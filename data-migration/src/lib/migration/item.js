@@ -1,35 +1,43 @@
-import moment from 'moment-timezone';
 import config from '../../../config';
 import * as file from '../utils/file';
 import * as core from './core';
 import * as constant from './constant';
 import * as mapper from '../utils/mapper';
 
-const getJewelry = async _ => {
+const settings = async (index, path) => ({
+    ...config,
+    elasticsearch: {
+        index: index,
+        type: 'items',
+        ...config.elasticsearch
+    },
+    mapper: mapper.mapItem,
+    query: {
+        table: constant.ITEM_TABLE,
+        field: constant.ITEM_ID,
+        template: await file.read(path),
+        ...config.query
+    }
+});
+
+const getJewelry = async index => {
     try {
-        const db = { ...config.db };
-        db.database = constant.MAIN_DATABASE;
-
-        const elasticsearch = {
-            ...config.elasticsearch,
-            index: `mol_${moment().format('YYYYMMDD')}`,
-            type: 'items'
-        };
-
-        const total = await core.parallelize({
-            db,
-            table: constant.ITEM_TABLE,
-            field: constant.ITEM_ID,
-            size: config.size,
-            template: await file.read(constant.JEWELRY_QUERY),
-            elasticsearch,
-            mapper: mapper.mapItem
-        });
-
+        console.log('Jewelry!!!');
+        const total = await core.parallelize(await settings(index, constant.JEWELRY_QUERY));
         console.log(`${total} items were processed in total.`);
     } catch (err) {
         throw err;
     }
 };
 
-export { getJewelry };
+const getStones = async index => {
+    try {
+        console.log('Stones!!!');
+        const total = await core.parallelize(await settings(index, constant.STONES_QUERY));
+        console.log(`${total} items were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+export { getJewelry, getStones };
