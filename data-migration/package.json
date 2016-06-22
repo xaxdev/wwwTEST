@@ -1,0 +1,23 @@
+{
+  "name": "data-migration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel src -d release -s && node --max_old_space_size=4096 ./release/index.js",
+    "build": "babel src -d release -s"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0"
+  },
+  "dependencies": {
+    "elasticsearch": "^11.0.1",
+    "moment-timezone": "^0.5.4",
+    "mssql": "^3.3.0"
+  }
+}
