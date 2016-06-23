@@ -12,11 +12,11 @@ const settings = async (index, path) => ({
         ...config.elasticsearch
     },
     mapper: mapper.mapItem,
-    query: {
+    parallelization: {
         table: constant.ITEM_TABLE,
         field: constant.ITEM_ID,
         template: await file.read(path),
-        ...config.query
+        ...config.parallelization
     }
 });
 
@@ -40,4 +40,14 @@ const getStones = async index => {
     }
 };
 
-export { getJewelry, getStones };
+const getWatches = async index => {
+    try {
+        console.log('Watches!!!');
+        const total = await core.parallelize(await settings(index, constant.WATCHES_QUERY));
+        console.log(`${total} items were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+export { getJewelry, getStones, getWatches };
