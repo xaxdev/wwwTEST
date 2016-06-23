@@ -35,14 +35,24 @@ SELECT item.[Id] AS 'id'
     , ISNULL(gemstone.[Symmetry], '') AS 'gemstone_symmetry'
     , ISNULL(gemstone.[Fluorescence], '') AS 'gemstone_fluorescence'
     , ISNULL(gemstone.[Certificate], '') AS 'certificate_number'
-    , 'JLY' AS 'type'
-    , ISNULL(jewelry.[Type], '') AS 'subType'
-    , ISNULL(jewelry.[Size], '') AS 'size'
-    , ISNULL(jewelry.[SetReference], '') AS 'setReference'
+    , 'WAT' AS 'type'
+    , ISNULL(watch.[Type], '') AS 'subType'
+    , ISNULL(watch.[SERIALNUMBER], '') AS 'serialNumber'
+    , ISNULL(watch.[Movement], '') AS 'movement'
+    , ISNULL(watch.[Complication], '') AS 'complication'
+    , ISNULL(watch.[StrapType], '') AS 'strapType'
+    , ISNULL(watch.[StrapColor], '') AS 'strapColor'
+    , ISNULL(watch.[DialIndex], '') AS 'dialIndex'
+    , ISNULL(watch.[DialColor], '') AS 'dialColor'
+    , ISNULL(watch.[DialMetal], '') AS 'dialMetal'
+    , ISNULL(watch.[BuckleType], '') AS 'buckleType'
+    , ISNULL(watch.[IsLimited], '') AS 'limitedEdition'
+    , ISNULL(watch.[LimitedEdition], '') AS 'limitedEditionNumber'
+    , ISNULL(watch.[ProductionDate], '') AS 'productionDate'
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
 ON item.[Reference] = gemstone.[ItemReference]
-INNER JOIN [ITORAMA].[dbo].[Jewelry] jewelry
-ON item.[Reference] = jewelry.[ItemReference]
+INNER JOIN [ITORAMA].[dbo].[Watch] watch
+ON item.[Reference] = watch.[ItemReference]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]

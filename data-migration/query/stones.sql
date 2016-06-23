@@ -38,10 +38,10 @@ SELECT item.[Id] AS 'id'
     , 'STO' AS 'type'
     , ISNULL(stone.[Type],'') AS 'subType'
     , ISNULL(stone.[LotNumber],'') AS 'lotNumber'
-FROM [Items] item
---LEFT JOIN [ItemGemstones] gemstone
+FROM [ITORAMA].[dbo].[Items] item
+--LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
 --ON item.[Reference] = gemstone.[ItemReference]
-INNER JOIN [Stones] stone
+INNER JOIN [ITORAMA].[dbo].[Stones] stone
 ON item.[Reference] = stone.[ItemReference]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]
