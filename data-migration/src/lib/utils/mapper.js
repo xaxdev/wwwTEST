@@ -50,4 +50,18 @@ const mapItem = recordset => {
     return items;
 };
 
-export { mapItem };
+const mapMaster = recordset => {
+    const records = [];
+    let id = 0;
+
+    for (let record of recordset) {
+      id++;
+      const row = {...record};
+      row.id = id;
+      records.push(row);
+    }
+
+    return records;
+};
+
+export { mapItem, mapMaster };

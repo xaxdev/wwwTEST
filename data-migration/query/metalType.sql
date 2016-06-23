@@ -1,0 +1,3 @@
+SELECT [METALTYPECODE] as code
+      ,[NAME] as name
+  FROM [ITORAMA].[dbo].[CRWMETALTYPE]
