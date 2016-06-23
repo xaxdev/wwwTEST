@@ -1,14 +1,13 @@
 {
     "db": {
         "server": "localhost",
-        "database": "ITORAMA",
         "user": "sa",
         "password": "P@ssw0rd"
     },
     "elasticsearch": {
         "host": "192.168.1.94:9200"
     },
-    "query": {
+    "parallelization": {
         "size": 20000
     }
 }

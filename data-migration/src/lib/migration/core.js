@@ -3,7 +3,7 @@ import { Es } from '../utils/es';
 
 const probe = async params => {
     try {
-        const query = `SELECT MIN(${params.query.field}) AS min, MAX(${params.query.field}) AS max FROM ${params.query.table}`;
+        const query = `SELECT MIN(${params.parallelization.field}) AS min, MAX(${params.parallelization.field}) AS max FROM ${params.parallelization.table}`;
         const db = new Db(params.db);
         const [record] = await db.exec(query, params.db);
         return record;
@@ -38,13 +38,13 @@ const get = async params => {
 const parallelize = async params => {
     try {
         const range = await probe(params);
-        const rounds = Math.ceil((range.max - range.min + 1) / params.query.size);
+        const rounds = Math.ceil((range.max - range.min + 1) / params.parallelization.size);
         let total = 0;
 
         for (let i = 0; i < rounds; i++) {
-            const from =  (i * params.query.size) + Number(range.min);
-            const to = (i * params.query.size) + params.query.size + Number(range.min) - 1;
-            const query = params.query.template.replace('@from', from).replace('@to', to);
+            const from =  (i * params.parallelization.size) + Number(range.min);
+            const to = (i * params.parallelization.size) + params.parallelization.size + Number(range.min) - 1;
+            const query = params.parallelization.template.replace('@from', from).replace('@to', to);
             const count =  await get({
                 ...params,
                 query
