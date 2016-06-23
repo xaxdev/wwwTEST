@@ -52,7 +52,7 @@ SELECT item.[Id] AS 'id'
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
 ON item.[Reference] = gemstone.[ItemReference]
-INNER JOIN [ITORAMA].[dbo].[Watch] watch
+INNER JOIN [ITORAMA].[dbo].[Watches] watch
 ON item.[Reference] = watch.[ItemReference]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]
