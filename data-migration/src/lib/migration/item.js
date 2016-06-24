@@ -50,4 +50,14 @@ const getWatches = async index => {
     }
 };
 
-export { getJewelry, getStones, getWatches };
+const getOBA = async index => {
+    try {
+        console.log('OBA!!!');
+        const total = await core.parallelize(await settings(index, constant.OBA_QUERY));
+        console.log(`${total} items were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+export { getJewelry, getStones, getWatches, getOBA };

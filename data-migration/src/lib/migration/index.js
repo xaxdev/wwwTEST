@@ -7,6 +7,8 @@ const migrate = async index => {
         await item.getJewelry(index);
         await item.getStones(index);
         await item.getWatches(index);
+        await item.getOBA(index);
+        
         await master.getCompany(index);
         await master.getLocation(index);
         await master.getWarehouse(index);

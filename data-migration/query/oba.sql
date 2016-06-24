@@ -25,13 +25,23 @@ SELECT item.[Id] AS 'id'
     , item.[ActualCostNonUSD] AS 'actualCostNonUSD'
     , item.[UpdatedCostNonUSD] AS 'updatedCostNonUSD'
     , item.[PriceNonUSD] AS 'priceNonUSD'
-    , 'STO' AS 'type'
-    , ISNULL(stone.[Type],'') AS 'subType'
-    , ISNULL(stone.[LotNumber],'') AS 'lotNumber'
+    , ISNULL(gemstone.[Cut], '') AS 'gemstone_cut'
+    , ISNULL(gemstone.[Color], '') AS 'gemstone_color'
+    , ISNULL(gemstone.[Clarity], '') AS 'gemstone_clarity'
+    , ISNULL(gemstone.[Cost], 0) AS 'gemstone_cost'
+    , ISNULL(gemstone.[Carat], 0) AS 'gemstone_carat'
+    , ISNULL(gemstone.[Quantity], 0) AS 'gemstone_quantity'
+    , ISNULL(gemstone.[Origin], '') AS 'gemstone_origin'
+    , ISNULL(gemstone.[Symmetry], '') AS 'gemstone_symmetry'
+    , ISNULL(gemstone.[Fluorescence], '') AS 'gemstone_fluorescence'
+    , ISNULL(gemstone.[Certificate], '') AS 'certificate_number'
+    , 'OBA' AS 'type'
+    , ISNULL(oba.[Type], '') AS 'subType'
+    , ISNULL(oba.[Dimensions], '') AS 'dimensions'
 FROM [ITORAMA].[dbo].[Items] item
---LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
---ON item.[Reference] = gemstone.[ItemReference]
-INNER JOIN [ITORAMA].[dbo].[Stones] stone
-ON item.[Reference] = stone.[ItemReference]
+LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
+ON item.[Reference] = gemstone.[ItemReference]
+INNER JOIN [ITORAMA].[dbo].[OBA] oba
+ON item.[Reference] = oba.[ItemReference]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]
