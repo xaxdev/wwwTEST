@@ -1,3 +1,3 @@
 SELECT [BRANDCODE] as code
       ,[BRANDDESC] as name
-  FROM [ITORAMA].[dbo].[CRWBRANDMASTER]
+  FROM [MWD_DB].[dbo].[CRWBRANDMASTER]

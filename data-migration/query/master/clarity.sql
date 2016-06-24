@@ -1,3 +1,3 @@
 SELECT [CLARITYCODE] as code
       ,[NAME] as name
-  FROM [ITORAMA].[dbo].[CRWCLARITY]
+  FROM [MWD_DB].[dbo].[CRWCLARITY]
