@@ -29,8 +29,6 @@ SELECT item.[Id] AS 'id'
     , ISNULL(stone.[Type],'') AS 'subType'
     , ISNULL(stone.[LotNumber],'') AS 'lotNumber'
 FROM [ITORAMA].[dbo].[Items] item
---LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
---ON item.[Reference] = gemstone.[ItemReference]
 INNER JOIN [ITORAMA].[dbo].[Stones] stone
 ON item.[Reference] = stone.[ItemReference]
 WHERE item.[Id] BETWEEN @from AND @to
