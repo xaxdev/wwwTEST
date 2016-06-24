@@ -6,12 +6,12 @@ export const ITEM_ID = '[Id]';
 export const JEWELRY_QUERY = './query/jewelry.sql';
 export const STONES_QUERY = './query/stones.sql';
 export const WATCHES_QUERY = './query/watches.sql';
+export const OBA_QUERY = './query/oba.sql';
 
-// master
+// Master
 export const COMPANY_QUERY = './query/company.sql';
 export const LOCATION_QUERY = './query/location.sql';
 export const WAREHOUSE_QUERY = './query/warehouse.sql';
-
 export const COUNTRY_QUERY = './query/country.sql';
 export const CUT_QUERY = './query/cut.sql';
 export const CUTSHAP_QUERY = './query/cutShap.sql';
