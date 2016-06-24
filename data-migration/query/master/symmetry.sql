@@ -1,3 +1,3 @@
 SELECT [CODE] as code
       ,[NAME] as name
-  FROM [ITORAMA].[dbo].[CRWSYMMETRY]
+  FROM [MWD_DB].[dbo].[CRWSYMMETRY]

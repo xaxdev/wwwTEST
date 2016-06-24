@@ -1,3 +1,3 @@
 SELECT [CODE] as code
       ,[NAME] as name
-  FROM [ITORAMA].[dbo].[CRWBUKLETYPE]
+  FROM [MWD_DB].[dbo].[CRWSTRAPCOLOR]

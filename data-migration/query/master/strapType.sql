@@ -1,3 +1,3 @@
 SELECT [STRAP] as code
       ,[NAME] as name
-  FROM [ITORAMA].[dbo].[CRWSTRAPTYPE]
+  FROM [MWD_DB].[dbo].[CRWSTRAPTYPE]
