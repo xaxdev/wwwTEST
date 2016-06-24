@@ -1,0 +1,3 @@
+SELECT [BRANDCODE] as code
+      ,[BRANDDESC] as name
+  FROM [ITORAMA].[dbo].[CRWBRANDMASTER]
