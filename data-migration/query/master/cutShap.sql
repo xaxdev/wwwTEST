@@ -1,3 +1,3 @@
 SELECT [CUTCODE] as code
       ,[NAME] as name
-FROM  [ITORAMA].[dbo].[CRWCUT]
+  FROM [MWD_DB].[dbo].[CRWCUT]
