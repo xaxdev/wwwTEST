@@ -1,7 +1,7 @@
 import mssql from 'mssql';
 
-export class Db {
-    async exec(query, config) {
+const db = {
+    exec: async (query, config) => {
         const connection = new mssql.Connection(config);
         try {
             await connection.connect();
@@ -13,3 +13,5 @@ export class Db {
         }
     }
 };
+
+export { db };

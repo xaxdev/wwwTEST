@@ -1,6 +1,8 @@
 import * as item from './item';
-import * as constant from './constant';
 import * as master from './master';
+import * as es from './es';
+
+import * as constant from './constant';
 
 const migrate = async index => {
     try {
@@ -8,7 +10,7 @@ const migrate = async index => {
         await item.getStones(index);
         await item.getWatches(index);
         await item.getOBA(index);
-        
+
         await master.getCompany(index);
         await master.getLocation(index);
         await master.getWarehouse(index);
@@ -36,4 +38,12 @@ const migrate = async index => {
     }
 };
 
-export { migrate };
+const alias = async (index, previous, name) => {
+    try {
+        await es.alias(index, previous, name);
+    } catch (err) {
+        throw err;
+    }
+}
+
+export { alias, migrate };

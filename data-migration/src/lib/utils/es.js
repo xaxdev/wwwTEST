@@ -1,7 +1,7 @@
 import elasticsearch from 'elasticsearch';
 
-export class Es {
-    async upload(documents, config) {
+const es =  {
+    upload: async (documents, config) => {
         const client = new elasticsearch.Client({
             host: config.host
         });
@@ -30,5 +30,29 @@ export class Es {
         } finally {
             client.close();
         }
+    },
+
+    alias: async (index, previous, name, config) => {
+        const client = new elasticsearch.Client({
+            host: config.host
+        });
+
+        try {
+            await client.indices.deleteAlias({
+                index: previous,
+                name
+            });
+
+            await client.indices.putAlias({
+                index,
+                name
+            });
+        } catch (err) {
+            throw err;
+        } finally {
+            client.close();
+        }
     }
-}
+};
+
+export { es };
