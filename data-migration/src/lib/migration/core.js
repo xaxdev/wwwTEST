@@ -1,10 +1,9 @@
-import { Db } from '../utils/db';
-import { Es } from '../utils/es';
+import { db } from '../utils/db';
+import { es } from '../utils/es';
 
 const probe = async params => {
     try {
         const query = `SELECT MIN(${params.parallelization.field}) AS min, MAX(${params.parallelization.field}) AS max FROM ${params.parallelization.table}`;
-        const db = new Db(params.db);
         const [record] = await db.exec(query, params.db);
         return record;
     } catch (err) {
@@ -15,7 +14,6 @@ const probe = async params => {
 const get = async params => {
     try {
         // query from db
-        const db = new Db(params.db);
         const recordset = await db.exec(params.query, params.db);
 
         if (recordset.length === 0) {
@@ -26,7 +24,6 @@ const get = async params => {
         const documents = params.mapper(recordset);
 
         // upload documents to Elasticsearch
-        const es = new Es();
         await es.upload(documents, params.elasticsearch);
 
         return documents.length;
@@ -59,4 +56,4 @@ const parallelize = async params => {
     }
 };
 
-export { parallelize, get };
+export { get, parallelize };
