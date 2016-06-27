@@ -38,18 +38,20 @@ const es =  {
         });
 
         try {
-            await client.indices.deleteAlias({
-                index: previous,
-                name
-            });
-
-            await client.indices.putAlias({
-                index,
-                name
-            });
+            const result = await client.indices.getAlias({ name });
+            const indices = Object.keys(result);
+            if (indices.length > 0) {
+                await client.indices.deleteAlias({ index: indices, name });
+            }
         } catch (err) {
+            if (err.message === `alias [${name}] missing`) {
+                console.log(`Failed to find the ${name} alias.`);
+                return;
+            }
+
             throw err;
         } finally {
+            await client.indices.putAlias({ index, name });
             client.close();
         }
     }
