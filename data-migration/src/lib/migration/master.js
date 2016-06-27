@@ -4,6 +4,8 @@ import * as core from './core';
 import * as constant from './constant';
 import * as mapper from '../utils/mapper';
 
+// const data = require('./options');
+
 const settings = async (index, type, path) => ({
     ...config,
     elasticsearch: {
@@ -13,6 +15,15 @@ const settings = async (index, type, path) => ({
     },
     mapper: mapper.mapMaster,
     query: await file.read(path)
+});
+
+const settingsArray = async (index, type, path) => ({
+    elasticsearch: {
+        index: index,
+        type: type,
+        ...config.elasticsearch
+    },
+    data: await require(path)
 });
 
 const getCompany = async index => {
@@ -235,6 +246,37 @@ const getStrapColor = async index => {
     }
 };
 
+const getCurrency = async index => {
+    try {
+        console.log('Currency!!!');
+        const total = await core.getFromArray(await settingsArray(index, 'currencies', constant.CURRENCY_DATA));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getRole = async index => {
+    try {
+        console.log('Role!!!');
+        const total = await core.getFromArray(await settingsArray(index, 'roles', constant.ROLE_DATA));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getProductGroup = async index => {
+    try {
+        console.log('ProductGroup!!!');
+        const total = await core.getFromArray(await settingsArray(index, 'productGroups', constant.PRODUCTGROUP_DATA));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
 export { getCompany, getLocation, getWarehouse, getCountry, getCut, getCutShap, getColor, getClarity, getSymmetry,
         getFluorescence, getCollection, getBrand, getMetalType, getMetalColor, getCertificateAgency, getDialIndex,
-        getDialColor, getDialMetal, getBuckleType, getStrapType, getStrapColor, getOrigin};
+        getDialColor, getDialMetal, getBuckleType, getStrapType, getStrapColor, getOrigin, getCurrency, getRole,
+        getProductGroup
+      };

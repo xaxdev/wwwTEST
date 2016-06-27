@@ -56,4 +56,22 @@ const parallelize = async params => {
     }
 };
 
-export { get, parallelize };
+const getFromArray = async params => {
+    try {
+        const data = params.data;
+
+        // console.log('params.quer-->',data);
+        // map record to document
+        const documents = data;
+
+        // upload documents to Elasticsearch
+        const es = new Es();
+        await es.upload(documents, params.elasticsearch);
+
+        return documents.length;
+    } catch (err) {
+        throw err;
+    }
+};
+
+export { parallelize, get, getFromArray };

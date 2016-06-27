@@ -31,3 +31,8 @@ export const DIALMETAL_QUERY = './query/master/dialMetal.sql';
 export const BUCKLETYPE_QUERY = './query/master/buckleType.sql';
 export const STRAPTYPE_QUERY = './query/master/strapType.sql';
 export const STRAPCOLOR_QUERY = './query/master/strapColor.sql';
+
+// from array
+export const CURRENCY_DATA = '../../../query/master/currency.js';
+export const ROLE_DATA = '../../../query/master/role.js';
+export const PRODUCTGROUP_DATA = '../../../query/master/productGroup.js';

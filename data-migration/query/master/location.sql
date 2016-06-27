@@ -1,4 +1,5 @@
 SELECT [SITEID] AS code
       ,[NAME] AS name
-      ,[DATAAREAID] AS comid
+      ,UPPER([DATAAREAID]) AS comid
 FROM  [MWD_DB].[dbo].[CRWSITE]
+GROUP BY [SITEID],[NAME],[DATAAREAID]
