@@ -31,6 +31,10 @@ export const DIALMETAL_QUERY = './query/master/dialMetal.sql';
 export const BUCKLETYPE_QUERY = './query/master/buckleType.sql';
 export const STRAPTYPE_QUERY = './query/master/strapType.sql';
 export const STRAPCOLOR_QUERY = './query/master/strapColor.sql';
+export const JEWELRYCATEGORY_QUERY = './query/master/jewelryCategory.sql';
+export const WATCHCATEGORY_QUERY = './query/master/watchCategory.sql';
+export const ACCESSORYTYPE_QUERY = './query/master/accessoryType.sql';
+export const SPAREPARTTYPE_QUERY = './query/master/sparePartType.sql';
 
 // from array
 export const CURRENCY_DATA = '../../../query/master/currency.js';

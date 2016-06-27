@@ -4,8 +4,6 @@ import * as core from './core';
 import * as constant from './constant';
 import * as mapper from '../utils/mapper';
 
-// const data = require('./options');
-
 const settings = async (index, type, path) => ({
     ...config,
     elasticsearch: {
@@ -246,6 +244,46 @@ const getStrapColor = async index => {
     }
 };
 
+const getJewelryCategory = async index => {
+    try {
+        console.log('JewelryCategory!!!');
+        const total = await core.get(await settings(index, 'jewelryCategories', constant.JEWELRYCATEGORY_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getWatchCategory = async index => {
+    try {
+        console.log('WatchCategory!!!');
+        const total = await core.get(await settings(index, 'watchCategories', constant.WATCHCATEGORY_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getAccessoryType = async index => {
+    try {
+        console.log('AccessoryType!!!');
+        const total = await core.get(await settings(index, 'accessoryTypes', constant.ACCESSORYTYPE_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getSparePartType = async index => {
+    try {
+        console.log('SparePartType!!!');
+        const total = await core.get(await settings(index, 'sparePartTypes', constant.SPAREPARTTYPE_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
 const getCurrency = async index => {
     try {
         console.log('Currency!!!');
@@ -275,8 +313,9 @@ const getProductGroup = async index => {
         throw err;
     }
 };
+
 export { getCompany, getLocation, getWarehouse, getCountry, getCut, getCutShap, getColor, getClarity, getSymmetry,
         getFluorescence, getCollection, getBrand, getMetalType, getMetalColor, getCertificateAgency, getDialIndex,
         getDialColor, getDialMetal, getBuckleType, getStrapType, getStrapColor, getOrigin, getCurrency, getRole,
-        getProductGroup
+        getProductGroup, getJewelryCategory, getWatchCategory, getAccessoryType, getSparePartType
       };
