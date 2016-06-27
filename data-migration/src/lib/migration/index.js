@@ -33,6 +33,10 @@ const migrate = async index => {
         await master.getBuckleType(index);
         await master.getStrapType(index);
         await master.getStrapColor(index);
+
+        await master.getCurrency(index);
+        await master.getRole(index);
+        await master.getProductGroup(index);
     } catch (err) {
         throw err;
     }

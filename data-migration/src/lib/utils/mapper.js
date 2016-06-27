@@ -56,8 +56,10 @@ const mapMaster = recordset => {
 
     for (let record of recordset) {
       id++;
-      const row = {...record};
-      row.id = id;
+      const row = {
+        ...record,
+        id
+      };
       records.push(row);
     }
 
