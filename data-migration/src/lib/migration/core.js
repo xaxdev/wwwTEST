@@ -65,7 +65,6 @@ const getFromArray = async params => {
         const documents = data;
 
         // upload documents to Elasticsearch
-        const es = new Es();
         await es.upload(documents, params.elasticsearch);
 
         return documents.length;
