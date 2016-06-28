@@ -32,7 +32,7 @@ const es =  {
         }
     },
 
-    alias: async (index, previous, name, config) => {
+    alias: async (index, name, config) => {
         const client = new elasticsearch.Client({
             host: config.host
         });

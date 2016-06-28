@@ -4,22 +4,22 @@ import moment from 'moment-timezone';
 
 import * as migration from './lib/migration/';
 
-const previous = `mol_${moment().add(-1, 'days').format('YYYYMMDD')}`;
-const index = `mol_${moment().format('YYYYMMDD')}`;
+const index = `mol_${moment().format('YYYYMMDD_HHmm')}`;
 const name = 'mol';
 
 const init = async _ => {
     try {
         console.log(`Start migrating data at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
         await migration.migrate(index);
-        await migration.alias(index, previous, name);
+        await migration.alias(index, name);
     } catch (err) {
         throw err;
     }
 };
 
 new CronJob({
-  cronTime: '00 20 11 * * *',
+  cronTime: '00 35 15 * * *',
+  // cronTime: '00 */5 * * * *',
   onTick: _ => {
     init()
         .then(_ => {

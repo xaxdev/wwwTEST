@@ -28,7 +28,10 @@ const mapGemstone = (item, record) => {
         delete item.certificate_number;
     }
 
-    item.gemstones.push(gemstone);
+    // Check if gemstone is an empty object
+    if (Object.keys(gemstone).length > 0) {
+        item.gemstones.push(gemstone);
+    }
 };
 
 const mapItem = recordset => {
