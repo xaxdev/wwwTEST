@@ -46,9 +46,9 @@ const migrate = async index => {
     }
 };
 
-const alias = async (index, previous, name) => {
+const alias = async (index, name) => {
     try {
-        await es.alias(index, previous, name);
+        await es.alias(index, name);
     } catch (err) {
         throw err;
     }
