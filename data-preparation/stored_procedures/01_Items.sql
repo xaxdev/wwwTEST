@@ -49,6 +49,7 @@ BEGIN
 	    [UpdatedCostNonUSD] [decimal](32, 16) NOT NULL,
 	    [PriceNonUSD] [decimal](32, 16) NOT NULL,
       [Site] [nvarchar](10) NOT NULL,
+      [SiteName] [nvarchar](60) NOT NULL,
       [CreatedDate] [datetime] NOT NULL
     ) ON [PRIMARY]
   END
@@ -82,6 +83,7 @@ BEGIN
       ,[UpdatedCostNonUSD]
       ,[PriceNonUSD]
       ,[Site]
+      ,[SiteName]
       ,[CreatedDate])
   SELECT
       i.[RECID]
@@ -111,11 +113,14 @@ BEGIN
       , [GroupCost]
       , [UpdatedCost]
       , [PublicPrice]
-      , w.[INVENTSITEID]
+      , s.[SITEID]
+      , s.[NAME]
       , GETUTCDATE()
   FROM [MWD_DB].[dbo].[CRWMOLINVENTORYMASTERS] i
-  INNER JOIN [MWD_DB].[dbo].[CRWWAREHOUSE] w
-     ON i.[WAREHOUSE] = w.[INVENTLOCATIONID]
+  LEFT JOIN [MWD_DB].[dbo].[CRWWAREHOUSE] w
+    ON i.[WAREHOUSE] = w.[INVENTLOCATIONID]
+  LEFT JOIN [MWD_DB].[dbo].[CRWSITE] s
+    ON w.[INVENTSITEID] = s.[SITEID]
 
   COMMIT TRANSACTION
 END
