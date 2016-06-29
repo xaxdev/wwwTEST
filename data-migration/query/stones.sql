@@ -6,6 +6,7 @@ SELECT item.[Id] AS 'id'
     , item.[WAREHOUSE] AS 'warehouse'
     , item.[WarehouseName] AS 'warehouseName'
     , item.[Site] AS 'site'
+    , item.[SiteName] AS 'siteName'
     , item.[Collection] AS 'collection'
     , item.[Brand] AS 'brand'
     , item.[Vendor] AS 'vendor'
@@ -33,8 +34,11 @@ SELECT item.[Id] AS 'id'
     , ISNULL(stone.[Clarity],'') AS 'clarity'
     , ISNULL(stone.[Carat],'') AS 'carat'
     , ISNULL(stone.[Quantity],'') AS 'quantity'
+    , ISNULL(img.[FILENAME], '') AS 'image'
 FROM [ITORAMA].[dbo].[Items] item
 INNER JOIN [ITORAMA].[dbo].[Stones] stone
 ON item.[Reference] = stone.[ItemReference]
+LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] img
+ON item.[Id] = img.[ITEMRECID]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]

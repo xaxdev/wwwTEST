@@ -86,7 +86,7 @@ BEGIN
       ,[SiteName]
       ,[CreatedDate])
   SELECT
-      i.[RECID]
+      i.[recididd]
       , [Reference]
       , i.[Name]
       , [DESCRIPTION]
@@ -113,8 +113,8 @@ BEGIN
       , [GroupCost]
       , [UpdatedCost]
       , [PublicPrice]
-      , s.[SITEID]
-      , s.[NAME]
+      , ISNULL(s.[SITEID], '')
+      , ISNULL(s.[NAME], '')
       , GETUTCDATE()
   FROM [MWD_DB].[dbo].[CRWMOLINVENTORYMASTERS] i
   LEFT JOIN [MWD_DB].[dbo].[CRWWAREHOUSE] w
