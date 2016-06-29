@@ -6,6 +6,7 @@ SELECT item.[Id] AS 'id'
     , item.[WAREHOUSE] AS 'warehouse'
     , item.[WarehouseName] AS 'warehouseName'
     , item.[Site] AS 'site'
+    , item.[SiteName] AS 'siteName'
     , item.[Collection] AS 'collection'
     , item.[Brand] AS 'brand'
     , item.[Vendor] AS 'vendor'
@@ -26,6 +27,7 @@ SELECT item.[Id] AS 'id'
     , item.[ActualCostNonUSD] AS 'actualCostNonUSD'
     , item.[UpdatedCostNonUSD] AS 'updatedCostNonUSD'
     , item.[PriceNonUSD] AS 'priceNonUSD'
+    , gemstone.[Id] AS 'gemstone_id'
     , ISNULL(gemstone.[Cut], '') AS 'gemstone_cut'
     , ISNULL(gemstone.[Color], '') AS 'gemstone_color'
     , ISNULL(gemstone.[Clarity], '') AS 'gemstone_clarity'
@@ -50,10 +52,13 @@ SELECT item.[Id] AS 'id'
     , CAST(ISNULL(watch.[IsLimited], 0) AS BIT) AS 'limitedEdition'
     , ISNULL(watch.[LimitedEdition], '') AS 'limitedEditionNumber'
     , ISNULL(watch.[ProductionDate], '') AS 'productionDate'
+    , ISNULL(img.[FILENAME], '') AS 'image'
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
 ON item.[Reference] = gemstone.[ItemReference]
 INNER JOIN [ITORAMA].[dbo].[Watches] watch
 ON item.[Reference] = watch.[ItemReference]
+LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] img
+ON item.[Id] = img.[ITEMRECID]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]

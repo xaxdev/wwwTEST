@@ -21,6 +21,7 @@ BEGIN
   ELSE
   BEGIN
     CREATE TABLE [dbo].[ItemGemstones](
+      [Id] [int] NOT NULL,
 	    [ItemReference] [nvarchar](20) NOT NULL,
 	    [GemstoneId] [nvarchar](20) NOT NULL,
 	    [Clarity] [nvarchar](20) NOT NULL,
@@ -38,7 +39,8 @@ BEGIN
   END
 
   INSERT INTO [dbo].[ItemGemstones]
-           ([ItemReference]
+           ([Id]
+           ,[ItemReference]
            ,[GemstoneId]
            ,[Clarity]
            ,[Cut]
@@ -51,7 +53,8 @@ BEGIN
            ,[Fluorescence]
            ,[Cost]
            ,[CreatedDate])
-   SELECT [Reference]
+   SELECT ROW_NUMBER() OVER (ORDER BY [Reference]) AS Id
+          ,  [Reference]
           , [ITEMID]
           , [CLARITYCODE]
           , [CUTCODE]
@@ -65,6 +68,7 @@ BEGIN
           , [ACTUALCVALUE]
           , GETUTCDATE()
   FROM [MWD_DB].[dbo].[CRWMOLITEMGEMSTONE]
+  ORDER BY [Reference]
 
   COMMIT TRANSACTION
 END

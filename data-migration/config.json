@@ -9,5 +9,9 @@
     },
     "parallelization": {
         "size": 20000
+    },
+    "gallery": {
+        "original": "/images",
+        "thumbnail": "/images"
     }
 }
