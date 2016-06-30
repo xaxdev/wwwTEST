@@ -1,0 +1,38 @@
+
+@font-face {
+  font-family: 'MercuryDisplay-Roman';
+  src: url('MercuryDisplay-Roman.eot');
+  src: url('MercuryDisplay-Roman.woff2') format('woff2'),
+       url('MercuryDisplay-Roman.woff') format('woff'),
+       url('MercuryDisplay-Roman.ttf') format('truetype'),
+       url('MercuryDisplay-Roman.svg#MercuryDisplay-Roman') format('svg'),
+       url('MercuryDisplay-Roman.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: 'open_sanslight';
+    src: url('open-sans.light.eot');
+    src: url('open-sans.light.eot?#iefix') format('embedded-opentype'),
+         url('open-sans.light.woff2') format('woff2'),
+         url('open-sans.light.woff') format('woff'),
+         url('open-sans.light.ttf') format('truetype'),
+         url('open-sans.light.svg#open_sanslight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'open_sanssemibold';
+    src: url('opensans-semibold.eot');
+    src: url('opensans-semibold.eot?#iefix') format('embedded-opentype'),
+         url('opensans-semibold.woff2') format('woff2'),
+         url('opensans-semibold.woff') format('woff'),
+         url('opensans-semibold.ttf') format('truetype'),
+         url('opensans-semibold.svg#open_sanssemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

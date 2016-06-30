@@ -1,0 +1,24 @@
+{
+  "name": "MOL2016",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "koakod.c <korakod.chaisongkram@itorama.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}
