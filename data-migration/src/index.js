@@ -18,7 +18,7 @@ const init = async _ => {
 };
 
 new CronJob({
-  cronTime: '00 35 15 * * *',
+  cronTime: '00 00 03 * * *',
   // cronTime: '00 */5 * * * *',
   onTick: _ => {
     init()
