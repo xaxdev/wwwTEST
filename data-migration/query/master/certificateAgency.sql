@@ -1,3 +1,3 @@
 SELECT [CERTIFICATIONCODE] as code
-      ,[DESCRIPTION] as name
+      ,[Name] as name
   FROM [MWD_DB].[dbo].[CRWCERFICATIONAGENCY]
