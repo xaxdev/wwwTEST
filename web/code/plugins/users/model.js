@@ -10,7 +10,7 @@ module.exports = {
   autoPK: false,
   identity: 'user',
   connection: 'mysql',
-  migrate: 'alter',
+  migrate: 'safe',
   tableName: 'User',
   attributes: {
     id: {

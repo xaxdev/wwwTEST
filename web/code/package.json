@@ -4,8 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "api": "json-server ./json-server/db.json --port 4500",
-    "prestart": "gulp",
+    "build": "NODE_ENV=production webpack --progress --color --define HOSTNAME='\"10.128.133.76\"'",
     "build:test": "NODE_ENV=test webpack --progress --color --define HOSTNAME='\"192.168.1.92\"'",
     "build:dev": "webpack --progress --color  --watch --define HOSTNAME='\"localhost\"'"
   },

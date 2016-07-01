@@ -5,7 +5,7 @@ module.exports = {
   autoPK: false,
   identity: 'onhandLocation',
   connection: 'mysql',
-  migrate: 'alter',
+  migrate: 'safe',
   tableName: 'PermissionOnhandLocation',
   attributes: {
     id: {

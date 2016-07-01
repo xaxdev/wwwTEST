@@ -7,7 +7,7 @@ module.exports = {
   autoUpdatedAt: false,
   identity: 'authentication',
   connection: 'mysql',
-  migrate: 'alter',
+  migrate: 'safe',
   tableName: 'Authentication',
   attributes: {
     id: {

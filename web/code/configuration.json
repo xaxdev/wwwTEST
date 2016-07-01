@@ -86,9 +86,10 @@
                 "user": "root"
               },
               "production": {
-                "host": "192.168.1.91",
+                "host": "localhost",
                 "database": "mol",
-                "user": "root"
+                "user": "mol",
+                "password": "P@ssw0rd#431"
               }
             }
           }
@@ -212,7 +213,7 @@
       "plugin": {
         "register": "./plugins/elastic",
         "options": {
-          "host": "192.168.1.94:9200"
+          "host": "10.128.133.77:9200"
         }
       }
     },
