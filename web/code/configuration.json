@@ -213,7 +213,19 @@
       "plugin": {
         "register": "./plugins/elastic",
         "options": {
-          "host": "192.168.1.94:9200"
+          "$filter": "env",
+          "development": {
+                "host": "192.168.1.94:9200"
+          },
+          "test": {
+                "host": "192.168.1.94:9200"
+          },
+          "staging": {
+                "host": "192.168.1.94:9200"
+          },
+          "production": {
+                "host": "10.128.133.77:9200"
+          }
         }
       }
     },
