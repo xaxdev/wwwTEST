@@ -34,7 +34,8 @@ SELECT item.[Id] AS 'id'
     , ISNULL(stone.[Clarity],'') AS 'clarity'
     , ISNULL(stone.[Carat],'') AS 'carat'
     , ISNULL(stone.[Quantity],'') AS 'quantity'
-    , ISNULL(img.[FILENAME], '') AS 'image'
+    , ISNULL(img.[FILENAME], '') AS 'imageName'
+    , ISNULL(img.[FILETYPE], '') AS 'imageType'
 FROM [ITORAMA].[dbo].[Items] item
 INNER JOIN [ITORAMA].[dbo].[Stones] stone
 ON item.[Reference] = stone.[ItemReference]

@@ -41,8 +41,8 @@ const mapProperties = (item, record) => {
     // add image, if not existed
     if (record.image.length > 0 && item.gallery.findIndex(image => image.original.match(new RegExp(`${record.image}$`)) !== null) === -1) {
         const image = {
-            original: `${config.gallery.original}/${record.company}/${record.image}`,
-            thumbnail: `${config.gallery.thumbnail}/${record.company}/${record.image}`
+            original: `${config.gallery.original}/${record.company}/${record.imageName}.${record.imageType}`,
+            thumbnail: `${config.gallery.thumbnail}/${record.company}/${record.imageName}.${record.imageType}`
         };
 
         delete item.image;

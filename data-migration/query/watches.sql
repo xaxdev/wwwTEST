@@ -52,7 +52,8 @@ SELECT item.[Id] AS 'id'
     , CAST(ISNULL(watch.[IsLimited], 0) AS BIT) AS 'limitedEdition'
     , ISNULL(watch.[LimitedEdition], '') AS 'limitedEditionNumber'
     , ISNULL(watch.[ProductionDate], '') AS 'productionDate'
-    , ISNULL(img.[FILENAME], '') AS 'image'
+    , ISNULL(img.[FILENAME], '') AS 'imageName'
+    , ISNULL(img.[FILETYPE], '') AS 'imageType'
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
 ON item.[Reference] = gemstone.[ItemReference]

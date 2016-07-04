@@ -42,7 +42,8 @@ SELECT item.[Id] AS 'id'
     , ISNULL(jewelry.[Type], '') AS 'subType'
     , ISNULL(jewelry.[Size], '') AS 'size'
     , ISNULL(jewelry.[SetReference], '') AS 'setReference'
-    , ISNULL(img.[FILENAME], '') AS 'image'
+    , ISNULL(img.[FILENAME], '') AS 'imageName'
+    , ISNULL(img.[FILETYPE], '') AS 'imageType'
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
 ON item.[Reference] = gemstone.[ItemReference]
