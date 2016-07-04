@@ -70,8 +70,8 @@ class InventoryFilter extends Component {
     this.props.masterDataActions.get();
   }
   componentDidMount(){
-    console.log('componentDidMount-->');
-    console.log('componentDidMount-->',this.refs.jewelry);
+    // console.log('componentDidMount-->');
+    // console.log('componentDidMount-->',this.refs.jewelry);
     this.refs.jewelry.treeOnUnClick();
     this.refs.watch.treeOnUnClick();
     this.refs.stone.treeOnUnClick();
@@ -237,6 +237,12 @@ class InventoryFilter extends Component {
     });
     this.resetCategory();
     this.props.inventoryActions.selectedTabCategory(activeTab);
+    this.refs.jewelry.treeOnUnClick();
+    this.refs.watch.treeOnUnClick();
+    this.refs.stone.treeOnUnClick();
+    this.refs.accessory.treeOnUnClick();
+    this.refs.oba.treeOnUnClick();
+    this.refs.sparepart.treeOnUnClick();
   }
   hideModal = (e) => {
     e.preventDefault();
