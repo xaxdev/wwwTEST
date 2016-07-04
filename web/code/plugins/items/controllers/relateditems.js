@@ -46,7 +46,7 @@ module.exports = {
         for (let i = 0; i < len; i++) {
           productdata.push({
               id: productResult[i].id,
-              image:'http://www.bq-magazine.com/wp-content/uploads/2013/09/Mouawad-Grand-Ellipse-Accessories-2-signet-1024x1024.jpg'
+              image:productResult[i].gallery[0].thumbnail
           });
         }
         const responeData = {
