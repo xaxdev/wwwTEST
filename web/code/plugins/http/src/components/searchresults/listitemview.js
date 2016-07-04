@@ -54,11 +54,14 @@ class ListItemsView extends Component {
   render(){
     var items = null;
     if (this.props.items.length != 0){
+      // items = this.props.items.map(function (col, idx) {
+      //   // console.log('col-->',col);
+      //   return {...col,imageOriginal: 'http://mol.mouawad.com/resources/images/blank.gif',
+      //   imageThumbnail: 'http://mol.mouawad.com/resources/images/blank.gif',
+      // }
+      // });
       items = this.props.items.map(function (col, idx) {
-        // console.log('col-->',col);
-        return {...col,imageOriginal: 'http://mol.mouawad.com/resources/images/blank.gif',
-        imageThumbnail: 'http://mol.mouawad.com/resources/images/blank.gif',
-      }
+        return {...col,imageOriginal: col.gallery[0].original,imageThumbnail: col.gallery[0].thumbnail}
       });
 
       items = items.map(function (col, idx) {

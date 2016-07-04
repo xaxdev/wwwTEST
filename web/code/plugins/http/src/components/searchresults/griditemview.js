@@ -216,7 +216,7 @@ class GridItemsView extends Component {
                       </div>
                     </div>
                     <div name={item.id} id={item.id} onClick={btnEvent}>
-                    <img src="http://mol.mouawad.com/resources/images/blank.gif" responsive width={200} height={200}/>
+                    <img src={item.gallery[0].original} responsive width={200} height={200}/>
                     <p className="font-b fc-000">
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
