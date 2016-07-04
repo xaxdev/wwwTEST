@@ -28,15 +28,30 @@ class InventorySparePart extends Component {
   }
   treeOnUnClick(vals){
     // console.log('unclick vals-->',this.state.treeViewData);
+
     if( this.state.treeViewData != null){
       this.state.treeViewData[0].checked = false;
       this.state.treeViewData[0].key = this.state.treeViewData[0].code;
       this.refs.treeview.handleChange(this.state.treeViewData[0]);
+      this.props.props.inventoryActions.setHierarchy(this.state.treeViewData)
+    }else{
+      // console.log('HierarchyValue vals-->',this.props.props.HierarchyValue);
+      if(this.props.props.HierarchyValue != null){
+        if(this.props.props.SearchAction == 'New'){
+          if(this.props.props.HierarchyValue.length != 0){
+            this.props.props.HierarchyValue[0].checked = false;
+            this.props.props.HierarchyValue[0].key = this.props.props.HierarchyValue[0].code;
+            this.refs.treeview.handleChange(this.props.props.HierarchyValue[0]);
+          }
+          this.props.props.inventoryActions.setHierarchy(null);
+        }
+      }
     }
   }
   treeOnClick(vals){
     // console.log('vals-->',vals);
     this.setState({treeViewData:vals});
+    this.props.props.inventoryActions.setHierarchy(vals);
     var treeSelected = [];
     var selectedData = vals.filter(val => {
       var checkAllNodes = function(node){
@@ -158,7 +173,7 @@ class InventorySparePart extends Component {
 
     if (props.options.watchCategories) {
       dataDropDownSparePartType.push(props.options.watchCategories.map(watchCategory =>{
-          return ({value: watchCategory.code,label:watchCategory.name});
+          return ({value: watchCategory.code,label:watchCategory.code + ' [' + watchCategory.name + ']'});
         })
       )
       dataDropDownSparePartType = dataDropDownSparePartType[0];

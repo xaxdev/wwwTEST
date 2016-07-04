@@ -3,7 +3,8 @@ import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CU
           SET_CERTIFICATELAB, SET_POLISH, SET_SYMMETRY, SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN, SET_JEWELRYCATEGORY, SET_COLLECTION,
           SET_BRAND, SET_MUSTHAVE, SET_RINGSIZE, SET_DOMINANTSTONE, SET_METALTYPE, SET_METALCOLOUR, SET_CERTIFICATEAGENCY,
           SET_WATCHCATEORY, SET_LIMITEDEDITION, SET_MOVEMENT, SET_DIALINDEX, SET_DIALCOLOR, SET_DIALMETAL, SET_BUCKLETYPE, SET_STRAPTYPE,
-          SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE
+          SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE,
+          SET_HIERARCHY
         } from '../../constants/inventoryConstants';
 
 const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, currentPage:1, totalpage:null, totalpublicprice:null,
@@ -14,7 +15,8 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                         MetalColourValue:[], CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[],
                         StrapTypeValue:[], BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[], DialIndexValue:[],
                         MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[], activeTabCategory:1,allItems:[],
-                        filters:[], AccessoryTypeValue:[],SparePartTypeValue:[], paramsSearch:null,IsAdvance:false
+                        filters:[], AccessoryTypeValue:[],SparePartTypeValue:[], paramsSearch:null,IsAdvance:false,
+                        HierarchyValue:null,SearchAction:'New'
                       };
 
   export default function(state = INITIAL_STATE, action){
@@ -29,11 +31,14 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[],
                 BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[],
                 LimitedEditionValue:[], WatchCategoryValue:[],filters:[], AccessoryTypeValue:[], paramsSearch:null,
-                SparePartTypeValue:[]
+                SparePartTypeValue:[],HierarchyValue:null,SearchAction:'New'
               };
       case SET_ACCESSORYTYPE :
         // console.log('SET_POLISH -->',action);
         return {...state, AccessoryTypeValue: action.accessoryType };
+      case SET_HIERARCHY :
+        // console.log('SET_POLISH -->',action);
+        return {...state, HierarchyValue: action.hierarchy };
       case SET_SPAREPARTTYPE :
         // console.log('SET_POLISH -->',action);
         return {...state, SparePartTypeValue: action.sparePartType };
@@ -153,14 +158,14 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[],
                 BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[],
                 LimitedEditionValue:[], WatchCategoryValue:[], currentPage:1,datas:null,allItems:[], totalpage:null,
-                totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[],SparePartTypeValue:[]
+                totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[],SparePartTypeValue:[],SearchAction:'New'
               }
       case SET_PARAMS:
         // console.log('action.params-->',action.params);
         return { ...state, paramsSearch:action.params }
       case MODIFY_SEARCH:
         return { ...state, paramsSearch:action.params, datas:null,allItems:[], totalpage:null,
-        totalpublicprice:null, totalupdatedcost:null }
+        totalpublicprice:null, totalupdatedcost:null,SearchAction:'Modify' }
       case FETCH_ALLITEMS:
         // console.log('action-->',action.type);
         // console.log('action-->',action);

@@ -213,7 +213,7 @@
       "plugin": {
         "register": "./plugins/elastic",
         "options": {
-          "host": "10.128.133.77:9200"
+          "host": "192.168.1.94:9200"
         }
       }
     },

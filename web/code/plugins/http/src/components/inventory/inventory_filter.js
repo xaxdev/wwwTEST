@@ -69,6 +69,16 @@ class InventoryFilter extends Component {
     // this.props.resetFilter();
     this.props.masterDataActions.get();
   }
+  componentDidMount(){
+    console.log('componentDidMount-->');
+    console.log('componentDidMount-->',this.refs.jewelry);
+    this.refs.jewelry.treeOnUnClick();
+    this.refs.watch.treeOnUnClick();
+    this.refs.stone.treeOnUnClick();
+    this.refs.accessory.treeOnUnClick();
+    this.refs.oba.treeOnUnClick();
+    this.refs.sparepart.treeOnUnClick();
+  }
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
@@ -524,6 +534,7 @@ function mapStateToProps(state) {
 
     searchResult:state.searchResult,
     options: state.users.options,
+    HierarchyValue: state.searchResult.HierarchyValue,
     WarehouseValue: state.searchResult.WarehouseValue,
     LocationValue: state.searchResult.LocationValue,
     StoneTypeValue: state.searchResult.StoneTypeValue,
@@ -562,6 +573,7 @@ function mapStateToProps(state) {
     IsAdvance: state.searchResult.IsAdvance,
     AccessoryTypeValue: state.searchResult.AccessoryTypeValue,
     SparePartTypeValue: state.searchResult.SparePartTypeValue,
+    SearchAction: state.searchResult.SearchAction
   };
 }
 function mapDispatchToProps(dispatch) {
