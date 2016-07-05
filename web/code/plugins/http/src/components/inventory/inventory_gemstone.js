@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select';
 import Calendar from 'react-input-calendar';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 
@@ -335,7 +336,11 @@ class InventoryGemStone extends Component {
           <div className="row margin-ft">
             <div className="col-lg-6 form-horizontal">
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Stone Type</label>
+                <label className="col-sm-4 control-label">Stone Type
+                  <OverlayTrigger placement="top" overlay={tooltipStoneType}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.StoneTypeValue}
                     placeholder="Select your Stone Type"
@@ -344,7 +349,11 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Cut</label>
+                <label className="col-sm-4 control-label">Cut (Shape)
+                  <OverlayTrigger placement="top" overlay={tooltipCut}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.CutValue}
                     placeholder="Select your Cut"
@@ -353,7 +362,11 @@ class InventoryGemStone extends Component {
                  </div>
               </div>
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Cut Grade</label>
+                <label className="col-sm-4 control-label">Cut Grade
+                  <OverlayTrigger placement="top" overlay={tooltipCutGrade}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.CutGradeValue}
                     placeholder="Select your Cut Grade"
@@ -362,7 +375,11 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Color</label>
+                <label className="col-sm-4 control-label">Color
+                  <OverlayTrigger placement="top" overlay={tooltipColor}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.ColorValue}
                     placeholder="Select your Color"
@@ -371,7 +388,11 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Clarity</label>
+                <label className="col-sm-4 control-label">Clarity
+                  <OverlayTrigger placement="top" overlay={tooltipClarity}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.ClarityValue}
                     placeholder="Select your Clarity"
@@ -459,7 +480,11 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Origin</label>
+                <label className="col-sm-4 control-label">Origin
+                  <OverlayTrigger placement="top" overlay={tooltipOrigin}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.OriginValue}
                     placeholder="Select your Origin"
@@ -468,7 +493,11 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Polish</label>
+                <label className="col-sm-4 control-label">Polish
+                  <OverlayTrigger placement="top" overlay={tooltipPolish}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.PolishValue}
                     placeholder="Select your Polish"
@@ -477,7 +506,11 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-               <label className="col-sm-4 control-label">Symmetry</label>
+               <label className="col-sm-4 control-label">Symmetry
+                 <OverlayTrigger placement="top" overlay={tooltipSymmetry}>
+                   <img src="/images/alphanumeric.png" />
+                 </OverlayTrigger>
+               </label>
                <div className="col-sm-7">
                   <Select multi simpleValue value={props.SymmetryValue}
                     placeholder="Select your Symmetry"
@@ -486,7 +519,11 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Treatment</label>
+                <label className="col-sm-4 control-label">Treatment
+                  <OverlayTrigger placement="top" overlay={tooltipTreatement}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.TreatmentValue}
                     placeholder="Select your Treatment"
@@ -495,7 +532,11 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Fluorescence</label>
+                <label className="col-sm-4 control-label">Fluorescence
+                  <OverlayTrigger placement="top" overlay={tooltipFluorescence}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.FluorescenceValue}
                     placeholder="Select your Fluorescence"
@@ -509,5 +550,39 @@ class InventoryGemStone extends Component {
     );
   }
 }
+
+const tooltipStoneType = (
+  <Tooltip id="tooltip"><strong>Stone Type!</strong></Tooltip>
+);
+const tooltipCut = (
+  <Tooltip id="tooltip"><strong>Cut (Shape)!</strong></Tooltip>
+);
+const tooltipCutGrade = (
+  <Tooltip id="tooltip"><strong>Cut Grade!</strong></Tooltip>
+);
+const tooltipColor = (
+  <Tooltip id="tooltip"><strong>Color!</strong></Tooltip>
+);
+const tooltipColorGrade = (
+  <Tooltip id="tooltip"><strong>Color Grade!</strong></Tooltip>
+);
+const tooltipClarity = (
+  <Tooltip id="tooltip"><strong>Clarity!</strong></Tooltip>
+);
+const tooltipOrigin = (
+  <Tooltip id="tooltip"><strong>Origin!</strong></Tooltip>
+);
+const tooltipPolish = (
+  <Tooltip id="tooltip"><strong>Polish!</strong></Tooltip>
+);
+const tooltipSymmetry = (
+  <Tooltip id="tooltip"><strong>Symmetry!</strong></Tooltip>
+);
+const tooltipTreatement = (
+  <Tooltip id="tooltip"><strong>Treatement!</strong></Tooltip>
+);
+const tooltipFluorescence = (
+  <Tooltip id="tooltip"><strong>Fluorescence!</strong></Tooltip>
+);
 
 module.exports = InventoryGemStone;

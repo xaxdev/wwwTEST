@@ -25,6 +25,9 @@ class UsersNew extends Component {
     var FLAG_SPP = 0x20; //100000
     var result = FLAG_ZERO;
     var permission = {};
+    var onhandLocation = null;
+    var onhandWarehouse = null;
+
     if(data.productGroup){
       if (data.productGroup == '1'){
         data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPP}};

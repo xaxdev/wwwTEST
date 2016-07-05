@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Select from 'react-select';
 import Calendar from 'react-input-calendar';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
@@ -423,13 +424,21 @@ class InventoryStone extends Component {
           <div className="row margin-ft">
             <div className="col-lg-6  form-horizontal">
               <div className="form-group">
-                <label className="col-sm-4 control-label">Product Hierarchy</label>
+                <label className="col-sm-4 control-label">Product Hierarchy
+                  <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7 bd-box">
                   <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Stone Type</label>
+                <label className="col-sm-4 control-label">Stone Type
+                  <OverlayTrigger placement="top" overlay={tooltipStoneType}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.StoneTypeValue}
                       placeholder="Select your Stone Type"
@@ -438,7 +447,11 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Cut (Shape)</label>
+                <label className="col-sm-4 control-label">Cut (Shape)
+                  <OverlayTrigger placement="top" overlay={tooltipCut}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.CutValue}
                       placeholder="Select your Cut (Shape)"
@@ -447,7 +460,11 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group hidden" >
-                <label className="col-sm-4 control-label">Cut Grade</label>
+                <label className="col-sm-4 control-label">Cut Grade
+                  <OverlayTrigger placement="top" overlay={tooltipCutGrade}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.CutGradeValue}
                     placeholder="Select your Cut Grade"
@@ -456,7 +473,11 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Color</label>
+                <label className="col-sm-4 control-label">Color
+                  <OverlayTrigger placement="top" overlay={tooltipColor}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.ColorValue}
                     placeholder="Select your Color"
@@ -465,7 +486,11 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Color Grade</label>
+                <label className="col-sm-4 control-label">Color Grade
+                  <OverlayTrigger placement="top" overlay={tooltipColorGrade}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.ColorGradeValue}
                     placeholder="Select your Color Grade"
@@ -474,7 +499,11 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Clarity</label>
+                <label className="col-sm-4 control-label">Clarity
+                  <OverlayTrigger placement="top" overlay={tooltipClarity}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.ClarityValue}
                     placeholder="Select your Clarity"
@@ -483,13 +512,21 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Lot Number</label>
+                <label className="col-sm-4 control-label">Lot Number
+                  <OverlayTrigger placement="top" overlay={tooltipLotNumber}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...lotNumber}/>
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Lot Quantity</label>
+                <label className="col-sm-4 control-label">Lot Quantity
+                  <OverlayTrigger placement="top" overlay={tooltipLotQuantity}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -502,7 +539,11 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Total Carat Weight</label>
+                <label className="col-sm-4 control-label">Total Carat Weight
+                  <OverlayTrigger placement="top" overlay={tooltipTotalCaratWeight}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -517,7 +558,11 @@ class InventoryStone extends Component {
             </div>
             <div className="col-lg-6 form-horizontal">
               <div className="form-group">
-                <label className="col-sm-4 control-label">Total Cost (USD)</label>
+                <label className="col-sm-4 control-label">Total Cost (USD)
+                  <OverlayTrigger placement="top" overlay={tooltipTotalCost}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -530,7 +575,11 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Total Updated Cost (USD)</label>
+                <label className="col-sm-4 control-label">Total Updated Cost (USD)
+                  <OverlayTrigger placement="top" overlay={tooltipTotalUpdatedCost}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -543,7 +592,11 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Public Price (USD)</label>
+                <label className="col-sm-4 control-label">Public Price (USD)
+                  <OverlayTrigger placement="top" overlay={tooltipPublicPrice}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -556,7 +609,11 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Markup %</label>
+                <label className="col-sm-4 control-label">Markup %
+                  <OverlayTrigger placement="top" overlay={tooltipMarkup}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -569,13 +626,21 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Certificate Number</label>
+                <label className="col-sm-4 control-label">Certificate Number
+                  <OverlayTrigger placement="top" overlay={tooltipCertificateNumber}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...certificatedNumber}/>
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Certificate Agency</label>
+                <label className="col-sm-4 control-label">Certificate Agency
+                  <OverlayTrigger placement="top" overlay={tooltipCertificateAgency}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.CertificateAgencyValue}
                     placeholder="Select your Certificate Agency"
@@ -584,7 +649,11 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Certificate Date</label>
+                <label className="col-sm-4 control-label">Certificate Date
+                  <OverlayTrigger placement="top" overlay={tooltipCertificateDate}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                   <div className="col-sm-10 nopadding">
@@ -658,5 +727,55 @@ class InventoryStone extends Component {
     );
   }
 }
-
+const tooltipHierarchy = (
+  <Tooltip id="tooltip"><strong>Product Hierarchy!</strong></Tooltip>
+);
+const tooltipStoneType = (
+  <Tooltip id="tooltip"><strong>Stone Type!</strong></Tooltip>
+);
+const tooltipCut = (
+  <Tooltip id="tooltip"><strong>Cut (Shape)!</strong></Tooltip>
+);
+const tooltipCutGrade = (
+  <Tooltip id="tooltip"><strong>Cut Grade!</strong></Tooltip>
+);
+const tooltipColor = (
+  <Tooltip id="tooltip"><strong>Color!</strong></Tooltip>
+);
+const tooltipColorGrade = (
+  <Tooltip id="tooltip"><strong>Color Grade!</strong></Tooltip>
+);
+const tooltipClarity = (
+  <Tooltip id="tooltip"><strong>Clarity!</strong></Tooltip>
+);
+const tooltipLotNumber = (
+  <Tooltip id="tooltip"><strong>Lot Number!</strong></Tooltip>
+);
+const tooltipLotQuantity = (
+  <Tooltip id="tooltip"><strong>Lot Quantity!</strong></Tooltip>
+);
+const tooltipTotalCaratWeight = (
+  <Tooltip id="tooltip"><strong>Total Carat Weight!</strong></Tooltip>
+);
+const tooltipCertificateNumber = (
+  <Tooltip id="tooltip"><strong>Certificate Number!</strong></Tooltip>
+);
+const tooltipCertificateAgency = (
+  <Tooltip id="tooltip"><strong>Certificate Agency!</strong></Tooltip>
+);
+const tooltipCertificateDate = (
+  <Tooltip id="tooltip"><strong>Certificate Date!</strong></Tooltip>
+);
+const tooltipTotalCost = (
+  <Tooltip id="tooltip"><strong>Total Cost (USD)!</strong></Tooltip>
+);
+const tooltipTotalUpdatedCost = (
+  <Tooltip id="tooltip"><strong>Total Updated Cost (USD)!</strong></Tooltip>
+);
+const tooltipPublicPrice = (
+  <Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>
+);
+const tooltipMarkup = (
+  <Tooltip id="tooltip"><strong>Markup %!</strong></Tooltip>
+);
 module.exports = InventoryStone;
