@@ -54,22 +54,16 @@ class ListItemsView extends Component {
   render(){
     var items = null;
     if (this.props.items.length != 0){
-      // items = this.props.items.map(function (col, idx) {
-      //   // console.log('col-->',col);
-      //   return {...col,imageOriginal: 'http://mol.mouawad.com/resources/images/blank.gif',
-      //   imageThumbnail: 'http://mol.mouawad.com/resources/images/blank.gif',
-      // }
-      // });
       items = this.props.items.map(function (col, idx) {
-        return {...col,imageOriginal: col.gallery[0].original,imageThumbnail: col.gallery[0].thumbnail}
+        let imagesOriginal = (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif';
+        let imagesThumbnail = (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif';
+        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail}
       });
 
       items = items.map(function (col, idx) {
         col.priceUSD = col.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
         return {...col}
       });
-
-      // console.log('items-->',items);
 
       const tableColumns = [
         { title: '', render: this.renderCheckItem },

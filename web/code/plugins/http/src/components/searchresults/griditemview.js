@@ -155,6 +155,7 @@ class GridItemsView extends Component {
       <div>
         {this.props.items.map(function(item, index){
           // console.log('item-->',item);
+          let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
            return (
              <div key={item.id} name={item.id} id={index}
                 className="col-md-3 col-sm-3 nopadding" onMouseOver={showDetails} onMouseOut={hideDetails}>
@@ -216,7 +217,7 @@ class GridItemsView extends Component {
                       </div>
                     </div>
                     <div name={item.id} id={item.id} onClick={btnEvent}>
-                    <img src={item.gallery[0].original} responsive width={200} height={200}/>
+                    <img src={imagesProduct} responsive width={200} height={200}/>
                     <p className="font-b fc-000">
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
