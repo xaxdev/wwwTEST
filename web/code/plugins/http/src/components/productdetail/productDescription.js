@@ -44,6 +44,10 @@ const Detail = (props) =>{
           <div className="col-md-8 col-sm-8">{props.siteName}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
+          <div className="col-md-4 col-sm-4 nopadding font-b">Warehouse</div>
+          <div className="col-md-8 col-sm-8">{props.warehouseName}</div>
+        </div>
+        <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Vendor Item Reference</div>
           <div className="col-md-8 col-sm-8">{props.venderReference}</div>
         </div>

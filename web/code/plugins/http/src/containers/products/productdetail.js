@@ -17,7 +17,7 @@ import ProductPrint from '../../components/productdetail/productPrint';
 import ProductObaAttributes from '../../components/productdetail/productObaAttributes';
 import ProductAccAttributes from '../../components/productdetail/productAccAttributes';
 import ProductSppAttributes from '../../components/productdetail/productSppAttributes';
-
+import numberFormat from '../../utils/convertNumberformatwithcomma';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
@@ -283,7 +283,7 @@ class productdetail extends Component {
                 last
                 ellipsis
                 boundaryLinks
-                items={totalpage}
+                items={numberFormat(totalpage)}
                 maxButtons={3}
                 activePage={reletepage.defaultValue}
                 onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey); }} />
@@ -342,7 +342,7 @@ class productdetail extends Component {
                                      </form>
                             </div>
                             <div className="float-l fc-fff margin-t5 text-center nopadding">
-                                  of {productlist.length} item
+                                  of {numberFormat(productlist.length)} item
                             </div>
                         </div>
                         <div className="float-l bar-detail-pre">
