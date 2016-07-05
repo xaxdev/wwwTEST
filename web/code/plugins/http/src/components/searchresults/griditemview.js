@@ -191,9 +191,9 @@ class GridItemsView extends Component {
                             || userLogin.permission.price == 'All') ?
                             '' : 'hidden'}`}>{item.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</span>
                         <span className="width-f100 fc-ddbe6a">Location : </span>
-                        <span className="width-f100">{item.location}</span>
-                        <span className="fc-ddbe6a width-f100">Site: </span>
                         <span className="width-f100">{item.siteName}</span>
+                        <span className="fc-ddbe6a width-f100">Warehouse: </span>
+                        <span className="width-f100">{item.warehouseName}</span>
                         <span className="fc-ddbe6a width-f100">Created Date: </span>
                         <span className="width-f100">{itemDate}</span>
                     </div>
