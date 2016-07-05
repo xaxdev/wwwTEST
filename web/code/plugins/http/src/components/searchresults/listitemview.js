@@ -27,7 +27,7 @@ class ListItemsView extends Component {
       <button type="button"
           onClick={
             (eventKey) => {
-              console.log('eventKey-->',item.id);
+              // console.log('eventKey-->',item.id);
             }
           }
       ><img src="/images/icon-add.png" width="30" /></button>
@@ -37,7 +37,7 @@ class ListItemsView extends Component {
     );
   }
   onClickGrid(event) {
-    console.log('onClickGrid->',event.currentTarget.id);
+    // console.log('onClickGrid->',event.currentTarget.id);
     event.preventDefault();
     this.props.onClickGrid(event.currentTarget.id);
   }

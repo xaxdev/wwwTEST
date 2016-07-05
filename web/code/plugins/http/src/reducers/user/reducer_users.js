@@ -17,7 +17,7 @@ export default function(state = INITIAL_STATE, action){
     return { ...state, options: action.data, locationOnHand: action.data.locations, warehouseOnHand: action.data.warehouses };
   case 'SELECTED_COMPANY':
     // console.log('FETCH_OPTIONS state-->',state);
-    console.log('SELECTED_COMPANY action.data-->',action.data);
+    // console.log('SELECTED_COMPANY action.data-->',action.data);
     return { ...state, options: action.data, selectedCompany: action.selected};
   case 'SELECTED_WAREHOUSES':
     // console.log('FETCH_OPTIONS state-->',state);

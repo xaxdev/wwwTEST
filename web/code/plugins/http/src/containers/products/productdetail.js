@@ -250,7 +250,7 @@ class productdetail extends Component {
       const { gallery } = this.props.productdetail;
       if(!gallery){
         return(
-          <div><img src="http://mol.mouawad.com/resources/images/blank.gif" width="100%"/></div>
+          <div><img src="/images/blank.gif" width="100%"/></div>
         );
       }
       return(
@@ -326,7 +326,7 @@ class productdetail extends Component {
             <div className="col-md-7 col-sm-7 col-xs-12 ip-nopadding maring-t15 ip-padding-l">
                       <div className="col-md-3 col-sm-1 "></div>
                       <div className="col-md-3 col-sm-3 ft-white productdetail-search">
-                        <Link to={'/inventories'} className="btn btn-searchresult">New Search</Link>
+                        <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
                       </div>
                       <div className="col-md-1 col-sm-1 margin-t5 text-center m-none">
                         <span className="bar-line">|</span>

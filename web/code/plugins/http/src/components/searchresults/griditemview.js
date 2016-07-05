@@ -33,7 +33,7 @@ class GridItemsView extends Component {
     return shallowCompare(this, nextProps, nextState);
   }
   onClickGrid(event) {
-    console.log('onClickGrid->',event.currentTarget.id);
+    // console.log('onClickGrid->',event.currentTarget.id);
     event.preventDefault();
     this.props.onClickGrid(event.currentTarget.id);
   }
@@ -204,7 +204,7 @@ class GridItemsView extends Component {
                       <div className="grid-add"
                           onClick={
                             (eventKey) => {
-                              console.log('eventKey-->',item.id);
+                              // console.log('eventKey-->',item.id);
                             }
                           }>
                         <span className="icon-add-28"></span>

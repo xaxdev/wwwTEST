@@ -166,7 +166,7 @@ class UsersNewFrom extends Component {
   }
   selectedOnHandAll(e){
     // console.log('e.target.value-->',e.target.value);
-    console.log('e.target.value-->',e.target.value);
+    // console.log('e.target.value-->',e.target.value);
     var {fields: { onhand }} = this.props;
     if(e.target.checked){
       this.setState(
