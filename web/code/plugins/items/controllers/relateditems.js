@@ -46,7 +46,7 @@ module.exports = {
         for (let i = 0; i < len; i++) {
           productdata.push({
               id: productResult[i].id,
-              image:productResult[i].gallery[0].thumbnail
+              image:productResult[i].gallery
           });
         }
         const responeData = {
