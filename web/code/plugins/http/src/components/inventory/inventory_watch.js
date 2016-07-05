@@ -492,7 +492,7 @@ class InventoryWatch extends Component {
           <div className="row margin-ft">
             <div className="col-lg-6 form-horizontal">
               <div className="form-group">
-                <label className="col-sm-4 control-label">Product Hierarchy
+                <label className="col-sm-4 control-label tooltiop-span">Product Hierarchy
                   <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -502,7 +502,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Watch Category
+                <label className="col-sm-4 control-label tooltiop-span">Watch Category
                   <OverlayTrigger placement="top" overlay={tooltipWatchCategory}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -515,7 +515,7 @@ class InventoryWatch extends Component {
                  </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Collection
+                <label className="col-sm-4 control-label tooltiop-span">Collection
                   <OverlayTrigger placement="top" overlay={tooltipCollection}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -528,7 +528,7 @@ class InventoryWatch extends Component {
                   </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Brand
+                <label className="col-sm-4 control-label tooltiop-span">Brand
                   <OverlayTrigger placement="top" overlay={tooltipBrand}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -541,7 +541,7 @@ class InventoryWatch extends Component {
                   </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Must Have
+                <label className="col-sm-4 control-label tooltiop-span">Must Have
                   <OverlayTrigger placement="top" overlay={tooltipMustHave}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -554,7 +554,7 @@ class InventoryWatch extends Component {
                   </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Type
+                <label className="col-sm-4 control-label tooltiop-span">Metal Type
                   <OverlayTrigger placement="top" overlay={tooltipMetalType}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -567,7 +567,7 @@ class InventoryWatch extends Component {
                   </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Colour
+                <label className="col-sm-4 control-label tooltiop-span">Metal Colour
                   <OverlayTrigger placement="top" overlay={tooltipMetalColour}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -589,7 +589,7 @@ class InventoryWatch extends Component {
                   </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Limited Edition
+                <label className="col-sm-4 control-label tooltiop-span">Limited Edition
                   <OverlayTrigger placement="top" overlay={tooltipLimitedEdition}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -602,27 +602,19 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Limited Edition Number
-                  <OverlayTrigger placement="top" overlay={tooltipLimitedEditionNumber}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Limited Edition Number</label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...limitedEditionNumber}/>
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Serial Number
-                  <OverlayTrigger placement="top" overlay={tooltipSerialNumber}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Serial Number</label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...serialNumber}/>
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Movement
+                <label className="col-sm-4 control-label tooltiop-span">Movement
                   <OverlayTrigger placement="top" overlay={tooltipMovement}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -654,11 +646,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Total Updated Cost (USD)
-                  <OverlayTrigger placement="top" overlay={tooltipTotalUpdatedCost}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Total Updated Cost (USD)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -671,11 +659,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Public Price (USD)
-                  <OverlayTrigger placement="top" overlay={tooltipPublicPrice}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Public Price (USD)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -688,11 +672,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Markup %
-                  <OverlayTrigger placement="top" overlay={tooltipMarkup}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Markup %</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -705,11 +685,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Gross Weight (Grams)
-                  <OverlayTrigger placement="top" overlay={tooltipGrossWeight}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Gross Weight (Grams)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -722,11 +698,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Production Date
-                  <OverlayTrigger placement="top" overlay={tooltipProductionDate}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Production Date</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                   <div className="col-sm-10 nopadding">
@@ -775,7 +747,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Dial Index
+                <label className="col-sm-4 control-label tooltiop-span">Dial Index
                   <OverlayTrigger placement="top" overlay={tooltipDialIndex}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -788,7 +760,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Dial Color
+                <label className="col-sm-4 control-label tooltiop-span">Dial Color
                   <OverlayTrigger placement="top" overlay={tooltipDialColor}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -801,7 +773,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Dial Metal
+                <label className="col-sm-4 control-label tooltiop-span">Dial Metal
                   <OverlayTrigger placement="top" overlay={tooltipDialMetal}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -814,7 +786,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Buckle Type
+                <label className="col-sm-4 control-label tooltiop-span">Buckle Type
                   <OverlayTrigger placement="top" overlay={tooltipBuckleType}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -827,7 +799,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Strap Type
+                <label className="col-sm-4 control-label tooltiop-span">Strap Type
                   <OverlayTrigger placement="top" overlay={tooltipStrapType}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -840,7 +812,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Strap Color
+                <label className="col-sm-4 control-label tooltiop-span">Strap Color
                   <OverlayTrigger placement="top" overlay={tooltipStrapColor}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -853,7 +825,7 @@ class InventoryWatch extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Complication
+                <label className="col-sm-4 control-label tooltiop-span">Complication
                   <OverlayTrigger placement="top" overlay={tooltipComplication}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>

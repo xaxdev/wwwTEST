@@ -336,7 +336,7 @@ class InventoryGemStone extends Component {
           <div className="row margin-ft">
             <div className="col-lg-6 form-horizontal">
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Stone Type
+                <label className="col-sm-4 control-label tooltiop-span">Stone Type
                   <OverlayTrigger placement="top" overlay={tooltipStoneType}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -349,7 +349,7 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Cut (Shape)
+                <label className="col-sm-4 control-label tooltiop-span">Cut (Shape)
                   <OverlayTrigger placement="top" overlay={tooltipCut}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -362,7 +362,7 @@ class InventoryGemStone extends Component {
                  </div>
               </div>
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Cut Grade
+                <label className="col-sm-4 control-label tooltiop-span">Cut Grade
                   <OverlayTrigger placement="top" overlay={tooltipCutGrade}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -375,7 +375,7 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Color
+                <label className="col-sm-4 control-label tooltiop-span">Color
                   <OverlayTrigger placement="top" overlay={tooltipColor}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -388,7 +388,7 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Clarity
+                <label className="col-sm-4 control-label tooltiop-span">Clarity
                   <OverlayTrigger placement="top" overlay={tooltipClarity}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -480,7 +480,7 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Origin
+                <label className="col-sm-4 control-label tooltiop-span">Origin
                   <OverlayTrigger placement="top" overlay={tooltipOrigin}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -493,7 +493,7 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Polish
+                <label className="col-sm-4 control-label tooltiop-span">Polish
                   <OverlayTrigger placement="top" overlay={tooltipPolish}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -506,7 +506,7 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-               <label className="col-sm-4 control-label">Symmetry
+               <label className="col-sm-4 control-label tooltiop-span">Symmetry
                  <OverlayTrigger placement="top" overlay={tooltipSymmetry}>
                    <img src="/images/alphanumeric.png" />
                  </OverlayTrigger>
@@ -519,7 +519,7 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Treatment
+                <label className="col-sm-4 control-label tooltiop-span">Treatment
                   <OverlayTrigger placement="top" overlay={tooltipTreatement}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -532,7 +532,7 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Fluorescence
+                <label className="col-sm-4 control-label tooltiop-span">Fluorescence
                   <OverlayTrigger placement="top" overlay={tooltipFluorescence}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>

@@ -448,7 +448,7 @@ class InventoryFilter extends Component {
                           </button>
                         </div>
                       </Tab>
-                      <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC}>
+                      <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC} className="hidden">
                         <InventoryAcc props={this.props} ref="accessory"/>
                         <div className="panel-body">
                           <div className="row gemstone-bar">

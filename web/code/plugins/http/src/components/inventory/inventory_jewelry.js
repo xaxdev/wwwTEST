@@ -265,7 +265,7 @@ class InventoryJewelry extends Component {
           <div className="row margin-ft">
             <div className="col-lg-6 form-horizontal">
               <div className="form-group">
-                <label className="col-sm-4 control-label">Product Hierarchy
+                <label className="col-sm-4 control-label tooltiop-span">Product Hierarchy
                   <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -275,7 +275,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Jewelry Category
+                <label className="col-sm-4 control-label tooltiop-span">Jewelry Category
                   <OverlayTrigger placement="top" overlay={tooltipJewelryCategory}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -288,7 +288,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Collection
+                <label className="col-sm-4 control-label tooltiop-span">Collection
                   <OverlayTrigger placement="top" overlay={tooltipCollection}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -301,7 +301,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Brand
+                <label className="col-sm-4 control-label tooltiop-span">Brand
                   <OverlayTrigger placement="top" overlay={tooltipBrand}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -314,7 +314,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Must Have
+                <label className="col-sm-4 control-label tooltiop-span">Must Have
                   <OverlayTrigger placement="top" overlay={tooltipMustHave}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -327,7 +327,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Ring Size
+                <label className="col-sm-4 control-label tooltiop-span">Ring Size
                   <OverlayTrigger placement="top" overlay={tooltipRingSize}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -339,11 +339,7 @@ class InventoryJewelry extends Component {
             </div>
             <div className="col-lg-6 form-horizontal">
               <div className="form-group">
-                <label className="col-sm-4 control-label">Total Cost (USD)
-                  <OverlayTrigger placement="top" overlay={tooltipTotalCost}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Total Cost (USD)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -356,11 +352,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Total Updated Cost (USD)
-                  <OverlayTrigger placement="top" overlay={tooltipTotalUpdatedCost}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Total Updated Cost (USD)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -373,11 +365,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Public Price (USD)
-                  <OverlayTrigger placement="top" overlay={tooltipPublicPrice}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Public Price (USD)</label>
                  <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -390,11 +378,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Markup %
-                  <OverlayTrigger placement="top" overlay={tooltipMarkup}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Markup %</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -407,11 +391,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Gross Weight (Grams)
-                  <OverlayTrigger placement="top" overlay={tooltipGrossWeight}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Gross Weight (Grams)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -424,11 +404,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Set Reference Number
-                  <OverlayTrigger placement="top" overlay={tooltipSetReferenceNumber}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
+                <label className="col-sm-4 control-label">Set Reference Number</label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...setReference}/>
                 </div>
@@ -443,7 +419,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Type
+                <label className="col-sm-4 control-label tooltiop-span">Metal Type
                   <OverlayTrigger placement="top" overlay={tooltipMetalType}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
@@ -456,7 +432,7 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Colour
+                <label className="col-sm-4 control-label tooltiop-span">Metal Colour
                   <OverlayTrigger placement="top" overlay={tooltipMetalColour}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>

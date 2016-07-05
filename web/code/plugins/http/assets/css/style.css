@@ -802,7 +802,7 @@ select.form-searchresult option{
   margin-top: 10px;
 }
 .user-edit select{min-height: 200px; max-width: 290px;}
-
+.tooltiop-span span{margin-right: 5px;}
 @media (max-width:1200px){
 	.ip-nopadding{padding:0;}
 	.mg-right{margin-left:-15px;}
@@ -1131,3 +1131,9 @@ select.form-searchresult option{
 			font-weight: normal;
 		}
 		.sort-icon:after{float:none !important;}
+
+
+ul.nav-tabs > li:nth-child(6),ul.nav-tabs > li:nth-child(4) ,ul.nav-tabs > li:nth-child(5)   {display: none;}
+.icon-add{display: none;}
+.searchresult-prodcut .pull-right div{display: none;} 
+.searchresult-prodcut .pull-right {width: 28px; height: 28px;} 
