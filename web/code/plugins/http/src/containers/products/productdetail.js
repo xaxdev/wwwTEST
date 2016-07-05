@@ -234,12 +234,14 @@ class productdetail extends Component {
             <div>Loading...</div>
           );
         }
+        if(gemstoneAttr.length > 0){
         return(
             <div>
               <h2>GEMSTONES ATTRIBUTES</h2>
               <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} />
             </div>
           );
+        }
       }
 
      }
@@ -271,7 +273,7 @@ class productdetail extends Component {
        if(type != 'STO' && products.length > 0){
        return(
            <div className="col-md-12 col-sm-12 nopadding">
-              <h2>RELETE PRODUCT</h2>
+              <h2>RELATED ITEMS</h2>
               <ProductRelete productrelte={products}/>
               <div className="searchresult-navi pagenavi relete col-md-12 col-sm-12 nopadding">
                <Pagination
