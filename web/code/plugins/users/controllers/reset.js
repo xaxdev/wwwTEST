@@ -38,7 +38,7 @@ exports.generate = {
             // Generate password-reset link
             const expiration = Date.now() + 3600000;
             const token = request.cryptography.encrypt([email, expiration].join('#'));
-            const link = `${request.connection.info.protocol}://${request.info.hostname}:${request.server.settings.app.port}/resetpassword/${token}`;
+            const link = `${request.connection.info.protocol}://${request.info.hostname}/resetpassword/${token}`;
             const content = Handlebars.compile(template)({ 'link': link });
 
             let config = request.email.configuration.reset;
