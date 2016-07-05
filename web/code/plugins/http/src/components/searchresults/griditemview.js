@@ -156,6 +156,8 @@ class GridItemsView extends Component {
         {this.props.items.map(function(item, index){
           // console.log('item-->',item);
           let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
+          let itemDate = new Date(item.itemCreatedDate);
+          itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
            return (
              <div key={item.id} name={item.id} id={index}
                 className="col-md-3 col-sm-3 nopadding" onMouseOver={showDetails} onMouseOut={hideDetails}>
@@ -191,9 +193,9 @@ class GridItemsView extends Component {
                         <span className="width-f100 fc-ddbe6a">Location : </span>
                         <span className="width-f100">{item.location}</span>
                         <span className="fc-ddbe6a width-f100">Site: </span>
-                        <span className="width-f100">{item.site}</span>
+                        <span className="width-f100">{item.siteName}</span>
                         <span className="fc-ddbe6a width-f100">Created Date: </span>
-                        <span className="width-f100">{item.createDate}</span>
+                        <span className="width-f100">{itemDate}</span>
                     </div>
                     <div className="over-product"></div>
                  </div>
