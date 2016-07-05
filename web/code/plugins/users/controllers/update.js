@@ -89,7 +89,7 @@ module.exports = {
           .populate('onhandLocation')
           .populate('onhandWarehouse')
           .then(function (permission) {
-            console.log('permission-->',permission);
+            // console.log('permission-->',permission);
             user.permission = permission.toJSON();
             return reply({ data: user });
           });

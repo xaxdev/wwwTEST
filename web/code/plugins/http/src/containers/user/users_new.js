@@ -16,6 +16,7 @@ class UsersNew extends Component {
   }
 
   handleSubmit(data) {
+    console.log('handleSubmit data-->',data);
     var FLAG_ZERO = 0x0; // 000001
     var FLAG_JLY = 0x1; // 000001
     var FLAG_WAT = 0x2; // 000010
@@ -91,6 +92,7 @@ class UsersNew extends Component {
     }
 
     data = Object.assign({}, data, { permission:permission });
+    console.log('permission-->',permission);
 
     delete data.productGroup;
     delete data.price;
@@ -101,12 +103,17 @@ class UsersNew extends Component {
     delete data.productGroupSTO;
     delete data.productGroupWAT;
     delete data.onhand;
-    delete data.onhandValue;
+    delete data.onhandLocationValue;
+    delete data.onhandWarehouseValue;
+    delete data.onhandAll;
+    delete data.onhandLocation;
+    delete data.onhandWarehouse;
+
     if(!data.webOnly){
       data = { ...data, webOnly:false};
     }
 
-    // console.log('data-->',data);
+    console.log('data-->',data);
     this.props.createUser(data)
         .then(() => {
           // user has been created, navigate the user to the index

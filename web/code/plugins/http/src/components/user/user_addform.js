@@ -123,7 +123,7 @@ class UsersNewFrom extends Component {
         {
           selectedOnHandWarehouse: false,
           // selectedOnHandLocation: true,
-          selectedOnHandAll: true
+          selectedOnHandAll: false
         });
       // onhand.value = 'notWarehouse';
       if(this.state.selectedOnHandLocation){
@@ -154,7 +154,7 @@ class UsersNewFrom extends Component {
         {
           // selectedOnHandWarehouse: true,
           selectedOnHandLocation: false,
-          selectedOnHandAll: true
+          selectedOnHandAll: false
         });
       // onhand.value = 'notLocation';
       if(this.state.selectedOnHandWarehouse){
@@ -180,8 +180,8 @@ class UsersNewFrom extends Component {
     }else{
       this.setState(
         {
-          selectedOnHandWarehouse: true,
-          selectedOnHandLocation: true,
+          selectedOnHandWarehouse: false,
+          selectedOnHandLocation: false,
           selectedOnHandAll: false
         });
       // onhand.value = 'notAll';
@@ -301,7 +301,7 @@ class UsersNewFrom extends Component {
               firstName,lastName,username,email,password,role,currency,status,company,location,warehouse
               ,productGroup,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT
               ,productGroupACC,productGroupOBA,productGroupSPP,onhandValue,webOnly,onhandLocation,onhandAll
-              ,permissionId,onhandWarehouse
+              ,permissionId,onhandWarehouse,onhandWarehouseValue,onhandLocationValue
           },handleSubmit,invalid,submitting } = this.props;
     // const datas = [{value:'One',selected:true},{value:'Two'},{value:'Three'},{value:'Four',label:'Four Label'}];
 
@@ -557,14 +557,14 @@ class UsersNewFrom extends Component {
                         <div className="form-group">
                           <label className="col-sm-2 control-label">View On-hand</label>
                           <div className="col-sm-4">
-                            <label> 
+                            <label>
                               <input type="checkbox" value="Location" {...onhandLocation}
                                 checked={this.state.selectedOnHandLocation}
                                 onChange={this.selectedOnHandLocation}
                               /> Only Location
                               <div className="user-edit">
                                 <select multiple
-                                  {...onhandValue}
+                                  {...onhandLocationValue}
                                   maxHeight={200} multiple
                                   disabled={`${this.state.selectedOnHandLocation ? '' : 'disabled'}`}>
                                   {dataDropDowntLocations.map(value => <option key={value.value} value={value.value}>{value.name}</option>
@@ -581,7 +581,7 @@ class UsersNewFrom extends Component {
                               /> Only Warehouse
                               <div className="user-edit">
                                 <select multiple
-                                  {...onhandValue}
+                                  {...onhandWarehouseValue}
                                   maxHeight={200} multiple
                                   disabled={`${this.state.selectedOnHandWarehouse ? '' : 'disabled'}`}>
                                   {dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.name}</option>
@@ -637,6 +637,6 @@ module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
   fields: ['firstName','lastName','username','email','password','role','currency','status','company',
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
           ,'productGroupACC','productGroupOBA','productGroupSPP','onhandValue','webOnly','permissionId'
-          ,'onhandLocation','onhandAll','onhandWarehouse'],
+          ,'onhandLocation','onhandAll','onhandWarehouse','onhandWarehouseValue','onhandLocationValue'],
   validate:validateUserAdd
 },mapStateToProps, mapDispatchToProps)(UsersNewFrom);

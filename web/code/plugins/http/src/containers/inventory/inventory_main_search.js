@@ -202,7 +202,7 @@ class InventorySearch extends Component {
       filters.push({'type':productArray.join(' ')});
     }
 
-    console.log('filters-->',filters);
+    // console.log('filters-->',filters);
     this.context.router.push('/searchresult');
   }
 

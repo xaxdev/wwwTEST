@@ -1,5 +1,8 @@
 import React from 'react';
 const Stoneattr =  (props) =>{
+  let certifiiedDate = new Date(props.certifiiedDate);
+  certifiiedDate = props.certifiiedDate?(certifiiedDate.getDate() + '/' + (certifiiedDate.getMonth()+1)) + '/' +  certifiiedDate.getFullYear():'';
+
   return (
     <div className="line-h">
         <div className="col-sm-6 nopadding">
@@ -47,7 +50,7 @@ const Stoneattr =  (props) =>{
             </div>
             <div className="col-md-12 col-sm-12 nopadding">
                   <div className="col-md-4 col-sm-4 nopadding font-b">Certificate Date</div>
-                  <div className="col-md-8 col-sm-8">{props.certifiiedDate}</div>
+                  <div className="col-md-8 col-sm-8">{certifiiedDate}</div>
             </div>
             <div className="col-md-12 col-sm-12 nopadding">
                   <div className="col-md-4 col-sm-4 nopadding font-b">Origin</div>

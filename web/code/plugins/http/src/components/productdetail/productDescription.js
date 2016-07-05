@@ -6,7 +6,7 @@ const Detail = (props) =>{
   if(logindata){
     const currency = logindata.currency;
     let invoicedDate = new Date(props.itemCreatedDate);
-    invoicedDate = (invoicedDate.getDate() + '/' + invoicedDate.getMonth() + 1) + '/' +  invoicedDate.getFullYear();
+    invoicedDate = (invoicedDate.getDate() + '/' + (invoicedDate.getMonth()+1)) + '/' +  invoicedDate.getFullYear();
     let actualCostUSD = numberFormat(props.actualCostUSD);
     let actualCostNonUSD = numberFormat(props.actualCostNonUSD);
     let updatedCostUSD = numberFormat(props.updatedCostUSD);

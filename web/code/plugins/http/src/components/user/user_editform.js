@@ -121,7 +121,7 @@ class UserDetailsFrom extends Component {
         {
           selectedOnHandWarehouse: false,
           // selectedOnHandLocation: true,
-          selectedOnHandAll: true
+          selectedOnHandAll: false
         });
       // onhand.value = 'notWarehouse';
       if(this.state.selectedOnHandLocation){
@@ -155,7 +155,7 @@ class UserDetailsFrom extends Component {
         {
           // selectedOnHandWarehouse: true,
           selectedOnHandLocation: false,
-          selectedOnHandAll: true
+          selectedOnHandAll: false
         });
       // onhand.value = 'notLocation';
       if(this.state.selectedOnHandWarehouse){
@@ -183,8 +183,8 @@ class UserDetailsFrom extends Component {
     }else{
       this.setState(
         {
-          selectedOnHandWarehouse: true,
-          selectedOnHandLocation: true,
+          selectedOnHandWarehouse: false,
+          selectedOnHandLocation: false,
           selectedOnHandAll: false
         });
       // onhand.value = 'notAll';

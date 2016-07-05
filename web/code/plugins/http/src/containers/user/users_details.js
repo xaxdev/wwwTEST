@@ -15,7 +15,7 @@ class UserDetails extends Component {
   }
 
   handleSubmit(data){
-    // console.log('edit data');
+    // console.log('data-->',data);
     var FLAG_ZERO = 0x0; // 000001
     var FLAG_JLY = 0x1; // 000001
     var FLAG_WAT = 0x2; // 000010
@@ -100,6 +100,10 @@ class UserDetails extends Component {
     delete data.onhand;
     delete data.onhandLocationValue;
     delete data.onhandWarehouseValue;
+    delete data.onhandAll;
+    delete data.onhandLocation;
+    delete data.onhandWarehouse;
+
     if(!data.password){
       delete data.password;
     }
