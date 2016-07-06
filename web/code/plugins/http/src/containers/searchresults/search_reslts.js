@@ -11,6 +11,7 @@ import * as itemactions from '../../actions/itemactions';
 import PureInput from '../../utils/PureInput';
 import GridItemsView from '../../components/searchresults/griditemview';
 import ListItemsView from '../../components/searchresults/listitemview';
+import numberFormat from '../../utils/convertNumberformatwithcomma';
 // var XLSX = require('xlsx')
 
 const checkFields = ['metalType', 'site', 'size', 'cut', 'metalColor', 'certificatedNumber', 'caseDimension',
@@ -189,7 +190,7 @@ class SearchResult extends Component {
               <span>Page</span>
                 <input type="text" placeholder={this.state.activePage} ref="reletego" {...currPage}/>
               <span>of</span>
-              <span>{totalPages}</span>
+              <span>{numberFormat(totalPages)}</span>
               <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
             </div>
 
@@ -213,7 +214,7 @@ class SearchResult extends Component {
 
     return(
       <div>
-          <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ allItems.length }</span><span className="padding-lf15">|</span></span>
+          <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(allItems.length) }</span><span className="padding-lf15">|</span></span>
           <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
               || userLogin.permission.price == 'All') ?
               '' : 'hidden'}`}>
