@@ -407,7 +407,7 @@ class productdetail extends Component {
                   <div className="col-md-12 col-sm-12">
                     {this.renderDesc()}
                  </div>
-                 <div className="col-md-12 col-sm-12">
+                 <div className="col-md-12 col-sm-12 line-border">
                    {this.renderReleteproduct()}
                   </div>
                 </div>

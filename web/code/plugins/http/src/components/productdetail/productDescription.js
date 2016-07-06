@@ -66,7 +66,6 @@ const Detail = (props) =>{
           <div className="col-md-4 col-sm-4 nopadding font-b">Date Created</div>
           <div className="col-md-8 col-sm-8">{invoicedDate}</div>
         </div>
-        <div className="col-md-12 col-sm-12 line-border"></div>
       </div>
 
     );

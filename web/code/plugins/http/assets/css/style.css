@@ -290,9 +290,12 @@ select.form-searchresult option{
   position: relative;
 }
 .body-login label{color: #fff;}
+.login h2{margin-top:0 !important;}
 .login .text-danger, .login .text-help {
     color: #ffffff;
 }
+.login .text-danger{margin:20px 0;}
+
 .login-height{
 	height:50px; 
 	font-size:16px;
@@ -475,12 +478,12 @@ select.form-searchresult option{
 .modal-body h3, .modal-body .h3{
 	text-align: center !important; 
 	color:#3c3c3a!important;
-  padding: 30px 0;
+  padding: 30px 0 20px 0;
   font-size:16px !important;
   font-family: 'open_sanssemibold';
 }
 .modal-footer {
-    padding: 15px;
+    padding: 0 15px 30px 15px;
     text-align: center;
     border-top: 1px solid transparent;
 }
@@ -627,7 +630,7 @@ select.form-searchresult option{
 	cursor:pointer;
 }
 .searchresult-navi{float:right;}
-.searchresult-navi div {margin-left:30px; margin-top: 2px;}
+.searchresult-navi div {margin-left:30px; margin-top: 10px;}
 .searchresult-navi input{margin:0 5px; text-align: center;}
 .searchresult-navi span{padding:0 3px;}
 .searchresult-navi div, .searchresult-navi ul{float:left;}
@@ -747,12 +750,12 @@ select.form-searchresult option{
 .searchresult-list-icon img{max-width: 30px;}
 
 .productdetailpage input{
-	 	width: 40px;
+	 	width: 34px;
     float: left;
     height: 30px;
     border: none;
     text-align: center;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 .productdetail-search{
 	  padding: 0;
@@ -763,7 +766,7 @@ select.form-searchresult option{
 	margin-top:20px;
 }
 .relete div {
-	margin-left: 25px;
+	margin-left: 0px;
 }
 .relete span, .relete input{float:left;}
 .pagination>li>a, .pagination>li>span{
@@ -771,6 +774,7 @@ select.form-searchresult option{
 	color:#383735;
 	font-weight: bold;
 }
+.image-gallery{margin-top:75px;}
 .image-gallery-thumbnail img{
 	width:122px !important;
 	border: 1px solid #efefef !important;
@@ -785,7 +789,7 @@ select.form-searchresult option{
     padding: 15px 26px;
     border: none;
 }
-.bar-detail-pre{width:50px;}
+.bar-detail-pre{width:48px;}
 .bar-detail-text{width:auto; padding: 0 5px;}
 .bar-detail-pre .btn-radius{margin-left: 0; padding: 4px 16px;}
 .gen-passord .btn-radius{margin:5px 0 0 0;}
@@ -795,6 +799,7 @@ select.form-searchresult option{
   top: 30px;
 }
 .width-100{width:100%}
+.width-90{width:90px;}
 .width-10{width:10%;}
 .width-f100{width:100%; float:left;}
 .user-edit{
@@ -854,7 +859,7 @@ select.form-searchresult option{
 	}
 	.searchresult-navi div {
     margin-left: 8px;
-    margin-top: 2px;
+    margin-top: 10px;
 	}
 	.over-product, .over-product:hover, .searchresult-prodcut, .searchresult-prodcut:hover{width:100%; height:375px;}
 	.over-searchresult {
@@ -931,6 +936,7 @@ select.form-searchresult option{
 	.m-pt-mgl{margin-left:0 !important;}
 	.icon-detail{top:15px;}
 	.m-user{margin:0;}
+	.image-gallery{margin-top:60px;}
 }
 @media screen and (max-width: 767px) and (min-width: 320px) and (orientation : portrait){
 	.logo-detail {

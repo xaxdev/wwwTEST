@@ -28,7 +28,7 @@ class UsersList extends Component {
         <div>
             <div className="col-sm-12 bg-hearder bg-header-inventories">
               <div className="col-sm-6 m-width-60 ft-white m-nopadding">
-                <h1>List of users.</h1>
+                <h1>List of users</h1>
               </div>
               <div className="col-sm-6 m-width-40 m-nopadding text-right maring-t15">
                 <Link to="/user/new" className="btn btn-primary btn-radius">
