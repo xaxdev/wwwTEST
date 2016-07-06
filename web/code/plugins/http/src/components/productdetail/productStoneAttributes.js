@@ -1,8 +1,7 @@
 import React from 'react';
+import convertDate from '../../utils/convertDate';
 const Stoneattr =  (props) =>{
-  let certifiiedDate = new Date(props.certifiiedDate);
-  certifiiedDate = props.certifiiedDate?(certifiiedDate.getDate() + '/' + (certifiiedDate.getMonth()+1)) + '/' +  certifiiedDate.getFullYear():'';
-
+  let certifiiedDate = convertDate(props.certifiiedDate);
   return (
     <div className="line-h">
         <div className="col-sm-6 nopadding">

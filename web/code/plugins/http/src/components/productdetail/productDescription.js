@@ -1,12 +1,12 @@
 import React,{PropTypes} from 'react';
 import numberFormat from '../../utils/convertNumberformat';
+import convertDate from '../../utils/convertDate';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
 
 const Detail = (props) =>{
   if(logindata){
     const currency = logindata.currency;
-    let invoicedDate = new Date(props.itemCreatedDate);
-    invoicedDate = (invoicedDate.getDate() + '/' + (invoicedDate.getMonth()+1)) + '/' +  invoicedDate.getFullYear();
+    let invoicedDate = convertDate(props.itemCreatedDate);
     let actualCostUSD = numberFormat(props.actualCostUSD);
     let actualCostNonUSD = numberFormat(props.actualCostNonUSD);
     let updatedCostUSD = numberFormat(props.updatedCostUSD);

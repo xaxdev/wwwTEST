@@ -26,35 +26,69 @@ class productprint extends Component {
 
   renderDesc(){
 
-    const  Detail  = this.props.productdetail;
-    let  Detailtitle  = '';
-    if(!Detail){
-      return(
-        <div>Loading...</div>
-      );
-    }
-
-    switch (Detail.type) {
-          case 'JLY':   Detailtitle='JEWELRY DETAILS';
-          case 'STO':   Detailtitle='STONE DETAILS';
-          case 'WAT':   Detailtitle='WATCH DETAILS';
-          default:  Detailtitle='JEWELRY DETAILS';
+        const  Detail  = this.props.productdetail;
+        let  Detailtitle  = '';
+        if(!Detail){
+          return(
+            <div>Loading...</div>
+          );
         }
-
-    return(
-        <div>
-
-          <h2>{Detailtitle}</h2>
-          <ProductDescriptionBlock Detail={Detail} />
-        </div>
-      );
+        switch (Detail.type) {
+              case 'JLY':
+                  Detailtitle='JEWELRY DETAILS';
+                  return(
+                      <div>
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
+                      </div>
+                    );
+              case 'STO':
+                  Detailtitle='STONE DETAILS';
+                  return(
+                      <div>
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
+                      </div>
+                    );
+              case 'WAT':
+                  Detailtitle='WATCH DETAILS';
+                  return(
+                      <div>
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
+                      </div>
+                    );
+              case 'OBA':
+                  Detailtitle='OBJECT OF ART DETAILS';
+                  return(
+                      <div>
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
+                      </div>
+                    );
+              case 'ACC':
+                  Detailtitle='ACCESSORY DETAILS';
+                  return(
+                      <div>
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
+                      </div>
+                    );
+              case 'SPP':
+                  Detailtitle='SPARE PARTS DETAILS';
+                  return(
+                      <div>
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
+                      </div>
+                    );
+            }
    }
 
    renderAttr(){
-     const { Attr } = this.props.productdetail;
      const  Detail  = this.props.productdetail;
      let  Attrtitle  = '';
-     if(!Attr){
+     if(!Detail){
        return(
          <div>Loading...</div>
        );
@@ -135,7 +169,7 @@ class productprint extends Component {
       const { gallery } = this.props.productdetail;
       if(!gallery){
         return(
-          <div>Loading...</div>
+          <div><img src="/images/blank.gif" width="100%"/></div>
         );
       }
       return(
@@ -148,6 +182,7 @@ class productprint extends Component {
             })}
           </div>
         );
+
      }
 
   render(){
