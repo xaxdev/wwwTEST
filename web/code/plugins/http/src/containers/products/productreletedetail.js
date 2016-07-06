@@ -163,10 +163,9 @@ class productreletedetail extends Component {
    }
 
    renderAttr(){
-     const { Attr } = this.props.productdetail;
      const  Detail  = this.props.productdetail;
      let  Attrtitle  = '';
-     if(!Attr){
+     if(!Detail){
        return(
          <div>Loading...</div>
        );
@@ -288,7 +287,7 @@ class productreletedetail extends Component {
        if(type != 'STO' && products.length > 0){
        return(
            <div className="col-md-12 col-sm-12 nopadding">
-              <h2>RELETE PRODUCT</h2>
+              <h2>RELATED ITEMS</h2>
               <ProductRelete productrelte={products}/>
               <div className="searchresult-navi pagenavi relete col-md-12 col-sm-12 nopadding">
                <Pagination

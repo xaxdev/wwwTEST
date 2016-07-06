@@ -283,7 +283,7 @@ class productdetail extends Component {
                 last
                 ellipsis
                 boundaryLinks
-                items={numberFormat(totalpage)}
+                items={totalpage}
                 maxButtons={3}
                 activePage={reletepage.defaultValue}
                 onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey); }} />
@@ -292,7 +292,7 @@ class productdetail extends Component {
                   <form onSubmit={handleSubmit(this.handleGo)} >
                    <input type="number" {...reletepage} />
                    <span>of</span>
-                  <span>{totalpage}</span>
+                  <span>{numberFormat(totalpage)}</span>
                    <button>Go</button>
                   </form>
 

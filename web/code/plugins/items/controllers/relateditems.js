@@ -16,7 +16,7 @@ module.exports = {
     // const keys = Object.keys(request.payload);
     const collection = request.params.collection;
     const page = request.params.page;
-    const itemperpage = 3;
+    const itemperpage = 6;
     const offset = (page-1) * itemperpage;
 
     internals.query = JSON.parse(
