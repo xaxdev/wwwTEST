@@ -139,14 +139,14 @@ class SearchResult extends Component {
   handleGo(e){
     e.preventDefault();
     // console.log('handleGo-->',this.refs.reletego.value);
-
-    const getPage = parseInt(this.refs.reletego.value);
+    const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
     const sortingBy = this.refs.sortingBy.value;
     const sortingDirection = this.refs.sortingDirection.value;
 
     this.setState({
       activePage: getPage
     });
+    // console.log('getPage-->',getPage);
     var params = {
       'page' : getPage,
       'sortBy': sortingBy,
@@ -160,6 +160,7 @@ class SearchResult extends Component {
         params[key] = value;
       });
     });
+    // console.log('params-->',params);
     this.props.getItems(params);
   }
   renderPagination(){
@@ -170,7 +171,7 @@ class SearchResult extends Component {
             handleSubmit,
             resetForm,
             submitting } = this.props;
-    // console.log('totalPages-->',totalPages);
+    // console.log('currPage-->',currPage);
 
     return(
         <div>
