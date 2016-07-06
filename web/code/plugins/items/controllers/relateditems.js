@@ -1,7 +1,4 @@
 const Boom = require('boom');
-const Hoek = require('hoek');
-const Joi = require('joi');
-const _ = require('lodash');
 
 const internals = {
   filters: []
