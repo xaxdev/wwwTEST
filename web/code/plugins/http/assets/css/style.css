@@ -55,6 +55,7 @@ label{font-weight: normal;}
   padding: 10px 30px !important;
 }
 .styled-select select:focus{background: none; outline: none;}
+select:focus::-ms-value {background: none;}
 *:focus {outline:none !important}
 .float-r{float:right;}
 .float-l{float:left;}
