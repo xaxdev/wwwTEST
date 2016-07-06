@@ -13,12 +13,12 @@ const Menu =  () => {
     <Navbar.Collapse>
       <Nav className="padding-lf30">
         <NavItem href="/inventories" className="active">Inventory Report</NavItem>
-        <NavItem href="#">My Catalog</NavItem>
-        <NavDropdown  title="Download" id="basic-nav-dropdown">
+        {/*<NavItem href="#">My Catalog</NavItem>*/}
+        {/*<NavDropdown  title="Download" id="basic-nav-dropdown">
           <MenuItem >Download</MenuItem>
           <MenuItem >Feedback</MenuItem>
           <MenuItem >Help</MenuItem>
-        </NavDropdown>
+        </NavDropdown>*/}
         {UserManagement}
 
       </Nav>
