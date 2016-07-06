@@ -176,7 +176,7 @@ class productprint extends Component {
           <div>
             { gallery.map( (data,index)=>{
               return (
-             <div key={`imgprint${index}`}><img width="200" height="200" src={data.thumbnail}/></div>
+             <div key={`imgprint${index}`}><img width="400" height="400" src={data.thumbnail}/></div>
              );
 
             })}
@@ -186,24 +186,42 @@ class productprint extends Component {
      }
 
   render(){
-
+    let monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
     const { type} = this.props.productdetail;
+    let currentDate = new Date();
+    let dd = currentDate.getDate();
+
+    let yyyy = currentDate.getFullYear();
+    if(dd<10){
+        dd='0'+dd;
+    }
+    currentDate = dd+' '+monthNames[currentDate.getMonth()]+' '+yyyy;
     return(
       <div>
+
+        <div className="col-md-12">
+          <div className="col-md-6">Mouawad online</div>
+          <div className="col-md-6">Printed Date :  {currentDate}</div>
+        </div>
+
         <div className="col-md-12">
           <div className="col-md-6">PRODUCT DETAIL</div>
-
         </div>
 
-        <div className="col-md-6">{this.renderImagegallery()}</div>
-
-        <div className="col-md-6">
-          <div className="col-md-12">
-            {this.renderDesc()}
-         </div>
-
+        <div className="col-md-12">
+          <div className="col-md-6">{this.renderImagegallery()}</div>
+          <div className="col-md-6">
+            <div className="col-md-12">
+              {this.renderDesc()}
+            </div>
+            <div className="col-md-12">
+              {this.renderAttr()}
+            </div>
+          </div>
         </div>
-        <div className="col-md-12">{this.renderAttr()}</div>
+
         <div className="col-md-12">{this.renderFooterAttr()}</div>
 
       </div>

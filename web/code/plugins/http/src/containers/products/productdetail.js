@@ -67,7 +67,7 @@ class productdetail extends Component {
 
             var divContents = jQuery('#dvContainer').html();
             var printWindow = window.open('', '', 'height=800,width=800');
-            printWindow.document.write('<html><head><title>Mol online 2016</title>');
+            printWindow.document.write('<html><head><title>Mouawad online</title>');
             printWindow.document.write('</head><body >');
             printWindow.document.write(divContents);
             printWindow.document.write('</body></html>');
