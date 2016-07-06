@@ -173,40 +173,42 @@ class InventorySparePart extends Component {
 
     InitModifyData(props);
 
-    if (props.options.watchCategories) {
-      dataDropDownSparePartType.push(props.options.watchCategories.map(watchCategory =>{
-          return ({value: watchCategory.code,label:watchCategory.code + ' [' + watchCategory.name + ']'});
-        })
-      )
-      dataDropDownSparePartType = dataDropDownSparePartType[0];
-    }
-    if (props.options.buckleTypes) {
-      dataDropDowntBuckleType.push(props.options.buckleTypes.map(buckleType =>{
-          return ({value: buckleType.code,label:buckleType.name});
-        })
-      )
-      dataDropDowntBuckleType = dataDropDowntBuckleType[0];
-    }
-    if (props.options.dominantStones) {
-      dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
-          return ({value: dominantStone.code,label:dominantStone.name});
-        })
-      )
-      dataDropDowntDominantStone = dataDropDowntDominantStone[0];
-    }
-    if (props.options.metalTypes) {
-      dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
-          return ({value: metalType.code,label:metalType.name});
-        })
-      )
-      dataDropDowntMetalType = dataDropDowntMetalType[0];
-    }
-    if (props.options.metalColours) {
-      dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
-          return ({value: metalColour.code,label:metalColour.name});
-        })
-      )
-      dataDropDowntMetalColour = dataDropDowntMetalColour[0];
+    if(props.options != undefined){
+      if (props.options.watchCategories) {
+        dataDropDownSparePartType.push(props.options.watchCategories.map(watchCategory =>{
+            return ({value: watchCategory.code,label:watchCategory.code + ' [' + watchCategory.name + ']'});
+          })
+        )
+        dataDropDownSparePartType = dataDropDownSparePartType[0];
+      }
+      if (props.options.buckleTypes) {
+        dataDropDowntBuckleType.push(props.options.buckleTypes.map(buckleType =>{
+            return ({value: buckleType.code,label:buckleType.name});
+          })
+        )
+        dataDropDowntBuckleType = dataDropDowntBuckleType[0];
+      }
+      if (props.options.dominantStones) {
+        dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
+            return ({value: dominantStone.code,label:dominantStone.name});
+          })
+        )
+        dataDropDowntDominantStone = dataDropDowntDominantStone[0];
+      }
+      if (props.options.metalTypes) {
+        dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
+            return ({value: metalType.code,label:metalType.name});
+          })
+        )
+        dataDropDowntMetalType = dataDropDowntMetalType[0];
+      }
+      if (props.options.metalColours) {
+        dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
+            return ({value: metalColour.code,label:metalColour.name});
+          })
+        )
+        dataDropDowntMetalColour = dataDropDowntMetalColour[0];
+      }
     }
 
     return(

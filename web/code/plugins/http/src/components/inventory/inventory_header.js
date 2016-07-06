@@ -106,54 +106,57 @@ class InventoryHeader extends Component {
     if(userLogin.permission.onhandLocation != undefined){
       if(userLogin.permission.onhandLocation.type == 'Location'
         || userLogin.permission.onhandLocation.type == 'All'){
-        if (this.props.props.options.locations) {
-          dataDropDowntLocations = InitDataLocation(this.props.props.options.locations,userLogin);
-        }
-      }
-    }
-
-    if (this.props.props.options.warehouses) {
-      var newDate = [];
-      var data = [];
-      if(dataDropDowntLocations.length != 0){
-        dataDropDowntLocations.forEach(function(location){
-          newDate.push(_.filter(that.props.props.options.warehouses,
-            function(warehouse)
-            { return warehouse.locationid == location.value})
-          );
-        });
-      }else{
-        if(userLogin.permission.onhandWarehouse != undefined){
-          if (userLogin.permission.onhandWarehouse.type == 'Warehouse'
-            || userLogin.permission.onhandWarehouse.type == 'All'){
-            userLogin.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
-              newDate.push(_.filter(that.props.props.options.warehouses,
-                function(warehouse){
-                  // console.log('warehouse.id-->',warehouse.id);
-                  if(warehouse.code != undefined){
-                    return warehouse.code.toString() == settingWarehouse;
-                  }
-                })
-              );
-            });
+        if (this.props.props.options != undefined){
+          if (this.props.props.options.locations) {
+            dataDropDowntLocations = InitDataLocation(this.props.props.options.locations,userLogin);
           }
         }
       }
-
-      var subdata = [];
-      newDate.forEach(newdata =>{
-          newdata.forEach(subdata =>{
-            data.push(subdata);
-          })
-      });
-
-      dataDropDowntWareHouse.push(data.map(warehouse =>{
-          return ({value: warehouse.code,label:warehouse.name});
-        })
-      )
-      dataDropDowntWareHouse = dataDropDowntWareHouse[0];
     }
+    if (this.props.props.options != undefined){
+      if (this.props.props.options.warehouses) {
+        var newDate = [];
+        var data = [];
+        if(dataDropDowntLocations.length != 0){
+          dataDropDowntLocations.forEach(function(location){
+            newDate.push(_.filter(that.props.props.options.warehouses,
+              function(warehouse)
+              { return warehouse.locationid == location.value})
+            );
+          });
+        }else{
+          if(userLogin.permission.onhandWarehouse != undefined){
+            if (userLogin.permission.onhandWarehouse.type == 'Warehouse'
+              || userLogin.permission.onhandWarehouse.type == 'All'){
+              userLogin.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
+                newDate.push(_.filter(that.props.props.options.warehouses,
+                  function(warehouse){
+                    // console.log('warehouse.id-->',warehouse.id);
+                    if(warehouse.code != undefined){
+                      return warehouse.code.toString() == settingWarehouse;
+                    }
+                  })
+                );
+              });
+            }
+          }
+        }
 
+        var subdata = [];
+        newDate.forEach(newdata =>{
+            newdata.forEach(subdata =>{
+              data.push(subdata);
+            })
+        });
+
+        dataDropDowntWareHouse.push(data.map(warehouse =>{
+            return ({value: warehouse.code,label:warehouse.name});
+          })
+        )
+        dataDropDowntWareHouse = dataDropDowntWareHouse[0];
+      }
+    }
+    
     return (
       <div >
         <div className="row">

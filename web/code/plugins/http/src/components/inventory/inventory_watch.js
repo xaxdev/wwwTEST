@@ -390,104 +390,107 @@ class InventoryWatch extends Component {
 
     InitModifyData(props);
 
-    if (props.options.watchCategories) {
-      dataDropDowntWatchCategory.push(props.options.watchCategories.map(watchCategory =>{
-          return ({value: watchCategory.code,label:watchCategory.code + ' [' + watchCategory.name + ']'});
-        })
-      )
-      dataDropDowntWatchCategory = dataDropDowntWatchCategory[0];
+    if(props.options != undefined){
+      if (props.options.watchCategories) {
+        dataDropDowntWatchCategory.push(props.options.watchCategories.map(watchCategory =>{
+            return ({value: watchCategory.code,label:watchCategory.code + ' [' + watchCategory.name + ']'});
+          })
+        )
+        dataDropDowntWatchCategory = dataDropDowntWatchCategory[0];
+      }
+      if (props.options.collections) {
+        dataDropDowntCollection.push(props.options.collections.map(collection =>{
+            return ({value: collection.code,label:collection.name});
+          })
+        )
+        dataDropDowntCollection = dataDropDowntCollection[0];
+      }
+      if (props.options.brands) {
+        dataDropDowntBrand.push(props.options.brands.map(brand =>{
+            return ({value: brand.code,label:brand.name});
+          })
+        )
+        dataDropDowntBrand = dataDropDowntBrand[0];
+      }
+      if (props.options.metalTypes) {
+        dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
+            return ({value: metalType.code,label:metalType.name});
+          })
+        )
+        dataDropDowntMetalType = dataDropDowntMetalType[0];
+      }
+      if (props.options.metalColours) {
+        dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
+            return ({value: metalColour.code,label:metalColour.name});
+          })
+        )
+        dataDropDowntMetalColour = dataDropDowntMetalColour[0];
+      }
+      if (props.options.dominantStones) {
+        dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
+            return ({value: dominantStone.code,label:dominantStone.name});
+          })
+        )
+        dataDropDowntDominantStone = dataDropDowntDominantStone[0];
+      }
+      if (props.options.movements) {
+        dataDropDowntMovement.push(props.options.movements.map(movement =>{
+            return ({value: movement.code,label:movement.name});
+          })
+        )
+        dataDropDowntMovement = dataDropDowntMovement[0];
+      }
+      if (props.options.dialIndexs) {
+        dataDropDowntDialIndex.push(props.options.dialIndexs.map(dialIndex =>{
+            return ({value: dialIndex.code,label:dialIndex.name});
+          })
+        )
+        dataDropDowntDialIndex = dataDropDowntDialIndex[0];
+      }
+      if (props.options.dialColors) {
+        dataDropDowntDialColor.push(props.options.dialColors.map(dialColor =>{
+            return ({value: dialColor.code,label:dialColor.name});
+          })
+        )
+        dataDropDowntDialColor = dataDropDowntDialColor[0];
+      }
+      if (props.options.dialMetals) {
+        dataDropDowntDialMetal.push(props.options.dialMetals.map(dialMetal =>{
+            return ({value: dialMetal.code,label:dialMetal.name});
+          })
+        )
+        dataDropDowntDialMetal = dataDropDowntDialMetal[0];
+      }
+      if (props.options.buckleTypes) {
+        dataDropDowntBuckleType.push(props.options.buckleTypes.map(buckleType =>{
+            return ({value: buckleType.code,label:buckleType.name});
+          })
+        )
+        dataDropDowntBuckleType = dataDropDowntBuckleType[0];
+      }
+      if (props.options.strapTypes) {
+        dataDropDowntStrapType.push(props.options.strapTypes.map(strapType =>{
+            return ({value: strapType.code,label:strapType.name});
+          })
+        )
+        dataDropDowntStrapType = dataDropDowntStrapType[0];
+      }
+      if (props.options.strapColors) {
+        dataDropDowntStrapColor.push(props.options.strapColors.map(strapColor =>{
+            return ({value: strapColor.code,label:strapColor.name});
+          })
+        )
+        dataDropDowntStrapColor = dataDropDowntStrapColor[0];
+      }
+      if (props.options.complications) {
+        dataDropDowntComplication.push(props.options.complications.map(complication =>{
+            return ({value: complication.code,label:complication.name});
+          })
+        )
+        dataDropDowntComplication = dataDropDowntComplication[0];
+      }
     }
-    if (props.options.collections) {
-      dataDropDowntCollection.push(props.options.collections.map(collection =>{
-          return ({value: collection.code,label:collection.name});
-        })
-      )
-      dataDropDowntCollection = dataDropDowntCollection[0];
-    }
-    if (props.options.brands) {
-      dataDropDowntBrand.push(props.options.brands.map(brand =>{
-          return ({value: brand.code,label:brand.name});
-        })
-      )
-      dataDropDowntBrand = dataDropDowntBrand[0];
-    }
-    if (props.options.metalTypes) {
-      dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
-          return ({value: metalType.code,label:metalType.name});
-        })
-      )
-      dataDropDowntMetalType = dataDropDowntMetalType[0];
-    }
-    if (props.options.metalColours) {
-      dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
-          return ({value: metalColour.code,label:metalColour.name});
-        })
-      )
-      dataDropDowntMetalColour = dataDropDowntMetalColour[0];
-    }
-    if (props.options.dominantStones) {
-      dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
-          return ({value: dominantStone.code,label:dominantStone.name});
-        })
-      )
-      dataDropDowntDominantStone = dataDropDowntDominantStone[0];
-    }
-    if (props.options.movements) {
-      dataDropDowntMovement.push(props.options.movements.map(movement =>{
-          return ({value: movement.code,label:movement.name});
-        })
-      )
-      dataDropDowntMovement = dataDropDowntMovement[0];
-    }
-    if (props.options.dialIndexs) {
-      dataDropDowntDialIndex.push(props.options.dialIndexs.map(dialIndex =>{
-          return ({value: dialIndex.code,label:dialIndex.name});
-        })
-      )
-      dataDropDowntDialIndex = dataDropDowntDialIndex[0];
-    }
-    if (props.options.dialColors) {
-      dataDropDowntDialColor.push(props.options.dialColors.map(dialColor =>{
-          return ({value: dialColor.code,label:dialColor.name});
-        })
-      )
-      dataDropDowntDialColor = dataDropDowntDialColor[0];
-    }
-    if (props.options.dialMetals) {
-      dataDropDowntDialMetal.push(props.options.dialMetals.map(dialMetal =>{
-          return ({value: dialMetal.code,label:dialMetal.name});
-        })
-      )
-      dataDropDowntDialMetal = dataDropDowntDialMetal[0];
-    }
-    if (props.options.buckleTypes) {
-      dataDropDowntBuckleType.push(props.options.buckleTypes.map(buckleType =>{
-          return ({value: buckleType.code,label:buckleType.name});
-        })
-      )
-      dataDropDowntBuckleType = dataDropDowntBuckleType[0];
-    }
-    if (props.options.strapTypes) {
-      dataDropDowntStrapType.push(props.options.strapTypes.map(strapType =>{
-          return ({value: strapType.code,label:strapType.name});
-        })
-      )
-      dataDropDowntStrapType = dataDropDowntStrapType[0];
-    }
-    if (props.options.strapColors) {
-      dataDropDowntStrapColor.push(props.options.strapColors.map(strapColor =>{
-          return ({value: strapColor.code,label:strapColor.name});
-        })
-      )
-      dataDropDowntStrapColor = dataDropDowntStrapColor[0];
-    }
-    if (props.options.complications) {
-      dataDropDowntComplication.push(props.options.complications.map(complication =>{
-          return ({value: complication.code,label:complication.name});
-        })
-      )
-      dataDropDowntComplication = dataDropDowntComplication[0];
-    }
+    
     return(
       <div className="panel panel-default">
         <div className="panel-body">
