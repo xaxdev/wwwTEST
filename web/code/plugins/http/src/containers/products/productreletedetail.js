@@ -287,7 +287,7 @@ class productreletedetail extends Component {
        if(type != 'STO' && products.length > 0){
        return(
            <div className="col-md-12 col-sm-12 nopadding">
-              <h2>RELATED ITEMS</h2>
+              <h2>RELATED DETAILS</h2>
               <ProductRelete productrelte={products}/>
               <div className="searchresult-navi pagenavi relete col-md-12 col-sm-12 nopadding">
                <Pagination
@@ -297,7 +297,7 @@ class productreletedetail extends Component {
                 last
                 ellipsis
                 boundaryLinks
-                items={numberFormat(totalpage)}
+                items={totalpage}
                 maxButtons={3}
                 activePage={reletepage}
                 onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey); }} />
@@ -306,7 +306,7 @@ class productreletedetail extends Component {
                   <form onSubmit={this.handleGo}>
                     <input type="number" value={page} ref="reletego" />
                 <span>of</span>
-                <span>{totalpage}</span>
+                <span>{numberFormat(totalpage)}</span>
                   <button>Go</button>
                   </form>
                 </div>
