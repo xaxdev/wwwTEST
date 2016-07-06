@@ -18,20 +18,6 @@ const mapProperties = (item, record) => {
             }
         });
 
-        if (record.certificate_number !== undefined && record.certificate_number.length > 0) {
-            gemstone.certificate = {};
-
-            gemstone.certificate.number = record.certificate_number;
-
-            if (record.certificate_agency !== undefined) {
-                gemstone.certificate.agency = record.certificate_agency;
-            }
-        }
-
-        if (item.certificate_number !== undefined) {
-            delete item.certificate_number;
-        }
-
         // Check if gemstone is an empty object
         if (Object.keys(gemstone).length > 0) {
             item.gemstones.push(gemstone);
@@ -45,8 +31,50 @@ const mapProperties = (item, record) => {
             thumbnail: `${config.gallery.thumbnail}/${record.company}/${record.imageName}.${record.imageType}`
         };
 
-        delete item.image;
+        if (item.imageName !== undefined) {
+          delete item.imageName;
+        }
+
+        if (item.imageType !== undefined) {
+          delete item.imageType
+        }
+
         item.gallery.push(image);
+    }
+
+    // add certificate, if not existed
+    if (record.CertificateNo.length > 0 && item.certificates.findIndex(certificate => certificate.number === record.CertificateNo) === -1) {
+        const certificate = {
+            number: record.CertificateNo,
+            agency: record.CertificateAgency,
+            site: record.CertificateWarehouse,
+            image: {
+                original: `${config.gallery.original}/${record.company}/${record.CertificateImageName}.${record.CertificateImageType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.company}/${record.CertificateImageName}.${record.CertificateImageType}`
+            }
+        };
+
+        if (item.CertificateNo !== undefined) {
+            delete item.CertificateNo;
+        }
+
+        if (item.CertificateAgency !== undefined) {
+            delete item.CertificateAgency;
+        }
+
+        if (item.CertificateWarehouse !== undefined) {
+            delete item.CertificateWarehouse;
+        }
+
+        if (item.CertificateImageName !== undefined) {
+            delete item.CertificateImageName;
+        }
+
+        if (item.CertificateImageType !== undefined) {
+            delete item.CertificateImageType;
+        }
+
+        item.certificates.push(certificate);
     }
 };
 
@@ -60,6 +88,7 @@ const mapItem = recordset => {
             const item = {...record};
             item.gemstones = [];
             item.gallery = [];
+            item.certificates = [];
             items.push(item);
         }
 

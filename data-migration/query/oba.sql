@@ -37,12 +37,16 @@ SELECT item.[Id] AS 'id'
     , ISNULL(gemstone.[Origin], '') AS 'gemstone_origin'
     , ISNULL(gemstone.[Symmetry], '') AS 'gemstone_symmetry'
     , ISNULL(gemstone.[Fluorescence], '') AS 'gemstone_fluorescence'
-    , ISNULL(gemstone.[Certificate], '') AS 'certificate_number'
     , 'OBA' AS 'type'
     , ISNULL(oba.[Type], '') AS 'subType'
     , ISNULL(oba.[Dimensions], '') AS 'dimensions'
     , ISNULL(img.[FILENAME], '') AS 'imageName'
     , ISNULL(img.[FILETYPE], '') AS 'imageType'
+    , ISNULL(cert.CERTIFICATIONNO, '') AS [CertificateNo]
+    , ISNULL(cert.AGENCYID, '') AS [CertificateAgency]
+    , ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
+    , ISNULL(certimage.[FILENAME], '') AS [CertificateImageName]
+    , ISNULL(certimage.[FILETYPE], '') AS [CertificateImageType]
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
 ON item.[Reference] = gemstone.[ItemReference]
@@ -50,5 +54,9 @@ INNER JOIN [ITORAMA].[dbo].[OBA] oba
 ON item.[Reference] = oba.[ItemReference]
 LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] img
 ON item.[Id] = img.[ITEMRECID]
+LEFT JOIN [MWD_DB].[dbo].[CRWMOLCERTIFICATE_LINE] cert
+  ON item.Reference = cert.INTSKUNUMBER
+LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] certimage
+  ON cert.INTSKUNUMBER = certimage.ITEMID
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]

@@ -36,10 +36,19 @@ SELECT item.[Id] AS 'id'
     , ISNULL(stone.[Quantity],'') AS 'quantity'
     , ISNULL(img.[FILENAME], '') AS 'imageName'
     , ISNULL(img.[FILETYPE], '') AS 'imageType'
+    , ISNULL(cert.CERTIFICATIONNO, '') AS [CertificateNo]
+    , ISNULL(cert.AGENCYID, '') AS [CertificateAgency]
+    , ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
+    , ISNULL(certimage.[FILENAME], '') AS [CertificateImageName]
+    , ISNULL(certimage.[FILETYPE], '') AS [CertificateImageType]
 FROM [ITORAMA].[dbo].[Items] item
 INNER JOIN [ITORAMA].[dbo].[Stones] stone
 ON item.[Reference] = stone.[ItemReference]
 LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] img
 ON item.[Id] = img.[ITEMRECID]
+LEFT JOIN [MWD_DB].[dbo].[CRWMOLCERTIFICATE_LINE] cert
+  ON item.Reference = cert.INTSKUNUMBER
+LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] certimage
+  ON cert.INTSKUNUMBER = certimage.ITEMID
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]
