@@ -113,6 +113,10 @@ module.exports = {
           return Boom.badRequest('no user with the username.');
         }
 
+        if (!user.status) {
+          return Boom.badRequest('user is inactive.');
+        }
+
         return user
           .verifyPassword(password)
           .then(function (valid) {

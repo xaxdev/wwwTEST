@@ -76,12 +76,22 @@ module.exports = {
 
     const Users = request.collections.user;
     const Permissions = request.collections.permission;
+    const Authentication = request.collections.authentication;
 
     console.log(request.payload);
 
     Users
       .update({ id: request.params.id }, request.payload)
       .then(function ([user, ...rest]) {
+
+        if(!user.status){
+          Authentication.destroy({user:user.email})
+          .exec(function (err){
+            if (err) {
+              return reply(Boom.badImplementation(err));
+            }
+          });
+        }
 
         return Permissions
           .findOne({ id: user.permission })
