@@ -126,7 +126,7 @@ const setnewprops = (data) => {
     productGroupSPP: productGroupSPP,
     onhandLocation: (permission.onhandLocation != null) ? (permission.onhandLocation.type.indexOf('Location') != -1) ? true : false : false,
     onhandWarehouse: (permission.onhandWarehouse != null) ? (permission.onhandWarehouse != null && permission.onhandWarehouse.type.indexOf('Warehouse') != -1) ? true : false : false,
-    // onhandValue: permission.onhand.places,
+    onhandAll: (permission.onhandLocation != null) ? (permission.onhandLocation.type.indexOf('All') != -1) ? true : false : false,
     permissionId: permission.id,
     onhandLocationValue: (permission.onhandLocation != null) ? permission.onhandLocation.places : null,
     onhandWarehouseValue: (permission.onhandWarehouse != null) ? permission.onhandWarehouse.places : null

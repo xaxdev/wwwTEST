@@ -490,7 +490,7 @@ class InventoryWatch extends Component {
         dataDropDowntComplication = dataDropDowntComplication[0];
       }
     }
-    
+
     return(
       <div className="panel panel-default">
         <div className="panel-body">
@@ -633,7 +633,8 @@ class InventoryWatch extends Component {
               </div>
             </div>
             <div className="col-lg-6 form-horizontal">
-              <div className="form-group">
+              <div className={`form-group ${(userLogin.permission.price == 'All') ?
+                  '' : 'hidden'}`}>
                 <label className="col-sm-4 control-label">Total Cost (USD)
                   <OverlayTrigger placement="top" overlay={tooltipTotalCost}>
                     <img src="/images/alphanumeric.png" />
