@@ -327,6 +327,8 @@ class InventoryStone extends Component {
     var dataDropDowntFluorescence = [];
     var dataDropDowntOrigin = [];
 
+    const userLogin = JSON.parse(sessionStorage.logindata);
+
     InitModifyData(props);
 
     if (props.options.stoneType) {
@@ -558,7 +560,9 @@ class InventoryStone extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
+              <div className={`form-group ${(userLogin.permission.price == 'Updated'
+                                            || userLogin.permission.price == 'All') ?
+                                            '' : 'hidden'}`}>
                 <label className="col-sm-4 control-label">Total Updated Cost (USD)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -571,7 +575,10 @@ class InventoryStone extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
+              <div className={`form-group ${(userLogin.permission.price == 'Public'
+                                            || userLogin.permission.price == 'Updated'
+                                            || userLogin.permission.price == 'All') ?
+                                          '' : 'hidden'}`}>
                 <label className="col-sm-4 control-label">Public Price (USD)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
