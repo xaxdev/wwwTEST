@@ -159,46 +159,7 @@ class GridItemsView extends Component {
           let itemDate = new Date(item.itemCreatedDate);
           itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
            return (
-             <div key={item.id} name={item.id} id={index}
-                className="col-md-3 col-sm-3 nopadding" onMouseOver={showDetails} onMouseOut={hideDetails}>
-                 <div>
-                    <div key={item.id}  id={index} style={{
-                        display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
-                                (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
-                                (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:
-                                (index==3)?`${that.state.isOpen3 ? '' : 'none'}`:
-                                (index==4)?`${that.state.isOpen4 ? '' : 'none'}`:
-                                (index==5)?`${that.state.isOpen5 ? '' : 'none'}`:
-                                (index==6)?`${that.state.isOpen6 ? '' : 'none'}`:
-                                (index==7)?`${that.state.isOpen7 ? '' : 'none'}`:'',
-                        }} className={(index==3||index==7)?'over-searchresult-left':'over-searchresult' }>
-                        <span className="fc-ddbe6a width-f100">Item Reference: </span>
-                        <span className="width-f100">{item.reference}</span>
-                        <span className="fc-ddbe6a width-f100">Item Name: </span>
-                        <span className="width-f100">{item.description}</span>
-                        <span className={`width-f100 fc-ddbe6a ${(userLogin.permission.price == 'All') ?
-                            '' : 'hidden'}`}>Actual Cost (USD): </span>
-                        <span className={`width-f100 ${(userLogin.permission.price == 'All') ?
-                            '' : 'hidden'}`}>{item.actualCostUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</span>
-                        <span className={`width-f100 fc-ddbe6a ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
-                            '' : 'hidden'}`}>Update Cost (USD): </span>
-                        <span className={`width-f100 ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
-                            '' : 'hidden'}`}>{item.updatedCostUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</span>
-                        <span className={`width-f100 fc-ddbe6a ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                            || userLogin.permission.price == 'All') ?
-                            '' : 'hidden'}`}>Public Price (USD): </span>
-                        <span className={`width-f100 ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                            || userLogin.permission.price == 'All') ?
-                            '' : 'hidden'}`}>{item.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</span>
-                        <span className="width-f100 fc-ddbe6a">Location : </span>
-                        <span className="width-f100">{item.siteName}</span>
-                        <span className="fc-ddbe6a width-f100">Warehouse: </span>
-                        <span className="width-f100">{item.warehouseName}</span>
-                        <span className="fc-ddbe6a width-f100">Created Date: </span>
-                        <span className="width-f100">{itemDate}</span>
-                    </div>
-                    <div className="over-product"></div>
-                 </div>
+             <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding" onMouseOver={showDetails} onMouseOut={hideDetails}>
                  <div className="searchresult-prodcut">
                     <div className="pull-right margin-r20">
                       <div className="grid-add"
@@ -209,7 +170,6 @@ class GridItemsView extends Component {
                           }>
                         <span className="icon-add-28"></span>
                       </div>
-
                      <div className="checkbox checkbox-warning">
                       <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
                         // checked={this.state.selectedStatus}
@@ -218,8 +178,9 @@ class GridItemsView extends Component {
                           <label className="checkbox1"></label>
                       </div>
                     </div>
-                    <div name={item.id} id={item.id} onClick={btnEvent}>
+                  
                     <img src={imagesProduct} responsive width={200} height={200}/>
+
                     <p className="font-b fc-000">
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
@@ -227,6 +188,42 @@ class GridItemsView extends Component {
                     <p className="product-detail-h">{item.description}</p>
                     <span className="fc-ae8f3b font-b price">{item.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')} {userLogin.currency}</span>
                     <span className="line"></span>
+                    <div name={item.id} id={item.id} onClick={btnEvent}>
+                     <div key={item.id}  id={index} style={{
+                            display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
+                                    (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
+                                    (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:
+                                    (index==3)?`${that.state.isOpen3 ? '' : 'none'}`:
+                                    (index==4)?`${that.state.isOpen4 ? '' : 'none'}`:
+                                    (index==5)?`${that.state.isOpen5 ? '' : 'none'}`:
+                                    (index==6)?`${that.state.isOpen6 ? '' : 'none'}`:
+                                    (index==7)?`${that.state.isOpen7 ? '' : 'none'}`:'',
+                            }} className={(index==3||index==7)?'over-searchresult-left':'over-searchresult' }>
+                            <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
+                            <span className="width-f100">{item.reference}</span>
+                            <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
+                            <span className="width-f100">{item.description}</span>
+                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') ?
+                                '' : 'hidden'}`}>Actual Cost (USD): </span>
+                            <span className={`width-f100 ${(userLogin.permission.price == 'All') ?
+                                '' : 'hidden'}`}>{item.actualCostUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</span>
+                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                                '' : 'hidden'}`}>Update Cost (USD): </span>
+                            <span className={`width-f100 ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                                '' : 'hidden'}`}>{item.updatedCostUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</span>
+                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                || userLogin.permission.price == 'All') ?
+                                '' : 'hidden'}`}>Public Price (USD): </span>
+                            <span className={`width-f100 ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                || userLogin.permission.price == 'All') ?
+                                '' : 'hidden'}`}>{item.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</span>
+                            <span className="width-f100 fc-ddbe6a font-b">Location : </span>
+                            <span className="width-f100">{item.siteName}</span>
+                            <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
+                            <span className="width-f100">{item.warehouseName}</span>
+                            <span className="fc-ddbe6a width-f100 font-b">Created Date: </span>
+                            <span className="width-f100">{itemDate}</span>
+                        </div> 
                     </div>
                  </div>
             </div>

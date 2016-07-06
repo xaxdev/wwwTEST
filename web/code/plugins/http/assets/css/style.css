@@ -8,7 +8,6 @@ body{
 	background-size: contain;
 	font-family: 'open_sanslight';
 	color: #383735;
-	line-height:0;
 }
 h1{
   color: #fff !important;
@@ -55,6 +54,7 @@ label{font-weight: normal;}
 	border-radius: 15px !important;
   padding: 10px 30px !important;
 }
+.styled-select select:focus{background: none; outline: none;}
 *:focus {outline:none !important}
 .float-r{float:right;}
 .float-l{float:left;}
@@ -304,9 +304,9 @@ select.form-searchresult option{
 .top-line{color:#d9c06e; padding:0 10px;}
 .bar-line{color:#d9c06e;}
 .top-bar{
-	margin:20px 0 0 0;
+	margin:10px 0 0 0;
 	padding:0;
-	float: right;
+	text-align: right;
 }
 .top-bar a{color:#fff;}
 
@@ -676,6 +676,8 @@ select.form-searchresult option{
 	border:3px solid #464646;
 	padding:20px 25px 0 25px;
 	cursor:pointer;
+	position: relative;
+	z-index: 9999;
 }
 .over-product{
 	margin:0 0 0 -15px;
@@ -699,7 +701,7 @@ select.form-searchresult option{
 }
 .over-searchresult{
 	font-size:13px;
-	margin:0px auto; 
+	margin:-3px auto; 
 	position: absolute; 
 	text-align: left;
 	background: #464646;
@@ -713,7 +715,7 @@ select.form-searchresult option{
 }
 .over-searchresult-left {
 	font-size:13px;
-	margin: 0px auto; 
+	margin:-3px auto; 
 	position: absolute; 
 	text-align: left;
 	background: #464646;
@@ -725,9 +727,16 @@ select.form-searchresult option{
   width:265px;
   height:418px;
 }
+.over-searchresult:hover ,
+.over-searchresult-left:hover {display:none;}
+.over-searchresult span, .over-searchresult-left span{line-height: 25px;}
 
 .search-product{
 	position: relative;
+}
+.block-product{
+	position: relative;
+	z-index: 1;
 }
 .price{
 	font-size:15px;
