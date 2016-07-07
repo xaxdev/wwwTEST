@@ -8,7 +8,7 @@ import ProductDescriptionBlock from '../../components/productdetail/productDescr
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
-import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributes';
+import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributesprint';
 import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelry';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
