@@ -2,16 +2,13 @@ import React,{ Component,PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Button,FormControl,Pagination } from 'react-bootstrap';
-import jQuery from 'jquery';
 import * as productdetailaction from '../../actions/productdetailaction';
-import ProductDescriptionBlock from '../../components/productdetail/productDescription';
-import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
-import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
-import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
+import ProductDescriptionBlock from '../../components/productdetail/productDescriptionprint';
+import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributesprint';
+import ProductStoneAttributes from '../../components/productdetail/productStoneAttributesprint';
+import ProductWatchAttributes from '../../components/productdetail/productWatchAttributesprint';
 import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributesprint';
-import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelry';
-import ProductGallery from '../../components/productdetail/productGallery';
-import ProductRelete from '../../components/productdetail/productReleted';
+import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelryprint';
 
 import '../../../public/css/productdetail.css';
 
