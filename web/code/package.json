@@ -64,6 +64,7 @@
     "redux-form": "^4.2.2",
     "rejoice": "^3.1.0",
     "require-all": "^2.0.0",
+    "sails-mongo": "^0.12.0",
     "sails-mysql": "^0.11.4",
     "scroll-behavior": "^0.7.0",
     "sendgrid": "^2.0.0",

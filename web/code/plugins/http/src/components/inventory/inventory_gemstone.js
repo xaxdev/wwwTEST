@@ -255,28 +255,28 @@ class InventoryGemStone extends Component {
     if(props.options != undefined){
       if (props.options.stoneType) {
         dataDropDowntstoneType.push(props.options.stoneType.map(stoneType =>{
-            return ({value: stoneType.id,label:stoneType.name});
+            return ({value: stoneType.code,label:stoneType.name});
           })
         )
         dataDropDowntstoneType = dataDropDowntstoneType[0];
       }
       if (props.options.cut) {
         dataDropDowntCut.push(props.options.cut.map(cut =>{
-            return ({value: cut.id,label:cut.name});
+            return ({value: cut.code,label:cut.name});
           })
         )
         dataDropDowntCut = dataDropDowntCut[0];
       }
       if (props.options.cutGrades) {
         dataDropDowntCutGrade.push(props.options.cutGrades.map(cutGrade =>{
-            return ({value: cutGrade.id,label:cutGrade.name});
+            return ({value: cutGrade.code,label:cutGrade.name});
           })
         )
         dataDropDowntCutGrade = dataDropDowntCutGrade[0];
       }
       if (props.options.colors) {
         dataDropDowntColor.push(props.options.colors.map(color =>{
-            return ({value: color.id,label:color.name});
+            return ({value: color.code,label:color.name});
           })
         )
         dataDropDowntColor = dataDropDowntColor[0];
@@ -284,7 +284,7 @@ class InventoryGemStone extends Component {
 
       if (props.options.clarities) {
         dataDropDowntClarity.push(props.options.clarities.map(clarity =>{
-            return ({value: clarity.id,label:clarity.name});
+            return ({value: clarity.code,label:clarity.name});
           })
         )
         dataDropDowntClarity = dataDropDowntClarity[0];
@@ -292,42 +292,42 @@ class InventoryGemStone extends Component {
 
       if (props.options.polishs) {
         dataDropDowntPolish.push(props.options.polishs.map(polish =>{
-            return ({value: polish.id,label:polish.name});
+            return ({value: polish.code,label:polish.name});
           })
         )
         dataDropDowntPolish = dataDropDowntPolish[0];
       }
       if (props.options.symmetries) {
         dataDropDowntSymmetry.push(props.options.symmetries.map(symmetry =>{
-            return ({value: symmetry.id,label:symmetry.name});
+            return ({value: symmetry.code,label:symmetry.name});
           })
         )
         dataDropDowntSymmetry = dataDropDowntSymmetry[0];
       }
       if (props.options.treatments) {
         dataDropDowntTreatment.push(props.options.treatments.map(treatment =>{
-            return ({value: treatment.id,label:treatment.name});
+            return ({value: treatment.code,label:treatment.name});
           })
         )
         dataDropDowntTreatment = dataDropDowntTreatment[0];
       }
       if (props.options.fluorescences) {
         dataDropDowntFluorescence.push(props.options.fluorescences.map(fluorescence =>{
-            return ({value: fluorescence.id,label:fluorescence.name});
+            return ({value: fluorescence.code,label:fluorescence.name});
           })
         )
         dataDropDowntFluorescence = dataDropDowntFluorescence[0];
       }
       if (props.options.origins) {
         dataDropDowntOrigin.push(props.options.origins.map(origin =>{
-            return ({value: origin.id,label:origin.name});
+            return ({value: origin.code,label:origin.name});
           })
         )
         dataDropDowntOrigin = dataDropDowntOrigin[0];
       }
       if (props.options.certificateAgencys) {
         dataDropDowntCertificateAgency.push(props.options.certificateAgencys.map(certificateAgency =>{
-            return ({value: certificateAgency.id,label:certificateAgency.name});
+            return ({value: certificateAgency.code,label:certificateAgency.name});
           })
         )
         dataDropDowntCertificateAgency = dataDropDowntCertificateAgency[0];

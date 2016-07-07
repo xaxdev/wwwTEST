@@ -334,21 +334,21 @@ class InventoryStone extends Component {
     if(props.options != undefined){
       if (props.options.stoneType) {
         dataDropDowntstoneType.push(props.options.stoneType.map(stoneType =>{
-            return ({value: stoneType.id,label:stoneType.name});
+            return ({value: stoneType.code,label:stoneType.name});
           })
         )
         dataDropDowntstoneType = dataDropDowntstoneType[0];
       }
       if (props.options.cut) {
         dataDropDowntCut.push(props.options.cut.map(cut =>{
-            return ({value: cut.id,label:cut.name});
+            return ({value: cut.code,label:cut.name});
           })
         )
         dataDropDowntCut = dataDropDowntCut[0];
       }
       if (props.options.cutGrades) {
         dataDropDowntCutGrade.push(props.options.cutGrades.map(cutGrade =>{
-            return ({value: cutGrade.id,label:cutGrade.name});
+            return ({value: cutGrade.code,label:cutGrade.name});
           })
         )
         dataDropDowntCutGrade = dataDropDowntCutGrade[0];
@@ -364,9 +364,9 @@ class InventoryStone extends Component {
       if (props.options.colorGrades) {
         dataDropDowntColorGrade.push(props.options.colorGrades.map(colorGrade =>{
             if (colorGrade.disabled){
-              return {value: colorGrade.id,label:colorGrade.name,disabled: true};
+              return {value: colorGrade.code,label:colorGrade.name,disabled: true};
             }else{
-              return {value: colorGrade.id,label:colorGrade.name};
+              return {value: colorGrade.code,label:colorGrade.name};
             }
           })
         )

@@ -25,6 +25,7 @@ class UserDetailsFrom extends Component {
     this.selectedProductGroup = this.selectedProductGroup.bind(this);
     this.selectedOnHandWarehouse = this.selectedOnHandWarehouse.bind(this);
     this.selectedOnHandLocation = this.selectedOnHandLocation.bind(this);
+    this.changedOnHandLocation = this.changedOnHandLocation.bind(this);
     this.selectedOnHandAll = this.selectedOnHandAll.bind(this);
 
     // console.log('constructor-->',this.props.user);
@@ -33,8 +34,8 @@ class UserDetailsFrom extends Component {
       productGroupDatas:[],
       selectedCompany: false,
       selectedSite: false,
-      selectedOnHandWarehouse: this.props.user.onhandWarehouse,
-      selectedOnHandLocation: this.props.user.onhandLocation,
+      selectedOnHandWarehouse: !this.props.user.onhandWarehouse,
+      selectedOnHandLocation: !this.props.user.onhandLocation,
       selectedOnHandAll: (!this.props.user.onhandLocation && !this.props.user.onhandWarehouse)? true: false,
       genPass:''
     };
@@ -45,7 +46,18 @@ class UserDetailsFrom extends Component {
   // shouldComponentUpdate(nextProps, nextState) {
   //   return shallowCompare(this, nextProps, nextState);
   // }
-
+  componentDidMount(){
+    // console.log('this.props.user.onhandLocation-->',this.props.user.onhandLocation);
+    // console.log('this.props.user.onhandWarehouse-->',this.props.user.onhandWarehouse);
+    // console.log('this.props.user.onhandLocationValue.length-->',this.props.user.onhandLocationValue.length);
+    // console.log('this.props.user.onhandWarehouseValue.length-->',this.props.user.onhandWarehouseValue.length);
+    this.setState(
+      {
+        selectedOnHandWarehouse: (this.props.user.onhandWarehouseValue.length != 0) ? false : true,
+        selectedOnHandLocation: (this.props.user.onhandLocationValue.length != 0) ? false : true,
+      }
+    );
+  }
   selectedCompany(e){
     // console.log('e-->',e);
     // console.log('this selectedCompany-->',e.target.value);
@@ -102,70 +114,58 @@ class UserDetailsFrom extends Component {
     // console.log('this.state-->',this.state);
   }
   selectedOnHandWarehouse(e){
-    var {fields: { onhand, onhandLocation }} = this.props;
-    if(e.target.checked){
-      this.setState(
-        {
-          selectedOnHandWarehouse: true,
-          // selectedOnHandLocation: false,
-          selectedOnHandAll: false
+    var {
+        fields: {
+            onhand,
+            onhandAll
+        }
+    } = this.props;
+    if (e.target.checked) {
+        this.setState({
+            selectedOnHandWarehouse: true,
+            selectedOnHandLocation: true,
+            selectedOnHandAll: true
         });
         // onhand.value = 'Warehouse';
-        if(this.state.selectedOnHandLocation){
-          onhand.onChange('Warehouse,Location');
-        }else{
-          onhand.onChange('Warehouse');
-        }
-    }else{
-      this.setState(
-        {
-          selectedOnHandWarehouse: false,
-          // selectedOnHandLocation: true,
-          selectedOnHandAll: false
+        onhand.onChange('All');
+        onhandAll.onChange(true);
+    } else {
+        this.setState({
+            selectedOnHandWarehouse: false,
+            selectedOnHandLocation: false,
+            selectedOnHandAll: false
         });
-      // onhand.value = 'notWarehouse';
-      if(this.state.selectedOnHandLocation){
-        onhand.onChange('Location');
-      }else{
-        onhand.onChange('notWarehouse');
-      }
-    }
-    if(this.refs.location){
-      onhandLocation.onChange(true);
+        // onhand.value = 'notWarehouse';
+        onhand.onChange('Warehouse');
+        onhandAll.onChange(false);
     }
   }
   selectedOnHandLocation(e){
-
-    var {fields: { onhand, onhandWarehouse }} = this.props;
-    if(e.target.checked){
-      this.setState(
-        {
-          // selectedOnHandWarehouse: false,
-          selectedOnHandLocation: true,
-          selectedOnHandAll: false
+    // console.log('e.target.value-->',e.target.value);
+    var {
+        fields: {
+            onhand,
+            onhandAll
+        }
+    } = this.props;
+    if (e.target.checked) {
+        this.setState({
+            selectedOnHandWarehouse: true,
+            selectedOnHandLocation: true,
+            selectedOnHandAll: true
         });
         // onhand.value = 'Location';
-        if(this.state.selectedOnHandWarehouse){
-          onhand.onChange('Warehouse,Location');
-        }else{
-          onhand.onChange('Location');
-        }
-    }else{
-      this.setState(
-        {
-          // selectedOnHandWarehouse: true,
-          selectedOnHandLocation: false,
-          selectedOnHandAll: false
+        onhand.onChange('All');
+        onhandAll.onChange(true);
+        this.props.optionsActions.get();
+    } else {
+        this.setState({
+            selectedOnHandWarehouse: false,
+            selectedOnHandLocation: false,
+            selectedOnHandAll: false
         });
-      // onhand.value = 'notLocation';
-      if(this.state.selectedOnHandWarehouse){
-        onhand.onChange('Warehouse');
-      }else{
-        onhand.onChange('notLocation');
-      }
-    }
-    if(this.refs.warehouse){
-      onhandWarehouse.onChange(true);
+        onhand.onChange('Location');
+        onhandAll.onChange(false);
     }
   }
   selectedOnHandAll(e){
@@ -190,6 +190,24 @@ class UserDetailsFrom extends Component {
       // onhand.value = 'notAll';
       onhand.onChange('notAll');
     }
+  }
+  changedOnHandLocation(e) {
+      var {
+          fields: {
+              onhandLocationValue
+          }
+      } = this.props;
+      var select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
+
+      var values = [].filter.call(select.options, function(o) {
+          return o.selected;
+      }).map(function(o) {
+          return o.value;
+      });
+
+      onhandLocationValue.onChange(values);
+
+      this.props.optionsActions.getOnHandWarehouse(values);
   }
   generatePassword(){
     var pass = GenPassword();
@@ -292,27 +310,29 @@ class UserDetailsFrom extends Component {
               ,productGroupACC,productGroupOBA,productGroupSPP,onhandLocationValue,webOnly,permissionId,onhandWarehouse
               ,onhandWarehouseValue
           },handleSubmit,submitting } = this.props;
-          var dataDropDowntLocations = [];
-          var dataDropDowntWareHouse = [];
+    var dataDropDowntLocations = [];
+    var dataDropDowntWareHouse = [];
 
-          if (typeof (this.props.options) !== 'undefined') {
-            if (typeof (this.props.warehouseOnHand) !== 'undefined')  {
-              dataDropDowntWareHouse.push(this.props.warehouseOnHand.map(warehouse =>{
-                  return ({value: warehouse.code,name:warehouse.name});
-                })
-              )
-              dataDropDowntWareHouse = dataDropDowntWareHouse[0];
-            }
-            if (typeof (this.props.locationOnHand) !== 'undefined') {
-              dataDropDowntLocations.push(this.props.locationOnHand.map(location =>{
-                  return ({value: location.code,name:location.name});
-                })
-              )
-              dataDropDowntLocations = dataDropDowntLocations[0];
-            }
-          }
-          // console.log('dataDropDowntWareHouse-->',dataDropDowntWareHouse);
-          // console.log('dataDropDowntLocations-->',dataDropDowntLocations);
+    if (typeof (this.props.options) !== 'undefined') {
+      if (typeof (this.props.warehouseOnHand) !== 'undefined')  {
+        dataDropDowntWareHouse.push(this.props.warehouseOnHand.map(warehouse =>{
+          return ({value: warehouse.code,name:warehouse.name});
+        })
+      )
+      dataDropDowntWareHouse = dataDropDowntWareHouse[0];
+    }
+    if (typeof (this.props.locationOnHand) !== 'undefined') {
+      dataDropDowntLocations.push(this.props.locationOnHand.map(location =>{
+          return ({value: location.code,name:location.name});
+        })
+      )
+      dataDropDowntLocations = dataDropDowntLocations[0];
+      }
+    }
+    console.log('this.props.user.onhandLocation-->',this.props.user.onhandLocation);
+    console.log('this.props.user.onhandWarehouse-->',this.props.user.onhandWarehouse);
+    console.log('this.props.user.onhandLocationValue.length-->',this.props.user.onhandLocationValue.length);
+    console.log('this.props.user.onhandWarehouseValue.length-->',this.props.user.onhandWarehouseValue.length);
     return (
       <form onSubmit={handleSubmit}>
             <div className="col-sm-12 bg-hearder bg-header-inventories">
@@ -530,7 +550,11 @@ class UserDetailsFrom extends Component {
                             <select multiple
                               {...onhandLocationValue}
                               maxHeight={200} multiple
-                              disabled={`${this.state.selectedOnHandLocation ? '' : 'disabled'}`}>
+                              disabled={`${this.state.selectedOnHandLocation ? 'disabled' : ''}`}
+                              onChange={this.changedOnHandLocation}
+                              ref="selectMultiLocation"
+                              onBlur={() => this.props.fields.onhandLocation.onBlur(this.props.fields.onhandLocation.value)}
+                            >
                               {dataDropDowntLocations.map(value => <option key={value.value} value={value.value}>{value.name}</option>
                               )}
                             </select>
@@ -542,13 +566,14 @@ class UserDetailsFrom extends Component {
                           <input type="checkbox" value="Warehouse" {...onhandWarehouse}
                             checked={this.state.selectedOnHandWarehouse}
                             onChange={this.selectedOnHandWarehouse}
+                            disabled={`${this.state.selectedOnHandWarehouse ? 'disabled' : ''}`}
                             ref="warehouse"
                           /> All Warehouse
                           <div className="user-edit">
                             <select multiple
                               {...onhandWarehouseValue}
                               maxHeight={200} multiple
-                              disabled={`${this.state.selectedOnHandWarehouse ? '' : 'disabled'}`}>
+                              disabled={`${this.state.selectedOnHandWarehouse ? 'disabled' : ''}`}>
                               {dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.name}</option>
                               )}
                             </select>

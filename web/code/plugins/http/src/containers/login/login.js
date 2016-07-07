@@ -18,8 +18,10 @@ class Login extends Component {
     }
   }
   handleSubmit(data) {
+    // console.log(data);
     this.props.login(data)
       .then(() => {
+        // console.log(this.props.logindata.loginstatus);
           if(this.props.logindata.loginstatus == true){
             this.context.router.push('/inventories');
           }

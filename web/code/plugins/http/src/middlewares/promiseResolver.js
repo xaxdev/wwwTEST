@@ -49,6 +49,29 @@ export default function promiseMiddleware() {
                         });
           data.warehouses = warehouses;
         }
+        if(type== 'GED_ONHANDWAREHOUSES'){
+          // console.log('GED_ONHANDWAREHOUSES-->');
+          const locationSelected = action.location;
+          // const sites = data.locations
+          //               .filter(function(site){
+          //                 return site.comid == action.comid;
+          //               });
+          // data.locations = sites;
+          var ware = [];
+          locationSelected.forEach(function(location) {
+            data.warehouses.forEach(function(warehouse){
+              if(warehouse.locationid == location)
+                ware.push(warehouse);
+            });
+            // ware.push(warehouses[0]);
+          });
+          // const warehouses = data.warehouses
+          //               .filter(function(warehouse){
+          //                 return warehouse.locationid == action.selected;
+          //               });
+
+          data.warehouses = ware;
+        }
 
         // console.log('promise data-->',data);
         next({ ...rest, data, type: SUCCESS });

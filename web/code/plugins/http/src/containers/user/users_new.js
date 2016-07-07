@@ -7,12 +7,12 @@ import AlertMessage from '../../utils/alertMessage';
 class UsersNew extends Component {
 
   constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+      super(props);
+      this.handleSubmit = this.handleSubmit.bind(this);
 
-    this.state = {
-      isError: false
-    }
+      this.state = {
+          isError: false
+      }
   }
 
   handleSubmit(data) {
@@ -29,66 +29,74 @@ class UsersNew extends Component {
     var onhandLocation = null;
     var onhandWarehouse = null;
 
-    if(data.productGroup){
-      if (data.productGroup == '1'){
-        data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPP}};
-      }else{
-        if(data.productGroupJLY){
-          result = result|FLAG_JLY;
+    if (data.productGroup) {
+        if (data.productGroup == '1') {
+            data = {...data,
+                permission: {
+                    productGroup: FLAG_ZERO | FLAG_JLY | FLAG_WAT | FLAG_STO | FLAG_ACC | FLAG_OBA | FLAG_SPP
+                }
+            };
+        } else {
+            if (data.productGroupJLY) {
+                result = result | FLAG_JLY;
+            }
+            if (data.productGroupWAT) {
+                result = result | FLAG_WAT;
+            }
+            if (data.productGroupSTO) {
+                result = result | FLAG_STO;
+            }
+            if (data.productGroupACC) {
+                result = result | FLAG_ACC;
+            }
+            if (data.productGroupOBA) {
+                result = result | FLAG_OBA;
+            }
+            if (data.productGroupSPP) {
+                result = result | FLAG_SPP;
+            }
+            data = {...data,
+                permission: {
+                    productGroup: result
+                }
+            };
         }
-        if(data.productGroupWAT){
-          result = result|FLAG_WAT;
-        }
-        if(data.productGroupSTO){
-          result = result|FLAG_STO;
-        }
-        if(data.productGroupACC){
-          result = result|FLAG_ACC;
-        }
-        if(data.productGroupOBA){
-          result = result|FLAG_OBA;
-        }
-        if(data.productGroupSPP){
-          result = result|FLAG_SPP;
-        }
-        data = { ...data, permission:{productGroup:result}};
-      }
-    }else{
-      data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPP} };
+    } else {
+        data = {...data,
+            permission: {
+                productGroup: FLAG_ZERO | FLAG_JLY | FLAG_WAT | FLAG_STO | FLAG_ACC | FLAG_OBA | FLAG_SPP
+            }
+        };
     }
-    var type = typeof(data.onhand) != 'undefined' ? data.onhand: 'Warehouse';
+    var type = typeof(data.onhand) != 'undefined' ? data.onhand : 'Warehouse';
     var price = typeof(data.price) != 'undefined' ? data.price : 'Public';
 
-    if(data.onhandLocation){
-      onhandLocation = {
-        type:'Location',
-        places:(!data.onhandLocationValue)?[]:data.onhandLocationValue
-      };
-    }
+    onhandLocation = {
+        type: 'Location',
+        places: (!data.onhandLocationValue) ? [] : data.onhandLocationValue
+    };
 
-    if(data.onhandWarehouse){
-      onhandWarehouse = {
-        type:'Warehouse',
-        places:(!data.onhandWarehouseValue)?[]:data.onhandWarehouseValue
-      };
-    }
+    onhandWarehouse = {
+        type: 'Warehouse',
+        places: (!data.onhandWarehouseValue) ? [] : data.onhandWarehouseValue
+    };
 
-    if(data.onhandAll){
-      onhandLocation = {
-        type:'All',
-        places:[]
-      };
-      onhandWarehouse = {
-        type:'All',
-        places:[]
-      };
+    if (data.onhandAll || (data.onhandAll == undefined)) {
+        onhandLocation = {
+            type: 'All',
+            places: []
+        };
+        onhandWarehouse = {
+            type: 'All',
+            places: []
+        };
     }
 
     permission = {...data.permission,
-              id:data.permissionId,
-              onhandLocation:onhandLocation,
-              onhandWarehouse:onhandWarehouse,
-              price:data.price
+        id: data.permissionId,
+        onhandLocation: onhandLocation,
+        onhandWarehouse: onhandWarehouse,
+        price: data.price
     }
 
     data = Object.assign({}, data, { permission:permission });
@@ -109,8 +117,10 @@ class UsersNew extends Component {
     delete data.onhandLocation;
     delete data.onhandWarehouse;
 
-    if(!data.webOnly){
-      data = { ...data, webOnly:false};
+    if (!data.webOnly) {
+        data = {...data,
+            webOnly: false
+        };
     }
 
     // console.log('data-->',data);

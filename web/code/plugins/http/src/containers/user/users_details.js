@@ -56,19 +56,15 @@ class UserDetails extends Component {
       data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPP} };
     }
 
-    if(data.onhandLocation){
-      onhandLocation = {
-        type:'Location',
-        places:(!data.onhandLocationValue)?[]:data.onhandLocationValue
-      };
-    }
+    onhandLocation = {
+        type: 'Location',
+        places: (!data.onhandLocationValue) ? [] : data.onhandLocationValue
+    };
 
-    if(data.onhandWarehouse){
-      onhandWarehouse = {
-        type:'Warehouse',
-        places:(!data.onhandWarehouseValue)?[]:data.onhandWarehouseValue
-      };
-    }
+    onhandWarehouse = {
+      type:'Warehouse',
+      places:(!data.onhandWarehouseValue)?[]:data.onhandWarehouseValue
+    };
 
     if(data.onhandAll){
       onhandLocation = {
@@ -82,10 +78,10 @@ class UserDetails extends Component {
     }
 
       permission = {...data.permission,
-                id:data.permissionId,
-                onhandLocation:onhandLocation,
-                onhandWarehouse:onhandWarehouse,
-                price:data.price
+              id: data.permissionId,
+              onhandLocation: onhandLocation,
+              onhandWarehouse: onhandWarehouse,
+              price: data.price
     }
     data = Object.assign({}, data, { permission:permission });
 

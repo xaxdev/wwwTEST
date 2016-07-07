@@ -1,5 +1,6 @@
 const INITIAL_STATE = { datas:[], user: null, options:[], errors: null, statuscode: null, selectedCompany:null
-  , selectedWarehouses:null, statusCode:null, message:null,locationOnHand:[],warehouseOnHand:[]};
+  , selectedWarehouses:null, statusCode:null, message:null,locationOnHand:[],warehouseOnHand:[]
+  ,onhandLocationSelected:null};
 
 export default function(state = INITIAL_STATE, action){
 
@@ -23,6 +24,9 @@ export default function(state = INITIAL_STATE, action){
     // console.log('FETCH_OPTIONS state-->',state);
     // console.log('FETCH_OPTIONS action.datas-->',action.datas);
     return { ...state, options: action.data, selectedWarehouses: action.selected};
+  case 'GED_ONHANDWAREHOUSES':
+    // console.log('GED_ONHANDWAREHOUSES action-->',action);
+    return { ...state, options: action.data, locationOnHand: action.data.locations, warehouseOnHand: action.data.warehouses};
   case 'CREATE_USER':
     // console.log('action-->',action);
     // console.log('FETCH_OPTIONS action.datas-->',action.datas);
