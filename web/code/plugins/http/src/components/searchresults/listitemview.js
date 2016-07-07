@@ -24,14 +24,16 @@ class ListItemsView extends Component {
   renderAction(val,row){
     return(
       <div className="searchresult-list-icon">
-      <button type="button"
-          onClick={
-            (eventKey) => {
-              // console.log('eventKey-->',item.id);
+      <div className="hidden">
+        <button type="button"
+            onClick={
+              (eventKey) => {
+                // console.log('eventKey-->',item.id);
+              }
             }
-          }
-      ><img src="/images/icon-add.png" width="30" /></button>
-      <br/>
+        > <img src="/images/icon-add.png" width="30"/></button>
+        <br/> 
+      </div>
       <button type="button" name={row.id} id={row.id} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
       </div>
     );

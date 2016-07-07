@@ -709,7 +709,7 @@ select.form-searchresult option{
 	color:#fff;
 	top:0; 
 	left: 275px;
-	padding: 24px 24px 25px 24px;
+	padding: 20px 20px;
   z-index: 9;
   width:285px;
 	height:418px;
@@ -723,14 +723,14 @@ select.form-searchresult option{
 	color:#fff;
 	top:0; 
 	left: -265px;
-	padding:24px 24px 25px 24px;
+	padding: 20px 20px;
   z-index: 9;
   width:265px;
   height:418px;
 }
 .over-searchresult:hover ,
 .over-searchresult-left:hover {display:none;}
-.over-searchresult span, .over-searchresult-left span{line-height: 25px;}
+.over-searchresult span, .over-searchresult-left span{line-height: 20px;}
 
 .search-product{
 	position: relative;

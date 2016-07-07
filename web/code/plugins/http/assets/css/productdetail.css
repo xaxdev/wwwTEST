@@ -9,3 +9,9 @@
   max-width: 1200px;
   margin: 20px auto;
 }
+@media print {
+   .col-md-6{
+   	width: 50%;
+   	float:left;
+   }
+}

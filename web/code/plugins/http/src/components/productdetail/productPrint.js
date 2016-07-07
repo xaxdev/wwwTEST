@@ -15,7 +15,6 @@ import ProductRelete from '../../components/productdetail/productReleted';
 
 import '../../../public/css/productdetail.css';
 
-
 class productprint extends Component {
 
   constructor(props) {
@@ -186,6 +185,11 @@ class productprint extends Component {
      }
 
   render(){
+    var styles ={
+      colmd6:{
+        width: '50%'
+      }
+    };
     let monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
@@ -197,32 +201,32 @@ class productprint extends Component {
     if(dd<10){
         dd='0'+dd;
     }
+
     currentDate = dd+' '+monthNames[currentDate.getMonth()]+' '+yyyy;
     return(
       <div>
-
-        <div className="col-md-12">
-          <div className="col-md-6">Mouawad online</div>
+        <div style={{width:'100%', float:'left'}}>
+          <div style={{width:'50%'}}>Mouawad online</div>
           <div className="col-md-6">Printed Date :  {currentDate}</div>
         </div>
 
-        <div className="col-md-12">
-          <div className="col-md-6">PRODUCT DETAIL</div>
+        <div style={{width:'100%', float:'left'}}>
+          <div style={styles.colmd6}>PRODUCT DETAIL</div>
         </div>
 
-        <div className="col-md-12">
-          <div className="col-md-6">{this.renderImagegallery()}</div>
-          <div className="col-md-6">
-            <div className="col-md-12">
+        <div style={{width:'100%', float:'left'}}>
+          <div style={{width:'50%', float:'left'}}>{this.renderImagegallery()}</div>
+          <div style={{width:'50%', float:'left'}}>
+            <div style={{width:'100%', float:'left'}}>
               {this.renderDesc()}
             </div>
-            <div className="col-md-12">
-              {this.renderAttr()}
+            <div style={{width:'100%', float:'left'}}>
+                {this.renderAttr()}
             </div>
           </div>
         </div>
 
-        <div className="col-md-12">{this.renderFooterAttr()}</div>
+        <div style={{width:'100%', float:'left'}}>{this.renderFooterAttr()}</div>
 
       </div>
     );
