@@ -525,7 +525,7 @@ class UserDetailsFrom extends Component {
                             checked={this.state.selectedOnHandLocation}
                             onChange={this.selectedOnHandLocation}
                             ref="location"
-                          /> Only Location
+                          /> All Location
                           <div className="user-edit">
                             <select multiple
                               {...onhandLocationValue}
@@ -543,7 +543,7 @@ class UserDetailsFrom extends Component {
                             checked={this.state.selectedOnHandWarehouse}
                             onChange={this.selectedOnHandWarehouse}
                             ref="warehouse"
-                          /> Only Warehouse
+                          /> All Warehouse
                           <div className="user-edit">
                             <select multiple
                               {...onhandWarehouseValue}
@@ -555,7 +555,7 @@ class UserDetailsFrom extends Component {
                           </div>
                         </label>
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col-sm-2 hidden">
                         <label>
                           <input type="checkbox" value="All" {...onhandAll}
                             checked={this.state.selectedOnHandAll}

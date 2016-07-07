@@ -20,7 +20,8 @@ class UsersNewFrom extends Component {
       productGroupDatas:[],
       selectedCompany: false,
       selectedSite: false,
-      selectedOnHandWarehouse: (this.props.user != undefined)?(this.props.user.onhandWarehouse)? true: false : false,
+      // selectedOnHandWarehouse: (this.props.user != undefined)?(this.props.user.onhandWarehouse)? true: false : false,
+      selectedOnHandWarehouse: false,
       selectedOnHandLocation: (this.props.user != undefined)?(this.props.user.onhandLocation)? true: false: false,
       selectedOnHandAll: (this.props.user != undefined)?(!this.props.user.onhandLocation && !this.props.user.onhandWarehouse)? true: false: false,
       genPass:'',
@@ -561,7 +562,7 @@ class UsersNewFrom extends Component {
                               <input type="checkbox" value="Location" {...onhandLocation}
                                 checked={this.state.selectedOnHandLocation}
                                 onChange={this.selectedOnHandLocation}
-                              /> Only Location
+                              /> All Location
                               <div className="user-edit">
                                 <select multiple
                                   {...onhandLocationValue}
@@ -578,7 +579,7 @@ class UsersNewFrom extends Component {
                               <input type="checkbox" value="Warehouse" {...onhandWarehouse}
                                 checked={this.state.selectedOnHandWarehouse}
                                 onChange={this.selectedOnHandWarehouse}
-                              /> Only Warehouse
+                              /> All Warehouse
                               <div className="user-edit">
                                 <select multiple
                                   {...onhandWarehouseValue}
@@ -590,7 +591,7 @@ class UsersNewFrom extends Component {
                               </div>
                             </label>
                           </div>
-                          <div className="col-sm-2">
+                          <div className="col-sm-2 hidden">
                             <label>
                               <input type="checkbox" value="All" {...onhandAll}
                                 checked={this.state.selectedOnHandAll}
