@@ -62,8 +62,7 @@
         "register": "./plugins/orm",
         "options": {
           "adapters": {
-            "mysql": "sails-mysql",
-            "mongo": "sails-mongo"
+            "mysql": "sails-mysql"
           },
           "connections": {
             "mysql": {
@@ -92,25 +91,7 @@
                 "user": "mol",
                 "password": "P@ssw0rd#431"
               }
-            },
-            "mongo": {
-             "$filter": "env",
-             "$base": {
-               "adapter": "mongo"
-             },
-             "development": {
-               "url": "mongodb://192.168.1.93:27017/mol"
-             },
-             "test": {
-               "url": "mongodb://192.168.1.93:27017/mol"
-             },
-             "staging": {
-               "url": "mongodb://192.168.1.93:27017/mol"
-             },
-             "production": {
-               "url": "mongodb://192.168.1.93:27017/mol"
-             }
-           }
+            }
           }
         }
       },
