@@ -21,7 +21,7 @@ import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
 import '../../utils/magnific-popup.js';
-
+var Loading = require('react-loading');
 class productreletedetail extends Component {
 
   constructor(props) {
@@ -98,7 +98,7 @@ class productreletedetail extends Component {
     let  Detailtitle  = '';
     if(!Detail){
       return(
-        <div>Loading...</div>
+        <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
       );
     }
 
@@ -167,7 +167,7 @@ class productreletedetail extends Component {
      let  Attrtitle  = '';
      if(!Detail){
        return(
-         <div>Loading...</div>
+         <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
        );
      }
 
@@ -244,7 +244,7 @@ class productreletedetail extends Component {
       } else {
         if(!gemstoneAttr){
           return(
-            <div>Loading...</div>
+            <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
           );
         }
         return(
@@ -280,7 +280,7 @@ class productreletedetail extends Component {
        const { type } = this.props.productdetail;
        if(!products){
          return(
-           <div>Loading...</div>
+           <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
          );
        }
 
