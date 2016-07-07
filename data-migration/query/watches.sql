@@ -64,10 +64,12 @@ ON item.[Reference] = gemstone.[ItemReference]
 INNER JOIN [ITORAMA].[dbo].[Watches] watch
 ON item.[Reference] = watch.[ItemReference]
 LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] img
-ON item.[Id] = img.[ITEMRECID]
+  ON item.[Id] = img.[ITEMRECID]
+  AND item.[Company] = img.[DATAAREAID]
 LEFT JOIN [MWD_DB].[dbo].[CRWMOLCERTIFICATE_LINE] cert
   ON item.Reference = cert.INTSKUNUMBER
 LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] certimage
   ON cert.INTSKUNUMBER = certimage.ITEMID
+  AND item.[Company] = certimage.[DATAAREAID]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]
