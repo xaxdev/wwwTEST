@@ -60,14 +60,15 @@ SELECT item.[Id] AS 'id'
     , ISNULL(certimage.[FILETYPE], '') AS [CertificateImageType]
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
-ON item.[Reference] = gemstone.[ItemReference]
+  ON item.[Reference] = gemstone.[ItemReference]
 INNER JOIN [ITORAMA].[dbo].[Watches] watch
-ON item.[Reference] = watch.[ItemReference]
+  ON item.[Reference] = watch.[ItemReference]
 LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] img
   ON item.[Id] = img.[ITEMRECID]
   AND item.[Company] = img.[DATAAREAID]
 LEFT JOIN [MWD_DB].[dbo].[CRWMOLCERTIFICATE_LINE] cert
-  ON item.Reference = cert.INTSKUNUMBER
+  ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
+  AND item.[Company] = cert.[DATAAREAID]
 LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] certimage
   ON cert.INTSKUNUMBER = certimage.ITEMID
   AND item.[Company] = certimage.[DATAAREAID]
