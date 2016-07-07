@@ -329,10 +329,10 @@ class UserDetailsFrom extends Component {
       dataDropDowntLocations = dataDropDowntLocations[0];
       }
     }
-    console.log('this.props.user.onhandLocation-->',this.props.user.onhandLocation);
-    console.log('this.props.user.onhandWarehouse-->',this.props.user.onhandWarehouse);
-    console.log('this.props.user.onhandLocationValue.length-->',this.props.user.onhandLocationValue.length);
-    console.log('this.props.user.onhandWarehouseValue.length-->',this.props.user.onhandWarehouseValue.length);
+    // console.log('this.props.user.onhandLocation-->',this.props.user.onhandLocation);
+    // console.log('this.props.user.onhandWarehouse-->',this.props.user.onhandWarehouse);
+    // console.log('this.props.user.onhandLocationValue.length-->',this.props.user.onhandLocationValue.length);
+    // console.log('this.props.user.onhandWarehouseValue.length-->',this.props.user.onhandWarehouseValue.length);
     return (
       <form onSubmit={handleSubmit}>
             <div className="col-sm-12 bg-hearder bg-header-inventories">
