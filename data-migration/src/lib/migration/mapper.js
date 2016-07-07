@@ -31,14 +31,6 @@ const mapProperties = (item, record) => {
             thumbnail: `${config.gallery.thumbnail}/${record.company}/${record.imageName}.${record.imageType}`
         };
 
-        if (item.imageName !== undefined) {
-          delete item.imageName;
-        }
-
-        if (item.imageType !== undefined) {
-          delete item.imageType
-        }
-
         item.gallery.push(image);
     }
 
@@ -54,27 +46,35 @@ const mapProperties = (item, record) => {
             }
         };
 
-        if (item.CertificateNo !== undefined) {
-            delete item.CertificateNo;
-        }
-
-        if (item.CertificateAgency !== undefined) {
-            delete item.CertificateAgency;
-        }
-
-        if (item.CertificateWarehouse !== undefined) {
-            delete item.CertificateWarehouse;
-        }
-
-        if (item.CertificateImageName !== undefined) {
-            delete item.CertificateImageName;
-        }
-
-        if (item.CertificateImageType !== undefined) {
-            delete item.CertificateImageType;
-        }
-
         item.certificates.push(certificate);
+    }
+
+    if (item.imageName !== undefined) {
+      delete item.imageName;
+    }
+
+    if (item.imageType !== undefined) {
+      delete item.imageType
+    }
+
+    if (item.CertificateNo !== undefined) {
+        delete item.CertificateNo;
+    }
+
+    if (item.CertificateAgency !== undefined) {
+        delete item.CertificateAgency;
+    }
+
+    if (item.CertificateWarehouse !== undefined) {
+        delete item.CertificateWarehouse;
+    }
+
+    if (item.CertificateImageName !== undefined) {
+        delete item.CertificateImageName;
+    }
+
+    if (item.CertificateImageType !== undefined) {
+        delete item.CertificateImageType;
     }
 };
 
