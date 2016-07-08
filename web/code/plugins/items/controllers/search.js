@@ -302,7 +302,7 @@ module.exports = {
           }
           else if(key == 'hierarchy'){
             var filterSplit = [];
-            console.log('hierarchy value-->', value)
+            // console.log('hierarchy value-->', value)
             var vals = value.split(',');
             vals.forEach((val)=>{
               var mapField =
@@ -416,7 +416,7 @@ module.exports = {
     console.log(JSON.stringify(internals.query, null, 2));
     elastic
       .search({
-        index: 'mol',
+        index: 'mol_20160706_1423',
         type: 'items',
         body: internals.query
       }).then(function (response) {

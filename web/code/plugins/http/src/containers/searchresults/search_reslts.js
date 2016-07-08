@@ -53,7 +53,7 @@ class SearchResult extends Component {
     this.confirmExport = this.confirmExport.bind(this);
 
     this.state = {
-      activePage: this.props.currentPage,
+      activePage: 1,
       showGridView: true,
       showListView: false,
       isExport: false,
@@ -95,7 +95,7 @@ class SearchResult extends Component {
           params[key] = value;
         });
       });
-
+      // console.log('params-->',params);
       this.props.getItems(params);
   }
   componentDidMount() {
@@ -172,6 +172,9 @@ class SearchResult extends Component {
             resetForm,
             submitting } = this.props;
     // console.log('currPage-->',currPage);
+    // console.log('this.state.activePage-->',this.state.activePage);
+    const page = this.state.activePage;
+    currPage.value = page;
 
     return(
         <div>
@@ -189,7 +192,7 @@ class SearchResult extends Component {
 
             <div>
               <span>Page</span>
-                <input type="text" placeholder={this.state.activePage} ref="reletego" {...currPage}/>
+                <input type="text" placeholder={page} ref="reletego" {...currPage}/>
               <span>of</span>
               <span>{numberFormat(totalPages)}</span>
               <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
@@ -252,14 +255,18 @@ class SearchResult extends Component {
     });
   }
   sortingBy(e){
+    this.setState({
+      activePage: 1
+    });
     const sortingBy = e.target.value;
     const { searchResult } = this.props;
     const sortingDirection = this.refs.sortingDirection.value;
+
     // console.log('searchResult-->',searchResult);
 
     // this.props.sortBy(searchResult, sortingBy, sortingDirection);
     var params = {
-      'page' : searchResult.currentPage,
+      'page' : this.state.activePage,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection
     };
@@ -272,15 +279,23 @@ class SearchResult extends Component {
       });
     });
     this.props.getItems(params);
+
+    var { currPage } = this.props.fields;
+    currPage.onChange(this.state.activePage);
+
   }
   sortingDirection(e){
     const sortingDirection = e.target.value;
     const { searchResult } = this.props;
     const sortingBy = this.refs.sortingBy.value;
 
+    this.setState({
+      activePage: 1
+    });
+
     // this.props.sortBy(searchResult, sortingBy, sortingDirection);
     var params = {
-      'page' : searchResult.currentPage,
+      'page' : this.state.activePage,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection
     };
@@ -292,6 +307,7 @@ class SearchResult extends Component {
         params[key] = value;
       });
     });
+
     this.props.getItems(params);
   }
   newSearch(e){
@@ -541,6 +557,8 @@ class SearchResult extends Component {
             submitting } = this.props;
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+
+    // console.log('this.state.activePage-->',this.state.activePage);
 
     // console.log('userLogin-->',userLogin);
     if(items == null){
