@@ -416,7 +416,7 @@ module.exports = {
     console.log(JSON.stringify(internals.query, null, 2));
     elastic
       .search({
-        index: 'mol_20160706_1423',
+        index: 'mol',
         type: 'items',
         body: internals.query
       }).then(function (response) {
