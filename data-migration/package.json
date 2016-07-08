@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel src -d release -s && node --max_old_space_size=4096 ./release/index.js",
-    "build": "babel src -d release -s"
+    "start": "babel src -d release -s && node --max_old_space_size=4096 ./release/index.js"
   },
   "keywords": [],
   "author": "",

@@ -78,7 +78,38 @@ const mapProperties = (item, record) => {
     }
 };
 
-const mapItem = recordset => {
+const calculatePrices = (item, exchangeRates) => {
+    const actualCost = {};
+    const updatedCost = {};
+    const price = {};
+    const exchangeRateFromUSDToHomeCurrency = exchangeRates.filter(exchangeRate => exchangeRate.from === 'USD' && exchangeRate.to === item.currency)[0];
+    const records = exchangeRates.filter(exchangeRate => exchangeRate.from === item.currency);
+
+    // convert costs & price
+    for (let record of records) {
+        actualCost[record.to] = item.actualCost * record.exchangeRate / 100;
+        updatedCost[record.to] = item.updatedCost * record.exchangeRate / 100;
+        price[record.to] = item.price * record.exchangeRate / 100;
+    }
+
+    // costs & price in USD
+    if (!!exchangeRateFromUSDToHomeCurrency) {
+        actualCost.USD = item.actualCost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
+        updatedCost.USD = item.updatedCost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
+        price.USD = item.price * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
+    }
+
+    // costs & price in home currency
+    actualCost[item.currency] = item.actualCost;
+    updatedCost[item.currency] = item.updatedCost;
+    price[item.currency] = item.price;
+
+    item.actualCost = actualCost;
+    item.updatedCost = updatedCost;
+    item.price = price;
+};
+
+const mapItem = (recordset, exchangeRates) => {
     const items = [];
     let id = 0;
 
@@ -89,6 +120,7 @@ const mapItem = recordset => {
             item.gemstones = [];
             item.gallery = [];
             item.certificates = [];
+            calculatePrices(item, exchangeRates);
             items.push(item);
         }
 

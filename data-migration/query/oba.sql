@@ -21,12 +21,10 @@ SELECT item.[Id] AS 'id'
     , item.[GROSSWEIGHT] AS 'grossWeight'
     , item.[MUSTHAVE] AS 'mustHave'
     , item.[Markup] AS 'markup'
-    , item.[ActualCostUSD] AS 'actualCostUSD'
-    , item.[UpdatedCostUSD] AS 'updatedCostUSD'
-    , item.[PriceUSD] AS 'priceUSD'
-    , item.[ActualCostNonUSD] AS 'actualCostNonUSD'
-    , item.[UpdatedCostNonUSD] AS 'updatedCostNonUSD'
-    , item.[PriceNonUSD] AS 'priceNonUSD'
+    , item.[ActualCost] AS 'actualCost'
+    , item.[UpdatedCost] AS 'updatedCost'
+    , item.[Price] AS 'price'
+    , item.[Currency] AS 'currency'
     , gemstone.[Id] AS 'gemstone_id'
     , ISNULL(gemstone.[Cut], '') AS 'gemstone_cut'
     , ISNULL(gemstone.[Color], '') AS 'gemstone_color'
@@ -52,13 +50,13 @@ LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
   ON item.[Reference] = gemstone.[ItemReference]
 INNER JOIN [ITORAMA].[dbo].[OBA] oba
   ON item.[Reference] = oba.[ItemReference]
-LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] img
+LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
   ON item.[Id] = img.[ITEMRECID]
   AND item.[Company] = img.[DATAAREAID]
-LEFT JOIN [MWD_DB].[dbo].[CRWMOLCERTIFICATE_LINE] cert
+LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
   ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
   AND item.[Company] = cert.[DATAAREAID]
-LEFT JOIN [MWD_DB].[dbo].[ITO_ITEMIMAGE] certimage
+LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
   ON cert.INTSKUNUMBER = certimage.ITEMID
   AND item.[Company] = certimage.[DATAAREAID]
 WHERE item.[Id] BETWEEN @from AND @to
