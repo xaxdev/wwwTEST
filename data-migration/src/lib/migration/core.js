@@ -21,7 +21,7 @@ const get = async params => {
         }
 
         // map record to document
-        const documents = params.mapper(recordset);
+        const documents = params.mapper(recordset, params.exchangeRates);
 
         // upload documents to Elasticsearch
         await es.upload(documents, params.elasticsearch);
