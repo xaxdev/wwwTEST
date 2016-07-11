@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 const pructdetailurl = '/productreletedetail/';
 const Gemstoneattr =  (props) =>{
   return (
-    <div className="table-responsive">
+    <div className="tableresponsive">
       <Table responsive className="table table-bordered">
            <thead>
              <tr>

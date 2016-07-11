@@ -184,8 +184,24 @@ class productprint extends Component {
 
   render(){
     var styles ={
+      colmd12:{
+        width:'100%'
+      },
       colmd6:{
         width: '50%'
+      },
+      tableresponsive:{
+        width:'100%'
+      },
+      table:{
+          border-collapse: 'collapse'
+          border-spacing: '0'
+          width: '100%''
+          border: '1px solid #ddd'
+          text-align: 'center'
+      },
+      th:{
+        background: '#eee'
       }
     };
     let monthNames = ["January", "February", "March", "April", "May", "June",

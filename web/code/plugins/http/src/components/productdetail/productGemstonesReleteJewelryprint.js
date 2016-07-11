@@ -8,7 +8,7 @@ const GemstoneReleteJewelry =  (props) =>{
   if(logindata){
     const currency = logindata.currency;
   return (
-    <div className="table-responsive">
+    <div className="tableresponsive">
       <Table responsive className="table table-bordered">
            <thead>
              <tr>

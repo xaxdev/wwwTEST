@@ -514,6 +514,7 @@ select.form-searchresult option{
     border-bottom: 1px solid transparent;
     background: #383735;
 }
+.nav-tabs>li{width:16.66666666666667%;}
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
 	  color: #383735;
     cursor: default;
@@ -536,6 +537,7 @@ select.form-searchresult option{
 	font-family: 'MercuryDisplay-Roman';
 	text-transform: uppercase;
   color: #fbdc88;
+  text-align: center;
 }
 
 .nav-tabs>li.active>a {
@@ -730,7 +732,7 @@ select.form-searchresult option{
 }
 .over-searchresult:hover ,
 .over-searchresult-left:hover {display:none;}
-.over-searchresult span, .over-searchresult-left span{line-height: 20px;}
+.over-searchresult span, .over-searchresult-left span{line-height: 25px;}
 
 .search-product{
 	position: relative;
