@@ -250,6 +250,8 @@ class InventoryGemStone extends Component {
     var dataDropDowntOrigin = [];
     var dataDropDowntCertificateAgency = [];
 
+    const userLogin = JSON.parse(sessionStorage.logindata);
+
     InitModifyData(props);
 
     if(props.options != undefined){
@@ -444,7 +446,7 @@ class InventoryGemStone extends Component {
             </div>
             <div className="col-lg-6 form-horizontal">
               <div className="form-group">
-                <label className="col-sm-4 control-label">Stone Cost (USD)</label>
+                <label className="col-sm-4 control-label">Stone Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">

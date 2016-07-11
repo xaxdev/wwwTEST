@@ -253,7 +253,7 @@ class InventorySparePart extends Component {
             <div className="col-lg-6 form-horizontal">
               <div className={`form-group ${(userLogin.permission.price == 'All') ?
                   '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Total Cost (USD)</label>
+                <label className="col-sm-4 control-label">Total Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -268,7 +268,7 @@ class InventorySparePart extends Component {
               <div className={`form-group ${(userLogin.permission.price == 'Updated'
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Total Updated Cost (USD)</label>
+                <label className="col-sm-4 control-label">Total Updated Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -284,7 +284,7 @@ class InventorySparePart extends Component {
                                             || userLogin.permission.price == 'Updated'
                                             || userLogin.permission.price == 'All') ?
                                           '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Public Price (USD)</label>
+                <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
