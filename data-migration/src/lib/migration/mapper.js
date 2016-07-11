@@ -27,8 +27,8 @@ const mapProperties = (item, record) => {
     // add image, if not existed
     if (record.imageName.length > 0 && item.gallery.findIndex(image => image.original.match(new RegExp(`${record.imageName}.${record.imageType}$`)) !== null) === -1) {
         const image = {
-            original: `${config.gallery.original}/${record.company}/${record.imageName}.${record.imageType}`,
-            thumbnail: `${config.gallery.thumbnail}/${record.company}/${record.imageName}.${record.imageType}`
+            original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
+            thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
         };
 
         item.gallery.push(image);
@@ -40,11 +40,15 @@ const mapProperties = (item, record) => {
             number: record.CertificateNo,
             agency: record.CertificateAgency,
             site: record.CertificateWarehouse,
-            image: {
-                original: `${config.gallery.original}/${record.company}/${record.CertificateImageName}.${record.CertificateImageType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.company}/${record.CertificateImageName}.${record.CertificateImageType}`
-            }
+
         };
+
+        if (record.CertificateImageName.length > 0) {
+            certificate.image = {
+                original: `${config.gallery.original}/${record.CertificateImageName}.${record.CertificateImageType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.CertificateImageName}.${record.CertificateImageType}`
+            }
+        }
 
         item.certificates.push(certificate);
     }
