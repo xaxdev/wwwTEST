@@ -19,6 +19,7 @@ module.exports = {
     var page = request.payload.page;
     var sortBy = request.payload.sortBy;
     var sortDirections = request.payload.sortDirections;
+    var userCurrency = request.payload.userCurrency;
     var keys = Object.keys(obj);
 
     var objRange={length:0};
@@ -78,7 +79,7 @@ module.exports = {
         }
 
         // console.log('key.value-->',value);
-        if(key != 'page' && key != 'sortBy' && key != 'sortDirections' ){
+        if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
              || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'fluorescence'
              || key == 'jewelryCategory' || key == 'collection' || key == 'brand'|| key == 'mustHave' || key == 'ringSize'
@@ -140,7 +141,38 @@ module.exports = {
               valToCost = value;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'actualCostUSD':{'from':valFromCost,'to':valToCost},'length':objLength};
+            switch(userCurrency){
+              case 'AED':
+                objRange = {...objRange,'actualCost.AED':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'CHF':
+                objRange = {...objRange,'actualCost.CHF':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'EUR':
+                objRange = {...objRange,'actualCost.EUR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'JOD':
+                objRange = {...objRange,'actualCost.JOD':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'KWD':
+                objRange = {...objRange,'actualCost.KWD':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'LBP':
+                objRange = {...objRange,'actualCost.LBP':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'OMR':
+                objRange = {...objRange,'actualCost.OMR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'QAR':
+                objRange = {...objRange,'actualCost.QAR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'SAR':
+                objRange = {...objRange,'actualCost.SAR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              default:
+                objRange = {...objRange,'actualCost.USD':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+            }
           }
           else if(key == 'totalUpdatedCostFrom' || key == 'totalUpdatedCostTo'){
             keyFromUpdatedCost = 'updatedCostUSD';
@@ -151,7 +183,38 @@ module.exports = {
               valToUpdatedCost = value;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'updatedCostUSD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+            switch(userCurrency){
+              case 'AED':
+                objRange = {...objRange,'updatedCost.AED':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                break;
+              case 'CHF':
+                objRange = {...objRange,'updatedCost.CHF':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                break;
+              case 'EUR':
+                objRange = {...objRange,'updatedCost.EUR':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                break;
+              case 'JOD':
+                objRange = {...objRange,'updatedCost.JOD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                break;
+              case 'KWD':
+                objRange = {...objRange,'updatedCost.KWD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                break;
+              case 'LBP':
+                objRange = {...objRange,'updatedCost.LBP':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                break;
+              case 'OMR':
+                objRange = {...objRange,'updatedCost.OMR':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                break;
+              case 'QAR':
+                objRange = {...objRange,'updatedCost.QAR':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                break;
+              case 'SAR':
+                objRange = {...objRange,'updatedCost.SAR':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                break;
+              default:
+                objRange = {...objRange,'updatedCost.USD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                break;
+            }
           }
           else if(key == 'publicPriceFrom' || key == 'publicPriceTo'){
             keyFromPPP = 'priceUSD';
@@ -162,7 +225,38 @@ module.exports = {
               valToPPP = value;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'priceUSD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+            switch(userCurrency){
+              case 'AED':
+                objRange = {...objRange,'price.AED':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                break;
+              case 'CHF':
+                objRange = {...objRange,'price.CHF':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                break;
+              case 'EUR':
+                objRange = {...objRange,'price.EUR':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                break;
+              case 'JOD':
+                objRange = {...objRange,'price.JOD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                break;
+              case 'KWD':
+                objRange = {...objRange,'price.KWD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                break;
+              case 'LBP':
+                objRange = {...objRange,'price.LBP':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                break;
+              case 'OMR':
+                objRange = {...objRange,'price.OMR':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                break;
+              case 'QAR':
+                objRange = {...objRange,'price.QAR':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                break;
+              case 'SAR':
+                objRange = {...objRange,'price.SAR':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                break;
+              default:
+                objRange = {...objRange,'price.USD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                break;
+            }
           }
           else if(key == 'markupFrom' || key == 'markupTo'){
             keyFromMarkup = 'markup';
@@ -454,7 +548,39 @@ module.exports = {
           if(pageData.length != 0){
             data.forEach(function(item){
               // console.log('item.priceUSD-->',item.priceUSD);
-              var p = item.priceUSD != undefined ? item.priceUSD : 0;
+              var p = 0;
+              switch(userCurrency){
+                case 'AED':
+                  p = item.price.AED != undefined ? item.price.AED : 0;
+                  break;
+                case 'CHF':
+                  p = item.price.CHF != undefined ? item.price.CHF : 0;
+                  break;
+                case 'EUR':
+                  p = item.price.EUR != undefined ? item.price.EUR : 0;
+                  break;
+                case 'JOD':
+                  p = item.price.JOD != undefined ? item.price.JOD : 0;
+                  break;
+                case 'KWD':
+                  p = item.price.KWD != undefined ? item.price.KWD : 0;
+                  break;
+                case 'LBP':
+                  p = item.price.LBP != undefined ? item.price.LBP : 0;
+                  break;
+                case 'OMR':
+                  p = item.price.OMR != undefined ? item.price.OMR : 0;
+                  break;
+                case 'QAR':
+                  p = item.price.QAR != undefined ? item.price.QAR : 0;
+                  break;
+                case 'SAR':
+                  p = item.price.SAR != undefined ? item.price.SAR : 0;
+                  break;
+                default:
+                  p = item.price.USD != undefined ? item.price.USD : 0;
+                  break;
+              }
               sumPriceData.push(p);
             });
 
@@ -464,7 +590,39 @@ module.exports = {
 
             data.forEach(function(item){
               // console.log('item.priceUSD-->',item.priceUSD);
-              var p = item.updatedCostUSD != undefined ? item.updatedCostUSD : 0;
+              var p = 0;
+              switch(userCurrency){
+                case 'AED':
+                  p = item.updatedCost.AED != undefined ? item.updatedCost.AED : 0;
+                  break;
+                case 'CHF':
+                  p = item.updatedCost.CHF != undefined ? item.updatedCost.CHF : 0;
+                  break;
+                case 'EUR':
+                  p = item.updatedCost.EUR != undefined ? item.updatedCost.EUR : 0;
+                  break;
+                case 'JOD':
+                  p = item.updatedCost.JOD != undefined ? item.updatedCost.JOD : 0;
+                  break;
+                case 'KWD':
+                  p = item.updatedCost.KWD != undefined ? item.updatedCost.KWD : 0;
+                  break;
+                case 'LBP':
+                  p = item.updatedCost.LBP != undefined ? item.updatedCost.LBP : 0;
+                  break;
+                case 'OMR':
+                  p = item.updatedCost.OMR != undefined ? item.updatedCost.OMR : 0;
+                  break;
+                case 'QAR':
+                  p = item.updatedCost.QAR != undefined ? item.updatedCost.QAR : 0;
+                  break;
+                case 'SAR':
+                  p = item.updatedCost.SAR != undefined ? item.updatedCost.SAR : 0;
+                  break;
+                default:
+                  p = item.updatedCost.USD != undefined ? item.updatedCost.USD : 0;
+                  break;
+              }
               sumCostData.push(p);
             });
 
