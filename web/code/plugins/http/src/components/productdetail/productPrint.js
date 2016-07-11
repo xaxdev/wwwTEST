@@ -173,7 +173,7 @@ class productprint extends Component {
           <div>
             { gallery.map( (data,index)=>{
               return (
-             <div key={`imgprint${index}`}><img width="400" height="400" src={data.thumbnail}/></div>
+             <div key={`imgprint${index}`}><img width="400" src={data.thumbnail}/></div>
              );
 
             })}
