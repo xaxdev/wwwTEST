@@ -382,6 +382,7 @@ module.exports = {
       internals.query = JSON.parse(
       `{
         "timeout": "5s",
+        "from": 0,
         "size": 10000,
         "sort" : [
             {"${sortBy}" : "${sortDirections}"}
@@ -400,6 +401,7 @@ module.exports = {
       internals.query = JSON.parse(
       `{
         "timeout": "5s",
+        "from": 0,
         "size": 10000,
         "sort" : [
             {"${sortBy}" : "${sortDirections}"}
@@ -411,78 +413,94 @@ module.exports = {
       }`);
     }
 
-
-
     console.log(JSON.stringify(internals.query, null, 2));
+
     elastic
       .search({
         index: 'mol',
         type: 'items',
         body: internals.query
       }).then(function (response) {
+        console.log(response.hits.total)
         var allData = [];
         var sumPriceData = [];
         var sumCostData = [];
 
         // console.log('response.hits.hits-->',response.hits.hits)
 
-        var data = response.hits.hits.map((element) => element._source);
-        if(sortDirections == 'desc'){
-          data = _.sortBy(data,sortBy,sortDirections).reverse();
-        }else{
-          data = _.sortBy(data,sortBy,sortDirections);
-        }
+        // if(response.hits.total < 10000){
+          var data = response.hits.hits.map((element) => element._source);
+          if(sortDirections == 'desc'){
+            data = _.sortBy(data,sortBy,sortDirections).reverse();
+          }else{
+            data = _.sortBy(data,sortBy,sortDirections);
+          }
 
-        // console.log('data-->',data);
-
-        data.forEach(function(item){
-          allData.push({'id': item.id,'reference':item.reference});
-        });
-
-        // console.log('size-->',size);
-        // console.log('fromitem-->',fromitem);
-        // var pageData = data.max(size) ;
-        var pageData = data.slice( (page - 1) * size, page * size );
-        var sumPrice = 0;
-        var cost = 0;
-
-        console.log('pageData-->',pageData.length);
-
-        if(pageData.length != 0){
-          data.forEach(function(item){
-            // console.log('item.priceUSD-->',item.priceUSD);
-            var p = item.priceUSD != undefined ? item.priceUSD : 0;
-            sumPriceData.push(p);
-          });
-
-          sumPriceData.forEach(function(price) {
-            sumPrice = sumPrice+Math.floor(price);
-          });
+          // console.log('data-->',data);
 
           data.forEach(function(item){
-            // console.log('item.priceUSD-->',item.priceUSD);
-            var p = item.updatedCostUSD != undefined ? item.updatedCostUSD : 0;
-            sumCostData.push(p);
+            allData.push({'id': item.id,'reference':item.reference});
           });
 
-          cost = sumCostData.reduce(function(a, b) {
-            return a + b;
-          });
-        }
+          // console.log('size-->',size);
+          // console.log('fromitem-->',fromitem);
+          // var pageData = data.max(size) ;
+          var pageData = data.slice( (page - 1) * size, page * size );
+          var sumPrice = 0;
+          var cost = 0;
 
-        const sendData = {
-                'data':pageData,
-                'allData':allData,
-                'summary':{
-                    'count': allData.length,
-                    'price': sumPrice,
-                    'cost': cost
+          console.log('pageData-->',pageData.length);
+
+          if(pageData.length != 0){
+            data.forEach(function(item){
+              // console.log('item.priceUSD-->',item.priceUSD);
+              var p = item.priceUSD != undefined ? item.priceUSD : 0;
+              sumPriceData.push(p);
+            });
+
+            sumPriceData.forEach(function(price) {
+              sumPrice = sumPrice+Math.floor(price);
+            });
+
+            data.forEach(function(item){
+              // console.log('item.priceUSD-->',item.priceUSD);
+              var p = item.updatedCostUSD != undefined ? item.updatedCostUSD : 0;
+              sumCostData.push(p);
+            });
+
+            cost = sumCostData.reduce(function(a, b) {
+              return a + b;
+            });
+          }
+
+          const sendData = {
+                  'data':pageData,
+                  'allData':allData,
+                  'summary':{
+                      'count': allData.length,
+                      'price': sumPrice,
+                      'cost': cost
+                    }
                   }
-                }
-        // console.log(JSON.stringify(sendData, null, 4));
-        // console.log({sendData});
-        elastic.close();
-        return reply(sendData);
+          // console.log(JSON.stringify(sendData, null, 4));
+          // console.log({sendData});
+          elastic.close();
+          return reply(sendData);
+        // }else{
+        //   console.log('data more than 10,000');
+        //   const sendData = {
+        //           'data':0,
+        //           'allData':0,
+        //           'summary':{
+        //               'count': 0,
+        //               'price': 0,
+        //               'cost': 0
+        //             }
+        //           }
+        //   return reply(sendData);
+        // }
+
+
       })
       .catch(function (error) {
         console.log('error-->',error)

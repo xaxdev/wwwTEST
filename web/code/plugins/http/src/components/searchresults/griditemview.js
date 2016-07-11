@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
+import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
@@ -158,6 +159,11 @@ class GridItemsView extends Component {
           let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
           let itemDate = new Date(item.itemCreatedDate);
           itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
+
+          let price = GetPriceWithCurrency(item,'price');
+          let actualCost = GetPriceWithCurrency(item,'actualCost');
+          let updatedCost = GetPriceWithCurrency(item,'updatedCost');
+
            return (
              <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding" onMouseOver={showDetails} onMouseOut={hideDetails}>
                  <div className="searchresult-prodcut">
@@ -178,7 +184,7 @@ class GridItemsView extends Component {
                           <label className="checkbox1"></label>
                       </div>
                     </div>
-                  
+
                     <img src={imagesProduct} responsive width={200} height={200}/>
 
                     <p className="font-b fc-000">
@@ -186,7 +192,7 @@ class GridItemsView extends Component {
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
                     </p>
                     <p className="product-detail-h">{item.description}</p>
-                    <span className="fc-ae8f3b font-b price">{item.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')} {userLogin.currency}</span>
+                    <span className="fc-ae8f3b font-b price">{price}</span>
                     <span className="line"></span>
                     <div name={item.id} id={item.id} onClick={btnEvent}>
                      <div key={item.id}  id={index} style={{
@@ -206,24 +212,24 @@ class GridItemsView extends Component {
                             <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') ?
                                 '' : 'hidden'}`}>Actual Cost (USD): </span>
                             <span className={`width-f100 ${(userLogin.permission.price == 'All') ?
-                                '' : 'hidden'}`}>{item.actualCostUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</span>
+                                '' : 'hidden'}`}>{actualCost}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
                                 '' : 'hidden'}`}>Update Cost (USD): </span>
                             <span className={`width-f100 ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
-                                '' : 'hidden'}`}>{item.updatedCostUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</span>
+                                '' : 'hidden'}`}>{updatedCost}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All') ?
                                 '' : 'hidden'}`}>Public Price (USD): </span>
                             <span className={`width-f100 ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All') ?
-                                '' : 'hidden'}`}>{item.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')}</span>
+                                '' : 'hidden'}`}>{price}</span>
                             <span className="width-f100 fc-ddbe6a font-b">Location : </span>
                             <span className="width-f100">{item.siteName}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
                             <span className="width-f100">{item.warehouseName}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Created Date: </span>
                             <span className="width-f100">{itemDate}</span>
-                        </div> 
+                        </div>
                     </div>
                  </div>
             </div>
