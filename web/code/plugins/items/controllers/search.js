@@ -315,7 +315,38 @@ module.exports = {
               valToCost = value;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'gemstones.cost':{'from':valFromCost,'to':valToCost},'length':objLength};
+            switch(userCurrency){
+              case 'AED':
+                objRange = {...objRange,'gemstones.cost.AED':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'CHF':
+                objRange = {...objRange,'gemstones.cost.CHF':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'EUR':
+                objRange = {...objRange,'gemstones.cost.EUR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'JOD':
+                objRange = {...objRange,'gemstones.cost.JOD':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'KWD':
+                objRange = {...objRange,'gemstones.cost.KWD':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'LBP':
+                objRange = {...objRange,'gemstones.cost.LBP':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'OMR':
+                objRange = {...objRange,'gemstones.cost.OMR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'QAR':
+                objRange = {...objRange,'gemstones.cost.QAR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              case 'SAR':
+                objRange = {...objRange,'gemstones.cost.SAR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+              default:
+                objRange = {...objRange,'gemstones.cost.USD':{'from':valFromCost,'to':valToCost},'length':objLength};
+                break;
+            }
           }
           else if(key == 'gemstones.quantityFrom' || key == 'gemstones.quantityTo'){
             if(key == 'gemstones.quantityFrom'){
