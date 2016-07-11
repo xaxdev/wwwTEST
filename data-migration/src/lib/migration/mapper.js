@@ -2,7 +2,7 @@ import config from '../../../config';
 
 const gemstones = ['gemstone_id', 'gemstone_cut', 'gemstone_color', 'gemstone_clarity', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence'];
 
-const mapProperties = (item, record) => {
+const mapProperties = (item, record, exchangeRates) => {
     // add gemstone, if not existed
     if (item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
         const gemstone = {};
@@ -17,6 +17,28 @@ const mapProperties = (item, record) => {
                 }
             }
         });
+
+        // calculate cost in different currencies
+        if (gemstone.cost !== undefined) {
+            const exchangeRateFromUSDToHomeCurrency = exchangeRates.filter(exchangeRate => exchangeRate.from === 'USD' && exchangeRate.to === item.currency)[0];
+            const records = exchangeRates.filter(exchangeRate => exchangeRate.from === item.currency);
+            const cost = {};
+
+            // costs in other currencies
+            for (let record of records) {
+                cost[record.to] = gemstone.cost * record.exchangeRate / 100;
+            }
+
+            // cost in USD
+            if (!!exchangeRateFromUSDToHomeCurrency) {
+                cost.USD = gemstone.cost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
+            }
+
+            // cost in home currency
+            cost[item.currency] = gemstone.cost;
+
+            gemstone.cost = cost;
+        }
 
         // Check if gemstone is an empty object
         if (Object.keys(gemstone).length > 0) {
@@ -89,7 +111,7 @@ const calculatePrices = (item, exchangeRates) => {
     const exchangeRateFromUSDToHomeCurrency = exchangeRates.filter(exchangeRate => exchangeRate.from === 'USD' && exchangeRate.to === item.currency)[0];
     const records = exchangeRates.filter(exchangeRate => exchangeRate.from === item.currency);
 
-    // convert costs & price
+    // costs & price in other currencies
     for (let record of records) {
         actualCost[record.to] = item.actualCost * record.exchangeRate / 100;
         updatedCost[record.to] = item.updatedCost * record.exchangeRate / 100;
@@ -129,7 +151,7 @@ const mapItem = (recordset, exchangeRates) => {
         }
 
         const latest = items[items.length - 1];
-        mapProperties(latest, record);
+        mapProperties(latest, record, exchangeRates);
     }
 
     return items;
