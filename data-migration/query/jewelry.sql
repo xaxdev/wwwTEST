@@ -49,16 +49,18 @@ SELECT item.[Id] AS 'id'
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
   ON item.[Reference] = gemstone.[ItemReference]
+  AND item.[Company] = gemstone.[Company]
 INNER JOIN [ITORAMA].[dbo].[Jewelry] jewelry
   ON item.[Reference] = jewelry.[ItemReference]
+  AND item.[Company] = jewelry.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
   ON item.[Id] = img.[ITEMRECID]
-  AND item.[Company] = img.[DATAAREAID]
+  AND item.[Company] = img.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
   ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
-  AND item.[Company] = cert.[DATAAREAID]
+  AND item.[Company] = cert.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
-  ON cert.INTSKUNUMBER = certimage.ITEMID
-  AND item.[Company] = certimage.[DATAAREAID]
+  ON cert.[INTSKUNUMBER] = certimage.[ITEMID]
+  AND item.[Company] = certimage.[Company]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]
