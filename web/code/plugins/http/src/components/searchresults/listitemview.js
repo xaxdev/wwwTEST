@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
-
+import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
 
 class ListItemsView extends Component {
@@ -32,7 +32,7 @@ class ListItemsView extends Component {
               }
             }
         > <img src="/images/icon-add.png" width="30"/></button>
-        <br/> 
+        <br/>
       </div>
       <button type="button" name={row.id} id={row.id} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
       </div>
@@ -63,7 +63,8 @@ class ListItemsView extends Component {
       });
 
       items = items.map(function (col, idx) {
-        col.priceUSD = col.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+        // col.priceUSD = col.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+        col.priceUSD = GetPriceWithCurrency(col,'price');
         return {...col}
       });
 
