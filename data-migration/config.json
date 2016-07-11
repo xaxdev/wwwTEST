@@ -12,7 +12,7 @@
         "size": 10000
     },
     "gallery": {
-        "original": "/images/products",
-        "thumbnail": "/images/products"
+        "original": "/images/products/original",
+        "thumbnail": "/images/products/thumbnail"
     }
 }
