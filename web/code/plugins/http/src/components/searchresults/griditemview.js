@@ -185,13 +185,13 @@ class GridItemsView extends Component {
                       </div>
                     </div>
 
-                    <img src={imagesProduct} responsive width={200} height={200}/>
+                    <div className="thumbnaillgrid"><img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/></div>
 
                     <p className="font-b fc-000">
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
                     </p>
-                    <p className="product-detail-h">{item.description}</p>
+                    <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{item.description}</p>
                     <span className="fc-ae8f3b font-b price">{price}</span>
                     <span className="line"></span>
                     <div name={item.id} id={item.id} onClick={btnEvent}>

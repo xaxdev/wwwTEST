@@ -26,6 +26,14 @@ h2{
 }
 img{max-width: 100%;}
 label{font-weight: normal;}
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 #page-wrapper{border:1px solid #dfdfdf;}
 .btn{
 	font-size:14px;
@@ -303,6 +311,11 @@ select.form-searchresult option{
 	margin-bottom:10px;
 }
 .top-line{color:#d9c06e; padding:0 10px;}
+.top-line-detail h2{
+	border-top:1px solid #eaeaea; 
+	line-height: 65px;
+  margin-bottom: 0;
+}
 .bar-line{color:#d9c06e;}
 .top-bar{
 	margin:10px 0 0 0;
@@ -443,7 +456,7 @@ select.form-searchresult option{
 	  background-color: #383735 !important;
     border-color: #383735 !important;
 }
-.pagenavi input{width:30px;}
+.pagenavi input{width:auto; max-width:50px; }
 .search-group label{
 	text-align: left;
 	padding-top: 7px;
@@ -633,10 +646,10 @@ select.form-searchresult option{
 	cursor:pointer;
 }
 .searchresult-navi{float:right;}
-.searchresult-navi div {margin-left:30px; margin-top: 10px;}
+.searchresult-navi div {margin-left:30px; margin-top: 0px;}
 .searchresult-navi input{margin:0 5px; text-align: center;}
 .searchresult-navi span{padding:0 3px;}
-.searchresult-navi div, .searchresult-navi ul{float:left;}
+.searchresult-navi div, .searchresult-navi ul{float:left; margin-bottom:10px;}
 .searchresult-navi	button	{    
 		background-color: #ddbe6a;
     border-color: #ddbe6a;
@@ -732,7 +745,7 @@ select.form-searchresult option{
 }
 .over-searchresult:hover ,
 .over-searchresult-left:hover {display:none;}
-.over-searchresult span, .over-searchresult-left span{line-height: 25px;}
+.over-searchresult span, .over-searchresult-left span{line-height: 22px;}
 
 .search-product{
 	position: relative;
@@ -762,7 +775,7 @@ select.form-searchresult option{
 .searchresult-list-icon img{max-width: 30px;}
 
 .productdetailpage input{
-	 	width: 34px;
+	 	width: 50px;
     float: left;
     height: 30px;
     border: none;
@@ -786,13 +799,57 @@ select.form-searchresult option{
 	color:#383735;
 	font-weight: bold;
 }
-.image-gallery{margin-top:75px;}
+.thumbnaillgrid{
+	position: relative;
+  width: 230px;
+  height: 200px;
+  overflow: hidden;
+}
+.thumbnaillgrid img{
+ 	position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  padding-bottom:20px;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
 .image-gallery-thumbnail img{
-	width:122px !important;
-	border: 1px solid #efefef !important;
+ 	position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+.image-gallery{margin-top:75px;}
+.image-gallery-thumbnail, .image-gallery-thumbnail.active{  
+	position: relative;
+  width: 122px;
+  height: 122px;
+  overflow: hidden;
+}
+.image-gallery-thumbnail img{
+ 	position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+.image-gallery-thumbnail.active{
+    border: 2px solid #464646 !important;
+    padding-right:0px;
 }
 .image-gallery-thumbnail.active img {
-    border: 2px solid #464646 !important;
+  width: 100%;
+  height: auto;
 }
 .search-icon{
     background-color: #ddbe6a;
@@ -811,6 +868,7 @@ select.form-searchresult option{
   top: 30px;
 }
 .width-100{width:100%}
+.width-50{width:57%; float:right;}
 .width-90{width:90px;}
 .width-10{width:10%;}
 .width-f100{width:100%; float:left;}
@@ -820,6 +878,10 @@ select.form-searchresult option{
 }
 .user-edit select{min-height: 200px; max-width: 290px;}
 .tooltiop-span span{margin-right: 5px;}
+.image-gallery-image{text-align: center; margin:0 auto;}
+.image-gallery-image img{width: auto !important;}
+
+
 @media (max-width:1200px){
 	.ip-nopadding{padding:0;}
 	.mg-right{margin-left:-15px;}
@@ -988,10 +1050,6 @@ select.form-searchresult option{
 	.searchresult-navi div {
     margin-left: 0;
     margin-top: 12px;
-	}
-	.image-gallery-thumbnail img {
-    width: 100px !important;
-    border: 1px solid #efefef !important;
 	}
 	.bd-img{text-align: center;}
 	.over-searchresult, .over-searchresult-left {

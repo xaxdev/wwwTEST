@@ -45,7 +45,7 @@ class productdetail extends Component {
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
-          src: jQuery('<div class="white-popup m-pt"><img width="600px" id="galleryimg"/><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button></div>'),
+          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button></div></div>'),
           type: 'inline'
         },
         callbacks: {
@@ -323,7 +323,7 @@ class productdetail extends Component {
       if(productlist.length != 0){
       return(
 
-            <div className="col-md-7 col-sm-7 col-xs-12 ip-nopadding maring-t15 ip-padding-l">
+            <div className="width-50  maring-t15">
                       <div className="col-md-3 col-sm-1 "></div>
                       <div className="col-md-3 col-sm-3 ft-white productdetail-search">
                         <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
@@ -407,7 +407,7 @@ class productdetail extends Component {
                   <div className="col-md-12 col-sm-12">
                     {this.renderDesc()}
                  </div>
-                 <div className="col-md-12 col-sm-12 line-border">
+                 <div className="col-md-12 col-sm-12 top-line-detail">
                    {this.renderReleteproduct()}
                   </div>
                 </div>

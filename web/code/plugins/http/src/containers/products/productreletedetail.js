@@ -44,7 +44,7 @@ class productreletedetail extends Component {
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
-          src: jQuery('<div class="white-popup m-pt"><img width="600px" id="galleryimg"/><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button></div>'),
+          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button></div></div>'),
           type: 'inline'
         },
         callbacks: {
@@ -360,23 +360,26 @@ class productreletedetail extends Component {
           <div className="col-sm-12">
               <div className="panel panel-default">
                   <div className="panel-body padding-ft0">
-                        <div className="col-md-12 icon-detail">
+                        <div className="col-md-12 col-sm-12 icon-detail">
                           <a><div className="icon-add margin-l10"></div></a>
                           <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                           <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
                         </div>
-                        <div className="col-md-6">{this.renderImagegallery()}</div>
+                        <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
-                        <div className="col-md-6">
-                          <div className="col-md-12">
+                        <div className="col-md-6 col-sm-12">
+                          <div className="col-md-12 col-sm-12">
                             {this.renderDesc()}
                          </div>
-                         <div className="col-md-12">
+                         <div className="col-md-12 col-sm-12 top-line-detail">
                            {this.renderReleteproduct()}
                           </div>
                         </div>
-                        <div className="col-md-12">{this.renderAttr()}</div>
-                        <div className="col-md-12">{this.renderFooterAttr()}</div>
+                        <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
+                          <div className="line-border"></div>
+                        </div>                        
+                        <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{this.renderAttr()}</div>
+                        <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterAttr()}</div>
                           <div id="dvContainer" className="hidden">
                              <ProductPrint productdetail={this.props.productdetail}/>
                           </div>

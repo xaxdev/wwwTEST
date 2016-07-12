@@ -185,20 +185,22 @@ class productprint extends Component {
   render(){
     var styles ={
       colmd12:{
-        width:'100%'
+        width:'100%',
+        float:'left'
       },
-      colmd6:{
-        width: '50%'
+      colmd5:{
+        width: '50%',
+        float:'left'
       },
+      colmd2:{
+        width: '20%',
+        float:'left'
+      },      
       tableresponsive:{
         width:'100%'
       },
       table:{
-          border-collapse: 'collapse'
-          border-spacing: '0'
-          width: '100%''
-          border: '1px solid #ddd'
-          text-align: 'center'
+          width: '100%'
       },
       th:{
         background: '#eee'
@@ -219,28 +221,31 @@ class productprint extends Component {
     currentDate = dd+' '+monthNames[currentDate.getMonth()]+' '+yyyy;
     return(
       <div>
-        <div style={{width:'100%', float:'left'}}>
-          <div style={{width:'50%'}}>Mouawad online</div>
-          <div className="col-md-6">Printed Date :  {currentDate}</div>
+        <div style={styles.colmd12}>
+          <div style={styles.colmd12}>Mouawad online</div>
+        </div>
+        <div style={styles.colmd12}>
+          <div style={styles.colmd2}>Printed Date :  </div>
+          <div style={styles.colmd5}>{currentDate}</div>
         </div>
 
-        <div style={{width:'100%', float:'left'}}>
-          <div style={styles.colmd6}>PRODUCT DETAIL</div>
+        <div style={styles.colmd12}>
+          <div style={styles.colmd5}>PRODUCT DETAIL</div>
         </div>
 
-        <div style={{width:'100%', float:'left'}}>
-          <div style={{width:'50%', float:'left'}}>{this.renderImagegallery()}</div>
-          <div style={{width:'50%', float:'left'}}>
-            <div style={{width:'100%', float:'left'}}>
+        <div style={styles.colmd12}>
+          <div style={styles.colmd5}>{this.renderImagegallery()}</div>
+          <div style={styles.colmd5}>
+            <div style={styles.colmd12}>
               {this.renderDesc()}
             </div>
-            <div style={{width:'100%', float:'left'}}>
+            <div style={styles.colmd12}>
                 {this.renderAttr()}
             </div>
           </div>
         </div>
 
-        <div style={{width:'100%', float:'left'}}>{this.renderFooterAttr()}</div>
+        <div style={styles.colmd12}>{this.renderFooterAttr()}</div>
 
       </div>
     );
