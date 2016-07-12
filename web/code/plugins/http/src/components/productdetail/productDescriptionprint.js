@@ -7,6 +7,9 @@ const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata
         width:'100%',
         float:'left'
       },
+      colmdhide:{
+        display:'none'
+      },
       colmd5:{
         width: '50%',
         float:'left',
@@ -32,15 +35,21 @@ const Detail = (props) =>{
           <div style={styles.colmd5}>Description</div>
           <div style={styles.colmd5}>{props.description}</div>
         </div>
-        <div style={styles.colmd12}>
+        <div style={(userLogin.permission.price == 'All') ?
+            styles.colmd12  : styles.colmdhide}>
           <div style={styles.colmd5}>Actual Cost ({ currency })</div>
           <div style={styles.colmd5}>{ actualCost }</div>
         </div>
-        <div style={styles.colmd12}>
+        <div style={(userLogin.permission.price == 'Updated'
+              || userLogin.permission.price == 'All') ?
+            styles.colmd12  : styles.colmdhide}>
           <div style={styles.colmd5}>Updated Cost ({ currency })</div>
           <div style={styles.colmd5}>{ updatedCost }</div>
         </div>
-        <div style={styles.colmd12}>
+        <div style={(userLogin.permission.price == 'Public'
+              || userLogin.permission.price == 'Updated'
+              || userLogin.permission.price == 'All') ?
+            styles.colmd12  : styles.colmdhide}>
           <div style={styles.colmd5}>Public Price ({ currency })</div>
           <div style={styles.colmd5}>{ price }</div>
         </div>
