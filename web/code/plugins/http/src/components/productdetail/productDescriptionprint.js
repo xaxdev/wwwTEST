@@ -53,7 +53,9 @@ const Detail = (props) =>{
           <div style={styles.colmd5}>Public Price ({ currency })</div>
           <div style={styles.colmd5}>{ price }</div>
         </div>
-        <div style={styles.colmd12}>
+        <div style={userLogin.permission.price == 'Updated'
+              || userLogin.permission.price == 'All') ?
+            styles.colmd12  : styles.colmdhide}>
           <div style={styles.colmd5}>Markup (%)</div>
           <div style={styles.colmd5}>{props.markup}</div>
         </div>

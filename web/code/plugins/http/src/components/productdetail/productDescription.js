@@ -41,7 +41,9 @@ const Detail = (props) =>{
           <div className="col-md-4 col-sm-4 nopadding font-b">Public Price ({ currency })</div>
           <div className="col-md-8 col-sm-8">{ price }</div>
         </div>
-        <div className="col-md-12 col-sm-12 nopadding">
+        <div className=`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'Updated'
+              || userLogin.permission.price == 'All') ?
+            '' : 'hidden'}`>
           <div className="col-md-4 col-sm-4 nopadding font-b">Markup (%)</div>
           <div className="col-md-8 col-sm-8">{props.markup}</div>
         </div>
