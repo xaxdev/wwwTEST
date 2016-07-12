@@ -20,14 +20,14 @@ const Gemstoneattr =  (props) =>{
                <th>Symmetry</th>
                <th>Treatment</th>
                <th>Fluorescence</th>
-               
+
              </tr>
            </thead>
            <tbody>
            {props.gemstoneAttrData.map(function(data, index){
              return (
                <tr key={index}>
-                 <td title="Stone Type" className="text-center">{data.type}</td>
+                 <td title="Stone Type" className="text-center">{props.subType}</td>
                  <td title="Clarity" className="text-center">{data.clarity}</td>
                  <td title="Cut" className="text-center">{data.cut}</td>
                  <td title="Cut Grade" className="text-center">{data.cutGrade}</td>

@@ -138,6 +138,7 @@ class productprint extends Component {
 
       const Detail  = this.props.productdetail;
       const gemstoneAttr = Detail.gemstones;
+      const subType = Detail.subType;
       if(!gemstoneAttr){
         return(
           <div>Loading...</div>
@@ -154,7 +155,7 @@ class productprint extends Component {
         return(
             <div>
               <h2>GEMSTONES ATTRIBUTES</h2>
-              <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} />
+              <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} subType={subType}/>
             </div>
           );
       }

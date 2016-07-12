@@ -3,17 +3,16 @@ import numberFormat from '../../utils/convertNumberformat';
 import convertDate from '../../utils/convertDate';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
 
+console.log("logindata -->",logindata);
 const Detail = (props) =>{
   if(logindata){
     const currency = logindata.currency;
     let invoicedDate = convertDate(props.itemCreatedDate);
-    let actualCostUSD = numberFormat(props.actualCostUSD);
-    let actualCostNonUSD = numberFormat(props.actualCostNonUSD);
-    let updatedCostUSD = numberFormat(props.updatedCostUSD);
-    let updatedCostNonUSD = numberFormat(props.updatedCostNonUSD);
-    let priceUSD = numberFormat(props.priceUSD);
-    let priceNonUSD = numberFormat(props.priceNonUSD);
+    let actualCost = numberFormat(props.actualCost[currency]);
+    let updatedCost = numberFormat(props.updatedCost[currency]);
+    let price = numberFormat(props.price[currency]);
     const userLogin = JSON.parse(sessionStorage.logindata);
+
     return (
       <div className="line-h">
         <div className="col-md-12 col-sm-12 nopadding">
@@ -24,23 +23,17 @@ const Detail = (props) =>{
           <div className="col-md-4 col-sm-4 nopadding font-b">Description</div>
           <div className="col-md-8 col-sm-8">{props.description}</div>
         </div>
-        <div className={`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'All') ?
-            '' : 'hidden'}`}>
+        <div className={`col-md-12 col-sm-12 nopadding`}>
           <div className="col-md-4 col-sm-4 nopadding font-b">Actual Cost ({ currency })</div>
-          <div className="col-md-8 col-sm-8">{ currency == 'USD'? actualCostUSD:actualCostNonUSD }</div>
+          <div className="col-md-8 col-sm-8">{ actualCost }</div>
         </div>
-        <div className={`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'Updated'
-              || userLogin.permission.price == 'All') ?
-            '' : 'hidden'}`}>
+        <div className={`col-md-12 col-sm-12 nopadding`}>
           <div className="col-md-4 col-sm-4 nopadding font-b">Updated Cost ({ currency })</div>
-          <div className="col-md-8 col-sm-8">{ currency == 'USD'? updatedCostUSD:updatedCostNonUSD }</div>
+          <div className="col-md-8 col-sm-8">{ updatedCost }</div>
         </div>
-        <div className={`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'Public'
-              || userLogin.permission.price == 'Updated'
-              || userLogin.permission.price == 'All') ?
-            '' : 'hidden'}`}>
+        <div className={`col-md-12 col-sm-12 nopadding`}>
           <div className="col-md-4 col-sm-4 nopadding font-b">Public Price ({ currency })</div>
-          <div className="col-md-8 col-sm-8">{ currency == 'USD'? priceUSD:priceNonUSD }</div>
+          <div className="col-md-8 col-sm-8">{ price }</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Markup (%)</div>
