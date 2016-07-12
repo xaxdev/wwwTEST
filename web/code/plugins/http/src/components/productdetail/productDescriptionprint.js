@@ -9,7 +9,8 @@ const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata
       },
       colmd5:{
         width: '50%',
-        float:'left'
+        float:'left',
+        lineHeight:'26px'
       }
     };
 const Detail = (props) =>{

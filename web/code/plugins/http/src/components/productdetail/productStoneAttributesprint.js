@@ -1,73 +1,84 @@
 import React from 'react';
 import convertDate from '../../utils/convertDate';
+    var styles ={
+      colmd12:{
+        width:'100%',
+        float:'left'
+      },
+      colmd5:{
+        width: '50%',
+        float:'left',
+        lineHeight:'26px'
+      }
+    };
 const Stoneattr =  (props) =>{
   let certifiiedDate = convertDate(props.certifiiedDate);
   return (
-    <div className="line-h">
-        <div className="colmd12">
-            <div className="colmd12">
-              <div className="colmd6 font-b">Stone Type</div>
-              <div className="colmd6">{props.subType}</div>
+     <div style={styles.colmd12}>
+        <div style={styles.colmd12}>
+            <div style={styles.colmd12}>
+              <div style={styles.colmd5}>Stone Type</div>
+              <div style={styles.colmd5}>{props.subType}</div>
             </div>
-            <div className="colmd12">
-              <div className="colmd6 font-b">Cut</div>
-              <div className="colmd6">{props.cut}</div>
+            <div style={styles.colmd12}>
+              <div style={styles.colmd5}>Cut</div>
+              <div style={styles.colmd5}>{props.cut}</div>
             </div>
-            <div className="colmd12">
-                <div className="colmd6 font-b">Cut Grade</div>
-                <div className="colmd6">{props.cutGrade}</div>
+            <div style={styles.colmd12}>
+                <div style={styles.colmd5}>Cut Grade</div>
+                <div style={styles.colmd5}>{props.cutGrade}</div>
             </div>
-            <div className="colmd12">
-                <div className="colmd6 font-b">Color</div>
-                <div className="colmd6">{props.color}</div>
+            <div style={styles.colmd12}>
+                <div style={styles.colmd5}>Color</div>
+                <div style={styles.colmd5}>{props.color}</div>
             </div>
-            <div className="colmd12">
-                <div className="colmd6 font-b">Clarity</div>
-                <div className="colmd6">{props.clarity}</div>
+            <div style={styles.colmd12}>
+                <div style={styles.colmd5}>Clarity</div>
+                <div style={styles.colmd5}>{props.clarity}</div>
             </div>
-            <div className="colmd12">
-                <div className="colmd6 font-b">Lot Number</div>
-                <div className="colmd6">{props.lotNumber}</div>
+            <div style={styles.colmd12}>
+                <div style={styles.colmd5}>Lot Number</div>
+                <div style={styles.colmd5}>{props.lotNumber}</div>
             </div>
-            <div className="colmd12">
-                  <div className="colmd6 font-b">Lot Quantity</div>
-                  <div className="colmd6">{props.quantity}</div>
+            <div style={styles.colmd12}>
+                  <div style={styles.colmd5}>Lot Quantity</div>
+                  <div style={styles.colmd5}>{props.quantity}</div>
             </div>
-            <div className="colmd12">
-                  <div className="colmd6 font-b">Total Carat Weight</div>
-                  <div className="colmd6">{props.carat}</div>
+            <div style={styles.colmd12}>
+                  <div style={styles.colmd5}>Total Carat Weight</div>
+                  <div style={styles.colmd5}>{props.carat}</div>
             </div>
-            <div className="colmd12">
-                  <div className="colmd6 font-b">Certificate Number</div>
-                  <div className="colmd6">{props.certificatedNumber}</div>
+            <div style={styles.colmd12}>
+                  <div style={styles.colmd5}>Certificate Number</div>
+                  <div style={styles.colmd5}>{props.certificatedNumber}</div>
             </div>
-            <div className="colmd12">
-                  <div className="colmd6 font-b">Certificate Lab</div>
-                  <div className="colmd6">{props.certificateLab}</div>
+            <div style={styles.colmd12}>
+                  <div style={styles.colmd5}>Certificate Lab</div>
+                  <div style={styles.colmd5}>{props.certificateLab}</div>
             </div>
-            <div className="colmd12">
-                  <div className="colmd6 font-b">Certificate Date</div>
-                  <div className="colmd6">{certifiiedDate}</div>
+            <div style={styles.colmd12}>
+                  <div style={styles.colmd5}>Certificate Date</div>
+                  <div style={styles.colmd5}>{certifiiedDate}</div>
             </div>
-            <div className="colmd12">
-                  <div className="colmd6 font-b">Origin</div>
-                  <div className="colmd6">{props.origin}</div>
+            <div style={styles.colmd12}>
+                  <div style={styles.colmd5}>Origin</div>
+                  <div style={styles.colmd5}>{props.origin}</div>
             </div>
-            <div className="colmd12">
-                  <div className="colmd6 font-b">Polish</div>
-                  <div className="colmd6">{props.polish}</div>
+            <div style={styles.colmd12}>
+                  <div style={styles.colmd5}>Polish</div>
+                  <div style={styles.colmd5}>{props.polish}</div>
             </div>
-            <div className="colmd12">
-                  <div className="colmd6 font-b">Symmetry</div>
-                  <div className="colmd6">{props.symmetry}</div>
+            <div style={styles.colmd12}>
+                  <div style={styles.colmd5}>Symmetry</div>
+                  <div style={styles.colmd5}>{props.symmetry}</div>
             </div>
-            <div className="colmd12">
-                  <div className="colmd6 font-b">Treatment</div>
-                  <div className="colmd6">{props.treatment}</div>
+            <div style={styles.colmd12}>
+                  <div style={styles.colmd5}>Treatment</div>
+                  <div style={styles.colmd5}>{props.treatment}</div>
             </div>
-            <div className="colmd12">
-                  <div className="colmd6 font-b">Fluorescence</div>
-                  <div className="colmd6">{props.fluorescence}</div>
+            <div style={styles.colmd12}>
+                  <div style={styles.colmd5}>Fluorescence</div>
+                  <div style={styles.colmd5}>{props.fluorescence}</div>
             </div>
         </div>
     </div>

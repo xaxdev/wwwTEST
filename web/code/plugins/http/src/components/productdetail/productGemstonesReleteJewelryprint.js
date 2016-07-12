@@ -18,10 +18,22 @@ import { Link } from 'react-router';
         width:'100%'
       },
       table:{
-          width: '100%'
+          width: '100%',
+          borderSpacing: '0',
+          borderCollapse: 'collapse'
       },
       th:{
         background: '#eee'
+      },
+      border:{
+        border: '1px solid #5c5954',
+        padding:'10px 5px',
+        whiteSpace: 'nowrap'
+      },
+      textcenter:{
+        border: '1px solid #5c5954',
+        padding:'5px 5px',
+        textAlign:'center'
       }
     };
 const pructdetailurl = '/productreletedetail/';
@@ -33,27 +45,27 @@ const GemstoneReleteJewelry =  (props) =>{
     <div style={styles.tableresponsive}>
       <Table responsive style={styles.table}>
            <thead style={styles.th}>
-             <tr>
-               <th>Category</th>
-               <th>Item Reference</th>
-               <th>Metal Type</th>
-               <th>Metal Color</th>
-               <th>Location</th>
-               <th>Public Price</th>
-               <th></th>
+             <tr style={styles.border}>
+               <th style={styles.border}>Category</th>
+               <th style={styles.border}>Item Reference</th>
+               <th style={styles.border}>Metal Type</th>
+               <th style={styles.border}>Metal Color</th>
+               <th style={styles.border}>Location</th>
+               <th style={styles.border}>Public Price</th>
+               <th style={styles.border}></th>
              </tr>
            </thead>
            <tbody>
            {props.gemstoneAttrData.map(function(data, index){
              return (
                <tr key={data.reference}>
-                 <td title="Category" className="text-center">{data.subtype}</td>
-                 <td title="Item Reference" className="text-center">{data.reference}</td>
-                 <td title="Metal Type" className="text-center">{data.metalType}</td>
-                 <td title="Metal Color" className="text-center">{data.metalColor}</td>
-                 <td title="Location" className="text-center">{data.location}</td>
-                 <td title="Public Price" className="text-center">{currency == 'USD'? data.priceUSD:data.priceNonUSD}</td>
-                 <td title="View" className="text-center"><Link to={{pathname: `${pructdetailurl}${data.id}`}}><span className="icon-search search-icon"></span></Link></td>
+                 <td title="Category" style={styles.textcenter}>{data.subtype}</td>
+                 <td title="Item Reference" style={styles.textcenter}>{data.reference}</td>
+                 <td title="Metal Type" style={styles.textcenter}>{data.metalType}</td>
+                 <td title="Metal Color" style={styles.textcenter}>{data.metalColor}</td>
+                 <td title="Location" style={styles.textcenter}>{data.location}</td>
+                 <td title="Public Price" style={styles.textcenter}>{currency == 'USD'? data.priceUSD:data.priceNonUSD}</td>
+                 <td title="View" style={styles.textcenter}><Link to={{pathname: `${pructdetailurl}${data.id}`}}><span className="icon-search search-icon"></span></Link></td>
                </tr>
             )
             })}

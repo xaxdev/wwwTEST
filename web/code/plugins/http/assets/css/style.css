@@ -1,7 +1,9 @@
 @import url(/fonts/font.css);
 html {
     position: relative;
-    min-height: 100%;
+    min-height:99.9%;
+    margin:0;
+    padding:0;
 }
 body{
 	background: url(/images/bg-login.jpg) top center !important;
@@ -295,7 +297,7 @@ select.form-searchresult option{
 .ft-white, .forgot a{color:#fff;}
 
 .body-login{
-  margin-top: 25%;
+  margin-top: 20%;
   position: relative;
 }
 .body-login label{color: #fff;}
@@ -462,6 +464,8 @@ select.form-searchresult option{
 	padding-top: 7px;
   margin-bottom: 0;
   width: 25%;
+  font-family: 'open_sanssemibold';
+  font-size: 13px;
 }
 #page-menu, #search-field, .search-group select{
 	background-color: #fff;
@@ -479,6 +483,8 @@ select.form-searchresult option{
   display: inline-block;
   margin-bottom:5px;
 }
+#checkboxlistProduct div{margin-bottom:5px;}
+#checkboxlistProduct div input[type=checkbox]{margin-right: 5px;}
 .lb-pass{
 	  width: 58% !important;
     float: left;
@@ -809,7 +815,7 @@ select.form-searchresult option{
  	position: absolute;
   left: 50%;
   top: 50%;
-  height: 100%;
+  height: auto;
   width: auto;
   padding-bottom:20px;
   -webkit-transform: translate(-50%,-50%);
@@ -827,7 +833,13 @@ select.form-searchresult option{
           transform: translate(-50%,-50%);
 }
 .image-gallery{margin-top:75px;}
-.image-gallery-thumbnail, .image-gallery-thumbnail.active{  
+.image-gallery-thumbnail{
+	position: relative;
+  width: 122px;
+  height: 122px;
+  overflow: hidden;
+}
+.image-gallery-thumbnail.active{  
 	position: relative;
   width: 122px;
   height: 122px;

@@ -96,9 +96,7 @@ class productprint extends Component {
                  return(
                      <div>
                        <h2>{Attrtitle}</h2>
-
-                           <ProductJewelryAttributes attr={Detail} />
-
+                          <ProductJewelryAttributes {...Detail} />
                      </div>
                    );
            case 'STO':
@@ -106,9 +104,7 @@ class productprint extends Component {
                   return(
                       <div>
                         <h2>{Attrtitle}</h2>
-
-                            <ProductStoneAttributes attr={Detail} />
-
+                            <ProductStoneAttributes {...Detail} />
                       </div>
                     );
            case 'WAT':
@@ -116,21 +112,33 @@ class productprint extends Component {
                   return(
                       <div>
                         <h2>{Attrtitle}</h2>
-
-                            <ProductWatchAttributes attr={Detail} />
-
+                            <ProductWatchAttributes {...Detail} />
                       </div>
                     );
-           default:
-                 Attrtitle='JEWELRY ATTRIBUTES';
+          case 'OBA':
+                 Attrtitle='OBJECT OF ART ATTRIBUTES';
                  return(
                      <div>
                        <h2>{Attrtitle}</h2>
-
-                           <ProductJewelryAttributes attr={Detail} />
-
+                           <ProductObaAttributes {...Detail} />
                      </div>
                    );
+         case 'ACC':
+                Attrtitle='ACCESSORY ATTRIBUTES';
+                return(
+                    <div>
+                      <h2>{Attrtitle}</h2>
+                          <ProductAccAttributes {...Detail} />
+                    </div>
+                  );
+         case 'SPP':
+               Attrtitle='SPARE PARTS ART ATTRIBUTES';
+               return(
+                   <div>
+                     <h2>{Attrtitle}</h2>
+                         <ProductSppAttributes {...Detail} />
+                   </div>
+                 );
         }
     }
 
@@ -204,6 +212,11 @@ class productprint extends Component {
       },
       th:{
         background: '#eee'
+      },
+      mgbt:{
+        width:'100%',
+        float:'left',
+        marginBottom:'20px'
       }
     };
     let monthNames = ["January", "February", "March", "April", "May", "June",
@@ -229,7 +242,7 @@ class productprint extends Component {
           <div style={styles.colmd5}>{currentDate}</div>
         </div>
 
-        <div style={styles.colmd12}>
+        <div style={styles.mgbt}>
           <div style={styles.colmd5}>PRODUCT DETAIL</div>
         </div>
 

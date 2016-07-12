@@ -6,7 +6,8 @@ import React from 'react';
       },
       colmd5:{
         width: '50%',
-        float:'left'
+        float:'left',
+        lineHeight:'26px'
       }
     };
 const Jewelryattr = (props) =>{
