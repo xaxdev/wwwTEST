@@ -682,7 +682,9 @@ class InventoryWatch extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
+              <div className={`form-group ${(userLogin.permission.price == 'All'
+                  || userLogin.permission.price == 'Updated') ?
+                  '' : 'hidden'}`}>
                 <label className="col-sm-4 control-label">Markup %</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
