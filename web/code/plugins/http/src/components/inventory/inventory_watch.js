@@ -356,7 +356,7 @@ class InventoryWatch extends Component {
   render() {
     const { props } = this.props;
 
-    const yesNo = [{value: true,label:'Yes'},{value: false,label:'No'}];
+    const yesNo = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
 
     var { fields:
           {

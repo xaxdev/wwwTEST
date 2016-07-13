@@ -188,7 +188,7 @@ class InventoryJewelry extends Component {
   render() {
     const { props } = this.props;
 
-    const musthaves = [{value: 'Yes',label:'Yes'},{value: 'No',label:'No'}];
+    const musthaves = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
     var {  fields:
           {
             collection, totalCostFrom, totalCostTo,totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo,

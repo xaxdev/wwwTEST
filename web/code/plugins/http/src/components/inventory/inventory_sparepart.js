@@ -149,7 +149,7 @@ class InventorySparePart extends Component {
   render() {
     const { props } = this.props;
 
-    const yesNo = [{value: 'Yes',label:'Yes'},{value: 'No',label:'No'}];
+    const yesNo = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
 
     var { fields:
           {
