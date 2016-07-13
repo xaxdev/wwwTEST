@@ -4,6 +4,7 @@ import { reduxForm, reset } from 'redux-form';
 import { Button,FormControl,Pagination, ControlLabel, DropdownButton, MenuItem } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
+import shallowCompare from 'react-addons-shallow-compare';
 import jQuery from 'jquery';
 var _ = require('lodash');
 var Loading = require('react-loading');
@@ -53,29 +54,30 @@ class SearchResult extends Component {
     this.confirmExport = this.confirmExport.bind(this);
 
     this.state = {
-      activePage: 1,
+      activePage: this.props.currentPage,
       showGridView: true,
       showListView: false,
       isExport: false,
       isOpen: false,
-      allFields:false,
-      showImages:false,
-      metalType:false,
-      site:false,
-      size:false,
-      cut:false,
-      metalColor:false,
-      certificatedNumber:false,
-      caseDimension:false,
-      color:false,
-      collection:false,
-      certificateDate:false,
-      obaDimension:false,
-      clarity:false,
-      brand:false,
-      dominantStone:false,
-      grossWeight:false,
-      cutGrade:false,
+      allFields: false,
+      showImages: false,
+      metalType: false,
+      site: false,
+      size: false,
+      cut: false,
+      metalColor: false,
+      certificatedNumber: false,
+      caseDimension: false,
+      color: false,
+      collection: false,
+      certificateDate: false,
+      obaDimension: false,
+      clarity: false,
+      brand: false,
+      dominantStone: false,
+      grossWeight: false,
+      cutGrade: false,
+      showLoading: false
     };
   }
   componentWillMount() {
@@ -111,6 +113,11 @@ class SearchResult extends Component {
           printWindow.print();
     });
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    // console.log('nextProps-->',nextProps);
+    // console.log('nextState-->',nextState);
+    return shallowCompare(this, nextProps, nextState);
+  }
 
   handleSelect(eventKey) {
       this.setState({
@@ -125,6 +132,7 @@ class SearchResult extends Component {
         'sortDirections': sortingDirection
       };
       const { filters } =  this.props;
+
       filters.forEach(function(filter){
         var keys = Object.keys(filter);
         keys.forEach((key) => {
@@ -132,13 +140,39 @@ class SearchResult extends Component {
           params[key] = value;
         });
       });
-      this.props.getItems(params);
+
+      let girdView = this.state.showGridView;
+      let listView = this.state.showListView;
+
+      this.setState({
+        showGridView: false,
+        showListView: false,
+        showLoading: true
+      });
+
+      this.props.getItems(params)
+      .then((value) => {
+        this.setState({
+          showLoading: false
+        });
+        if(girdView){
+          this.setState({
+            showGridView: true
+          });
+        }else if (listView) {
+          this.setState({
+            showListView: true
+          });
+        }
+      });
+
       var { currPage } = this.props.fields;
       currPage.onChange(eventKey);
   }
   handleGo(e){
     e.preventDefault();
     // console.log('handleGo-->',this.refs.reletego.value);
+
     const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
     const sortingBy = this.refs.sortingBy.value;
     const sortingDirection = this.refs.sortingDirection.value;
@@ -152,7 +186,8 @@ class SearchResult extends Component {
       'sortBy': sortingBy,
       'sortDirections': sortingDirection
     };
-    const { filters } =  this.props;
+    let { filters } =  this.props;
+
     filters.forEach(function(filter){
       var keys = Object.keys(filter);
       keys.forEach((key) => {
@@ -160,8 +195,31 @@ class SearchResult extends Component {
         params[key] = value;
       });
     });
-    // console.log('params-->',params);
-    this.props.getItems(params);
+
+    let girdView = this.state.showGridView;
+    let listView = this.state.showListView;
+
+    this.setState({
+      showGridView: false,
+      showListView: false,
+      showLoading: true
+    });
+
+    this.props.getItems(params)
+    .then((value) => {
+      this.setState({
+        showLoading: false
+      });
+      if(girdView){
+        this.setState({
+          showGridView: true
+        });
+      }else if (listView) {
+        this.setState({
+          showListView: true
+        });
+      }
+    });
   }
   renderPagination(){
     const { fields: { currPage },
@@ -174,7 +232,8 @@ class SearchResult extends Component {
     // console.log('currPage-->',currPage);
     // console.log('this.state.activePage-->',this.state.activePage);
     const page = this.state.activePage;
-    currPage.value = page;
+    // currPage.value = page;
+    // console.log('page-->',page);
 
     return(
         <div>
@@ -192,7 +251,7 @@ class SearchResult extends Component {
 
             <div>
               <span>Page</span>
-                <input type="text" placeholder={page} ref="reletego" {...currPage}/>
+                <input type="text" placeholder={this.state.activePage} ref="reletego" {...currPage}/>
               <span>of</span>
               <span>{numberFormat(totalPages)}</span>
               <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
@@ -605,14 +664,14 @@ class SearchResult extends Component {
                 </div>
               </div>
               <div className="col-sm-2 ft-white nopadding">
-              <div
-                disabled={submitting} onClick={ this.gridViewResults }>
-                <div className="bd-white m-pt-mgl"><span className="glyphicon glyphicon-th-large"></span></div>
-              </div>
-              <div
-                disabled={submitting} onClick={ this.listViewResults } >
-                <div className="bd-white"><span className="glyphicon glyphicon-th-list"></span></div>
-              </div>
+                <div
+                  disabled={submitting} onClick={ this.gridViewResults }>
+                    <div className="bd-white m-pt-mgl"><span className="glyphicon glyphicon-th-large"></span></div>
+                </div>
+                <div
+                  disabled={submitting} onClick={ this.listViewResults } >
+                    <div className="bd-white"><span className="glyphicon glyphicon-th-list"></span></div>
+                </div>
               </div>
             </div>
             </div>
@@ -645,11 +704,18 @@ class SearchResult extends Component {
                           </div>
                         {/* End Total Data */}
                         {/* Grid Product */}
-                        <div className={`search-product ${this.state.showGridView ? '' : 'hidden'}` }>
+                        <div id="gridview" className={`search-product ${this.state.showGridView ? '' : 'hidden'}` }>
                           <GridItemsView  items={items} onClickGrid={this.onClickGrid} />
                         </div>
-                        <div className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
+                        <div id="listview" className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
                           <ListItemsView items={items} onClickGrid={this.onClickGrid}/>
+                        </div>
+                        <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
+                          <center>
+                            <br/><br/><br/><br/><br/><br/>
+                              <Loading type="spin" color="#202020" width="10%"/>
+                          </center>
+                          <br/><br/><br/><br/><br/><br/>
                         </div>
                         {/* Grid Product */}
                       </div>
