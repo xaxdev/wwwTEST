@@ -57,9 +57,25 @@ class ListItemsView extends Component {
     var items = null;
     if (this.props.items.length != 0){
       items = this.props.items.map(function (col, idx) {
+        // console.log('col-->',col);
         let imagesOriginal = (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif';
         let imagesThumbnail = (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif';
-        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail}
+        let size = '';
+
+        switch (col.type) {
+          case 'JLY':
+            size = (col.size != undefined) ? col.size : '';
+            break;
+          case 'WAT':
+            size = (col.caseDimension != undefined) ? col.caseDimension : '';
+            break;
+          case 'OBA':
+            size = (col.dimension != undefined) ? col.dimension : '';
+            break;
+          default:
+            break;
+        }
+        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size}
       });
 
       items = items.map(function (col, idx) {
@@ -74,11 +90,9 @@ class ListItemsView extends Component {
         { title: 'Item Reference', prop: 'reference' },
         { title: 'Description', prop: 'description' },
         { title: 'SKU', prop: 'sku' },
-        { title: 'Location', prop: 'location' },
-        { title: 'Warehouse', prop: 'site' },
+        { title: 'Location', prop: 'siteName' },
+        { title: 'Warehouse', prop: 'warehouseName' },
         { title: 'Size', prop: 'size' },
-        { title: 'Case Dimension', prop: '' },
-        { title: 'OBA Dimension', prop: '' },
         { title: 'Jewelry Weight', prop: '' },
         { title: 'Gross Weight', prop: 'grossWeight' },
         { title: 'Public Price', prop: 'priceUSD' },
@@ -89,7 +103,7 @@ class ListItemsView extends Component {
         <div>
           <DataTable
             className="col-sm-12"
-            keys={['', 'image','reference', 'description', 'sku', 'location', 'site', 'size', '', '', '', 'grossWeight','priceUSD','' ]}
+            keys={['', 'image','reference', 'description', 'sku', 'siteName', 'warehouseName', 'size', '', 'grossWeight','priceUSD','' ]}
             columns={tableColumns}
             initialData={items}
             initialPageLength={this.state.initialPageLength}

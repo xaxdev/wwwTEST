@@ -441,7 +441,7 @@ class SearchResult extends Component {
   confirmExport(e){
     e.preventDefault();
     const that = this;
-    const { items } = this.props;
+    const { items, exportItems } = this.props;
     // console.log('this',this);
     var titles = ['Item Reference', 'Description', 'SKU', 'Location', 'Vendor Item Reference', 'Vendor Name',
                   'Public Price', 'Quantity', 'Unit'];
@@ -470,7 +470,8 @@ class SearchResult extends Component {
     if (this.state.showImages) titles.push('Images');
 
     var data = [titles];
-    items.forEach(function(item){
+    exportItems.forEach(function(item){
+      // console.log('item-->',item);
       var arrayItems = [];
 
       arrayItems.push(item.reference,item.description,item.sku,item.location,item.venderReference,'Vendor Name',
@@ -742,6 +743,7 @@ function mapStateToProps(state) {
   return {
     searchResult: state.searchResult,
     items: state.searchResult.datas,
+    exportItems: state.searchResult.exportItems,
     totalPages: state.searchResult.totalpage,
     currentPage: state.searchResult.currentPage,
     totalPublicPrice: state.searchResult.totalpublicprice,

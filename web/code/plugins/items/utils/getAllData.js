@@ -6,6 +6,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
   var allData = [];
   var sumPriceData = [];
   var sumCostData = [];
+  var exportData = null;
 
   var data = response.hits.hits.map((element) => element._source);
   if(sortDirections == 'desc'){
@@ -14,6 +15,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
     data = _.sortBy(data,sortBy,sortDirections);
   }
 
+  exportData = data;
   // console.log('data-->',data);
   data.forEach(function(item){
     allData.push({'id': item.id,'reference':item.reference});
@@ -51,6 +53,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
   const sendData = {
           'data':pageData,
           'allData':allData,
+          'exportData': exportData,
           'summary':{
               'count': allData.length,
               'price': sumPrice,
