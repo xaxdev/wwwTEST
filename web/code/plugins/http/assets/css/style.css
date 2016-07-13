@@ -31,10 +31,10 @@ label{font-weight: normal;}
 input[type='number'] {
     -moz-appearance:textfield;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 #page-wrapper{border:1px solid #dfdfdf;}
 .btn{
@@ -221,7 +221,7 @@ select:focus::-ms-value {background: none;}
 }
 
 input[type=file] {
-    display: block;   
+    display: block;
 }
 #btn-browsefile{
 	background: url(/images/bg-upload.jpg) no-repeat;
@@ -268,7 +268,7 @@ select.form-searchresult option{
   -moz-appearance:none;
   -o-appearance:none;
    appearance:none;
-    -moz-appearance: none; 
+    -moz-appearance: none;
 }
 
 .styled-select select::-ms-expand{
@@ -308,13 +308,13 @@ select.form-searchresult option{
 .login .text-danger{margin:20px 0;}
 
 .login-height{
-	height:50px; 
+	height:50px;
 	font-size:16px;
 	margin-bottom:10px;
 }
 .top-line{color:#d9c06e; padding:0 10px;}
 .top-line-detail h2{
-	border-top:1px solid #eaeaea; 
+	border-top:1px solid #eaeaea;
 	line-height: 65px;
   margin-bottom: 0;
 }
@@ -496,7 +496,7 @@ select.form-searchresult option{
 	font-size:16px !important;
 }
 .modal-body h3, .modal-body .h3{
-	text-align: center !important; 
+	text-align: center !important;
 	color:#3c3c3a!important;
   padding: 30px 0 20px 0;
   font-size:16px !important;
@@ -552,7 +552,7 @@ select.form-searchresult option{
 	margin-right: 0;
 	border-radius: 0;
 	padding: 15px 20px;
-	font-size: 16px;	
+	font-size: 16px;
 	font-family: 'MercuryDisplay-Roman';
 	text-transform: uppercase;
   color: #fbdc88;
@@ -617,36 +617,36 @@ select.form-searchresult option{
     cursor:pointer;
 }
 .icon-add{
-	background: url(/images/icon-add.png) no-repeat center; 
-	width:40px; 
+	background: url(/images/icon-add.png) no-repeat center;
+	width:40px;
 	height: 40px;
 	float: left;
 	cursor:pointer;
 }
 .icon-excel{
-	background: url(/images/icon-excel.png) no-repeat center; 
-	width:40px; 
+	background: url(/images/icon-excel.png) no-repeat center;
+	width:40px;
 	height: 40px;
 	float: left;
 	cursor:pointer;
 }
 .icon-print{
-	background: url(/images/icon-print.png) no-repeat center; 
-	width:40px; 
+	background: url(/images/icon-print.png) no-repeat center;
+	width:40px;
 	height: 40px;
 	float: left;
 	cursor:pointer;
 }
 .icon-zoom{
-	background: url(/images/icon-zoom.png) no-repeat center; 
-	width:40px; 
+	background: url(/images/icon-zoom.png) no-repeat center;
+	width:40px;
 	height: 40px;
 	float: left;
 	cursor:pointer;
 }
 .icon-search{
-	background: url(/images/icon-search-30.png) no-repeat center; 
-	width:30px; 
+	background: url(/images/icon-search-30.png) no-repeat center;
+	width:30px;
 	height: 30px;
 	float: left;
 	cursor:pointer;
@@ -656,7 +656,7 @@ select.form-searchresult option{
 .searchresult-navi input{margin:0 5px; text-align: center;}
 .searchresult-navi span{padding:0 3px;}
 .searchresult-navi div, .searchresult-navi ul{float:left; margin-bottom:10px;}
-.searchresult-navi	button	{    
+.searchresult-navi	button	{
 		background-color: #ddbe6a;
     border-color: #ddbe6a;
     border-radius:16px;
@@ -673,15 +673,15 @@ select.form-searchresult option{
     margin: 20px 0;
 }
 .icon-add-28{
-	background: url(/images/icon-add-28.png) no-repeat center; 
-	width:28px; 
+	background: url(/images/icon-add-28.png) no-repeat center;
+	width:28px;
 	height: 28px;
 	float: left;
 	cursor: pointer;
 }
 .grid-add, .checkbox{
-	float:left; margin-top: 0; 
-	z-index: 1; 
+	float:left; margin-top: 0;
+	z-index: 1;
 	position: relative;
 	cursor:pointer;
 }
@@ -723,12 +723,12 @@ select.form-searchresult option{
 }
 .over-searchresult{
 	font-size:13px;
-	margin:-3px auto; 
-	position: absolute; 
+	margin:-3px auto;
+	position: absolute;
 	text-align: left;
 	background: #464646;
 	color:#fff;
-	top:0; 
+	top:0;
 	left: 275px;
 	padding: 20px 20px;
   z-index: 9;
@@ -737,12 +737,12 @@ select.form-searchresult option{
 }
 .over-searchresult-left {
 	font-size:13px;
-	margin:-3px auto; 
-	position: absolute; 
+	margin:-3px auto;
+	position: absolute;
 	text-align: left;
 	background: #464646;
 	color:#fff;
-	top:0; 
+	top:0;
 	left: -265px;
 	padding: 20px 20px;
   z-index: 9;
@@ -767,7 +767,7 @@ select.form-searchresult option{
 .product-detail-h{
 	font-weight: 900;
 	height:auto;
-	height:60px; 
+	height:60px;
 	overflow: hidden;
 }
 .searchresult-list-icon	button{
@@ -801,7 +801,7 @@ select.form-searchresult option{
 }
 .relete span, .relete input{float:left;}
 .pagination>li>a, .pagination>li>span{
-	padding: 6px 9px; 
+	padding: 6px 9px;
 	color:#383735;
 	font-weight: bold;
 }
@@ -839,7 +839,7 @@ select.form-searchresult option{
   height: 122px;
   overflow: hidden;
 }
-.image-gallery-thumbnail.active{  
+.image-gallery-thumbnail.active{
 	position: relative;
   width: 122px;
   height: 122px;
@@ -888,7 +888,7 @@ select.form-searchresult option{
 	float: left;
   margin-top: 10px;
 }
-.user-edit select{min-height: 200px; max-width: 290px;}
+.user-edit select{min-height: 200px; width: 290px;}
 .tooltiop-span span{margin-right: 5px;}
 .image-gallery-image{text-align: center; margin:0 auto;}
 .image-gallery-image img{width: auto !important;}
@@ -904,7 +904,7 @@ select.form-searchresult option{
 		width: 245px;
 	}
 	.over-searchresult-left{
-		width: 245px; 
+		width: 245px;
 		left: -235px;
 	}
 	.form-searchresult, .btn, .bg-hearder label{font-size: 12px;}
@@ -1090,7 +1090,7 @@ select.form-searchresult option{
 	.over-searchresult,.over-searchresult-left {
 	    left: 0;
 	    width: 35%;
-	}	
+	}
 	.m-land-user{
 		margin-bottom: 20px;
     float: right;
@@ -1143,7 +1143,7 @@ select.form-searchresult option{
 			.checkbox input[type="checkbox"]{
 					width:28px;
 					height:28px;
-					margin:0 0 0 -10px; 
+					margin:0 0 0 -10px;
 					cursor:pointer;
 			}
 		  .checkbox input[type="checkbox"],
@@ -1204,7 +1204,7 @@ select.form-searchresult option{
 			background-color: #383735;
 			color:#ffffff;
 			border-top: 1px solid #383735;
-		} 
+		}
 		.table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
 			border-bottom-width: 0px;
 		}
@@ -1223,5 +1223,5 @@ select.form-searchresult option{
 
 ul.nav-tabs > li:nth-child(6),ul.nav-tabs > li:nth-child(4) ,ul.nav-tabs > li:nth-child(5)   {display: none;}
 .icon-add{display: none;}
-.searchresult-prodcut .pull-right div{display: none;} 
-.searchresult-prodcut .pull-right {width: 28px; height: 28px;} 
+.searchresult-prodcut .pull-right div{display: none;}
+.searchresult-prodcut .pull-right {width: 28px; height: 28px;}
