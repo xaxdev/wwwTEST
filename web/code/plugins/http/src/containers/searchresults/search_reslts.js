@@ -520,7 +520,7 @@ class SearchResult extends Component {
         if(that.state.cutGrade) arrayItems.push(item.cutGrade);
       }
 
-      if (that.state.showImages) arrayItems.push(item.gallery[0].thumbnail);
+      if (that.state.showImages) arrayItems.push((item.gallery.length) != 0 ? item.gallery[0].thumbnail : '/images/blank.gif');
 
       data.push(arrayItems);
     });
