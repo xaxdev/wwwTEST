@@ -1,6 +1,8 @@
 import React,{ Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import Loginform from '../../components/login/login_form';
 import * as loginAction from '../../actions/loginaction';
+import * as itemActions from '../../actions/itemactions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
@@ -19,9 +21,10 @@ class Login extends Component {
   }
   handleSubmit(data) {
     // console.log(data);
-    this.props.login(data)
+    this.props.loginAction.login(data)
       .then(() => {
         // console.log(this.props.logindata.loginstatus);
+          this.props.itemActions.newSearch();
           if(this.props.logindata.loginstatus == true){
             this.context.router.push('/inventories');
           }
@@ -44,5 +47,10 @@ Login.contextTypes = {
 function mapStateToProps(state) {
   return { logindata: state.login };
 }
-
-module.exports = connect(mapStateToProps, loginAction)(Login)
+function mapDispatchToProps(dispatch) {
+  return {
+    loginAction: bindActionCreators(Object.assign({}, loginAction), dispatch),
+    itemActions: bindActionCreators(Object.assign({}, itemActions), dispatch)
+  }
+}
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Login)
