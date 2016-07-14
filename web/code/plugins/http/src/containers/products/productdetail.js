@@ -45,7 +45,7 @@ class productdetail extends Component {
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
-          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button></div></div>'),
+          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button><button id="btnzoom" class="btn btn-primary btn-radius" style="float:right">Zoom</button></div></div>'),
           type: 'inline'
         },
         callbacks: {
@@ -58,6 +58,17 @@ class productdetail extends Component {
             jQuery('#btndown').click(function(){
 
               jQuery('#galleryimg').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
+            });
+            let zoomimg = false;
+            jQuery('#btnzoom').click(function(){
+                if(zoomimg == false){
+                  zoomimg = true;
+                  jQuery('#galleryimg').css({'width': jQuery('#galleryimg').width() * 2 ,'max-width':'700px'});
+                } else {
+                  zoomimg = false;
+                  jQuery('#galleryimg').css({'width': 'auto' ,'max-width':'500px'});
+                }
+
             });
           }
         }

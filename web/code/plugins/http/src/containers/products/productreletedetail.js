@@ -44,7 +44,7 @@ class productreletedetail extends Component {
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
-          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button></div></div>'),
+          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button><button id="btnzoom" class="btn btn-primary btn-radius" style="float:right">Zoom</button></div></div>'),
           type: 'inline'
         },
         callbacks: {
@@ -57,6 +57,17 @@ class productreletedetail extends Component {
             jQuery('#btndown').click(function(){
 
               jQuery('#galleryimg').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
+            });
+            let zoomimg = false;
+            jQuery('#btnzoom').click(function(){
+                if(zoomimg == false){
+                  zoomimg = true;
+                  jQuery('#galleryimg').css({'width': jQuery('#galleryimg').width() * 2 ,'max-width':'700px'});
+                } else {
+                  zoomimg = false;
+                  jQuery('#galleryimg').css({'width': 'auto' ,'max-width':'500px'});
+                }
+
             });
           }
         }
@@ -377,7 +388,7 @@ class productreletedetail extends Component {
                         </div>
                         <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
                           <div className="line-border"></div>
-                        </div>                        
+                        </div>
                         <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{this.renderAttr()}</div>
                         <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterAttr()}</div>
                           <div id="dvContainer" className="hidden">
