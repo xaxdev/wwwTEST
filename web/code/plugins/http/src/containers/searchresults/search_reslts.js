@@ -459,6 +459,10 @@ class SearchResult extends Component {
   }
   confirmExport(e){
     e.preventDefault();
+
+    const host = HOSTNAME || 'localhost';
+    const ROOT_URL = `${host}:3005`;
+
     const that = this;
     const { items, exportItems } = this.props;
     // console.log('this',this);
@@ -520,7 +524,10 @@ class SearchResult extends Component {
         if(that.state.cutGrade) arrayItems.push(item.cutGrade);
       }
 
-      if (that.state.showImages) arrayItems.push((item.gallery.length) != 0 ? item.gallery[0].thumbnail : '/images/blank.gif');
+      if (that.state.showImages)
+        arrayItems.push((item.gallery.length) != 0
+                          ? ROOT_URL + item.gallery[0].thumbnail
+                          : ROOT_URL + '/images/blank.gif');
 
       data.push(arrayItems);
     });
