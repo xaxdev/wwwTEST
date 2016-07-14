@@ -52,6 +52,9 @@ class SearchResult extends Component {
     this.modifySearch = this.modifySearch.bind(this);
     this.exportExcel = this.exportExcel.bind(this);
     this.confirmExport = this.confirmExport.bind(this);
+    this.hideModalNoResults = this.hideModalNoResults.bind(this);
+
+    // console.log('this.props.items-->',this.props.searchResult.datas);
 
     this.state = {
       activePage: this.props.currentPage,
@@ -59,6 +62,7 @@ class SearchResult extends Component {
       showListView: false,
       isExport: false,
       isOpen: false,
+      isOpenNoResults: true,
       allFields: false,
       showImages: false,
       metalType: false,
@@ -232,8 +236,6 @@ class SearchResult extends Component {
     // console.log('currPage-->',currPage);
     // console.log('this.state.activePage-->',this.state.activePage);
     const page = this.state.activePage;
-    // currPage.value = page;
-    // console.log('page-->',page);
 
     return(
         <div>
@@ -256,11 +258,10 @@ class SearchResult extends Component {
               <span>{numberFormat(totalPages)}</span>
               <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
             </div>
-
         </div>
-
       );
   }
+
   renderTotals(){
     const { fields: { currPage },
             totalPages,
@@ -299,7 +300,6 @@ class SearchResult extends Component {
     if(token){
         this.context.router.push(`/productdetail/${pageNumber}`);
     }
-    // this.setState({ currentPage: pageNumber });
   }
   gridViewResults(){
     this.setState({
@@ -320,9 +320,6 @@ class SearchResult extends Component {
     const sortingBy = e.target.value;
     const { searchResult } = this.props;
     const sortingDirection = this.refs.sortingDirection.value;
-
-    // console.log('searchResult-->',searchResult);
-
     // this.props.sortBy(searchResult, sortingBy, sortingDirection);
     var params = {
       'page' : this.state.activePage,
@@ -352,13 +349,14 @@ class SearchResult extends Component {
       activePage: 1
     });
 
-    // this.props.sortBy(searchResult, sortingBy, sortingDirection);
     var params = {
       'page' : this.state.activePage,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection
     };
+
     const { filters } =  this.props;
+
     filters.forEach(function(filter){
       var keys = Object.keys(filter);
       keys.forEach((key) => {
@@ -371,7 +369,9 @@ class SearchResult extends Component {
   }
   newSearch(e){
     e.preventDefault();
+
     const token = sessionStorage.token;
+
     this.props.newSearch();
     if(token){
       this.context.router.push('/inventories');
@@ -379,7 +379,9 @@ class SearchResult extends Component {
   }
   modifySearch(e){
     e.preventDefault();
+
     const token = sessionStorage.token;
+
     this.props.modifySearch(this.props.paramsSearch);
     if(token){
       this.context.router.push('/inventories');
@@ -388,6 +390,7 @@ class SearchResult extends Component {
   openModal(){
     this.setState({ isOpen: true });
   }
+
   hideModal = (e) => {
     e.preventDefault();
 
@@ -395,6 +398,22 @@ class SearchResult extends Component {
       isOpen: false,
     });
   }
+
+  hideModalNoResults = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      isOpenNoResults: false
+    });
+
+    const token = sessionStorage.token;
+
+    this.props.modifySearch(this.props.paramsSearch);
+    if(token){
+      this.context.router.push('/inventories');
+    }
+  }
+
   exportExcel(){
     this.setState({
       isOpen: true,
@@ -610,13 +629,15 @@ class SearchResult extends Component {
 
   render() {
     const { totalPages,
-            currentPage,
+            currentPage,allItems,
             items,totalPublicPrice,totalUpdatedCost,
             handleSubmit,
             resetForm,
             submitting } = this.props;
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+
+    const { isOpenMessage } = this.state;
 
     // console.log('this.state.activePage-->',this.state.activePage);
 
@@ -626,114 +647,188 @@ class SearchResult extends Component {
         <center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center>
       );
     }else{
-      return(
-        <form role="form">
-          {/* Header Search */}
-          <div className="col-sm-12 bg-hearder bg-header-searchresult">
-            <div className="col-md-4 col-sm-12 ft-white m-nopadding">
-              <h1>SEARCH RESULTS</h1>
-            </div>
-            <div className="col-md-8 col-sm-12 nopadding">
-            <div className="m-width-100 text-right maring-t15 float-r ip-font ipp-margin m-pt">
-              <div className="col-sm-4 col-xs-12 nopadding">
-                  <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                    <button className="btn btn-searchresult" disabled={submitting} onClick={this.newSearch}>New Search</button>
-                  </div>
-                  <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                    <button className="btn btn-searchresult" disabled={submitting} onClick={this.modifySearch}>Modify Search</button>
-                  </div>
+      if(allItems.length == 0){
+        return(
+          <form role="form">
+            {/* Header Search */}
+            <div className="col-sm-12 bg-hearder bg-header-searchresult">
+              <div className="col-md-4 col-sm-12 ft-white m-nopadding">
+                <h1>SEARCH RESULTS</h1>
               </div>
-              <div className="col-sm-2 col-xs-12 ft-white margin-t5">
-                <ControlLabel> <span className="fc-ddbe6a m-none">|</span> Sort By: </ControlLabel>
-              </div>
-              <div className="col-sm-2 col-xs-12 nopadding">
-                <div className="styled-select">
-                  <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy">
-                    <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                    <option key={'priceUSD'} value={'priceUSD'}>{'Public Price'}</option>
-                    <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
-                    <option key={'description'} value={'description'}>{'Description'}</option>
-                  </select>
+              <div className="col-md-8 col-sm-12 nopadding">
+              <div className="m-width-100 text-right maring-t15 float-r ip-font ipp-margin m-pt">
+                <div className="col-sm-4 col-xs-12 nopadding">
+                    <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
+                      <button className="btn btn-searchresult" disabled={submitting} onClick={this.newSearch}>New Search</button>
+                    </div>
+                    <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
+                      <button className="btn btn-searchresult" disabled={submitting} onClick={this.modifySearch}>Modify Search</button>
+                    </div>
                 </div>
-              </div>
-              <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
-                <div className="styled-select">
-                    <select className="form-searchresult" onChange={this.sortingDirection} ref="sortingDirection">
-                      <option key={'desc'} value={'desc'}>{'Descending'}</option>
-                      <option key={'asc'} value={'asc'}>{'Ascending'}</option>
+                <div className="col-sm-2 col-xs-12 ft-white margin-t5">
+                  <ControlLabel> <span className="fc-ddbe6a m-none">|</span> Sort By: </ControlLabel>
+                </div>
+                <div className="col-sm-2 col-xs-12 nopadding">
+                  <div className="styled-select">
+                    <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy">
+                      <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
+                      <option key={'priceUSD'} value={'priceUSD'}>{'Public Price'}</option>
+                      <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
+                      <option key={'description'} value={'description'}>{'Description'}</option>
                     </select>
-                </div>
-              </div>
-              <div className="col-sm-2 ft-white nopadding">
-                <div
-                  disabled={submitting} onClick={ this.gridViewResults }>
-                    <div className="bd-white m-pt-mgl"><span className="glyphicon glyphicon-th-large"></span></div>
-                </div>
-                <div
-                  disabled={submitting} onClick={ this.listViewResults } >
-                    <div className="bd-white"><span className="glyphicon glyphicon-th-list"></span></div>
-                </div>
-              </div>
-            </div>
-            </div>
-          </div>
-          {/* End Header Search */}
-          {/* Util&Pagination */}
-          <div className="row">
-            <div className="col-sm-12">
-                <div className="panel panel-default">
-                    <div className="panel-body padding-ft0">
-                      <div className="col-sm-12 ">
-                        <div className="col-md-3 col-sm-4 nopadding">
-
-                          <a><div className="icon-add margin-l10"></div></a>
-                          <a><div className="icon-excel margin-l10" disabled={submitting}
-                                onClick={ this.exportExcel }></div></a>
-                          <a><div className="icon-print margin-l10" id="printproduct"></div></a>
-                        </div>
-                        <div className="col-md-9 col-sm-8 pagenavi">
-                          <div className="searchresult-navi">
-                              {this.renderPagination()}
-                          </div>
-                        </div>
-                      </div>
-                      {/* End Util&Pagination */}
-                      <div id="dvContainerPrint">
-                        {/* Total Data */}
-                          <div className="bg-or text-center">
-                            {this.renderTotals()}
-                          </div>
-                        {/* End Total Data */}
-                        {/* Grid Product */}
-                        <div id="gridview" className={`search-product ${this.state.showGridView ? '' : 'hidden'}` }>
-                          <GridItemsView  items={items} onClickGrid={this.onClickGrid} />
-                        </div>
-                        <div id="listview" className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
-                          <ListItemsView items={items} onClickGrid={this.onClickGrid}/>
-                        </div>
-                        <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
-                          <center>
-                            <br/><br/><br/><br/><br/><br/>
-                              <Loading type="spin" color="#202020" width="10%"/>
-                          </center>
-                          <br/><br/><br/><br/><br/><br/>
-                        </div>
-                        {/* Grid Product */}
-                      </div>
-                      {/* Pagination */}
-                      <div className="col-sm-12 pagenavi maring-t20">
-                        <div className="searchresult-navi pull-right margin-r20">
-                          {this.renderPagination()}
-                        </div>
-                      </div>
-                      {/* End Pagination */}
                   </div>
                 </div>
+                <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
+                  <div className="styled-select">
+                      <select className="form-searchresult" onChange={this.sortingDirection} ref="sortingDirection">
+                        <option key={'desc'} value={'desc'}>{'Descending'}</option>
+                        <option key={'asc'} value={'asc'}>{'Ascending'}</option>
+                      </select>
+                  </div>
+                </div>
+                <div className="col-sm-2 ft-white nopadding">
+                  <div
+                    disabled={submitting} onClick={ this.gridViewResults }>
+                      <div className="bd-white m-pt-mgl"><span className="glyphicon glyphicon-th-large"></span></div>
+                  </div>
+                  <div
+                    disabled={submitting} onClick={ this.listViewResults } >
+                      <div className="bd-white"><span className="glyphicon glyphicon-th-list"></span></div>
+                  </div>
+                </div>
+              </div>
+              </div>
             </div>
-          </div>
-          {this.renderExportExcelDialog()}
-        </form>
-      );
+
+            <div >
+              <Modal isOpen={this.state.isOpenNoResults} onRequestHide={this.hideModalNoResults}>
+                <div className="modal-header">
+                  <ModalClose onClick={this.hideModalNoResults}/>
+                  <h1 className="modal-title">Message</h1>
+                </div>
+                <div className="modal-body">
+                  <h3>No Results.</h3>
+                </div>
+                <div className="modal-footer">
+                  <button className="btn btn-default btn-radius btn-width" onClick={this.hideModalNoResults}>
+                    Ok
+                  </button>
+                </div>
+              </Modal>
+             </div>
+          </form>
+        );
+
+      }else{
+        return(
+          <form role="form">
+            {/* Header Search */}
+            <div className="col-sm-12 bg-hearder bg-header-searchresult">
+              <div className="col-md-4 col-sm-12 ft-white m-nopadding">
+                <h1>SEARCH RESULTS</h1>
+              </div>
+              <div className="col-md-8 col-sm-12 nopadding">
+              <div className="m-width-100 text-right maring-t15 float-r ip-font ipp-margin m-pt">
+                <div className="col-sm-4 col-xs-12 nopadding">
+                    <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
+                      <button className="btn btn-searchresult" disabled={submitting} onClick={this.newSearch}>New Search</button>
+                    </div>
+                    <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
+                      <button className="btn btn-searchresult" disabled={submitting} onClick={this.modifySearch}>Modify Search</button>
+                    </div>
+                </div>
+                <div className="col-sm-2 col-xs-12 ft-white margin-t5">
+                  <ControlLabel> <span className="fc-ddbe6a m-none">|</span> Sort By: </ControlLabel>
+                </div>
+                <div className="col-sm-2 col-xs-12 nopadding">
+                  <div className="styled-select">
+                    <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy">
+                      <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
+                      <option key={'priceUSD'} value={'priceUSD'}>{'Public Price'}</option>
+                      <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
+                      <option key={'description'} value={'description'}>{'Description'}</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
+                  <div className="styled-select">
+                      <select className="form-searchresult" onChange={this.sortingDirection} ref="sortingDirection">
+                        <option key={'desc'} value={'desc'}>{'Descending'}</option>
+                        <option key={'asc'} value={'asc'}>{'Ascending'}</option>
+                      </select>
+                  </div>
+                </div>
+                <div className="col-sm-2 ft-white nopadding">
+                  <div
+                    disabled={submitting} onClick={ this.gridViewResults }>
+                      <div className="bd-white m-pt-mgl"><span className="glyphicon glyphicon-th-large"></span></div>
+                  </div>
+                  <div
+                    disabled={submitting} onClick={ this.listViewResults } >
+                      <div className="bd-white"><span className="glyphicon glyphicon-th-list"></span></div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+            {/* End Header Search */}
+            {/* Util&Pagination */}
+            <div className="row">
+              <div className="col-sm-12">
+                  <div className="panel panel-default">
+                      <div className="panel-body padding-ft0">
+                        <div className="col-sm-12 ">
+                          <div className="col-md-3 col-sm-4 nopadding">
+
+                            <a><div className="icon-add margin-l10"></div></a>
+                            <a><div className="icon-excel margin-l10" disabled={submitting}
+                                  onClick={ this.exportExcel }></div></a>
+                            <a><div className="icon-print margin-l10" id="printproduct"></div></a>
+                          </div>
+                          <div className="col-md-9 col-sm-8 pagenavi">
+                            <div className="searchresult-navi">
+                                {this.renderPagination()}
+                            </div>
+                          </div>
+                        </div>
+                        {/* End Util&Pagination */}
+                        <div id="dvContainerPrint">
+                          {/* Total Data */}
+                            <div className="bg-or text-center">
+                              {this.renderTotals()}
+                            </div>
+                          {/* End Total Data */}
+                          {/* Grid Product */}
+                          <div id="gridview" className={`search-product ${this.state.showGridView ? '' : 'hidden'}` }>
+                            <GridItemsView  items={items} onClickGrid={this.onClickGrid} />
+                          </div>
+                          <div id="listview" className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
+                            <ListItemsView items={items} onClickGrid={this.onClickGrid}/>
+                          </div>
+                          <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
+                            <center>
+                              <br/><br/><br/><br/><br/><br/>
+                                <Loading type="spin" color="#202020" width="10%"/>
+                            </center>
+                            <br/><br/><br/><br/><br/><br/>
+                          </div>
+                          {/* Grid Product */}
+                        </div>
+                        {/* Pagination */}
+                        <div className="col-sm-12 pagenavi maring-t20">
+                          <div className="searchresult-navi pull-right margin-r20">
+                            {this.renderPagination()}
+                          </div>
+                        </div>
+                        {/* End Pagination */}
+                    </div>
+                  </div>
+              </div>
+            </div>
+            {this.renderExportExcelDialog()}
+          </form>
+        );
+      }
     }
   }
 }
