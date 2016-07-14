@@ -460,8 +460,8 @@ class SearchResult extends Component {
   confirmExport(e){
     e.preventDefault();
 
-    const host = HOSTNAME || 'localhost';
-    const ROOT_URL = `${host}:3005`;
+    const host = HOSTNAME || 'localhost:3005';
+    const ROOT_URL = `${host}`;
 
     const that = this;
     const { items, exportItems } = this.props;
