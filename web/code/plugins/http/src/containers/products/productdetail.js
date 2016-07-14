@@ -72,7 +72,13 @@ class productdetail extends Component {
             printWindow.document.write(divContents);
             printWindow.document.write('</body></html>');
             printWindow.document.close();
-            printWindow.print();
+            printWindow.focus();
+            setTimeout( function(){
+              printWindow.document.close();
+              printWindow.print();
+            },500);
+            return true;
+
       });
 
 
