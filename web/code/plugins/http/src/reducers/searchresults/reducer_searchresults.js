@@ -1,4 +1,5 @@
-import { FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS } from '../../constants/itemconstants';
+import { FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE
+        } from '../../constants/itemconstants';
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY,
           SET_CERTIFICATELAB, SET_POLISH, SET_SYMMETRY, SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN, SET_JEWELRYCATEGORY, SET_COLLECTION,
           SET_BRAND, SET_MUSTHAVE, SET_RINGSIZE, SET_DOMINANTSTONE, SET_METALTYPE, SET_METALCOLOUR, SET_CERTIFICATEAGENCY,
@@ -33,6 +34,9 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 LimitedEditionValue:[], WatchCategoryValue:[],filters:[], AccessoryTypeValue:[], paramsSearch:null,
                 SparePartTypeValue:[],HierarchyValue:null,SearchAction:'New'
               };
+      case SET_CURRENTPAGE :
+        // console.log('SET_POLISH -->',action);
+        return {...state, currentPage: action.currentPage };
       case SET_ACCESSORYTYPE :
         // console.log('SET_POLISH -->',action);
         return {...state, AccessoryTypeValue: action.accessoryType };
