@@ -53,6 +53,7 @@ class SearchResult extends Component {
     this.exportExcel = this.exportExcel.bind(this);
     this.confirmExport = this.confirmExport.bind(this);
     this.hideModalNoResults = this.hideModalNoResults.bind(this);
+    this.printResults = this.printResults.bind(this);
 
     // console.log('this.props.items-->',this.props.searchResult.datas);
 
@@ -104,30 +105,61 @@ class SearchResult extends Component {
       // console.log('params-->',params);
       this.props.getItems(params);
   }
-  componentDidMount() {
-    jQuery('#printproduct').click( function(){
 
-          var dvContainerPrint = jQuery('#dvContainerPrint').html();
-          var printWindow = window.open('', '', 'height=800,width=1200');
-          printWindow.document.write('<html><head><title>Mol online 2016</title>');
-          printWindow.document.write('</head><body >');
-          printWindow.document.write(dvContainerPrint);
-          printWindow.document.write('</body></html>');
-          printWindow.document.close();
-          printWindow.print();
-    });
-  }
   shouldComponentUpdate(nextProps, nextState) {
     // console.log('nextProps-->',nextProps);
     // console.log('nextState-->',nextState);
     return shallowCompare(this, nextProps, nextState);
   }
+  printResults(e){
+    e.preventDefault();
+    // console.log('printproductBind-->');
 
+    var dvTotal = jQuery('#dvTotalsub').html();
+    var dvGridview = jQuery('#dvGridview').html();
+    var dvListview = jQuery('#dvListview').html();
+    // console.log('printproduct-->',dvContainerPrint);
+    var printWindow = window.open('', '', 'height=800,width=1200');
+    printWindow.document.write('<html><head><title>Mol online 2016</title>');
+    printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
+    printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
+    printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
+    printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
+    printWindow.document.write('</head><body >');
+    printWindow.document.write(dvTotal);
+    if (this.state.showGridView) {
+        printWindow.document.write(dvGridview);
+    }
+    if (this.state.showListView) {
+      printWindow.document.write(dvListview);
+    }
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.focus();
+    setTimeout( function(){
+      printWindow.document.close();
+      printWindow.print();
+    },500);
+    return true;
+  }
   handleSelect(eventKey) {
       this.setState({
         activePage: eventKey
       });
-      const sortingBy = this.refs.sortingBy.value;
+
+      const userLogin = JSON.parse(sessionStorage.logindata);
+
+      let sortingBy = '';
+
+      switch (this.refs.sortingBy.value) {
+        case 'price':
+          sortingBy = 'price.' + userLogin.currency;
+          break;
+        default:
+          sortingBy = this.refs.sortingBy.value;
+          break;
+      }
+
       const sortingDirection = this.refs.sortingDirection.value;
 
       var params = {
@@ -178,7 +210,20 @@ class SearchResult extends Component {
     // console.log('handleGo-->',this.refs.reletego.value);
 
     const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
-    const sortingBy = this.refs.sortingBy.value;
+
+    const userLogin = JSON.parse(sessionStorage.logindata);
+
+    let sortingBy = '';
+
+    switch (this.refs.sortingBy.value) {
+      case 'price':
+        sortingBy = 'price.' + userLogin.currency;
+        break;
+      default:
+        sortingBy = this.refs.sortingBy.value;
+        break;
+    }
+
     const sortingDirection = this.refs.sortingDirection.value;
 
     this.setState({
@@ -277,7 +322,7 @@ class SearchResult extends Component {
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     return(
-      <div>
+      <div id="dvTotalsub">
           <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(allItems.length) } Items </span><span className="padding-lf15">|</span></span>
           <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
               || userLogin.permission.price == 'All') ?
@@ -317,7 +362,19 @@ class SearchResult extends Component {
     this.setState({
       activePage: 1
     });
-    const sortingBy = e.target.value;
+    const userLogin = JSON.parse(sessionStorage.logindata);
+
+    let sortingBy = '';
+
+    switch (e.target.value) {
+      case 'price':
+        sortingBy = 'price.' + userLogin.currency;
+        break;
+      default:
+        sortingBy = e.target.value;
+        break;
+    }
+
     const { searchResult } = this.props;
     const sortingDirection = this.refs.sortingDirection.value;
     // this.props.sortBy(searchResult, sortingBy, sortingDirection);
@@ -343,7 +400,19 @@ class SearchResult extends Component {
   sortingDirection(e){
     const sortingDirection = e.target.value;
     const { searchResult } = this.props;
-    const sortingBy = this.refs.sortingBy.value;
+
+    const userLogin = JSON.parse(sessionStorage.logindata);
+
+    let sortingBy = '';
+
+    switch (this.refs.sortingBy.value) {
+      case 'price':
+        sortingBy = 'price.' + userLogin.currency;
+        break;
+      default:
+        sortingBy = this.refs.sortingBy.value;
+        break;
+    }
 
     this.setState({
       activePage: 1
@@ -465,16 +534,18 @@ class SearchResult extends Component {
 
     const that = this;
     const { items, exportItems } = this.props;
+    const userLogin = JSON.parse(sessionStorage.logindata);
+
     // console.log('this',this);
     var titles = ['Item Reference', 'Description', 'SKU', 'Location', 'Vendor Item Reference', 'Vendor Name',
                   'Public Price', 'Quantity', 'Unit'];
     if(this.state.allFields){
-      titles.push('Metal Type', 'Site', 'Size', 'Cut', 'Metal Color', 'Certificate Number', 'Case Dimension',
+      titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Color', 'Certificate Number', 'Case Dimension',
                   'Color', 'Collection', 'Certificate Date','OBA Dimension', 'Clarity', 'Brand', 'Dominant Stone',
                   'Gross Weight', 'Cut Grade');
     }else{
       if(this.state.metalType) titles.push('Metal Type');
-      if(this.state.site) titles.push('Site');
+      if(this.state.site) titles.push('Warehouse');
       if(this.state.size) titles.push('Size');
       if(this.state.cut) titles.push('Cut');
       if(this.state.metalColor) titles.push('Metal Color');
@@ -497,25 +568,36 @@ class SearchResult extends Component {
       // console.log('item-->',item);
       var arrayItems = [];
 
-      arrayItems.push(item.reference,item.description,item.sku,item.location,item.venderReference,'Vendor Name',
-                      item.priceUSD,'Quantity','Unit');
+      arrayItems.push(item.reference,item.description,item.sku,item.siteName,item.venderReference,item.vendor,
+                      (userLogin.currency == 'AED')
+                      ? item.price.AED
+                        : (userLogin.currency == 'CHF') ? item.price.CHF
+                        : (userLogin.currency == 'EUR') ? item.price.EUR
+                        : (userLogin.currency == 'JOD') ? item.price.JOD
+                        : (userLogin.currency == 'KWD') ? item.price.KWD
+                        : (userLogin.currency == 'LBP') ? item.price.LBP
+                        : (userLogin.currency == 'OMR') ? item.price.OMR
+                        : (userLogin.currency == 'QAR') ? item.price.QAR
+                        : (userLogin.currency == 'SAR') ? item.price.SAR
+                        : item.price.USD
+                      ,item.quantity,(item.unit != undefined) ? item.unit : '');
 
       if(that.state.allFields){
-        arrayItems.push(item.metalType,item.site,item.size,item.cut,item.metalColor,item.certificatedNumber,
-                        item.caseDimension,item.color,item.collection,item.certificateDate,item.obaDimension,
+        arrayItems.push(item.metalType,item.warehouseName,item.size,item.cut,item.metalColor,item.certificates.number,
+                        item.caseDimension,item.color,item.collection,item.certificates.issuedDate,item.obaDimension,
                         item.clarity,item.brand,item.dominantStone,item.grossWeight,item.cutGrade
                       );
       }else{
         if(that.state.metalType) arrayItems.push(item.metalType);
-        if(that.state.site) arrayItems.push(item.site);
+        if(that.state.site) arrayItems.push(item.warehouseName);
         if(that.state.size) arrayItems.push(item.size);
         if(that.state.cut) arrayItems.push(item.cut);
         if(that.state.metalColor) arrayItems.push(item.metalColor);
-        if(that.state.certificatedNumber) arrayItems.push(item.certificatedNumber);
+        if(that.state.certificatedNumber) arrayItems.push(item.certificates.number);
         if(that.state.caseDimension) arrayItems.push(item.caseDimension);
         if(that.state.color) arrayItems.push(item.color);
         if(that.state.collection) arrayItems.push(item.collection);
-        if(that.state.certificateDate) arrayItems.push(item.certificateDate);
+        if(that.state.certificateDate) arrayItems.push(item.certificates.issuedDate);
         if(that.state.obaDimension) arrayItems.push(item.obaDimension);
         if(that.state.clarity) arrayItems.push(item.clarity);
         if(that.state.brand) arrayItems.push(item.brand);
@@ -582,7 +664,8 @@ class SearchResult extends Component {
   renderExportExcelDialog(){
     var that = this;
     return(
-      <div >
+      <div>
+      <div  className="popexport">
         <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
           <div className="modal-header">
             <ModalClose onClick={this.hideModal}/>
@@ -630,6 +713,7 @@ class SearchResult extends Component {
             </button>
           </div>
         </Modal>
+        </div>
        </div>
     );
   }
@@ -679,7 +763,7 @@ class SearchResult extends Component {
                   <div className="styled-select">
                     <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy">
                       <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                      <option key={'priceUSD'} value={'priceUSD'}>{'Public Price'}</option>
+                      <option key={'price'} value={'price'}>{'Public Price'}</option>
                       <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                       <option key={'description'} value={'description'}>{'Description'}</option>
                     </select>
@@ -751,7 +835,7 @@ class SearchResult extends Component {
                   <div className="styled-select">
                     <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy">
                       <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                      <option key={'priceUSD'} value={'priceUSD'}>{'Public Price'}</option>
+                      <option key={'price'} value={'price'}>{'Public Price'}</option>
                       <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                       <option key={'description'} value={'description'}>{'Description'}</option>
                     </select>
@@ -790,7 +874,10 @@ class SearchResult extends Component {
                             <a><div className="icon-add margin-l10"></div></a>
                             <a><div className="icon-excel margin-l10" disabled={submitting}
                                   onClick={ this.exportExcel }></div></a>
-                            <a><div className="icon-print margin-l10" id="printproduct"></div></a>
+                            <a><div className="icon-print margin-l10" id="printproduct" disabled={submitting}
+                                  onClick={ this.printResults }>
+                                </div>
+                            </a>
                           </div>
                           <div className="col-md-9 col-sm-8 pagenavi">
                             <div className="searchresult-navi">
@@ -801,15 +888,15 @@ class SearchResult extends Component {
                         {/* End Util&Pagination */}
                         <div id="dvContainerPrint">
                           {/* Total Data */}
-                            <div className="bg-or text-center">
+                            <div id="dvTotal" className="bg-or text-center">
                               {this.renderTotals()}
                             </div>
                           {/* End Total Data */}
                           {/* Grid Product */}
-                          <div id="gridview" className={`search-product ${this.state.showGridView ? '' : 'hidden'}` }>
+                          <div id="dvGridview" className={`search-product ${this.state.showGridView ? '' : 'hidden'}` }>
                             <GridItemsView  items={items} onClickGrid={this.onClickGrid} />
                           </div>
-                          <div id="listview" className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
+                          <div id="dvListview" className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
                             <ListItemsView items={items} onClickGrid={this.onClickGrid}/>
                           </div>
                           <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
