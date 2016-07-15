@@ -6,6 +6,7 @@ export default function(state = INITIAL_STATE,action){
     switch (action.type) {
 
       case FETCH_PRODUCTDETAIL:
+
         return {...state,detail:action.data,index:action.productlist?findproductindex(action.productlist,action.productid):0
           ,indexplus:action.productlist?findproductindexplus(action.productlist,action.productid):0
           ,pagego:action.productlist?findproductindexplus(action.productlist,action.productid):0,productlist:action.productlist}

@@ -13,6 +13,7 @@ module.exports = {
     // const keys = Object.keys(request.payload);
     const collection = request.params.collection;
     const page = request.params.page;
+    const productId = request.params.productId;
     const itemperpage = 8;
     const offset = (page-1) * itemperpage;
 
@@ -23,11 +24,29 @@ module.exports = {
       "sort" : [
            { "reference" : "desc" }
         ],
-      "query":
-        {
-         "match": {"collection": "${collection}"}
+      "query":{
+           "constant_score": {
+             "filter": {
+               "bool": {
+                 "must": [
+                   {
+                     "match": {
+                       "collection": "${collection}"
+                     }
+                   }
+                 ],
+                 "must_not": [
+                   {
+                     "match": {
+                       "id": "${productId}"
+                     }
+                   }
+                 ]
+               }
+             }
+           }
         }
-    }`);
+      }`);
 
     elastic
       .search({

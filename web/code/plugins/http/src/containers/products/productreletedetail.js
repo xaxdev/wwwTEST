@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Button,FormControl,Pagination } from 'react-bootstrap';
 import jQuery from 'jquery';
+import { reduxForm,reset } from 'redux-form';
 import * as gemstoneattrdetailaction from '../../actions/gemstoneattrdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/productDescription';
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
@@ -37,14 +38,14 @@ class productreletedetail extends Component {
       const productlist = this.props.productlist;
       this.props.getProductDetail(productId).then(()=>{
         const  Detail  = this.props.productdetail;
-        this.props.getProductRelete(Detail.collection,1)
+        this.props.getProductRelete(Detail.collection,1,productId)
       });
 
 
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
-          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button><button id="btnzoom" class="btn btn-primary btn-radius" style="float:right">Zoom</button></div></div>'),
+          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button></div></div>'),
           type: 'inline'
         },
         callbacks: {
@@ -58,36 +59,25 @@ class productreletedetail extends Component {
 
               jQuery('#galleryimg').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
             });
-            let zoomimg = false;
-            jQuery('#btnzoom').click(function(){
-                if(zoomimg == false){
-                  zoomimg = true;
-                  jQuery('#galleryimg').css({'width': jQuery('#galleryimg').width() * 2 ,'max-width':'700px'});
-                } else {
-                  zoomimg = false;
-                  jQuery('#galleryimg').css({'width': 'auto' ,'max-width':'500px'});
-                }
-
-            });
           }
         }
       });
 
       jQuery('#printproduct').click( function(){
 
-        var divContents = jQuery('#dvContainer').html();
-        var printWindow = window.open('', '', 'height=800,width=800');
-        printWindow.document.write('<html><head><title>Mouawad online</title>');
-        printWindow.document.write('</head><body >');
-        printWindow.document.write(divContents);
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.focus();
-        setTimeout( function(){
-          printWindow.document.close();
-          printWindow.print();
-        },500);
-        return true;
+            var divContents = jQuery('#dvContainer').html();
+            var printWindow = window.open('', '', 'height=400,width=800');
+            printWindow.document.write('<html><head><title>Mol online 2016</title>');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(divContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout( function(){
+              printWindow.document.close();
+              printWindow.print();
+            },500);
+            return true;
       });
 
 
@@ -102,7 +92,7 @@ class productreletedetail extends Component {
       this.props.getProductDetail(productId).then(()=>{
         // console.log('productId',this.props.productdetail);
         const  Detail  = this.props.productdetail;
-        this.props.getProductRelete(Detail.collection,1)
+        this.props.getProductRelete(Detail.collection,1,productId)
       })
     }
   }
@@ -274,26 +264,33 @@ class productreletedetail extends Component {
      }
 
     renderImagegallery(){
-      const { gallery } = this.props.productdetail;
+        const { gallery } = this.props.productdetail;
+        if(!gallery){
+          return(
+            <div><img src="http://mol.mouawad.com/resources/images/blank.gif" width="100%"/></div>
+          );
+        }
 
-      if(!gallery){
-        return(
-          <div><img src="http://mol.mouawad.com/resources/images/blank.gif" width="100%"/></div>
-        );
-      }
-      return(
-          <div>
-            <ProductGallery imagegallery={gallery}/>
-          </div>
-        );
+        if(gallery.length > 0 ) {
+          return(
+            <div>
+              <ProductGallery imagegallery={gallery}/>
+            </div>
+          );
+        } else {
+          return(
+              <div><img src="http://mol.mouawad.com/resources/images/blank.gif" width="100%"/></div>
+            );
+        }
+
      }
      renderReleteproduct(){
 
        const { totalpage,products,page } = this.props.productrelete;
-       const reletepage = this.props.productreletepage;
+       //const reletepage = this.props.productreletepage;
        const productId = this.props.params.id;
-       const  { collection }  = this.props.productdetail;
-       const { type } = this.props.productdetail;
+       const { type,collection } = this.props.productdetail;
+       const { fields: { reletepage },handleSubmit} = this.props;
        if(!products){
          return(
            <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
@@ -301,6 +298,7 @@ class productreletedetail extends Component {
        }
 
        if(type != 'STO' && products.length > 0){
+         console.log('reletepage -->',reletepage);
        return(
            <div className="col-md-12 col-sm-12 nopadding">
               <h2>RELATED DETAILS</h2>
@@ -315,15 +313,15 @@ class productreletedetail extends Component {
                 boundaryLinks
                 items={totalpage}
                 maxButtons={3}
-                activePage={reletepage}
-                onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey); }} />
+                activePage={reletepage.defaultValue}
+                onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey,productId); }} />
                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 nopadding">
                   <span>Page</span>
-                  <form onSubmit={this.handleGo}>
-                    <input type="number" value={page} ref="reletego" />
-                <span>of</span>
-                <span>{numberFormat(totalpage)}</span>
-                  <button>Go</button>
+                  <form onSubmit={handleSubmit(this.handleGo)} >
+                   <input type="number" {...reletepage} />
+                   <span>of</span>
+                  <span>{numberFormat(totalpage)}</span>
+                   <button>Go</button>
                   </form>
                 </div>
                 </div>
@@ -341,7 +339,7 @@ class productreletedetail extends Component {
       const getPage = parseInt(this.refs.reletego.value);
       const  Detail  = this.props.productdetail;
       if((getPage <= totalpage) && (getPage != 0)){
-      this.props.getProductRelete(Detail.collection,getPage);
+      this.props.getProductRelete(Detail.collection,getPage,productId);
       }
     }
 
@@ -357,6 +355,28 @@ class productreletedetail extends Component {
        this.context.router.push(`/productdetail/${productid}`);
      }
    }
+   zoomicon() {
+     const { gallery } = this.props.productdetail;
+     var styles ={
+       displaynone:{
+         display:'none'
+       }
+     };
+     if(!!gallery && gallery.length > 0){
+       return(
+         <div>
+         <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+         </div>
+       );
+     } else {
+       return(
+         <div>
+         <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+         </div>
+       );
+     }
+   }
+
   render(){
     const { totalpage,products,page } = this.props.productrelete;
     const reletepage = this.props.productreletepage;
@@ -379,7 +399,7 @@ class productreletedetail extends Component {
                         <div className="col-md-12 col-sm-12 icon-detail">
                           <a><div className="icon-add margin-l10"></div></a>
                           <a><div className="icon-print margin-l10" id="printproduct"></div></a>
-                          <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+                          {this.zoomicon()}
                         </div>
                         <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
@@ -412,10 +432,13 @@ class productreletedetail extends Component {
 function mapStateToProps(state) {
 
   return {
+    initialValues: state.productdetail,
     productdetail: state.productdetail.detail,
     productrelete: state.productdetail.relete,
-    productreletepage: state.productdetail.reletepage
+    //productreletepage: state.productdetail.reletepage
    }
 }
-
-module.exports = connect(mapStateToProps,gemstoneattrdetailaction)(productreletedetail)
+module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
+  form: 'Pageform',
+  fields: ['reletepage']
+},mapStateToProps,gemstoneattrdetailaction)(productreletedetail)

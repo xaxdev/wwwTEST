@@ -23,9 +23,10 @@ class Login extends Component {
     // console.log(data);
     this.props.loginAction.login(data)
       .then(() => {
-        // console.log(this.props.logindata.loginstatus);
-          this.props.itemActions.newSearch();
+
           if(this.props.logindata.loginstatus == true){
+            console.log(this.props.logindata);
+            this.props.itemActions.newSearch();
             this.context.router.push('/inventories');
           }
       });

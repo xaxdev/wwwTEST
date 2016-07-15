@@ -32,20 +32,21 @@ class productdetail extends Component {
     this.handleGo = this.handleGo.bind(this);
   }
 
+  componentWillMount(){
+    const productId = this.props.params.id;
+    const productlist = JSON.parse(sessionStorage.navigation);
+    this.props.getProductDetail(productId,productlist).then(()=>{
+      const  Detail  = this.props.productdetail;
+      this.props.getProductRelete(Detail.collection,1,productId)
+    });
+
+  }
   componentDidMount() {
-
-      const productId = this.props.params.id;
-      const productlist = JSON.parse(sessionStorage.navigation);
-      this.props.getProductDetail(productId,productlist).then(()=>{
-        const  Detail  = this.props.productdetail;
-        this.props.getProductRelete(Detail.collection,1)
-      });
-
 
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
-          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button><button id="btnzoom" class="btn btn-primary btn-radius" style="float:right">Zoom</button></div></div>'),
+          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button><button id="btnzoom" class="btn btn-primary icon-zoom" style="float:right"></button></div></div>'),
           type: 'inline'
         },
         callbacks: {
@@ -102,7 +103,7 @@ class productdetail extends Component {
       const productlist = this.props.productlist;
       this.props.getProductDetail(productId,productlist).then(()=>{
         const  Detail  = this.props.productdetail;
-        this.props.getProductRelete(Detail.collection,1)
+        this.props.getProductRelete(Detail.collection,1,productId)
       })
     }
   }
@@ -267,14 +268,21 @@ class productdetail extends Component {
       const { gallery } = this.props.productdetail;
       if(!gallery){
         return(
-          <div><img src="/images/blank.gif" width="100%"/></div>
+          <div><img src="http://mol.mouawad.com/resources/images/blank.gif" width="100%"/></div>
         );
       }
-      return(
+
+      if(gallery.length > 0 ) {
+        return(
           <div>
             <ProductGallery imagegallery={gallery}/>
           </div>
         );
+      } else {
+        return(
+            <div><img src="http://mol.mouawad.com/resources/images/blank.gif" width="100%"/></div>
+          );
+      }
      }
      renderReleteproduct(){
        const { totalpage,products,page } = this.props.productrelete;
@@ -303,7 +311,7 @@ class productdetail extends Component {
                 items={totalpage}
                 maxButtons={3}
                 activePage={reletepage.defaultValue}
-                onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey); }} />
+                onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey,productId); }} />
                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 nopadding">
                   <span>Page</span>
                   <form onSubmit={handleSubmit(this.handleGo)} >
@@ -379,7 +387,7 @@ class productdetail extends Component {
       const getPage = parseInt(data.reletepage);
       const { collection } = this.props.productdetail;
       if((getPage <= totalpage) && (getPage != 0)){
-      this.props.getProductRelete(collection,getPage);
+      this.props.getProductRelete(collection,getPage,productId);
       }
     }
 
@@ -392,7 +400,27 @@ class productdetail extends Component {
     //    this.context.router.push(`/productdetail/${productid}`);
     //  }
    }
-
+   zoomicon() {
+     const { gallery } = this.props.productdetail;
+     var styles ={
+       displaynone:{
+         display:'none'
+       }
+     };
+     if(!!gallery && gallery.length > 0){
+       return(
+         <div>
+         <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+         </div>
+       );
+     } else {
+       return(
+         <div>
+         <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+         </div>
+       );
+     }
+   }
   render(){
     const { totalpage,products,page } = this.props.productrelete;
     const reletepage = this.props.productreletepage;
@@ -401,7 +429,9 @@ class productdetail extends Component {
     const productIndex = this.props.productindex;
     const productindexplus = this.props.productindexplus;
     const { type} = this.props.productdetail;
+
     let pructdetailurl = '/productdetail/';
+
     return(
       <div id="page-wrapper">
         <div className="col-sm-12 bg-hearder m-prodcutdetail">
@@ -416,7 +446,7 @@ class productdetail extends Component {
                 <div className="col-md-12 col-sm-12 icon-detail">
                   <a><div className="icon-add margin-l10"></div></a>
                   <a><div className="icon-print margin-l10" id="printproduct"></div></a>
-                  <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+                  {this.zoomicon()}
                 </div>
                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
