@@ -3,6 +3,7 @@ import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
+import convertDate from '../../utils/convertDate';
 
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
@@ -43,102 +44,66 @@ class GridItemsView extends Component {
 
     switch(e.currentTarget.id){
     case '0':
-      this.setState({
-        isOpen0:true
-      });
+      this.setState({isOpen0:true});
       break;
     case '1':
-      this.setState({
-        isOpen1:true
-      });
+      this.setState({isOpen1:true});
       break;
     case '2':
-      this.setState({
-        isOpen2:true
-      });
+      this.setState({isOpen2:true});
       break;
     case '3':
-      this.setState({
-        isOpen3:true
-      });
+      this.setState({isOpen3:true});
       break;
     case '4':
-      this.setState({
-        isOpen4:true
-      });
+      this.setState({isOpen4:true});
       break;
     case '5':
-      this.setState({
-        isOpen5:true
-      });
+      this.setState({isOpen5:true});
       break;
     case '6':
-      this.setState({
-        isOpen6:true
-      });
+      this.setState({isOpen6:true});
       break;
     case '7':
-      this.setState({
-        isOpen7:true
-      });
+      this.setState({isOpen7:true});
       break;
     default:
       break;
     }
-
-    // this.renderShowDetails();
   }
   onMouseOutGrid(e){
     // console.log('onMouseOutGrid e->',e);
     switch(e.currentTarget.id){
     case '0':
-      this.setState({
-        isOpen0:false
-      });
+      this.setState({isOpen0:false});
       break;
     case '1':
-      this.setState({
-        isOpen1:false
-      });
+      this.setState({isOpen1:false});
       break;
     case '2':
-      this.setState({
-        isOpen2:false
-      });
+      this.setState({isOpen2:false});
       break;
     case '3':
-      this.setState({
-        isOpen3:false
-      });
+      this.setState({isOpen3:false});
       break;
     case '4':
-      this.setState({
-        isOpen4:false
-      });
+      this.setState({isOpen4:false});
       break;
     case '5':
-      this.setState({
-        isOpen5:false
-      });
+      this.setState({isOpen5:false});
       break;
     case '6':
-      this.setState({
-        isOpen6:false
-      });
+      this.setState({isOpen6:false});
       break;
     case '7':
-      this.setState({
-        isOpen7:false
-      });
+      this.setState({isOpen7:false});
       break;
     default:
       break;
     }
-    // this.renderShowDetails();
   }
   renderShowDetails(){
     // console.log('renderShowDetails this.state.isOpen-->',this.state.isOpen);
-
       return(
         <div style={{margin: '0 auto', textAlign: 'center'}} ><h1> pop up header </h1> <p> pop up content </p></div>
       );
@@ -157,8 +122,8 @@ class GridItemsView extends Component {
         {this.props.items.map(function(item, index){
           // console.log('item-->',item);
           let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
-          let itemDate = new Date(item.itemCreatedDate);
-          itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
+          let itemDate = convertDate(item.itemCreatedDate);
+          // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
 
           let price = GetPriceWithCurrency(item,'price');
           let actualCost = GetPriceWithCurrency(item,'actualCost');

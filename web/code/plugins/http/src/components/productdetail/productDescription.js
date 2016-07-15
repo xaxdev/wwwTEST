@@ -3,7 +3,7 @@ import numberFormat from '../../utils/convertNumberformat';
 import convertDate from '../../utils/convertDate';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
 
-console.log("logindata -->",logindata);
+// console.log("logindata -->",logindata);
 const Detail = (props) =>{
   if(logindata){
     const currency = logindata.currency;
