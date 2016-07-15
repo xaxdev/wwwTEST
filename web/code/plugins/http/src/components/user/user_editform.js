@@ -47,10 +47,7 @@ class UserDetailsFrom extends Component {
   //   return shallowCompare(this, nextProps, nextState);
   // }
   componentDidMount(){
-    // console.log('this.props.user.onhandLocation-->',this.props.user.onhandLocation);
-    // console.log('this.props.user.onhandWarehouse-->',this.props.user.onhandWarehouse);
-    // console.log('this.props.user.onhandLocationValue.length-->',this.props.user.onhandLocationValue.length);
-    // console.log('this.props.user.onhandWarehouseValue.length-->',this.props.user.onhandWarehouseValue.length);
+
     this.setState(
       {
         selectedOnHandWarehouse: (this.props.user.onhandWarehouseValue.length != 0) ? false : true,

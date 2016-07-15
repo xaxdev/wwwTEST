@@ -44,6 +44,8 @@ class InventoryHeader extends Component {
     location.onChange(LocationSelectValue);
     location.value = LocationSelectValue;
     this.props.props.inventoryActions.setDataLocation(LocationSelectValue);
+    let vlues = LocationSelectValue.split(',');
+    this.props.props.masterDataActions.getOnHandWarehouse(vlues);
   }
   componentDidMount() {
       jQuery('#file').hide();
@@ -156,7 +158,7 @@ class InventoryHeader extends Component {
         dataDropDowntWareHouse = dataDropDowntWareHouse[0];
       }
     }
-    
+
     return (
       <div >
         <div className="row">
