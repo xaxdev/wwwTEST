@@ -45,12 +45,13 @@ class productreletedetail extends Component {
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
-          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button></div></div>'),
+          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button><button id="btnzoom" class="btn btn-primary btn-radius" style="float:right">zoom</button></div></div>'),
           type: 'inline'
         },
         callbacks: {
           open: function() {
-            jQuery('#galleryimg').attr('src',jQuery('.active img').attr('src'));
+            let activegallery = jQuery('.active img').attr('src').replace("thumbnail", "original");
+            jQuery('#galleryimg').attr('src',activegallery);
             let rotatecount = 0;
             jQuery('#btnup').click(function(){
               jQuery('#galleryimg').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
