@@ -17,8 +17,8 @@ if [ $PROCESS -le 2 ]; then
   find $SOURCE -iname "*.jpg" -mtime -2 | while read file
   do
     echo "Resizing file"
-    mogrify -resize 250x -strip -format jpg -compress jpeg -verbose -path $THUMBNAIL $file
-    mogrify -resize 500x -strip -format jpg -compress jpeg -verbose -path $ORIGINAL $file
+    mogrify -resize 250x -strip -format jpg -compress jpeg -verbose -path $THUMBNAIL "$file"
+    mogrify -resize 500x -strip -format jpg -compress jpeg -verbose -path $ORIGINAL "$file"
   done
 else
   echo "Process is already running!."

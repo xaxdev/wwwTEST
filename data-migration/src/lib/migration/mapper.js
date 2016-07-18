@@ -62,6 +62,7 @@ const mapProperties = (item, record, exchangeRates) => {
             number: record.CertificateNo,
             agency: record.CertificateAgency,
             site: record.CertificateWarehouse,
+            issuedDate: record.CertifiedDate
 
         };
 
