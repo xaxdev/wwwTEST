@@ -24,6 +24,7 @@ SELECT item.[Id] AS 'id'
     , item.[UpdatedCost] AS 'updatedCost'
     , item.[Price] AS 'price'
     , item.[Currency] AS 'currency'
+    , item.[Unit] AS 'unit'
     , 'STO' AS 'type'
     , ISNULL(stone.[Type],'') AS 'subType'
     , ISNULL(stone.[LotNumber],'') AS 'lotNumber'
@@ -43,6 +44,7 @@ SELECT item.[Id] AS 'id'
     , ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
     , ISNULL(certimage.[FILENAME], '') AS [CertificateImageName]
     , ISNULL(certimage.[FILETYPE], '') AS [CertificateImageType]
+    , certmaster.[CERTIFICATECREATEDDATE] AS [CertifiedDate]
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
   ON item.[Reference] = gemstone.[ItemReference]
@@ -59,5 +61,7 @@ LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
   ON cert.INTSKUNUMBER = certimage.ITEMID
   AND item.[Company] = certimage.[Company]
+LEFT JOIN [MWD_DB].[dbo].[CRWMOLCERTIFCATEMASTER] certmaster
+  ON cert.[CERTIFICATIONNO] = certmaster.[SKU]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]
