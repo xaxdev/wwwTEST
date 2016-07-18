@@ -60,6 +60,17 @@ class productreletedetail extends Component {
 
               jQuery('#galleryimg').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
             });
+            let zoomimg = false;
+            jQuery('#btnzoom').click(function(){
+                if(zoomimg == false){
+                  zoomimg = true;
+                  jQuery('#galleryimg').css({'width': jQuery('#galleryimg').width() * 2 ,'max-width':'700px'});
+                } else {
+                  zoomimg = false;
+                  jQuery('#galleryimg').css({'width': 'auto' ,'max-width':'500px'});
+                }
+
+            });
           }
         }
       });
