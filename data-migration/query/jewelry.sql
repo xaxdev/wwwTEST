@@ -47,7 +47,7 @@ SELECT item.[Id] AS 'id'
     , ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
     , ISNULL(certimage.[FILENAME], '') AS [CertificateImageName]
     , ISNULL(certimage.[FILETYPE], '') AS [CertificateImageType]
-    , certmaster.[CERTIFICATECREATEDDATE] AS [CertifiedDate]
+    , certmaster.[CertificateCreateDate] AS [CertifiedDate]
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
   ON item.[Reference] = gemstone.[ItemReference]
@@ -64,7 +64,8 @@ LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
   ON cert.[INTSKUNUMBER] = certimage.[ITEMID]
   AND item.[Company] = certimage.[Company]
-LEFT JOIN [MWD_DB].[dbo].[CRWMOLCERTIFCATEMASTER] certmaster
+LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
   ON cert.[CERTIFICATIONNO] = certmaster.[SKU]
+  AND item.[Company] = certmaster.[Company]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]
