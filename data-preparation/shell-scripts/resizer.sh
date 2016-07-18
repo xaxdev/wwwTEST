@@ -14,7 +14,7 @@ if [ $PROCESS -le 2 ]; then
   # rsync -a -f "+ */" -f "- *" $SOURCE $ORIGINAL
   # rsync -a -f "+ */" -f "- *" $SOURCE $THUMBNAIL
 
-  find $SOURCE -iname "*.jpg" -mtime -2 | while read file
+  find $SOURCE -iname "*.jpg" -type f -ctime -2 | while read file
   do
     echo "Resizing file"
     mogrify -resize 250x -strip -format jpg -compress jpeg -verbose -path $THUMBNAIL "$file"
