@@ -39,3 +39,4 @@ jspm_packages
 public
 
 *.js.save
+*.json.save
