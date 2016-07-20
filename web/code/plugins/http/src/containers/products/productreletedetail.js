@@ -344,14 +344,14 @@ class productreletedetail extends Component {
        }
     }
 
-    handleGo(e){
-      e.preventDefault();
+    handleGo(data){
+      //e.preventDefault();
       const productId = this.props.params.id;
       const { totalpage} = this.props.productrelete;
-      const getPage = parseInt(this.refs.reletego.value);
-      const  Detail  = this.props.productdetail;
+      const getPage = parseInt(data.reletepage);
+      const { collection } = this.props.productdetail;
       if((getPage <= totalpage) && (getPage != 0)){
-      this.props.getProductRelete(Detail.collection,getPage,productId);
+      this.props.getProductRelete(collection,getPage,productId);
       }
     }
 
@@ -389,6 +389,17 @@ class productreletedetail extends Component {
      }
    }
 
+   renderNavigation(){
+     return(
+
+        <div className="width-50  maring-t15">
+                     <div className="col-md-12 col-sm-12 ft-white productdetail-search">
+                       <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
+                     </div>
+           </div>
+         );
+  }
+
   render(){
     const { totalpage,products,page } = this.props.productrelete;
     const reletepage = this.props.productreletepage;
@@ -401,7 +412,8 @@ class productreletedetail extends Component {
     return(
       <div id="page-wrapper">
         <div className="col-sm-12 bg-hearder">
-          <div className="col-sm-6 m-width-60 ft-white m-nopadding"><h1>PRODUCT DETAIL</h1></div>
+          <div className="col-md-5 col-sm-5 ft-white m-nopadding"><h1>PRODUCT DETAIL</h1></div>
+          {this.renderNavigation()}
         </div>
 
         <div className="row">
