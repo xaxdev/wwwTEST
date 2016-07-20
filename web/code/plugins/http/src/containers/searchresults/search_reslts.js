@@ -139,7 +139,7 @@ class SearchResult extends Component {
     setTimeout( function(){
       printWindow.document.close();
       printWindow.print();
-    },500);
+    },1000);
     return true;
   }
   handleSelect(eventKey) {
@@ -475,9 +475,10 @@ class SearchResult extends Component {
       isOpenNoResults: false
     });
 
-    const token = sessionStorage.token;
-
     this.props.modifySearch(this.props.paramsSearch);
+
+    const token = sessionStorage.token;  
+
     if(token){
       this.context.router.push('/inventories');
     }
