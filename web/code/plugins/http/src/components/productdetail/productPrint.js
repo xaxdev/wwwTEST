@@ -12,6 +12,13 @@ import ProductGemstonesReleteJewelry from '../../components/productdetail/produc
 
 import '../../../public/css/productdetail.css';
 
+let styles ={
+  imgwidth:{
+    width: '100%',
+    marginRight: '20px',
+    maxWidth: '350px'
+  }
+  };
 class productprint extends Component {
 
   constructor(props) {
@@ -181,7 +188,7 @@ class productprint extends Component {
           <div>
             { gallery.map( (data,index)=>{
               return (
-             <div key={`imgprint${index}`}><img width="400" src={data.thumbnail}/></div>
+             <div key={`imgprint${index}`}><img style={styles.imgwidth} src={data.original}/></div>
              );
 
             })}
@@ -203,7 +210,7 @@ class productprint extends Component {
       colmd2:{
         width: '20%',
         float:'left'
-      },      
+      },
       tableresponsive:{
         width:'100%'
       },

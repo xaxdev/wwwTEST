@@ -77,9 +77,18 @@ class productreletedetail extends Component {
 
       jQuery('#printproduct').click( function(){
 
+        let styleprint = '<style type="text/css" media="print">';
+        styleprint +='.landScape';
+        styleprint +='{ ';
+        styleprint +='width: 100%;';
+        styleprint +='height: 100%;';
+        styleprint +='margin: 0% 0% 0% 0%;';
+        styleprint +='filter: progid:DXImageTransform.Microsoft.BasicImage(Rotation=3);';
+        styleprint +='}';
+        styleprint +='</style>';
             var divContents = jQuery('#dvContainer').html();
             var printWindow = window.open('', '', 'height=400,width=800');
-            printWindow.document.write('<html><head><title>Mol online 2016</title>');
+            printWindow.document.write('<html><head><title>Mouawad online</title>'+styleprint);
             printWindow.document.write('</head><body >');
             printWindow.document.write(divContents);
             printWindow.document.write('</body></html>');

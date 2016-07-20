@@ -53,7 +53,7 @@ class productdetail extends Component {
           open: function() {
 
             let activegallery = jQuery('.active img').attr('src').replace("thumbnail", "original");
-            
+
             jQuery('#galleryimg').attr('src',activegallery);
             let rotatecount = 0;
             jQuery('#btnup').click(function(){
@@ -80,10 +80,19 @@ class productdetail extends Component {
 
       jQuery('#printproduct').click( function(){
 
+        let styleprint = '<style type="text/css" media="print">';
+        styleprint +='.landScape';
+        styleprint +='{ ';
+        styleprint +='width: 100%;';
+        styleprint +='height: 100%;';
+        styleprint +='margin: 0% 0% 0% 0%;';
+        styleprint +='filter: progid:DXImageTransform.Microsoft.BasicImage(Rotation=3);';
+        styleprint +='}';
+        styleprint +='</style>';
             var divContents = jQuery('#dvContainer').html();
             var printWindow = window.open('', '', 'height=800,width=800');
-            printWindow.document.write('<html><head><title>Mouawad online</title>');
-            printWindow.document.write('</head><body >');
+            printWindow.document.write('<html><head><title>Mouawad online</title>'+styleprint);
+            printWindow.document.write('</head><body class="landScape">');
             printWindow.document.write(divContents);
             printWindow.document.write('</body></html>');
             printWindow.document.close();
