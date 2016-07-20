@@ -56,7 +56,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
             || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType'
             || key == 'metalColour' || key == 'gemstones.stoneType' || key == 'gemstones.cut' || key == 'gemstones.cutGrade'
-            || key == 'gemstones.color' || key == 'gemstones.clarity' || key == 'limitedEdition'
+            || key == 'gemstones.color' || key == 'gemstones.clarity' || key == 'limitedEdition' || key == 'sku'
             || key == 'origin' || key == 'gemstones.origin' || key == 'gemstones.polish' || key == 'gemstones.symmetry'
             || key == 'gemstones.treatment' || key == 'gemstones.fluorescence' || key == 'watchCategory'
             || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal'
