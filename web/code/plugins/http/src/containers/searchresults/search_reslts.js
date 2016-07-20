@@ -477,7 +477,11 @@ class SearchResult extends Component {
 
     this.props.modifySearch(this.props.paramsSearch);
 
-    const token = sessionStorage.token;  
+    const token = sessionStorage.token;
+
+    var modalOpen = jQuery('.modal-open');
+    modalOpen.removeClass()
+    // console.log('modalOpen-->',modalOpen);
 
     if(token){
       this.context.router.push('/inventories');
