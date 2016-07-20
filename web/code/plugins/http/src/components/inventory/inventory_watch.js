@@ -496,7 +496,7 @@ class InventoryWatch extends Component {
         <div className="panel-body">
           <div className="row margin-ft">
             <div className="col-lg-6 form-horizontal">
-              <div className="form-group">
+              <div className="form-group hidden">
                 <label className="col-sm-4 control-label tooltiop-span">Product Hierarchy
                   <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
                     <img src="/images/alphanumeric.png" />

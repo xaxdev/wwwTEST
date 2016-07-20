@@ -216,7 +216,7 @@ class InventorySparePart extends Component {
         <div className="panel-body">
           <div className="row margin-ft">
             <div className="col-lg-6 form-horizontal">
-              <div className="form-group">
+              <div className="form-group hidden">
                 <label className="col-sm-4 control-label">Product Hierarchy</label>
                 <div className="col-sm-7 bd-box">
                   <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview" />
