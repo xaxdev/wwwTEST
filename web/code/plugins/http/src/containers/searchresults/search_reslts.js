@@ -13,6 +13,7 @@ import PureInput from '../../utils/PureInput';
 import GridItemsView from '../../components/searchresults/griditemview';
 import ListItemsView from '../../components/searchresults/listitemview';
 import numberFormat from '../../utils/convertNumberformatwithcomma';
+import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 // var XLSX = require('xlsx')
 
 const checkFields = ['metalType', 'site', 'size', 'cut', 'metalColor', 'certificatedNumber', 'caseDimension',
@@ -534,137 +535,31 @@ class SearchResult extends Component {
   confirmExport(e){
     e.preventDefault();
 
-    const host = HOSTNAME || 'localhost:3005';
+    let host = HOSTNAME || 'localhost:3005';
+    host = (host == 'localhost') ? 'localhost:3005' : host;
     const ROOT_URL = `${host}`;
 
     const that = this;
     const { items, exportItems } = this.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
 
-    // console.log('this',this);
-    var titles = ['Item Reference', 'Description', 'SKU', 'Location', 'Vendor Item Reference', 'Vendor Name',
-                  'Public Price', 'Quantity', 'Unit'];
-    if(this.state.allFields){
-      titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Color', 'Certificate Number', 'Case Dimension',
-                  'Color', 'Collection', 'Certificate Date','OBA Dimension', 'Clarity', 'Brand', 'Dominant Stone',
-                  'Gross Weight', 'Cut Grade');
-    }else{
-      if(this.state.metalType) titles.push('Metal Type');
-      if(this.state.site) titles.push('Warehouse');
-      if(this.state.size) titles.push('Size');
-      if(this.state.cut) titles.push('Cut');
-      if(this.state.metalColor) titles.push('Metal Color');
-      if(this.state.certificatedNumber) titles.push('Certificate Number');
-      if(this.state.caseDimension) titles.push('Case Dimension');
-      if(this.state.color) titles.push('Color');
-      if(this.state.collection) titles.push('Collection');
-      if(this.state.certificateDate) titles.push('Certificate Date');
-      if(this.state.obaDimension) titles.push('OBA Dimension');
-      if(this.state.clarity) titles.push('Clarity');
-      if(this.state.brand) titles.push('Brand');
-      if(this.state.dominantStone) titles.push('Dominant Stone');
-      if(this.state.grossWeight) titles.push('Gross Weight');
-      if(this.state.cutGrade) titles.push('Cut Grade');
+    let tab_text = GenHtmlExportExcel(this, exportItems, userLogin, ROOT_URL);
+
+    var data_type = 'data:application/vnd.ms-excel';
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf('Edge');
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        if (window.navigator.msSaveBlob) {
+            var blob = new Blob([tab_text], {
+                type: 'application/csv;charset=utf-8;'
+            });
+            navigator.msSaveBlob(blob, 'Test file.xls');
+        }
+    } else {
+        window.open(data_type + ', ' + encodeURIComponent(tab_text));
     }
-    if (this.state.showImages) titles.push('Images');
-
-    var data = [titles];
-    exportItems.forEach(function(item){
-      // console.log('item-->',item);
-      var arrayItems = [];
-
-      arrayItems.push(item.reference,item.description,item.sku,item.siteName,item.venderReference,item.vendor,
-                      (userLogin.currency == 'AED')
-                      ? item.price.AED
-                        : (userLogin.currency == 'CHF') ? item.price.CHF
-                        : (userLogin.currency == 'EUR') ? item.price.EUR
-                        : (userLogin.currency == 'JOD') ? item.price.JOD
-                        : (userLogin.currency == 'KWD') ? item.price.KWD
-                        : (userLogin.currency == 'LBP') ? item.price.LBP
-                        : (userLogin.currency == 'OMR') ? item.price.OMR
-                        : (userLogin.currency == 'QAR') ? item.price.QAR
-                        : (userLogin.currency == 'SAR') ? item.price.SAR
-                        : item.price.USD
-                      ,item.quantity,(item.unit != undefined) ? item.unit : '');
-
-      if(that.state.allFields){
-        arrayItems.push(item.metalType,item.warehouseName,item.size,item.cut,item.metalColor,item.certificates.number,
-                        item.caseDimension,item.color,item.collection,item.certificates.issuedDate,item.obaDimension,
-                        item.clarity,item.brand,item.dominantStone,item.grossWeight,item.cutGrade
-                      );
-      }else{
-        if(that.state.metalType) arrayItems.push(item.metalType);
-        if(that.state.site) arrayItems.push(item.warehouseName);
-        if(that.state.size) arrayItems.push(item.size);
-        if(that.state.cut) arrayItems.push(item.cut);
-        if(that.state.metalColor) arrayItems.push(item.metalColor);
-        if(that.state.certificatedNumber) arrayItems.push(item.certificates.number);
-        if(that.state.caseDimension) arrayItems.push(item.caseDimension);
-        if(that.state.color) arrayItems.push(item.color);
-        if(that.state.collection) arrayItems.push(item.collection);
-        if(that.state.certificateDate) arrayItems.push(item.certificates.issuedDate);
-        if(that.state.obaDimension) arrayItems.push(item.obaDimension);
-        if(that.state.clarity) arrayItems.push(item.clarity);
-        if(that.state.brand) arrayItems.push(item.brand);
-        if(that.state.dominantStone) arrayItems.push(item.dominantStone);
-        if(that.state.grossWeight) arrayItems.push(item.grossWeight);
-        if(that.state.cutGrade) arrayItems.push(item.cutGrade);
-      }
-
-      if (that.state.showImages)
-        arrayItems.push((item.gallery.length) != 0
-                          ? ROOT_URL + item.gallery[0].thumbnail
-                          : ROOT_URL + '/images/blank.gif');
-
-      data.push(arrayItems);
-    });
-
-    var ws_name = 'Items';
-    /* set up workbook objects -- some of these will not be required in the future */
-    var wb = {}
-    wb.Sheets = {};
-    wb.Props = {};
-    wb.SSF = {};
-    wb.SheetNames = [];
-
-    /* create worksheet: */
-    var ws = {}
-
-    /* the range object is used to keep track of the range of the sheet */
-    var range = {s: {c:0, r:0}, e: {c:0, r:0 }};
-
-    /* Iterate through each element in the structure */
-    for(var R = 0; R != data.length; ++R) {
-      if(range.e.r < R) range.e.r = R;
-      for(var C = 0; C != data[R].length; ++C) {
-        if(range.e.c < C) range.e.c = C;
-
-        /* create cell object: .v is the actual data */
-        var cell = { v: data[R][C] };
-        if(cell.v == null) continue;
-
-        /* create the correct cell reference */
-        var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
-
-        /* determine the cell type */
-        if(typeof cell.v === 'number') cell.t = 'n';
-        else if(typeof cell.v === 'boolean') cell.t = 'b';
-        else cell.t = 's';
-
-        /* add to structure */
-        ws[cell_ref] = cell;
-      }
-    }
-    ws['!ref'] = XLSX.utils.encode_range(range);
-
-        /* add worksheet to workbook */
-    wb.SheetNames.push(ws_name);
-    wb.Sheets[ws_name] = ws;
-
-    /* write file */
-    var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
-    saveAs(new Blob([this.s2ab(wbout)],{type:'application/octet-stream'}), 'MolProduct.xlsx')
-
   }
   renderExportExcelDialog(){
     var that = this;
@@ -710,7 +605,7 @@ class SearchResult extends Component {
             </div>
           </div>
           <div className="modal-footer">
-            <button className="btn btn-default btn-radius" onClick={this.confirmExport}>
+            <button id="export" className="btn btn-default btn-radius" onClick={this.confirmExport}>
               Export
             </button>
             <button className="btn btn-default btn-radius" onClick={this.hideModal}>
