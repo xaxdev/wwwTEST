@@ -1,3 +1,3 @@
 export default (number)=> {
-  return number ? (number/100).toFixed(2): 0;
+  return number ? (number/100): 0;
 }
