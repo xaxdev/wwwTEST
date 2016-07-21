@@ -1,5 +1,6 @@
 import React,{PropTypes} from 'react';
 import numberFormat from '../../utils/convertNumberformat';
+import percentformatFormat from '../../utils/convertMarkpercent';
 import convertDate from '../../utils/convertDate';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
 
@@ -11,6 +12,7 @@ const Detail = (props) =>{
     let actualCost = numberFormat(props.actualCost[currency]);
     let updatedCost = numberFormat(props.updatedCost[currency]);
     let price = numberFormat(props.price[currency]);
+    let markUp = percentformatFormat(props.markup);
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     return (
@@ -45,7 +47,7 @@ const Detail = (props) =>{
               || userLogin.permission.price == 'All') ?
             '' : 'hidden'}`}>
           <div className="col-md-4 col-sm-4 nopadding font-b">Markup (%)</div>
-          <div className="col-md-8 col-sm-8">{props.markup}</div>
+          <div className="col-md-8 col-sm-8">{markUp}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Location</div>

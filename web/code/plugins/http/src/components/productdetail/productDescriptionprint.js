@@ -1,6 +1,7 @@
 import React,{PropTypes} from 'react';
 import numberFormat from '../../utils/convertNumberformat';
 import convertDate from '../../utils/convertDate';
+import percentformatFormat from '../../utils/convertMarkpercent';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
     var styles ={
       colmd12:{
@@ -23,6 +24,7 @@ const Detail = (props) =>{
     let actualCost = numberFormat(props.actualCost[currency]);
     let updatedCost = numberFormat(props.updatedCost[currency]);
     let price = numberFormat(props.price[currency]);
+    let markUp = percentformatFormat(props.markup);
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     return (
@@ -57,7 +59,7 @@ const Detail = (props) =>{
               || userLogin.permission.price == 'All') ?
             styles.colmd12  : styles.colmdhide}>
           <div style={styles.colmd5}>Markup (%)</div>
-          <div style={styles.colmd5}>{props.markup}</div>
+          <div style={styles.colmd5}>{markUp}</div>
         </div>
         <div style={styles.colmd12}>
           <div style={styles.colmd5}>Location</div>
