@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux';
 import Multiselect from 'react-bootstrap-multiselect';
 import GenPassword from '../../utils/genPassword';
 import ReactDOM from 'react-dom';
+var _ = require('lodash');
 
 class UsersNewFrom extends Component {
   constructor(props) {
@@ -26,7 +27,8 @@ class UsersNewFrom extends Component {
       selectedOnHandLocation: true,
       selectedOnHandAll: (this.props.user != undefined)?(!this.props.user.onhandLocation && !this.props.user.onhandWarehouse)? true: false: false,
       genPass:'',
-      selectedStatus: true
+      selectedStatus: true,
+      changedOnHandLocation:false
     };
 
     this.generatePassword = this.generatePassword.bind(this);
@@ -110,18 +112,43 @@ class UsersNewFrom extends Component {
     var {
         fields: {
             onhand,
-            onhandAll
+            onhandAll,
+            onhandWarehouseValue
         }
     } = this.props;
     if (e.target.checked) {
         this.setState({
             selectedOnHandWarehouse: true,
-            selectedOnHandLocation: true,
             selectedOnHandAll: true
         });
-        // onhand.value = 'Warehouse';
-        onhand.onChange('All');
-        onhandAll.onChange(true);
+
+        var select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
+
+        var values = [].filter.call(select.options, function(o) {
+            return o.selected;
+        }).map(function(o) {
+            return o.value;
+        });
+        if (values.length != 0) {
+            this.setState({
+                selectedOnHandLocation: false,
+            });
+            var selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
+            var valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
+                return !o.selected;
+            }).map(function(o) {
+                return o.value;
+            });
+            onhandWarehouseValue.onChange(valuesWarehouse);
+            onhand.onChange('Warehouse');
+            onhandAll.onChange(false);
+        }else{
+          this.setState({
+              selectedOnHandLocation: true,
+          });
+          onhand.onChange('All');
+          onhandAll.onChange(true);
+        }
     } else {
         this.setState({
             selectedOnHandWarehouse: false,
@@ -145,7 +172,8 @@ class UsersNewFrom extends Component {
         this.setState({
             selectedOnHandWarehouse: true,
             selectedOnHandLocation: true,
-            selectedOnHandAll: true
+            selectedOnHandAll: true,
+            changedOnHandLocation: true
         });
         // onhand.value = 'Location';
         onhand.onChange('All');
@@ -155,7 +183,8 @@ class UsersNewFrom extends Component {
         this.setState({
             selectedOnHandWarehouse: false,
             selectedOnHandLocation: false,
-            selectedOnHandAll: false
+            selectedOnHandAll: false,
+            changedOnHandLocation: false
         });
         onhand.onChange('Location');
         onhandAll.onChange(false);
@@ -198,6 +227,16 @@ class UsersNewFrom extends Component {
       }).map(function(o) {
           return o.value;
       });
+
+      if (values.length != 0) {
+        this.setState({
+          changedOnHandLocation: true
+        });
+      }else{
+        this.setState({
+          changedOnHandLocation: false
+        });
+      }
 
       onhandLocationValue.onChange(values);
 
@@ -323,25 +362,30 @@ class UsersNewFrom extends Component {
     // console.log('warehouseOnHand-->',this.props.warehouseOnHand);
     var dataDropDowntLocations = [];
     var dataDropDowntWareHouse = [];
+    var that = this;
+
+    const userLogin = JSON.parse(sessionStorage.logindata);
+
     if (typeof(this.props.options) !== 'undefined') {
-        if (typeof(this.props.warehouseOnHand) !== 'undefined') {
-            dataDropDowntWareHouse.push(this.props.warehouseOnHand.map(warehouse => {
-                return ({
-                    value: warehouse.code,
-                    name: warehouse.name
-                });
-            }))
-            dataDropDowntWareHouse = dataDropDowntWareHouse[0];
-        }
-        if (typeof(this.props.locationOnHand) !== 'undefined') {
-            dataDropDowntLocations.push(this.props.locationOnHand.map(location => {
-                return ({
-                    value: location.code,
-                    name: location.name
-                });
-            }))
-            dataDropDowntLocations = dataDropDowntLocations[0];
-        }
+      if (typeof(this.props.warehouseOnHand) !== 'undefined') {
+          dataDropDowntWareHouse.push(this.props.warehouseOnHand.map(warehouse => {
+              return ({
+                  value: warehouse.code,
+                  name: warehouse.name
+              });
+          }))
+          dataDropDowntWareHouse = dataDropDowntWareHouse[0];
+      }
+
+      if (typeof(this.props.locationOnHand) !== 'undefined') {
+          dataDropDowntLocations.push(this.props.locationOnHand.map(location => {
+              return ({
+                  value: location.code,
+                  name: location.name
+              });
+          }))
+          dataDropDowntLocations = dataDropDowntLocations[0];
+      }
     }
 
       return (
@@ -601,12 +645,12 @@ class UsersNewFrom extends Component {
                               <input type="checkbox" value="Warehouse" {...onhandWarehouse}
                                 checked={this.state.selectedOnHandWarehouse}
                                 onChange={this.selectedOnHandWarehouse}
-                                disabled={`${this.state.selectedOnHandWarehouse ? 'disabled' : ''}`}
                               /> All Warehouse
                               <div className="user-edit">
                                 <select multiple
                                   {...onhandWarehouseValue}
                                   maxHeight={200} multiple
+                                  ref="selectMultiWarehouse"
                                   disabled={`${this.state.selectedOnHandWarehouse ? 'disabled' : ''}`}>
                                   {dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.name}</option>
                                   )}
