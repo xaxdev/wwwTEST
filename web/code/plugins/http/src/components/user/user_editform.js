@@ -52,8 +52,8 @@ class UserDetailsFrom extends Component {
 
     this.setState(
       {
-        selectedOnHandWarehouse: (this.props.user.onhandWarehouseValue.length != 0) ? false : true,
-        selectedOnHandLocation: (this.props.user.onhandLocationValue.length != 0) ? false : true,
+        selectedOnHandWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false,
+        selectedOnHandLocation: (this.props.user.onhandLocationValue != null)?(this.props.user.onhandLocationValue.length != 0) ? false : true:false,
       }
     );
   }
@@ -144,6 +144,11 @@ class UserDetailsFrom extends Component {
             }).map(function(o) {
                 return o.value;
             });
+            if(valuesWarehouse.length == 0){
+              valuesWarehouse = [].filter.call(this.props.warehouseOnHand, function(o) {
+                  return o.code;
+              });
+            }
             onhandWarehouseValue.onChange(valuesWarehouse);
             onhand.onChange('AllWarehouse');
             onhandAll.onChange(false);
@@ -376,13 +381,13 @@ class UserDetailsFrom extends Component {
               );
             });
           }else{
-            if(userLogin.permission.onhandWarehouse != undefined){
-              if (userLogin.permission.onhandWarehouse.type == 'Warehouse'
-                || userLogin.permission.onhandWarehouse.type == 'All'
-                || userLogin.permission.onhandWarehouse.type == 'AllWarehouse'){
-                  if (userLogin.permission.onhandWarehouse.type == 'Warehouse'
-                      || userLogin.permission.onhandWarehouse.type == 'AllWarehouse') {
-                    userLogin.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
+            if(this.props.user.permission.onhandWarehouse != undefined){
+              if (this.props.user.permission.onhandWarehouse.type == 'Warehouse'
+                || this.props.user.permission.onhandWarehouse.type == 'All'
+                || this.props.user.permission.onhandWarehouse.type == 'AllWarehouse'){
+                  if (this.props.user.permission.onhandWarehouse.type == 'Warehouse'
+                      || this.props.user.permission.onhandWarehouse.type == 'AllWarehouse') {
+                    this.props.user.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
                       newDate.push(_.filter(that.props.warehouseOnHand,
                         function(warehouse){
                           // console.log('warehouse.id-->',warehouse.id);
