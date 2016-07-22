@@ -159,6 +159,7 @@ class GridItemsView extends Component {
                     <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{item.description}</p>
                     <span className="fc-ae8f3b font-b price">{price}</span>
                     <span className="line"></span>
+                 </div>
                     <div name={item.id} id={item.id} onClick={btnEvent}>
                      <div key={item.id}  id={index} style={{
                             display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
@@ -195,8 +196,7 @@ class GridItemsView extends Component {
                             <span className="fc-ddbe6a width-f100 font-b">Created Date: </span>
                             <span className="width-f100">{itemDate}</span>
                         </div>
-                    </div>
-                 </div>
+                    </div>                 
             </div>
           )
           })}

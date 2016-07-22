@@ -682,7 +682,8 @@ select.form-searchresult option{
 	cursor: pointer;
 }
 .grid-add, .checkbox{
-	float:left; margin-top: 0;
+	float:left; 
+  margin-top: 0;
 	z-index: 1;
 	position: relative;
 	cursor:pointer;
@@ -725,7 +726,8 @@ select.form-searchresult option{
 }
 .over-searchresult{
 	font-size:13px;
-	margin:-3px auto;
+	// margin:-3px auto; over 
+  margin:0px auto;
 	position: absolute;
 	text-align: left;
 	background: #464646;
@@ -739,7 +741,8 @@ select.form-searchresult option{
 }
 .over-searchresult-left {
 	font-size:13px;
-	margin:-3px auto;
+	// margin:-3px auto; over 
+  margin:0px auto;
 	position: absolute;
 	text-align: left;
 	background: #464646;
@@ -752,7 +755,7 @@ select.form-searchresult option{
   height:418px;
 }
 .over-searchresult:hover ,
-.over-searchresult-left:hover {display:none;}
+.over-searchresult-left:hover {display:block;}
 .over-searchresult span, .over-searchresult-left span{line-height: 22px;}
 
 .search-product{
@@ -920,7 +923,24 @@ select.form-searchresult option{
 	}
 	#fileName {width: 50%;}
 }
-
+@media (max-width:1199px){
+  .pd-10{padding:0 10px;}
+  .thumbnaillgrid{    
+    position: relative;
+    width: 100% !important;
+    height: 200px;
+    overflow: hidden;
+  }
+  .styled-select select{font-size:13px !important;}
+}
+@media screen and (max-width: 991px){
+  .thumbnaillgrid {
+    position: relative;
+    width: 100% !important;
+    height: 150px;
+    overflow: hidden;
+  }
+}
 @media screen and (max-width: 991px) and (min-width: 768px) and (orientation : portrait){
 	.ip-nopadding{padding:0;}
 	.ip-padding-l{padding-left:20px;}

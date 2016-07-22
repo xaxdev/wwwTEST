@@ -802,7 +802,7 @@ class SearchResult extends Component {
                       </select>
                   </div>
                 </div>
-                <div className="col-sm-2 ft-white nopadding">
+                <div className="col-sm-2 ft-white nopadding pd-10">
                   <div
                     disabled={submitting} onClick={ this.gridViewResults }>
                       <div className="bd-white m-pt-mgl"><span className="glyphicon glyphicon-th-large"></span></div>
@@ -874,7 +874,7 @@ class SearchResult extends Component {
                       </select>
                   </div>
                 </div>
-                <div className="col-sm-2 ft-white nopadding">
+                <div className="col-sm-2 ft-white nopadding pd-10">
                   <div
                     disabled={submitting} onClick={ this.gridViewResults }>
                       <div className="bd-white m-pt-mgl"><span className="glyphicon glyphicon-th-large"></span></div>
