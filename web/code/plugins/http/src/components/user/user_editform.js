@@ -145,7 +145,7 @@ class UserDetailsFrom extends Component {
                 return o.value;
             });
             onhandWarehouseValue.onChange(valuesWarehouse);
-            onhand.onChange('Warehouse');
+            onhand.onChange('AllWarehouse');
             onhandAll.onChange(false);
         }else{
           this.setState({
@@ -377,8 +377,10 @@ class UserDetailsFrom extends Component {
           }else{
             if(userLogin.permission.onhandWarehouse != undefined){
               if (userLogin.permission.onhandWarehouse.type == 'Warehouse'
-                || userLogin.permission.onhandWarehouse.type == 'All'){
-                  if (userLogin.permission.onhandWarehouse.type == 'Warehouse') {
+                || userLogin.permission.onhandWarehouse.type == 'All'
+                || userLogin.permission.onhandWarehouse.type == 'AllWarehouse'){
+                  if (userLogin.permission.onhandWarehouse.type == 'Warehouse'
+                      || userLogin.permission.onhandWarehouse.type == 'AllWarehouse') {
                     userLogin.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
                       newDate.push(_.filter(that.props.warehouseOnHand,
                         function(warehouse){
