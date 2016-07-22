@@ -1,3 +1,4 @@
 SELECT [BRANDCODE] as code
-      ,[BRANDDESC] as name
+      ,Ltrim([BRANDDESC]) as name
   FROM [MWD_DB].[dbo].[CRWBRANDMASTER]
+  Order by Ltrim([BRANDDESC])
