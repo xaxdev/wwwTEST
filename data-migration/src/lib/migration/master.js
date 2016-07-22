@@ -314,8 +314,29 @@ const getProductGroup = async index => {
     }
 };
 
+const getDominantStones = async index => {
+    try {
+        console.log('Dominant Stones!!!');
+        const total = await core.get(await settings(index, 'dominantStones', constant.DOMINATSTONES_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getGemstoneStoneType = async index => {
+    try {
+        console.log('Gemstone Stone Type!!!');
+        const total = await core.get(await settings(index, 'gemstoneStoneType', constant.GEMSTONE_STONETYPE_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
 export { getCompany, getLocation, getWarehouse, getCountry, getCut, getCutShap, getColor, getClarity, getSymmetry,
         getFluorescence, getCollection, getBrand, getMetalType, getMetalColor, getCertificateAgency, getDialIndex,
         getDialColor, getDialMetal, getBuckleType, getStrapType, getStrapColor, getOrigin, getCurrency, getRole,
         getProductGroup, getJewelryCategory, getWatchCategory, getAccessoryType, getSparePartType
+        , getDominantStones, getGemstoneStoneType
       };

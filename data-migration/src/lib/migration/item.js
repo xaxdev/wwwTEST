@@ -72,4 +72,16 @@ const getOBA = async (index, exchangeRates) => {
     }
 };
 
-export { getExchangeRates, getJewelry, getStones, getWatches, getOBA };
+const test = async (index, exchangeRates) => {
+    try {
+        console.log('TEST!!!');
+        const query = await file.read('./query/test.sql');
+        const recordset = await db.exec(query, config.db);
+        const documents = mapper.mapItem(recordset, exchangeRates);
+        console.log(JSON.stringify(documents, null, 4));
+    } catch (err) {
+        throw err;
+    }
+};
+
+export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, test };
