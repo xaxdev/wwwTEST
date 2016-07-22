@@ -10,7 +10,7 @@ import ProductJewelryAttributes from '../../components/productdetail/productJewa
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
 import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributes';
-import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelry';
+//import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelry';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
 import ProductPrint from '../../components/productdetail/productPrint';
@@ -38,7 +38,9 @@ class productreletedetail extends Component {
       const productlist = this.props.productlist;
       this.props.getProductDetail(productId).then(()=>{
         const  Detail  = this.props.productdetail;
+        if(Detail.type != 'STO'){
         this.props.getProductRelete(Detail.collection,1,productId)
+        }
       });
 
 
@@ -257,17 +259,7 @@ class productreletedetail extends Component {
       const relatedJewelry = Detail.relatedJewelry;
 
       if(Detail.type == 'STO'){
-        // if(!relatedJewelry){
-        //   return(
-        //     <div>Loading...</div>
-        //   );
-        // }
-        // return(
-        //     <div>
-        //       <h2>RELATED JEWELRY</h2>
-        //       <ProductGemstonesReleteJewelry gemstoneAttrData={relatedJewelry} />
-        //     </div>
-        //   );
+
       } else {
         if(!gemstoneAttr){
           return(

@@ -2,6 +2,7 @@ import React,{PropTypes} from 'react';
 import numberFormat from '../../utils/convertNumberformat';
 import convertDate from '../../utils/convertDate';
 import percentformatFormat from '../../utils/convertMarkpercent';
+import convertBlanktodash  from '../../utils/convertBlanktodash';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
     var styles ={
       colmd12:{
@@ -31,11 +32,11 @@ const Detail = (props) =>{
       <div>
         <div style={styles.colmd12}>
           <div style={styles.colmd5}>Item Reference</div>
-          <div style={styles.colmd5}>{props.reference}</div>
+          <div style={styles.colmd5}>{convertBlanktodash(props.reference)}</div>
         </div>
         <div style={styles.colmd12}>
           <div style={styles.colmd5}>Description</div>
-          <div style={styles.colmd5}>{props.description}</div>
+          <div style={styles.colmd5}>{convertBlanktodash(props.description)}</div>
         </div>
         <div style={(userLogin.permission.price == 'All') ?
             styles.colmd12  : styles.colmdhide}>
@@ -62,20 +63,20 @@ const Detail = (props) =>{
           <div style={styles.colmd5}>{markUp}</div>
         </div>
         <div style={styles.colmd12}>
-          <div style={styles.colmd5}>Location</div>
-          <div style={styles.colmd5}>{props.siteName}</div>
+          <div style={styles.colmd5}>Site</div>
+          <div style={styles.colmd5}>{convertBlanktodash(props.siteName)}</div>
         </div>
         <div style={styles.colmd12}>
           <div style={styles.colmd5}>Warehouse</div>
-          <div style={styles.colmd5}>{props.warehouseName}</div>
+          <div style={styles.colmd5}>{convertBlanktodash(props.warehouseName)}</div>
         </div>
         <div style={styles.colmd12}>
           <div style={styles.colmd5}>Vendor Item Reference</div>
-          <div style={styles.colmd5}>{props.venderReference}</div>
+          <div style={styles.colmd5}>{convertBlanktodash(props.venderReference)}</div>
         </div>
         <div style={styles.colmd12}>
           <div style={styles.colmd5}>SKU</div>
-          <div style={styles.colmd5}>{props.sku}</div>
+          <div style={styles.colmd5}>{convertBlanktodash(props.sku)}</div>
         </div>
         <div style={styles.colmd12}>
           <div style={styles.colmd5}>Date Created</div>

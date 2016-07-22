@@ -160,12 +160,7 @@ class productprint extends Component {
         );
       }
       if(Detail.type == 'STO'){
-        return(
-            <div>
-              <h2>RELATED JEWELRY</h2>
-              <ProductGemstonesReleteJewelry gemstoneAttrData={gemstoneAttr} />
-            </div>
-          );
+        
       } else {
         return(
             <div>

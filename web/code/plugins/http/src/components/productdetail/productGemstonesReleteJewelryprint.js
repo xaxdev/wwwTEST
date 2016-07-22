@@ -1,6 +1,7 @@
 import React,{PropTypes} from 'react';
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router';
+import convertBlanktodash  from '../../utils/convertBlanktodash';
     var styles ={
       colmd12:{
         width:'100%',
@@ -13,7 +14,7 @@ import { Link } from 'react-router';
       colmd2:{
         width: '20%',
         float:'left'
-      },      
+      },
       tableresponsive:{
         width:'100%'
       },

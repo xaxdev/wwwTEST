@@ -2,6 +2,7 @@ import React,{PropTypes} from 'react';
 import numberFormat from '../../utils/convertNumberformat';
 import percentformatFormat from '../../utils/convertMarkpercent';
 import convertDate from '../../utils/convertDate';
+import convertBlanktodash  from '../../utils/convertBlanktodash';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
 
 // console.log("logindata -->",logindata);
@@ -50,7 +51,7 @@ const Detail = (props) =>{
           <div className="col-md-8 col-sm-8">{markUp}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
-          <div className="col-md-4 col-sm-4 nopadding font-b">Location</div>
+          <div className="col-md-4 col-sm-4 nopadding font-b">Site</div>
           <div className="col-md-8 col-sm-8">{props.siteName}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">

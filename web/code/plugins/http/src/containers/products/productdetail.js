@@ -10,7 +10,7 @@ import ProductJewelryAttributes from '../../components/productdetail/productJewa
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
 import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributes';
-import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelry';
+//import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelry';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
 import ProductPrint from '../../components/productdetail/productPrint';
@@ -37,7 +37,9 @@ class productdetail extends Component {
     const productlist = JSON.parse(sessionStorage.navigation);
     this.props.getProductDetail(productId,productlist).then(()=>{
       const  Detail  = this.props.productdetail;
+      if(Detail.type != 'STO'){
       this.props.getProductRelete(Detail.collection,1,productId)
+      }
     });
 
   }
@@ -247,17 +249,7 @@ class productdetail extends Component {
       const relatedJewelry = Detail.relatedJewelry;
       const subType = Detail.subType;
       if(Detail.type == 'STO'){
-        // if(!relatedJewelry){
-        //   return(
-        //     <div>Loading...</div>
-        //   );
-        // }
-        // return(
-        //     <div>
-        //       <h2>RELATED JEWELRY</h2>
-        //       <ProductGemstonesReleteJewelry gemstoneAttrData={relatedJewelry} />
-        //     </div>
-        //   );
+
       } else {
         if(!gemstoneAttr){
           return(
@@ -265,6 +257,7 @@ class productdetail extends Component {
           );
         }
         if(gemstoneAttr.length > 0){
+          console.log(gemstoneAttr)
         return(
             <div>
               <h2>GEMSTONES ATTRIBUTES</h2>
@@ -302,7 +295,7 @@ class productdetail extends Component {
        const productId = this.props.params.id;
        const { type,collection } = this.props.productdetail;
        const { fields: { reletepage },handleSubmit} = this.props;
-       if(!products){
+       if(type != 'STO' && !products){
          return(
            <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
          );

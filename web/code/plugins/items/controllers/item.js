@@ -29,9 +29,19 @@ module.exports = {
 
         const [productResult] = response.hits.hits.map((element) => element._source);
 
-        productResult.certificates.forEach((certificate) => {
-            productResult.gallery = [...productResult.gallery, certificate.image]
-        });
+        const images = productResult.gemstones.reduce((accumulator, gemstone) => {
+         let data = [];
+
+         if (gemstone && gemstone.certificate && gemstone.certificate.images) {
+           data = gemstone.certificate.images;
+         }
+
+         return accumulator.concat(data);
+        }, []);
+
+
+        productResult.gallery = productResult.gallery.concat(images);
+
 
         elastic.close();
         return reply(JSON.stringify(productResult, null, 4));

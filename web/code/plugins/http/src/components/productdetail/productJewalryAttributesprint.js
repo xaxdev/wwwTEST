@@ -1,4 +1,5 @@
 import React from 'react';
+import convertBlanktodash  from '../../utils/convertBlanktodash';
     var styles ={
       colmd12:{
         width:'100%',
@@ -15,36 +16,36 @@ const Jewelryattr = (props) =>{
         <div style={styles.colmd12}>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Jewelry Category</div>
-              <div style={styles.colmd5}>{props.subType}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.subType)}</div>
             </div>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Collection</div>
-              <div style={styles.colmd5}>{props.collection}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.collectionName)}</div>
             </div>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Brand</div>
-              <div style={styles.colmd5}>{props.brand}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.brandName)}</div>
             </div>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Dominant Stone</div>
-              <div style={styles.colmd5}>{props.dominant}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.dominantStoneName)}</div>
             </div>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Metal Type</div>
-              <div style={styles.colmd5}>{props.metalType}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.metalTypeName)}</div>
             </div>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Metal Color</div>
-              <div style={styles.colmd5}>{props.metalColor}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.metalColorName)}</div>
             </div>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Gross Weight</div>
-              <div style={styles.colmd5}>{props.grossWeight}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.grossWeight)}</div>
             </div>
 
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Size</div>
-              <div style={styles.colmd5}>{props.size}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.size)}</div>
             </div>
         </div>
   );
