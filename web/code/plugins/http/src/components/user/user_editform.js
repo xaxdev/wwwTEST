@@ -35,8 +35,8 @@ class UserDetailsFrom extends Component {
       productGroupDatas:[],
       selectedCompany: false,
       selectedSite: false,
-      selectedOnHandWarehouse: !this.props.user.onhandWarehouse,
-      selectedOnHandLocation: !this.props.user.onhandLocation,
+      selectedOnHandWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false,
+      selectedOnHandLocation: (this.props.user.onhandLocationValue != null)?(this.props.user.onhandLocationValue.length != 0) ? false : true:false,
       selectedOnHandAll: (!this.props.user.onhandLocation && !this.props.user.onhandWarehouse)? true: false,
       genPass:'',
       changedOnHandLocation:false

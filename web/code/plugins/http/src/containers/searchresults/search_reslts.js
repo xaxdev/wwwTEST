@@ -120,7 +120,8 @@ class SearchResult extends Component {
     var dvGridview = jQuery('#dvGridview').html();
     var dvListview = jQuery('#dvListview').html();
     // console.log('printproduct-->',dvContainerPrint);
-    var printWindow = window.open('', '', 'height=800,width=1200');
+    var options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=1000,height=500';
+    var printWindow = window.open('', '', options);
     printWindow.document.write('<html><head><title>Mol online 2016</title>');
     printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
     printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
@@ -669,7 +670,7 @@ class SearchResult extends Component {
     } else {
       let tab_text = GenHtmlExportExcel(this, exportItems, userLogin, ROOT_URL);
 
-      var data_type = 'data:application/vnd.ms-excel';
+      var data_type = 'data:application/vnd.ms-excel;base64';
 
       var ua = window.navigator.userAgent;
       var msie = ua.indexOf('Edge');
@@ -682,7 +683,8 @@ class SearchResult extends Component {
               navigator.msSaveBlob(blob, 'Test file.xls');
           }
       } else {
-          window.open(data_type + ', ' + encodeURIComponent(tab_text));
+          // window.open(data_type + ', ' + $.base64.encode(tab_text));
+          window.open('data:application/vnd.ms-excel;base64,' + $.base64.encode(tab_text));
       }
     }
   }
@@ -918,7 +920,10 @@ class SearchResult extends Component {
                             </div>
                           {/* End Total Data */}
                           {/* Grid Product */}
-                          <div id="dvGridview" className={`search-product ${this.state.showGridView ? '' : 'hidden'}` }>
+                          <div className={`search-product ${this.state.showGridView ? '' : 'hidden'}` }>
+                            <GridItemsView  items={items} onClickGrid={this.onClickGrid} />
+                          </div>
+                          <div id="dvGridview" className="search-product hidden">
                             <GridItemsView  items={items} onClickGrid={this.onClickGrid} />
                           </div>
                           <div id="dvListview" className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
