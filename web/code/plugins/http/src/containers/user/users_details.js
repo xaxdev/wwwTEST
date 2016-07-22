@@ -62,7 +62,7 @@ class UserDetails extends Component {
     };
 
     onhandWarehouse = {
-      type:'Warehouse',
+      type:data.onhand,
       places:(!data.onhandWarehouseValue)?[]:data.onhandWarehouseValue
     };
 
