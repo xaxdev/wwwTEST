@@ -235,7 +235,8 @@ class UserDetailsFrom extends Component {
 
       if (values.length != 0) {
         this.setState({
-          changedOnHandLocation: true
+          changedOnHandLocation: true,
+          selectedOnHandWarehouse: false
         });
       }else{
         this.setState({
