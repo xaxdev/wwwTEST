@@ -93,13 +93,13 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'ringSize')
               key = 'size'
             if(key == 'certificatedNumber')
-              key = 'certificates.number'
+              key = 'gemstones.certificate.number'
             if(key == 'certificateAgency')
-              key = 'certificates.agency'
+              key = 'gemstones.certificate.agency'
             if(key == 'gemstones.certificateAgency')
-              key = 'gemstones.certificates.agency'
+              key = 'gemstones.certificate.agency'
             if(key == 'gemstones.certificatedNumber')
-              key = 'gemstones.certificates.number'
+              key = 'gemstones.certificate.number'
             filter =
               `{
                 "match": {
@@ -278,7 +278,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
               valToCerDate= `${d[2]}-${d[0]}-${d[1]}`;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'certificates.issuedDate':{'from':valFromCerDate,'to':valToCerDate},'length':objLength};
+            objRange = {...objRange,'gemstones.certificate.issuedDate':{'from':valFromCerDate,'to':valToCerDate},'length':objLength};
           }
           else if(key == 'grossWeightFrom' || key == 'grossWeightTo'){
             if(key == 'grossWeightFrom'){
@@ -302,7 +302,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
               valToCerDate= `${d[2]}-${d[0]}-${d[1]}`;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'gemstones.certificates.issuedDate':{'from':valFromCerDate,'to':valToCerDate},'length':objLength};
+            objRange = {...objRange,'gemstones.certificate.issuedDate':{'from':valFromCerDate,'to':valToCerDate},'length':objLength};
           }
           else if(key == 'gemstones.stoneCostFrom' || key == 'gemstones.stoneCostTo'){
             if(key == 'gemstones.stoneCostFrom'){

@@ -686,7 +686,7 @@ select.form-searchresult option{
 	cursor: pointer;
 }
 .grid-add, .checkbox{
-	float:left; 
+	float:left;
   margin-top: 0;
 	z-index: 1;
 	position: relative;
@@ -730,7 +730,7 @@ select.form-searchresult option{
 }
 .over-searchresult{
 	font-size:13px;
-	// margin:-3px auto; over 
+	// margin:-3px auto; over
   margin:0px auto;
 	position: absolute;
 	text-align: left;
@@ -745,7 +745,7 @@ select.form-searchresult option{
 }
 .over-searchresult-left {
 	font-size:13px;
-	// margin:-3px auto; over 
+	// margin:-3px auto; over
   margin:0px auto;
 	position: absolute;
 	text-align: left;
@@ -761,7 +761,10 @@ select.form-searchresult option{
 .over-searchresult:hover ,
 .over-searchresult-left:hover {display:block;}
 .over-searchresult span, .over-searchresult-left span{line-height: 22px;}
-
+.print-search-results{
+  height: 95%;
+  margin: 0 auto;
+}
 .search-product{
 	position: relative;
 }
@@ -929,7 +932,7 @@ select.form-searchresult option{
 }
 @media (max-width:1199px){
   .pd-10{padding:0 10px;}
-  .thumbnaillgrid{    
+  .thumbnaillgrid{
     position: relative;
     width: 100% !important;
     height: 200px;
