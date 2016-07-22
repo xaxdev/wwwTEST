@@ -1,19 +1,17 @@
 import config from '../../../config';
 
-const gemstones = ['gemstone_id', 'gemstone_cut', 'gemstone_color', 'gemstone_clarity', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence'];
+const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_color', 'gemstone_clarity', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence'];
 
 const mapProperties = (item, record, exchangeRates) => {
     // add gemstone, if not existed
     if (item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
         const gemstone = {};
 
-        gemstones.forEach(property => {
+        gemstoneProperties.forEach(property => {
             if (record[property] !== undefined) {
                 const match = property.match(/^gemstone_(\w+)$/);
                 if (match) {
-                    const value = record[property];
-                    gemstone[match[1]] = value;
-                    delete item[property];
+                    gemstone[match[1]] = record[property];
                 }
             }
         });
@@ -40,14 +38,27 @@ const mapProperties = (item, record, exchangeRates) => {
             gemstone.cost = cost;
         }
 
+        // add certificate
+        if (!!record.CertificateNo) {
+            const certificate = {
+                number: record.CertificateNo,
+                agency: record.CertificateAgency,
+                site: record.CertificateWarehouse,
+                issuedDate: record.CertifiedDate
+
+            };
+
+            gemstone.certificates = certificate;
+        }
+
         // Check if gemstone is an empty object
-        if (Object.keys(gemstone).length > 0) {
+        if (!!Object.keys(gemstone).length) {
             item.gemstones.push(gemstone);
         }
     }
 
     // add image, if not existed
-    if (record.imageName.length > 0 && item.gallery.findIndex(image => image.original.match(new RegExp(`${record.imageName}.${record.imageType}$`)) !== null) === -1) {
+    if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(`${record.imageName}.${record.imageType}$`)) !== null) === -1) {
         const image = {
             original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
             thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
@@ -56,25 +67,27 @@ const mapProperties = (item, record, exchangeRates) => {
         item.gallery.push(image);
     }
 
-    // add certificate, if not existed
-    if (record.CertificateNo.length > 0 && item.certificates.findIndex(certificate => certificate.number === record.CertificateNo) === -1) {
-        const certificate = {
-            number: record.CertificateNo,
-            agency: record.CertificateAgency,
-            site: record.CertificateWarehouse,
-            issuedDate: record.CertifiedDate
+    // add certificate image, if not existed
+    if (!!record.CertificateImageName) {
+        const gemstone = item.gemstones.find(gemstone => gemstone.id === record.gemstone_id);
 
-        };
+        if (gemstone && gemstone.certificate) {
+            if (gemstone.certificate.images === undefined) {
+                gemstone.certificate.images = [];
+            }
 
-        if (record.CertificateImageName.length > 0) {
-            certificate.image = {
+            gemstone.certificate.images.push({
                 original: `${config.gallery.original}/${record.CertificateImageName}.${record.CertificateImageType}`,
                 thumbnail: `${config.gallery.thumbnail}/${record.CertificateImageName}.${record.CertificateImageType}`
-            }
+            });
         }
-
-        item.certificates.push(certificate);
     }
+
+    gemstoneProperties.forEach(property => {
+        if (item[property] !== undefined) {
+            delete item[property];
+        }
+    });
 
     if (item.imageName !== undefined) {
       delete item.imageName;
@@ -94,6 +107,10 @@ const mapProperties = (item, record, exchangeRates) => {
 
     if (item.CertificateWarehouse !== undefined) {
         delete item.CertificateWarehouse;
+    }
+
+    if (item.CertifiedDate !== undefined) {
+        delete item.CertifiedDate;
     }
 
     if (item.CertificateImageName !== undefined) {
@@ -146,7 +163,6 @@ const mapItem = (recordset, exchangeRates) => {
             const item = {...record};
             item.gemstones = [];
             item.gallery = [];
-            item.certificates = [];
             calculatePrices(item, exchangeRates);
             items.push(item);
         }

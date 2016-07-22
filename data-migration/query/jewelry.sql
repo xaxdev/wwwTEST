@@ -8,11 +8,17 @@ SELECT item.[Id] AS 'id'
     , item.[Site] AS 'site'
     , item.[SiteName] AS 'siteName'
     , item.[Collection] AS 'collection'
+    , item.[CollectionName] AS 'collectionName'
     , item.[Brand] AS 'brand'
-    , item.[Vendor] AS 'vendor'
+    , item.[BrandName] AS 'brandName'
+    , ISNULL(item.[Vendor], '') AS 'vendor'
+    , ISNULL(item.[VendorName], '') AS 'vendorName'
     , item.[MetalType] AS 'metalType'
+    , ISNULL(item.[MetalTypeName], '') AS 'metalTypeName'
     , item.[MetalColor] AS 'metalColor'
+    , ISNULL(item.[MetalColorName], '') AS 'metalColorName'
     , item.[DominantStone] AS 'dominant'
+    , ISNULL(item.[DominantStoneName], '') AS 'dominantStoneName'
     , item.[ItemCreatedDate] AS 'itemCreatedDate'
     , item.[Hierarchy] AS 'hierarchy'
     , item.[SKU] AS 'sku'
@@ -62,8 +68,8 @@ LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
   ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
   AND item.[Company] = cert.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
-  ON cert.[INTSKUNUMBER] = certimage.[ITEMID]
-  AND item.[Company] = certimage.[Company]
+  ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
+  AND certimage.[Company] = 'mme'
 LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
   ON cert.[CERTIFICATIONNO] = certmaster.[SKU]
   AND item.[Company] = certmaster.[Company]
