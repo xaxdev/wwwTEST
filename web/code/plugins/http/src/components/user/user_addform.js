@@ -140,7 +140,7 @@ class UsersNewFrom extends Component {
                 return o.value;
             });
             onhandWarehouseValue.onChange(valuesWarehouse);
-            onhand.onChange('Warehouse');
+            onhand.onChange('AllWarehouse');
             onhandAll.onChange(false);
         }else{
           this.setState({
