@@ -1,6 +1,6 @@
 import config from '../../../config';
 
-const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_color', 'gemstone_clarity', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence'];
+const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_color', 'gemstone_clarity', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence', 'gemstone_stoneTypeId', 'gemstone_stoneTypeName', 'gemstone_type'];
 
 const mapProperties = (item, record, exchangeRates) => {
     // add gemstone, if not existed
@@ -48,7 +48,7 @@ const mapProperties = (item, record, exchangeRates) => {
 
             };
 
-            gemstone.certificates = certificate;
+            gemstone.certificate = certificate;
         }
 
         // Check if gemstone is an empty object

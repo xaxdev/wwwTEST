@@ -38,6 +38,8 @@ export const JEWELRYCATEGORY_QUERY = './query/master/jewelryCategory.sql';
 export const WATCHCATEGORY_QUERY = './query/master/watchCategory.sql';
 export const ACCESSORYTYPE_QUERY = './query/master/accessoryType.sql';
 export const SPAREPARTTYPE_QUERY = './query/master/sparePartType.sql';
+export const DOMINATSTONES_QUERY = './query/master/dominantStone.sql';
+export const GEMSTONE_STONETYPE_QUERY = './query/master/gemstone-stoneType.sql';
 
 // from array
 export const CURRENCY_DATA = '../../../query/master/currency.js';

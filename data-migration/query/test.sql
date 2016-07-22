@@ -45,9 +45,10 @@ SELECT item.[Id] AS 'id'
     , ISNULL(gemstone.[StoneTypeId], '') AS 'gemstone_stoneTypeId'
     , ISNULL(gemstone.[StoneTypeName], '') AS 'gemstone_stoneTypeName'
     , ISNULL(gemstone.[Type], '') AS 'gemstone_type'
-    , 'OBA' AS 'type'
-    , ISNULL(oba.[Type], '') AS 'subType'
-    , ISNULL(oba.[Dimensions], '') AS 'dimensions'
+    , 'JLY' AS 'type'
+    , ISNULL(jewelry.[Type], '') AS 'subType'
+    , ISNULL(jewelry.[Size], '') AS 'size'
+    , ISNULL(jewelry.[SetReference], '') AS 'setReference'
     , ISNULL(img.[FILENAME], '') AS 'imageName'
     , ISNULL(img.[FILETYPE], '') AS 'imageType'
     , ISNULL(cert.CERTIFICATIONNO, '') AS [CertificateNo]
@@ -60,9 +61,9 @@ FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
   ON item.[Reference] = gemstone.[ItemReference]
   AND item.[Company] = gemstone.[Company]
-INNER JOIN [ITORAMA].[dbo].[OBA] oba
-  ON item.[Reference] = oba.[ItemReference]
-  AND item.[Company] = oba.[Company]
+INNER JOIN [ITORAMA].[dbo].[Jewelry] jewelry
+  ON item.[Reference] = jewelry.[ItemReference]
+  AND item.[Company] = jewelry.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
   ON item.[Id] = img.[ITEMRECID]
   AND item.[Company] = img.[Company]
@@ -75,5 +76,5 @@ LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
 LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
   ON cert.[CERTIFICATIONNO] = certmaster.[SKU]
   AND item.[Company] = certmaster.[Company]
-WHERE item.[Id] BETWEEN @from AND @to
+WHERE item.[Id] = 5637763687
 ORDER BY item.[Id]
