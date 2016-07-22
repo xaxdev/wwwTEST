@@ -552,7 +552,7 @@ class InventoryStone extends Component {
             <div className="col-lg-6 form-horizontal">
               <div className={`form-group ${(userLogin.permission.price == 'All') ?
                   '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Total Cost ({userLogin.currency})</label>
+                <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -567,7 +567,7 @@ class InventoryStone extends Component {
               <div className={`form-group ${(userLogin.permission.price == 'Updated'
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Total Updated Cost ({userLogin.currency})</label>
+                <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -744,10 +744,10 @@ const tooltipCertificateDate = (
   <Tooltip id="tooltip"><strong>Certificate Date!</strong></Tooltip>
 );
 const tooltipTotalCost = (
-  <Tooltip id="tooltip"><strong>Total Cost (USD)!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>
 );
 const tooltipTotalUpdatedCost = (
-  <Tooltip id="tooltip"><strong>Total Updated Cost (USD)!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>
 );
 const tooltipPublicPrice = (
   <Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>

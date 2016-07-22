@@ -274,7 +274,7 @@ class UserDetailsFrom extends Component {
             );
           case 'site':
             return (
-              <option value={''}>{'Please select location'}</option>
+              <option value={''}>{'Please select Site'}</option>
             );
           case 'warehouse':
             return (
@@ -414,7 +414,7 @@ class UserDetailsFrom extends Component {
                   }
               }
             }
-          }          
+          }
         }
       }
 
@@ -515,7 +515,7 @@ class UserDetailsFrom extends Component {
                     </div>
                   </div>
                   <div className={`form-group ${location.touched && location.invalid ? 'has-danger' : ''}` }>
-                    <label className="col-sm-4 control-label">location</label>
+                    <label className="col-sm-4 control-label">Site</label>
                     <div className="col-sm-7">
                       <select  disabled={`${this.state.selectedCompany ? '' : 'disabled'}`}  className="form-control" {...location} onClick={this.selectedSite}>
                         <option key={''} value={''}>{'Please select location'}</option>
@@ -641,7 +641,7 @@ class UserDetailsFrom extends Component {
                             checked={this.state.selectedOnHandLocation}
                             onChange={this.selectedOnHandLocation}
                             ref="location"
-                          /> All Location
+                          /> All Site
                           <div className="user-edit">
                             <select multiple
                               {...onhandLocationValue}

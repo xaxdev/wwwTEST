@@ -285,7 +285,7 @@ class UsersNewFrom extends Component {
             );
           case 'site':
             return (
-              <option value={''}>{'Please select location'}</option>
+              <option value={''}>{'Please select Site'}</option>
             );
           case 'warehouse':
             return (
@@ -495,10 +495,10 @@ class UsersNewFrom extends Component {
                             </div>
                           </div>
                         <div className={`form-group ${location.touched && location.invalid ? 'has-danger' : ''}` }>
-                          <label className="col-sm-4 control-label">location</label>
+                          <label className="col-sm-4 control-label">Site</label>
                           <div className="col-sm-7">
                             <select disabled={`${this.state.selectedCompany ? '' : 'disabled'}`} className="form-control" {...location} onClick={this.selectedSite}>
-                              <option key={''} value={''}>{'Please select location'}</option>
+                              <option key={''} value={''}>{'Please select Site'}</option>
                               {this.renderOption('site')}
                             </select>
                             <div className="text-help">
@@ -624,7 +624,7 @@ class UsersNewFrom extends Component {
                               <input type="checkbox" value="Location" {...onhandLocation}
                                 checked={this.state.selectedOnHandLocation}
                                 onChange={this.selectedOnHandLocation}
-                              /> All Location
+                              /> All Site
                               <div className="user-edit">
                                 <select multiple
                                   {...onhandLocationValue}

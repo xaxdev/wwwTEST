@@ -298,7 +298,7 @@ class InventoryAccessory extends Component {
             <div className="col-lg-6 form-horizontal">
               <div className={`form-group ${(userLogin.permission.price == 'All') ?
                   '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Total Cost ({userLogin.currency})</label>
+                <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -313,7 +313,7 @@ class InventoryAccessory extends Component {
               <div className={`form-group ${(userLogin.permission.price == 'Updated'
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Total Updated Cost ({userLogin.currency})</label>
+                <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">

@@ -317,8 +317,8 @@ class SearchResult extends Component {
             resetForm,
             submitting } = this.props;
       // var _totalUpdatedCost = new Intl.NumberFormat().format(totalUpdatedCost);
-    var _totalUpdatedCost =  (totalUpdatedCost!=null)?totalUpdatedCost.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'):0;
-    var _totalPublicPrice =  (totalPublicPrice!=null)?totalPublicPrice.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'):0;
+    var _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
+    var _totalPublicPrice =  (totalPublicPrice!=null) ? numberFormat(totalPublicPrice) : 0;
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -684,7 +684,7 @@ class SearchResult extends Component {
       } else {
           window.open(data_type + ', ' + encodeURIComponent(tab_text));
       }
-    }    
+    }
   }
   renderExportExcelDialog(){
     var that = this;
