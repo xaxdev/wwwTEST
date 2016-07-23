@@ -1,10 +1,10 @@
 import config from '../../../config';
 
-const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_color', 'gemstone_clarity', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence', 'gemstone_stoneTypeId', 'gemstone_stoneTypeName', 'gemstone_type'];
+const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_cutName', 'gemstone_color', 'gemstone_colorName', 'gemstone_clarity', 'gemstone_clarityName', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence', 'gemstone_stoneTypeId', 'gemstone_stoneTypeName', 'gemstone_type'];
 
 const mapProperties = (item, record, exchangeRates) => {
     // add gemstone, if not existed
-    if (item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
+    if (!!record.gemstone_id && item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
         const gemstone = {};
 
         gemstoneProperties.forEach(property => {
@@ -45,15 +45,24 @@ const mapProperties = (item, record, exchangeRates) => {
                 agency: record.CertificateAgency,
                 site: record.CertificateWarehouse,
                 issuedDate: record.CertifiedDate
-
             };
 
             gemstone.certificate = certificate;
         }
 
-        // Check if gemstone is an empty object
-        if (!!Object.keys(gemstone).length) {
-            item.gemstones.push(gemstone);
+        item.gemstones.push(gemstone);
+    }
+
+    if (record.type === 'STO' && !!record.CertificateNo) {
+        const certificate = {
+            number: record.CertificateNo,
+            agency: record.CertificateAgency,
+            site: record.CertificateWarehouse,
+            issuedDate: record.CertifiedDate
+        };
+
+        if (item.certificates.findIndex(current => current.number === certificate.number ) === -1) {
+            item.certificates.push(certificate);
         }
     }
 
@@ -69,17 +78,31 @@ const mapProperties = (item, record, exchangeRates) => {
 
     // add certificate image, if not existed
     if (!!record.CertificateImageName) {
-        const gemstone = item.gemstones.find(gemstone => gemstone.id === record.gemstone_id);
+        const image = {
+            original: `${config.gallery.original}/${record.CertificateImageName}.${record.CertificateImageType}`,
+            thumbnail: `${config.gallery.thumbnail}/${record.CertificateImageName}.${record.CertificateImageType}`
+        };
 
-        if (gemstone && gemstone.certificate) {
-            if (gemstone.certificate.images === undefined) {
-                gemstone.certificate.images = [];
+        if (record.type === 'STO') {
+            const certificate = item.certificates.find(certificate => certificate.number === record.CertificateNo);
+
+            if (!!certificate) {
+                if (certificate.images === undefined) {
+                    certificate.images = [];
+                }
+
+                certificate.images.push(image);
             }
+        } else {
+            const gemstone = item.gemstones.find(gemstone => gemstone.id === record.gemstone_id);
 
-            gemstone.certificate.images.push({
-                original: `${config.gallery.original}/${record.CertificateImageName}.${record.CertificateImageType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.CertificateImageName}.${record.CertificateImageType}`
-            });
+            if (gemstone && gemstone.certificate) {
+                if (gemstone.certificate.images === undefined) {
+                    gemstone.certificate.images = [];
+                }
+
+                gemstone.certificate.images.push(image);
+            }
         }
     }
 
@@ -163,6 +186,7 @@ const mapItem = (recordset, exchangeRates) => {
             const item = {...record};
             item.gemstones = [];
             item.gallery = [];
+            item.certificates = [];
             calculatePrices(item, exchangeRates);
             items.push(item);
         }
