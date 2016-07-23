@@ -63,7 +63,7 @@ const Gemstoneattr =  (props) =>{
            {props.gemstoneAttrData.map(function(data, index){
              return (
                <tr key={index}>
-                 <td title="Stone Type" style={styles.textcenter}>{convertBlanktodash(props.stoneTypeName)}</td>
+                 <td title="Stone Type" style={styles.textcenter}>{convertBlanktodash(data.stoneTypeName)}</td>
                  <td title="Clarity" style={styles.textcenter}>{convertBlanktodash(data.clarity)}</td>
                  <td title="Cut" style={styles.textcenter}>{convertBlanktodash(data.cut)}</td>
 
@@ -73,7 +73,7 @@ const Gemstoneattr =  (props) =>{
 
                  <td title="Symmetry" style={styles.textcenter}>{convertBlanktodash(data.symmetry)}</td>
                  <td title="Fluorescence" style={styles.textcenter}>{convertBlanktodash(data.fluorescence)}</td>
-                 <td title="Certificate Number," className="text-center">{data.number}</td>
+                 <td title="Certificate Number," className="text-center">{!!data.certificate ? data.certificate.number: '-'}</td>
                  <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
 
                </tr>

@@ -27,15 +27,15 @@ const Gemstoneattr =  (props) =>{
            {props.gemstoneAttrData.map(function(data, index){
              return (
                <tr key={index}>
-                 <td title="Stone Type" className="text-center">{props.stoneTypeName}</td>
-                 <td title="Clarity" className="text-center">{data.clarity}</td>
-                 <td title="Cut" className="text-center">{data.cut}</td>
-                 <td title="Color" className="text-center">{data.color}</td>
-                 <td title="QTY Of Stones" className="text-center">{data.quantity}</td>
-                 <td title="Total Carat Weight" className="text-center">{data.carat}</td>
-                 <td title="Symmetry" className="text-center">{data.symmetry}</td>
-                 <td title="Fluorescence" className="text-center">{data.fluorescence}</td>
-                 <td title="Certificate Number," className="text-center">{data.number}</td>
+                 <td title="Stone Type" className="text-center">{convertBlanktodash(data.stoneTypeName)}</td>
+                 <td title="Clarity" className="text-center">{convertBlanktodash(data.clarity)}</td>
+                 <td title="Cut" className="text-center">{convertBlanktodash(data.cut)}</td>
+                 <td title="Color" className="text-center">{convertBlanktodash(data.color)}</td>
+                 <td title="QTY Of Stones" className="text-center">{convertBlanktodash(data.quantity)}</td>
+                 <td title="Total Carat Weight" className="text-center">{convertBlanktodash(data.carat)}</td>
+                 <td title="Symmetry" className="text-center">{convertBlanktodash(data.symmetry)}</td>
+                 <td title="Fluorescence" className="text-center">{convertBlanktodash(data.fluorescence)}</td>
+                 <td title="Certificate Number," className="text-center">{!!data.certificate ? data.certificate.number: '-'}</td>
                  <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
 
                </tr>
