@@ -31,7 +31,7 @@ module.exports = {
                  "must": [
                    {
                      "match": {
-                       "collection": "${collection}"
+                       "subType": "${collection}"
                      }
                    }
                  ],

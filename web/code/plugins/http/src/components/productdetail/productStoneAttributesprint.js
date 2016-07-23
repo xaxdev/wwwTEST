@@ -59,7 +59,7 @@ const Stoneattr =  (props) =>{
             </div>
             <div style={styles.colmd12}>
                   <div style={styles.colmd5}>Certificate Date</div>
-                  <div style={styles.colmd5}>{certifiiedDate}</div>
+                  <div style={styles.colmd5}>-</div>
             </div>
             <div style={styles.colmd12}>
                   <div style={styles.colmd5}>Origin</div>

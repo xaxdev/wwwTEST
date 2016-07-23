@@ -38,7 +38,7 @@ class productdetail extends Component {
     this.props.getProductDetail(productId,productlist).then(()=>{
       const  Detail  = this.props.productdetail;
       if(Detail.type != 'STO'){
-      this.props.getProductRelete(Detail.collection,1,productId)
+      this.props.getProductRelete(Detail.subType,1,productId)
       }
     });
 
@@ -117,7 +117,7 @@ class productdetail extends Component {
       const productlist = this.props.productlist;
       this.props.getProductDetail(productId,productlist).then(()=>{
         const  Detail  = this.props.productdetail;
-        this.props.getProductRelete(Detail.collection,1,productId)
+        this.props.getProductRelete(Detail.subType,1,productId)
       })
     }
   }
