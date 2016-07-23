@@ -142,7 +142,7 @@ class SearchResult extends Component {
     setTimeout( function(){
       printWindow.document.close();
       printWindow.print();
-    },1000);
+    },1500);
     return true;
   }
   handleSelect(eventKey) {
@@ -880,11 +880,11 @@ class SearchResult extends Component {
                 <div className="col-sm-2 ft-white nopadding pd-10">
                   <div
                     disabled={submitting} onClick={ this.gridViewResults }>
-                      <div className="bd-white m-pt-mgl"><span className="glyphicon glyphicon-th-large"></span></div>
+                      <div className={`bd-white m-pt-mgl ${this.state.showGridView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-large"></span></div>
                   </div>
                   <div
                     disabled={submitting} onClick={ this.listViewResults } >
-                      <div className="bd-white"><span className="glyphicon glyphicon-th-list"></span></div>
+                      <div className={`bd-white m-pt-mgl ${this.state.showListView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-list"></span></div>
                   </div>
                 </div>
               </div>
