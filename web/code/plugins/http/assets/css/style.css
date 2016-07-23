@@ -931,7 +931,7 @@ select.form-searchresult option{
 	#fileName {width: 50%;}
 }
 @media (max-width:1199px){
-  .pd-10{padding:0 10px;}
+  .pd-10{padding:0 7px;}
   .thumbnaillgrid{
     position: relative;
     width: 100% !important;
@@ -946,6 +946,27 @@ select.form-searchresult option{
     width: 100% !important;
     height: 150px;
     overflow: hidden;
+  }
+  #fileName {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 5px;
+  }
+  .bg-hearder {
+    background: #383735;
+    height: 100%;
+    padding-bottom: 15px;
+  }
+  .searchresult-navi div {
+    margin-left: 0;
+    margin-top: 0px;
+  }
+  .searchresult-navi div, .searchresult-navi ul{float: right;}
+  .over-searchresult {
+    left: 180px;
+  }
+  .over-product, .over-product:hover, .over-searchresult, .over-searchresult-left {
+    width: 180px;
   }
 }
 @media screen and (max-width: 991px) and (min-width: 768px) and (orientation : portrait){
