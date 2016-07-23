@@ -762,7 +762,7 @@ select.form-searchresult option{
 .over-searchresult-left:hover {display:block;}
 .over-searchresult span, .over-searchresult-left span{line-height: 22px;}
 .print-search-results{
-  height: 95%;
+  height: 98%;
   margin: 0 auto;
 }
 .search-product{

@@ -24,7 +24,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
   // var pageData = data.max(size) ;
   var pageData = data.slice( (page - 1) * size, page * size );
   var sumPrice = 0;
-  var cost = 0;
+  var sumCost = 0;
 
   console.log('pageData-->',pageData.length);
 
@@ -36,7 +36,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
     });
 
     sumPriceData.forEach(function(price) {
-      sumPrice = sumPrice+Math.floor(price);
+      sumPrice = sumPrice+Math.round(price);
     });
 
     data.forEach(function(item){
@@ -44,10 +44,16 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
 
       sumCostData.push(GetPriceCurrency(item,'updatedCost',userCurrency));
     });
-
-    cost = sumCostData.reduce(function(a, b) {
-      return a + b;
+    console.log('sumCostData-->',sumCostData.length);
+    sumCostData.forEach(function(cost) {
+      // console.log('cost-->',cost);
+      sumCost = sumCost+Math.round(cost);
     });
+    console.log('sumCost-->',sumCost);
+
+    // cost = sumCostData.reduce(function(a, b) {
+    //   return a + b;
+    // });
   }
 
   const sendData = {
@@ -57,7 +63,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
           'summary':{
               'count': allData.length,
               'price': sumPrice,
-              'cost': cost
+              'cost': sumCost
             }
           };
   return sendData;

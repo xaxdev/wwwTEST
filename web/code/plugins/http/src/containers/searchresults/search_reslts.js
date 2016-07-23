@@ -17,26 +17,22 @@ import numberFormat from '../../utils/convertNumberformatwithcomma';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 // var XLSX = require('xlsx')
 
-const checkFields = ['metalType', 'site', 'size', 'cut', 'metalColor', 'certificatedNumber', 'caseDimension',
-      'color', 'collection', 'certificateDate','obaDimension', 'clarity', 'brand', 'dominantStone', 'grossWeight',
-      'cutGrade'];
+const checkFields = ['metalType', 'site', 'size', 'cut', 'metalColor', 'certificatedNumber',
+      'color', 'collection', 'certificateDate', 'clarity', 'brand', 'dominantStone', 'grossWeight'];
 const labels = {
   metalType: 'Metal Type',
   site: 'Warehouse',
   size: 'Size',
   cut: 'Cut',
-  metalColor: 'Meta lColor',
+  metalColor: 'Metal Color',
   certificatedNumber: 'Certificate Number',
-  caseDimension: 'Case Dimension',
   color: 'Color',
   collection: 'Collection',
   certificateDate: 'Certificate Date',
-  obaDimension: 'OBA Dimension',
   clarity: 'Clarity',
   brand: 'Brand',
   dominantStone: 'Dominant Stone',
-  grossWeight: 'Gross Weight',
-  cutGrade: 'Cut Grade'
+  grossWeight: 'Gross Weight'
 }
 
 class SearchResult extends Component {
@@ -123,7 +119,7 @@ class SearchResult extends Component {
     // console.log('printproduct-->',dvContainerPrint);
     var options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
     var printWindow = window.open('', '', options);
-    printWindow.document.write('<style>@page{size:landscape;}</style><html><head><title>Mol online 2016</title>');
+    printWindow.document.write('<style>@media print{@page {size: landscape;}}</style><html><head><title>Mol online 2016</title>');
     printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
     printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
     printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
@@ -284,6 +280,8 @@ class SearchResult extends Component {
     // console.log('currPage-->',currPage);
     // console.log('this.state.activePage-->',this.state.activePage);
     const page = this.state.activePage;
+    currPage.value = this.state.activePage;
+    // console.log('renderPagination-->',this.state.activePage);
 
     return(
         <div>
@@ -301,7 +299,7 @@ class SearchResult extends Component {
 
             <div>
               <span>Page</span>
-                <input type="text" placeholder={this.state.activePage} ref="reletego" {...currPage}/>
+                <input type="text" placeholder={page} ref="reletego" {...currPage}/>
               <span>of</span>
               <span>{numberFormat(totalPages)}</span>
               <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
@@ -362,9 +360,8 @@ class SearchResult extends Component {
     });
   }
   sortingBy(e){
-    this.setState({
-      activePage: 1
-    });
+    e.preventDefault();
+
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     let sortingBy = '';
@@ -378,15 +375,21 @@ class SearchResult extends Component {
         break;
     }
 
+    this.setState({
+      activePage: 1
+    });
+
     const { searchResult } = this.props;
     const sortingDirection = this.refs.sortingDirection.value;
     // this.props.sortBy(searchResult, sortingBy, sortingDirection);
     var params = {
-      'page' : this.state.activePage,
+      'page' : 1,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection
     };
-    const { filters } =  this.props;
+
+    let { filters } =  this.props;
+
     filters.forEach(function(filter){
       var keys = Object.keys(filter);
       keys.forEach((key) => {
@@ -394,13 +397,41 @@ class SearchResult extends Component {
         params[key] = value;
       });
     });
-    this.props.getItems(params);
+
+    let girdView = this.state.showGridView;
+    let listView = this.state.showListView;
+
+    this.setState({
+      showGridView: false,
+      showListView: false,
+      showLoading: true
+    });
+
+    this.props.getItems(params)
+    .then((value) => {
+      this.setState({
+        showLoading: false
+      });
+      if(girdView){
+        this.setState({
+          showGridView: true
+        });
+      }else if (listView) {
+        this.setState({
+          showListView: true
+        });
+      }
+    });
 
     var { currPage } = this.props.fields;
     currPage.onChange(this.state.activePage);
+    currPage.value = this.state.activePage;
+    // console.log('this.state.activePage-->',this.state.activePage);
 
   }
   sortingDirection(e){
+    e.preventDefault();
+
     const sortingDirection = e.target.value;
     const { searchResult } = this.props;
 
@@ -422,12 +453,12 @@ class SearchResult extends Component {
     });
 
     var params = {
-      'page' : this.state.activePage,
+      'page' : 1,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection
     };
 
-    const { filters } =  this.props;
+    let { filters } =  this.props;
 
     filters.forEach(function(filter){
       var keys = Object.keys(filter);
@@ -437,7 +468,30 @@ class SearchResult extends Component {
       });
     });
 
-    this.props.getItems(params);
+    let girdView = this.state.showGridView;
+    let listView = this.state.showListView;
+
+    this.setState({
+      showGridView: false,
+      showListView: false,
+      showLoading: true
+    });
+
+    this.props.getItems(params)
+    .then((value) => {
+      this.setState({
+        showLoading: false
+      });
+      if(girdView){
+        this.setState({
+          showGridView: true
+        });
+      }else if (listView) {
+        this.setState({
+          showListView: true
+        });
+      }
+    });
   }
   newSearch(e){
     e.preventDefault();
@@ -549,9 +603,9 @@ class SearchResult extends Component {
       var titles = ['Item Reference', 'Description', 'SKU', 'Location', 'Vendor Item Reference', 'Vendor Name',
                   'Public Price', 'Quantity', 'Unit'];
       if(this.state.allFields){
-        titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Color', 'Certificate Number', 'Case Dimension',
-                    'Color', 'Collection', 'Certificate Date','OBA Dimension', 'Clarity', 'Brand', 'Dominant Stone',
-                    'Gross Weight', 'Cut Grade');
+        titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Color', 'Certificate Number',
+                    'Color', 'Collection', 'Certificate Date', 'Clarity', 'Brand', 'Dominant Stone',
+                    'Gross Weight');
       }else{
         if(this.state.metalType) titles.push('Metal Type');
         if(this.state.site) titles.push('Warehouse');
@@ -559,16 +613,13 @@ class SearchResult extends Component {
         if(this.state.cut) titles.push('Cut');
         if(this.state.metalColor) titles.push('Metal Color');
         if(this.state.certificatedNumber) titles.push('Certificate Number');
-        if(this.state.caseDimension) titles.push('Case Dimension');
         if(this.state.color) titles.push('Color');
         if(this.state.collection) titles.push('Collection');
         if(this.state.certificateDate) titles.push('Certificate Date');
-        if(this.state.obaDimension) titles.push('OBA Dimension');
         if(this.state.clarity) titles.push('Clarity');
         if(this.state.brand) titles.push('Brand');
         if(this.state.dominantStone) titles.push('Dominant Stone');
         if(this.state.grossWeight) titles.push('Gross Weight');
-        if(this.state.cutGrade) titles.push('Cut Grade');
       }
       if (this.state.showImages) titles.push('Images');
 
@@ -592,9 +643,9 @@ class SearchResult extends Component {
                         ,item.quantity,(item.unit != undefined) ? item.unit : '');
 
         if(that.state.allFields){
-          arrayItems.push(item.metalType,item.warehouseName,item.size,item.cut,item.metalColor,item.certificates.number,
-                          item.caseDimension,item.color,item.collection,item.certificates.issuedDate,item.obaDimension,
-                          item.clarity,item.brand,item.dominantStone,item.grossWeight,item.cutGrade
+          arrayItems.push(item.metalType,item.warehouseName,item.size,item.cut,item.metalColor,item.gemstones.certificate.number,
+                          item.color,item.collection,item.gemstones.certificate.issuedDate,
+                          item.clarity,item.brand,item.dominantStone,item.grossWeight
                         );
         }else{
           if(that.state.metalType) arrayItems.push(item.metalType);
@@ -602,17 +653,14 @@ class SearchResult extends Component {
           if(that.state.size) arrayItems.push(item.size);
           if(that.state.cut) arrayItems.push(item.cut);
           if(that.state.metalColor) arrayItems.push(item.metalColor);
-          if(that.state.certificatedNumber) arrayItems.push(item.certificates.number);
-          if(that.state.caseDimension) arrayItems.push(item.caseDimension);
+          if(that.state.certificatedNumber) arrayItems.push(item.gemstones.certificate.number);
           if(that.state.color) arrayItems.push(item.color);
           if(that.state.collection) arrayItems.push(item.collection);
-          if(that.state.certificateDate) arrayItems.push(item.certificates.issuedDate);
-          if(that.state.obaDimension) arrayItems.push(item.obaDimension);
+          if(that.state.certificateDate) arrayItems.push(item.gemstones.certificate.issuedDate);
           if(that.state.clarity) arrayItems.push(item.clarity);
           if(that.state.brand) arrayItems.push(item.brand);
           if(that.state.dominantStone) arrayItems.push(item.dominantStone);
           if(that.state.grossWeight) arrayItems.push(item.grossWeight);
-          if(that.state.cutGrade) arrayItems.push(item.cutGrade);
         }
 
         if (that.state.showImages)
@@ -700,7 +748,7 @@ class SearchResult extends Component {
             <h1 className="modal-title">Export</h1>
           </div>
           <div className="modal-body">
-            <h3>Please choose additional fields for exprot.</h3>
+            <h3>Please choose additional fields for export.</h3>
             <h5>(Normal export field Item Reference, Description, SKU, Location, Vendor Item Reference, Vendor Name, Public Price, Quantity, Unit)</h5>
             <br/>
             <div className="col-sm-12">
