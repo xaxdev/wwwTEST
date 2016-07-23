@@ -317,7 +317,7 @@ class productdetail extends Component {
                 maxButtons={3}
                 activePage={reletepage.defaultValue}
                 onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey,productId); }} />
-                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 nopadding">
+                <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
                   <span>Page</span>
                   <form onSubmit={handleSubmit(this.handleGo)} >
                    <input type="number" {...reletepage} />
@@ -440,7 +440,7 @@ class productdetail extends Component {
     return(
       <div id="page-wrapper">
         <div className="col-sm-12 bg-hearder m-prodcutdetail">
-          <div className="col-md-5 col-sm-5 ft-white m-nopadding"><h1>PRODUCT DETAIL</h1></div>
+          <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding"><h1>PRODUCT DETAIL</h1></div>
           {this.renderNavigation()}
         </div>
         <div className="row">

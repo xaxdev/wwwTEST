@@ -847,7 +847,7 @@ class SearchResult extends Component {
                 <h1>SEARCH RESULTS</h1>
               </div>
               <div className="col-md-8 col-sm-12 nopadding">
-              <div className="m-width-100 text-right maring-t15 float-r ip-font ipp-margin m-pt">
+              <div className="m-width-100 text-right maring-t15 float-r ip-font m-pt">
                 <div className="col-sm-4 col-xs-12 nopadding">
                     <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
                       <button className="btn btn-searchresult" disabled={submitting} onClick={this.newSearch}>New Search</button>
@@ -908,7 +908,7 @@ class SearchResult extends Component {
                             </a>
                           </div>
                           <div className="col-md-9 col-sm-8 pagenavi">
-                            <div className="searchresult-navi">
+                            <div className="searchresult-navi search-right">
                                 {this.renderPagination()}
                             </div>
                           </div>

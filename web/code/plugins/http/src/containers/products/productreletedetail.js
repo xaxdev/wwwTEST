@@ -328,7 +328,7 @@ class productreletedetail extends Component {
                 maxButtons={3}
                 activePage={reletepage.defaultValue}
                 onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey,productId); }} />
-                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 nopadding">
+                <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
                   <span>Page</span>
                   <form onSubmit={handleSubmit(this.handleGo)} >
                    <input type="number" {...reletepage} />
@@ -393,7 +393,7 @@ class productreletedetail extends Component {
    renderNavigation(){
      return(
 
-        <div className="width-50  maring-t15">
+        <div className="width-50 productreletedetail-width maring-t15">
                      <div className="col-md-12 col-sm-12 ft-white productdetail-search">
                        <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
                      </div>
@@ -412,7 +412,7 @@ class productreletedetail extends Component {
     let pructdetailurl = '/productdetail/';
     return(
       <div id="page-wrapper">
-        <div className="col-sm-12 bg-hearder">
+        <div className="col-sm-12 bg-hearder bg-hearder-rel">
           <div className="col-md-5 col-sm-5 ft-white m-nopadding"><h1>PRODUCT DETAIL</h1></div>
           {this.renderNavigation()}
         </div>

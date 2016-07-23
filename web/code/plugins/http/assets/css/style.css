@@ -940,7 +940,8 @@ select.form-searchresult option{
   }
   .styled-select select{font-size:13px !important;}
 }
-@media screen and (max-width: 991px){
+
+@media screen and (max-width: 991px) and (min-width: 767px){
   .thumbnaillgrid {
     position: relative;
     width: 100% !important;
@@ -961,13 +962,22 @@ select.form-searchresult option{
     margin-left: 0;
     margin-top: 0px;
   }
-  .searchresult-navi div, .searchresult-navi ul{float: right;}
+  .search-right div, .search-right ul{float:right;}
   .over-searchresult {
-    left: 180px;
+    left: 180px !important;
   }
   .over-product, .over-product:hover, .over-searchresult, .over-searchresult-left {
-    width: 180px;
+    width: 180px !important;
   }
+  .over-searchresult-left {
+    left: -180px!important;
+  }
+  .productdetailpage input {
+    width: 50px;
+  }
+  .bg-or{margin: 0 0 20px 0;}
+  .width-50{width: 65%;}
+  .productreletedetail-width{width: 50%}
 }
 @media screen and (max-width: 991px) and (min-width: 768px) and (orientation : portrait){
 	.ip-nopadding{padding:0;}
@@ -1042,13 +1052,21 @@ select.form-searchresult option{
     padding: 5px 9px;
     margin-left: 5px;
 	}
+  .productdetailpage input{width: 50px;}
+  .width-50 {width: 65%;}
+  .productreletedetail-width{width: 50%}
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px){
+  .bg-hearder-rel{height:100px;}
+  .navbar-nav {
+    margin: 7.5px 0;
+  }
 	.logo-detail{
 		float: none;
     margin: 0 auto;
   }
+  .styled-select select{width: 100%;}
 	h2 {font-size: 1.5em;}
 	.m-none{display: none;}
 	.m-nopadding{padding:0;}
@@ -1067,17 +1085,26 @@ select.form-searchresult option{
 	#dvContainerPrint, .search-product{float:left; width: 100%;}
 	.bg-or{padding:15px 15px;}
 	.margin-allr-9 {margin-right: 0;}
-	.m-pt{text-align: center;}
+	.m-pt{text-align: center; width: 100%;}
 	.m-pt-select{padding:10px 0;}
 	.m-pt-mgl{margin-left:0 !important;}
-	.icon-detail{top:15px;}
+	.icon-detail{top:15px; width: 90%;}
 	.m-user{margin:0;}
 	.image-gallery{margin-top:60px;}
+  .styled-select{width:100%;}
+  .form-group label{width: 100%;}
+  .modal-dialog{width: 90%;}
+  .width-50{width: 100%;}
+  .productdetailpage input {
+    width: 50px;
+  }
+  .over-searchresult{z-index: 9999;}
+  .m-prodcutdetail{height:155px !important;}
+  .m-prodcutdetail-item{float:right; margin-top:10px;}
 }
 @media screen and (max-width: 767px) and (min-width: 320px) and (orientation : portrait){
 	.logo-detail {
 	    background: url(/images/logo-mouawad-detail.png) no-repeat center 20px;
-	    width: 100%;
 	    height: 45px;
 	    float: none;
 	    text-align: center;
@@ -1086,6 +1113,9 @@ select.form-searchresult option{
 	}
 	.m-width-100{width:100%;}
 	.maring-t15 {margin-top: 0;}
+  .nav-tabs>li {
+    width: 100%;
+  }
 	.navbar-nav>li {
 	    padding-right: 15px;
 	    padding-left: 15px;
@@ -1096,8 +1126,6 @@ select.form-searchresult option{
 	.m-searchresult{
 		height:235px !important;
 	}
-	.m-prodcutdetail{height:145px !important;}
-	.m-prodcutdetail-item{float:right; margin-top:10px;}
 	.m-prodet{
 		padding: 0;
     margin-bottom: 10px;
