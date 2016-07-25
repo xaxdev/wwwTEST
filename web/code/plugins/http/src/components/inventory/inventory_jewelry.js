@@ -340,7 +340,23 @@ class InventoryJewelry extends Component {
                   <input type="text" className="form-control" {...ringSize}/>
                 </div>
               </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label">Set Reference Number</label>
+                <div className="col-sm-7">
+                  <input type="text" className="form-control" {...setReference}/>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label">Dominant Stone</label>
+                <div className="col-sm-7">
+                  <Select multi simpleValue value={props.DominantStoneValue}
+                    placeholder="Select your Dominant Stone"
+                    options={dataDropDowntDominantStone}
+                    onChange={this.handleDominantStoneSelectChange} />
+                </div>
+              </div>
             </div>
+
             <div className="col-lg-6 form-horizontal">
               <div className={`form-group ${(userLogin.permission.price == 'All') ?
                   '' : 'hidden'}`}>
@@ -415,7 +431,7 @@ class InventoryJewelry extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
+              {/*<div className="form-group">
                 <label className="col-sm-4 control-label">Set Reference Number</label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...setReference}/>
@@ -429,7 +445,7 @@ class InventoryJewelry extends Component {
                     options={dataDropDowntDominantStone}
                     onChange={this.handleDominantStoneSelectChange} />
                 </div>
-              </div>
+              </div>*/}
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Metal Type
                   <OverlayTrigger placement="top" overlay={tooltipMetalType}>

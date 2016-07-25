@@ -414,6 +414,33 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
+               <label className="col-sm-4 control-label tooltiop-span">Symmetry
+                 <OverlayTrigger placement="top" overlay={tooltipSymmetry}>
+                   <img src="/images/alphanumeric.png" />
+                 </OverlayTrigger>
+               </label>
+               <div className="col-sm-7">
+                  <Select multi simpleValue value={props.SymmetryValue}
+                    placeholder="Select your Symmetry"
+                    options={dataDropDowntSymmetry}
+                    onChange={this.handleSymmetrySelectChange}/>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label tooltiop-span">Origin
+                  <OverlayTrigger placement="top" overlay={tooltipOrigin}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
+                <div className="col-sm-7">
+                  <Select multi simpleValue value={props.OriginValue}
+                    placeholder="Select your Origin"
+                    options={dataDropDowntOrigin}
+                    onChange={this.handleOriginSelectChange}/>
+                </div>
+              </div>
+
+              {/*<div className="form-group">
                 <label className="col-sm-4 control-label">Certificate Number</label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...gemstone_certificatedNumber}/>
@@ -450,7 +477,8 @@ class InventoryGemStone extends Component {
                     />
                   </div>
                 </div>
-              </div>
+              </div>*/}
+
             </div>
             <div className="col-lg-6 form-horizontal">
               <div className="form-group">
@@ -492,7 +520,7 @@ class InventoryGemStone extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
+              {/*<div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Origin
                   <OverlayTrigger placement="top" overlay={tooltipOrigin}>
                     <img src="/images/alphanumeric.png" />
@@ -504,7 +532,7 @@ class InventoryGemStone extends Component {
                     options={dataDropDowntOrigin}
                     onChange={this.handleOriginSelectChange}/>
                 </div>
-              </div>
+              </div>*/}
               <div className="form-group hidden">
                 <label className="col-sm-4 control-label tooltiop-span">Polish
                   <OverlayTrigger placement="top" overlay={tooltipPolish}>
@@ -518,7 +546,7 @@ class InventoryGemStone extends Component {
                     onChange={this.handlePolishSelectChange}/>
                 </div>
               </div>
-              <div className="form-group">
+              {/*<div className="form-group">
                <label className="col-sm-4 control-label tooltiop-span">Symmetry
                  <OverlayTrigger placement="top" overlay={tooltipSymmetry}>
                    <img src="/images/alphanumeric.png" />
@@ -530,7 +558,7 @@ class InventoryGemStone extends Component {
                     options={dataDropDowntSymmetry}
                     onChange={this.handleSymmetrySelectChange}/>
                 </div>
-              </div>
+              </div>*/}
               <div className="form-group hidden">
                 <label className="col-sm-4 control-label tooltiop-span">Treatment
                   <OverlayTrigger placement="top" overlay={tooltipTreatement}>
@@ -555,6 +583,44 @@ class InventoryGemStone extends Component {
                     placeholder="Select your Fluorescence"
                     options={dataDropDowntFluorescence}
                     onChange={this.handleFluorescenceSelectChange}/>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label">Certificate Number</label>
+                <div className="col-sm-7">
+                  <input type="text" className="form-control" {...gemstone_certificatedNumber}/>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label">Certificate Agency</label>
+                <div className="col-sm-7">
+                  <Select multi simpleValue value={props.CertificateAgencyValue}
+                    placeholder="Select your Certificate Agency"
+                    options={dataDropDowntCertificateAgency}
+                    onChange={this.handleCertificateAgencySelectChange}/>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label">Certificate Date</label>
+                <div className="col-sm-7">
+                  <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
+                  <div className="col-sm-10 nopadding">
+                    <Calendar
+                      format="MM-DD-YYYY"
+                      date={(paramsSearch != null)?paramsSearch.gemstone_cerDateFrom:this.state.startDate}
+                      closeOnSelect = {true}
+                      onChange={this.handleChangeStart}
+                    />
+                  </div>
+                  <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
+                  <div className="col-sm-10 nopadding">
+                    <Calendar
+                      format="MM-DD-YYYY"
+                      date={(paramsSearch != null)?paramsSearch.gemstone_cerDateTo:this.state.endDate}
+                      closeOnSelect = {true}
+                      onChange={this.handleChangeEnd}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

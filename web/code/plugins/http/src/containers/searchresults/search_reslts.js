@@ -632,16 +632,16 @@ class SearchResult extends Component {
         arrayItems.push(item.reference,item.description,item.sku,item.siteName,item.venderReference,
                         (item.vendorName != undefined) ? item.vendorName : '',
                         (userLogin.currency == 'AED')
-                        ? item.price.AED
-                          : (userLogin.currency == 'CHF') ? item.price.CHF
-                          : (userLogin.currency == 'EUR') ? item.price.EUR
-                          : (userLogin.currency == 'JOD') ? item.price.JOD
-                          : (userLogin.currency == 'KWD') ? item.price.KWD
-                          : (userLogin.currency == 'LBP') ? item.price.LBP
-                          : (userLogin.currency == 'OMR') ? item.price.OMR
-                          : (userLogin.currency == 'QAR') ? item.price.QAR
-                          : (userLogin.currency == 'SAR') ? item.price.SAR
-                          : item.price.USD
+                        ? numberFormat(item.price.AED)
+                          : (userLogin.currency == 'CHF') ? numberFormat(item.price.CHF)
+                          : (userLogin.currency == 'EUR') ? numberFormat(item.price.EUR)
+                          : (userLogin.currency == 'JOD') ? numberFormat(item.price.JOD)
+                          : (userLogin.currency == 'KWD') ? numberFormat(item.price.KWD)
+                          : (userLogin.currency == 'LBP') ? numberFormat(item.price.LBP)
+                          : (userLogin.currency == 'OMR') ? numberFormat(item.price.OMR)
+                          : (userLogin.currency == 'QAR') ? numberFormat(item.price.QAR)
+                          : (userLogin.currency == 'SAR') ? numberFormat(item.price.SAR)
+                          : numberFormat(item.price.USD)
                         ,item.quantity,(item.unit != undefined) ? item.unit : '');
 
         if(that.state.allFields){

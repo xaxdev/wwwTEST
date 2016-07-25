@@ -618,9 +618,9 @@ class InventoryStone extends Component {
               </div>
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Certificate Agency
-                  <OverlayTrigger placement="top" overlay={tooltipCertificateAgency}>
+                  {/*<OverlayTrigger placement="top" overlay={tooltipCertificateAgency}>
                     <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
+                  </OverlayTrigger>*/}
                 </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.CertificateAgencyValue}
