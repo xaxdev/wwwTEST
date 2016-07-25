@@ -6,7 +6,7 @@ const Watchattr =  (props) =>{
       <div className="col-sm-6 nopadding">
           <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Watch Category</div>
-              <div className="col-md-8 col-sm-8">{convertBlanktodash(props.subType)}</div>
+              <div className="col-md-8 col-sm-8">{convertBlanktodash(props.strapTypeName)}</div>
             </div>
           <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Collection</div>
@@ -40,35 +40,35 @@ const Watchattr =  (props) =>{
       <div className="col-sm-6 nopadding">
           <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Movement</div>
-                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.movement)}</div>
+                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.movementName)}</div>
           </div>
           <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Complication</div>
-                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.complication)}</div>
+                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.complicationName)}</div>
           </div>
           <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Strap Type</div>
-                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.strapType)}</div>
+                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.strapTypeName)}</div>
           </div>
           <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Strap Color</div>
-                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.strapColor)}</div>
+                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.strapColorName)}</div>
           </div>
           <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Dial Index</div>
-                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.dialIndex)}</div>
+                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.dialIndexName)}</div>
           </div>
           <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Dial Color</div>
-                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.dialColor)}</div>
+                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.dialColorName)}</div>
           </div>
           <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Dial Metal</div>
-                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.dialMetal)}</div>
+                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.dialMetalName)}</div>
           </div>
           <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Buckle Type</div>
-                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.buckleType)}</div>
+                  <div className="col-md-8 col-sm-8">{convertBlanktodash(props.buckleTypeName)}</div>
           </div>
       </div>
     </div>

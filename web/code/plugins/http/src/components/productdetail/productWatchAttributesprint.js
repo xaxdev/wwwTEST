@@ -17,7 +17,7 @@ const Watchattr =  (props) =>{
       <div style={styles.colmd12}>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Watch Category</div>
-              <div style={styles.colmd5}>{convertBlanktodash(props.subType)}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.strapTypeName)}</div>
             </div>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Collection</div>
@@ -49,35 +49,35 @@ const Watchattr =  (props) =>{
             </div>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Movement</div>
-                  <div style={styles.colmd5}>{convertBlanktodash(props.movement)}</div>
+                  <div style={styles.colmd5}>{convertBlanktodash(props.movementName)}</div>
           </div>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Complication</div>
-                  <div style={styles.colmd5}>{convertBlanktodash(props.complication)}</div>
+                  <div style={styles.colmd5}>{convertBlanktodash(props.complicationName)}</div>
           </div>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Strap Type</div>
-                  <div style={styles.colmd5}>{convertBlanktodash(props.strapType)}</div>
+                  <div style={styles.colmd5}>{convertBlanktodash(props.strapTypeName)}</div>
           </div>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Strap Color</div>
-                  <div style={styles.colmd5}>{convertBlanktodash(props.strapColor)}</div>
+                  <div style={styles.colmd5}>{convertBlanktodash(props.strapColorName)}</div>
           </div>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Dial Index</div>
-                  <div style={styles.colmd5}>{convertBlanktodash(props.dialIndex)}</div>
+                  <div style={styles.colmd5}>{convertBlanktodash(props.dialIndexName)}</div>
           </div>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Dial Color</div>
-                  <div style={styles.colmd5}>{convertBlanktodash(props.dialColor)}</div>
+                  <div style={styles.colmd5}>{convertBlanktodash(props.dialColorName)}</div>
           </div>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Dial Metal</div>
-                  <div style={styles.colmd5}>{convertBlanktodash(props.dialMetal)}</div>
+                  <div style={styles.colmd5}>{convertBlanktodash(props.dialMetalName)}</div>
           </div>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Buckle Type</div>
-                  <div style={styles.colmd5}>{convertBlanktodash(props.buckleType)}</div>
+                  <div style={styles.colmd5}>{convertBlanktodash(props.buckleTypeName)}</div>
           </div>
       </div>
     </div>

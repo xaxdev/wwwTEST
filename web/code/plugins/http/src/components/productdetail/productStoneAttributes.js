@@ -8,20 +8,20 @@ const Stoneattr =  (props) =>{
         <div className="col-sm-6 nopadding">
             <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Stone Type</div>
-              <div className="col-md-8 col-sm-8">{convertBlanktodash(props.subType)}</div>
+              <div className="col-md-8 col-sm-8">{convertBlanktodash(props.subTypeName)}</div>
             </div>
             <div className="col-md-12 col-sm-12 nopadding">
               <div className="col-md-4 col-sm-4 nopadding font-b">Cut</div>
-              <div className="col-md-8 col-sm-8">{convertBlanktodash(props.cut)}</div>
+              <div className="col-md-8 col-sm-8">{convertBlanktodash(props.cutName)}</div>
             </div>
 
             <div className="col-md-12 col-sm-12 nopadding">
                 <div className="col-md-4 col-sm-4 nopadding font-b">Color</div>
-                <div className="col-md-8 col-sm-8">{convertBlanktodash(props.color)}</div>
+                <div className="col-md-8 col-sm-8">{convertBlanktodash(props.colorName)}</div>
             </div>
             <div className="col-md-12 col-sm-12 nopadding">
                 <div className="col-md-4 col-sm-4 nopadding font-b">Clarity</div>
-                <div className="col-md-8 col-sm-8">{convertBlanktodash(props.clarity)}</div>
+                <div className="col-md-8 col-sm-8">{convertBlanktodash(props.clarityName)}</div>
             </div>
             <div className="col-md-12 col-sm-12 nopadding">
                 <div className="col-md-4 col-sm-4 nopadding font-b">Lot Number</div>

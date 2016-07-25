@@ -16,7 +16,7 @@ const Jewelryattr = (props) =>{
         <div style={styles.colmd12}>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Jewelry Category</div>
-              <div style={styles.colmd5}>{convertBlanktodash(props.subType)}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.subTypeName)}</div>
             </div>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Collection</div>

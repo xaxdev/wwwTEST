@@ -19,23 +19,20 @@ const Stoneattr =  (props) =>{
         <div style={styles.colmd12}>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Stone Type</div>
-              <div style={styles.colmd5}>{convertBlanktodash(props.subType)}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.subTypeName)}</div>
             </div>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Cut</div>
-              <div style={styles.colmd5}>{convertBlanktodash(props.cut)}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.cutName)}</div>
             </div>
-            <div style={styles.colmd12}>
-                <div style={styles.colmd5}>Cut Grade</div>
-                <div style={styles.colmd5}>{convertBlanktodash(props.cutGrade)}</div>
-            </div>
+
             <div style={styles.colmd12}>
                 <div style={styles.colmd5}>Color</div>
-                <div style={styles.colmd5}>{convertBlanktodash(props.color)}</div>
+                <div style={styles.colmd5}>{convertBlanktodash(props.colorName)}</div>
             </div>
             <div style={styles.colmd12}>
                 <div style={styles.colmd5}>Clarity</div>
-                <div style={styles.colmd5}>{convertBlanktodash(props.clarity)}</div>
+                <div style={styles.colmd5}>{convertBlanktodash(props.clarityName)}</div>
             </div>
             <div style={styles.colmd12}>
                 <div style={styles.colmd5}>Lot Number</div>
