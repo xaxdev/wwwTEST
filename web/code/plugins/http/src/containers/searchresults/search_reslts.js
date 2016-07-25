@@ -727,27 +727,51 @@ class SearchResult extends Component {
 
       /* write file */
       var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
-      saveAs(new Blob([this.s2ab(wbout)],{type:'application/octet-stream'}), 'MolProduct.xlsx')
+      saveAs(new Blob([this.s2ab(wbout)],{type:'application/octet-stream'}), 'download.xlsx')
     } else {
       let tab_text = GenHtmlExportExcel(this, exportItems, userLogin, ROOT_URL);
 
       var data_type = 'data:application/vnd.ms-excel;base64';
 
       var ua = window.navigator.userAgent;
-      var msie = ua.indexOf('Edge');
+      var msie = ua.indexOf('MSIE');
+      var edge = ua.indexOf('Edge');
+      var sa = '';
+      var uriContent = '';
 
-      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+      if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
           if (window.navigator.msSaveBlob) {
               var blob = new Blob([tab_text], {
                   type: 'application/csv;charset=utf-8;'
               });
-              navigator.msSaveBlob(blob, 'Test file.xls');
+              this.setState({
+                isOpen: false,
+              });
+              navigator.msSaveBlob(blob, 'download.xls');
           }
       } else {
-          // window.open(data_type + ', ' + $.base64.encode(tab_text));
-          window.open('data:application/vnd.ms-excel;base64,' + $.base64.encode(tab_text));
+          var isFirefox = typeof InstallTrigger !== 'undefined';
+          if(!isFirefox){
+            this.setState({
+              isOpen: false,
+            });
+            uriContent = 'data:application/vnd.ms-excel;base64,' + $.base64.encode(tab_text);
+            sa = window.open(uriContent,'download.xls');
+          } else {
+              uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
+              // sa = window.open(uriContent,'download.xlsx');
+              // var wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});
+              this.setState({
+                isOpen: false,
+              });
+              window.open(uriContent,'download.xls')
+          }
       }
+      return sa;
     }
+    this.setState({
+      isOpen: false,
+    });
   }
   renderExportExcelDialog(){
     var that = this;

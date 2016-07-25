@@ -52,7 +52,7 @@ module.exports = {
       const productGroupsget = alldata.hits.hits.filter((element)=> {{
         return element._type == 'productGroups';
       }})
-      const stoneType = alldata.hits.hits.filter((element)=> {{
+      const stoneTypeget = alldata.hits.hits.filter((element)=> {{
         return element._type == 'stoneType';
       }})
       const gemstoneStoneTypeget = alldata.hits.hits.filter((element)=> {{
