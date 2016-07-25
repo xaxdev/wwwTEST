@@ -19,7 +19,7 @@ module.exports = {
             "match_all" : {}
         }
     }`);
-    let type = 'roles,currencies,companies,locations,warehouses,countries,productGroups,stoneType,cut,cutShape,cutGrades,colors,colorGrades,clarities,certificateLabs,polishs,symmetries,treatments,fluorescences,origins,jewelryCategories,collections,brands,ringSizes,dominantStones,metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,buckleTypes,strapTypes,strapColors,complications'
+    let type = 'roles,currencies,companies,locations,warehouses,countries,productGroups,stoneType,gemstoneStoneType,cut,cutShape,cutGrades,colors,colorGrades,clarities,certificateLabs,polishs,symmetries,treatments,fluorescences,origins,jewelryCategories,collections,brands,ringSizes,dominantStones,metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,buckleTypes,strapTypes,strapColors,complications'
     // let type = 'roles,currencies';
     const alldata = elastic
       .search({
@@ -54,6 +54,9 @@ module.exports = {
       }})
       const stoneTypeget = alldata.hits.hits.filter((element)=> {{
         return element._type == 'stoneType';
+      }})
+      const gemstoneStoneTypeget = alldata.hits.hits.filter((element)=> {{
+        return element._type == 'gemstoneStoneType';
       }})
       const cutShapeget = alldata.hits.hits.filter((element)=> {{
         return element._type == 'cutShape';
@@ -152,7 +155,8 @@ module.exports = {
         warehouses:_.sortBy(warehousesget.map((element)=> element._source),'name'),
         countries:_.sortBy(countriesget.map((element)=> element._source),'name'),
         productGroups:_.sortBy(productGroupsget.map((element)=> element._source),'name'),
-        stoneType:_.sortBy(stoneTypeget.map((element)=> element._source),'name'),
+        stoneType:_.sortBy(stoneTypeget.map((element)=> element._source),'code'),
+        gemstoneStoneType:_.sortBy(gemstoneStoneTypeget.map((element)=> element._source),'code'),
         cutShape:_.sortBy(cutShapeget.map((element)=> element._source),'name'),
         cut:_.sortBy(cutget.map((element)=> element._source),'name'),
         cutGrades:_.sortBy(cutGradesget.map((element)=> element._source),'name'),
@@ -169,7 +173,7 @@ module.exports = {
         collections:_.sortBy(collectionsget.map((element)=> element._source),'name'),
         brands:_.sortBy(brandsget.map((element)=> element._source),'name'),
         ringSizes:_.sortBy(ringSizesget.map((element)=> element._source),'name'),
-        dominantStones:_.sortBy(dominantStonesget.map((element)=> element._source),'name'),
+        dominantStones:_.sortBy(dominantStonesget.map((element)=> element._source),'code'),
         metalTypes:_.sortBy(metalTypesget.map((element)=> element._source),'name'),
         metalColours:_.sortBy(metalColoursget.map((element)=> element._source),'name'),
         certificateAgencys:_.sortBy(certificateAgencysget.map((element)=> element._source),'name'),

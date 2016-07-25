@@ -239,6 +239,7 @@ class InventoryGemStone extends Component {
                         null;
 
     var dataDropDowntstoneType = [];
+    var dataDropDowntGemstoneStoneType = [];
     var dataDropDowntCut = [];
     var dataDropDowntCutGrade = [];
     var dataDropDowntColor = [];
@@ -261,6 +262,13 @@ class InventoryGemStone extends Component {
           })
         )
         dataDropDowntstoneType = dataDropDowntstoneType[0];
+      }
+      if (props.options.gemstoneStoneType) {
+        dataDropDowntGemstoneStoneType.push(props.options.gemstoneStoneType.map(gemstoneStoneType =>{
+            return ({value: gemstoneStoneType.code,label:gemstoneStoneType.name});
+          })
+        )
+        dataDropDowntGemstoneStoneType = dataDropDowntGemstoneStoneType[0];
       }
       if (props.options.cut) {
         dataDropDowntCut.push(props.options.cut.map(cut =>{
@@ -340,7 +348,7 @@ class InventoryGemStone extends Component {
      <div className="maring-t30">
           <div className="row margin-ft">
             <div className="col-lg-6 form-horizontal">
-              <div className="form-group hidden">
+              <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Stone Type
                   <OverlayTrigger placement="top" overlay={tooltipStoneType}>
                     <img src="/images/alphanumeric.png" />
@@ -349,7 +357,7 @@ class InventoryGemStone extends Component {
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.StoneTypeValue}
                     placeholder="Select your Stone Type"
-                    options={dataDropDowntstoneType}
+                    options={dataDropDowntGemstoneStoneType}
                     onChange={this.handlestoneTypeSelectChange} />
                 </div>
               </div>

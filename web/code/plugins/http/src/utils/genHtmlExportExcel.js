@@ -1,8 +1,8 @@
 export default (that, exportItems, userLogin, ROOT_URL)=> {
-  var titles = ['Item Reference', 'Description', 'SKU', 'Location', 'Vendor Item Reference', 'Vendor Name',
+  var titles = ['Item Reference', 'Description', 'SKU', 'Site', 'Vendor Item Reference', 'Vendor Name',
                 'Public Price', 'Quantity', 'Unit'];
   if(that.state.allFields){
-    titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Color', 'Certificate Number',
+    titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Colour', 'Certificate Number',
                 'Color', 'Collection', 'Certificate Date','Clarity', 'Brand', 'Dominant Stone',
                 'Gross Weight');
   }else{
@@ -10,7 +10,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     if(that.state.site) titles.push('Warehouse');
     if(that.state.size) titles.push('Size');
     if(that.state.cut) titles.push('Cut');
-    if(that.state.metalColor) titles.push('Metal Color');
+    if(that.state.metalColor) titles.push('Metal Colour');
     if(that.state.certificatedNumber) titles.push('Certificate Number');
     if(that.state.color) titles.push('Color');
     if(that.state.collection) titles.push('Collection');
@@ -27,7 +27,8 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     // console.log('item-->',item);
     var arrayItems = [];
 
-    arrayItems.push(item.reference,item.description,item.sku,item.siteName,item.venderReference,item.vendor,
+    arrayItems.push(item.reference,item.description,item.sku,item.siteName,item.venderReference,
+                    (item.vendorName != undefined) ? item.vendorName : '',
                     (userLogin.currency == 'AED')
                     ? item.price.AED
                       : (userLogin.currency == 'CHF') ? item.price.CHF
@@ -42,24 +43,34 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
                     ,item.quantity,(item.unit != undefined) ? item.unit : '');
 
     if(that.state.allFields){
-      arrayItems.push(item.metalType,item.warehouseName,item.size,item.cut,item.metalColor,item.gemstones.certificate.number,
-                      item.color,item.collection,item.gemstones.certificate.issuedDate,
-                      item.clarity,item.brand,item.dominantStone,item.grossWeight
+      arrayItems.push((item.metalTypeName != undefined) ? item.metalTypeName : '',
+                      (item.warehouseName != undefined) ? item.warehouseName : '',
+                      (item.size != undefined) ? item.size : '',
+                      (item.cutName != undefined) ? item.cutName : '',
+                      (item.metalColorName != undefined) ? item.metalColorName : '',
+                      (item.gemstones.certificate != undefined) ? item.gemstones.certificate.number : '',
+                      (item.colorName != undefined) ? item.colorName : '',
+                      (item.collectionName != undefined) ? item.collectionName : '',
+                      (item.gemstones.certificate != undefined) ? item.gemstones.certificate.issuedDate : '',
+                      (item.clarityName != undefined) ? item.clarityName : '',
+                      (item.brandName != null) ? item.brandName : '',
+                      (item.dominantStoneName != undefined) ? item.dominantStoneName : '',
+                      (item.grossWeight != undefined) ? item.grossWeight : ''
                     );
     }else{
-      if(that.state.metalType) arrayItems.push(item.metalType);
-      if(that.state.site) arrayItems.push(item.warehouseName);
-      if(that.state.size) arrayItems.push(item.size);
-      if(that.state.cut) arrayItems.push(item.cut);
-      if(that.state.metalColor) arrayItems.push(item.metalColor);
-      if(that.state.certificatedNumber) arrayItems.push(item.gemstones.certificate.number);
-      if(that.state.color) arrayItems.push(item.color);
-      if(that.state.collection) arrayItems.push(item.collection);
-      if(that.state.certificateDate) arrayItems.push(item.gemstones.certificate.issuedDate);
-      if(that.state.clarity) arrayItems.push(item.clarity);
-      if(that.state.brand) arrayItems.push(item.brand);
-      if(that.state.dominantStone) arrayItems.push(item.dominantStone);
-      if(that.state.grossWeight) arrayItems.push(item.grossWeight);
+      if(that.state.metalType) arrayItems.push((item.metalTypeName != undefined) ? item.metalTypeName : '');
+      if(that.state.site) arrayItems.push((item.warehouseName != undefined) ? item.warehouseName : '');
+      if(that.state.size) arrayItems.push((item.size != undefined) ? item.size : '');
+      if(that.state.cut) arrayItems.push((item.cutName != undefined) ? item.cutName : '');
+      if(that.state.metalColor) arrayItems.push((item.metalColorName != undefined) ? item.metalColorName : '');
+      if(that.state.certificatedNumber) arrayItems.push((item.gemstones.certificate != undefined) ? item.gemstones.certificate.number : '');
+      if(that.state.color) arrayItems.push((item.colorName != undefined) ? item.colorName : '');
+      if(that.state.collection) arrayItems.push((item.collectionName != undefined) ? item.collectionName : '');
+      if(that.state.certificateDate) arrayItems.push((item.gemstones.certificate != undefined) ? item.gemstones.certificate.issuedDate : '');
+      if(that.state.clarity) arrayItems.push((item.clarityName != undefined) ? item.clarityName : '');
+      if(that.state.brand) arrayItems.push((item.brandName != null) ? item.brandName : '');
+      if(that.state.dominantStone) arrayItems.push((item.dominantStoneName != undefined) ? item.dominantStoneName : '');
+      if(that.state.grossWeight) arrayItems.push((item.grossWeight != undefined) ? item.grossWeight : '');
     }
 
     if (that.state.showImages)

@@ -421,7 +421,7 @@ class InventoryJewelry extends Component {
                   <input type="text" className="form-control" {...setReference}/>
                 </div>
               </div>
-              <div className="form-group hidden">
+              <div className="form-group">
                 <label className="col-sm-4 control-label">Dominant Stone</label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.DominantStoneValue}

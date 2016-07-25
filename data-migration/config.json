@@ -3,13 +3,13 @@
       "server": "10.128.133.74",
       "user": "molintegration",
       "password": "NGhRt%^-09",
-      "requestTimeout": 30000
+      "requestTimeout": 45000
     },
     "elasticsearch": {
         "host": "10.128.133.77:9200"
     },
     "parallelization": {
-        "size": 10000
+        "size": 5000
     },
     "gallery": {
         "original": "/images/products/original",
