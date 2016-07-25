@@ -119,7 +119,8 @@ class SearchResult extends Component {
     // console.log('printproduct-->',dvContainerPrint);
     var options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
     var printWindow = window.open('', '', options);
-    printWindow.document.write('<style>@media print{@page {size: landscape;}}</style><html><head><title>Mol online 2016</title>');
+    printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
+    printWindow.document.write('<html><head><title>Mol online 2016</title>');
     printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
     printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
     printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
