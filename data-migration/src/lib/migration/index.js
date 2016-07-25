@@ -46,6 +46,7 @@ const migrate = async index => {
 
         await master.getDominantStones(index);
         await master.getGemstoneStoneType(index);
+        await master.getStoneType(index);
     } catch (err) {
         throw err;
     }
