@@ -64,10 +64,10 @@ const Gemstoneattr =  (props) =>{
              return (
                <tr key={index}>
                  <td title="Stone Type" style={styles.textcenter}>{convertBlanktodash(data.stoneTypeName)}</td>
-                 <td title="Clarity" style={styles.textcenter}>{convertBlanktodash(data.clarity)}</td>
-                 <td title="Cut" style={styles.textcenter}>{convertBlanktodash(data.cut)}</td>
+                 <td title="Clarity" style={styles.textcenter}>{convertBlanktodash(data.clarityName)}</td>
+                 <td title="Cut" style={styles.textcenter}>{convertBlanktodash(data.cutName)}</td>
 
-                 <td title="Color" style={styles.textcenter}>{convertBlanktodash(data.color)}</td>
+                 <td title="Color" style={styles.textcenter}>{convertBlanktodash(data.colorName)}</td>
                  <td title="QTY Of Stones" style={styles.textcenter}>{convertBlanktodash(data.quantity)}</td>
                  <td title="Total Carat Weight" style={styles.textcenter}>{convertBlanktodash(data.carat)}</td>
 

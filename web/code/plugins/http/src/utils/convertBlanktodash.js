@@ -1,3 +1,3 @@
 export default (data)=> {
-  return data ? data: "-";
+  return !!data ? data: "-";
 }

@@ -48,15 +48,15 @@ const Stoneattr =  (props) =>{
             </div>
             <div style={styles.colmd12}>
                   <div style={styles.colmd5}>Certificate Number</div>
-                  <div style={styles.colmd5}>{convertBlanktodash(props.certificatedNumber)}</div>
+                  <div style={styles.colmd5}>{!!props.certificates.length ? props.certificates[0].number : '-'}</div>
             </div>
             <div style={styles.colmd12}>
                   <div style={styles.colmd5}>Certificate Lab</div>
-                  <div style={styles.colmd5}>{convertBlanktodash(props.certificateLab)}</div>
+                  <div style={styles.colmd5}>{!!props.certificates.length ? props.certificates[0].agency : '-'}</div>
             </div>
             <div style={styles.colmd12}>
                   <div style={styles.colmd5}>Certificate Date</div>
-                  <div style={styles.colmd5}>-</div>
+                  <div style={styles.colmd5}>{!!props.certificates.length ? convertDate(props.certificates[0].issuedDate) : '-'}</div>
             </div>
             <div style={styles.colmd12}>
                   <div style={styles.colmd5}>Origin</div>
