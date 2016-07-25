@@ -83,7 +83,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'metalColour')
               key = 'metalColor'
             if(key == 'gemstones.stoneType')
-              key = 'gemstones.subtype'
+              key = 'gemstones.stoneTypeId'
             if(key == 'location')
               key = 'site'
             if(key == 'jewelryCategory')
@@ -100,6 +100,10 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
               key = 'gemstones.certificate.agency'
             if(key == 'gemstones.certificatedNumber')
               key = 'gemstones.certificate.number'
+            if(key == 'dominantStone')
+              key = 'dominant'
+            if(key == 'stoneType')
+              key = 'subType'
             filter =
               `{
                 "match": {

@@ -584,7 +584,7 @@ class InventoryWatch extends Component {
                     onChange={this.handleMetalColourSelectChange} />
                   </div>
               </div>
-              <div className="form-group hidden">
+              <div className="form-group">
                 <label className="col-sm-4 control-label">Dominant Stone</label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.DominantStoneValue}

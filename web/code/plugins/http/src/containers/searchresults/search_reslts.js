@@ -24,7 +24,7 @@ const labels = {
   site: 'Warehouse',
   size: 'Size',
   cut: 'Cut',
-  metalColor: 'Metal Color',
+  metalColor: 'Metal Colour',
   certificatedNumber: 'Certificate Number',
   color: 'Color',
   collection: 'Collection',
@@ -601,10 +601,10 @@ class SearchResult extends Component {
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     if (!this.state.showImages) {
-      var titles = ['Item Reference', 'Description', 'SKU', 'Location', 'Vendor Item Reference', 'Vendor Name',
+      var titles = ['Item Reference', 'Description', 'SKU', 'Site', 'Vendor Item Reference', 'Vendor Name',
                   'Public Price', 'Quantity', 'Unit'];
       if(this.state.allFields){
-        titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Color', 'Certificate Number',
+        titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Colour', 'Certificate Number',
                     'Color', 'Collection', 'Certificate Date', 'Clarity', 'Brand', 'Dominant Stone',
                     'Gross Weight');
       }else{
@@ -612,7 +612,7 @@ class SearchResult extends Component {
         if(this.state.site) titles.push('Warehouse');
         if(this.state.size) titles.push('Size');
         if(this.state.cut) titles.push('Cut');
-        if(this.state.metalColor) titles.push('Metal Color');
+        if(this.state.metalColor) titles.push('Metal Colour');
         if(this.state.certificatedNumber) titles.push('Certificate Number');
         if(this.state.color) titles.push('Color');
         if(this.state.collection) titles.push('Collection');
@@ -629,7 +629,8 @@ class SearchResult extends Component {
         // console.log('item-->',item);
         var arrayItems = [];
 
-        arrayItems.push(item.reference,item.description,item.sku,item.siteName,item.venderReference,item.vendor,
+        arrayItems.push(item.reference,item.description,item.sku,item.siteName,item.venderReference,
+                        (item.vendorName != undefined) ? item.vendorName : '',
                         (userLogin.currency == 'AED')
                         ? item.price.AED
                           : (userLogin.currency == 'CHF') ? item.price.CHF
@@ -644,24 +645,34 @@ class SearchResult extends Component {
                         ,item.quantity,(item.unit != undefined) ? item.unit : '');
 
         if(that.state.allFields){
-          arrayItems.push(item.metalType,item.warehouseName,item.size,item.cut,item.metalColor,item.gemstones.certificate.number,
-                          item.color,item.collection,item.gemstones.certificate.issuedDate,
-                          item.clarity,item.brand,item.dominantStone,item.grossWeight
+          arrayItems.push((item.metalTypeName != undefined) ? item.metalTypeName : '',
+                          (item.warehouseName != undefined) ? item.warehouseName : '',
+                          (item.size != undefined) ? item.size : '',
+                          (item.cutName != undefined) ? item.cutName : '',
+                          (item.metalColorName != undefined) ? item.metalColorName : '',
+                          (item.gemstones.certificate != undefined) ? item.gemstones.certificate.number : '',
+                          (item.colorName != undefined) ? item.colorName : '',
+                          (item.collectionName != undefined) ? item.collectionName : '',
+                          (item.gemstones.certificate != undefined) ? item.gemstones.certificate.issuedDate : '',
+                          (item.clarityName != undefined) ? item.clarityName : '',
+                          (item.brandName != null) ? item.brandName : '',
+                          (item.dominantStoneName != undefined) ? item.dominantStoneName : '',
+                          (item.grossWeight != undefined) ? item.grossWeight : ''
                         );
         }else{
-          if(that.state.metalType) arrayItems.push(item.metalType);
-          if(that.state.site) arrayItems.push(item.warehouseName);
-          if(that.state.size) arrayItems.push(item.size);
-          if(that.state.cut) arrayItems.push(item.cut);
-          if(that.state.metalColor) arrayItems.push(item.metalColor);
-          if(that.state.certificatedNumber) arrayItems.push(item.gemstones.certificate.number);
-          if(that.state.color) arrayItems.push(item.color);
-          if(that.state.collection) arrayItems.push(item.collection);
-          if(that.state.certificateDate) arrayItems.push(item.gemstones.certificate.issuedDate);
-          if(that.state.clarity) arrayItems.push(item.clarity);
-          if(that.state.brand) arrayItems.push(item.brand);
-          if(that.state.dominantStone) arrayItems.push(item.dominantStone);
-          if(that.state.grossWeight) arrayItems.push(item.grossWeight);
+          if(that.state.metalType) arrayItems.push((item.metalTypeName != undefined) ? item.metalTypeName : '');
+          if(that.state.site) arrayItems.push((item.warehouseName != undefined) ? item.warehouseName : '');
+          if(that.state.size) arrayItems.push((item.size != undefined) ? item.size : '');
+          if(that.state.cut) arrayItems.push((item.cutName != undefined) ? item.cutName : '');
+          if(that.state.metalColor) arrayItems.push((item.metalColorName != undefined) ? item.metalColorName : '');
+          if(that.state.certificatedNumber) arrayItems.push((item.gemstones.certificate != undefined) ? item.gemstones.certificate.number : '');
+          if(that.state.color) arrayItems.push((item.colorName != undefined) ? item.colorName : '');
+          if(that.state.collection) arrayItems.push((item.collectionName != undefined) ? item.collectionName : '');
+          if(that.state.certificateDate) arrayItems.push((item.gemstones.certificate != undefined) ? item.gemstones.certificate.issuedDate : '');
+          if(that.state.clarity) arrayItems.push((item.clarityName != undefined) ? item.clarityName : '');
+          if(that.state.brand) arrayItems.push((item.brandName != null) ? item.brandName : '');
+          if(that.state.dominantStone) arrayItems.push((item.dominantStoneName != undefined) ? item.dominantStoneName : '');
+          if(that.state.grossWeight) arrayItems.push((item.grossWeight != undefined) ? item.grossWeight : '');
         }
 
         if (that.state.showImages)
@@ -750,7 +761,7 @@ class SearchResult extends Component {
           </div>
           <div className="modal-body">
             <h3>Please choose additional fields for export.</h3>
-            <h5>(Normal export field Item Reference, Description, SKU, Location, Vendor Item Reference, Vendor Name, Public Price, Quantity, Unit)</h5>
+            <h5>(Normal export field Item Reference, Description, SKU, Site, Vendor Item Reference, Vendor Name, Public Price, Quantity, Unit)</h5>
             <br/>
             <div className="col-sm-12">
               <div className="col-sm-3">
@@ -928,7 +939,7 @@ class SearchResult extends Component {
                 </div>
                 <div className="col-sm-2 ft-white nopadding pd-10">
                   <div
-                    disabled={submitting} onClick={ this.gridViewResults }>
+                    disabled={submitting} onClick={ this.gridViewResults } >
                       <div className={`bd-white m-pt-mgl ${this.state.showGridView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-large"></span></div>
                   </div>
                   <div
