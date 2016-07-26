@@ -109,11 +109,13 @@ class InventoryFilter extends Component {
   }
   tabsSelected(activeKey){
     // console.log('activeKey-->',activeKey);
-    this.setState({
-      alert:true,
-      isOpen: true,
-      activeTab:activeKey
-    });
+    if(activeKey != this.state.activeTab){
+      this.setState({
+        alert:true,
+        isOpen: true,
+        activeTab:activeKey
+      });
+    }
   }
   advanceSearchClick(e){
     e.preventDefault();
