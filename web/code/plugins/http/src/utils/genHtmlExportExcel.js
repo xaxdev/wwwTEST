@@ -1,4 +1,4 @@
-import numberFormat from './convertNumberformatwithcomma';
+import numberFormat from './convertNumberformat';
 
 export default (that, exportItems, userLogin, ROOT_URL)=> {
   var titles = ['Item Reference', 'Description', 'SKU', 'Site', 'Vendor Item Reference', 'Vendor Name',

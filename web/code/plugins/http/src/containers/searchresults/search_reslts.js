@@ -13,7 +13,7 @@ import PureInput from '../../utils/PureInput';
 import GridItemsView from '../../components/searchresults/griditemview';
 import GridItemsViewPrint from '../../components/searchresults/griditemviewPrint';
 import ListItemsView from '../../components/searchresults/listitemview';
-import numberFormat from '../../utils/convertNumberformatwithcomma';
+import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 // var XLSX = require('xlsx')
 
@@ -757,6 +757,29 @@ class SearchResult extends Component {
             });
             uriContent = 'data:application/vnd.ms-excel;base64,' + $.base64.encode(tab_text);
             sa = window.open(uriContent,'download.xls');
+            // var htmlObject = document.createElement('table');
+            // htmlObject.innerHTML = tab_text;
+            // // var theTable = htmlObject.getElementById('myTable');
+            // var oo = generateArray(htmlObject);
+            // var ranges = oo[1];
+            // /* original data */
+            // var data = oo[0];
+            // var ws_name = 'SheetJS';
+            // console.log(data);
+            //
+            // var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
+            //
+            // /* add ranges to worksheet */
+            // ws['!merges'] = ranges;
+            //
+            // /* add worksheet to workbook */
+            // wb.SheetNames.push(ws_name);
+            // wb.Sheets[ws_name] = ws;
+            //
+            // var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
+
+            // saveAs(new Blob([s2ab(wbout)],{type:'application/octet-stream'}), 'download.xls')
+
           } else {
               uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
               // sa = window.open(uriContent,'download.xlsx');
