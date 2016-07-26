@@ -11,6 +11,10 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.state = {
+      showloading: false
+    };
   }
 
   componentWillMount() {
@@ -21,11 +25,15 @@ class Login extends Component {
   }
   handleSubmit(data) {
     // console.log(data);
+    this.setState({
+      showloading: true
+    });
     this.props.loginAction.login(data)
       .then(() => {
-
+        this.setState({
+          showloading: false
+        });
           if(this.props.logindata.loginstatus == true){
-            console.log(this.props.logindata);
             this.props.itemActions.newSearch();
             this.context.router.push('/inventories');
           }
@@ -33,8 +41,8 @@ class Login extends Component {
   }
   render() {
     return (
-      <div className="wrapper body-login">
-      <Loginform onSubmit={this.handleSubmit} msg={this.props.logindata.msg}/>
+      <div className={`wrapper body-login ${this.props.logindata.loginstatus ? 'hidden' : ''}` }>
+      <Loginform onSubmit={this.handleSubmit} msg={this.props.logindata.msg} loading={this.state.showloading}/>
       </div>
     );
   }

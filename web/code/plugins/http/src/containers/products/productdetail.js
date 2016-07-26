@@ -24,27 +24,43 @@ import '../../../public/css/magnific-popup.css';
 import '../../utils/magnific-popup.js';
 var Loading = require('react-loading');
 
+
 class productdetail extends Component {
+
 
   constructor(props) {
     super(props);
     this.handleKeyPressNavigation = this.handleKeyPressNavigation.bind(this);
     this.handleGo = this.handleGo.bind(this);
+
+    this.state = {
+      productdetailLoading: false
+    };
   }
 
   componentWillMount(){
+    console.log("componentWillMount -->");
     const productId = this.props.params.id;
     const productlist = JSON.parse(sessionStorage.navigation);
+    this.setState({
+      productdetailLoading: true
+    });
     this.props.getProductDetail(productId,productlist).then(()=>{
+      console.log(this.state.productdetailLoading);
+      this.setState({
+        productdetailLoading: false
+      });
       const  Detail  = this.props.productdetail;
       if(Detail.type != 'STO'){
       this.props.getProductRelete(Detail.subType,1,productId)
       }
+
+
     });
 
   }
   componentDidMount() {
-
+    console.log("componentDidMount -->");
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
@@ -112,12 +128,19 @@ class productdetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("componentWillReceiveProps -->");
     if (nextProps.params.id !== this.props.params.id) {
+      this.setState({
+        productdetailLoading: true
+      });
       const productId = nextProps.params.id;
       const productlist = this.props.productlist;
       this.props.getProductDetail(productId,productlist).then(()=>{
         const  Detail  = this.props.productdetail;
         this.props.getProductRelete(Detail.subType,1,productId)
+        this.setState({
+          productdetailLoading: false
+        });
       })
     }
   }
@@ -257,7 +280,6 @@ class productdetail extends Component {
           );
         }
         if(gemstoneAttr.length > 0){
-          console.log(gemstoneAttr)
         return(
             <div>
               <h2>GEMSTONES ATTRIBUTES</h2>
@@ -293,7 +315,7 @@ class productdetail extends Component {
        const { totalpage,products,page } = this.props.productrelete;
        //const reletepage = this.props.productreletepage;
        const productId = this.props.params.id;
-       const { type,collection } = this.props.productdetail;
+       const { type,collection,subType } = this.props.productdetail;
        const { fields: { reletepage },handleSubmit} = this.props;
        if(type != 'STO' && !products){
          return(
@@ -316,7 +338,7 @@ class productdetail extends Component {
                 items={totalpage}
                 maxButtons={3}
                 activePage={reletepage.defaultValue}
-                onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey,productId); }} />
+                onSelect={(eventKey) => { this.props.getProductRelete(subType,eventKey,productId); }} />
                 <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
                   <span>Page</span>
                   <form onSubmit={handleSubmit(this.handleGo)} >
@@ -436,14 +458,24 @@ class productdetail extends Component {
     const { type} = this.props.productdetail;
 
     let pructdetailurl = '/productdetail/';
+    console.log("on render -->",this.state);
 
     return(
       <div id="page-wrapper">
+
         <div className="col-sm-12 bg-hearder m-prodcutdetail">
           <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding"><h1>PRODUCT DETAIL</h1></div>
           {this.renderNavigation()}
         </div>
-        <div className="row">
+        <div className={`${this.state.productdetailLoading == true ? '' : 'hidden'}` }>
+          <center>
+            <br/><br/><br/><br/><br/><br/>
+              <Loading type="spin" color="#202020" width="10%"/>
+          </center>
+          <br/><br/><br/><br/><br/><br/>
+        </div>
+        <div className={`${this.state.productdetailLoading == true ? 'hidden' : 'row'}`}>
+
           <div className="col-sm-12">
               <div className="panel panel-default">
                   <div className="panel-body padding-ft0">

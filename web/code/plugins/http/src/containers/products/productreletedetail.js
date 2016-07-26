@@ -23,6 +23,7 @@ import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
 import '../../utils/magnific-popup.js';
 var Loading = require('react-loading');
+
 class productreletedetail extends Component {
 
   constructor(props) {
@@ -30,13 +31,22 @@ class productreletedetail extends Component {
     this.handleKeyPressNavigation = this.handleKeyPressNavigation.bind(this);
     this.handleGo = this.handleGo.bind(this);
     this.handleKeyChangeNavigation = this.handleKeyChangeNavigation.bind(this);
+    this.state = {
+      productdetailLoading: false
+    };
   }
 
   componentDidMount() {
 
       const productId = this.props.params.id;
       const productlist = this.props.productlist;
+      this.setState({
+        productdetailLoading: true
+      });
       this.props.getProductDetail(productId).then(()=>{
+        this.setState({
+          productdetailLoading: false
+        });
         const  Detail  = this.props.productdetail;
         if(Detail.type != 'STO'){
         this.props.getProductRelete(Detail.subType,1,productId)
@@ -110,12 +120,18 @@ class productreletedetail extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.params.id !== this.props.params.id) {
       const productId = nextProps.params.id;
-
+      this.setState({
+        productdetailLoading: true
+      });
       const productlist = this.props.productlist;
       this.props.getProductDetail(productId).then(()=>{
-        // console.log('productId',this.props.productdetail);
         const  Detail  = this.props.productdetail;
         this.props.getProductRelete(Detail.subType,1,productId)
+
+
+        this.setState({
+          productdetailLoading: false
+        });
       })
     }
   }
@@ -302,7 +318,7 @@ class productreletedetail extends Component {
        const { totalpage,products,page } = this.props.productrelete;
        //const reletepage = this.props.productreletepage;
        const productId = this.props.params.id;
-       const { type,collection } = this.props.productdetail;
+       const { type,collection,subType } = this.props.productdetail;
        const { fields: { reletepage },handleSubmit} = this.props;
        if(!products){
          return(
@@ -311,7 +327,6 @@ class productreletedetail extends Component {
        }
 
        if(type != 'STO' && products.length > 0){
-         console.log('reletepage -->',reletepage);
        return(
            <div className="col-md-12 col-sm-12 nopadding">
               <h2>RELATED DETAILS</h2>
@@ -327,7 +342,7 @@ class productreletedetail extends Component {
                 items={totalpage}
                 maxButtons={3}
                 activePage={reletepage.defaultValue}
-                onSelect={(eventKey) => { this.props.getProductRelete(collection,eventKey,productId); }} />
+                onSelect={(eventKey) => { this.props.getProductRelete(subType,eventKey,productId); }} />
                 <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
                   <span>Page</span>
                   <form onSubmit={handleSubmit(this.handleGo)} >
@@ -410,14 +425,22 @@ class productreletedetail extends Component {
     const productindexplus = this.props.productindexplus;
     const { type} = this.props.productdetail;
     let pructdetailurl = '/productdetail/';
+
     return(
       <div id="page-wrapper">
         <div className="col-sm-12 bg-hearder bg-hearder-rel">
           <div className="col-md-5 col-sm-5 ft-white m-nopadding"><h1>PRODUCT DETAIL</h1></div>
           {this.renderNavigation()}
         </div>
+        <div className={`${this.state.productdetailLoading == true ? '' : 'hidden'}` }>
+          <center>
+            <br/><br/><br/><br/><br/><br/>
+              <Loading type="spin" color="#202020" width="10%"/>
+          </center>
+          <br/><br/><br/><br/><br/><br/>
+        </div>
+        <div className={`${this.state.productdetailLoading == true ? 'hidden' : 'row'}`}>
 
-        <div className="row">
           <div className="col-sm-12">
               <div className="panel panel-default">
                   <div className="panel-body padding-ft0">
