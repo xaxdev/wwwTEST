@@ -70,7 +70,7 @@ class InventoryFilter extends Component {
     // console.log('componentWillMount-->');
     // this.props.resetFilter();
     let that = this;
-    console.log('componentWillMount');
+    // console.log('componentWillMount');
     this.props.masterDataActions.get()
     .then( () => {
 
@@ -372,7 +372,7 @@ class InventoryFilter extends Component {
       }
     });
     // jQuery("input[type='checkbox']").attr('checked',false);
-    console.log('this.state.showLoading-->',this.state.showLoading);
+    // console.log('this.state.showLoading-->',this.state.showLoading);
       return (
 
         <form role="form" onSubmit={handleSubmit}>

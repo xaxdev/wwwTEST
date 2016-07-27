@@ -172,7 +172,7 @@ class UserDetailsFrom extends Component {
     }
   }
   selectedOnHandLocation(e){
-    // console.log('e.target.value-->',e.target.value);
+    console.log('e.target.value-->',e.target.value);
     var {
         fields: {
             onhand,
@@ -186,6 +186,21 @@ class UserDetailsFrom extends Component {
             selectedOnHandAll: true,
             changedOnHandLocation: true
         });
+
+        var select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
+
+        var values = [].filter.call(select.options, function(o) {
+            return o.selected || !o.selected;
+        }).map(function(o) {
+            return o.value;
+        });
+
+        select.options.forEach(function(o) {
+          o.selected = true;
+        });
+
+        console.log('values-->',values);
+
         // onhand.value = 'Location';
         onhand.onChange('All');
         onhandAll.onChange(true);
@@ -657,7 +672,7 @@ class UserDetailsFrom extends Component {
                               disabled={`${this.state.selectedOnHandLocation ? 'disabled' : ''}`}
                               onChange={this.changedOnHandLocation}
                               ref="selectMultiLocation"
-                              onBlur={() => this.props.fields.onhandLocation.onBlur(this.props.fields.onhandLocation.value)}
+
                             >
                               {dataDropDowntLocations.map(value => <option key={value.value} value={value.value}>{value.name}</option>
                               )}
