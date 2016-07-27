@@ -73,8 +73,8 @@ const Gemstoneattr =  (props) =>{
 
                  <td title="Symmetry" style={styles.textcenter}>{convertBlanktodash(data.symmetry)}</td>
                  <td title="Fluorescence" style={styles.textcenter}>{convertBlanktodash(data.fluorescence)}</td>
-                 <td title="Certificate Number," className="text-center">{!!data.certificate ? data.certificate.number: '-'}</td>
-                 <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
+                 <td title="Certificate Number," style={styles.textcenter}>{!!data.certificate ? data.certificate.number: '-'}</td>
+                 <td title="Certificate Date" style={styles.textcenter}>{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
 
                </tr>
             )

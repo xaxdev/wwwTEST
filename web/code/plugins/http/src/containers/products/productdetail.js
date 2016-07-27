@@ -394,7 +394,7 @@ class productdetail extends Component {
                                      </form>
                             </div>
                             <div className="float-l fc-fff margin-t5 text-center nopadding">
-                                  of {numberFormat(productlist.length)} item
+                                  of {numberFormat(productlist.length)} items
                             </div>
                         </div>
                         <div className="float-l bar-detail-pre">
