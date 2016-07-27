@@ -63,7 +63,7 @@ class UserDetailsFrom extends Component {
     // console.log('componentDidUpdate-->');
     if (this.state.selectedOnHandLocation) {
       if (this.state.clickAllLocarion) {
-        console.log('clickAllLocarion-->true');
+        // console.log('clickAllLocarion-->true');
         let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
 
         let values = [].filter.call(select.options, function(o) {
@@ -88,7 +88,7 @@ class UserDetailsFrom extends Component {
           o.selected = true;
         });
       } else {
-        console.log('clickAllLocarion-->false');
+        // console.log('clickAllLocarion-->false');
         let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
 
         let values = [].filter.call(select.options, function(o) {
@@ -136,7 +136,7 @@ class UserDetailsFrom extends Component {
       }
 
       if(this.state.selectedOnHandWarehouse){
-        console.log('this.state.clickAllWarehouse-->',this.state.clickAllWarehouse);
+        // console.log('this.state.clickAllWarehouse-->',this.state.clickAllWarehouse);
         if (this.state.clickAllWarehouse) {
             let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
             _.each(selectWarehouse.options,function (o) {
@@ -146,7 +146,7 @@ class UserDetailsFrom extends Component {
       }else{
 
         if (!this.state.clickAllWarehouse) {
-          console.log('this.state.clickAllWarehouse--> !false');
+          // console.log('this.state.clickAllWarehouse--> !false');
           let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
           let valuesWarehouseAll = [].filter.call(selectWarehouse.options, function(o) {
               return o.selected || !o.selected;
@@ -158,14 +158,14 @@ class UserDetailsFrom extends Component {
           }).map(function(o) {
               return o.value;
           });
-          console.log('valuesWarehouseAll-->',valuesWarehouseAll.length);
-          console.log('valuesWarehouse-->',valuesWarehouse.length);
+          // console.log('valuesWarehouseAll-->',valuesWarehouseAll.length);
+          // console.log('valuesWarehouse-->',valuesWarehouse.length);
           if (valuesWarehouseAll.length == valuesWarehouse.length) {
             _.each(selectWarehouse.options,function (o) {
               o.selected = false;
             });
           }else{
-            console.log('valuesWarehouseAll.length != valuesWarehouse.length-->');
+            // console.log('valuesWarehouseAll.length != valuesWarehouse.length-->');
             if(!this.state.changedOnHandLocation){
               _.each(selectWarehouse.options,function (o) {
                 o.selected = false;
@@ -173,7 +173,7 @@ class UserDetailsFrom extends Component {
             }
           }
         }else{
-          console.log('this.state.clickAllWarehouse-->true');
+          // console.log('this.state.clickAllWarehouse-->true');
         }
       }
     }
@@ -234,12 +234,13 @@ class UserDetailsFrom extends Component {
     // console.log('this.state-->',this.state);
   }
   selectedOnHandWarehouse(e){
-    console.log('selectedOnHandWarehouse-->',e.target.checked);
+    // console.log('selectedOnHandWarehouse-->',e.target.checked);
     let {
         fields: {
             onhand,
             onhandAll,
-            onhandWarehouseValue
+            onhandWarehouseValue,
+            onhandLocationValue
         }
     } = this.props;
     if (e.target.checked) {
@@ -301,17 +302,19 @@ class UserDetailsFrom extends Component {
           o.selected = false;
         });
         // onhand.value = 'notWarehouse';
+        // onhandLocationValue.onChange([]);
         onhandWarehouseValue.onChange([]);
         onhand.onChange('Warehouse');
         onhandAll.onChange(false);
+        // this.props.optionsActions.getOnHandWarehouse([]);
     }
   }
   selectedOnHandLocation(e){
-    console.log('e.target.value-->',e.target.value);
+    // console.log('e.target.value-->',e.target.value);
     let {
         fields: {
             onhand,
-            onhandAll
+            onhandAll,onhandWarehouseValue
         }
     } = this.props;
     if (e.target.checked) {
@@ -389,8 +392,11 @@ class UserDetailsFrom extends Component {
           o.selected = false;
         });
 
+        onhandWarehouseValue.onChange([]);
+
         onhand.onChange('Location');
         onhandAll.onChange(false);
+        this.props.optionsActions.getOnHandWarehouse([]);
     }
   }
   selectedOnHandAll(e){
@@ -419,7 +425,7 @@ class UserDetailsFrom extends Component {
   changedOnHandLocation(e) {
       let {
           fields: {
-              onhandLocationValue
+              onhandLocationValue,onhandWarehouseValue
           }
       } = this.props;
       let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
@@ -448,6 +454,7 @@ class UserDetailsFrom extends Component {
         });
       }
 
+      onhandWarehouseValue.onChange([]);
       onhandLocationValue.onChange(values);
 
       this.props.optionsActions.getOnHandWarehouse(values);
@@ -698,6 +705,7 @@ class UserDetailsFrom extends Component {
                     <label className="col-sm-4 control-label">Status</label>
                     <div className="col-sm-7">
                       <input type="checkbox" defaultChecked={this.props.user.status?'checked':''} {...status} />
+                      <span>Active</span>
                     </div>
                   </div>
                   <div className="form-group">
@@ -843,7 +851,7 @@ class UserDetailsFrom extends Component {
                     <div className="form-group">
                       <label className="col-sm-2 control-label">View On-hand</label>
                       <div className="col-sm-4 ">
-                        <label>
+
                           <input type="checkbox" value="Location" {...onhandLocation}
                             checked={this.state.selectedOnHandLocation}
                             onChange={this.selectedOnHandLocation}
@@ -862,10 +870,10 @@ class UserDetailsFrom extends Component {
                               )}
                             </select>
                           </div>
-                        </label>
+
                       </div>
                       <div className="col-sm-4">
-                        <label>
+
                           <input type="checkbox" value="Warehouse" {...onhandWarehouse}
                             checked={this.state.selectedOnHandWarehouse}
                             onChange={this.selectedOnHandWarehouse}
@@ -882,7 +890,7 @@ class UserDetailsFrom extends Component {
                               }
                             </select>
                           </div>
-                        </label>
+
                       </div>
                       <div className="col-sm-2 hidden">
                         <label>
