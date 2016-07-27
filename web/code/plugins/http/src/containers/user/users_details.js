@@ -105,14 +105,14 @@ class UserDetails extends Component {
     }
     delete data.permissionId;
 
-    // console.log('data-->',data);
-    this.props.updateUser(data)
-        .then(() => {
-          // user has been created, navigate the user to the index
-          // We navigate by calling this.context.router.push with the
-          // new path to navigate to.
-          this.context.router.push('/users');
-        });
+    console.log('data-->',data);
+    // this.props.updateUser(data)
+    //     .then(() => {
+    //       // user has been created, navigate the user to the index
+    //       // We navigate by calling this.context.router.push with the
+    //       // new path to navigate to.
+    //       this.context.router.push('/users');
+    //     });
   }
 
   render () {

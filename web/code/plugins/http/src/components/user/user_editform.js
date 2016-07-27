@@ -8,7 +8,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import Multiselect from 'react-bootstrap-multiselect';
 import GenPassword from '../../utils/genPassword';
 import ReactDOM from 'react-dom';
-var _ = require('lodash');
+let _ = require('lodash');
 
 export const fields = ['id','firstName','lastName','username','email','password','role','currency','status','company',
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
@@ -39,7 +39,9 @@ class UserDetailsFrom extends Component {
       selectedOnHandLocation: (this.props.user.onhandLocationValue != null)?(this.props.user.onhandLocationValue.length != 0) ? false : true:false,
       selectedOnHandAll: (!this.props.user.onhandLocation && !this.props.user.onhandWarehouse)? true: false,
       genPass:'',
-      changedOnHandLocation:false
+      changedOnHandLocation: false,
+      clickAllLocarion: (this.props.user.onhandLocationValue != null)?(this.props.user.onhandLocationValue.length != 0) ? false : true:false,
+      clickAllWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false
     };
   }
   componentWillMount(){
@@ -56,6 +58,125 @@ class UserDetailsFrom extends Component {
         selectedOnHandLocation: (this.props.user.onhandLocationValue != null)?(this.props.user.onhandLocationValue.length != 0) ? false : true:false,
       }
     );
+  }
+  componentDidUpdate(){
+    // console.log('componentDidUpdate-->');
+    if (this.state.selectedOnHandLocation) {
+      if (this.state.clickAllLocarion) {
+        console.log('clickAllLocarion-->true');
+        let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
+
+        let values = [].filter.call(select.options, function(o) {
+            return o.selected || !o.selected;
+        }).map(function(o) {
+            return o.value;
+        });
+
+        _.each(select.options,function (o) {
+          o.selected = true;
+        });
+
+        let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
+
+        let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
+            return o.selected || !o.selected;
+        }).map(function(o) {
+            return o.value;
+        });
+
+        _.each(selectWarehouse.options,function (o) {
+          o.selected = true;
+        });
+      } else {
+        console.log('clickAllLocarion-->false');
+        let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
+
+        let values = [].filter.call(select.options, function(o) {
+            return o.selected || !o.selected;
+        }).map(function(o) {
+            return o.value;
+        });
+
+        _.each(select.options,function (o) {
+          o.selected = false;
+        });
+
+        let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
+
+        let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
+            return o.selected || !o.selected;
+        }).map(function(o) {
+            return o.value;
+        });
+
+        _.each(selectWarehouse.options,function (o) {
+          o.selected = false;
+        });
+      }
+    }else{
+      // Click not checked all location
+      let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
+
+      let valuesAll = [].filter.call(select.options, function(o) {
+          return o.selected || !o.selected;
+      }).map(function(o) {
+          return o.value;
+      });
+
+      let values = [].filter.call(select.options, function(o) {
+          return o.selected;
+      }).map(function(o) {
+          return o.value;
+      });
+
+      if (!this.state.changedOnHandLocation) {
+        _.each(select.options,function (o) {
+          o.selected = false;
+        });
+      }
+
+      if(this.state.selectedOnHandWarehouse){
+        console.log('this.state.clickAllWarehouse-->',this.state.clickAllWarehouse);
+        if (this.state.clickAllWarehouse) {
+            let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
+            _.each(selectWarehouse.options,function (o) {
+              o.selected = true;
+            });
+        }
+      }else{
+
+        if (!this.state.clickAllWarehouse) {
+          console.log('this.state.clickAllWarehouse--> !false');
+          let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
+          let valuesWarehouseAll = [].filter.call(selectWarehouse.options, function(o) {
+              return o.selected || !o.selected;
+          }).map(function(o) {
+              return o.value;
+          });
+          let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
+              return o.selected
+          }).map(function(o) {
+              return o.value;
+          });
+          console.log('valuesWarehouseAll-->',valuesWarehouseAll.length);
+          console.log('valuesWarehouse-->',valuesWarehouse.length);
+          if (valuesWarehouseAll.length == valuesWarehouse.length) {
+            _.each(selectWarehouse.options,function (o) {
+              o.selected = false;
+            });
+          }else{
+            console.log('valuesWarehouseAll.length != valuesWarehouse.length-->');
+            if(!this.state.changedOnHandLocation){
+              _.each(selectWarehouse.options,function (o) {
+                o.selected = false;
+              });
+            }
+          }
+        }else{
+          console.log('this.state.clickAllWarehouse-->true');
+        }
+      }
+    }
   }
   selectedCompany(e){
     // console.log('e-->',e);
@@ -113,8 +234,8 @@ class UserDetailsFrom extends Component {
     // console.log('this.state-->',this.state);
   }
   selectedOnHandWarehouse(e){
-    // console.log('selectedOnHandWarehouse-->');
-    var {
+    console.log('selectedOnHandWarehouse-->',e.target.checked);
+    let {
         fields: {
             onhand,
             onhandAll,
@@ -124,12 +245,13 @@ class UserDetailsFrom extends Component {
     if (e.target.checked) {
         this.setState({
             selectedOnHandWarehouse: true,
-            selectedOnHandAll: true
+            selectedOnHandAll: true,
+            clickAllWarehouse: true
         });
 
-        var select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
+        let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
 
-        var values = [].filter.call(select.options, function(o) {
+        let values = [].filter.call(select.options, function(o) {
             return o.selected;
         }).map(function(o) {
             return o.value;
@@ -138,8 +260,13 @@ class UserDetailsFrom extends Component {
             this.setState({
                 selectedOnHandLocation: false,
             });
-            var selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
-            var valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
+            let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
+
+            _.each(selectWarehouse.options,function (o) {
+              o.selected = false;
+            });
+
+            let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
                 return !o.selected;
             }).map(function(o) {
                 return o.value;
@@ -164,16 +291,24 @@ class UserDetailsFrom extends Component {
         this.setState({
             selectedOnHandWarehouse: false,
             selectedOnHandLocation: false,
-            selectedOnHandAll: false
+            selectedOnHandAll: false,
+            clickAllWarehouse: false
+        });
+
+        let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
+
+        _.each(selectWarehouse.options,function (o) {
+          o.selected = false;
         });
         // onhand.value = 'notWarehouse';
+        onhandWarehouseValue.onChange([]);
         onhand.onChange('Warehouse');
         onhandAll.onChange(false);
     }
   }
   selectedOnHandLocation(e){
     console.log('e.target.value-->',e.target.value);
-    var {
+    let {
         fields: {
             onhand,
             onhandAll
@@ -184,22 +319,36 @@ class UserDetailsFrom extends Component {
             selectedOnHandWarehouse: true,
             selectedOnHandLocation: true,
             selectedOnHandAll: true,
-            changedOnHandLocation: true
+            changedOnHandLocation: true,
+            clickAllLocarion: true
         });
 
-        var select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
+        let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
 
-        var values = [].filter.call(select.options, function(o) {
+        let values = [].filter.call(select.options, function(o) {
             return o.selected || !o.selected;
         }).map(function(o) {
             return o.value;
         });
 
-        select.options.forEach(function(o) {
-          o.selected = true;
+        _.each(select.options,function (o) {
+          o.selected = false;
         });
 
-        console.log('values-->',values);
+        // console.log('values-->',values);
+        // this.props.optionsActions.getOnHandWarehouse(values);
+
+        let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
+
+        let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
+            return o.selected || !o.selected;
+        }).map(function(o) {
+            return o.value;
+        });
+
+        _.each(selectWarehouse.options,function (o) {
+          o.selected = true;
+        });
 
         // onhand.value = 'Location';
         onhand.onChange('All');
@@ -210,15 +359,43 @@ class UserDetailsFrom extends Component {
             selectedOnHandWarehouse: false,
             selectedOnHandLocation: false,
             selectedOnHandAll: false,
-            changedOnHandLocation: false
+            changedOnHandLocation: false,
+            clickAllLocarion: false
         });
+
+        let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
+
+        let values = [].filter.call(select.options, function(o) {
+            return o.selected || !o.selected;
+        }).map(function(o) {
+            return o.value;
+        });
+
+        _.each(select.options,function (o) {
+          o.selected = false;
+        });
+
+        // this.props.optionsActions.getOnHandWarehouse(values);
+
+        let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
+
+        let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
+            return o.selected || !o.selected;
+        }).map(function(o) {
+            return o.value;
+        });
+
+        _.each(selectWarehouse.options,function (o) {
+          o.selected = false;
+        });
+
         onhand.onChange('Location');
         onhandAll.onChange(false);
     }
   }
   selectedOnHandAll(e){
     // console.log('e.target.value-->',e.target.value);
-    var {fields: { onhand, onhandAll }} = this.props;
+    let {fields: { onhand, onhandAll }} = this.props;
     if(e.target.checked){
       this.setState(
         {
@@ -240,14 +417,14 @@ class UserDetailsFrom extends Component {
     }
   }
   changedOnHandLocation(e) {
-      var {
+      let {
           fields: {
               onhandLocationValue
           }
       } = this.props;
-      var select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
+      let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
 
-      var values = [].filter.call(select.options, function(o) {
+      let values = [].filter.call(select.options, function(o) {
           return o.selected;
       }).map(function(o) {
           return o.value;
@@ -256,7 +433,14 @@ class UserDetailsFrom extends Component {
       if (values.length != 0) {
         this.setState({
           changedOnHandLocation: true,
+          selectedOnHandLocation: false,
           selectedOnHandWarehouse: false
+        });
+
+        let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
+
+        _.each(selectWarehouse.options,function (o) {
+          o.selected = false;
         });
       }else{
         this.setState({
@@ -269,7 +453,7 @@ class UserDetailsFrom extends Component {
       this.props.optionsActions.getOnHandWarehouse(values);
   }
   generatePassword(){
-    var pass = GenPassword();
+    let pass = GenPassword();
     this.setState({
       genPass: pass
     });
@@ -369,9 +553,9 @@ class UserDetailsFrom extends Component {
               ,productGroupACC,productGroupOBA,productGroupSPP,onhandLocationValue,webOnly,permissionId,onhandWarehouse
               ,onhandWarehouseValue
           },handleSubmit,submitting } = this.props;
-    var dataDropDowntLocations = [];
-    var dataDropDowntWareHouse = [];
-    var that = this;
+    let dataDropDowntLocations = [];
+    let dataDropDowntWareHouse = [];
+    let that = this;
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -386,8 +570,8 @@ class UserDetailsFrom extends Component {
           }
       }else{
         if (this.props.warehouseOnHand) {
-          var newDate = [];
-          var data = [];
+          let newDate = [];
+          let data = [];
           if(dataDropDowntLocations.length != 0){
             dataDropDowntLocations.forEach(function(location){
               newDate.push(_.filter(that.props.warehouseOnHand,
@@ -413,7 +597,7 @@ class UserDetailsFrom extends Component {
                       );
                     });
 
-                    var subdata = [];
+                    let subdata = [];
                     newDate.forEach(newdata =>{
                         newdata.forEach(subdata =>{
                           data.push(subdata);
@@ -450,7 +634,7 @@ class UserDetailsFrom extends Component {
       }
 
     }
-    // console.log('this.props.user.onhandLocation-->',this.props.user.onhandLocation);
+    // console.log('this.props.user.onhandLocation-->');
 
     return (
       <form onSubmit={handleSubmit}>
@@ -693,8 +877,9 @@ class UserDetailsFrom extends Component {
                               maxHeight={200} multiple
                               ref="selectMultiWarehouse"
                               disabled={`${this.state.selectedOnHandWarehouse ? 'disabled' : ''}`}>
-                              {dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.name}</option>
-                              )}
+                              {
+                                dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.name}</option>)
+                              }
                             </select>
                           </div>
                         </label>

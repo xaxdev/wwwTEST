@@ -13,6 +13,7 @@ import PureInput from '../../utils/PureInput';
 import GridItemsView from '../../components/searchresults/griditemview';
 import GridItemsViewPrint from '../../components/searchresults/griditemviewPrint';
 import ListItemsView from '../../components/searchresults/listitemview';
+import ListItemsViewPrint from '../../components/searchresults/listitemviewPrint';
 import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 // var XLSX = require('xlsx')
@@ -126,12 +127,13 @@ class SearchResult extends Component {
     printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
     printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
     printWindow.document.write('</head><body >');
-    printWindow.document.write(dvTotal);
     if (this.state.showGridView) {
+        printWindow.document.write(dvTotal);
         printWindow.document.write(dvGridview);
     }
     if (this.state.showListView) {
       printWindow.document.write(dvListview);
+      printWindow.document.write(dvTotal);
     }
     printWindow.document.write('</body></html>');
     printWindow.document.close();
@@ -1020,8 +1022,11 @@ class SearchResult extends Component {
                           <div id="dvGridview" className="search-product hidden">
                             <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
                           </div>
-                          <div id="dvListview" className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
+                          <div className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
                             <ListItemsView items={items} onClickGrid={this.onClickGrid}/>
+                          </div>
+                          <div id="dvListview" className="col-sm-12 search-product hidden">
+                            <ListItemsViewPrint items={items} onClickGrid={this.onClickGrid}/>
                           </div>
                           <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                             <center>
