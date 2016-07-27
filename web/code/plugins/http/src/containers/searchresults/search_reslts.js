@@ -13,6 +13,7 @@ import PureInput from '../../utils/PureInput';
 import GridItemsView from '../../components/searchresults/griditemview';
 import GridItemsViewPrint from '../../components/searchresults/griditemviewPrint';
 import ListItemsView from '../../components/searchresults/listitemview';
+import ListItemsViewPrint from '../../components/searchresults/listitemviewPrint';
 import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 // var XLSX = require('xlsx')
@@ -126,12 +127,13 @@ class SearchResult extends Component {
     printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
     printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
     printWindow.document.write('</head><body >');
-    printWindow.document.write(dvTotal);
     if (this.state.showGridView) {
+        printWindow.document.write(dvTotal);
         printWindow.document.write(dvGridview);
     }
     if (this.state.showListView) {
       printWindow.document.write(dvListview);
+      printWindow.document.write(dvTotal);
     }
     printWindow.document.write('</body></html>');
     printWindow.document.close();
@@ -589,6 +591,12 @@ class SearchResult extends Component {
   	this.SheetNames = [];
   	this.Sheets = {};
   }
+  base64(s){
+    return window.btoa(unescape(encodeURIComponent(s)));
+  }
+  format(s, c){
+    return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; });
+  }
   confirmExport(e){
     e.preventDefault();
 
@@ -600,135 +608,135 @@ class SearchResult extends Component {
     const { items, exportItems } = this.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
 
-    if (!this.state.showImages) {
-      var titles = ['Item Reference', 'Description', 'SKU', 'Site', 'Vendor Item Reference', 'Vendor Name',
-                  'Public Price', 'Quantity', 'Unit'];
-      if(this.state.allFields){
-        titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Colour', 'Certificate Number',
-                    'Color', 'Collection', 'Certificate Date', 'Clarity', 'Brand', 'Dominant Stone',
-                    'Gross Weight');
-      }else{
-        if(this.state.metalType) titles.push('Metal Type');
-        if(this.state.site) titles.push('Warehouse');
-        if(this.state.size) titles.push('Size');
-        if(this.state.cut) titles.push('Cut');
-        if(this.state.metalColor) titles.push('Metal Colour');
-        if(this.state.certificatedNumber) titles.push('Certificate Number');
-        if(this.state.color) titles.push('Color');
-        if(this.state.collection) titles.push('Collection');
-        if(this.state.certificateDate) titles.push('Certificate Date');
-        if(this.state.clarity) titles.push('Clarity');
-        if(this.state.brand) titles.push('Brand');
-        if(this.state.dominantStone) titles.push('Dominant Stone');
-        if(this.state.grossWeight) titles.push('Gross Weight');
-      }
-      if (this.state.showImages) titles.push('Images');
-
-      var data = [titles];
-      exportItems.forEach(function(item){
-        // console.log('item-->',item);
-        var arrayItems = [];
-
-        arrayItems.push(item.reference,item.description,item.sku,item.siteName,item.venderReference,
-                        (item.vendorName != undefined) ? item.vendorName : '',
-                        (userLogin.currency == 'AED')
-                        ? numberFormat(item.price.AED)
-                          : (userLogin.currency == 'CHF') ? numberFormat(item.price.CHF)
-                          : (userLogin.currency == 'EUR') ? numberFormat(item.price.EUR)
-                          : (userLogin.currency == 'JOD') ? numberFormat(item.price.JOD)
-                          : (userLogin.currency == 'KWD') ? numberFormat(item.price.KWD)
-                          : (userLogin.currency == 'LBP') ? numberFormat(item.price.LBP)
-                          : (userLogin.currency == 'OMR') ? numberFormat(item.price.OMR)
-                          : (userLogin.currency == 'QAR') ? numberFormat(item.price.QAR)
-                          : (userLogin.currency == 'SAR') ? numberFormat(item.price.SAR)
-                          : numberFormat(item.price.USD)
-                        ,item.quantity,(item.unit != undefined) ? item.unit : '');
-
-        if(that.state.allFields){
-          arrayItems.push((item.metalTypeName != undefined) ? item.metalTypeName : '',
-                          (item.warehouseName != undefined) ? item.warehouseName : '',
-                          (item.size != undefined) ? item.size : '',
-                          (item.cutName != undefined) ? item.cutName : '',
-                          (item.metalColorName != undefined) ? item.metalColorName : '',
-                          (item.gemstones.certificate != undefined) ? item.gemstones.certificate.number : '',
-                          (item.colorName != undefined) ? item.colorName : '',
-                          (item.collectionName != undefined) ? item.collectionName : '',
-                          (item.gemstones.certificate != undefined) ? item.gemstones.certificate.issuedDate : '',
-                          (item.clarityName != undefined) ? item.clarityName : '',
-                          (item.brandName != null) ? item.brandName : '',
-                          (item.dominantStoneName != undefined) ? item.dominantStoneName : '',
-                          (item.grossWeight != undefined) ? item.grossWeight : ''
-                        );
-        }else{
-          if(that.state.metalType) arrayItems.push((item.metalTypeName != undefined) ? item.metalTypeName : '');
-          if(that.state.site) arrayItems.push((item.warehouseName != undefined) ? item.warehouseName : '');
-          if(that.state.size) arrayItems.push((item.size != undefined) ? item.size : '');
-          if(that.state.cut) arrayItems.push((item.cutName != undefined) ? item.cutName : '');
-          if(that.state.metalColor) arrayItems.push((item.metalColorName != undefined) ? item.metalColorName : '');
-          if(that.state.certificatedNumber) arrayItems.push((item.gemstones.certificate != undefined) ? item.gemstones.certificate.number : '');
-          if(that.state.color) arrayItems.push((item.colorName != undefined) ? item.colorName : '');
-          if(that.state.collection) arrayItems.push((item.collectionName != undefined) ? item.collectionName : '');
-          if(that.state.certificateDate) arrayItems.push((item.gemstones.certificate != undefined) ? item.gemstones.certificate.issuedDate : '');
-          if(that.state.clarity) arrayItems.push((item.clarityName != undefined) ? item.clarityName : '');
-          if(that.state.brand) arrayItems.push((item.brandName != null) ? item.brandName : '');
-          if(that.state.dominantStone) arrayItems.push((item.dominantStoneName != undefined) ? item.dominantStoneName : '');
-          if(that.state.grossWeight) arrayItems.push((item.grossWeight != undefined) ? item.grossWeight : '');
-        }
-
-        if (that.state.showImages)
-          arrayItems.push((item.gallery.length) != 0
-                            ? ROOT_URL + item.gallery[0].thumbnail
-                            : ROOT_URL + '/images/blank.gif');
-
-        data.push(arrayItems);
-      });
-
-      var ws_name = 'Items';
-      /* set up workbook objects -- some of these will not be required in the future */
-      var wb = {}
-      wb.Sheets = {};
-      wb.Props = {};
-      wb.SSF = {};
-      wb.SheetNames = [];
-
-      /* create worksheet: */
-      var ws = {}
-
-      /* the range object is used to keep track of the range of the sheet */
-      var range = {s: {c:0, r:0}, e: {c:0, r:0 }};
-
-      /* Iterate through each element in the structure */
-      for(var R = 0; R != data.length; ++R) {
-        if(range.e.r < R) range.e.r = R;
-        for(var C = 0; C != data[R].length; ++C) {
-          if(range.e.c < C) range.e.c = C;
-
-          /* create cell object: .v is the actual data */
-          var cell = { v: data[R][C] };
-          if(cell.v == null) continue;
-
-          /* create the correct cell reference */
-          var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
-
-          /* determine the cell type */
-          if(typeof cell.v === 'number') cell.t = 'n';
-          else if(typeof cell.v === 'boolean') cell.t = 'b';
-          else cell.t = 's';
-
-          /* add to structure */
-          ws[cell_ref] = cell;
-        }
-      }
-      ws['!ref'] = XLSX.utils.encode_range(range);
-
-          /* add worksheet to workbook */
-      wb.SheetNames.push(ws_name);
-      wb.Sheets[ws_name] = ws;
-
-      /* write file */
-      var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
-      saveAs(new Blob([this.s2ab(wbout)],{type:'application/octet-stream'}), 'download.xlsx')
-    } else {
+    // if (!this.state.showImages) {
+    //   var titles = ['Item Reference', 'Description', 'SKU', 'Site', 'Vendor Item Reference', 'Vendor Name',
+    //               'Public Price', 'Quantity', 'Unit'];
+    //   if(this.state.allFields){
+    //     titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Colour', 'Certificate Number',
+    //                 'Color', 'Collection', 'Certificate Date', 'Clarity', 'Brand', 'Dominant Stone',
+    //                 'Gross Weight');
+    //   }else{
+    //     if(this.state.metalType) titles.push('Metal Type');
+    //     if(this.state.site) titles.push('Warehouse');
+    //     if(this.state.size) titles.push('Size');
+    //     if(this.state.cut) titles.push('Cut');
+    //     if(this.state.metalColor) titles.push('Metal Colour');
+    //     if(this.state.certificatedNumber) titles.push('Certificate Number');
+    //     if(this.state.color) titles.push('Color');
+    //     if(this.state.collection) titles.push('Collection');
+    //     if(this.state.certificateDate) titles.push('Certificate Date');
+    //     if(this.state.clarity) titles.push('Clarity');
+    //     if(this.state.brand) titles.push('Brand');
+    //     if(this.state.dominantStone) titles.push('Dominant Stone');
+    //     if(this.state.grossWeight) titles.push('Gross Weight');
+    //   }
+    //   if (this.state.showImages) titles.push('Images');
+    //
+    //   var data = [titles];
+    //   exportItems.forEach(function(item){
+    //     // console.log('item-->',item);
+    //     var arrayItems = [];
+    //
+    //     arrayItems.push(item.reference,item.description,item.sku,item.siteName,item.venderReference,
+    //                     (item.vendorName != undefined) ? item.vendorName : '',
+    //                     (userLogin.currency == 'AED')
+    //                     ? numberFormat(item.price.AED)
+    //                       : (userLogin.currency == 'CHF') ? numberFormat(item.price.CHF)
+    //                       : (userLogin.currency == 'EUR') ? numberFormat(item.price.EUR)
+    //                       : (userLogin.currency == 'JOD') ? numberFormat(item.price.JOD)
+    //                       : (userLogin.currency == 'KWD') ? numberFormat(item.price.KWD)
+    //                       : (userLogin.currency == 'LBP') ? numberFormat(item.price.LBP)
+    //                       : (userLogin.currency == 'OMR') ? numberFormat(item.price.OMR)
+    //                       : (userLogin.currency == 'QAR') ? numberFormat(item.price.QAR)
+    //                       : (userLogin.currency == 'SAR') ? numberFormat(item.price.SAR)
+    //                       : numberFormat(item.price.USD)
+    //                     ,item.quantity,(item.unit != undefined) ? item.unit : '');
+    //
+    //     if(that.state.allFields){
+    //       arrayItems.push((item.metalTypeName != undefined) ? item.metalTypeName : '',
+    //                       (item.warehouseName != undefined) ? item.warehouseName : '',
+    //                       (item.size != undefined) ? item.size : '',
+    //                       (item.cutName != undefined) ? item.cutName : '',
+    //                       (item.metalColorName != undefined) ? item.metalColorName : '',
+    //                       (item.gemstones.certificate != undefined) ? item.gemstones.certificate.number : '',
+    //                       (item.colorName != undefined) ? item.colorName : '',
+    //                       (item.collectionName != undefined) ? item.collectionName : '',
+    //                       (item.gemstones.certificate != undefined) ? item.gemstones.certificate.issuedDate : '',
+    //                       (item.clarityName != undefined) ? item.clarityName : '',
+    //                       (item.brandName != null) ? item.brandName : '',
+    //                       (item.dominantStoneName != undefined) ? item.dominantStoneName : '',
+    //                       (item.grossWeight != undefined) ? item.grossWeight : ''
+    //                     );
+    //     }else{
+    //       if(that.state.metalType) arrayItems.push((item.metalTypeName != undefined) ? item.metalTypeName : '');
+    //       if(that.state.site) arrayItems.push((item.warehouseName != undefined) ? item.warehouseName : '');
+    //       if(that.state.size) arrayItems.push((item.size != undefined) ? item.size : '');
+    //       if(that.state.cut) arrayItems.push((item.cutName != undefined) ? item.cutName : '');
+    //       if(that.state.metalColor) arrayItems.push((item.metalColorName != undefined) ? item.metalColorName : '');
+    //       if(that.state.certificatedNumber) arrayItems.push((item.gemstones.certificate != undefined) ? item.gemstones.certificate.number : '');
+    //       if(that.state.color) arrayItems.push((item.colorName != undefined) ? item.colorName : '');
+    //       if(that.state.collection) arrayItems.push((item.collectionName != undefined) ? item.collectionName : '');
+    //       if(that.state.certificateDate) arrayItems.push((item.gemstones.certificate != undefined) ? item.gemstones.certificate.issuedDate : '');
+    //       if(that.state.clarity) arrayItems.push((item.clarityName != undefined) ? item.clarityName : '');
+    //       if(that.state.brand) arrayItems.push((item.brandName != null) ? item.brandName : '');
+    //       if(that.state.dominantStone) arrayItems.push((item.dominantStoneName != undefined) ? item.dominantStoneName : '');
+    //       if(that.state.grossWeight) arrayItems.push((item.grossWeight != undefined) ? item.grossWeight : '');
+    //     }
+    //
+    //     if (that.state.showImages)
+    //       arrayItems.push((item.gallery.length) != 0
+    //                         ? ROOT_URL + item.gallery[0].thumbnail
+    //                         : ROOT_URL + '/images/blank.gif');
+    //
+    //     data.push(arrayItems);
+    //   });
+    //
+    //   var ws_name = 'Items';
+    //   /* set up workbook objects -- some of these will not be required in the future */
+    //   var wb = {}
+    //   wb.Sheets = {};
+    //   wb.Props = {};
+    //   wb.SSF = {};
+    //   wb.SheetNames = [];
+    //
+    //   /* create worksheet: */
+    //   var ws = {}
+    //
+    //   /* the range object is used to keep track of the range of the sheet */
+    //   var range = {s: {c:0, r:0}, e: {c:0, r:0 }};
+    //
+    //   /* Iterate through each element in the structure */
+    //   for(var R = 0; R != data.length; ++R) {
+    //     if(range.e.r < R) range.e.r = R;
+    //     for(var C = 0; C != data[R].length; ++C) {
+    //       if(range.e.c < C) range.e.c = C;
+    //
+    //       /* create cell object: .v is the actual data */
+    //       var cell = { v: data[R][C] };
+    //       if(cell.v == null) continue;
+    //
+    //       /* create the correct cell reference */
+    //       var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
+    //
+    //       /* determine the cell type */
+    //       if(typeof cell.v === 'number') cell.t = 'n';
+    //       else if(typeof cell.v === 'boolean') cell.t = 'b';
+    //       else cell.t = 's';
+    //
+    //       /* add to structure */
+    //       ws[cell_ref] = cell;
+    //     }
+    //   }
+    //   ws['!ref'] = XLSX.utils.encode_range(range);
+    //
+    //       /* add worksheet to workbook */
+    //   wb.SheetNames.push(ws_name);
+    //   wb.Sheets[ws_name] = ws;
+    //
+    //   /* write file */
+    //   var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
+    //   saveAs(new Blob([this.s2ab(wbout)],{type:'application/octet-stream'}), 'download.xlsx')
+    // } else {
       let tab_text = GenHtmlExportExcel(this, exportItems, userLogin, ROOT_URL);
 
       var data_type = 'data:application/vnd.ms-excel;base64';
@@ -757,44 +765,24 @@ class SearchResult extends Component {
             });
             uriContent = 'data:application/vnd.ms-excel;base64,' + $.base64.encode(tab_text);
             sa = window.open(uriContent,'download.xls');
-            // var htmlObject = document.createElement('table');
-            // htmlObject.innerHTML = tab_text;
-            // // var theTable = htmlObject.getElementById('myTable');
-            // var oo = generateArray(htmlObject);
-            // var ranges = oo[1];
-            // /* original data */
-            // var data = oo[0];
-            // var ws_name = 'SheetJS';
-            // console.log(data);
-            //
-            // var wb = new Workbook(), ws = sheet_from_array_of_arrays(data);
-            //
-            // /* add ranges to worksheet */
-            // ws['!merges'] = ranges;
-            //
-            // /* add worksheet to workbook */
-            // wb.SheetNames.push(ws_name);
-            // wb.Sheets[ws_name] = ws;
-            //
-            // var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
-
-            // saveAs(new Blob([s2ab(wbout)],{type:'application/octet-stream'}), 'download.xls')
 
           } else {
-              uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
+              let uri = 'data:application/vnd.ms-excel;base64,'
+              // uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
               // sa = window.open(uriContent,'download.xlsx');
               // var wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});
               this.setState({
                 isOpen: false,
               });
-              window.open(uriContent,'download.xls')
+              // window.open(uriContent,'download.xls')
+              window.location.href = uri + this.base64(tab_text)
           }
       }
       return sa;
-    }
-    this.setState({
-      isOpen: false,
-    });
+    // }
+    // this.setState({
+    //   isOpen: false,
+    // });
   }
   renderExportExcelDialog(){
     var that = this;
@@ -808,7 +796,7 @@ class SearchResult extends Component {
           </div>
           <div className="modal-body">
             <h3>Please choose additional fields for export.</h3>
-            <h5>(Normal export field Item Reference, Description, SKU, Site, Vendor Item Reference, Vendor Name, Public Price, Quantity, Unit)</h5>
+            <h5>(Normal export field Item Reference, Item Description, SKU, Vendor Item Reference, Site, Vendor Name, Public Price, Quantity, Unit)</h5>
             <br/>
             <div className="col-sm-12">
               <div className="col-sm-3">
@@ -1034,8 +1022,11 @@ class SearchResult extends Component {
                           <div id="dvGridview" className="search-product hidden">
                             <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
                           </div>
-                          <div id="dvListview" className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
+                          <div className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
                             <ListItemsView items={items} onClickGrid={this.onClickGrid}/>
+                          </div>
+                          <div id="dvListview" className="col-sm-12 search-product hidden">
+                            <ListItemsViewPrint items={items} onClickGrid={this.onClickGrid}/>
                           </div>
                           <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                             <center>

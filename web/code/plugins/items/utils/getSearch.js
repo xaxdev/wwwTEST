@@ -262,10 +262,10 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           else if(key == 'markupFrom' || key == 'markupTo'){
             keyFromMarkup = 'markup';
             if(key == 'markupFrom'){
-              valFromMarkup = value*100;
+              valFromMarkup = Math.round(value * 100);
             }
             if(key == 'markupTo'){
-              valToMarkup= value*100;
+              valToMarkup= Math.round(value * 100);
             }
             var objLength = objRange.length +1;
             objRange = {...objRange,'markup':{'from':valFromMarkup,'to':valToMarkup},'length':objLength};
