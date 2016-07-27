@@ -160,14 +160,16 @@ class productprint extends Component {
         );
       }
       if(Detail.type == 'STO'){
-        
+
       } else {
+        if(gemstoneAttr.length > 0){
         return(
             <div>
               <h2>GEMSTONES ATTRIBUTES</h2>
               <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} subType={subType}/>
             </div>
           );
+        }
       }
 
      }
