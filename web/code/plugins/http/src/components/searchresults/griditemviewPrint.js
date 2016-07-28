@@ -176,16 +176,16 @@ class GridItemsView extends Component {
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
                             <span className="width-f100">{item.description}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') ?
-                                '' : 'hidden'}`}>Actual Cost (USD): </span>
+                                '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
                             <span className={`width-f100 ${(userLogin.permission.price == 'All') ?
                                 '' : 'hidden'}`}>{actualCost}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
-                                '' : 'hidden'}`}>Update Cost (USD): </span>
+                                '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
                             <span className={`width-f100 ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
                                 '' : 'hidden'}`}>{updatedCost}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All') ?
-                                '' : 'hidden'}`}>Public Price (USD): </span>
+                                '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
                             <span className={`width-f100 ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All') ?
                                 '' : 'hidden'}`}>{price}</span>
