@@ -41,7 +41,8 @@ class UserDetailsFrom extends Component {
       genPass:'',
       changedOnHandLocation: false,
       clickAllLocarion: (this.props.user.onhandLocationValue != null)?(this.props.user.onhandLocationValue.length != 0) ? false : true:false,
-      clickAllWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false
+      clickAllWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false,
+      firstloading: true
     };
   }
   componentWillMount(){
@@ -130,9 +131,11 @@ class UserDetailsFrom extends Component {
       });
 
       if (!this.state.changedOnHandLocation) {
-        _.each(select.options,function (o) {
-          o.selected = false;
-        });
+        if(!this.state.firstloading){
+          _.each(select.options,function (o) {
+            o.selected = false;
+          });
+        }
       }
 
       if(this.state.selectedOnHandWarehouse){
@@ -247,7 +250,8 @@ class UserDetailsFrom extends Component {
         this.setState({
             selectedOnHandWarehouse: true,
             selectedOnHandAll: true,
-            clickAllWarehouse: true
+            clickAllWarehouse: true,
+            firstloading: false
         });
 
         let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
@@ -293,7 +297,8 @@ class UserDetailsFrom extends Component {
             selectedOnHandWarehouse: false,
             selectedOnHandLocation: false,
             selectedOnHandAll: false,
-            clickAllWarehouse: false
+            clickAllWarehouse: false,
+            firstloading: false
         });
 
         let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
@@ -327,7 +332,8 @@ class UserDetailsFrom extends Component {
             selectedOnHandLocation: true,
             selectedOnHandAll: true,
             changedOnHandLocation: true,
-            clickAllLocarion: true
+            clickAllLocarion: true,
+            firstloading: false
         });
 
         let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
@@ -367,7 +373,8 @@ class UserDetailsFrom extends Component {
             selectedOnHandLocation: false,
             selectedOnHandAll: false,
             changedOnHandLocation: false,
-            clickAllLocarion: false
+            clickAllLocarion: false,
+            firstloading: false
         });
 
         let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
@@ -444,7 +451,8 @@ class UserDetailsFrom extends Component {
         this.setState({
           changedOnHandLocation: true,
           selectedOnHandLocation: false,
-          selectedOnHandWarehouse: false
+          selectedOnHandWarehouse: false,
+          firstloading: false
         });
 
         let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
@@ -454,7 +462,8 @@ class UserDetailsFrom extends Component {
         });
       }else{
         this.setState({
-          changedOnHandLocation: false
+          changedOnHandLocation: false,
+          firstloading: false
         });
       }
 
