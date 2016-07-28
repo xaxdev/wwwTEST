@@ -194,11 +194,27 @@ class UserDetailsFrom extends Component {
           selectedSite: false
         });
     }else{
-      this.props.optionsActions.getSite(e.target.value);
-      this.setState(
-        {
-          selectedCompany:true
-        });
+      const { options } = this.props;
+      const siteid = this.refs.site.value;
+      const comid = e.target.value;
+      const propsCom = { siteid, comid, options };
+
+      let {
+          fields: {
+              warehouse
+          }
+      } = this.props;
+
+      this.props.optionsActions.getSite(e.target.value)
+      .then((value) => {
+        warehouse.onChange('');
+        this.props.optionsActions.getWarehouse(propsCom);
+        this.setState(
+          {
+            selectedCompany:true,
+            selectedSite: false
+          });
+      });
     }
   }
 
@@ -522,7 +538,7 @@ class UserDetailsFrom extends Component {
         }
        }
       else {
-        // console.log('this.props.options-->',this.props.options);
+
         switch(type){
           case 'role':
             if (this.props.options) {
@@ -562,6 +578,8 @@ class UserDetailsFrom extends Component {
             }
           case 'warehouse':
             if (this.props.options) {
+              // console.log('this.props.options.warehouses-->',this.props.options.warehouses);
+              // this.props.selectedWarehouses = '';
               return this.props.options.warehouses.map(warehouse =>
                 {
                   return (
@@ -757,8 +775,8 @@ class UserDetailsFrom extends Component {
                   <div className={`form-group ${location.touched && location.invalid ? 'has-danger' : ''}` }>
                     <label className="col-sm-4 control-label">Site</label>
                     <div className="col-sm-7">
-                      <select  disabled={`${this.state.selectedCompany ? '' : 'disabled'}`}  className="form-control" {...location} onClick={this.selectedSite}>
-                        <option key={''} value={''}>{'Please select location'}</option>
+                      <select  disabled={`${this.state.selectedCompany ? '' : 'disabled'}`}  className="form-control" {...location} onClick={this.selectedSite} ref="site">
+                        <option key={''} value={''}>{'Please select Site'}</option>
                         {this.renderOption('site')}
                       </select>
                       <div className="text-help">
