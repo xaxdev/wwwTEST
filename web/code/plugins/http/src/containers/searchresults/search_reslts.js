@@ -128,8 +128,8 @@ class SearchResult extends Component {
     printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
     printWindow.document.write('</head><body >');
     if (this.state.showGridView) {
-        printWindow.document.write(dvTotal);
         printWindow.document.write(dvGridview);
+        printWindow.document.write(dvTotal);
     }
     if (this.state.showListView) {
       printWindow.document.write(dvListview);
