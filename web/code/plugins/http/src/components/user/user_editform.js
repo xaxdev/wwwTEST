@@ -306,7 +306,11 @@ class UserDetailsFrom extends Component {
         onhandWarehouseValue.onChange([]);
         onhand.onChange('Warehouse');
         onhandAll.onChange(false);
-        // this.props.optionsActions.getOnHandWarehouse([]);
+        if (onhandLocationValue.value.length != 0) {
+          this.props.optionsActions.getOnHandWarehouse(onhandLocationValue.value);
+        }else{
+          this.props.optionsActions.getOnHandWarehouse([]);
+        }
     }
   }
   selectedOnHandLocation(e){
