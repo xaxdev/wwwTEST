@@ -14,6 +14,7 @@ export const fields = ['id','firstName','lastName','username','email','password'
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
           ,'productGroupACC','productGroupOBA','productGroupSPP','onhandLocationValue','webOnly','permissionId','onhandLocation'
           ,'onhandAll','onhandWarehouse','onhandWarehouseValue'];
+export let countFirst = 0;
 
 class UserDetailsFrom extends Component {
 
@@ -131,10 +132,12 @@ class UserDetailsFrom extends Component {
       });
 
       if (!this.state.changedOnHandLocation) {
-        if(!this.state.firstloading){
-          _.each(select.options,function (o) {
-            o.selected = false;
-          });
+        if(!this.state.firstloading && !this.state.clickAllWarehouse){
+          if(values.length ==0){
+            _.each(select.options,function (o) {
+              o.selected = false;
+            });
+          }
         }
       }
 
@@ -238,6 +241,7 @@ class UserDetailsFrom extends Component {
   }
   selectedOnHandWarehouse(e){
     // console.log('selectedOnHandWarehouse-->',e.target.checked);
+    countFirst++;
     let {
         fields: {
             onhand,
@@ -246,12 +250,16 @@ class UserDetailsFrom extends Component {
             onhandLocationValue
         }
     } = this.props;
+    if (countFirst != 1) {
+      this.setState({
+          firstloading: false
+      });
+    }
     if (e.target.checked) {
         this.setState({
             selectedOnHandWarehouse: true,
             selectedOnHandAll: true,
-            clickAllWarehouse: true,
-            firstloading: false
+            clickAllWarehouse: true
         });
 
         let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
@@ -292,13 +300,13 @@ class UserDetailsFrom extends Component {
           onhandAll.onChange(true);
         }
 
-    } else {
+    }
+    else {
         this.setState({
             selectedOnHandWarehouse: false,
             selectedOnHandLocation: false,
             selectedOnHandAll: false,
-            clickAllWarehouse: false,
-            firstloading: false
+            clickAllWarehouse: false
         });
 
         let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
@@ -323,7 +331,9 @@ class UserDetailsFrom extends Component {
     let {
         fields: {
             onhand,
-            onhandAll,onhandWarehouseValue
+            onhandAll,
+            onhandWarehouseValue,
+            onhandLocationValue
         }
     } = this.props;
     if (e.target.checked) {
@@ -388,6 +398,8 @@ class UserDetailsFrom extends Component {
         _.each(select.options,function (o) {
           o.selected = false;
         });
+
+        onhandLocationValue.onChange([]);
 
         // this.props.optionsActions.getOnHandWarehouse(values);
 
