@@ -17,7 +17,7 @@ const Watchattr =  (props) =>{
       <div style={styles.colmd12}>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Watch Category</div>
-              <div style={styles.colmd5}>{convertBlanktodash(props.strapTypeName)}</div>
+              <div style={styles.colmd5}>{convertBlanktodash(props.subTypeName)}</div>
             </div>
           <div style={styles.colmd12}>
               <div style={styles.colmd5}>Collection</div>
