@@ -71,7 +71,7 @@ class UserDetails extends Component {
     };
 
     onhandWarehouse = {
-      type:data.onhand,
+      type:(data.onhand != undefined) ? (data.onhand.indexOf('All') != -1) ? 'AllWarehouse': 'Warehouse' : 'Warehouse',
       places:(!data.onhandWarehouseValue)?[]:data.onhandWarehouseValue
     };
 
@@ -114,7 +114,7 @@ class UserDetails extends Component {
     }
     delete data.permissionId;
 
-    // console.log('data-->',data);
+    // console.log('permission-->',data);
     this.props.updateUser(data)
         .then(() => {
           // user has been created, navigate the user to the index
