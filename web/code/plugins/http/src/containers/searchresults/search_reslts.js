@@ -6,8 +6,8 @@ import { Link } from 'react-router';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
 import jQuery from 'jquery';
-var _ = require('lodash');
-var Loading = require('react-loading');
+let _ = require('lodash');
+let Loading = require('react-loading');
 import * as itemactions from '../../actions/itemactions';
 import PureInput from '../../utils/PureInput';
 import GridItemsView from '../../components/searchresults/griditemview';
@@ -16,7 +16,7 @@ import ListItemsView from '../../components/searchresults/listitemview';
 import ListItemsViewPrint from '../../components/searchresults/listitemviewPrint';
 import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
-// var XLSX = require('xlsx')
+// let XLSX = require('xlsx')
 
 const checkFields = ['metalType', 'site', 'size', 'cut', 'metalColor', 'certificatedNumber',
       'color', 'collection', 'certificateDate', 'clarity', 'brand', 'dominantStone', 'grossWeight'];
@@ -86,7 +86,7 @@ class SearchResult extends Component {
   }
   componentWillMount() {
       // console.log('this.props.currentPage->',this.props.currentPage);
-      var params = {
+      let params = {
         'page' : this.props.currentPage,
         'sortBy': 'itemCreatedDate',
         'sortDirections': 'desc'
@@ -95,7 +95,7 @@ class SearchResult extends Component {
       const { filters } =  this.props;
       // console.log('filters-->',filters);
       filters.forEach(function(filter){
-        var keys = Object.keys(filter);
+        let keys = Object.keys(filter);
         keys.forEach((key) => {
           const value = filter[key];
           params[key] = value;
@@ -114,12 +114,12 @@ class SearchResult extends Component {
     e.preventDefault();
     // console.log('printproductBind-->');
 
-    var dvTotal = jQuery('#dvTotalsub').html();
-    var dvGridview = jQuery('#dvGridview').html();
-    var dvListview = jQuery('#dvListview').html();
+    let dvTotal = jQuery('#dvTotalsub').html();
+    let dvGridview = jQuery('#dvGridview').html();
+    let dvListview = jQuery('#dvListview').html();
     // console.log('printproduct-->',dvContainerPrint);
-    var options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
-    var printWindow = window.open('', '', options);
+    let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
+    let printWindow = window.open('', '', options);
     printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
     printWindow.document.write('<html><head><title>Mol online 2016</title>');
     printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
@@ -164,7 +164,7 @@ class SearchResult extends Component {
 
       const sortingDirection = this.refs.sortingDirection.value;
 
-      var params = {
+      let params = {
         'page' : eventKey,
         'sortBy': sortingBy,
         'sortDirections': sortingDirection
@@ -172,7 +172,7 @@ class SearchResult extends Component {
       const { filters } =  this.props;
 
       filters.forEach(function(filter){
-        var keys = Object.keys(filter);
+        let keys = Object.keys(filter);
         keys.forEach((key) => {
           const value = filter[key];
           params[key] = value;
@@ -204,7 +204,7 @@ class SearchResult extends Component {
         }
       });
 
-      var { currPage } = this.props.fields;
+      let { currPage } = this.props.fields;
       currPage.onChange(eventKey);
   }
   handleGo(e){
@@ -232,7 +232,7 @@ class SearchResult extends Component {
       activePage: getPage
     });
     // console.log('getPage-->',getPage);
-    var params = {
+    let params = {
       'page' : getPage,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection
@@ -240,7 +240,7 @@ class SearchResult extends Component {
     let { filters } =  this.props;
 
     filters.forEach(function(filter){
-      var keys = Object.keys(filter);
+      let keys = Object.keys(filter);
       keys.forEach((key) => {
         const value = filter[key];
         params[key] = value;
@@ -319,9 +319,9 @@ class SearchResult extends Component {
             handleSubmit,
             resetForm,
             submitting } = this.props;
-      // var _totalUpdatedCost = new Intl.NumberFormat().format(totalUpdatedCost);
-    var _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
-    var _totalPublicPrice =  (totalPublicPrice!=null) ? numberFormat(totalPublicPrice) : 0;
+      // let _totalUpdatedCost = new Intl.NumberFormat().format(totalUpdatedCost);
+    let _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
+    let _totalPublicPrice =  (totalPublicPrice!=null) ? numberFormat(totalPublicPrice) : 0;
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -385,7 +385,7 @@ class SearchResult extends Component {
     const { searchResult } = this.props;
     const sortingDirection = this.refs.sortingDirection.value;
     // this.props.sortBy(searchResult, sortingBy, sortingDirection);
-    var params = {
+    let params = {
       'page' : 1,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection
@@ -394,7 +394,7 @@ class SearchResult extends Component {
     let { filters } =  this.props;
 
     filters.forEach(function(filter){
-      var keys = Object.keys(filter);
+      let keys = Object.keys(filter);
       keys.forEach((key) => {
         const value = filter[key];
         params[key] = value;
@@ -426,7 +426,7 @@ class SearchResult extends Component {
       }
     });
 
-    var { currPage } = this.props.fields;
+    let { currPage } = this.props.fields;
     currPage.onChange(this.state.activePage);
     currPage.value = this.state.activePage;
     // console.log('this.state.activePage-->',this.state.activePage);
@@ -455,7 +455,7 @@ class SearchResult extends Component {
       activePage: 1
     });
 
-    var params = {
+    let params = {
       'page' : 1,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection
@@ -464,7 +464,7 @@ class SearchResult extends Component {
     let { filters } =  this.props;
 
     filters.forEach(function(filter){
-      var keys = Object.keys(filter);
+      let keys = Object.keys(filter);
       keys.forEach((key) => {
         const value = filter[key];
         params[key] = value;
@@ -539,7 +539,7 @@ class SearchResult extends Component {
 
     const token = sessionStorage.token;
 
-    var modalOpen = jQuery('.modal-open');
+    let modalOpen = jQuery('.modal-open');
     modalOpen.removeClass()
     // console.log('modalOpen-->',modalOpen);
 
@@ -554,23 +554,23 @@ class SearchResult extends Component {
     });
   }
   s2ab(s) {
-  	var buf = new ArrayBuffer(s.length);
-  	var view = new Uint8Array(buf);
-  	for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+  	let buf = new ArrayBuffer(s.length);
+  	let view = new Uint8Array(buf);
+  	for (let i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
   	return buf;
   }
   sheet_from_array_of_arrays(data, opts) {
-  	var ws = {};
-  	var range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
-  	for(var R = 0; R != data.length; ++R) {
-  		for(var C = 0; C != data[R].length; ++C) {
+  	let ws = {};
+  	let range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
+  	for(let R = 0; R != data.length; ++R) {
+  		for(let C = 0; C != data[R].length; ++C) {
   			if(range.s.r > R) range.s.r = R;
   			if(range.s.c > C) range.s.c = C;
   			if(range.e.r < R) range.e.r = R;
   			if(range.e.c < C) range.e.c = C;
-  			var cell = {v: data[R][C] };
+  			let cell = {v: data[R][C] };
   			if(cell.v == null) continue;
-  			var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
+  			let cell_ref = XLSX.utils.encode_cell({c:C,r:R});
 
   			if(typeof cell.v === 'number') cell.t = 'n';
   			else if(typeof cell.v === 'boolean') cell.t = 'b';
@@ -609,7 +609,7 @@ class SearchResult extends Component {
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     // if (!this.state.showImages) {
-    //   var titles = ['Item Reference', 'Description', 'SKU', 'Site', 'Vendor Item Reference', 'Vendor Name',
+    //   let titles = ['Item Reference', 'Description', 'SKU', 'Site', 'Vendor Item Reference', 'Vendor Name',
     //               'Public Price', 'Quantity', 'Unit'];
     //   if(this.state.allFields){
     //     titles.push('Metal Type', 'Warehouse', 'Size', 'Cut', 'Metal Colour', 'Certificate Number',
@@ -632,10 +632,10 @@ class SearchResult extends Component {
     //   }
     //   if (this.state.showImages) titles.push('Images');
     //
-    //   var data = [titles];
+    //   let data = [titles];
     //   exportItems.forEach(function(item){
     //     // console.log('item-->',item);
-    //     var arrayItems = [];
+    //     let arrayItems = [];
     //
     //     arrayItems.push(item.reference,item.description,item.sku,item.siteName,item.venderReference,
     //                     (item.vendorName != undefined) ? item.vendorName : '',
@@ -691,32 +691,32 @@ class SearchResult extends Component {
     //     data.push(arrayItems);
     //   });
     //
-    //   var ws_name = 'Items';
+    //   let ws_name = 'Items';
     //   /* set up workbook objects -- some of these will not be required in the future */
-    //   var wb = {}
+    //   let wb = {}
     //   wb.Sheets = {};
     //   wb.Props = {};
     //   wb.SSF = {};
     //   wb.SheetNames = [];
     //
     //   /* create worksheet: */
-    //   var ws = {}
+    //   let ws = {}
     //
     //   /* the range object is used to keep track of the range of the sheet */
-    //   var range = {s: {c:0, r:0}, e: {c:0, r:0 }};
+    //   let range = {s: {c:0, r:0}, e: {c:0, r:0 }};
     //
     //   /* Iterate through each element in the structure */
-    //   for(var R = 0; R != data.length; ++R) {
+    //   for(let R = 0; R != data.length; ++R) {
     //     if(range.e.r < R) range.e.r = R;
-    //     for(var C = 0; C != data[R].length; ++C) {
+    //     for(let C = 0; C != data[R].length; ++C) {
     //       if(range.e.c < C) range.e.c = C;
     //
     //       /* create cell object: .v is the actual data */
-    //       var cell = { v: data[R][C] };
+    //       let cell = { v: data[R][C] };
     //       if(cell.v == null) continue;
     //
     //       /* create the correct cell reference */
-    //       var cell_ref = XLSX.utils.encode_cell({c:C,r:R});
+    //       let cell_ref = XLSX.utils.encode_cell({c:C,r:R});
     //
     //       /* determine the cell type */
     //       if(typeof cell.v === 'number') cell.t = 'n';
@@ -734,22 +734,22 @@ class SearchResult extends Component {
     //   wb.Sheets[ws_name] = ws;
     //
     //   /* write file */
-    //   var wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
+    //   let wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
     //   saveAs(new Blob([this.s2ab(wbout)],{type:'application/octet-stream'}), 'download.xlsx')
     // } else {
       let tab_text = GenHtmlExportExcel(this, exportItems, userLogin, ROOT_URL);
 
-      var data_type = 'data:application/vnd.ms-excel;base64';
+      let data_type = 'data:application/vnd.ms-excel;base64';
 
-      var ua = window.navigator.userAgent;
-      var msie = ua.indexOf('MSIE');
-      var edge = ua.indexOf('Edge');
-      var sa = '';
-      var uriContent = '';
+      let ua = window.navigator.userAgent;
+      let msie = ua.indexOf('MSIE');
+      let edge = ua.indexOf('Edge');
+      let sa = '';
+      let uriContent = '';
 
       if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
           if (window.navigator.msSaveBlob) {
-              var blob = new Blob([tab_text], {
+              let blob = new Blob([tab_text], {
                   type: 'application/csv;charset=utf-8;'
               });
               this.setState({
@@ -758,7 +758,7 @@ class SearchResult extends Component {
               navigator.msSaveBlob(blob, 'download.xls');
           }
       } else {
-          var isFirefox = typeof InstallTrigger !== 'undefined';
+          let isFirefox = typeof InstallTrigger !== 'undefined';
           if(!isFirefox){
             this.setState({
               isOpen: false,
@@ -770,7 +770,7 @@ class SearchResult extends Component {
               let uri = 'data:application/vnd.ms-excel;base64,'
               // uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
               // sa = window.open(uriContent,'download.xlsx');
-              // var wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});
+              // let wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});
               this.setState({
                 isOpen: false,
               });
@@ -785,7 +785,7 @@ class SearchResult extends Component {
     // });
   }
   renderExportExcelDialog(){
-    var that = this;
+    let that = this;
     return(
       <div>
       <div  className="popexport">
