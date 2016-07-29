@@ -168,20 +168,20 @@ class UserDetailsFrom extends Component {
           }).map(function(o) {
               return o.value;
           });
-          // console.log('valuesWarehouseAll-->',valuesWarehouseAll.length);
-          // console.log('valuesWarehouse-->',valuesWarehouse.length);
-          if (valuesWarehouseAll.length == valuesWarehouse.length) {
-            _.each(selectWarehouse.options,function (o) {
-              o.selected = false;
-            });
-          }else{
-            // console.log('valuesWarehouseAll.length != valuesWarehouse.length-->');
-            if(!this.state.changedOnHandLocation){
-              _.each(selectWarehouse.options,function (o) {
-                o.selected = false;
-              });
-            }
-          }
+          // // console.log('valuesWarehouseAll-->',valuesWarehouseAll.length);
+          // // console.log('valuesWarehouse-->',valuesWarehouse.length);
+          // if (valuesWarehouseAll.length == valuesWarehouse.length) {
+          //   _.each(selectWarehouse.options,function (o) {
+          //     o.selected = false;
+          //   });
+          // }else{
+          //   // console.log('valuesWarehouseAll.length != valuesWarehouse.length-->');
+          //   if(!this.state.changedOnHandLocation){
+          //     _.each(selectWarehouse.options,function (o) {
+          //       o.selected = false;
+          //     });
+          //   }
+          // }
         }else{
           // console.log('this.state.clickAllWarehouse-->true');
         }
@@ -638,8 +638,7 @@ class UserDetailsFrom extends Component {
               if (this.props.user.permission.onhandWarehouse.type == 'Warehouse'
                 || this.props.user.permission.onhandWarehouse.type == 'All'
                 || this.props.user.permission.onhandWarehouse.type == 'AllWarehouse'){
-                  if (this.props.user.permission.onhandWarehouse.type == 'Warehouse'
-                      || this.props.user.permission.onhandWarehouse.type == 'AllWarehouse') {
+                  if (this.props.user.permission.onhandWarehouse.type == 'AllWarehouse') {
                     this.props.user.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
                       newDate.push(_.filter(that.props.warehouseOnHand,
                         function(warehouse){
@@ -664,7 +663,29 @@ class UserDetailsFrom extends Component {
                     )
                     dataDropDowntWareHouse = dataDropDowntWareHouse[0];
 
-                  } else {
+                  } else if(this.props.user.permission.onhandWarehouse.type == 'Warehouse') {
+                    this.props.user.permission.onhandLocation.places.forEach(function(settingLocation){
+                      newDate.push(_.filter(that.props.warehouseOnHand,
+                        function(warehouse){
+                          // console.log('warehouse.id-->',warehouse.id);
+                          if(warehouse.code != undefined){
+                            return warehouse.locationid.toString() == settingLocation;
+                          }
+                        })
+                      );
+                    });
+                    let subdata = [];
+                    newDate.forEach(newdata =>{
+                        newdata.forEach(subdata =>{
+                          data.push(subdata);
+                        })
+                    });
+                    dataDropDowntWareHouse.push(data.map(warehouse =>{
+                        return ({value: warehouse.code,name:warehouse.name});
+                      })
+                    )
+                    dataDropDowntWareHouse = dataDropDowntWareHouse[0];
+                  }else if(this.props.user.permission.onhandWarehouse.type == 'All') {
                     if (typeof (this.props.warehouseOnHand) !== 'undefined')  {
                         dataDropDowntWareHouse.push(this.props.warehouseOnHand.map(warehouse =>{
                           return ({value: warehouse.code,name:warehouse.name});
@@ -689,8 +710,8 @@ class UserDetailsFrom extends Component {
 
     }
     // console.log('this.props.user.onhandLocation-->');
-    if(this.props.user.permission.onhandLocation != undefined)
-      // console.log('return type-->',this.props.user.permission.onhandLocation.type);
+    // if(this.props.user.permission.onhandLocation != undefined)
+    //   console.log('return type-->',this.props.user.permission.onhandWarehouse);
 
     return (
       <form onSubmit={handleSubmit}>

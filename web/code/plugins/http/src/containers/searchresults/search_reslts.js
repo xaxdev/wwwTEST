@@ -786,6 +786,7 @@ class SearchResult extends Component {
   }
   renderExportExcelDialog(){
     let that = this;
+    const userLogin = JSON.parse(sessionStorage.logindata);
     return(
       <div>
       <div  className="popexport">
@@ -796,7 +797,14 @@ class SearchResult extends Component {
           </div>
           <div className="modal-body">
             <h3>Please choose additional fields for export.</h3>
-            <h5>(Normal export field Item Reference, Item Description, SKU, Vendor Item Reference, Site, Vendor Name, Public Price, Quantity, Unit)</h5>
+            <h5>(Normal export field Item Reference, Item Description, SKU, Item Vendor Reference,
+                  {`${(userLogin.permission.price == 'All') ? 'Actual Price, ':''}`}
+                  {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price, ':''}`}
+                  {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Public Price, ':''}`}
+                  {`${(userLogin.permission.price == 'All') ? 'Actual Price (USD), ':''}`}
+                  {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price (USD), ':''}`}
+                  {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Public Price (USD), ':''}`}
+                  Gross Weight, Ring Size, Site, Company, Warehouse)</h5>
             <br/>
             <div className="col-sm-12">
               <div className="col-sm-3">
