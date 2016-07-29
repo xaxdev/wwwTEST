@@ -88,10 +88,11 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     if(that.state.limitedEditionNumber) titles.push('Limited Edition #');
   }
 
-  var data = [];
+  let data = [];
   exportItems.forEach(function(item){
     // console.log('item-->',item);
-    var arrayItems = [];
+    let arrayItems = [];
+    let itemReference = item.reference;
 
     if (that.state.showImages)
       arrayItems.push((item.gallery.length) != 0
@@ -150,7 +151,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
                       (item.cut != undefined) ? item.cut : '',
                       (item.color != undefined) ? item.color : '',
                       (item.clarity != undefined) ? item.clarity : '',
-                      (item.carat != undefined) ? item.carat : '',
+                      (item.carat != undefined) ? item.carat : 0,
                       (item.unit != undefined) ? item.unit : '',
                       (item.quantity != undefined) ? item.quantity : '',
                       (item.origin != undefined) ? item.origin : '',
@@ -182,7 +183,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
                       (item.dialColorName != undefined) ? item.dialColorName : '',
                       (item.movementName != undefined) ? item.movementName : '',
                       (item.serialNumber != undefined) ? item.serialNumber : '',
-                      (item.limitedEdition != undefined) ? item.limitedEdition : '',
+                      (item.limitedEdition != undefined) ? (item.limitedEdition) ? 'Yes' : 'No' : 'No',
                       (item.limitedEditionNumber != undefined) ? item.limitedEditionNumber : ''
                     );
 
@@ -195,7 +196,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
       if(that.state.cut) arrayItems.push((item.cut != undefined) ? item.cut : '');
       if(that.state.color) arrayItems.push((item.color != undefined) ? item.color : '');
       if(that.state.clarity) arrayItems.push((item.clarity != undefined) ? item.clarity : '');
-      if(that.state.caratWt) arrayItems.push((item.carat != undefined) ? item.carat : '');
+      if(that.state.caratWt) arrayItems.push((item.carat != undefined) ? item.carat : 0);
       if(that.state.unit) arrayItems.push((item.unit != undefined) ? item.unit : '');
       if(that.state.qty) arrayItems.push((item.quantity != null) ? item.quantity : '');
       if(that.state.origin) arrayItems.push((item.origin != undefined) ? item.origin : '');
@@ -227,7 +228,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
       if(that.state.dialColor) arrayItems.push((item.dialColorName != undefined) ? item.dialColorName : '');
       if(that.state.movement) arrayItems.push((item.movementName != undefined) ? item.movementName : '');
       if(that.state.serial) arrayItems.push((item.serialNumber != undefined) ? item.serialNumber : '');
-      if(that.state.limitedEdition) arrayItems.push((item.limitedEdition != undefined) ? item.limitedEdition : '');
+      if(that.state.limitedEdition) arrayItems.push((item.limitedEdition != undefined) ? (item.limitedEdition) ? 'Yes' : 'No' : 'No');
       if(that.state.limitedEditionNumber) arrayItems.push((item.limitedEditionNumber != undefined) ? item.limitedEditionNumber : '');
     }
 
@@ -241,23 +242,46 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
         item.gemstones.forEach(function(gemstone) {
           arrayItems = [];
           arrayItems.push('', // images
-                          '', // Item Reference
+                          itemReference, // Item Reference
                           '', // Item Description
-                          (gemstone.stoneTypeName != undefined) ? gemstone.stoneTypeName : '', // sku
-                          '', // Vendor ref
-                          '', // actual Price
-                        );
-          if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
-            arrayItems.push(numberFormat((gemstone.cost != undefined) ? gemstone.cost[userLogin.currency] : 0));
+                          (gemstone.stoneTypeId != undefined) ? gemstone.stoneTypeId : '', // sku
+                          ''); // Vendor ref
+          if (userLogin.currency != 'USD') {
+            if (userLogin.permission.price == 'All') {
+              arrayItems.push(''); // actual Price
+            }
+            if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
+              arrayItems.push(numberFormat(gemstone.cost[userLogin.currency])); // updated Price
+            }
+            if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+              || userLogin.permission.price == 'All') {
+              arrayItems.push('');// Public Price
+            }
+
+            if (userLogin.permission.price == 'All') {
+                arrayItems.push(''); // actual Price (USD)
+            }
+            if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
+                arrayItems.push(numberFormat(gemstone.cost['USD'])); // updated Price (USD)
+            }
+            if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                || userLogin.permission.price == 'All') {
+                arrayItems.push('');// Public Price (USD)
+            }
+          }else{
+            if (userLogin.permission.price == 'All') {
+              arrayItems.push(''); // actual Price (USD)
+            }
+            if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
+              arrayItems.push(numberFormat(gemstone.cost['USD'])); // updated Price (USD)
+            }
+            if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                || userLogin.permission.price == 'All') {
+              arrayItems.push('');// Public Price (USD)
+            }
           }
-          arrayItems.push('', // public Price
-                          '', // Actual Price (USD)
-                        );
-          if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
-            arrayItems.push(numberFormat((gemstone.cost != undefined) ? gemstone.cost['USD'] : 0));
-          }
-          arrayItems.push('', // Public Price (USD)
-                          '', // Gross Weight
+
+          arrayItems.push('', // Gross Weight
                           '', // Ring Size
                           '', // Site
                           '', // Company
@@ -271,8 +295,8 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             if(that.state.cut || that.state.allFields) arrayItems.push((gemstone.cut != undefined) ? gemstone.cut : ''); // Cut
             if(that.state.color || that.state.allFields) arrayItems.push((gemstone.color != undefined) ? gemstone.color : ''); // Color
             if(that.state.clarity || that.state.allFields) arrayItems.push((gemstone.clarity != undefined) ? gemstone.clarity : ''); // Clarity
-            if(that.state.caratWt || that.state.allFields) arrayItems.push(''); // Carat Wt
-            if(that.state.unit || that.state.allFields) arrayItems.push(''); // Unit
+            if(that.state.caratWt || that.state.allFields) arrayItems.push((gemstone.carat != undefined) ? gemstone.carat : ''); // Carat Wt
+            if(that.state.unit || that.state.allFields) arrayItems.push((gemstone.unit != undefined) ? gemstone.unit : ''); // Unit
             if(that.state.qty || that.state.allFields) arrayItems.push((gemstone.quantity != undefined) ? gemstone.quantity : ''); // Qty
             if(that.state.origin || that.state.allFields) arrayItems.push((gemstone.origin != undefined) ? gemstone.origin : ''); // Origin
             if(that.state.symmetry || that.state.allFields) arrayItems.push((gemstone.symmetry != undefined) ? gemstone.symmetry : ''); // symmetry
@@ -296,7 +320,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             if(that.state.dialColor || that.state.allFields) arrayItems.push(''); // Dial Color
             if(that.state.movement || that.state.allFields) arrayItems.push(''); // Movement
             if(that.state.serial || that.state.allFields) arrayItems.push(''); // Serial #
-            if(that.state.limitedEdition || that.state.allFields) arrayItems.push(''); // Limited Edition
+            if(that.state.limitedEdition || that.state.allFields) arrayItems.push((item.limitedEdition != undefined) ? (item.limitedEdition) ? 'Yes' : 'No' : 'No'); // Limited Edition
             if(that.state.limitedEditionNumber || that.state.allFields) arrayItems.push(''); // Limited Edition #
           data.push(arrayItems);
         });
@@ -344,7 +368,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
         html =  html  +
                 `</tbody>
               </table>`;
-    var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+    let tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
         tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
 
         tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
