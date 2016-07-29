@@ -329,14 +329,29 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }
 
   });
-  let html = `<table id="myTable">
+  let countColumn = 0;
+  let columnIngredients = 0;
+  titles.forEach(function(title){
+    countColumn++;
+    if(title == 'Ingredients'){
+      columnIngredients = countColumn;
+    }
+  });
+
+  let html = `<table id="myTable" border='1'>
                  <thead>
                   <tr>`;
+  countColumn = 0;
   titles.forEach(function(title){
+    countColumn++;
     if (title != 'Images') {
-      html = html + `<td><b>${title}</b></td>`;
+      if(countColumn < columnIngredients){
+        html = html + `<td bgcolor="#F79647"><b>${title}</b></td>`;
+      }else{
+        html = html + `<td bgcolor="#92D14F"><b>${title}</b></td>`;
+      }
     } else {
-      html = html + `<td width='150'><b>${title}</b></td>`;
+      html = html + `<td width='150' bgcolor="#F79647"><b>${title}</b></td>`;
     }
   });
       html =  html  +
@@ -344,9 +359,16 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
                  </thead>
                  <tbody>`
   data.forEach(function(item){
-    html = html + `<tr ${that.state.showImages ? 'height="150"': ''}>`;
     let numberField = item.length;
     let countField = 1;
+    if(countField == 1){
+      if(item[0] != ''){
+        html = html + `<tr ${that.state.showImages ? 'height="150"': ''}>`;
+      }else{
+        html = html + '<tr>';
+      }
+    }
+
     item.forEach(function(feild){
       if (countField != 1) {
         html = html + `<td>${feild}</td>`;
