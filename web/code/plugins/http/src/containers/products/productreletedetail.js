@@ -282,12 +282,14 @@ class productreletedetail extends Component {
             <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
           );
         }
+        if(gemstoneAttr.length > 0){
         return(
             <div>
               <h2>GEMSTONES ATTRIBUTES</h2>
               <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} />
             </div>
           );
+        }
       }
 
      }
