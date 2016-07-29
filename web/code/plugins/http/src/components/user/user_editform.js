@@ -37,7 +37,7 @@ class UserDetailsFrom extends Component {
       selectedCompany: false,
       selectedSite: false,
       selectedOnHandWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false,
-      selectedOnHandLocation: (this.props.user.onhandLocationValue != null)?(this.props.user.onhandLocationValue.length != 0) ? false : true:false,
+      selectedOnHandLocation: (this.props.user.permission.onhandLocation != undefined)?(this.props.user.permission.onhandLocation.type.indexOf('All') == -1) ? false : true : false,
       selectedOnHandAll: (!this.props.user.onhandLocation && !this.props.user.onhandWarehouse)? true: false,
       genPass:'',
       changedOnHandLocation: false,
@@ -53,16 +53,20 @@ class UserDetailsFrom extends Component {
   //   return shallowCompare(this, nextProps, nextState);
   // }
   componentDidMount(){
+    if(this.props.user.permission.onhandLocation != undefined)
+      // console.log('componentDidMount type-->',this.props.user.permission.onhandLocation.type);
 
     this.setState(
       {
         selectedOnHandWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false,
-        selectedOnHandLocation: (this.props.user.onhandLocationValue != null)?(this.props.user.onhandLocationValue.length != 0) ? false : true:false,
+        selectedOnHandLocation: (this.props.user.permission.onhandLocation != undefined)?(this.props.user.permission.onhandLocation.type.indexOf('All') == -1) ? false : true : false,
       }
     );
   }
   componentDidUpdate(){
     // console.log('componentDidUpdate-->');
+    if(this.props.user.permission.onhandLocation != undefined)
+      // console.log('componentDidUpdate type-->',this.props.user.permission.onhandLocation.type);
     if (this.state.selectedOnHandLocation) {
       if (this.state.clickAllLocarion) {
         // console.log('clickAllLocarion-->true');
@@ -685,6 +689,8 @@ class UserDetailsFrom extends Component {
 
     }
     // console.log('this.props.user.onhandLocation-->');
+    if(this.props.user.permission.onhandLocation != undefined)
+      // console.log('return type-->',this.props.user.permission.onhandLocation.type);
 
     return (
       <form onSubmit={handleSubmit}>
