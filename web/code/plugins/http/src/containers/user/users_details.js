@@ -128,12 +128,12 @@ class UserDetails extends Component {
 
     if(!this.props.user){
       return <div >
-        <center>
-          <br/><br/><br/><br/><br/><br/>
-            <Loading type="spin" color="#202020" width="10%"/>
-        </center>
-        <br/><br/><br/><br/><br/><br/>
-      </div>
+              <center>
+                <br/><br/><br/><br/><br/><br/>
+                  <Loading type="spin" color="#202020" width="10%"/>
+              </center>
+              <br/><br/><br/><br/><br/><br/>
+            </div>
     }
     else{
       // console.log('user_details this.props.user-->',this.props.user.id)

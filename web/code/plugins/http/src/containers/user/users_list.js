@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as usersActions from '../../actions/usersaction';
 import { Link } from 'react-router';
 import UsersListItem  from '../../components/user/user_list_item';
+let Loading = require('react-loading');
 // import Pagination from '../../utils/Pagination';
 // import DataMixin from '../../utils/DataMixin';
 
@@ -17,10 +18,14 @@ class UsersList extends Component {
 
     if (!this.props.users) {
       return (
-        <div>
-        Loading....
-        </div>
-      );
+              <div >
+                <center>
+                  <br/><br/><br/><br/><br/><br/>
+                    <Loading type="spin" color="#202020" width="10%"/>
+                </center>
+                <br/><br/><br/><br/><br/><br/>
+              </div>
+              );
      }
     else {
 
