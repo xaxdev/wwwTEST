@@ -81,6 +81,18 @@
                     }
                 },
                 {
+                    "master_multiple": {
+                        "index": "analyzed",
+                        "match_mapping_type": "string",
+                        "match": "metalColor",
+                        "match_pattern": "regex",
+                        "mapping": {
+                            "type": "string",
+                            "search_analyzer": "whitespace_analyzer"
+                        }
+                    }
+                },
+                {
                     "forward_slash": {
                         "match_mapping_type": "string",
                         "match": "hierarchy",
