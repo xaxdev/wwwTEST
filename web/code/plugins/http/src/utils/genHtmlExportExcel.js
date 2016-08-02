@@ -41,19 +41,20 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }
   }
 
-  titles.push('Gross Weight','Ring Size','Site','company', 'Warehouse');
+  titles.push('Gross Weight','Ring Size', 'Jewels Weight (text)','Site','company', 'Warehouse');
   if(that.state.allFields){
-    titles.push('Ingredients','Category Name','Category', 'Collection','Set Reference Number', 'Cut','Color',
-                'Clarity','Carat Wt', 'Unit', 'Qty','Origin','Symmetry','Flourance','Batch','Stone Qty',
-                'Dominant Stone', 'Markup%',
-                'Certificate Number','Certificate Date', 'Vendor Code','Vendor Name', 'Metal Colour', 'Metal','Brand',
-                'Complication','Strap Type','Strap Color','Buckle Type','Dial Index','Dial Color','Movement',
-                'Serial #','Limited Edition','Limited Edition #'
+    titles.push('Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color',
+                'Clarity','Carat Wt', 'Unit', 'Qty','Origin','Symmetry','Flourance','Batch','Net Weight',
+                'Stone Qty','Dominant Stone', 'Markup%','Certificate Number','Certificate Date', 'Vendor Code',
+                'Vendor Name', 'Metal Colour', 'Metal','Brand','Complication','Strap Type','Strap Color',
+                'Buckle Type','Dial Index','Dial Color','Movement','Serial #','Limited Edition',
+                'Limited Edition #'
               );
   }else{
     if(that.state.ingredients) titles.push('Ingredients');
     if(that.state.categoryName) titles.push('Category Name');
     if(that.state.category) titles.push('Category');
+    if(that.state.article) titles.push('Article');
     if(that.state.collection) titles.push('Collection');
     if(that.state.setReferenceNumber) titles.push('Set Reference Number');
     if(that.state.cut) titles.push('Cut');
@@ -66,6 +67,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     if(that.state.symmetry) titles.push('Symmetry');
     if(that.state.flourance) titles.push('Flourance');
     if(that.state.batch) titles.push('Batch');
+    if(that.state.netWeight) titles.push('Net Weight');
     if(that.state.stoneQty) titles.push('Stone Qty');
     if(that.state.dominantStone) titles.push('Dominant Stone');
     if(that.state.markup) titles.push('Markup%');
@@ -135,8 +137,15 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
         arrayItems.push(numberFormat(item.price['USD']));
       }
     }
+    let jewelsWeight = 0;
+    item.gemstones.forEach(function(gemstone) {
+      if(gemstone.carat != undefined){
+        jewelsWeight = jewelsWeight + gemstone.carat;
+      }
+    });
     arrayItems.push((item.grossWeight != undefined) ? item.grossWeight : '',
                     (item.size != undefined) ? item.size : '',
+                    jewelsWeight,
                     (item.site != undefined) ? item.site : '',
                     (item.company != undefined) ? item.company : '',
                     (item.warehouse != undefined) ? item.warehouse : '',
@@ -145,7 +154,8 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     if(that.state.allFields){
       arrayItems.push('Main',
                       (item.hierarchy != undefined) ? item.hierarchy : '',
-                      '',
+                      (item.type == 'ACC' || item.type == 'OBA' || item.type == 'SPP') ? item.subType : '', // category
+                      (item.type == 'JLY' || item.type == 'WAT' || item.type == 'STO') ? item.subType : '', // article
                       (item.collectionName != undefined) ? item.collectionName : '',
                       (item.setReference != undefined) ? item.setReference : '',
                       (item.cut != undefined) ? item.cut : '',
@@ -157,7 +167,8 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
                       (item.origin != undefined) ? item.origin : '',
                       (item.symmetry != null) ? item.symmetry : '',
                       (item.fluorescence != undefined) ? item.fluorescence : '',
-                      (item.lotNumber != undefined) ? item.lotNumber : ''
+                      (item.lotNumber != undefined) ? item.lotNumber : '',
+                      (item.netWeight != undefined) ? item.netWeight : ''
                     );
                       let stoneQty = 0;
                       item.gemstones.forEach(function(gemstone) {
@@ -190,7 +201,8 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }else{
       if(that.state.ingredients) arrayItems.push('Main');
       if(that.state.categoryName) arrayItems.push((item.hierarchy != undefined) ? item.hierarchy : '');
-      if(that.state.category) arrayItems.push('');
+      if(that.state.category) arrayItems.push((item.type == 'ACC' || item.type == 'OBA' || item.type == 'SPP') ? item.subType : '');
+      if(that.state.article) arrayItems.push((item.type == 'JLY' || item.type == 'WAT' || item.type == 'STO') ? item.subType : '');
       if(that.state.collection) arrayItems.push((item.collectionName != undefined) ? item.collectionName : '');
       if(that.state.setReferenceNumber) arrayItems.push((item.setReference != undefined) ? item.setReference : '');
       if(that.state.cut) arrayItems.push((item.cut != undefined) ? item.cut : '');
@@ -204,6 +216,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
 
       if(that.state.flourance) arrayItems.push((item.fluorescence != undefined) ? item.fluorescence : '');
       if(that.state.batch) arrayItems.push((item.lotNumber != undefined) ? item.lotNumber : '');
+      if(that.state.netWeight) arrayItems.push((item.netWeight != undefined) ? item.netWeight : '');
       let stoneQty = 0;
                       item.gemstones.forEach(function(gemstone) {
                         if(gemstone.quantity != undefined){
@@ -283,6 +296,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
 
           arrayItems.push('', // Gross Weight
                           '', // Ring Size
+                          '', // Jewels Weight
                           '', // Site
                           '', // Company
                           ''); // Warehouse
@@ -290,6 +304,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
           arrayItems.push('Ingredient');
             if(that.state.categoryName || that.state.allFields) arrayItems.push(''); // Category Name
             if(that.state.category || that.state.allFields) arrayItems.push(''); // Category
+            if(that.state.article || that.state.allFields) arrayItems.push(''); // article
             if(that.state.collection || that.state.allFields) arrayItems.push(''); // Collection
             if(that.state.setReferenceNumber || that.state.allFields) arrayItems.push(''); // Set Reference Number
             if(that.state.cut || that.state.allFields) arrayItems.push((gemstone.cut != undefined) ? gemstone.cut : ''); // Cut
@@ -302,6 +317,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             if(that.state.symmetry || that.state.allFields) arrayItems.push((gemstone.symmetry != undefined) ? gemstone.symmetry : ''); // symmetry
             if(that.state.flourance || that.state.allFields) arrayItems.push((gemstone.fluorescence != undefined) ? gemstone.fluorescence : ''); // Flourance
             if(that.state.batch || that.state.allFields) arrayItems.push(''); // Batch lot number
+            if(that.state.netWeight || that.state.allFields) arrayItems.push(''); // Net Weight
             if(that.state.stoneQty || that.state.allFields) arrayItems.push(0); // Stone Qty
             if(that.state.dominantStone || that.state.allFields) arrayItems.push(''); // Dominant Stone
             if(that.state.markup || that.state.allFields) arrayItems.push(''); // Markup%

@@ -18,16 +18,17 @@ import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 // let XLSX = require('xlsx')
 
-const checkFields = ['ingredients','categoryName','category', 'collection','setReferenceNumber','cut','color',
-      'clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch','stoneQty', 'dominantStone',
-      'markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName', 'metalColor','metalType',
-      'brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex', 'dialColor','movement',
-      'serial', 'limitedEdition','limitedEditionNumber'
+const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
+      'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
+      'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName', 'metalColor',
+      'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex',
+      'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber'
     ];
 const labels = {
   ingredients: 'Ingredients',
   categoryName: 'Category Name',
   category: 'Category',
+  article: 'Article',
   collection: 'Collection',
   setReferenceNumber: 'Set Reference Number',
   cut: 'Cut',
@@ -40,6 +41,7 @@ const labels = {
   symmetry: 'Symmetry',
   flourance: 'Flourance',
   batch: 'Batch',
+  netWeight: 'Net Weight',
   stoneQty: 'Stone Qty',
   dominantStone: 'Dominant Stone',
   markup: 'Markup%',
@@ -95,6 +97,7 @@ class SearchResult extends Component {
       ingredients: false,
       categoryName: false,
       category: false,
+      article: false,
       collection: false,
       setReferenceNumber: false,
       cut: false,
@@ -107,6 +110,7 @@ class SearchResult extends Component {
       symmetry: false,
       flourance: false,
       batch: false,
+      netWeight: false,
       stoneQty: false,
       dominantStone: false,
       markup: false,
@@ -850,7 +854,7 @@ class SearchResult extends Component {
                   {`${(userLogin.permission.price == 'All') ? 'Actual Price (USD), ':''}`}
                   {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price (USD), ':''}`}
                   {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Public Price (USD), ':''}`}
-                  Gross Weight, Ring Size, Site, Company, Warehouse)</h5>
+                  Gross Weight, Ring Size, Jewels Weight (text), Site, Company, Warehouse)</h5>
             <br/>
             <div className="col-sm-12">
               <div className="col-sm-3">
