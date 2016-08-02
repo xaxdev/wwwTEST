@@ -18,11 +18,11 @@ import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 // let XLSX = require('xlsx')
 
-const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut','color',
-      'clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch','stoneQty', 'dominantStone',
-      'markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName', 'metalColor','metalType',
-      'brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex', 'dialColor','movement',
-      'serial', 'limitedEdition','limitedEditionNumber'
+const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
+      'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
+      'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName', 'metalColor',
+      'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex',
+      'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber'
     ];
 const labels = {
   ingredients: 'Ingredients',
@@ -41,6 +41,7 @@ const labels = {
   symmetry: 'Symmetry',
   flourance: 'Flourance',
   batch: 'Batch',
+  netWeight: 'Net Weight',
   stoneQty: 'Stone Qty',
   dominantStone: 'Dominant Stone',
   markup: 'Markup%',
@@ -109,6 +110,7 @@ class SearchResult extends Component {
       symmetry: false,
       flourance: false,
       batch: false,
+      netWeight: false,
       stoneQty: false,
       dominantStone: false,
       markup: false,

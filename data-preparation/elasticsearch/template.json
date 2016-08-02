@@ -81,14 +81,72 @@
                     }
                 },
                 {
-                    "master_multiple": {
-                        "index": "analyzed",
+                    "master_gemstones_color_multiple": {
                         "match_mapping_type": "string",
-                        "match": "metalColor",
-                        "match_pattern": "regex",
+                        "match": "gemstones_color",
                         "mapping": {
                             "type": "string",
-                            "search_analyzer": "whitespace_analyzer"
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "master_color_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "color",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "master_dominant_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "dominant",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "master_metalType_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "metalType",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "master_metalColor_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "metalColor",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
                         }
                     }
                 },
@@ -112,7 +170,7 @@
                         "match_mapping_type": "string",
                         "match_pattern": "regex",
                         "match": ".+",
-                        "unmatch": "description|hierarchy|stoneType|cutShape|cut|cutGrades|colorGrades|",
+                        "unmatch": "description|hierarchy|stoneType|cutShape|cut|cutGrades|colorGrades|metalColor|metalType|site|warehouse|color|clarity|origin|collection|brand|dominant|dialColor|dialMetal|strapType",
                         "mapping": {
                             "type": "string",
                             "analyzer": "ngram_filter_analyzer",
