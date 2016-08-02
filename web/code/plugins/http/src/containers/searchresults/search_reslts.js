@@ -800,7 +800,7 @@ class SearchResult extends Component {
       if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
           if (window.navigator.msSaveBlob) {
               let blob = new Blob([tab_text], {
-                  type: 'application/csv;charset=utf-8;'
+                  type: 'data:application/vnd.ms-excel;base64,'
               });
               this.setState({
                 isOpen: false,
@@ -825,7 +825,7 @@ class SearchResult extends Component {
                 isOpen: false,
               });
               // window.open(uriContent,'download.xls')
-              window.location.href = uri + this.base64(tab_text)
+              window.location.href = uri + $.base64.encode(tab_text)
           }
       }
       return sa;
