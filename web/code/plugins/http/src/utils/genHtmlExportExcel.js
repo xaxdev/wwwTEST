@@ -406,7 +406,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
         html =  html  +
                 `</tbody>
               </table>`;
-    let tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+    let tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
         tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
 
         tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';

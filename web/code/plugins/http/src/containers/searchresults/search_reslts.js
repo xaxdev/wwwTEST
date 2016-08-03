@@ -16,6 +16,7 @@ import ListItemsView from '../../components/searchresults/listitemview';
 import ListItemsViewPrint from '../../components/searchresults/listitemviewPrint';
 import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
+import moment from 'moment';
 // let XLSX = require('xlsx')
 
 const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
@@ -787,37 +788,41 @@ class SearchResult extends Component {
     //   let wbout = XLSX.write(wb, {bookType:'xlsx', bookSST:false, type: 'binary'});
     //   saveAs(new Blob([this.s2ab(wbout)],{type:'application/octet-stream'}), 'download.xlsx')
     // } else {
-      let tab_text = GenHtmlExportExcel(this, exportItems, userLogin, ROOT_URL);
+      var tab_text = GenHtmlExportExcel(this, exportItems, userLogin, ROOT_URL);
 
-      let data_type = 'data:application/vnd.ms-excel;base64';
+      var data_type = 'data:application/vnd.ms-excel;base64';
 
-      let ua = window.navigator.userAgent;
-      let msie = ua.indexOf('MSIE');
-      let edge = ua.indexOf('Edge');
-      let sa = '';
-      let uriContent = '';
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf('MSIE');
+      var edge = ua.indexOf('Edge');
+      var sa = '';
+      var uriContent = '';
+      var startDate = new Date();
+      var exportDate = moment(startDate,'MM-DD-YYYY');
+      exportDate = exportDate.format('YYYYMMDD_HHmm');
+      var fileName = 'download_'+exportDate+'.xls';
 
       if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
           if (window.navigator.msSaveBlob) {
-              let blob = new Blob([tab_text], {
-                  type: 'data:application/vnd.ms-excel;base64,'
+              var blob = new Blob([tab_text], {
+                  type: 'application/csv;charset=utf-8;'
               });
               this.setState({
                 isOpen: false,
               });
-              navigator.msSaveBlob(blob, 'download.xls');
+              navigator.msSaveBlob(blob, fileName);
           }
       } else {
-          let isFirefox = typeof InstallTrigger !== 'undefined';
+          var isFirefox = typeof InstallTrigger !== 'undefined';
           if(!isFirefox){
             this.setState({
               isOpen: false,
             });
             uriContent = 'data:application/vnd.ms-excel;base64,' + $.base64.encode(tab_text);
-            sa = window.open(uriContent,'download.xls');
+            sa = window.open(uriContent,fileName);
 
           } else {
-              let uri = 'data:application/vnd.ms-excel;base64,'
+              var uri = 'data:application/vnd.ms-excel;base64,'
               // uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
               // sa = window.open(uriContent,'download.xlsx');
               // let wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});
