@@ -805,7 +805,7 @@ class SearchResult extends Component {
       if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
           if (window.navigator.msSaveBlob) {
               var blob = new Blob([tab_text], {
-                  type: 'application/csv;charset=utf-8;'
+                  type: 'data:application/vnd.ms-excel;'
               });
               this.setState({
                 isOpen: false,

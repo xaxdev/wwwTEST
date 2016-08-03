@@ -724,16 +724,13 @@ class UsersNewFrom extends Component {
                             </div>
                           </div>
                         </div>
-                          <div className={`form-group ${warehouse.touched && warehouse.invalid ? 'has-danger' : ''}` }>
+                          <div className="form-group">
                             <label className="col-sm-4 control-label">Warehouse</label>
                             <div className="col-sm-7">
                               <select disabled={`${this.state.selectedSite ? '' : 'disabled'}`}  className="form-control" {...warehouse} >
                                 <option key={''} value={''}>{'Please select warehouse'}</option>
                                 {this.renderOption('warehouse')}
                               </select>
-                              <div className="text-help">
-                                { warehouse.touched ? warehouse.error : ''}
-                              </div>
                             </div>
                           </div>
                       </div>

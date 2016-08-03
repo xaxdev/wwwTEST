@@ -344,7 +344,7 @@ class InventoryAccessory extends Component {
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Markup %</label>
+                <label className="col-sm-4 control-label">Markup (Times)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">

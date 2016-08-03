@@ -29,6 +29,10 @@ class UsersNew extends Component {
     var onhandLocation = null;
     var onhandWarehouse = null;
 
+    if(data.warehouse == undefined || data.warehouse == ''){
+      data.warehouse = '';
+    }
+
     if (data.productGroup) {
         if (data.productGroup == '1') {
             data = {...data,
@@ -116,6 +120,7 @@ class UsersNew extends Component {
     delete data.onhandAll;
     delete data.onhandLocation;
     delete data.onhandWarehouse;
+    delete data.onhandValue;
 
     if (!data.webOnly) {
         data = {...data,

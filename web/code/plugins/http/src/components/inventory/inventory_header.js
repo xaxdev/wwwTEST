@@ -152,7 +152,7 @@ class InventoryHeader extends Component {
         });
 
         dataDropDowntWareHouse.push(data.map(warehouse =>{
-            return ({value: warehouse.code,label:warehouse.name});
+            return ({value: warehouse.code,label:warehouse.code +' ['+ warehouse.name + ']'});
           })
         )
         dataDropDowntWareHouse = dataDropDowntWareHouse[0];

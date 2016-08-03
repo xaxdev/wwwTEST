@@ -406,7 +406,7 @@ class InventoryJewelry extends Component {
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Markup %</label>
+                <label className="col-sm-4 control-label">Markup (Times)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -508,7 +508,7 @@ const tooltipPublicPrice = (
   <Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>
 );
 const tooltipMarkup = (
-  <Tooltip id="tooltip"><strong>Markup %!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>
 );
 const tooltipGrossWeight = (
   <Tooltip id="tooltip"><strong>Gross Weight (Grams)!</strong></Tooltip>

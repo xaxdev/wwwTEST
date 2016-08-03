@@ -21,7 +21,7 @@ module.exports = {
       status: Joi.boolean().required(),
       company: Joi.string().required(),
       location: Joi.string().required(),
-      warehouse: Joi.string().required(),
+      warehouse: Joi.string().allow(''),
       permission: Joi.object({
         productGroup: Joi.number().integer().required(),
         onhandLocation: Joi.object({

@@ -65,8 +65,7 @@ module.exports = {
       required: true
     },
     warehouse: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
     permission: {
       model: 'permission'
