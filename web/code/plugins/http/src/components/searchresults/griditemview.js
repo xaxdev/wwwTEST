@@ -160,7 +160,7 @@ class GridItemsView extends Component {
                     <span className="fc-ae8f3b font-b price">{price}</span>
                     <span className="line"></span>
                  </div>
-                    <div name={item.id} id={item.id} onClick={btnEvent}>
+                    <div>
                      <div key={item.id}  id={index} style={{
                             display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
                                     (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
