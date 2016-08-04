@@ -283,6 +283,10 @@ class InventoryFilter extends Component {
     // jQuery("input[type='checkbox']").attr('checked',false);
     // this.props.itemActions.newSearch();
 
+    let fileName = jQuery('#fileName');
+
+    fileName.html('');
+
     ResetFormMain(this);
     this.props.resetForm();
     this.refs.jewelry.treeOnUnClick();
