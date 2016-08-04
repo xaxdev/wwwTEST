@@ -547,7 +547,7 @@ class UsersNewFrom extends Component {
               return this.props.options.locations.map(site =>
                 {
                   return (
-                    <option key={site.id} value={site.code}>{site.name}</option>
+                    <option key={site.id} value={site.code}>{site.code + ' [' + site.name + ']'}</option>
                   );
                 });
             }
@@ -556,7 +556,7 @@ class UsersNewFrom extends Component {
               return this.props.options.warehouses.map(warehouse =>
                 {
                   return (
-                    <option key={warehouse.id} value={warehouse.code}>{warehouse.name}</option>
+                    <option key={warehouse.id} value={warehouse.code}>{warehouse.code + ' [' + warehouse.name + ']'}</option>
                   );
                 });
             }

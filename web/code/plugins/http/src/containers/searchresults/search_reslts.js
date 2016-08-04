@@ -793,6 +793,8 @@ class SearchResult extends Component {
       var data_type = 'data:application/vnd.ms-excel;base64';
 
       var ua = window.navigator.userAgent;
+      let isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+      console.log(isSafari);
       var msie = ua.indexOf('MSIE');
       var edge = ua.indexOf('Edge');
       var sa = '';
@@ -815,12 +817,25 @@ class SearchResult extends Component {
       } else {
           var isFirefox = typeof InstallTrigger !== 'undefined';
           if(!isFirefox){
-            this.setState({
-              isOpen: false,
-            });
-            uriContent = 'data:application/vnd.ms-excel;base64,' + $.base64.encode(tab_text);
-            sa = window.open(uriContent,fileName);
+            if(isSafari){
+              let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
+              let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) };
 
+              // let ctx = { worksheet: exportDate || 'Worksheet', table: tab_text }
+              uriContent = 'data:application/xls,' + base64(tab_text);
+              this.setState({
+                isOpen: false,
+              });
+              sa = window.open(uriContent,fileName);
+
+            }else{
+              // chrome or other
+              this.setState({
+                isOpen: false,
+              });
+              uriContent = 'data:application/vnd.ms-excel;base64,' + $.base64.encode(tab_text);
+              sa = window.open(uriContent,fileName);
+            }
           } else {
               var uri = 'data:application/vnd.ms-excel;base64,'
               // uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
