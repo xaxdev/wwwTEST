@@ -286,10 +286,10 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             }
           }else{
             if (userLogin.permission.price == 'All') {
-              arrayItems.push(''); // actual Price (USD)
+              arrayItems.push(numberFormat(gemstone.cost['USD']));// actual Price (USD)
             }
             if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
-              arrayItems.push(numberFormat(gemstone.cost['USD'])); // updated Price (USD)
+              arrayItems.push(''); // updated Price (USD)
             }
             if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                 || userLogin.permission.price == 'All') {
