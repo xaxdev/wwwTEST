@@ -807,7 +807,7 @@ class SearchResult extends Component {
       if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
           if (window.navigator.msSaveBlob) {
               var blob = new Blob([tab_text], {
-                  type: 'data:application/vnd.ms-excel;'
+                  type: 'data:application/vnd.ms-excel,'
               });
               this.setState({
                 isOpen: false,
@@ -822,7 +822,7 @@ class SearchResult extends Component {
               let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) };
 
               // let ctx = { worksheet: exportDate || 'Worksheet', table: tab_text }
-              uriContent = 'data:application/xls,' + base64(tab_text);
+              uriContent = 'data:application/vnd.ms-excel,' + base64(tab_text);
               this.setState({
                 isOpen: false,
               });
