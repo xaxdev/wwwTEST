@@ -3,6 +3,7 @@ import numberFormat from '../../utils/convertNumberformat';
 import percentformatFormat from '../../utils/convertMarkpercent';
 import convertDate from '../../utils/convertDate';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
+import convertMarkpercent from '../../utils/convertMarkpercent';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
 
 const Detail = (props) =>{
@@ -12,7 +13,7 @@ const Detail = (props) =>{
     let actualCost = numberFormat(props.actualCost[currency]);
     let updatedCost = numberFormat(props.updatedCost[currency]);
     let price = numberFormat(props.price[currency]);
-    let markUp = props.markup;
+    let markUp = convertMarkpercent(props.markup);
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     return (
