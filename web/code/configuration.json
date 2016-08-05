@@ -1,0 +1,270 @@
+{
+  "server": {
+    "app": {
+
+    }
+  },
+  "connections": [
+    {
+      "$filter": "env",
+      "$base": {
+        "labels": ["api"],
+        "routes": {
+          "cors": {
+            "exposedHeaders": ["Authorization"]
+          }
+        }
+      },
+      "development": {
+        "port": 3002
+      },
+      "test": {
+        "port": 3002
+      },
+      "staging": {
+        "port": 3002
+      },
+      "production": {
+        "port": 3002
+      }
+    },
+    {
+      "$filter": "env",
+      "$base": {
+        "labels": ["http"]
+      },
+      "development": {
+        "port": 3005
+      },
+      "test": {
+        "port": 3005
+      },
+      "staging": {
+        "port": 3005
+      },
+      "production": {
+        "port": 3005
+      }
+    }
+  ],
+  "registrations": [
+    {
+      "plugin": "hapi-auth-jwt2"
+    },
+    {
+      "plugin": "inert",
+      "options": {
+        "select": "http"
+      }
+    },
+    {
+      "plugin": {
+        "register": "./plugins/orm",
+        "options": {
+          "adapters": {
+            "mysql": "sails-mysql",
+            "mongo": "sails-mongo"
+          },
+          "connections": {
+            "mysql": {
+              "$filter": "env",
+              "$base": {
+                "adapter": "mysql"
+              },
+              "development": {
+                "host": "192.168.1.91",
+                "database": "mol",
+                "user": "root"
+              },
+              "test": {
+                "host": "192.168.1.91",
+                "database": "mol_test",
+                "user": "root"
+              },
+              "staging": {
+                "host": "192.168.1.91",
+                "database": "mol_test",
+                "user": "root"
+              },
+              "production": {
+                "host": "localhost",
+                "database": "mol",
+                "user": "mol",
+                "password": "P@ssw0rd#431"
+              }
+            },
+           "mongo": {
+             "$filter": "env",
+             "$base": {
+               "adapter": "mongo"
+             },
+             "development": {
+               "url": "mongodb://192.168.1.93:27017/mol"
+             },
+             "test": {
+               "url": "mongodb://192.168.1.93:27017/mol"
+             },
+             "staging": {
+               "url": "mongodb://192.168.1.93:27017/mol"
+             },
+             "production": {
+               "url": "mongodb://10.128.133.76:27017/mol"
+             }
+           }
+          }
+        }
+      },
+      "options": {
+        "select": "api"
+      }
+    },
+    {
+      "plugin": {
+        "register": "./plugins/authentication",
+        "options": {
+          "key": "!toram@431"
+        }
+      },
+      "options": {
+        "select": "api"
+      }
+    },
+    {
+      "plugin": {
+        "register": "./plugins/token",
+        "options": {
+          "key": "!toram@431"
+        }
+      },
+      "options": {
+        "select": "api"
+      }
+    },
+    {
+      "plugin": {
+        "register": "./plugins/cryptography",
+        "options": {
+          "key": "s]JqZmzsyyw$HmL?",
+          "algorithm": "aes256"
+        }
+      },
+      "options": {
+        "select": "api"
+      }
+    },
+    {
+      "plugin": {
+        "register": "./plugins/email",
+        "options": {
+          "user": "azure_7fe2416fe9b6546bd21d8e81829437c1@azure.com",
+          "password": "2Q8afc6h8NUkxil",
+          "reset": {
+            "from": "dev@itorama.com",
+            "subject": "Request to reset password"
+          }
+        }
+      },
+      "options": {
+        "select": "api"
+      }
+    },
+    {
+      "plugin": "./plugins/event",
+      "options": {
+        "select": "api"
+      }
+    },
+    {
+      "plugin": "./plugins/users",
+      "options": {
+        "select": "api",
+        "routes": {
+          "prefix": "/api/users"
+        }
+      }
+    },
+    {
+      "plugin": "./plugins/permission",
+      "options": {
+        "select": "api"
+      }
+    },
+    {
+      "plugin": {
+        "register": "./plugins/http",
+        "options": {
+          "engine": "hapi-react-views",
+          "path": "./views"
+        }
+      },
+      "options": {
+        "select": "http"
+      }
+    },
+    {
+      "plugin": {
+        "register": "good",
+        "options": {
+          "opsInterval": 1000,
+          "requestHeaders": true,
+          "reporters": [
+            {
+              "reporter": "good-file",
+              "events": { "response": "*" },
+              "config": {
+                "path": "logs/response.log",
+                "rotate": "daily"
+              }
+            },
+            {
+              "reporter": "good-file",
+              "events": { "error": "*" },
+              "config": {
+                "path": "logs/error.log",
+                "rotate": "daily"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "plugin": {
+        "register": "./plugins/elastic",
+        "options": {
+          "$filter": "env",
+          "development": {
+                "host": "192.168.1.94:9200"
+          },
+          "test": {
+                "host": "192.168.1.94:9200"
+          },
+          "staging": {
+                "host": "192.168.1.94:9200"
+          },
+          "production": {
+                "host": "10.128.133.77:9200"
+          }
+        }
+      }
+    },
+    {
+      "plugin": "./plugins/items",
+      "options": {
+        "select": "api",
+        "routes": {
+          "prefix": "/api/items"
+        }
+      }
+    },
+    {
+      "plugin": "./plugins/masterdata",
+      "options": {
+        "select": "api",
+        "routes": {
+          "prefix": "/api/masterdata"
+        }
+      }
+    }
+  ]
+}

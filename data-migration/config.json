@@ -1,13 +1,18 @@
 {
     "db": {
-        "server": "localhost",
-        "user": "sa",
-        "password": "P@ssw0rd"
+      "server": "10.128.133.74",
+      "user": "molintegration",
+      "password": "NGhRt%^-09",
+      "requestTimeout": 45000
     },
     "elasticsearch": {
-        "host": "192.168.1.94:9200"
+        "host": "10.128.133.77:9200 "
     },
     "parallelization": {
-        "size": 20000
+        "size": 3000
+    },
+    "gallery": {
+        "original": "/images/products/original",
+        "thumbnail": "/images/products/thumbnail"
     }
 }

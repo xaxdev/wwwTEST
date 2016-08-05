@@ -1,0 +1,187 @@
+{
+    "template": "mol*",
+    "settings": {
+        "max_result_window": 100000,
+        "number_of_shards": 1,
+        "number_of_replicas": 1,
+        "analysis": {
+            "analyzer": {
+                "ngram_filter_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "whitespace",
+                    "filter": [
+                        "lowercase",
+                        "ngram_filter"
+                    ]
+                },
+                "whitespace_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "whitespace",
+                    "filter": [
+                        "lowercase"
+                    ]
+                },
+                "forward_slash_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "forward_slash_tokenizer",
+                    "filter": [
+                        "lowercase",
+                        "remove_space_filter"
+                    ]
+                }
+            },
+            "tokenizer": {
+                "forward_slash_tokenizer": {
+                    "type": "pattern",
+                    "pattern": "/"
+                }
+            },
+            "filter": {
+                "ngram_filter": {
+                    "type": "ngram",
+                    "min_gram": 2,
+                    "max_gram": 20
+                },
+                "remove_space_filter": {
+                    "type": "pattern_replace",
+                    "pattern": " ",
+                    "replacement": "_"
+                }
+            }
+        }
+    },
+    "mappings": {
+        "_default_": {
+            "_all": {
+                "enabled": false
+            },
+            "date_detection": false,
+            "dynamic_templates": [
+                {
+                    "ids": {
+                        "match": "id",
+                        "match_mapping_type": "long",
+                        "mapping": {
+                            "fields": {
+                                "text": {
+                                    "index": "not_analyzed",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "dates": {
+                        "match": ".*Date|date",
+                        "match_pattern": "regex",
+                        "mapping": {
+                            "type": "date"
+                        }
+                    }
+                },
+                {
+                    "master_gemstones_color_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "gemstones_color",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "master_color_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "color",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "master_dominant_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "dominant",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "master_metalType_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "metalType",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "master_metalColor_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "metalColor",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "forward_slash": {
+                        "match_mapping_type": "string",
+                        "match": "hierarchy",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "forward_slash_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "partial_matching": {
+                        "index": "analyzed",
+                        "match_mapping_type": "string",
+                        "match_pattern": "regex",
+                        "match": ".+",
+                        "unmatch": "description|hierarchy|stoneType|cutShape|cut|cutGrades|colorGrades|metalColor|metalType|site|warehouse|color|clarity|origin|collection|brand|dominant|dialColor|dialMetal|strapType",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "ngram_filter_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

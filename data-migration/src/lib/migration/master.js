@@ -2,7 +2,7 @@ import config from '../../../config';
 import * as file from '../utils/file';
 import * as core from './core';
 import * as constant from './constant';
-import * as mapper from '../utils/mapper';
+import * as mapper from './mapper';
 
 const settings = async (index, type, path) => ({
     ...config,
@@ -13,6 +13,15 @@ const settings = async (index, type, path) => ({
     },
     mapper: mapper.mapMaster,
     query: await file.read(path)
+});
+
+const settingsArray = async (index, type, path) => ({
+    elasticsearch: {
+        index: index,
+        type: type,
+        ...config.elasticsearch
+    },
+    data: await require(path)
 });
 
 const getCompany = async index => {
@@ -235,6 +244,109 @@ const getStrapColor = async index => {
     }
 };
 
+const getJewelryCategory = async index => {
+    try {
+        console.log('JewelryCategory!!!');
+        const total = await core.get(await settings(index, 'jewelryCategories', constant.JEWELRYCATEGORY_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getWatchCategory = async index => {
+    try {
+        console.log('WatchCategory!!!');
+        const total = await core.get(await settings(index, 'watchCategories', constant.WATCHCATEGORY_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getAccessoryType = async index => {
+    try {
+        console.log('AccessoryType!!!');
+        const total = await core.get(await settings(index, 'accessoryTypes', constant.ACCESSORYTYPE_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getSparePartType = async index => {
+    try {
+        console.log('SparePartType!!!');
+        const total = await core.get(await settings(index, 'sparePartTypes', constant.SPAREPARTTYPE_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getCurrency = async index => {
+    try {
+        console.log('Currency!!!');
+        const total = await core.getFromArray(await settingsArray(index, 'currencies', constant.CURRENCY_DATA));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getRole = async index => {
+    try {
+        console.log('Role!!!');
+        const total = await core.getFromArray(await settingsArray(index, 'roles', constant.ROLE_DATA));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getProductGroup = async index => {
+    try {
+        console.log('ProductGroup!!!');
+        const total = await core.getFromArray(await settingsArray(index, 'productGroups', constant.PRODUCTGROUP_DATA));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getDominantStones = async index => {
+    try {
+        console.log('Dominant Stones!!!');
+        const total = await core.get(await settings(index, 'dominantStones', constant.DOMINATSTONES_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getGemstoneStoneType = async index => {
+    try {
+        console.log('Gemstone Stone Type!!!');
+        const total = await core.get(await settings(index, 'gemstoneStoneType', constant.GEMSTONE_STONETYPE_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getStoneType = async index => {
+    try {
+        console.log('Stone Type!!!');
+        const total = await core.get(await settings(index, 'stoneType', constant.STONETYPE_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
 export { getCompany, getLocation, getWarehouse, getCountry, getCut, getCutShap, getColor, getClarity, getSymmetry,
         getFluorescence, getCollection, getBrand, getMetalType, getMetalColor, getCertificateAgency, getDialIndex,
-        getDialColor, getDialMetal, getBuckleType, getStrapType, getStrapColor, getOrigin};
+        getDialColor, getDialMetal, getBuckleType, getStrapType, getStrapColor, getOrigin, getCurrency, getRole,
+        getProductGroup, getJewelryCategory, getWatchCategory, getAccessoryType, getSparePartType
+        , getDominantStones, getGemstoneStoneType, getStoneType
+      };

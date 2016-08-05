@@ -1,0 +1,9 @@
+/home/mol/log/image-transfer/resize.log {
+    daily
+    missingok
+    rotate 21
+    notifempty
+    dateext
+    dateformat -%Y-%m-%d
+    create 0660 mol mol
+}

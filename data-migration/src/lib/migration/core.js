@@ -21,7 +21,7 @@ const get = async params => {
         }
 
         // map record to document
-        const documents = params.mapper(recordset);
+        const documents = params.mapper(recordset, params.exchangeRates);
 
         // upload documents to Elasticsearch
         await es.upload(documents, params.elasticsearch);
@@ -56,4 +56,21 @@ const parallelize = async params => {
     }
 };
 
-export { get, parallelize };
+const getFromArray = async params => {
+    try {
+        const data = params.data;
+
+        // console.log('params.quer-->',data);
+        // map record to document
+        const documents = data;
+
+        // upload documents to Elasticsearch
+        await es.upload(documents, params.elasticsearch);
+
+        return documents.length;
+    } catch (err) {
+        throw err;
+    }
+};
+
+export { parallelize, get, getFromArray };
