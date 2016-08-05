@@ -202,7 +202,9 @@ class InventorySearch extends Component {
       filters.push({'type':productArray.join(' ')});
     }
 
-    console.log('filters-->',filters);
+    filters.push({'userCurrency':userLogin.currency});
+    // console.log('filters-->',filters);
+    this.props.setCurrentPage(1);
     this.context.router.push('/searchresult');
   }
 

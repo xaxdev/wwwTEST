@@ -21,6 +21,7 @@ import InventoryAcc from './inventory_acc';
 import InventoryOBA from './inventory_oba';
 import InventorySparePart from './inventory_sparepart';
 import jQuery from 'jquery';
+let Loading = require('react-loading');
 
 import '../../../public/css/react-multi-select.css';
 import '../../../public/css/input-calendar.css';
@@ -56,7 +57,8 @@ class InventoryFilter extends Component {
       alert:false,
       isOpen: true,
       activeTab:1,
-      beforeActiveTab:1
+      beforeActiveTab:1,
+      showLoading: true
     };
   }
   static contextTypes = {
@@ -67,7 +69,28 @@ class InventoryFilter extends Component {
   componentWillMount(){
     // console.log('componentWillMount-->');
     // this.props.resetFilter();
-    this.props.masterDataActions.get();
+    let that = this;
+    // console.log('componentWillMount');
+    this.props.masterDataActions.get()
+    .then( () => {
+
+      setTimeout( ()=> {
+        this.setState({
+          showLoading: false
+        });
+      },500)
+
+    });
+  }
+  componentDidMount(){
+    // console.log('componentDidMount-->');
+    // console.log('componentDidMount-->',this.refs.jewelry);
+    this.refs.jewelry.treeOnUnClick();
+    this.refs.watch.treeOnUnClick();
+    this.refs.stone.treeOnUnClick();
+    this.refs.accessory.treeOnUnClick();
+    this.refs.oba.treeOnUnClick();
+    this.refs.sparepart.treeOnUnClick();
   }
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
@@ -99,11 +122,13 @@ class InventoryFilter extends Component {
   }
   tabsSelected(activeKey){
     // console.log('activeKey-->',activeKey);
-    this.setState({
-      alert:true,
-      isOpen: true,
-      activeTab:activeKey
-    });
+    if(activeKey != this.state.activeTab){
+      this.setState({
+        alert:true,
+        isOpen: true,
+        activeTab:activeKey
+      });
+    }
   }
   advanceSearchClick(e){
     e.preventDefault();
@@ -227,6 +252,12 @@ class InventoryFilter extends Component {
     });
     this.resetCategory();
     this.props.inventoryActions.selectedTabCategory(activeTab);
+    this.refs.jewelry.treeOnUnClick();
+    this.refs.watch.treeOnUnClick();
+    this.refs.stone.treeOnUnClick();
+    this.refs.accessory.treeOnUnClick();
+    this.refs.oba.treeOnUnClick();
+    this.refs.sparepart.treeOnUnClick();
   }
   hideModal = (e) => {
     e.preventDefault();
@@ -251,6 +282,10 @@ class InventoryFilter extends Component {
     // console.log('ResetFormMain-->');
     // jQuery("input[type='checkbox']").attr('checked',false);
     // this.props.itemActions.newSearch();
+
+    let fileName = jQuery('#fileName');
+
+    fileName.html('');
 
     ResetFormMain(this);
     this.props.resetForm();
@@ -341,175 +376,183 @@ class InventoryFilter extends Component {
       }
     });
     // jQuery("input[type='checkbox']").attr('checked',false);
+    // console.log('this.state.showLoading-->',this.state.showLoading);
+      return (
 
-    return (
-
-      <form role="form" onSubmit={handleSubmit}>
-      <div className="alert"></div>
-      <div id="page-wrapper">
-        <div className="col-sm-12 bg-hearder bg-header-inventories">
-          <div className="col-sm-6 m-width-60 ft-white m-nopadding"><h1>Inventory Report</h1></div>
-          <div className="col-sm-6 m-width-40 m-nopadding">
-          <div className="text-right maring-t15">
-            <button type="submit" className="btn btn-primary btn-radius">Search</button>
-            <button type="button" className="btn btn-primary btn-radius"
-              disabled={submitting} onClick={this.resetFormInventory}>
-              <i/> Reset
-            </button>
-          </div>
-          </div>
-          </div>
-          <InventoryHeader props={this.props}/>
-          {/*Advance search*/}
-          <div className="row">
-            <div className="bg-while">
-              <button disabled={submitting}  onClick={this.advanceSearchClick} className="btn btn-primary btn-advance">
-                Advance Search
+        <form role="form" onSubmit={handleSubmit}>
+        <div className="alert"></div>
+        <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
+          <center>
+            <br/><br/><br/><br/><br/><br/>
+              <Loading type="spin" color="#202020" width="10%"/>
+          </center>
+          <br/><br/><br/><br/><br/><br/>
+        </div>
+        <div id="page-wrapper" className={`${this.state.showLoading ? 'hidden' : ''}` }>
+          <div className="col-sm-12 bg-hearder bg-header-inventories">
+            <div className="col-sm-6 m-width-60 ft-white m-nopadding"><h1>Inventory Report</h1></div>
+            <div className="col-sm-6 m-width-40 m-nopadding">
+            <div className="text-right maring-t15">
+              <button type="submit" className="btn btn-primary btn-radius">Search</button>
+              <button type="button" className="btn btn-primary btn-radius"
+                disabled={submitting} onClick={this.resetFormInventory}>
+                <i/> Reset
               </button>
             </div>
-          </div>
-          <div className={`row ${this.props.IsAdvance ? '' : 'hidden'}` }>
-            <div className="col-sm-12">
-              <div className="panel">
-                <div className="panel-body">
-                  <div className="row margin-t-17 ">
-                    <Tabs defaultActiveKey={this.props.activeTabCategory}
-                      animation={false} id="uncontrolled-tab-example"
-                      activeKey={this.props.activeTabCategory}
-                      onSelect={this.tabsSelected}>
+            </div>
+            </div>
+            <InventoryHeader props={this.props}/>
+            {/*Advance search*/}
+            <div className="row">
+              <div className="bg-while">
+                <button disabled={submitting}  onClick={this.advanceSearchClick} className="btn btn-primary btn-advance">
+                  Advance Search
+                </button>
+              </div>
+            </div>
+            <div className={`row ${this.props.IsAdvance ? '' : 'hidden'}` }>
+              <div className="col-sm-12">
+                <div className="panel">
+                  <div className="panel-body">
+                    <div className="row margin-t-17 ">
+                      <Tabs defaultActiveKey={this.props.activeTabCategory}
+                        animation={false} id="uncontrolled-tab-example"
+                        activeKey={this.props.activeTabCategory}
+                        onSelect={this.tabsSelected}>
 
-                      <Tab eventKey={1} title="Jewelry" disabled={!productGroupJLY}>
-                        <InventoryJewelry props={this.props} ref="jewelry"/>
-                        <div className="panel-body">
-                          <div className="row gemstone-bar">
-                            <h2
-                              disabled={submitting}
-                              onClick={this.gemStoneSearchClick}>
-                              Gemstone Search
-                            </h2>
+                        <Tab eventKey={1} title="Jewelry" disabled={!productGroupJLY}>
+                          <InventoryJewelry props={this.props} ref="jewelry"/>
+                          <div className="panel-body">
+                            <div className="row gemstone-bar">
+                              <h2
+                                disabled={submitting}
+                                onClick={this.gemStoneSearchClick}>
+                                Gemstone Search
+                              </h2>
+                            </div>
+                            <div>
+                              <InventoryGemStone props={this.props}/>
+                            </div>
                           </div>
-                          <div>
-                            <InventoryGemStone props={this.props}/>
+                          <div className="col-sm-12 text-center">
+                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
+                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
+                              disabled={submitting} onClick={this.resetFormInventory}>
+                              <i/> Reset
+                            </button>
                           </div>
-                        </div>
-                        <div className="col-sm-12 text-center">
-                          <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
-                          <button type="button" className="btn btn-primary btn-radius btn-inventories"
-                            disabled={submitting} onClick={this.resetFormInventory}>
-                            <i/> Reset
-                          </button>
-                        </div>
-                      </Tab>
-                      <Tab eventKey={2} title="Watch" disabled={!productGroupWAT}>
-                        <InventoryWatch props={this.props} ref="watch"/>
-                        <div className="panel-body">
-                          <div className="row gemstone-bar">
-                            <h2
-                              disabled={submitting}
-                              onClick={this.gemStoneSearchClick}>
-                              Gemstone Search
-                            </h2>
+                        </Tab>
+                        <Tab eventKey={2} title="Watch" disabled={!productGroupWAT}>
+                          <InventoryWatch props={this.props} ref="watch"/>
+                          <div className="panel-body">
+                            <div className="row gemstone-bar">
+                              <h2
+                                disabled={submitting}
+                                onClick={this.gemStoneSearchClick}>
+                                Gemstone Search
+                              </h2>
+                            </div>
+                            <div>
+                              <InventoryGemStone props={this.props}/>
+                            </div>
                           </div>
-                          <div>
-                            <InventoryGemStone props={this.props}/>
+                          <div className="col-sm-12 text-center">
+                            <button type="submit" className="btn btn-primary btn-radius btn-inventories btn-inventories">Search</button>
+                            <button type="button" className="btn btn-primary btn-radius btn-inventories btn-inventories"
+                              disabled={submitting} onClick={this.resetFormInventory}>
+                              <i/> Reset
+                            </button>
                           </div>
-                        </div>
-                        <div className="col-sm-12 text-center">
-                          <button type="submit" className="btn btn-primary btn-radius btn-inventories btn-inventories">Search</button>
-                          <button type="button" className="btn btn-primary btn-radius btn-inventories btn-inventories"
-                            disabled={submitting} onClick={this.resetFormInventory}>
-                            <i/> Reset
-                          </button>
-                        </div>
-                      </Tab>
-                      <Tab eventKey={3} title="Stone" disabled={!productGroupSTO}>
-                        <InventoryStone props={this.props} ref="stone"/>
-                        <div className="col-sm-12 text-center">
-                          <button type="submit" className="btn btn-primary btn-radius">Search</button>
-                          <button type="button" className="btn btn-primary btn-radius"
-                            disabled={submitting} onClick={this.resetFormInventory}>
-                            <i/> Reset
-                          </button>
-                        </div>
-                      </Tab>
-                      <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC}>
-                        <InventoryAcc props={this.props} ref="accessory"/>
-                        <div className="panel-body">
-                          <div className="row gemstone-bar">
-                            <h2
-                              disabled={submitting}
-                              onClick={this.gemStoneSearchClick}>
-                              Gemstone Search
-                            </h2>
+                        </Tab>
+                        <Tab eventKey={3} title="Stone" disabled={!productGroupSTO}>
+                          <InventoryStone props={this.props} ref="stone"/>
+                          <div className="col-sm-12 text-center">
+                            <button type="submit" className="btn btn-primary btn-radius">Search</button>
+                            <button type="button" className="btn btn-primary btn-radius"
+                              disabled={submitting} onClick={this.resetFormInventory}>
+                              <i/> Reset
+                            </button>
                           </div>
-                          <div>
-                            <InventoryGemStone props={this.props}/>
+                        </Tab>
+                        <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC} className="hidden">
+                          <InventoryAcc props={this.props} ref="accessory"/>
+                          <div className="panel-body">
+                            <div className="row gemstone-bar">
+                              <h2
+                                disabled={submitting}
+                                onClick={this.gemStoneSearchClick}>
+                                Gemstone Search
+                              </h2>
+                            </div>
+                            <div>
+                              <InventoryGemStone props={this.props}/>
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-sm-12 text-center">
-                          <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
-                          <button type="button" className="btn btn-primary btn-radius btn-inventories"
-                            disabled={submitting} onClick={this.resetFormInventory}>
-                            <i/> Reset
-                          </button>
-                        </div>
-                      </Tab>
-                      <Tab eventKey={5} title="OBJECT OF ART" disabled={!productGroupOBA}>
-                        <InventoryOBA props={this.props}  ref="oba"/>
-                        <div className="panel-body">
-                          <div className="row gemstone-bar">
-                            <h2
-                              disabled={submitting}
-                              onClick={this.gemStoneSearchClick}>
-                              Gemstone Search
-                            </h2>
+                          <div className="col-sm-12 text-center">
+                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
+                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
+                              disabled={submitting} onClick={this.resetFormInventory}>
+                              <i/> Reset
+                            </button>
                           </div>
-                          <div>
-                            <InventoryGemStone props={this.props}/>
+                        </Tab>
+                        <Tab eventKey={5} title="OBJECT OF ART" disabled={!productGroupOBA}>
+                          <InventoryOBA props={this.props}  ref="oba"/>
+                          <div className="panel-body">
+                            <div className="row gemstone-bar">
+                              <h2
+                                disabled={submitting}
+                                onClick={this.gemStoneSearchClick}>
+                                Gemstone Search
+                              </h2>
+                            </div>
+                            <div>
+                              <InventoryGemStone props={this.props}/>
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-sm-12 text-center">
-                          <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
-                          <button type="button" className="btn btn-primary btn-radius btn-inventories"
-                            disabled={submitting} onClick={this.resetFormInventory}>
-                            <i/> Reset
-                          </button>
-                        </div>
-                      </Tab>
-                      <Tab eventKey={6} title="SPARE PART" disabled={!productGroupSPP}>
-                        <InventorySparePart props={this.props}  ref="sparepart"/>
-                        <div className="panel-body">
-                          <div className="row gemstone-bar">
-                            <h2
-                              disabled={submitting}
-                              onClick={this.gemStoneSearchClick}>
-                              Gemstone Search
-                            </h2>
+                          <div className="col-sm-12 text-center">
+                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
+                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
+                              disabled={submitting} onClick={this.resetFormInventory}>
+                              <i/> Reset
+                            </button>
                           </div>
-                          <div>
-                            <InventoryGemStone props={this.props}/>
+                        </Tab>
+                        <Tab eventKey={6} title="SPARE PART" disabled={!productGroupSPP}>
+                          <InventorySparePart props={this.props}  ref="sparepart"/>
+                          <div className="panel-body">
+                            <div className="row gemstone-bar">
+                              <h2
+                                disabled={submitting}
+                                onClick={this.gemStoneSearchClick}>
+                                Gemstone Search
+                              </h2>
+                            </div>
+                            <div>
+                              <InventoryGemStone props={this.props}/>
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-sm-12 text-center">
-                          <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
-                          <button type="button" className="btn btn-primary btn-radius btn-inventories"
-                            disabled={submitting} onClick={this.resetFormInventory}>
-                            <i/> Reset
-                          </button>
-                        </div>
-                      </Tab>
-                    </Tabs>
+                          <div className="col-sm-12 text-center">
+                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
+                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
+                              disabled={submitting} onClick={this.resetFormInventory}>
+                              <i/> Reset
+                            </button>
+                          </div>
+                        </Tab>
+                      </Tabs>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            {/* End Advance search*/}
           </div>
-          {/* End Advance search*/}
-        </div>
-        {alert?this.renderAlertMessage():''}
-      </form>
-    );
-  }
+
+          {alert?this.renderAlertMessage():''}
+        </form>
+      );
+    }
 }
 InventoryFilter.propTypes = {
   fields: PropTypes.object.isRequired,
@@ -524,6 +567,7 @@ function mapStateToProps(state) {
 
     searchResult:state.searchResult,
     options: state.users.options,
+    HierarchyValue: state.searchResult.HierarchyValue,
     WarehouseValue: state.searchResult.WarehouseValue,
     LocationValue: state.searchResult.LocationValue,
     StoneTypeValue: state.searchResult.StoneTypeValue,
@@ -562,6 +606,7 @@ function mapStateToProps(state) {
     IsAdvance: state.searchResult.IsAdvance,
     AccessoryTypeValue: state.searchResult.AccessoryTypeValue,
     SparePartTypeValue: state.searchResult.SparePartTypeValue,
+    SearchAction: state.searchResult.SearchAction
   };
 }
 function mapDispatchToProps(dispatch) {

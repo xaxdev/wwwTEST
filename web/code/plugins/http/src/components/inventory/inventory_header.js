@@ -44,6 +44,8 @@ class InventoryHeader extends Component {
     location.onChange(LocationSelectValue);
     location.value = LocationSelectValue;
     this.props.props.inventoryActions.setDataLocation(LocationSelectValue);
+    let vlues = LocationSelectValue.split(',');
+    this.props.props.masterDataActions.getOnHandWarehouse(vlues);
   }
   componentDidMount() {
       jQuery('#file').hide();
@@ -106,52 +108,55 @@ class InventoryHeader extends Component {
     if(userLogin.permission.onhandLocation != undefined){
       if(userLogin.permission.onhandLocation.type == 'Location'
         || userLogin.permission.onhandLocation.type == 'All'){
-        if (this.props.props.options.locations) {
-          dataDropDowntLocations = InitDataLocation(this.props.props.options.locations,userLogin);
-        }
-      }
-    }
-
-    if (this.props.props.options.warehouses) {
-      var newDate = [];
-      var data = [];
-      if(dataDropDowntLocations.length != 0){
-        dataDropDowntLocations.forEach(function(location){
-          newDate.push(_.filter(that.props.props.options.warehouses,
-            function(warehouse)
-            { return warehouse.locationid == location.value})
-          );
-        });
-      }else{
-        if(userLogin.permission.onhandWarehouse != undefined){
-          if (userLogin.permission.onhandWarehouse.type == 'Warehouse'
-            || userLogin.permission.onhandWarehouse.type == 'All'){
-            userLogin.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
-              newDate.push(_.filter(that.props.props.options.warehouses,
-                function(warehouse){
-                  // console.log('warehouse.id-->',warehouse.id);
-                  if(warehouse.code != undefined){
-                    return warehouse.code.toString() == settingWarehouse;
-                  }
-                })
-              );
-            });
+        if (this.props.props.options != undefined){
+          if (this.props.props.options.locations) {
+            dataDropDowntLocations = InitDataLocation(this.props.props.options.locations,userLogin);
           }
         }
       }
+    }
+    if (this.props.props.options != undefined){
+      if (this.props.props.options.warehouses) {
+        var newDate = [];
+        var data = [];
+        if(dataDropDowntLocations.length != 0){
+          dataDropDowntLocations.forEach(function(location){
+            newDate.push(_.filter(that.props.props.options.warehouses,
+              function(warehouse)
+              { return warehouse.locationid == location.value})
+            );
+          });
+        }else{
+          if(userLogin.permission.onhandWarehouse != undefined){
+            if (userLogin.permission.onhandWarehouse.type == 'Warehouse'
+              || userLogin.permission.onhandWarehouse.type == 'All'){
+              userLogin.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
+                newDate.push(_.filter(that.props.props.options.warehouses,
+                  function(warehouse){
+                    // console.log('warehouse.id-->',warehouse.id);
+                    if(warehouse.code != undefined){
+                      return warehouse.code.toString() == settingWarehouse;
+                    }
+                  })
+                );
+              });
+            }
+          }
+        }
 
-      var subdata = [];
-      newDate.forEach(newdata =>{
-          newdata.forEach(subdata =>{
-            data.push(subdata);
+        var subdata = [];
+        newDate.forEach(newdata =>{
+            newdata.forEach(subdata =>{
+              data.push(subdata);
+            })
+        });
+
+        dataDropDowntWareHouse.push(data.map(warehouse =>{
+            return ({value: warehouse.code,label:warehouse.code +' ['+ warehouse.name + ']'});
           })
-      });
-
-      dataDropDowntWareHouse.push(data.map(warehouse =>{
-          return ({value: warehouse.code,label:warehouse.name});
-        })
-      )
-      dataDropDowntWareHouse = dataDropDowntWareHouse[0];
+        )
+        dataDropDowntWareHouse = dataDropDowntWareHouse[0];
+      }
     }
 
     return (
@@ -202,11 +207,11 @@ class InventoryHeader extends Component {
                       </div>
                       <div className={`form-group ${(userLogin.permission.onhandLocation != undefined) ? '' :
                                         'hidden'}` }>
-                        <label className="col-sm-4 control-label">Location</label>
+                        <label className="col-sm-4 control-label">Site</label>
                         <div className= "col-sm-7">
                           <Select multi simpleValue
                               value={this.props.props.LocationValue}
-                              placeholder="Select your Location"
+                              placeholder="Select your Site"
                               options={dataDropDowntLocations}
                               onChange={this.handleLocationSelectChange}
                               disabled={(userLogin.permission.onhandLocation != undefined) ? false : true}

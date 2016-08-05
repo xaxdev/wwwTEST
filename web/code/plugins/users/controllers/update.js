@@ -76,6 +76,7 @@ module.exports = {
 
     const Users = request.collections.user;
     const Permissions = request.collections.permission;
+    const Authentication = request.collections.authentication;
 
     console.log(request.payload);
 
@@ -83,13 +84,22 @@ module.exports = {
       .update({ id: request.params.id }, request.payload)
       .then(function ([user, ...rest]) {
 
+        if(!user.status){
+          Authentication.destroy({user:user.email})
+          .exec(function (err){
+            if (err) {
+              return reply(Boom.badImplementation(err));
+            }
+          });
+        }
+
         return Permissions
           .findOne({ id: user.permission })
           // .populate('onhand')
           .populate('onhandLocation')
           .populate('onhandWarehouse')
           .then(function (permission) {
-            console.log('permission-->',permission);
+            // console.log('permission-->',permission);
             user.permission = permission.toJSON();
             return reply({ data: user });
           });

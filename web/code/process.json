@@ -1,0 +1,14 @@
+{
+  "apps" : [{
+    "name": "mol",
+    "script"      : "server.js",
+    "watch"       : false,
+    "env": {
+      "NODE_ENV": "production",
+    },
+    "merge_logs": true,
+    "error_file": "../logs/mol-err.log",
+    "out_file": "../logs/mol-out.log",
+    "log_date_format": "YYYY-MM-DD HH:mm Z"
+  }]
+}

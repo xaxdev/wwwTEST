@@ -21,20 +21,20 @@ module.exports = {
       status: Joi.boolean().required(),
       company: Joi.string().required(),
       location: Joi.string().required(),
-      warehouse: Joi.string().required(),
+      warehouse: Joi.string().allow(''),
       permission: Joi.object({
         productGroup: Joi.number().integer().required(),
         onhandLocation: Joi.object({
-          type: Joi.string().required(),
+          type: Joi.string(),
           places: Joi.array().items(Joi.string())
-        }).required(),
+        }).allow(null),
         onhandWarehouse: Joi.object({
-          type: Joi.string().required(),
+          type: Joi.string(),
           places: Joi.array().items(Joi.string())
-        }).required(),
+        }).allow(null),
         price: Joi.string().required()
       }).required(),
-      webOnly: Joi.boolean().required()
+      webOnly: Joi.boolean()
     }
   },
   pre: [{ method: (request, reply) => {
@@ -82,6 +82,15 @@ module.exports = {
     const Users = request.collections.user;
     const Permissions = request.collections.permission;
     const Onhands = request.collections.onhand;
+    const OnhandsLocation = request.collections.onhandlocation;
+    const OnhandsWarehouse = request.collections.onhandwarehouse;
+    let perUser = null;
+    let perId = null;
+
+    // console.log('request.collections-->',request.collections);
+    // console.log('user-->',Users);
+    // console.log('Permissions-->',Permissions);
+    // console.log('OnhandsLocation-->',request.collections.onhandlocation);
 
     Users
       .create(request.payload)
@@ -90,32 +99,88 @@ module.exports = {
         return Permissions.update({ id: user.permission }, { user: user.id });
       })
       .then(function ([permission, ...rest]) {
+        console.log('permission-->',permission);
+        perUser = permission;
+        const onhandsLocation = OnhandsLocation.update({ id: permission.onhandLocation }, { permission: permission.id });
+        const onhandsWarehouse = OnhandsWarehouse.update({ id: permission.onhandWarehouse }, { permission: permission.id });
+        Promise.all([onhandsLocation,onhandsWarehouse])
+        .then(function(onhand){
+          console.log('onhand-->',onhand);
+          console.log('onhandslocation-->',onhand[0]);
+          console.log('onhandswarehouse-->',onhand[1]);
+          if(onhand[0].length != 0){
+            perId = onhand[0].permission;
+          }else{
+            if(onhand[1].length != 0){
+              perId = onhand[1].permission;
+            }else{
+              console.log('perUser--> 0 ');
+            }
+          }
+          return onhand;
+        })
+        .then(function ([onhand, ... rest]) {
+          console.log('onhand-->',onhand);
+          console.log('perUser-->',perUser);
 
-        return Onhands.update({ id: permission.onhand }, { permission: permission.id });
+          return Permissions
+            .findOne({ id: perId })
+            .populate('onhandLocation')
+            .then(function (permission) {
+
+              return permission;
+              });
+        })
+        .then(function (permission) {
+          console.log('permission-->',permission);
+          return Users
+            .findOne({ id: perUser.user })
+            .then(function (user) {
+              console.log('user-->',user);
+              // user.permission = permission.toJSON();
+              return reply({ data: user.toJSON() });
+            });
+        });
+        // return onhand;
       })
-      .then(function ([onhand, ... rest]) {
-
-        return Permissions
-          .findOne({ id: onhand.permission })
-          .populate('onhandLocation')
-          .populate('onhandWarehouse')
-          .then(function (permission) {
-
-            return permission;
-          });
-      })
-      .then(function (permission) {
-
-        return Users
-          .findOne({ id: permission.user })
-          .then(function (user) {
-
-            user.permission = permission.toJSON();
-            return reply({ data: user.toJSON() });
-          });
-      })
+      // .then(function ([permission, ...rest]) {
+      //   console.log('permission-->',permission);
+      //   console.log('permissionWarehouse-->',permission.onhandWarehouse);
+      //   OnhandsWarehouse.update({ id: permission.onhandWarehouse }, { permission: permission.id });
+      //   return Permissions;
+      // })
+      // .then(function ([onhandLocation, ... rest]) {
+      //   console.log('onhandLocation-->',onhandLocation);
+      //   return Permissions
+      //     .findOne({ id: onhandLocation.permission })
+      //     .populate('onhandLocation')
+      //     .then(function (permission) {
+      //
+      //       return permission;
+      //     });
+      // })
+      // .then(function ([onhand, ... rest]) {
+      //   console.log('onhand-->',onhand);
+      //   // return Permissions
+      //   //   .findOne({ id: onhandWarehouse.permission })
+      //   //   .populate('onhandWarehouse')
+      //   //   .then(function (permission) {
+      //   //
+      //   //     return permission;
+      //   //   });
+      // })
+      // .then(function (onhand) {
+      //   console.log('onhand-->',onhand);
+      //   // return Users
+      //   //   .findOne({ id: permission.user })
+      //   //   .then(function (user) {
+      //   //
+      //   //     user.permission = permission.toJSON();
+      //   //     return reply({ data: user.toJSON() });
+      //   //   });
+      // })
       .catch((err) => {
-
+        console.log('err-->',err);
         return reply(Boom.badImplementation(err));
       })
       .done();

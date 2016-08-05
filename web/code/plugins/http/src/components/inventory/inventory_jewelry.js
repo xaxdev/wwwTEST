@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/TreeDataJewelry.js';
@@ -26,14 +27,29 @@ class InventoryJewelry extends Component {
   }
   treeOnUnClick(vals){
     // console.log('unclick vals-->',this.state.treeViewData);
+
     if( this.state.treeViewData != null){
       this.state.treeViewData[0].checked = false;
       this.state.treeViewData[0].key = this.state.treeViewData[0].code;
       this.refs.treeview.handleChange(this.state.treeViewData[0]);
+      this.props.props.inventoryActions.setHierarchy(this.state.treeViewData)
+    }else{
+      // console.log('HierarchyValue vals-->',this.props.props.HierarchyValue);
+      if(this.props.props.HierarchyValue != null){
+        if(this.props.props.SearchAction == 'New'){
+          if(this.props.props.HierarchyValue.length != 0){
+            this.props.props.HierarchyValue[0].checked = false;
+            this.props.props.HierarchyValue[0].key = this.props.props.HierarchyValue[0].code;
+            this.refs.treeview.handleChange(this.props.props.HierarchyValue[0]);
+          }
+          this.props.props.inventoryActions.setHierarchy(null);
+        }
+      }
     }
   }
   treeOnClick(vals){
     this.setState({treeViewData:vals});
+    this.props.props.inventoryActions.setHierarchy(vals);
     // console.log('vals-->',vals);
     var treeSelected = [];
     var selectedData = vals.filter(val => {
@@ -172,7 +188,7 @@ class InventoryJewelry extends Component {
   render() {
     const { props } = this.props;
 
-    const musthaves = [{value: 'Yes',label:'Yes'},{value: 'No',label:'No'}];
+    const musthaves = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
     var {  fields:
           {
             collection, totalCostFrom, totalCostTo,totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo,
@@ -189,56 +205,60 @@ class InventoryJewelry extends Component {
     var dataDropDowntMetalType = [];
     var dataDropDowntMetalColour = [];
 
+    const userLogin = JSON.parse(sessionStorage.logindata);
+
     InitModifyData(props);
 
-    if (props.options.jewelryCategories) {
-      dataDropDowntJewelryCategory.push(props.options.jewelryCategories.map(jewelryCategory =>{
-          return ({value: jewelryCategory.code,label:jewelryCategory.name});
-        })
-      )
-      dataDropDowntJewelryCategory = dataDropDowntJewelryCategory[0];
-    }
-    if (props.options.collections) {
-      dataDropDowntCollection.push(props.options.collections.map(collection =>{
-          return ({value: collection.code,label:collection.name});
-        })
-      )
-      dataDropDowntCollection = dataDropDowntCollection[0];
-    }
-    if (props.options.brands) {
-      dataDropDowntBrand.push(props.options.brands.map(brand =>{
-          return ({value: brand.code,label:brand.name});
-        })
-      )
-      dataDropDowntBrand = dataDropDowntBrand[0];
-    }
-    if (props.options.ringSizes) {
-      dataDropDowntRingSize.push(props.options.ringSizes.map(ringSize =>{
-          return ({value: ringSize.code,label:ringSize.name});
-        })
-      )
-      dataDropDowntRingSize = dataDropDowntRingSize[0];
-    }
-    if (props.options.dominantStones) {
-      dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
-          return ({value: dominantStone.code,label:dominantStone.name});
-        })
-      )
-      dataDropDowntDominantStone = dataDropDowntDominantStone[0];
-    }
-    if (props.options.metalTypes) {
-      dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
-          return ({value: metalType.code,label:metalType.name});
-        })
-      )
-      dataDropDowntMetalType = dataDropDowntMetalType[0];
-    }
-    if (props.options.metalColours) {
-      dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
-          return ({value: metalColour.code,label:metalColour.name});
-        })
-      )
-      dataDropDowntMetalColour = dataDropDowntMetalColour[0];
+    if(props.options != undefined){
+      if (props.options.jewelryCategories) {
+        dataDropDowntJewelryCategory.push(props.options.jewelryCategories.map(jewelryCategory =>{
+            return ({value: jewelryCategory.code,label:jewelryCategory.code + ' [' + jewelryCategory.name + ']'});
+          })
+        )
+        dataDropDowntJewelryCategory = dataDropDowntJewelryCategory[0];
+      }
+      if (props.options.collections) {
+        dataDropDowntCollection.push(props.options.collections.map(collection =>{
+            return ({value: collection.code,label:collection.name});
+          })
+        )
+        dataDropDowntCollection = dataDropDowntCollection[0];
+      }
+      if (props.options.brands) {
+        dataDropDowntBrand.push(props.options.brands.map(brand =>{
+            return ({value: brand.code,label:brand.name});
+          })
+        )
+        dataDropDowntBrand = dataDropDowntBrand[0];
+      }
+      if (props.options.ringSizes) {
+        dataDropDowntRingSize.push(props.options.ringSizes.map(ringSize =>{
+            return ({value: ringSize.code,label:ringSize.name});
+          })
+        )
+        dataDropDowntRingSize = dataDropDowntRingSize[0];
+      }
+      if (props.options.dominantStones) {
+        dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
+            return ({value: dominantStone.code,label:dominantStone.name});
+          })
+        )
+        dataDropDowntDominantStone = dataDropDowntDominantStone[0];
+      }
+      if (props.options.metalTypes) {
+        dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
+            return ({value: metalType.code,label:metalType.name});
+          })
+        )
+        dataDropDowntMetalType = dataDropDowntMetalType[0];
+      }
+      if (props.options.metalColours) {
+        dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
+            return ({value: metalColour.code,label:metalColour.name});
+          })
+        )
+        dataDropDowntMetalColour = dataDropDowntMetalColour[0];
+      }
     }
 
     // console.log('musthaves-->',musthaves);
@@ -248,14 +268,22 @@ class InventoryJewelry extends Component {
         <div className="panel-body">
           <div className="row margin-ft">
             <div className="col-lg-6 form-horizontal">
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Product Hierarchy</label>
+              <div className="form-group hidden">
+                <label className="col-sm-4 control-label tooltiop-span">Product Hierarchy
+                  <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7 bd-box">
                   <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Jewelry Category</label>
+                <label className="col-sm-4 control-label tooltiop-span">Jewelry Category
+                  <OverlayTrigger placement="top" overlay={tooltipJewelryCategory}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.JewelryCategoryValue}
                     placeholder="Select your Jewelry Category"
@@ -264,7 +292,11 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Collection</label>
+                <label className="col-sm-4 control-label tooltiop-span">Collection
+                  <OverlayTrigger placement="top" overlay={tooltipCollection}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.CollectionValue}
                     placeholder="Select your Collection"
@@ -273,7 +305,11 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Brand</label>
+                <label className="col-sm-4 control-label tooltiop-span">Brand
+                  <OverlayTrigger placement="top" overlay={tooltipBrand}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.BrandValue}
                     placeholder="Select your Brand"
@@ -282,7 +318,11 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Must Have</label>
+                <label className="col-sm-4 control-label tooltiop-span">Must Have
+                  <OverlayTrigger placement="top" overlay={tooltipMustHave}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.MustHaveValue}
                     placeholder="Select your MustHave"
@@ -290,26 +330,37 @@ class InventoryJewelry extends Component {
                     onChange={this.handleMustHaveSelectChange} />
                 </div>
               </div>
-              {/*<div className="form-group">
-                <label className="col-sm-4 control-label">Ring Size</label>
-                <div className="col-sm-7">
-                  <Select multi simpleValue value={props.RingSizeValue}
-                    placeholder="Select your Ring Size"
-                    options={dataDropDowntRingSize}
-                    onChange={this.handleRingSizeSelectChange} />
-                </div>
-              </div>*/}
               <div className="form-group">
-                <label className="col-sm-4 control-label">Ring Size</label>
+                <label className="col-sm-4 control-label tooltiop-span">Ring Size
+                  <OverlayTrigger placement="top" overlay={tooltipRingSize}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...ringSize}/>
                 </div>
               </div>
-
-            </div>
-            <div className="col-lg-6 form-horizontal">
               <div className="form-group">
-                <label className="col-sm-4 control-label">Total Cost (USD)</label>
+                <label className="col-sm-4 control-label">Set Reference Number</label>
+                <div className="col-sm-7">
+                  <input type="text" className="form-control" {...setReference}/>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label">Dominant Stone</label>
+                <div className="col-sm-7">
+                  <Select multi simpleValue value={props.DominantStoneValue}
+                    placeholder="Select your Dominant Stone"
+                    options={dataDropDowntDominantStone}
+                    onChange={this.handleDominantStoneSelectChange} />
+                </div>
+              </div>
+            </div>
+
+            <div className="col-lg-6 form-horizontal">
+              <div className={`form-group ${(userLogin.permission.price == 'All') ?
+                  '' : 'hidden'}`}>
+                <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -321,8 +372,10 @@ class InventoryJewelry extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Total Updated Cost (USD)</label>
+              <div className={`form-group ${(userLogin.permission.price == 'Updated'
+                                            || userLogin.permission.price == 'All') ?
+                                            '' : 'hidden'}`}>
+                <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -334,8 +387,11 @@ class InventoryJewelry extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Public Price (USD)</label>
+              <div className={`form-group ${(userLogin.permission.price == 'Public'
+                                            || userLogin.permission.price == 'Updated'
+                                            || userLogin.permission.price == 'All') ?
+                                          '' : 'hidden'}`}>
+                <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
                  <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -347,8 +403,10 @@ class InventoryJewelry extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Markup %</label>
+              <div className={`form-group ${(userLogin.permission.price == 'All'
+                  || userLogin.permission.price == 'Updated') ?
+                  '' : 'hidden'}`}>
+                <label className="col-sm-4 control-label">Markup (Times)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -373,13 +431,13 @@ class InventoryJewelry extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
+              {/*<div className="form-group">
                 <label className="col-sm-4 control-label">Set Reference Number</label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...setReference}/>
                 </div>
               </div>
-              <div className="form-group hidden">
+              <div className="form-group">
                 <label className="col-sm-4 control-label">Dominant Stone</label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.DominantStoneValue}
@@ -387,9 +445,13 @@ class InventoryJewelry extends Component {
                     options={dataDropDowntDominantStone}
                     onChange={this.handleDominantStoneSelectChange} />
                 </div>
-              </div>
+              </div>*/}
               <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Type</label>
+                <label className="col-sm-4 control-label tooltiop-span">Metal Type
+                  <OverlayTrigger placement="top" overlay={tooltipMetalType}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.MetalTypeValue}
                     placeholder="Select your Metal Type"
@@ -398,7 +460,11 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Colour</label>
+                <label className="col-sm-4 control-label tooltiop-span">Metal Colour
+                  <OverlayTrigger placement="top" overlay={tooltipMetalColour}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.MetalColourValue}
                     placeholder="Select your Metal Colour"
@@ -414,4 +480,46 @@ class InventoryJewelry extends Component {
   }
 }
 
+const tooltipHierarchy = (
+  <Tooltip id="tooltip"><strong>Product Hierarchy!</strong></Tooltip>
+);
+const tooltipJewelryCategory = (
+  <Tooltip id="tooltip"><strong>Jewelry Category!</strong></Tooltip>
+);
+const tooltipCollection = (
+  <Tooltip id="tooltip"><strong>Collection!</strong></Tooltip>
+);
+const tooltipBrand = (
+  <Tooltip id="tooltip"><strong>Brand!</strong></Tooltip>
+);
+const tooltipMustHave = (
+  <Tooltip id="tooltip"><strong>Must Have!</strong></Tooltip>
+);
+const tooltipRingSize = (
+  <Tooltip id="tooltip"><strong>Ring Size!</strong></Tooltip>
+);
+const tooltipTotalCost = (
+  <Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>
+);
+const tooltipTotalUpdatedCost = (
+  <Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>
+);
+const tooltipPublicPrice = (
+  <Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>
+);
+const tooltipMarkup = (
+  <Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>
+);
+const tooltipGrossWeight = (
+  <Tooltip id="tooltip"><strong>Gross Weight (Grams)!</strong></Tooltip>
+);
+const tooltipSetReferenceNumber = (
+  <Tooltip id="tooltip"><strong>Set Reference Number</strong></Tooltip>
+);
+const tooltipMetalType = (
+  <Tooltip id="tooltip"><strong>Metal Type!</strong></Tooltip>
+);
+const tooltipMetalColour = (
+  <Tooltip id="tooltip"><strong>Metal Colour!</strong></Tooltip>
+);
 module.exports = InventoryJewelry;

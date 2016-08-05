@@ -11,13 +11,13 @@ export default function InitDataLocation(LocationValue,userLogin){
     });
     dataDropDowntLocations.push(newDate.map(location =>{
         // console.log('location-->',location);
-        return ({value: location[0].code,label:location[0].name});
+        return ({value: location[0].code,label:location[0].code +' ['+ location[0].name + ']'});
       })
     );
   }else{
     dataDropDowntLocations.push(LocationValue.map(location =>{
         // console.log('location-->',location);
-        return ({value: location.code,label:location.name});
+        return ({value: location.code,label:location.code +' [' + location.name + ']'});
       })
     );
   }

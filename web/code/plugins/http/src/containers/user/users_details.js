@@ -2,31 +2,40 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as usersActions from '../../actions/usersaction';
 import UsersFrom from '../../components/user/user_editform';
+let Loading = require('react-loading');
 
 class UserDetails extends Component {
 
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      loadComplete: false
+    }
   }
 
   componentWillMount(){
-      this.props.fetchUser(this.props.params.id);
+      this.props.fetchUser(this.props.params.id)
+          .then((value) => {
+            this.setState({
+              loadComplete: true
+            });
+          });
   }
 
   handleSubmit(data){
-    // console.log('edit data');
-    var FLAG_ZERO = 0x0; // 000001
-    var FLAG_JLY = 0x1; // 000001
-    var FLAG_WAT = 0x2; // 000010
-    var FLAG_STO = 0x4; // 000100
-    var FLAG_ACC = 0x8; // 001000
-    var FLAG_OBA = 0x10; //010000
-    var FLAG_SPP = 0x20; //100000
-    var result = FLAG_ZERO;
-    var permission = null;
-    var onhandLocation = null;
-    var onhandWarehouse = null;
+    // console.log('data-->',data);
+    let FLAG_ZERO = 0x0; // 000001
+    let FLAG_JLY = 0x1; // 000001
+    let FLAG_WAT = 0x2; // 000010
+    let FLAG_STO = 0x4; // 000100
+    let FLAG_ACC = 0x8; // 001000
+    let FLAG_OBA = 0x10; //010000
+    let FLAG_SPP = 0x20; //100000
+    let result = FLAG_ZERO;
+    let permission = null;
+    let onhandLocation = null;
+    let onhandWarehouse = null;
 
     if(data.productGroup){
       if (data.productGroup == '1'){
@@ -56,19 +65,15 @@ class UserDetails extends Component {
       data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPP} };
     }
 
-    if(data.onhandLocation){
-      onhandLocation = {
-        type:'Location',
-        places:(!data.onhandLocationValue)?[]:data.onhandLocationValue
-      };
-    }
+    onhandLocation = {
+        type: 'Location',
+        places: (!data.onhandLocationValue) ? [] : data.onhandLocationValue
+    };
 
-    if(data.onhandWarehouse){
-      onhandWarehouse = {
-        type:'Warehouse',
-        places:(!data.onhandWarehouseValue)?[]:data.onhandWarehouseValue
-      };
-    }
+    onhandWarehouse = {
+      type:(data.onhand != undefined) ? (data.onhand.indexOf('All') != -1) ? 'AllWarehouse': 'Warehouse' : 'Warehouse',
+      places:(!data.onhandWarehouseValue)?[]:data.onhandWarehouseValue
+    };
 
     if(data.onhandAll){
       onhandLocation = {
@@ -82,10 +87,10 @@ class UserDetails extends Component {
     }
 
       permission = {...data.permission,
-                id:data.permissionId,
-                onhandLocation:onhandLocation,
-                onhandWarehouse:onhandWarehouse,
-                price:data.price
+              id: data.permissionId,
+              onhandLocation: onhandLocation,
+              onhandWarehouse: onhandWarehouse,
+              price: data.price
     }
     data = Object.assign({}, data, { permission:permission });
 
@@ -100,12 +105,16 @@ class UserDetails extends Component {
     delete data.onhand;
     delete data.onhandLocationValue;
     delete data.onhandWarehouseValue;
+    delete data.onhandAll;
+    delete data.onhandLocation;
+    delete data.onhandWarehouse;
+
     if(!data.password){
       delete data.password;
     }
     delete data.permissionId;
 
-    // console.log('data-->',data);
+    // console.log('permission-->',data);
     this.props.updateUser(data)
         .then(() => {
           // user has been created, navigate the user to the index
@@ -116,13 +125,31 @@ class UserDetails extends Component {
   }
 
   render () {
+
     if(!this.props.user){
-      return <div>Loading...</div>
+      return <div >
+              <center>
+                <br/><br/><br/><br/><br/><br/>
+                  <Loading type="spin" color="#202020" width="10%"/>
+              </center>
+              <br/><br/><br/><br/><br/><br/>
+            </div>
     }
     else{
+      // console.log('user_details this.props.user-->',this.props.user.id)
       const { user } = this.props;
-      return (<UsersFrom onSubmit={this.handleSubmit} user={user}  />
-      );
+      if(this.state.loadComplete){
+        return (<UsersFrom onSubmit={this.handleSubmit} user={user}  />
+        );
+      }else{
+        return <div >
+          <center>
+            <br/><br/><br/><br/><br/><br/>
+              <Loading type="spin" color="#202020" width="10%"/>
+          </center>
+          <br/><br/><br/><br/><br/><br/>
+        </div>
+      }
     }
   }
 }

@@ -8,7 +8,7 @@ const productreleted = (props) =>{
       {props.productrelte.map(function(data, index){
          return (
            <div key={data.id} className="col-md-3 col-sm-3 bd-img nopadding">
-             <Link to={{pathname: `${pructdetailurl}${data.id}`}}><img src={data.image}  responsive width={120} height={120}/></Link>
+             <Link to={{pathname: `${pructdetailurl}${data.id}`}}><img src={data.image.length > 0 ? data.image[0].thumbnail :'/images/blank.gif' }  responsive width={120} height={120}/></Link>
            </div>
         )
         })}

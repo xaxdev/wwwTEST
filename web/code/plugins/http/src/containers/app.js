@@ -9,10 +9,12 @@ class App extends Component {
   render() {
 
     const {loginstatus,logindata} = this.props;
+    let currentLocation = this.props.location.pathname;
+    
     return (
       <div>
         {loginstatus ? <Header {...logindata}/> : ''}
-        {loginstatus ? <Menu {...logindata}/> : ''}
+        {loginstatus ? <Menu {...logindata} currentLocation={currentLocation}/> : ''}
         <div className="container margin-b4">
         {this.props.children}
         </div>

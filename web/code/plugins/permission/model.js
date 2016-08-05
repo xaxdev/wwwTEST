@@ -1,11 +1,11 @@
-'use strict';
+'use strict' ;
 
 module.exports = {
   schema: true,
   autoPK: false,
   identity: 'permission',
   connection: 'mysql',
-  migrate: 'alter',
+  migrate: 'safe',
   tableName: 'Permission',
   attributes: {
     id: {

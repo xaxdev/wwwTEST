@@ -20,15 +20,17 @@ class Header extends Component {
       return (
 
           <div className="navbar-static-top navbar-grau">
-                      <div className="container">
-                       <div className="padding-lf30">
+              <div className="container">
+                  <div className="padding-lf30 col-md-12">
+                      <div className="col-md-6 nopadding">
                         <div className="logo-detail"></div>
-                        <div className="navbar-right top-bar">
-                           <a href="#">{firstName}  {lastName}</a><span className="top-line">|</span>
-                            <span className="marginbtnlogout" onClick={this.handleLogoutButton}>Logout</span>
-                        </div>
-                        </div>
                       </div>
+                      <div className="navbar-right top-bar col-md-6">
+                         <a href="#">{firstName}  {lastName}</a><span className="top-line">|</span>
+                          <span className="marginbtnlogout" onClick={this.handleLogoutButton}>Logout</span>
+                      </div>
+                  </div>
+              </div>
           </div>
         );
     }

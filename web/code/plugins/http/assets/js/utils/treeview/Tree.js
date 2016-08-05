@@ -10,8 +10,8 @@ var Tree = React.createClass({
   },
 
   handleChange: function (evt) {
-    console.log('evt-->',evt.target.checked);
-    console.log('evt.target.getAttribute-->',evt.target.getAttribute('data-key'));
+    // console.log('evt-->',evt.target.checked);
+    // console.log('evt.target.getAttribute-->',evt.target.getAttribute('data-key'));
     var checked = evt.target.checked;
     var key = evt.target.getAttribute('data-key');
     var traverseNodes = function (node) {

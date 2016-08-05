@@ -5,6 +5,7 @@ import {Modal, ModalClose} from 'react-modal-bootstrap';
 // import { DataTable,Table,DataMixin,Pagination } from 'react-data-components';
 import { DataTable } from '../../utils/react-data-components/index';
 import UserModal from './user_modal';
+let Loading = require('react-loading');
 
 class UsersListItem extends Component {
 
@@ -78,7 +79,13 @@ class UsersListItem extends Component {
        </div>
      );
    }else{
-      return (<div>Loading...</div>);
+      return (<div >
+                <center>
+                  <br/><br/><br/><br/><br/><br/>
+                    <Loading type="spin" color="#202020" width="10%"/>
+                </center>
+                <br/><br/><br/><br/><br/><br/>
+              </div>);
    }
  }
 

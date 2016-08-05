@@ -29,15 +29,30 @@ class InventoryOBA extends Component {
   }
   treeOnUnClick(vals){
     // console.log('unclick vals-->',this.state.treeViewData);
+
     if( this.state.treeViewData != null){
       this.state.treeViewData[0].checked = false;
       this.state.treeViewData[0].key = this.state.treeViewData[0].code;
       this.refs.treeview.handleChange(this.state.treeViewData[0]);
+      this.props.props.inventoryActions.setHierarchy(this.state.treeViewData)
+    }else{
+      // console.log('HierarchyValue vals-->',this.props.props.HierarchyValue);
+      if(this.props.props.HierarchyValue != null){
+        if(this.props.props.SearchAction == 'New'){
+          if(this.props.props.HierarchyValue.length != 0){
+            this.props.props.HierarchyValue[0].checked = false;
+            this.props.props.HierarchyValue[0].key = this.props.props.HierarchyValue[0].code;
+            this.refs.treeview.handleChange(this.props.props.HierarchyValue[0]);
+          }
+          this.props.props.inventoryActions.setHierarchy(null);
+        }
+      }
     }
   }
   treeOnClick(vals){
     // console.log('vals-->',vals);
     this.setState({treeViewData:vals});
+    this.props.props.inventoryActions.setHierarchy(vals);
     var treeSelected = [];
     var selectedData = vals.filter(val => {
       var checkAllNodes = function(node){
@@ -149,7 +164,7 @@ class InventoryOBA extends Component {
   render() {
     const { props } = this.props;
 
-    const yesNo = [{value: 'Yes',label:'Yes'},{value: 'No',label:'No'}];
+    const yesNo = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
 
     var { fields:
           {
@@ -169,42 +184,46 @@ class InventoryOBA extends Component {
     var dataDropDowntMetalColour = [];
     var dataDropDowntDominantStone = [];
 
+    const userLogin = JSON.parse(sessionStorage.logindata);
+
     InitModifyData(props);
 
-    if (props.options.collections) {
-      dataDropDowntCollection.push(props.options.collections.map(collection =>{
-          return ({value: collection.code,label:collection.name});
-        })
-      )
-      dataDropDowntCollection = dataDropDowntCollection[0];
-    }
-    if (props.options.brands) {
-      dataDropDowntBrand.push(props.options.brands.map(brand =>{
-          return ({value: brand.code,label:brand.name});
-        })
-      )
-      dataDropDowntBrand = dataDropDowntBrand[0];
-    }
-    if (props.options.metalTypes) {
-      dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
-          return ({value: metalType.code,label:metalType.name});
-        })
-      )
-      dataDropDowntMetalType = dataDropDowntMetalType[0];
-    }
-    if (props.options.metalColours) {
-      dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
-          return ({value: metalColour.code,label:metalColour.name});
-        })
-      )
-      dataDropDowntMetalColour = dataDropDowntMetalColour[0];
-    }
-    if (props.options.dominantStones) {
-      dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
-          return ({value: dominantStone.code,label:dominantStone.name});
-        })
-      )
-      dataDropDowntDominantStone = dataDropDowntDominantStone[0];
+    if(props.options != undefined){
+      if (props.options.collections) {
+        dataDropDowntCollection.push(props.options.collections.map(collection =>{
+            return ({value: collection.code,label:collection.name});
+          })
+        )
+        dataDropDowntCollection = dataDropDowntCollection[0];
+      }
+      if (props.options.brands) {
+        dataDropDowntBrand.push(props.options.brands.map(brand =>{
+            return ({value: brand.code,label:brand.name});
+          })
+        )
+        dataDropDowntBrand = dataDropDowntBrand[0];
+      }
+      if (props.options.metalTypes) {
+        dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
+            return ({value: metalType.code,label:metalType.name});
+          })
+        )
+        dataDropDowntMetalType = dataDropDowntMetalType[0];
+      }
+      if (props.options.metalColours) {
+        dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
+            return ({value: metalColour.code,label:metalColour.name});
+          })
+        )
+        dataDropDowntMetalColour = dataDropDowntMetalColour[0];
+      }
+      if (props.options.dominantStones) {
+        dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
+            return ({value: dominantStone.code,label:dominantStone.name});
+          })
+        )
+        dataDropDowntDominantStone = dataDropDowntDominantStone[0];
+      }
     }
 
     return(
@@ -212,7 +231,7 @@ class InventoryOBA extends Component {
         <div className="panel-body">
           <div className="row margin-ft">
             <div className="col-lg-6 form-horizontal">
-              <div className="form-group">
+              <div className="form-group hidden">
                 <label className="col-sm-4 control-label">Product Hierarchy</label>
                 <div className="col-sm-7 bd-box">
                   <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview" />
@@ -247,8 +266,9 @@ class InventoryOBA extends Component {
               </div>
             </div>
             <div className="col-lg-6 form-horizontal">
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Total Cost (USD)</label>
+              <div className={`form-group ${(userLogin.permission.price == 'All') ?
+                  '' : 'hidden'}`}>
+                <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -260,8 +280,10 @@ class InventoryOBA extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Total Updated Cost (USD)</label>
+              <div className={`form-group ${(userLogin.permission.price == 'Updated'
+                                            || userLogin.permission.price == 'All') ?
+                                            '' : 'hidden'}`}>
+                <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -273,8 +295,11 @@ class InventoryOBA extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Public Price (USD)</label>
+              <div className={`form-group ${(userLogin.permission.price == 'Public'
+                                            || userLogin.permission.price == 'Updated'
+                                            || userLogin.permission.price == 'All') ?
+                                          '' : 'hidden'}`}>
+                <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -286,8 +311,10 @@ class InventoryOBA extends Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Markup %</label>
+              <div className={`form-group ${(userLogin.permission.price == 'All'
+                  || userLogin.permission.price == 'Updated') ?
+                  '' : 'hidden'}`}>
+                <label className="col-sm-4 control-label">Markup (Times)</label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">

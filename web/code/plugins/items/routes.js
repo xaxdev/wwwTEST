@@ -12,7 +12,7 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: '/relateditems/{collection}/{page}',
+    path: '/relateditems/{collection}/{page}/{productId}',
     config: controllers.relateditems
   },
   {

@@ -1,5 +1,6 @@
 const INITIAL_STATE = { datas:[], user: null, options:[], errors: null, statuscode: null, selectedCompany:null
-  , selectedWarehouses:null, statusCode:null, message:null,locationOnHand:[],warehouseOnHand:[]};
+  , selectedWarehouses:null, statusCode:null, message:null,locationOnHand:[],warehouseOnHand:[]
+  ,onhandLocationSelected:null};
 
 export default function(state = INITIAL_STATE, action){
 
@@ -17,12 +18,15 @@ export default function(state = INITIAL_STATE, action){
     return { ...state, options: action.data, locationOnHand: action.data.locations, warehouseOnHand: action.data.warehouses };
   case 'SELECTED_COMPANY':
     // console.log('FETCH_OPTIONS state-->',state);
-    console.log('SELECTED_COMPANY action.data-->',action.data);
-    return { ...state, options: action.data, selectedCompany: action.selected};
+    // console.log('SELECTED_COMPANY action.data-->',action.data);
+    return { ...state, options: action.data, selectedCompany: action.selected, selectedWarehouses: ''};
   case 'SELECTED_WAREHOUSES':
     // console.log('FETCH_OPTIONS state-->',state);
     // console.log('FETCH_OPTIONS action.datas-->',action.datas);
-    return { ...state, options: action.data, selectedWarehouses: action.selected};
+    return { ...state, options: action.data, selectedCompany: action.comid, selectedWarehouses: action.selected};
+  case 'GED_ONHANDWAREHOUSES':
+    // console.log('GED_ONHANDWAREHOUSES action-->',action);
+    return { ...state, options: action.data, locationOnHand: action.data.locations, warehouseOnHand: action.data.warehouses};
   case 'CREATE_USER':
     // console.log('action-->',action);
     // console.log('FETCH_OPTIONS action.datas-->',action.datas);
@@ -124,9 +128,9 @@ const setnewprops = (data) => {
     productGroupACC: productGroupACC,
     productGroupOBA: productGroupOBA,
     productGroupSPP: productGroupSPP,
-    onhandLocation: (permission.onhandLocation != null) ? (permission.onhandLocation.type.indexOf('Location') != -1) ? true : false : false,
-    onhandWarehouse: (permission.onhandWarehouse != null) ? (permission.onhandWarehouse != null && permission.onhandWarehouse.type.indexOf('Warehouse') != -1) ? true : false : false,
-    // onhandValue: permission.onhand.places,
+    onhandLocation: (permission.onhandLocation != null) ? (permission.onhandLocation.type.indexOf('All') != -1) ? true : false : false,
+    onhandWarehouse: (permission.onhandWarehouse != null) ? (permission.onhandWarehouse != null && permission.onhandWarehouse.type.indexOf('AllWarehouse') != -1) ? true : false : false,
+    onhandAll: (permission.onhandLocation != null) ? (permission.onhandLocation.type.indexOf('All') != -1) ? true : false : false,
     permissionId: permission.id,
     onhandLocationValue: (permission.onhandLocation != null) ? permission.onhandLocation.places : null,
     onhandWarehouseValue: (permission.onhandWarehouse != null) ? permission.onhandWarehouse.places : null

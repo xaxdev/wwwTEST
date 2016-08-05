@@ -26,7 +26,8 @@ class Loginform extends Component {
             </div>
           </div>
             <div className={`${this.props.msg != '' ? 'text-danger' : ''}` }>{ (this.props.msg != '') ? this.props.msg : '' }</div>
-          <button type="submit" className="btn btn-lg btn-login btn-block" disabled={invalid}>LOGIN</button>
+          <button type="submit" className="btn btn-lg btn-login btn-block" disabled={invalid}>
+          {this.props.loading ? 'Loading...' : 'LOGIN'}</button>
           <div className="maring-t30 text-center forgot"><Link to="/forgotpassword">Forgot Password</Link></div>
         </div>
         </form>

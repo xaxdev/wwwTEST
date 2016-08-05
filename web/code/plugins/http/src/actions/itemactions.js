@@ -1,7 +1,8 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
-import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS} from '../constants/itemconstants';
+import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS,
+  SET_CURRENTPAGE} from '../constants/itemconstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
 export function getItems(params){
@@ -52,5 +53,11 @@ export function setParams(params){
   return {
           type: SET_PARAMS,
           params:params
+  }
+}
+export function setCurrentPage(value){
+  return {
+          type: SET_CURRENTPAGE,
+          currentPage:value
   }
 }

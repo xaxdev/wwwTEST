@@ -2,6 +2,9 @@ export const MAIN_DATABASE = 'ITORAMA';
 export const ITEM_TABLE = '[ITORAMA].[dbo].[Items]';
 export const ITEM_ID = '[Id]';
 
+// Exchange Rates
+export const EXCHANGE_RATE_QUERY = './query/exchange_rate.sql';
+
 // Items
 export const JEWELRY_QUERY = './query/jewelry.sql';
 export const STONES_QUERY = './query/stones.sql';
@@ -35,6 +38,9 @@ export const JEWELRYCATEGORY_QUERY = './query/master/jewelryCategory.sql';
 export const WATCHCATEGORY_QUERY = './query/master/watchCategory.sql';
 export const ACCESSORYTYPE_QUERY = './query/master/accessoryType.sql';
 export const SPAREPARTTYPE_QUERY = './query/master/sparePartType.sql';
+export const DOMINATSTONES_QUERY = './query/master/dominantStone.sql';
+export const GEMSTONE_STONETYPE_QUERY = './query/master/gemstone-stoneType.sql';
+export const STONETYPE_QUERY = './query/master/stoneCategory.sql';
 
 // from array
 export const CURRENCY_DATA = '../../../query/master/currency.js';

@@ -10,7 +10,7 @@ module.exports = {
   autoPK: false,
   identity: 'user',
   connection: 'mysql',
-  migrate: 'alter',
+  migrate: 'safe',
   tableName: 'User',
   attributes: {
     id: {
@@ -65,8 +65,7 @@ module.exports = {
       required: true
     },
     warehouse: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
     permission: {
       model: 'permission'
@@ -111,6 +110,10 @@ module.exports = {
 
         if (!user) {
           return Boom.badRequest('no user with the username.');
+        }
+
+        if (!user.status) {
+          return Boom.badRequest('user is inactive.');
         }
 
         return user

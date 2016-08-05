@@ -1,7 +1,4 @@
 const Boom = require('boom');
-const Hoek = require('hoek');
-const Joi = require('joi');
-const _ = require('lodash');
 
 const internals = {
   filters: []
@@ -16,7 +13,8 @@ module.exports = {
     // const keys = Object.keys(request.payload);
     const collection = request.params.collection;
     const page = request.params.page;
-    const itemperpage = 3;
+    const productId = request.params.productId;
+    const itemperpage = 8;
     const offset = (page-1) * itemperpage;
 
     internals.query = JSON.parse(
@@ -26,11 +24,29 @@ module.exports = {
       "sort" : [
            { "reference" : "desc" }
         ],
-      "query":
-        {
-         "match": {"collection": "${collection}"}
+      "query":{
+           "constant_score": {
+             "filter": {
+               "bool": {
+                 "must": [
+                   {
+                     "match": {
+                       "subType": "${collection}"
+                     }
+                   }
+                 ],
+                 "must_not": [
+                   {
+                     "match": {
+                       "id": "${productId}"
+                     }
+                   }
+                 ]
+               }
+             }
+           }
         }
-    }`);
+      }`);
 
     elastic
       .search({
@@ -46,7 +62,7 @@ module.exports = {
         for (let i = 0; i < len; i++) {
           productdata.push({
               id: productResult[i].id,
-              image:'http://www.bq-magazine.com/wp-content/uploads/2013/09/Mouawad-Grand-Ellipse-Accessories-2-signet-1024x1024.jpg'
+              image:productResult[i].gallery
           });
         }
         const responeData = {

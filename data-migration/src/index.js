@@ -17,18 +17,10 @@ const init = async _ => {
     }
 };
 
-new CronJob({
-  cronTime: '00 35 15 * * *',
-  // cronTime: '00 */5 * * * *',
-  onTick: _ => {
-    init()
-        .then(_ => {
-            console.log(`Migration is done at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-  },
-  start: true,
-  timeZone: 'Asia/Bangkok'
-});
+init()
+    .then(_ => {
+        console.log(`Migration is done at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
+    })
+    .catch(err => {
+        console.log(err);
+    });

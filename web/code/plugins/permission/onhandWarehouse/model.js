@@ -5,7 +5,7 @@ module.exports = {
   autoPK: false,
   identity: 'onhandWarehouse',
   connection: 'mysql',
-  migrate: 'alter',
+  migrate: 'safe',
   tableName: 'PermissionOnhandWarehouse',
   attributes: {
     id: {

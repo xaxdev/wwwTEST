@@ -34,9 +34,6 @@ export default function validate(values){
   if(!values.location){
     errors.location = 'Enter location';
   }
-  if(!values.warehouse){
-    errors.warehouse = 'Enter Warehouse';
-  }
 
   return errors;
 
