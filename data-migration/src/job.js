@@ -17,15 +17,59 @@ const init = async _ => {
     }
 };
 
+const notify = err => {
+    const sg = sendgrid(config.key)
+    const request = sg.emptyRequest()
+
+    request.method = 'POST'
+    request.path = '/v3/mail/send'
+    request.body = {
+        personalizations: [
+            {
+                to: [
+                    {
+                        email: 'jittawe@itorama.com'
+                    }
+                    ,
+                    {
+                        email: 'korakod.chaisongkram@itorama.com'
+                    }
+                ],
+                subject: `Failed to migrate data to ES at ${moment().tz('Asia/Bangkok').format()}`
+            }
+        ],
+        from: {
+            email: 'dev@itorama.com'
+        },
+        content: [
+            {
+                type: 'text/plain',
+                value: JSON.stringify(err, nulll, 4)
+            }
+        ]
+    };
+
+    sg
+        .API(request)
+        .then(response => {
+            console.log(response.statusCode)
+            console.log(response.body)
+            console.log(response.headers)
+        })
+        .catch(err => {
+            console.log(err);
+        });
+};
+
 new CronJob({
-  cronTime: '00 30 06 * * *',
+  cronTime: '00 52 14 * * *',
   onTick: _ => {
     init()
         .then(_ => {
             console.log(`Migration is done at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
         })
         .catch(err => {
-            console.log(err);
+            nofity(err);
         });
   },
   start: true,
