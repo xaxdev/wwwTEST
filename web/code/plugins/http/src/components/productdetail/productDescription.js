@@ -5,7 +5,6 @@ import convertDate from '../../utils/convertDate';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
 
-// console.log("logindata -->",logindata);
 const Detail = (props) =>{
   if(logindata){
     const currency = logindata.currency;
