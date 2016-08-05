@@ -67,6 +67,7 @@ LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
 INNER JOIN [ITORAMA].[dbo].[Stones] stone
   ON item.[Reference] = stone.[ItemReference]
   AND item.[Company] = stone.[Company]
+  AND stone.[Warehouse] NOT LIKE '%CONS%'
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
   ON item.[Id] = img.[ITEMRECID]
   AND item.[Company] = img.[Company]
