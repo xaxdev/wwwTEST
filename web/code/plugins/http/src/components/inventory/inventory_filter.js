@@ -286,6 +286,9 @@ class InventoryFilter extends Component {
     let fileName = jQuery('#fileName');
 
     fileName.html('');
+    var { fields:{reference }} = this.props;
+    reference.value = '';
+    reference.onChange('');
 
     ResetFormMain(this);
     this.props.resetForm();
