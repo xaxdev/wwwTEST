@@ -9,7 +9,7 @@
         "host": "10.128.133.77:9200 "
     },
     "parallelization": {
-        "size": 3000
+        "size": 2000
     },
     "gallery": {
         "original": "/images/products/original",

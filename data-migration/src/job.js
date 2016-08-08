@@ -1,11 +1,13 @@
 import 'babel-polyfill'; // required for async
 import { CronJob } from 'cron';
 import moment from 'moment-timezone';
-
+import sendgrid from 'sendgrid'
+import config from '../sendgrid.json'
 import * as migration from './lib/migration/';
 
 const index = `mol_${moment().format('YYYYMMDD_HHmm')}`;
 const name = 'mol';
+const time = moment().tz('Asia/Bangkok').format()
 
 const init = async _ => {
     try {
@@ -18,6 +20,7 @@ const init = async _ => {
 };
 
 const notify = err => {
+    const subject = (!!err)? `Failed to migrate data to ES at ${time}` : `Succeeded in migrating data to ES at ${time}`
     const sg = sendgrid(config.key)
     const request = sg.emptyRequest()
 
@@ -28,14 +31,10 @@ const notify = err => {
             {
                 to: [
                     {
-                        email: 'jittawe@itorama.com'
-                    }
-                    ,
-                    {
-                        email: 'korakod.chaisongkram@itorama.com'
+                        email: 'mol@itorama.com'
                     }
                 ],
-                subject: `Failed to migrate data to ES at ${moment().tz('Asia/Bangkok').format()}`
+                subject
             }
         ],
         from: {
@@ -44,7 +43,7 @@ const notify = err => {
         content: [
             {
                 type: 'text/plain',
-                value: JSON.stringify(err, nulll, 4)
+                value: (!!err)? err.message : subject
             }
         ]
     };
@@ -62,14 +61,17 @@ const notify = err => {
 };
 
 new CronJob({
-  cronTime: '00 52 14 * * *',
+  cronTime: '00 45 15 * * *',
   onTick: _ => {
     init()
         .then(_ => {
-            console.log(`Migration is done at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
+            console.log(`Migration is done at: ${time}`)
         })
         .catch(err => {
-            nofity(err);
+            return err
+        })
+        .then(value => {
+            notify(value)
         });
   },
   start: true,

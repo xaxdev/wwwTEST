@@ -1,0 +1,4 @@
+SELECT [NAME] AS 'name'
+      ,[ITO_PARENTCATEGORYPATH] AS 'parent'
+      ,[ITO_CATEGORYPATH] AS 'path'
+FROM [MWD_DB].[dbo].[ECORESCATEGORY]

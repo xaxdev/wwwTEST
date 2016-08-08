@@ -1,4 +1,5 @@
 /home/mol/log/image-transfer/resize.log {
+    su mol mol
     daily
     missingok
     rotate 21
