@@ -104,7 +104,6 @@ module.exports = [
                 ]
               },
               {id:7,code:'Mouawad Inventory\\\\Merchandise\\\\Jewelry\\\\Classic\\\\Pearl Classics',label: 'Pearl Classics'},
-							{id:7,code:'Mouawad Inventory\\\\Merchandise\\\\Jewelry\\\\Classic\\\\Colored Diamond Classic',label: 'Colored Diamond Classic'},
               {id:7,code:'Mouawad Inventory\\\\Merchandise\\\\Jewelry\\\\Classic\\\\Gemstone Classic',label: 'Gemstone Classic',
                 children: [
                     {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Jewelry\\\\Classic\\\\Gemstone Classic\\\\Royale Rings',label: 'Royale Rings'},
