@@ -428,7 +428,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           }
           else if(key == 'hierarchy'){
             var filterSplit = [];
-            // console.log('hierarchy value-->', value)
+            console.log('hierarchy value-->', value)
             var vals = value.split(',');
             vals.forEach((val)=>{
               var mapField =
@@ -440,6 +440,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                           }
                         }
                       }`;
+              console.log('mapField-->',mapField);
               filterSplit.push(JSON.parse(mapField));
             });
             filter =

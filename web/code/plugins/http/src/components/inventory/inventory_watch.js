@@ -496,7 +496,7 @@ class InventoryWatch extends Component {
         <div className="panel-body">
           <div className="row margin-ft">
             <div className="col-lg-6 form-horizontal">
-              <div className="form-group hidden">
+              <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Product Hierarchy
                   <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
                     <img src="/images/alphanumeric.png" />
@@ -631,32 +631,7 @@ class InventoryWatch extends Component {
                     onChange={this.handleMovementSelectChange} />
                 </div>
               </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label tooltiop-span">Strap Type
-                  <OverlayTrigger placement="top" overlay={tooltipStrapType}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
-                <div className="col-sm-7">
-                  <Select multi simpleValue value={props.StrapTypeValue}
-                    placeholder="Select your Strap Type"
-                    options={dataDropDowntStrapType}
-                    onChange={this.handleStrapTypeSelectChange} />
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label tooltiop-span">Strap Color
-                  <OverlayTrigger placement="top" overlay={tooltipStrapColor}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
-                <div className="col-sm-7">
-                  <Select multi simpleValue value={props.StrapColorValue}
-                    placeholder="Select your Strap Color"
-                    options={dataDropDowntStrapColor}
-                    onChange={this.handleStrapColorSelectChange} />
-                </div>
-              </div>
+
             </div>
             <div className="col-lg-6 form-horizontal">
               <div className={`form-group ${(userLogin.permission.price == 'All') ?
@@ -837,7 +812,7 @@ class InventoryWatch extends Component {
                     onChange={this.handleBuckleTypeSelectChange} />
                 </div>
               </div>
-              {/*<div className="form-group">
+              <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Strap Type
                   <OverlayTrigger placement="top" overlay={tooltipStrapType}>
                     <img src="/images/alphanumeric.png" />
@@ -862,7 +837,7 @@ class InventoryWatch extends Component {
                     options={dataDropDowntStrapColor}
                     onChange={this.handleStrapColorSelectChange} />
                 </div>
-              </div>*/}
+              </div>
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Complication
                   <OverlayTrigger placement="top" overlay={tooltipComplication}>

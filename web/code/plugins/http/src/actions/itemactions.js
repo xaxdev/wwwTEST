@@ -25,6 +25,26 @@ export function getItems(params){
   }
 }
 
+export function exportDatas(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/items/export`;
+  // console.log('getItems-->',url);
+
+  return {
+          type: FETCH_ALLITEMS,
+    		  promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          }),
+          currPage:params.page
+  }
+}
+
 export function sortBy(data,sortBy,sortDirections){
   const token = sessionStorage.token;
   return {

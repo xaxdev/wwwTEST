@@ -1,82 +1,70 @@
 module.exports = [
-  {id:1,code:'Watch',label: 'Watch',
+  {id:1,code:'Mouawad Inventory\\\\Merchandise\\\\Watch',label: 'Watch',
     children: [
-        {id:2,code:'Watch/Mouawad',label: 'Mouawad',
+        {id:2,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad',label: 'Mouawad',
 					children: [
-							{id:3,code:'Watch/Mouawad/Haute Jewelry Watches',label: 'Haute Jewelry Watches'},
-							{id:4,code:'Watch/Mouawad/Grand Ellipse',label: 'Grand Ellipse',
+							{id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Haute Jewelry Watches',label: 'Haute Jewelry Watches'},
+							{id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse',label: 'Grand Ellipse',
                 children: [
-                    {id:3,code:'Watch/Mouawad/Grand Ellipse/Sport',label: 'Sport',
+                    {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\GE Lady',label: 'GE Lady',
                       children: [
-                          {id:3,code:'Watch/Mouawad/Grand Ellipse/Sport/Titanium',label: 'Titanium'},
-                          {id:4,code:'Watch/Mouawad/Grand Ellipse/Sport/Titanium-PVD',label: 'Titanium-PVD'},
-                          {id:4,code:'Watch/Mouawad/Grand Ellipse/Sport/Titanium-PVD ans Rose Gold',label: 'Titanium-PVD ans Rose Gold'}
+                          {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\GE Lady\\\\GE Rose Gold with Diamonds',label: 'GE Rose Gold with Diamonds'}
                       ]
                     },
-                    {id:4,code:'Watch/Mouawad/Grand Ellipse/Sport-ville',label: 'Sport-ville',
+                    {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Reveil',label: 'Reveil',
                       children: [
-                          {id:3,code:'Watch/Mouawad/Grand Ellipse/Sport-ville/Steel',label: 'Steel'},
-                          {id:4,code:'Watch/Mouawad/Grand Ellipse/Sport-ville/Steel-Rose Gold',label: 'Steel-Rose Gold'}
+                          {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Reveil\\\\REV Rose Gold',label: 'REV Rose Gold'}
                       ]
                     },
-                    {id:4,code:'Watch/Mouawad/Grand Ellipse/Royale',label: 'Royale',
+                    {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Royale',label: 'Royale',
                       children: [
-                          {id:3,code:'Watch/Mouawad/Grand Ellipse/Royale/Rose Gold',label: 'Rose Gold'},
-                          {id:4,code:'Watch/Mouawad/Grand Ellipse/Royale/Rose Gold with Diamonds',label: 'Rose Gold with Diamonds'}
+                          {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Royale\\\\RO Rose Gold with Diamonds',label: 'RO Rose Gold with Diamonds'},
+                          {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Royale\\\\Rose Gold',label: 'Rose Gold'}
                       ]
                     },
-                    {id:4,code:'Watch/Mouawad/Grand Ellipse/GE Lady',label: 'GE Lady',
+                    {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Sport',label: 'Sport',
                       children: [
-                          {id:3,code:'Watch/Mouawad/Grand Ellipse/GE Lady/Rose Gold with Diamonds',label: 'Rose Gold with Diamonds'}
+                          {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Sport\\\\Titanium',label: 'Titanium'},
+                          {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Sport\\\\Titanium-PVD',label: 'Titanium-PVD'},
+                          {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Sport\\\\Titanium-Pvd And Rose Gold',label: 'Titanium-Pvd And Rose Gold'}
                       ]
                     },
-                    {id:4,code:'Watch/Mouawad/Grand Ellipse/Reveil',label: 'Reveil',
+                    {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Sport-Ville',label: 'Sport-Ville',
                       children: [
-                          {id:3,code:'Watch/Mouawad/Grand Ellipse/Reveil/Rose Gold',label: 'Rose Gold'}
+                          {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Sport-ville\\\\Steel',label: 'Steel'},
+                          {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Grand Ellipse\\\\Sport-ville\\\\Steel-Rose Gold',label: 'Steel-Rose Gold'}
                       ]
                     }
                 ]
               },
-              {id:4,code:'Watch/Mouawad/La Griffe',label: 'La Griffe',
+              {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Mouawad La Griffe',label: 'Mouawad La Griffe',
                 children: [
-                    {id:3,code:'Watch/Mouawad/La Griffe/Steel and Precious Stones (Diamond or Colored Stones)',label: 'Steel and Precious Stones (Diamond or Colored Stones)'},
-                    {id:4,code:'Watch/Mouawad/La Griffe/Steel-Rose Gold and Diamonds',label: 'Steel-Rose Gold and Diamonds'},
-                    {id:4,code:'Watch/Mouawad/La Griffe/Rose Gold and Diamonds',label: 'Rose Gold and Diamonds'}
+                    {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Mouawad La Griffe\\\\Rose Gold With Diamonds',label: 'Rose Gold With Diamonds'},
+                    {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Mouawad La Griffe\\\\Steel and Precious Stones',label: 'Steel and Precious Stones'}
                 ]
               },
-              {id:4,code:'Watch/Mouawad/La Classique',label: 'La Classique',
+              {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Mouawad La Classique',label: 'Mouawad La Classique',
                 children: [
-                  {id:3,code:'Watch/Mouawad/La Classique/Attitude',label: 'Attitude',
+                  {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Mouawad La Classique\\\\Attitude',label: 'Attitude',
                     children: [
-                        {id:3,code:'Watch/Mouawad/La Classique/Attitude/Steel with Diamond',label: 'Steel with Diamond'},
-                        {id:4,code:'Watch/Mouawad/La Classique/Attitude/Rose Gold with Diamonds',label: 'Rose Gold with Diamonds'}
-                    ]
-                  },
-                  {id:4,code:'Watch/Mouawad/La Classique/3 Hand Ladies',label: '3 Hand Ladies',
-                    children: [
-                        {id:3,code:'Watch/Mouawad/La Classique/3 Hand Ladies/Steel with Diamond',label: 'Steel with Diamond'},
-                        {id:4,code:'Watch/Mouawad/La Classique/3 Hand Ladies/Rose Gold with Diamonds',label: 'Rose Gold with Diamonds'}
-                    ]
-                  },
-                  {id:4,code:'Watch/Mouawad/La Classique/3 Hand Gents',label: '3 Hand Gents',
-                    children: [
-                        {id:3,code:'Watch/Mouawad/La Classique/3 Hand Gents/Steel',label: 'Steel'},
-                        {id:3,code:'Watch/Mouawad/La Classique/3 Hand Gents/Rose Gold',label: 'Rose Gold'},
-                        {id:4,code:'Watch/Mouawad/La Classique/3 Hand Gents/Rose Gold with Diamonds',label: 'Rose Gold with Diamonds'}
-                    ]
-                  },
-                  {id:4,code:'Watch/Mouawad/La Classique/GMT',label: 'GMT',
-                    children: [
-                        {id:3,code:'Watch/Mouawad/La Classique/GMT/Steel',label: 'Steel'},
-                        {id:3,code:'Watch/Mouawad/La Classique/GMT/Rose Gold',label: 'Rose Gold'},
-                        {id:4,code:'Watch/Mouawad/La Classique/GMT/Rose Gold with Diamonds',label: 'Rose Gold with Diamonds'}
+                        {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Mouawad La Classique\\\\Attitude\\\\Steel With Diamonds',label: 'Steel With Diamonds'}
                     ]
                   }
                 ]
-            }
+              },
+              {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Mouawad\\\\Other Brands',label: 'Other Brands'}
 					]
 				},
-        {id:5,code:'Watch/Other Watch Brands',label: 'Other Watch Brands'}
+        {id:5,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Other Watch Brands',label: 'Other Watch Brands',
+          children: [
+              {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Other Watch Brands\\\\Roberge',label: 'Roberge',
+                children: [
+                    {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Other Watch Brands\\\\Roberge Altair',label: 'Roberge Altair'},
+                    {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Watch\\\\Other Watch Brands\\\\Roberge tucana',label: 'Roberge tucana'}
+                ]
+              }
+          ]
+        }
     ]
   }
 ];
