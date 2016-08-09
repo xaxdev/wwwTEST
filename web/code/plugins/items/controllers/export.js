@@ -25,6 +25,7 @@ module.exports = {
     var sortDirections = request.payload.sortDirections;
     var userCurrency = request.payload.userCurrency;
     var keys = Object.keys(obj);
+    let that = request.payload.this;
 
     var size = 8;
 
