@@ -716,123 +716,122 @@ class SearchResult extends Component {
       limitedEditionNumber: this.state.limitedEditionNumber,
     };
 
-    let params = {
-      'page' : this.props.currentPage,
-      'sortBy': sortingBy,
-      'sortDirections': sortingDirection,
-      'fields': fields,
-      'price': userLogin.permission.price
-    };  // default search params
-
-    // console.log('filters-->',filters);
-    filters.forEach(function(filter){
-      let keys = Object.keys(filter);
-      keys.forEach((key) => {
-        const value = filter[key];
-        params[key] = value;
-      });
-    });
-
-    this.setState({
-      showLoading: true,
-      isOpen: false
-    });
-
-    console.log('params--:>',params);
-    this.props.exportDatas(params)
-        .then((value) => {
-          console.log('export done!');
-          this.setState({
-            showLoading: false
-          });
-        });
-
-
-    // let alldata = exportItems.length;
-    // let size = Math.ceil(alldata/1500);
+    // let params = {
+    //   'page' : this.props.currentPage,
+    //   'sortBy': sortingBy,
+    //   'sortDirections': sortingDirection,
+    //   'fields': fields,
+    //   'price': userLogin.permission.price
+    // };  // default search params
     //
-    // let chunks = [];
-    // let i = 0;
-    // let file = 0;
-    //
-    // while (i < alldata) {
-    //   chunks.push(exportItems.slice(i, i += 1500));
-    // }
-    //
-    // // console.log('chunks-->',chunks);
-    //
-    // chunks.forEach(function (chunk) {
-    //   file++;
-    //   var tab_text = GenHtmlExportExcel(that, chunk, userLogin, ROOT_URL);
-    //
-    //   var data_type = 'data:application/vnd.ms-excel;base64';
-    //
-    //   var ua = window.navigator.userAgent;
-    //   let isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
-    //   // console.log(isSafari);
-    //   var msie = ua.indexOf('MSIE');
-    //   var edge = ua.indexOf('Edge');
-    //   var sa = '';
-    //   var uriContent = '';
-    //   var startDate = new Date();
-    //   var exportDate = moment(startDate,'MM-DD-YYYY');
-    //   exportDate = exportDate.format('YYYYMMDD_HHmm');
-    //   var fileName = 'download_'+exportDate+'_'+file+'.xls';
-    //   let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>{table}</body></html>';
-    //
-    //   if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-    //       if (window.navigator.msSaveBlob) {
-    //           var blob = new Blob([tab_text], {
-    //               type: 'data:application/vnd.ms-excel,'
-    //           });
-    //           that.setState({
-    //             isOpen: false,
-    //           });
-    //           navigator.msSaveBlob(blob, fileName);
-    //       }
-    //   } else {
-    //       var isFirefox = typeof InstallTrigger !== 'undefined';
-    //       if(!isFirefox){
-    //         if(isSafari){
-    //           let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
-    //           let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) };
-    //
-    //           // let ctx = { worksheet: exportDate || 'Worksheet', table: tab_text }
-    //           uriContent = 'data:application/vnd.ms-excel,' + base64(tab_text);
-    //           that.setState({
-    //             isOpen: false,
-    //           });
-    //           sa = window.open(uriContent,fileName);
-    //
-    //         }else{
-    //           // chrome or other
-    //           that.setState({
-    //             isOpen: false,
-    //           });
-    //           let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
-    //           let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
-    //           let ctx = { worksheet: 'Worksheet', table: tab_text };
-    //           // uri = 'data:application/vnd.ms-excel;base64,'
-    //           uriContent = 'data:application/vnd.ms-excel;base64,' + base64(tab_text);
-    //           // sa = window.open(uri + base64(format(template, ctx)),fileName);
-    //           sa = window.open(uriContent,fileName);
-    //           // return sa;
-    //           // window.open(uri + base64(format(template, ctx)));
-    //         }
-    //       } else {
-    //           var uri = 'data:application/vnd.ms-excel;base64,'
-    //           // uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
-    //           // sa = window.open(uriContent,'download.xlsx');
-    //           // let wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});
-    //           that.setState({
-    //             isOpen: false,
-    //           });
-    //           // window.open(uriContent,'download.xls')
-    //           window.location.href = uri + $.base64.encode(tab_text)
-    //       }
-    //   }
-    //
+    // // console.log('filters-->',filters);
+    // filters.forEach(function(filter){
+    //   let keys = Object.keys(filter);
+    //   keys.forEach((key) => {
+    //     const value = filter[key];
+    //     params[key] = value;
+    //   });
     // });
+    //
+    // this.setState({
+    //   showLoading: true,
+    //   isOpen: false
+    // });
+    //
+    // console.log('params--:>',params);
+    // this.props.exportDatas(params)
+    //     .then((value) => {
+    //       console.log('export done!');
+    //       this.setState({
+    //         showLoading: false
+    //       });
+    //     });
+
+    let alldata = exportItems.length;
+    let size = Math.ceil(alldata/1500);
+
+    let chunks = [];
+    let i = 0;
+    let file = 0;
+
+    while (i < alldata) {
+      chunks.push(exportItems.slice(i, i += 1500));
+    }
+
+    // console.log('chunks-->',chunks);
+
+    chunks.forEach(function (chunk) {
+      file++;
+      var tab_text = GenHtmlExportExcel(that, chunk, userLogin, ROOT_URL);
+
+      var data_type = 'data:application/vnd.ms-excel;base64';
+
+      var ua = window.navigator.userAgent;
+      let isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+      // console.log(isSafari);
+      var msie = ua.indexOf('MSIE');
+      var edge = ua.indexOf('Edge');
+      var sa = '';
+      var uriContent = '';
+      var startDate = new Date();
+      var exportDate = moment(startDate,'MM-DD-YYYY');
+      exportDate = exportDate.format('YYYYMMDD_HHmm');
+      var fileName = 'download_'+exportDate+'_'+file+'.xls';
+      let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>{table}</body></html>';
+
+      if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+          if (window.navigator.msSaveBlob) {
+              var blob = new Blob([tab_text], {
+                  type: 'data:application/vnd.ms-excel,'
+              });
+              that.setState({
+                isOpen: false,
+              });
+              navigator.msSaveBlob(blob, fileName);
+          }
+      } else {
+          var isFirefox = typeof InstallTrigger !== 'undefined';
+          if(!isFirefox){
+            if(isSafari){
+              let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
+              let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) };
+
+              // let ctx = { worksheet: exportDate || 'Worksheet', table: tab_text }
+              uriContent = 'data:application/vnd.ms-excel,' + base64(tab_text);
+              that.setState({
+                isOpen: false,
+              });
+              sa = window.open(uriContent,fileName);
+
+            }else{
+              // chrome or other
+              that.setState({
+                isOpen: false,
+              });
+              let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
+              let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+              let ctx = { worksheet: 'Worksheet', table: tab_text };
+              // uri = 'data:application/vnd.ms-excel;base64,'
+              uriContent = 'data:application/vnd.ms-excel;base64,' + base64(tab_text);
+              // sa = window.open(uri + base64(format(template, ctx)),fileName);
+              sa = window.open(uriContent,fileName);
+              // return sa;
+              // window.open(uri + base64(format(template, ctx)));
+            }
+          } else {
+              var uri = 'data:application/vnd.ms-excel;base64,'
+              // uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
+              // sa = window.open(uriContent,'download.xlsx');
+              // let wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});
+              that.setState({
+                isOpen: false,
+              });
+              // window.open(uriContent,'download.xls')
+              window.location.href = uri + $.base64.encode(tab_text)
+          }
+      }
+
+    });
 
   }
   renderExportExcelDialog(){

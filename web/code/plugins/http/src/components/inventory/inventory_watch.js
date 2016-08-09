@@ -633,6 +633,19 @@ class InventoryWatch extends Component {
                     onChange={this.handleMovementSelectChange} />
                 </div>
               </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label tooltiop-span">Complication
+                  <OverlayTrigger placement="top" overlay={tooltipComplication}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
+                <div className="col-sm-7">
+                  <Select multi simpleValue value={props.ComplicationValue}
+                    placeholder="Select your Complication"
+                    options={dataDropDowntComplication}
+                    onChange={this.handleComplicationSelectChange} />
+                </div>
+              </div>
 
             </div>
             <div className="col-lg-6 form-horizontal">
@@ -840,7 +853,7 @@ class InventoryWatch extends Component {
                     onChange={this.handleStrapColorSelectChange} />
                 </div>
               </div>
-              <div className="form-group">
+              {/*<div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Complication
                   <OverlayTrigger placement="top" overlay={tooltipComplication}>
                     <img src="/images/alphanumeric.png" />
@@ -852,7 +865,7 @@ class InventoryWatch extends Component {
                     options={dataDropDowntComplication}
                     onChange={this.handleComplicationSelectChange} />
                 </div>
-              </div>
+              </div>*/}
             </div>
           </div>
         </div>
