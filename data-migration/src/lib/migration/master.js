@@ -347,7 +347,7 @@ const getStoneType = async index => {
 const getHierarchy = async index => {
     try {
         console.log('Hierarchy!!!');
-        const total = await core.get(await settings(index, 'stoneType', constant.HIERARCHY_QUERY));
+        const total = await core.get(await settings(index, 'hierarchy', constant.HIERARCHY_QUERY));
         console.log(`${total} records were processed in total.`);
     } catch (err) {
         throw err;
