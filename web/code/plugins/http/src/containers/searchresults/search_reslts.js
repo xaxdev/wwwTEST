@@ -674,11 +674,54 @@ class SearchResult extends Component {
 
     const sortingDirection = this.refs.sortingDirection.value;
 
+    let fields = {
+      allFields: this.state.allFields,
+      showImages: this.state.showImages,
+      ingredients: this.state.ingredients,
+      categoryName: this.state.categoryName,
+      category: this.state.category,
+      article: this.state.article,
+      collection: this.state.collection,
+      setReferenceNumber: this.state.setReferenceNumber,
+      cut: this.state.cut,
+      color: this.state.color,
+      clarity: this.state.clarity,
+      caratWt: this.state.caratWt,
+      unit: this.state.unit,
+      qty: this.state.qty,
+      origin: this.state.origin,
+      symmetry: this.state.symmetry,
+      flourance: this.state.flourance,
+      batch: this.state.batch,
+      netWeight: this.state.netWeight,
+      stoneQty: this.state.stoneQty,
+      dominantStone: this.state.dominantStone,
+      markup: this.state.markup,
+      certificatedNumber: this.state.certificatedNumber,
+      certificateDate: this.state.certificateDate,
+      vendorCode: this.state.vendorCode,
+      vendorName: this.state.vendorName,
+      metalColor: this.state.metalColor,
+      metalType: this.state.metalType,
+      brand: this.state.brand,
+      complication: this.state.complication,
+      strapType: this.state.strapType,
+      strapColor: this.state.strapColor,
+      buckleType: this.state.buckleType,
+      dialIndex: this.state.dialIndex,
+      dialColor: this.state.dialColor,
+      movement: this.state.movement,
+      serial: this.state.serial,
+      limitedEdition: this.state.limitedEdition,
+      limitedEditionNumber: this.state.limitedEditionNumber,
+    };
+
     let params = {
       'page' : this.props.currentPage,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection,
-      'this': this
+      'fields': fields,
+      'price': userLogin.permission.price
     };  // default search params
 
     // console.log('filters-->',filters);
