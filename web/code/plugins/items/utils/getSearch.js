@@ -446,7 +446,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             filter =
               `{
                 "bool": {
-                  "must": [
+                  "should": [
                       ${JSON.stringify(filterSplit)}
                     ]
                   }
