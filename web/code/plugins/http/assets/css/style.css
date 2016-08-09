@@ -436,11 +436,13 @@ select.form-searchresult option{
 .bd-box .checkbox-tree{
   border: 1px solid #ccc;
   border-radius: 6px;
-  padding: 10px 15px;
+  padding: 5px 15px;
   font-size: 13px;
-  height: 150px;
+  max-height: 150px;
+  height: auto;
   overflow-y: scroll;
 }
+.bd-box .checkbox-tree span:first-child  {width: 10px; display: inline-block;}
 .bd-box .checkbox-tree span {
     cursor: pointer;
     line-height: 28px;
