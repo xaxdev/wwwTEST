@@ -438,17 +438,18 @@ select.form-searchresult option{
   border-radius: 6px;
   padding: 10px 15px;
   font-size: 13px;
-  height: 200px;
+  height: 150px;
   overflow-y: scroll;
 }
 .bd-box .checkbox-tree span {
     cursor: pointer;
-    line-height: 24px;
+    line-height: 28px;
 }
 .bd-box ul{
   list-style: none;
 }
 .bd-box ul input{margin:0 10px; cursor: pointer;}
+.bd-box .checkbox-tree ul{padding:0 0 0 20px;}
 .Select-arrow{
 	background: url(/images/arrow.jpg) no-repeat center -7px;
 	border-color: transparent !important;
@@ -912,7 +913,9 @@ select.form-searchresult option{
 .image-gallery-image{text-align: center; margin:0 auto;}
 .image-gallery-image img{width: auto !important;}
 
-
+@media (min-width:1201px){
+ .bd-box{width: 79%;}
+}
 @media (max-width:1200px){
 	.ip-nopadding{padding:0;}
 	.mg-right{margin-left:-15px;}
