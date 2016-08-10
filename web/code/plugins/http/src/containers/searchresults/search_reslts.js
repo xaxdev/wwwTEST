@@ -159,7 +159,7 @@ class SearchResult extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // console.log('nextProps-->',nextProps);
+    // console.log('nextProps-->',nextProps.currentPage);
     // console.log('nextState-->',nextState);
     return shallowCompare(this, nextProps, nextState);
   }
@@ -336,7 +336,7 @@ class SearchResult extends Component {
     // console.log('currPage-->',currPage);
     // console.log('this.state.activePage-->',this.state.activePage);
     const page = this.state.activePage;
-    currPage.value = this.state.activePage;
+    // currPage.value = this.state.activePage;
     // console.log('renderPagination-->',this.state.activePage);
 
     return(

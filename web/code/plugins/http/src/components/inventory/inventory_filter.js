@@ -121,8 +121,8 @@ class InventoryFilter extends Component {
     );
   }
   tabsSelected(activeKey){
-    console.log('activeKey-->',activeKey);
-    console.log('this.props.activeTabCategory-->',this.props.activeTabCategory);
+    // console.log('activeKey-->',activeKey);
+    // console.log('this.props.activeTabCategory-->',this.props.activeTabCategory);
     if(activeKey != this.props.activeTabCategory){
       this.setState({
         alert:true,
