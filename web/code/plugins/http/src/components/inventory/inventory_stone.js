@@ -37,6 +37,23 @@ class InventoryStone extends Component {
       treeViewData:null
     };
   }
+  componentWillReceiveProps(nextProps) {
+    const { props } = this.props;
+    // console.log('nextProps-->',nextProps.props.SearchAction);
+    // console.log('props.SearchAction-->',props.SearchAction);
+    if(nextProps.props.SearchAction != props.SearchAction){
+      if(props.HierarchyValue != null){
+        if(nextProps.props.SearchAction == 'New'){
+          if(props.HierarchyValue.length != 0){
+            props.HierarchyValue[0].checked = false;
+            props.HierarchyValue[0].key = props.HierarchyValue[0].code;
+            this.refs.treeview.handleChange(props.HierarchyValue[0]);
+          }
+          props.inventoryActions.setHierarchy(null);
+        }
+      }
+    }
+  }
   treeOnUnClick(vals){
     // console.log('unclick vals-->',this.state.treeViewData);
 
