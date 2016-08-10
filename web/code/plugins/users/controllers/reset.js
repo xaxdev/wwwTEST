@@ -27,7 +27,11 @@ exports.generate = {
       .then(function (user) {
 
         if (!user) {
-          return reply(Boom.badRequest('failed to find any account with this email'));
+          return reply(Boom.badRequest('Failed to find any account with this email.'));
+        }
+
+        if (!user.status) {
+          return reply(Boom.badRequest('This user is not active.'));
         }
 
         // Load email template

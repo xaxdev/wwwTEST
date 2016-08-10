@@ -32,7 +32,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[],
                 BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[],
                 LimitedEditionValue:[], WatchCategoryValue:[],filters:[], AccessoryTypeValue:[], paramsSearch:null,
-                SparePartTypeValue:[],HierarchyValue:null,SearchAction:'New'
+                SparePartTypeValue:[],SearchAction:'New'
               };
       case SET_CURRENTPAGE :
         // console.log('SET_POLISH -->',action);

@@ -24,6 +24,7 @@
     "dogwater": "^1.1.0",
     "elasticsearch": "^11.0.1",
     "es6-promise": "^3.1.2",
+    "excel4node": "^1.2.0",
     "fs": "0.0.2",
     "glob": "^7.0.0",
     "glue": "^3.1.0",

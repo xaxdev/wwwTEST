@@ -38,7 +38,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 input[type=checkbox]{margin: 4px 5px 0 0px;}
 .active-bar{
-  border: 1px solid #ddbe6a !important; 
+  border: 1px solid #ddbe6a !important;
   color: #ddbe6a;
 }
 #page-wrapper{border:1px solid #dfdfdf;}
@@ -434,16 +434,26 @@ select.form-searchresult option{
 }
 .input-calendar{width:auto !important}
 .bd-box .checkbox-tree{
-	border: 1px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 6px;
-  padding: 10px 15px;
+  padding: 5px 15px;
+  font-size: 13px;
+  max-height: 150px;
+  height: auto;
+  overflow-y: scroll;
+}
+.bd-box .checkbox-tree span:first-child  {width: 10px; display: inline-block;}
+.bd-box .checkbox-tree span {
+    cursor: pointer;
+    line-height: 28px;
 }
 .bd-box ul{
   list-style: none;
 }
-.bd-box ul input{margin:0 10px;}
+.bd-box ul input{margin:0 10px; cursor: pointer;}
+.bd-box .checkbox-tree ul{padding:0 0 0 20px;}
 .Select-arrow{
-	background: url(/images/arrow.jpg) no-repeat center;
+	background: url(/images/arrow.jpg) no-repeat center -7px;
 	border-color: transparent !important;
 }
 .Select--multi .Select-item{
@@ -905,7 +915,9 @@ select.form-searchresult option{
 .image-gallery-image{text-align: center; margin:0 auto;}
 .image-gallery-image img{width: auto !important;}
 
-
+@media (min-width:1201px){
+ .bd-box{width: 79%;}
+}
 @media (max-width:1200px){
 	.ip-nopadding{padding:0;}
 	.mg-right{margin-left:-15px;}

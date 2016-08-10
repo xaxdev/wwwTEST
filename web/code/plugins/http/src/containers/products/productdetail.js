@@ -39,14 +39,12 @@ class productdetail extends Component {
   }
 
   componentWillMount(){
-    console.log("componentWillMount -->");
     const productId = this.props.params.id;
     const productlist = JSON.parse(sessionStorage.navigation);
     this.setState({
       productdetailLoading: true
     });
     this.props.getProductDetail(productId,productlist).then(()=>{
-      console.log(this.state.productdetailLoading);
       this.setState({
         productdetailLoading: false
       });
@@ -60,7 +58,6 @@ class productdetail extends Component {
 
   }
   componentDidMount() {
-    console.log("componentDidMount -->");
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
@@ -128,7 +125,6 @@ class productdetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps -->");
     if (nextProps.params.id !== this.props.params.id) {
       this.setState({
         productdetailLoading: true
@@ -458,7 +454,6 @@ class productdetail extends Component {
     const { type} = this.props.productdetail;
 
     let pructdetailurl = '/productdetail/';
-    console.log("on render -->",this.state);
 
     return(
       <div id="page-wrapper">
