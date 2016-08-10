@@ -61,7 +61,7 @@ const notify = err => {
 };
 
 new CronJob({
-  cronTime: '00 00 5 * * *',
+  cronTime: '00 00 6 * * *',
   onTick: _ => {
     init()
         .then(_ => {
