@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel src -d release -s && node --max_old_space_size=4096 ./release/index.js"
+    "start": "babel src -d release -s && node --max_old_space_size=4096 ./release/index.js",
+    "build": "babel src -d release -s",
+    "job": "babel src -d release -s && node --max_old_space_size=4096 ./release/job.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +21,6 @@
     "elasticsearch": "^11.0.1",
     "moment-timezone": "^0.5.4",
     "mssql": "^3.3.0",
-    "sendgrid": "^3.0.10"
+    "sendgrid": "^4.0.1"
   }
 }

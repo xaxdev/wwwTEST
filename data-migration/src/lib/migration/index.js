@@ -7,7 +7,6 @@ import * as constant from './constant';
 const migrate = async index => {
     try {
         const exchangeRates = await item.getExchangeRates();
-        // await item.test(index, exchangeRates);
         await item.getJewelry(index, exchangeRates);
         await item.getStones(index, exchangeRates);
         await item.getWatches(index, exchangeRates);
@@ -47,6 +46,7 @@ const migrate = async index => {
         await master.getDominantStones(index);
         await master.getGemstoneStoneType(index);
         await master.getStoneType(index);
+        await master.getHierarchy(index);
     } catch (err) {
         throw err;
     }

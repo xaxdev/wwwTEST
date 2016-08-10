@@ -67,7 +67,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
         }
 
         // console.log('key.value-->',value);
-        if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' ){
+        if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
              || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'fluorescence'
              || key == 'jewelryCategory' || key == 'collection' || key == 'brand'|| key == 'mustHave' || key == 'ringSize'
@@ -428,7 +428,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           }
           else if(key == 'hierarchy'){
             var filterSplit = [];
-            // console.log('hierarchy value-->', value)
+            console.log('hierarchy value-->', value)
             var vals = value.split(',');
             vals.forEach((val)=>{
               var mapField =
@@ -440,12 +440,13 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                           }
                         }
                       }`;
+              console.log('mapField-->',mapField);
               filterSplit.push(JSON.parse(mapField));
             });
             filter =
               `{
                 "bool": {
-                  "must": [
+                  "should": [
                       ${JSON.stringify(filterSplit)}
                     ]
                   }

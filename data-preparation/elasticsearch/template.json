@@ -28,12 +28,24 @@
                         "lowercase",
                         "remove_space_filter"
                     ]
+                },
+                "double_backslash_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "double_backslash_tokenizer",
+                    "filter": [
+                        "lowercase",
+                        "remove_space_filter"
+                    ]
                 }
             },
             "tokenizer": {
                 "forward_slash_tokenizer": {
                     "type": "pattern",
                     "pattern": "/"
+                },
+                "double_backslash_tokenizer": {
+                    "type": "pattern",
+                    "pattern": "\\\\"
                 }
             },
             "filter": {
@@ -151,13 +163,13 @@
                     }
                 },
                 {
-                    "forward_slash": {
+                    "hierarchy": {
                         "match_mapping_type": "string",
                         "match": "hierarchy",
                         "mapping": {
                             "type": "string",
-                            "analyzer": "forward_slash_analyzer",
-                            "search_analyzer": "forward_slash_analyzer",
+                            "analyzer": "double_backslash_analyzer",
+                            "search_analyzer": "double_backslash_analyzer",
                             "norms": {
                                 "enabled": false
                             }

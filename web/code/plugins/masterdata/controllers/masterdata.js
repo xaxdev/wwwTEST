@@ -19,7 +19,7 @@ module.exports = {
             "match_all" : {}
         }
     }`);
-    let type = 'roles,currencies,companies,locations,warehouses,countries,productGroups,stoneType,gemstoneStoneType,cut,cutShape,cutGrades,colors,colorGrades,clarities,certificateLabs,polishs,symmetries,treatments,fluorescences,origins,jewelryCategories,collections,brands,ringSizes,dominantStones,metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,buckleTypes,strapTypes,strapColors,complications'
+    let type = 'roles,currencies,companies,locations,warehouses,countries,productGroups,stoneType,gemstoneStoneType,cut,cutShape,cutGrades,colors,colorGrades,clarities,certificateLabs,polishs,symmetries,treatments,fluorescences,origins,jewelryCategories,collections,brands,ringSizes,dominantStones,metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,buckleTypes,strapTypes,strapColors,complications,hierarchy'
     // let type = 'roles,currencies';
     const alldata = elastic
       .search({
@@ -145,47 +145,51 @@ module.exports = {
       const complicationsget = alldata.hits.hits.filter((element)=> {{
         return element._type == 'complications';
       }})
+      const hierarchyget = alldata.hits.hits.filter((element)=> {{
+        return element._type == 'hierarchy';
+      }})
 
 
       const responsesata = {
-        roles:_.sortBy(rolesget.map((element)=> element._source),'name'),
-        currencies:_.sortBy(currenciesget.map((element)=> element._source),'name'),
-        companies:_.sortBy(companiesget.map((element)=> element._source),'name'),
-        locations:_.sortBy(locationsget.map((element)=> element._source),'code'),
-        warehouses:_.sortBy(warehousesget.map((element)=> element._source),'code'),
-        countries:_.sortBy(countriesget.map((element)=> element._source),'name'),
-        productGroups:_.sortBy(productGroupsget.map((element)=> element._source),'name'),
-        stoneType:_.sortBy(stoneTypeget.map((element)=> element._source),'code'),
-        gemstoneStoneType:_.sortBy(gemstoneStoneTypeget.map((element)=> element._source),'code'),
-        cutShape:_.sortBy(cutShapeget.map((element)=> element._source),'name'),
-        cut:_.sortBy(cutget.map((element)=> element._source),'name'),
-        cutGrades:_.sortBy(cutGradesget.map((element)=> element._source),'name'),
-        colors:_.sortBy(colorsget.map((element)=> element._source),'code'),
-        colorGrades:_.sortBy(colorGradesget.map((element)=> element._source),'name'),
-        clarities:_.sortBy(claritiesget.map((element)=> element._source),'name'),
-        certificateLabs:_.sortBy(certificateLabsget.map((element)=> element._source),'name'),
-        polishs:_.sortBy(polishsget.map((element)=> element._source),'name'),
-        symmetries:_.sortBy(symmetriesget.map((element)=> element._source),'name'),
-        treatments:_.sortBy(treatmentsget.map((element)=> element._source),'name'),
-        fluorescences:_.sortBy(fluorescencesget.map((element)=> element._source),'name'),
-        origins:_.sortBy(originsget.map((element)=> element._source),'name'),
-        jewelryCategories:_.sortBy(jewelryCategoriesget.map((element)=> element._source),'name'),
-        collections:_.sortBy(collectionsget.map((element)=> element._source),'name'),
-        brands:_.sortBy(brandsget.map((element)=> element._source),'name'),
-        ringSizes:_.sortBy(ringSizesget.map((element)=> element._source),'name'),
-        dominantStones:_.sortBy(dominantStonesget.map((element)=> element._source),'code'),
-        metalTypes:_.sortBy(metalTypesget.map((element)=> element._source),'name'),
-        metalColours:_.sortBy(metalColoursget.map((element)=> element._source),'name'),
-        certificateAgencys:_.sortBy(certificateAgencysget.map((element)=> element._source),'name'),
-        watchCategories:_.sortBy(watchCategoriesget.map((element)=> element._source),'name'),
-        movements:_.sortBy(movementsget.map((element)=> element._source),'name'),
-        dialIndexs:_.sortBy(dialIndexsget.map((element)=> element._source),'name'),
-        dialColors:_.sortBy(dialColorsget.map((element)=> element._source),'name'),
-        dialMetals:_.sortBy(dialMetalsget.map((element)=> element._source),'name'),
-        buckleTypes:_.sortBy(buckleTypesget.map((element)=> element._source),'name'),
-        strapTypes:_.sortBy(strapTypesget.map((element)=> element._source),'name'),
-        strapColors:_.sortBy(strapColorsget.map((element)=> element._source),'name'),
-        complications:_.sortBy(complicationsget.map((element)=> element._source),'name')
+        roles: _.sortBy(rolesget.map((element)=> element._source),'name'),
+        currencies: _.sortBy(currenciesget.map((element)=> element._source),'name'),
+        companies: _.sortBy(companiesget.map((element)=> element._source),'name'),
+        locations: _.sortBy(locationsget.map((element)=> element._source),'code'),
+        warehouses: _.sortBy(warehousesget.map((element)=> element._source),'code'),
+        countries: _.sortBy(countriesget.map((element)=> element._source),'name'),
+        productGroups: _.sortBy(productGroupsget.map((element)=> element._source),'name'),
+        stoneType: _.sortBy(stoneTypeget.map((element)=> element._source),'code'),
+        gemstoneStoneType: _.sortBy(gemstoneStoneTypeget.map((element)=> element._source),'code'),
+        cutShape: _.sortBy(cutShapeget.map((element)=> element._source),'name'),
+        cut: _.sortBy(cutget.map((element)=> element._source),'name'),
+        cutGrades: _.sortBy(cutGradesget.map((element)=> element._source),'name'),
+        colors: _.sortBy(colorsget.map((element)=> element._source),'code'),
+        colorGrades: _.sortBy(colorGradesget.map((element)=> element._source),'name'),
+        clarities: _.sortBy(claritiesget.map((element)=> element._source),'name'),
+        certificateLabs: _.sortBy(certificateLabsget.map((element)=> element._source),'name'),
+        polishs: _.sortBy(polishsget.map((element)=> element._source),'name'),
+        symmetries: _.sortBy(symmetriesget.map((element)=> element._source),'name'),
+        treatments: _.sortBy(treatmentsget.map((element)=> element._source),'name'),
+        fluorescences: _.sortBy(fluorescencesget.map((element)=> element._source),'name'),
+        origins: _.sortBy(originsget.map((element)=> element._source),'name'),
+        jewelryCategories: _.sortBy(jewelryCategoriesget.map((element)=> element._source),'name'),
+        collections: _.sortBy(collectionsget.map((element)=> element._source),'name'),
+        brands: _.sortBy(brandsget.map((element)=> element._source),'name'),
+        ringSizes: _.sortBy(ringSizesget.map((element)=> element._source),'name'),
+        dominantStones: _.sortBy(dominantStonesget.map((element)=> element._source),'code'),
+        metalTypes: _.sortBy(metalTypesget.map((element)=> element._source),'name'),
+        metalColours: _.sortBy(metalColoursget.map((element)=> element._source),'name'),
+        certificateAgencys: _.sortBy(certificateAgencysget.map((element)=> element._source),'name'),
+        watchCategories: _.sortBy(watchCategoriesget.map((element)=> element._source),'name'),
+        movements: _.sortBy(movementsget.map((element)=> element._source),'name'),
+        dialIndexs: _.sortBy(dialIndexsget.map((element)=> element._source),'name'),
+        dialColors: _.sortBy(dialColorsget.map((element)=> element._source),'name'),
+        dialMetals: _.sortBy(dialMetalsget.map((element)=> element._source),'name'),
+        buckleTypes: _.sortBy(buckleTypesget.map((element)=> element._source),'name'),
+        strapTypes: _.sortBy(strapTypesget.map((element)=> element._source),'name'),
+        strapColors: _.sortBy(strapColorsget.map((element)=> element._source),'name'),
+        complications: _.sortBy(complicationsget.map((element)=> element._source),'name'),
+        hierarchy: _.sortBy(hierarchyget.map((element)=> element._source),'path')
       };
       elastic.close();
       return reply(JSON.stringify(responsesata,null,4));

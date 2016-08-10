@@ -24,7 +24,6 @@ class Login extends Component {
     }
   }
   handleSubmit(data) {
-    // console.log(data);
     this.setState({
       showloading: true
     });

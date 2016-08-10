@@ -121,8 +121,9 @@ class InventoryFilter extends Component {
     );
   }
   tabsSelected(activeKey){
-    // console.log('activeKey-->',activeKey);
-    if(activeKey != this.state.activeTab){
+    console.log('activeKey-->',activeKey);
+    console.log('this.props.activeTabCategory-->',this.props.activeTabCategory);
+    if(activeKey != this.props.activeTabCategory){
       this.setState({
         alert:true,
         isOpen: true,
@@ -286,10 +287,17 @@ class InventoryFilter extends Component {
     let fileName = jQuery('#fileName');
 
     fileName.html('');
+    var { fields:{reference }} = this.props;
+    reference.value = '';
+    reference.onChange('');
 
     ResetFormMain(this);
+    // console.log('this.props.SearchAction-->',this.props.SearchAction);
     this.props.resetForm();
+    // console.log('reset form')
+    // console.log('this.props.SearchAction-->',this.props.SearchAction);
     this.refs.jewelry.treeOnUnClick();
+    // console.log('reset hierarchy')
     this.refs.watch.treeOnUnClick();
     this.refs.stone.treeOnUnClick();
     this.refs.accessory.treeOnUnClick();

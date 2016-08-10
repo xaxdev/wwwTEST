@@ -37,6 +37,23 @@ class InventoryStone extends Component {
       treeViewData:null
     };
   }
+  componentWillReceiveProps(nextProps) {
+    const { props } = this.props;
+    // console.log('nextProps-->',nextProps.props.SearchAction);
+    // console.log('props.SearchAction-->',props.SearchAction);
+    if(nextProps.props.SearchAction != props.SearchAction){
+      if(props.HierarchyValue != null){
+        if(nextProps.props.SearchAction == 'New'){
+          if(props.HierarchyValue.length != 0){
+            props.HierarchyValue[0].checked = false;
+            props.HierarchyValue[0].key = props.HierarchyValue[0].code;
+            this.refs.treeview.handleChange(props.HierarchyValue[0]);
+          }
+          props.inventoryActions.setHierarchy(null);
+        }
+      }
+    }
+  }
   treeOnUnClick(vals){
     // console.log('unclick vals-->',this.state.treeViewData);
 
@@ -427,17 +444,19 @@ class InventoryStone extends Component {
       <div className="panel panel-default">
         <div className="panel-body">
           <div className="row margin-ft">
-            <div className="col-lg-6  form-horizontal">
-              <div className="form-group hidden">
-                <label className="col-sm-4 control-label tooltiop-span">Product Hierarchy
+            <div className="col-lg-12  form-horizontal">
+              <div className="form-group">
+                <label className="col-lg-2 col-md-4 col-sm-4 control-label tooltiop-span">Product Hierarchy
                   <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>
                 </label>
-                <div className="col-sm-7 bd-box">
+                <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
                   <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                 </div>
               </div>
+            </div>
+            <div className="col-lg-6  form-horizontal">
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Stone Type
                   <OverlayTrigger placement="top" overlay={tooltipStoneType}>

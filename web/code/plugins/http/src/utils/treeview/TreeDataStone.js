@@ -1,43 +1,40 @@
 module.exports = [
-  {id:1,code:'Stone',label: 'Stone',
+  {id:1,code:'Mouawad Inventory\\\\Merchandise\\\\Stone',label: 'Stone',
     children: [
-        {id:2,code:'Stone/Loose Colored Gemstones',label: 'Loose Colored Gemstones',
+        {id:2,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Colored Gemstones',label: 'Loose Colored Gemstones',
 					children: [
-							{id:3,code:'Stone/Loose Colored Gemstones/Natural',label: 'Natural'},
-							{id:4,code:'Stone/Loose Colored Gemstones/Treated',label: 'Treated'}
+							{id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Colored Gemstones\\\\Loose Emerald',label: 'Loose Emerald',
+                children: [
+                    {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Colored Gemstones\\\\Loose Emerald\\\\Loose Emerald Natural',label: 'Loose Emerald Natural'}
+                ]
+              },
+							{id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Colored Gemstones\\\\Loose Ruby',label: 'Loose Ruby',
+                children: [
+                    {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Colored Gemstones\\\\Loose Ruby\\\\Loose Ruby Natural',label: 'Loose Ruby Natural'}
+                ]
+              },
+              {id:4,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Colored Gemstones\\\\Loose Sapphire',label: 'Loose Sapphire',
+                children: [
+                    {id:3,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Colored Gemstones\\\\Loose Sapphire\\\\Loose Sapphire Natural',label: 'Loose Sapphire Natural'}
+                ]
+              }
 					]
 				},
-        {id:5,code:'Stone/Loose Diamonds',label: 'Loose Diamonds',
+        {id:5,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Diamonds',label: 'Loose Diamonds',
 					children: [
-							{id:6,code:'Stone/Loose Diamonds/Natural',label: 'Natural'},
-							{id:7,code:'Stone/Loose Diamonds/Treated',label: 'Treated'}
+							{id:6,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Diamonds\\\\Loose Diamond Natural',label: 'Loose Diamond Natural'}
 					]
 				},
-        {id:8,code:'Stone/Loose Beads',label: 'Loose Beads'},
-				{id:9,code:'Stone/Certified Colored Gemstones',label: 'Certified Colored Gemstones',
+        {id:15,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Pearl',label: 'Loose Pearl',
 					children: [
-							{id:10,code:'Stone/Certified Colored Gemstones/Natural',label: 'Natural'},
-							{id:11,code:'Stone/Certified Colored Gemstones/Treated',label: 'Treated'}
+							{id:17,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Pearl\\\\Pearl Natural',label: 'Pearl Natural'}
 					]
 				},
-				{id:12,code:'Stone/Certified Diamonds',label: 'Certified Diamonds',
+        {id:18,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Semiprecious',label: 'Loose Semiprecious',
 					children: [
-							{id:13,code:'Stone/Certified Diamonds/Natural',label: 'Natural'},
-							{id:14,code:'Stone/Certified Diamonds/HPHT',label: 'HPHT'}
+							{id:19,code:'Mouawad Inventory\\\\Merchandise\\\\Stone\\\\Loose Semiprecious\\\\Loose Semiprecious Natural',label: 'Loose Semiprecious Natural'}
 					]
-				},
-				{id:15,code:'Stone/Loose Pearls',label: 'Loose Pearls',
-					children: [
-							{id:16,code:'Stone/Loose Pearls/Cultured',label: 'Cultured'},
-							{id:17,code:'Stone/Loose Pearls/Pearl Natural',label: 'Pearl Natural'}
-					]
-				},
-				{id:18,code:'Stone/Loose Semiprecious',label: 'Loose Semiprecious',
-					children: [
-							{id:19,code:'Stone/Loose Semiprecious/Natural',label: 'Natural'},
-							{id:20,code:'Stone/Loose Semiprecious/Treated',label: 'Treated'}
-					]
-				},
+				}
     ]
   }
 ];

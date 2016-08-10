@@ -41,6 +41,7 @@ export const SPAREPARTTYPE_QUERY = './query/master/sparePartType.sql';
 export const DOMINATSTONES_QUERY = './query/master/dominantStone.sql';
 export const GEMSTONE_STONETYPE_QUERY = './query/master/gemstone-stoneType.sql';
 export const STONETYPE_QUERY = './query/master/stoneCategory.sql';
+export const HIERARCHY_QUERY = './query/master/hierarchy.sql';
 
 // from array
 export const CURRENCY_DATA = '../../../query/master/currency.js';

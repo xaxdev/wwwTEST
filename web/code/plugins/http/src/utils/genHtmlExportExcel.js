@@ -364,11 +364,16 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
   titles.forEach(function(title){
     countColumn++;
     if (title != 'Images') {
-      if(countColumn < columnIngredients){
+      if (that.state.allFields) {
+        if(countColumn < columnIngredients){
+          html = html + `<td bgcolor="#F79647"><b>${title}</b></td>`;
+        }else{
+          html = html + `<td bgcolor="#92D14F"><b>${title}</b></td>`;
+        }
+      } else {
         html = html + `<td bgcolor="#F79647"><b>${title}</b></td>`;
-      }else{
-        html = html + `<td bgcolor="#92D14F"><b>${title}</b></td>`;
       }
+
     } else {
       html = html + `<td width='150' bgcolor="#F79647"><b>${title}</b></td>`;
     }
@@ -417,5 +422,5 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
 
         tab_text = tab_text + html ;
         tab_text = tab_text + '</body></html>';
-  return tab_text;
+  return html;
 }
