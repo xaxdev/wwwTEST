@@ -372,7 +372,7 @@ class InventoryStone extends Component {
       }
       if (props.options.colors) {
         dataDropDowntColor.push(props.options.colors.map(color =>{
-            return ({value: color.code,label:color.name});
+            return ({value: color.code,label:color.code + ' [' + color.name + ']'});
           })
         )
         dataDropDowntColor = dataDropDowntColor[0];

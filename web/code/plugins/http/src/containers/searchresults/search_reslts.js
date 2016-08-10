@@ -159,9 +159,16 @@ class SearchResult extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // console.log('nextProps-->',nextProps);
+    // console.log('nextProps.currentPage-->',nextProps.currentPage);
     // console.log('nextState-->',nextState);
     return shallowCompare(this, nextProps, nextState);
+  }
+  componentWillReceiveProps(nextProps) {
+    // console.log('nextProps-->',nextProps);
+    if(this.props.currentPage != nextProps.currentPage){
+      let { currPage } = this.props.fields;
+      currPage.onChange(nextProps.currentPage);
+    }
   }
   printResults(e){
     e.preventDefault();
@@ -336,7 +343,7 @@ class SearchResult extends Component {
     // console.log('currPage-->',currPage);
     // console.log('this.state.activePage-->',this.state.activePage);
     const page = this.state.activePage;
-    currPage.value = this.state.activePage;
+    // currPage.value = this.state.activePage;
     // console.log('renderPagination-->',this.state.activePage);
 
     return(
@@ -480,9 +487,9 @@ class SearchResult extends Component {
     });
 
     let { currPage } = this.props.fields;
-    currPage.onChange(this.state.activePage);
-    currPage.value = this.state.activePage;
-    // console.log('this.state.activePage-->',this.state.activePage);
+    currPage.onChange(1);
+    currPage.value = 1;
+    // console.log('currPage.value-->',currPage.value);
 
   }
   sortingDirection(e){
@@ -548,6 +555,10 @@ class SearchResult extends Component {
         });
       }
     });
+
+    let { currPage } = this.props.fields;
+    currPage.onChange(1);
+    currPage.value = 1;
   }
   newSearch(e){
     e.preventDefault();
