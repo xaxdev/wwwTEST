@@ -1,5 +1,4 @@
-SELECT	[Type] AS code
-		,Ltrim([ARTICLEDESCRIPTION]) AS name
-FROM	[MWD_DB].[dbo].[CRWMOLJEWELRYTYPE]
-WHERE [TYPE] <> ''
-GROUP BY [Type],Ltrim([ARTICLEDESCRIPTION])
+SELECT	[Code] AS code
+		,Ltrim([Name]) AS name
+FROM [ITORAMA].[dbo].[JewelryType]
+GROUP BY [Code],Ltrim([Name])
