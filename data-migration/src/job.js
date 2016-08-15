@@ -5,12 +5,12 @@ import sendgrid from 'sendgrid'
 import config from '../sendgrid.json'
 import * as migration from './lib/migration/';
 
-const index = `mol_${moment().format('YYYYMMDD_HHmm')}`;
 const name = 'mol';
 
 const init = async _ => {
     try {
         console.log(`Start migrating data at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
+        const index = `mol_${moment().format('YYYYMMDD_HHmm')}`;
         await migration.migrate(index);
         await migration.alias(index, name);
     } catch (err) {
