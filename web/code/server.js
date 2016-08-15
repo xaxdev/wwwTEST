@@ -1,5 +1,6 @@
 'use strict';
 
+require('newrelic');
 require('babel-register')();
 
 const Confidence = require('confidence');

@@ -848,7 +848,7 @@ class UsersNewFrom extends Component {
                                   ref="selectMultiLocation"
                                   onBlur={() => this.props.fields.onhandLocation.onBlur(this.props.fields.onhandLocation.value)}
                                 >
-                                  {dataDropDowntLocations.map(value => <option key={value.value} value={value.value}>{value.name}</option>
+                                  {dataDropDowntLocations.map(value => <option key={value.value} value={value.value}>{value.value + ' [' + value.name + ']'}</option>
                                   )}
                                 </select>
                               </div>
@@ -864,7 +864,7 @@ class UsersNewFrom extends Component {
                                   maxHeight={200} multiple
                                   ref="selectMultiWarehouse"
                                   disabled={`${this.state.selectedOnHandWarehouse ? 'disabled' : ''}`}>
-                                  {dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.name}</option>
+                                  {dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.value + ' [' + value.name + ']'}</option>
                                   )}
                                 </select>
                               </div>
