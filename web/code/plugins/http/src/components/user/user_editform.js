@@ -936,7 +936,7 @@ class UserDetailsFrom extends Component {
                               ref="selectMultiLocation"
 
                             >
-                              {dataDropDowntLocations.map(value => <option key={value.value} value={value.value}>{value.name}</option>
+                              {dataDropDowntLocations.map(value => <option key={value.value} value={value.value}>{value.value + ' [' + value.name + ']'}</option>
                               )}
                             </select>
                           </div>
@@ -956,7 +956,7 @@ class UserDetailsFrom extends Component {
                               ref="selectMultiWarehouse"
                               disabled={`${this.state.selectedOnHandWarehouse ? 'disabled' : ''}`}>
                               {
-                                dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.name}</option>)
+                                dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.value + ' [' + value.name + ']'}</option>)
                               }
                             </select>
                           </div>
