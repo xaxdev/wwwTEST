@@ -7,7 +7,6 @@ import * as migration from './lib/migration/';
 
 const index = `mol_${moment().format('YYYYMMDD_HHmm')}`;
 const name = 'mol';
-const time = moment().tz('Asia/Bangkok').format()
 
 const init = async _ => {
     try {
@@ -20,6 +19,7 @@ const init = async _ => {
 };
 
 const notify = err => {
+    const time = moment().tz('Asia/Bangkok').format()
     const subject = (!!err)? `Failed to migrate data to ES at ${time}` : `Succeeded in migrating data to ES at ${time}`
     const sg = sendgrid(config.key)
     const request = sg.emptyRequest()
@@ -65,6 +65,7 @@ new CronJob({
   onTick: _ => {
     init()
         .then(_ => {
+            const time = moment().tz('Asia/Bangkok').format()
             console.log(`Migration is done at: ${time}`)
         })
         .catch(err => {
