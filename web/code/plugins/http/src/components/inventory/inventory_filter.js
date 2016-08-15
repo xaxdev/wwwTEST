@@ -311,7 +311,7 @@ class InventoryFilter extends Component {
     const { alert } = this.state;
 
     const userLogin = JSON.parse(sessionStorage.logindata);
-    // console.log('userLogin-->',userLogin);
+    // console.log('this.props-->',this.props);
 
     var permission = userLogin.permission;
     var bitwise = Number(permission.productGroup).toString(2);

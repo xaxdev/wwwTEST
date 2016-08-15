@@ -288,7 +288,32 @@ class InventoryJewelry extends Component {
       }
     }
 
-    // console.log('musthaves-->',musthaves);
+    let hierarchyData = null;
+    let templateHierarchy = '';
+    let temp = '';
+    let parentPath = '';
+
+    if(props.options.hierarchy != undefined){
+      props.options.hierarchy.forEach((node)=>{
+        if(node.name == 'Jewelry'){
+          parentPath = node.path;
+          temp = '[{"id":1,"code":"' + node.path.replace(/\\/g,'\\\\\\\\') + '","label": "' + node.name ;
+        }
+        if(node.name != 'Jewelry' && node.path.indexOf('Jewelry') != -1){
+          if(parentPath == node.parent){
+            console.log('node.path-->',node.name);
+          }
+        }
+      });
+      templateHierarchy = temp + '"}]';
+
+      // hierarchyData = JSON.parse('[{"id":1,"code":"Mouawad Inventory\\\\Merchandise\\\\Jewelry\\\\Classic\\\\Diamond Classic\\\\Engagement Ring\\\\Solitaire","label": "name"}]');
+      hierarchyData = JSON.parse(templateHierarchy);
+    }else{
+      hierarchyData = TreeData;
+    }
+
+    console.log('hierarchyData-->',hierarchyData);
 
     return(
       <div className="panel panel-default">
@@ -302,7 +327,8 @@ class InventoryJewelry extends Component {
                 </OverlayTrigger>
               </label>
               <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
-                <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                {/*<Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>*/}
+                <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
               </div>
             </div>
             </div>

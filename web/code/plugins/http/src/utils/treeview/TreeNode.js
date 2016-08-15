@@ -38,7 +38,7 @@ var TreeNode = React.createClass({
         <span onClick={this.handleClick} onTouchEnd={this.handleClick}>
           { node.children === undefined ?
             '' :
-            (this.state.collapsed ? String.fromCharCode(43) : String.fromCharCode(8722))
+            (this.state.collapsed ? String.fromCharCode(94) : String.fromCharCode(118))
           }
         </span>
         <input
