@@ -1,6 +1,155 @@
 {
-    "id": "166",
-    "label": "Metals+stones",
-    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\OBA\\\\\\\\Metals+stones",
-    "children": []
+    "id": "205",
+    "label": "Stone",
+    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone",
+    "children": [
+        {
+            "id": "206",
+            "label": "Certified Colored Gemstones",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Certified Colored Gemstones",
+            "children": [
+                {
+                    "id": "207",
+                    "label": "CCG Natural",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Certified Colored Gemstones\\\\\\\\CCG Natural"
+                },
+                {
+                    "id": "208",
+                    "label": "CCG Treated",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Certified Colored Gemstones\\\\\\\\CCG Treated"
+                }
+            ]
+        },
+        {
+            "id": "209",
+            "label": "Certified Diamonds",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Certified Diamonds",
+            "children": [
+                {
+                    "id": "210",
+                    "label": "CD Natural",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Certified Diamonds\\\\\\\\CD Natural"
+                },
+                {
+                    "id": "211",
+                    "label": "HPHT",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Certified Diamonds\\\\\\\\HPHT"
+                }
+            ]
+        },
+        {
+            "id": "212",
+            "label": "Loose Beads",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Beads"
+        },
+        {
+            "id": "213",
+            "label": "Loose Colored Gemstones",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Colored Gemstones",
+            "children": [
+                {
+                    "id": "214",
+                    "label": "Loose Emerald",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Colored Gemstones\\\\\\\\Loose Emerald",
+                    "children": [
+                        {
+                            "id": "215",
+                            "label": "Loose Emerald Natural",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Colored Gemstones\\\\\\\\Loose Emerald\\\\\\\\Loose Emerald Natural"
+                        },
+                        {
+                            "id": "216",
+                            "label": "Loose Emerald Treated",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Colored Gemstones\\\\\\\\Loose Emerald\\\\\\\\Loose Emerald Treated"
+                        }
+                    ]
+                },
+                {
+                    "id": "217",
+                    "label": "Loose Ruby",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Colored Gemstones\\\\\\\\Loose Ruby",
+                    "children": [
+                        {
+                            "id": "218",
+                            "label": "Loose Ruby Natural",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Colored Gemstones\\\\\\\\Loose Ruby\\\\\\\\Loose Ruby Natural"
+                        },
+                        {
+                            "id": "219",
+                            "label": "Loose Ruby Treated",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Colored Gemstones\\\\\\\\Loose Ruby\\\\\\\\Loose Ruby Treated"
+                        }
+                    ]
+                },
+                {
+                    "id": "220",
+                    "label": "Loose Sapphire",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Colored Gemstones\\\\\\\\Loose Sapphire",
+                    "children": [
+                        {
+                            "id": "221",
+                            "label": "Loose Sapphire Natural",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Colored Gemstones\\\\\\\\Loose Sapphire\\\\\\\\Loose Sapphire Natural"
+                        },
+                        {
+                            "id": "222",
+                            "label": "Loose Sapphire Treated",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Colored Gemstones\\\\\\\\Loose Sapphire\\\\\\\\Loose Sapphire Treated"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "223",
+            "label": "Loose Diamonds",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Diamonds",
+            "children": [
+                {
+                    "id": "224",
+                    "label": "Loose Diamond Natural",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Diamonds\\\\\\\\Loose Diamond Natural"
+                },
+                {
+                    "id": "225",
+                    "label": "Loose Diamond Treated",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Diamonds\\\\\\\\Loose Diamond Treated"
+                }
+            ]
+        },
+        {
+            "id": "226",
+            "label": "Loose Pearl",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Pearl",
+            "children": [
+                {
+                    "id": "227",
+                    "label": "Cultured",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Pearl\\\\\\\\Cultured"
+                },
+                {
+                    "id": "228",
+                    "label": "Pearl Natural",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Pearl\\\\\\\\Pearl Natural"
+                }
+            ]
+        },
+        {
+            "id": "229",
+            "label": "Loose Semiprecious",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Semiprecious",
+            "children": [
+                {
+                    "id": "230",
+                    "label": "Loose Semiprecious Natural",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Semiprecious\\\\\\\\Loose Semiprecious Natural"
+                },
+                {
+                    "id": "231",
+                    "label": "Loose Semiprecious Treated",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Stone\\\\\\\\Loose Semiprecious\\\\\\\\Loose Semiprecious Treated"
+                }
+            ]
+        }
+    ]
 }

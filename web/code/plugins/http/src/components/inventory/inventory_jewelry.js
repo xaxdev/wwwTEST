@@ -3,7 +3,8 @@ import Select from 'react-select';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
-import TreeData from '../../utils/treeview/TreeDataJewelry.js';
+import TreeData from '../../utils/treeview/jewelry.json';
+
 
 class InventoryJewelry extends Component {
   constructor(props) {
@@ -288,7 +289,11 @@ class InventoryJewelry extends Component {
       }
     }
 
-    // console.log('musthaves-->',musthaves);
+    let hierarchyData = [];
+
+    hierarchyData.push(TreeData);
+    // console.log('TreeData-->',TreeData);
+    // console.log('hierarchyData-->',mapObj);
 
     return(
       <div className="panel panel-default">
@@ -302,7 +307,8 @@ class InventoryJewelry extends Component {
                 </OverlayTrigger>
               </label>
               <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
-                <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                {/*<Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>*/}
               </div>
             </div>
             </div>

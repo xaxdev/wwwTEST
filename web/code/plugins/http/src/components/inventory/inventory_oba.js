@@ -4,7 +4,7 @@ import Calendar from 'react-input-calendar';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
-import TreeData from '../../utils/treeview/TreeDataOBA';
+import TreeData from '../../utils/treeview/oba.json';
 
 class InventoryOBA extends Component {
   constructor(props) {
@@ -226,6 +226,10 @@ class InventoryOBA extends Component {
       }
     }
 
+    let hierarchyData = [];
+
+    hierarchyData.push(TreeData);
+
     return(
       <div className="panel panel-default">
         <div className="panel-body">
@@ -234,7 +238,7 @@ class InventoryOBA extends Component {
               <div className="form-group hidden">
                 <label className="col-sm-4 control-label">Product Hierarchy</label>
                 <div className="col-sm-7 bd-box">
-                  <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview" />
+                  <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview" />
                 </div>
               </div>
               <div className="form-group">

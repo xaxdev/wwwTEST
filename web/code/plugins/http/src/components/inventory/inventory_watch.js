@@ -5,7 +5,7 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
-import TreeData from '../../utils/treeview/TreeDataWatch.js';
+import TreeData from '../../utils/treeview/watch.json';
 
 class InventoryWatch extends Component {
   constructor(props) {
@@ -507,6 +507,9 @@ class InventoryWatch extends Component {
         dataDropDowntComplication = dataDropDowntComplication[0];
       }
     }
+    let hierarchyData = [];
+
+    hierarchyData.push(TreeData);
 
     return(
       <div className="panel panel-default">
@@ -520,7 +523,7 @@ class InventoryWatch extends Component {
                 </OverlayTrigger>
               </label>
               <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
-                <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
               </div>
             </div>
             </div>

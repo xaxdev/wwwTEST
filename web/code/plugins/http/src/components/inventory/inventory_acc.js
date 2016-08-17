@@ -4,7 +4,7 @@ import Calendar from 'react-input-calendar';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
-import TreeData from '../../utils/treeview/TreeDataAcc';
+import TreeData from '../../utils/treeview/accessory.json';
 
 class InventoryAccessory extends Component {
   constructor(props) {
@@ -246,6 +246,9 @@ class InventoryAccessory extends Component {
         dataDropDowntDominantStone = dataDropDowntDominantStone[0];
       }
     }
+    let hierarchyData = [];
+
+    hierarchyData.push(TreeData);
 
     return(
       <div className="panel panel-default">
@@ -255,7 +258,7 @@ class InventoryAccessory extends Component {
               <div className="form-group hidden">
                 <label className="col-sm-4 control-label">Product Hierarchy</label>
                 <div className="col-sm-7 bd-box">
-                  <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview" />
+                  <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview" />
                 </div>
               </div>
               <div className="form-group">
