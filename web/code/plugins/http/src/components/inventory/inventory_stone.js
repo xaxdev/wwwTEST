@@ -5,7 +5,7 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
-import TreeData from '../../utils/treeview/TreeDataStone.js';
+import TreeData from '../../utils/treeview/stone.json';
 
 class InventoryStone extends Component {
   constructor(props) {
@@ -439,7 +439,9 @@ class InventoryStone extends Component {
         dataDropDowntOrigin = dataDropDowntOrigin[0];
       }
     }
+    let hierarchyData = [];
 
+    hierarchyData.push(TreeData);
     return (
       <div className="panel panel-default">
         <div className="panel-body">
@@ -452,7 +454,7 @@ class InventoryStone extends Component {
                   </OverlayTrigger>
                 </label>
                 <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
-                  <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                  <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                 </div>
               </div>
             </div>

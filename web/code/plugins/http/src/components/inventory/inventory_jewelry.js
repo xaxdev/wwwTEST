@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
-import TreeData from '../../utils/treeview/DataJewelry.json';
+import TreeData from '../../utils/treeview/jewelry.json';
 
 
 class InventoryJewelry extends Component {
@@ -290,12 +290,6 @@ class InventoryJewelry extends Component {
     }
 
     let hierarchyData = [];
-    let templateHierarchy = '';
-    let temp = '';
-    let parentPath = '';
-    let mapObj = [];
-    let mapChildrenObj = {};
-    let i = 0;
 
     hierarchyData.push(TreeData);
     // console.log('TreeData-->',TreeData);
