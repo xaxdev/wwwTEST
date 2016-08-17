@@ -1,6 +1,7 @@
 import * as item from './item';
 import * as master from './master';
 import * as es from './es';
+import * as hierarchy from './hierarchy'
 
 import * as constant from './constant';
 
@@ -60,4 +61,12 @@ const alias = async (index, name) => {
     }
 }
 
-export { alias, migrate };
+const productHierarchy = async _ => {
+    try {
+        await hierarchy.getSources()
+    } catch (err) {
+        throw err
+    }
+}
+
+export { alias, migrate, productHierarchy };

@@ -12,6 +12,7 @@ const init = async _ => {
         console.log(`Start migrating data at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
         await migration.migrate(index);
         await migration.alias(index, name);
+        await migration.productHierarchy()
     } catch (err) {
         throw err;
     }
