@@ -1,5 +1,5 @@
-import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED} from '../../constants/productdetailconstants';
-const INITIAL_STATE = {detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1};
+import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,FETCH_SETREFERENCE} from '../../constants/productdetailconstants';
+const INITIAL_STATE = {detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1,setreference:''};
 
 
 export default function(state = INITIAL_STATE,action){
@@ -12,6 +12,8 @@ export default function(state = INITIAL_STATE,action){
           ,pagego:action.productlist?findproductindexplus(action.productlist,action.productid):0,productlist:action.productlist}
       case FETCH_PRODUCTRELETED:
         return {...state,relete:action.data,reletepage:action.page}
+      case FETCH_SETREFERENCE:
+        return {...state,setreference:action.data}
       default:
         return state;
     }

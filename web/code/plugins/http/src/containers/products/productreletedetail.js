@@ -17,6 +17,7 @@ import ProductPrint from '../../components/productdetail/productPrint';
 import ProductObaAttributes from '../../components/productdetail/productObaAttributes';
 import ProductAccAttributes from '../../components/productdetail/productAccAttributes';
 import ProductSppAttributes from '../../components/productdetail/productSppAttributes';
+import Setreference from '../../components/productdetail/productset';
 import numberFormat from '../../utils/convertNumberformatwithcomma';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
@@ -50,6 +51,10 @@ class productreletedetail extends Component {
         const  Detail  = this.props.productdetail;
         if(Detail.type != 'STO'){
         this.props.getProductRelete(Detail.subType,1,productId)
+        }
+
+        if(Detail.setReference){
+          this.props.getSetreference(Detail.setReference,productId);
         }
       });
 
@@ -128,6 +133,9 @@ class productreletedetail extends Component {
         const  Detail  = this.props.productdetail;
         this.props.getProductRelete(Detail.subType,1,productId)
 
+        if(Detail.setReference){
+          this.props.getSetreference(Detail.setReference,productId);
+        }
 
         this.setState({
           productdetailLoading: false
@@ -268,6 +276,30 @@ class productreletedetail extends Component {
         }
     }
 
+    renderSetreference(){
+
+      const setreference = this.props.setreference;
+      // if(!setreference){
+      //   return(
+      //     <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
+      //   );
+      // }
+      if(setreference.length > 0){
+        return(
+            <div>
+              <h2>SET DETAILS</h2>
+              <Setreference productset={setreference}/>
+            </div>
+          );
+      } else {
+        return(
+            <div>
+
+            </div>
+          );
+      }
+    }
+
     renderFooterAttr(){
 
       const Detail  = this.props.productdetail;
@@ -298,7 +330,7 @@ class productreletedetail extends Component {
         const { gallery } = this.props.productdetail;
         if(!gallery){
           return(
-            <div><img src="http://mol.mouawad.com/resources/images/blank.gif" width="100%"/></div>
+            <div><img src="/images/blank.gif" width="100%"/></div>
           );
         }
 
@@ -310,7 +342,7 @@ class productreletedetail extends Component {
           );
         } else {
           return(
-              <div><img src="http://mol.mouawad.com/resources/images/blank.gif" width="100%"/></div>
+              <div><img src="/images/blank.gif" width="100%"/></div>
             );
         }
 
@@ -458,6 +490,9 @@ class productreletedetail extends Component {
                             {this.renderDesc()}
                          </div>
                          <div className="col-md-12 col-sm-12 top-line-detail">
+                             {this.renderSetreference()}
+                         </div>
+                         <div className="col-md-12 col-sm-12 top-line-detail">
                            {this.renderReleteproduct()}
                           </div>
                         </div>
@@ -485,6 +520,7 @@ function mapStateToProps(state) {
     initialValues: state.productdetail,
     productdetail: state.productdetail.detail,
     productrelete: state.productdetail.relete,
+    setreference:state.productdetail.setreference
     //productreletepage: state.productdetail.reletepage
    }
 }

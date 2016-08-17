@@ -17,6 +17,7 @@ import ProductPrint from '../../components/productdetail/productPrint';
 import ProductObaAttributes from '../../components/productdetail/productObaAttributes';
 import ProductAccAttributes from '../../components/productdetail/productAccAttributes';
 import ProductSppAttributes from '../../components/productdetail/productSppAttributes';
+import Setreference from '../../components/productdetail/productset';
 import numberFormat from '../../utils/convertNumberformatwithcomma';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
@@ -53,7 +54,9 @@ class productdetail extends Component {
       this.props.getProductRelete(Detail.subType,1,productId)
       }
 
-
+      if(Detail.setReference){
+        this.props.getSetreference(Detail.setReference,productId);
+      }
     });
 
   }
@@ -134,6 +137,9 @@ class productdetail extends Component {
       this.props.getProductDetail(productId,productlist).then(()=>{
         const  Detail  = this.props.productdetail;
         this.props.getProductRelete(Detail.subType,1,productId)
+        if(Detail.setReference){
+          this.props.getSetreference(Detail.setReference,productId);
+        }
         this.setState({
           productdetailLoading: false
         });
@@ -261,6 +267,30 @@ class productdetail extends Component {
         }
     }
 
+    renderSetreference(){
+
+      const setreference = this.props.setreference;
+      // if(setreference.length <= 0 && !setreference){
+      //   return(
+      //     <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
+      //   );
+      // }
+      if(setreference.length > 0){
+        return(
+            <div>
+              <h2>SET DETAILS</h2>
+              <Setreference productset={setreference}/>
+            </div>
+          );
+      } else {
+        return(
+            <div>
+
+            </div>
+          );
+      }
+    }
+
     renderFooterAttr(){
 
       const Detail  = this.props.productdetail;
@@ -276,12 +306,14 @@ class productdetail extends Component {
           );
         }
         if(gemstoneAttr.length > 0){
-        return(
-            <div>
-              <h2>GEMSTONES ATTRIBUTES</h2>
-              <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} subType={subType} />
-            </div>
-          );
+          return(
+              <div>
+                <h2>GEMSTONES ATTRIBUTES</h2>
+                <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} subType={subType} />
+              </div>
+            );
+        } else {
+
         }
       }
 
@@ -291,7 +323,7 @@ class productdetail extends Component {
       const { gallery } = this.props.productdetail;
       if(!gallery){
         return(
-          <div><img src="http://mol.mouawad.com/resources/images/blank.gif" width="100%"/></div>
+          <div><img src="/images/blank.gif" width="100%"/></div>
         );
       }
 
@@ -303,7 +335,7 @@ class productdetail extends Component {
         );
       } else {
         return(
-            <div><img src="http://mol.mouawad.com/resources/images/blank.gif" width="100%"/></div>
+            <div><img src="/images/blank.gif" width="100%"/></div>
           );
       }
      }
@@ -485,10 +517,13 @@ class productdetail extends Component {
                 <div className="col-md-6 col-sm-12">
                   <div className="col-md-12 col-sm-12">
                     {this.renderDesc()}
-                 </div>
-                 <div className="col-md-12 col-sm-12 top-line-detail">
-                   {this.renderReleteproduct()}
                   </div>
+                <div className="col-md-12 col-sm-12 top-line-detail">
+                    {this.renderSetreference()}
+                </div>
+                <div className="col-md-12 col-sm-12 top-line-detail">
+                   {this.renderReleteproduct()}
+                </div>
                 </div>
                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
                   <div className="line-border"></div>
@@ -519,6 +554,7 @@ function mapStateToProps(state) {
     productindex: state.productdetail.index,
     productindexplus: state.productdetail.indexplus,
     productrelete: state.productdetail.relete,
+    setreference:state.productdetail.setreference,
     //productreletepage: state.productdetail.reletepage,
     productlist:state.productdetail.productlist
    }
