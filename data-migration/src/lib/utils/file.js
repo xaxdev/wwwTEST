@@ -1,7 +1,5 @@
 import fs from 'fs';
 
-const pause = duration => new Promise((resolve, reject) => { setTimeout(resolve, duration); });
-
 const read = async file => {
     try {
         return await new Promise((resolve, reject) => {
@@ -18,4 +16,20 @@ const read = async file => {
     }
 }
 
-export { pause, read };
+const write = async (file, data) => {
+    try {
+        return await new Promise((resolve, reject) => {
+            fs.writeFile(file, data, err => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve()
+                }
+            })
+        })
+    } catch (err) {
+        throw err
+    }
+}
+
+export { read, write };

@@ -1,0 +1,24 @@
+{
+    "id": "197",
+    "label": "Spare",
+    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare",
+    "children": [
+        {
+            "id": "199",
+            "label": "Other Spare Parts",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Other Spare Parts",
+            "children": [
+                {
+                    "id": "200",
+                    "label": "Mouawad SpareParts",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Other Spare Parts\\\\\\\\Mouawad SpareParts"
+                },
+                {
+                    "id": "201",
+                    "label": "Other Brands SpareParts",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Other Spare Parts\\\\\\\\Other Brands SpareParts"
+                }
+            ]
+        }
+    ]
+}
