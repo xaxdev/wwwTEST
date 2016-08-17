@@ -3,7 +3,8 @@ import Select from 'react-select';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
-import TreeData from '../../utils/treeview/TreeDataJewelry.js';
+import TreeData from '../../utils/treeview/DataJewelry.json';
+
 
 class InventoryJewelry extends Component {
   constructor(props) {
@@ -288,7 +289,7 @@ class InventoryJewelry extends Component {
       }
     }
 
-    let hierarchyData = null;
+    let hierarchyData = [];
     let templateHierarchy = '';
     let temp = '';
     let parentPath = '';
@@ -296,67 +297,8 @@ class InventoryJewelry extends Component {
     let mapChildrenObj = {};
     let i = 0;
 
-    // function createChildren(node){
-    //   if(mapObj[0].children == undefined){
-    //     mapObj[0]['children'] = [];
-    //     if(parentPath == node.parent){
-    //         mapChildrenObj[i]= {'id':2,'code': node.path.replace(/\\/g,'\\\\\\\\'),'label': node.name };
-    //     }
-    //   }
-    //   console.log('node.path-->',node.name);
-    //     // temp = temp + '{"id":2,"code":"' + node.path.replace(/\\/g,'\\\\\\\\') + '","label": "' + node.name + '"},';;
-    //   if(parentPath == node.parent){
-    //     if(mapChildrenObj[i]['children'] == undefined){
-    //       mapChildrenObj[i]['children']= [];
-    //     }else{
-    //       mapChildrenObj[i].children.push({'id':2,'code': node.path.replace(/\\/g,'\\\\\\\\'),'label': node.name });
-    //     }
-    //   }
-    // }
-    //
-    // if(props.options.hierarchy != undefined){
-    //   props.options.hierarchy.forEach((node)=>{
-    //     i++;
-    //     // First Node
-    //     if(node.name == 'Jewelry'){
-    //       parentPath = node.path;
-    //       // temp = '[{"id":1,"code":"' + node.path.replace(/\\/g,'\\\\\\\\') + '","label": "' + node.name + '",';
-    //       // temp = temp + 'children: [';
-    //       mapObj.push({'id':1,'code': node.path.replace(/\\/g,'\\\\\\\\'),'label': node.name});
-    //     }
-    //     // Children Node
-    //     if(node.name != 'Jewelry' && node.path.indexOf('Jewelry') != -1){
-    //       if(parentPath == node.parent){
-    //
-    //         // if(mapObj[0].children == undefined){
-    //         //   mapObj[0]['children'] = [];
-    //         // }
-    //         // console.log('node.path-->',node.name);
-    //         //   // temp = temp + '{"id":2,"code":"' + node.path.replace(/\\/g,'\\\\\\\\') + '","label": "' + node.name + '"},';;
-    //         // mapChildrenObj[i]= {'id':2,'code': node.path.replace(/\\/g,'\\\\\\\\'),'label': node.name };
-    //         createChildren(node);
-    //       }else{
-    //         // checke parent
-    //         if(node.parent.indexOf(parentPath) != -1){
-    //           parentPath = node.path;
-    //           createChildren(node);
-    //         }
-    //       }
-    //     }
-    //   });
-    //   if(mapObj.length != 0){
-    //     mapObj[0].children  = mapChildrenObj;
-    //   }
-    //   temp = temp + ']';
-    //   templateHierarchy = temp + '}]';
-    //
-    //   // hierarchyData = JSON.parse('[{"id":1,"code":"Mouawad Inventory\\\\Merchandise\\\\Jewelry\\\\Classic\\\\Diamond Classic\\\\Engagement Ring\\\\Solitaire","label": "name"}]');
-    //   // hierarchyData = JSON.parse(templateHierarchy);
-    // }else{
-    //   hierarchyData = TreeData;
-    // }
-
-    console.log('TreeData-->',TreeData);
+    hierarchyData.push(TreeData);
+    // console.log('TreeData-->',TreeData);
     // console.log('hierarchyData-->',mapObj);
 
     return(
@@ -371,7 +313,7 @@ class InventoryJewelry extends Component {
                 </OverlayTrigger>
               </label>
               <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
-                <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                 {/*<Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>*/}
               </div>
             </div>

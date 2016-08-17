@@ -9,6 +9,8 @@ SELECT ROW_NUMBER() OVER(ORDER BY [ITO_CATEGORYPATH]) AS [id]
           WHEN [ITO_CATEGORYPATH] LIKE '%OBA%' THEN 'OBA'
           WHEN [ITO_CATEGORYPATH] LIKE '%Accessories%' THEN 'Accessories'
           WHEN [ITO_CATEGORYPATH] LIKE '%Spare%' THEN 'Spare'
+          WHEN [LEVEL_] = 1 THEN 'Root'
+          WHEN [ITO_CATEGORYPATH] = 'Mouawad Inventory\Merchandise' THEN 'Root'
           ELSE ''
        END AS [type]
 FROM [MWD_DB].[dbo].[ECORESCATEGORY]

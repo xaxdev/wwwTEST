@@ -20,6 +20,9 @@ module.exports =  {
   },
   module: {
     loaders: [
+      { test: /\.json$/,
+        loader: 'json'
+      },
       { test: /\.jsx?$/,
         include: [ path.resolve(__dirname, 'plugins/http/src') ],
         loader: 'babel'
