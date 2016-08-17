@@ -292,28 +292,72 @@ class InventoryJewelry extends Component {
     let templateHierarchy = '';
     let temp = '';
     let parentPath = '';
+    let mapObj = [];
+    let mapChildrenObj = {};
+    let i = 0;
 
-    if(props.options.hierarchy != undefined){
-      props.options.hierarchy.forEach((node)=>{
-        if(node.name == 'Jewelry'){
-          parentPath = node.path;
-          temp = '[{"id":1,"code":"' + node.path.replace(/\\/g,'\\\\\\\\') + '","label": "' + node.name ;
-        }
-        if(node.name != 'Jewelry' && node.path.indexOf('Jewelry') != -1){
-          if(parentPath == node.parent){
-            console.log('node.path-->',node.name);
-          }
-        }
-      });
-      templateHierarchy = temp + '"}]';
+    // function createChildren(node){
+    //   if(mapObj[0].children == undefined){
+    //     mapObj[0]['children'] = [];
+    //     if(parentPath == node.parent){
+    //         mapChildrenObj[i]= {'id':2,'code': node.path.replace(/\\/g,'\\\\\\\\'),'label': node.name };
+    //     }
+    //   }
+    //   console.log('node.path-->',node.name);
+    //     // temp = temp + '{"id":2,"code":"' + node.path.replace(/\\/g,'\\\\\\\\') + '","label": "' + node.name + '"},';;
+    //   if(parentPath == node.parent){
+    //     if(mapChildrenObj[i]['children'] == undefined){
+    //       mapChildrenObj[i]['children']= [];
+    //     }else{
+    //       mapChildrenObj[i].children.push({'id':2,'code': node.path.replace(/\\/g,'\\\\\\\\'),'label': node.name });
+    //     }
+    //   }
+    // }
+    //
+    // if(props.options.hierarchy != undefined){
+    //   props.options.hierarchy.forEach((node)=>{
+    //     i++;
+    //     // First Node
+    //     if(node.name == 'Jewelry'){
+    //       parentPath = node.path;
+    //       // temp = '[{"id":1,"code":"' + node.path.replace(/\\/g,'\\\\\\\\') + '","label": "' + node.name + '",';
+    //       // temp = temp + 'children: [';
+    //       mapObj.push({'id':1,'code': node.path.replace(/\\/g,'\\\\\\\\'),'label': node.name});
+    //     }
+    //     // Children Node
+    //     if(node.name != 'Jewelry' && node.path.indexOf('Jewelry') != -1){
+    //       if(parentPath == node.parent){
+    //
+    //         // if(mapObj[0].children == undefined){
+    //         //   mapObj[0]['children'] = [];
+    //         // }
+    //         // console.log('node.path-->',node.name);
+    //         //   // temp = temp + '{"id":2,"code":"' + node.path.replace(/\\/g,'\\\\\\\\') + '","label": "' + node.name + '"},';;
+    //         // mapChildrenObj[i]= {'id':2,'code': node.path.replace(/\\/g,'\\\\\\\\'),'label': node.name };
+    //         createChildren(node);
+    //       }else{
+    //         // checke parent
+    //         if(node.parent.indexOf(parentPath) != -1){
+    //           parentPath = node.path;
+    //           createChildren(node);
+    //         }
+    //       }
+    //     }
+    //   });
+    //   if(mapObj.length != 0){
+    //     mapObj[0].children  = mapChildrenObj;
+    //   }
+    //   temp = temp + ']';
+    //   templateHierarchy = temp + '}]';
+    //
+    //   // hierarchyData = JSON.parse('[{"id":1,"code":"Mouawad Inventory\\\\Merchandise\\\\Jewelry\\\\Classic\\\\Diamond Classic\\\\Engagement Ring\\\\Solitaire","label": "name"}]');
+    //   // hierarchyData = JSON.parse(templateHierarchy);
+    // }else{
+    //   hierarchyData = TreeData;
+    // }
 
-      // hierarchyData = JSON.parse('[{"id":1,"code":"Mouawad Inventory\\\\Merchandise\\\\Jewelry\\\\Classic\\\\Diamond Classic\\\\Engagement Ring\\\\Solitaire","label": "name"}]');
-      hierarchyData = JSON.parse(templateHierarchy);
-    }else{
-      hierarchyData = TreeData;
-    }
-
-    console.log('hierarchyData-->',hierarchyData);
+    console.log('TreeData-->',TreeData);
+    // console.log('hierarchyData-->',mapObj);
 
     return(
       <div className="panel panel-default">
@@ -327,8 +371,8 @@ class InventoryJewelry extends Component {
                 </OverlayTrigger>
               </label>
               <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
-                {/*<Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>*/}
-                <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                <Tree data={TreeData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                {/*<Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>*/}
               </div>
             </div>
             </div>
