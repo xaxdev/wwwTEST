@@ -1,0 +1,17 @@
+{
+    "id": "202",
+    "label": "Watch Strap",
+    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Watch Strap",
+    "children": [
+        {
+            "id": "203",
+            "label": "Mouawad Strap",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Watch Strap\\\\\\\\Mouawad Strap"
+        },
+        {
+            "id": "204",
+            "label": "Other Brands Strap",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Watch Strap\\\\\\\\Other Brands Strap"
+        }
+    ]
+}

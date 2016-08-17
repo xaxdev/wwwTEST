@@ -47,3 +47,6 @@ export const HIERARCHY_QUERY = './query/master/hierarchy.sql';
 export const CURRENCY_DATA = '../../../query/master/currency.js';
 export const ROLE_DATA = '../../../query/master/role.js';
 export const PRODUCTGROUP_DATA = '../../../query/master/productGroup.js';
+
+// Hierarchy
+export const HIERARCHY_TREE_QUERY = './query/hierarchy.sql';
