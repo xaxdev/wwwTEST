@@ -556,6 +556,9 @@ class InventoryStone extends Component {
                   </div>
                 </div>
               </div>
+
+            </div>
+            <div className="col-lg-6 form-horizontal">
               <div className="form-group">
                 <label className="col-sm-4 control-label">Total Carat Weight</label>
                 <div className="col-sm-7">
@@ -569,9 +572,7 @@ class InventoryStone extends Component {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col-lg-6 form-horizontal">
-              <div className={`form-group ${(userLogin.permission.price == 'All') ?
+              {/*<div className={`form-group ${(userLogin.permission.price == 'All') ?
                   '' : 'hidden'}`}>
                 <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
@@ -615,7 +616,7 @@ class InventoryStone extends Component {
                     <input type="text" className="form-control" {...publicPriceTo}/>
                   </div>
                 </div>
-              </div>
+              </div>*/}
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
