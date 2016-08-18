@@ -19,10 +19,18 @@ import ProductAccAttributes from '../../components/productdetail/productAccAttri
 import ProductSppAttributes from '../../components/productdetail/productSppAttributes';
 import Setreference from '../../components/productdetail/productset';
 import numberFormat from '../../utils/convertNumberformatwithcomma';
+
+import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributes';
+import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributes';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
 import '../../utils/magnific-popup.js';
+
+
+import checkInarrayObject from '../../utils/checkInarrayObject';
+import checkInarrayObjectOther from '../../utils/checkInarrayObjectOther';
+
 var Loading = require('react-loading');
 
 class productreletedetail extends Component {
@@ -284,7 +292,7 @@ class productreletedetail extends Component {
       //     <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
       //   );
       // }
-      if(setreference.length > 0){
+      if(setreference.products.length > 0){
         return(
             <div>
               <h2>SET DETAILS</h2>
@@ -315,6 +323,7 @@ class productreletedetail extends Component {
           );
         }
         if(gemstoneAttr.length > 0){
+          if(checkInarrayObject("type","Stone",gemstoneAttr)){
         return(
             <div>
               <h2>GEMSTONES ATTRIBUTES</h2>
@@ -322,10 +331,65 @@ class productreletedetail extends Component {
             </div>
           );
         }
+        }
       }
 
      }
+     renderFooterDiamondsAttr(){
 
+       const Detail  = this.props.productdetail;
+       const gemstoneAttr = Detail.gemstones;
+       const subType = Detail.subType;
+       if(Detail.type == 'STO'){
+
+       } else {
+         if(!gemstoneAttr){
+           return(
+             <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
+           );
+         }
+         if(gemstoneAttr.length > 0){
+           if(checkInarrayObject("type","Loose Diamond",gemstoneAttr)){
+           return(
+               <div>
+                 <h2>DIAMONDS ATTRIBUTES</h2>
+                 <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} />
+               </div>
+             );
+           }
+         } else {
+
+         }
+       }
+     }
+
+     renderFooterRawmatirialAttr(){
+
+       const Detail  = this.props.productdetail;
+       const gemstoneAttr = Detail.gemstones;
+       const subType = Detail.subType;
+       if(Detail.type == 'STO'){
+
+       } else {
+         if(!gemstoneAttr){
+           return(
+             <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
+           );
+         }
+         if(gemstoneAttr.length > 0){
+           if(checkInarrayObjectOther("type",gemstoneAttr)){
+           return(
+               <div>
+                 <h2>RAWMATERIAL ATTRIBUTES</h2>
+                 <ProductRawmatirialAttributes gemstoneAttrData={gemstoneAttr} />
+               </div>
+             );
+           }
+         } else {
+
+         }
+       }
+     }
     renderImagegallery(){
         const { gallery } = this.props.productdetail;
         if(!gallery){
@@ -500,7 +564,9 @@ class productreletedetail extends Component {
                           <div className="line-border"></div>
                         </div>
                         <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{this.renderAttr()}</div>
+                        <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterDiamondsAttr()}</div>
                         <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterAttr()}</div>
+                        <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterRawmatirialAttr()}</div>
                           <div id="dvContainer" className="hidden">
                              <ProductPrint productdetail={this.props.productdetail}/>
                           </div>

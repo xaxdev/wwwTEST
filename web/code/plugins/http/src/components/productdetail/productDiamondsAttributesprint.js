@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
-const allowGemstone = ["Stone"];
+const allowGemstone = ["Loose Diamond"];
     var styles ={
       colmd12:{
         width:'100%',
@@ -81,7 +81,6 @@ const Gemstoneattr =  (props) =>{
                      <td title="Certificate Number," style={styles.textcenter}>{!!data.certificate ? data.certificate.number: '-'}</td>
                      <td title="Certificate Date" style={styles.textcenter}>{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
                      <td title="Certificate agency" style={styles.textcenter}>{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
-
                    </tr>
                 )
               }
