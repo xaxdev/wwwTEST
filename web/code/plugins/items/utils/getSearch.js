@@ -49,6 +49,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
 
     if (keys.length != 3 ){
       keys.forEach((key) => {
+        filter = '';
         // console.log('keys-->',key);
         var value = obj[key];
         if(key == 'reference' || key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity'
@@ -377,6 +378,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                 }
               }`;
             internals.filters.push(JSON.parse(filter));
+            filter = '';
             filter =
               `{
                 "match": {
@@ -386,6 +388,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                 }
               }`;
             internals.filters.push(JSON.parse(filter));
+            filter = '';
             filter =
               `{
                 "match": {
@@ -395,7 +398,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                 }
               }`;
             internals.filters.push(JSON.parse(filter));
-
+            filter = '';
           }
           else if(key == 'proDateFrom' || key == 'proDateTo'){
             if(key == 'proDateFrom'){
@@ -492,9 +495,10 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           }
           // console.log('objRange-->',objRange);
           // console.log('objRange.length-->',objRange.length);
-          console.log('filter-->',filter);
+          // console.log('filter-->',filter);
           if(filter != ''){
             internals.filters.push(JSON.parse(filter));
+            filter = '';
             // console.log('internals.filters-->',JSON.stringify(internals.filters));
           }
         }
@@ -526,6 +530,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                 }`;
             }
             internals.filters.push(JSON.parse(filter));
+            filter = '';
           }
         });
       }
