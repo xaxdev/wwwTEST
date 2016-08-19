@@ -445,6 +445,13 @@ class InventoryWatch extends Component {
       }
       if (props.options.dominantStones) {
         dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
+          // if (dominantStone.name === 'ONY') {
+          //   return ({value: dominantStone.code + 's',label:dominantStone.name});
+          // }else if(dominantStone.name === 'PER'){
+          //   return ({value: dominantStone.code + 's',label:dominantStone.name});
+          // }else{
+          //   return ({value: dominantStone.code,label:dominantStone.name});
+          // }
             return ({value: dominantStone.code,label:dominantStone.name});
           })
         )
@@ -606,7 +613,7 @@ class InventoryWatch extends Component {
                     onChange={this.handleMetalColourSelectChange} />
                   </div>
               </div>
-              <div className="form-group">
+              {/*<div className="form-group">
                 <label className="col-sm-4 control-label">Dominant Stone</label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.DominantStoneValue}
@@ -614,7 +621,7 @@ class InventoryWatch extends Component {
                     options={dataDropDowntDominantStone}
                     onChange={this.handleDominantStoneSelectChange} />
                   </div>
-              </div>
+              </div>*/}
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Limited Edition
                   <OverlayTrigger placement="top" overlay={tooltipLimitedEdition}>
@@ -669,12 +676,9 @@ class InventoryWatch extends Component {
 
             </div>
             <div className="col-lg-6 form-horizontal">
-              <div className={`form-group ${(userLogin.permission.price == 'All') ?
+              {/*<div className={`form-group ${(userLogin.permission.price == 'All') ?
                   '' : 'hidden'}`}>
                 <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})
-                  {/*<OverlayTrigger placement="top" overlay={tooltipTotalCost}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>*/}
                 </label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -717,7 +721,7 @@ class InventoryWatch extends Component {
                     <input type="text" className="form-control" {...publicPriceTo}/>
                   </div>
                 </div>
-              </div>
+              </div>*/}
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
@@ -886,6 +890,7 @@ class InventoryWatch extends Component {
                     onChange={this.handleComplicationSelectChange} />
                 </div>
               </div>*/}
+
             </div>
           </div>
         </div>

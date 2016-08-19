@@ -205,9 +205,7 @@ class SearchResult extends Component {
     return true;
   }
   handleSelect(eventKey) {
-      this.setState({
-        activePage: eventKey
-      });
+      this.setState({activePage: eventKey});
 
       const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -250,17 +248,11 @@ class SearchResult extends Component {
 
       this.props.getItems(params)
       .then((value) => {
-        this.setState({
-          showLoading: false
-        });
+        this.setState({showLoading: false});
         if(girdView){
-          this.setState({
-            showGridView: true
-          });
+          this.setState({showGridView: true});
         }else if (listView) {
-          this.setState({
-            showListView: true
-          });
+          this.setState({showListView: true});
         }
       });
 
@@ -288,9 +280,7 @@ class SearchResult extends Component {
 
     const sortingDirection = this.refs.sortingDirection.value;
 
-    this.setState({
-      activePage: getPage
-    });
+    this.setState({activePage: getPage});
     // console.log('getPage-->',getPage);
     let params = {
       'page' : getPage,
@@ -318,17 +308,11 @@ class SearchResult extends Component {
 
     this.props.getItems(params)
     .then((value) => {
-      this.setState({
-        showLoading: false
-      });
+      this.setState({showLoading: false});
       if(girdView){
-        this.setState({
-          showGridView: true
-        });
+        this.setState({showGridView: true});
       }else if (listView) {
-        this.setState({
-          showListView: true
-        });
+        this.setState({showListView: true});
       }
     });
   }
@@ -375,7 +359,7 @@ class SearchResult extends Component {
     const { fields: { currPage },
             totalPages,
             currentPage,
-            items,totalPublicPrice,totalUpdatedCost,allItems,
+            items,totalPublicPrice,totalUpdatedCost,allItems,maxPrice,minPrice,avrgPrice,
             handleSubmit,
             resetForm,
             submitting } = this.props;
@@ -386,21 +370,29 @@ class SearchResult extends Component {
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     return(
-      <div id="dvTotalsub">
-          <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(allItems.length) } Items </span><span className="padding-lf15">|</span></span>
-          <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-              || userLogin.permission.price == 'All') ?
-              '' : 'hidden'}`}>
-              <span className="font-b fc-000">Total Public Price :</span> <span className="font-w9">{ _totalPublicPrice } { userLogin.currency }</span><span className="padding-lf15">
-              |
-              </span>
-          </span>
-          <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
-              '' : 'hidden'}`}>
-              <span className="font-b fc-000">Total Updated Cost :</span> <span className="font-w9">{ _totalUpdatedCost } { userLogin.currency }
-              </span>
-          </span>
+      <div>
+        <div id="dvTotalsub">
+            <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(allItems.length) } Items </span><span className="padding-lf15">|</span></span>
+            <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                || userLogin.permission.price == 'All') ?
+                '' : 'hidden'}`}>
+                <span className="font-b fc-000">Total Public Price :</span> <span className="font-w9">{ _totalPublicPrice } { userLogin.currency }</span><span className="padding-lf15">
+                |
+                </span>
+            </span>
+            <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                '' : 'hidden'}`}>
+                <span className="font-b fc-000">Total Updated Cost :</span> <span className="font-w9">{ _totalUpdatedCost } { userLogin.currency }
+                </span>
+            </span>
+        </div>
+        <div id="dvTotalsub">
+            <span><span className="font-b fc-000">Highest Price :</span> <span className="font-w9">{ numberFormat(maxPrice) } { userLogin.currency } </span><span className="padding-lf15">|</span></span>
+            <span><span className="font-b fc-000">Lowest Price :</span> <span className="font-w9">{ numberFormat(minPrice) } { userLogin.currency } </span><span className="padding-lf15">|</span></span>
+            <span><span className="font-b fc-000">Average Price :</span> <span className="font-w9">{ numberFormat(avrgPrice) } { userLogin.currency } </span></span>
+        </div>
       </div>
+
     );
   }
   onClickGrid(pageNumber) {
@@ -438,9 +430,7 @@ class SearchResult extends Component {
         break;
     }
 
-    this.setState({
-      activePage: 1
-    });
+    this.setState({activePage: 1});
 
     const { searchResult } = this.props;
     const sortingDirection = this.refs.sortingDirection.value;
@@ -472,17 +462,11 @@ class SearchResult extends Component {
 
     this.props.getItems(params)
     .then((value) => {
-      this.setState({
-        showLoading: false
-      });
+      this.setState({showLoading: false});
       if(girdView){
-        this.setState({
-          showGridView: true
-        });
+        this.setState({showGridView: true});
       }else if (listView) {
-        this.setState({
-          showListView: true
-        });
+        this.setState({showListView: true});
       }
     });
 
@@ -511,9 +495,7 @@ class SearchResult extends Component {
         break;
     }
 
-    this.setState({
-      activePage: 1
-    });
+    this.setState({activePage: 1});
 
     let params = {
       'page' : 1,
@@ -542,17 +524,11 @@ class SearchResult extends Component {
 
     this.props.getItems(params)
     .then((value) => {
-      this.setState({
-        showLoading: false
-      });
+      this.setState({showLoading: false});
       if(girdView){
-        this.setState({
-          showGridView: true
-        });
+        this.setState({showGridView: true});
       }else if (listView) {
-        this.setState({
-          showListView: true
-        });
+        this.setState({showListView: true});
       }
     });
 
@@ -587,17 +563,13 @@ class SearchResult extends Component {
   hideModal = (e) => {
     e.preventDefault();
 
-    this.setState({
-      isOpen: false,
-    });
+    this.setState({isOpen: false});
   }
 
   hideModalNoResults = (e) => {
     e.preventDefault();
 
-    this.setState({
-      isOpenNoResults: false
-    });
+    this.setState({isOpenNoResults: false});
 
     this.props.modifySearch(this.props.paramsSearch);
 
@@ -613,9 +585,7 @@ class SearchResult extends Component {
   }
 
   exportExcel(){
-    this.setState({
-      isOpen: true,
-    });
+    this.setState({isOpen: true});
   }
   s2ab(s) {
   	let buf = new ArrayBuffer(s.length);
@@ -1137,7 +1107,10 @@ function mapStateToProps(state) {
     totalUpdatedCost: state.searchResult.totalupdatedcost,
     allItems: state.searchResult.allItems,
     filters: state.searchResult.filters,
-    paramsSearch: state.searchResult.paramsSearch
+    paramsSearch: state.searchResult.paramsSearch,
+    maxPrice: state.searchResult.maxPrice,
+    minPrice: state.searchResult.minPrice,
+    avrgPrice: state.searchResult.avrgPrice,
    }
 }
 SearchResult.propTypes = {

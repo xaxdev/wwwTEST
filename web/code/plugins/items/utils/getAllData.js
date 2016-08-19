@@ -3,12 +3,14 @@ const GetPriceCurrency = require('./getPriceCurrency');
 
 module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb) => {
   console.log(response.hits.total)
-  var allData = [];
-  var sumPriceData = [];
-  var sumCostData = [];
-  var exportData = null;
+  let allData = [];
+  let sumPriceData = [];
+  let sumCostData = [];
+  let exportData = null;
+  let itemCount = response.hits.total;
+  let avrgPrice = 0;
 
-  var data = response.hits.hits.map((element) => element._source);
+  let data = response.hits.hits.map((element) => element._source);
   if(sortDirections == 'desc'){
     data = _.sortBy(data,sortBy,sortDirections).reverse();
   }else{
@@ -17,16 +19,27 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
 
   exportData = data;
   // console.log('data-->',data);
+  let maxPrice = 0;
+
+
   data.forEach(function(item){
     allData.push({'id': item.id,'reference':item.reference});
+    maxPrice = Math.max(maxPrice, item.price[userCurrency]);
   });
 
-  // var pageData = data.max(size) ;
-  var pageData = data.slice( (page - 1) * size, page * size );
-  var sumPrice = 0;
-  var sumCost = 0;
+  let minPrice = maxPrice;
+  data.forEach(function(item){
+    minPrice = Math.min(minPrice, item.price[userCurrency]);
+  });
+
+  // let pageData = data.max(size) ;
+  let pageData = data.slice( (page - 1) * size, page * size );
+  let sumPrice = 0;
+  let sumCost = 0;
 
   console.log('pageData-->',pageData.length);
+  console.log('maxPrice-->',maxPrice);
+  console.log('minPrice-->',minPrice);
 
   if(pageData.length != 0){
     data.forEach(function(item){
@@ -38,6 +51,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
     sumPriceData.forEach(function(price) {
       sumPrice = sumPrice+Math.round(price);
     });
+    avrgPrice = sumPrice/itemCount;
 
     data.forEach(function(item){
       // console.log('item.priceUSD-->',item.priceUSD);
@@ -63,7 +77,10 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
           'summary':{
               'count': allData.length,
               'price': sumPrice,
-              'cost': sumCost
+              'cost': sumCost,
+              'maxPrice': maxPrice,
+              'minPrice': minPrice,
+              'avrgPrice': avrgPrice
             }
           };
   return sendData;

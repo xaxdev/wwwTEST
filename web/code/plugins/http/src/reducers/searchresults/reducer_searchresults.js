@@ -17,7 +17,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                         StrapTypeValue:[], BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[], DialIndexValue:[],
                         MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[], activeTabCategory:1,allItems:[],
                         filters:[], AccessoryTypeValue:[],SparePartTypeValue:[], paramsSearch:null,IsAdvance:false,
-                        HierarchyValue:null,SearchAction:'New',exportItems:[]
+                        HierarchyValue:null,SearchAction:'New',exportItems:[],maxPrice:null,minPrice:null,avrgPrice:null
                       };
 
   export default function(state = INITIAL_STATE, action){
@@ -163,20 +163,23 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[],
                 LimitedEditionValue:[], WatchCategoryValue:[], currentPage:1,datas:null,allItems:[], totalpage:null,
                 totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[],SparePartTypeValue:[],SearchAction:'New',
-                exporttems:[]
+                exporttems:[],maxPrice:null,minPrice:null,avrgPrice:null
               }
       case SET_PARAMS:
         // console.log('action.params-->',action.params);
         return { ...state, paramsSearch:action.params }
       case MODIFY_SEARCH:
         return { ...state, paramsSearch:action.params, datas:null,allItems:[], totalpage:null,
-        totalpublicprice:null, totalupdatedcost:null,SearchAction:'Modify',exportItems:[] }
+        totalpublicprice:null, totalupdatedcost:null,SearchAction:'Modify',exportItems:[],
+        maxPrice:null,minPrice:null,avrgPrice:null }
       case FETCH_ALLITEMS:
         // console.log('action-->',action.type);
-        // console.log('action-->',action);
+        // console.log('action.data.summary-->',action.data.summary);
         return { ...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/8),
                 totalpublicprice: action.data.summary.price, totalupdatedcost: action.data.summary.cost,
-                currentPage:action.currPage, allItems: action.data.allData, exportItems: action.data.exportData};
+                currentPage:action.currPage, allItems: action.data.allData, exportItems: action.data.exportData,
+                maxPrice: action.data.summary.maxPrice,minPrice: action.data.summary.minPrice,
+                avrgPrice: action.data.summary.avrgPrice};
       case FETCH_SORTING:
         // console.log('action-->',action);
         switch(action.sortDirections){
