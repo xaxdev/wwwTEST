@@ -132,7 +132,37 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
               valToCarat = value;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'totalCaratWeight':{'from':valFromCarat,'to':valToCarat},'length':objLength};
+            objRange = {...objRange,'carat':{'from':valFromCarat,'to':valToCarat},'length':objLength};
+            filter =
+              `{
+                "match": {
+                  "gemstoneType": {
+                    "query": "Loose Diamond"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter = '';
+            filter =
+              `{
+                "match": {
+                  "gemstoneType": {
+                    "query": "Stone"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter = '';
+            filter =
+              `{
+                "match": {
+                  "gemstoneType": {
+                    "query": "Diamond"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter = '';
           }
           else if(key == 'totalCostFrom' || key == 'totalCostTo'){
             keyFromCost = 'costUSD';
