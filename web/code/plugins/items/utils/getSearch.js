@@ -368,6 +368,34 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             }
             var objLength = objRange.length +1;
             objRange = {...objRange,'gemstones.carat':{'from':valFromCost,'to':valToCost},'length':objLength};
+            filter =
+              `{
+                "match": {
+                  "gemstones.type": {
+                    "query": "Loose Diamond"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter =
+              `{
+                "match": {
+                  "gemstones.type": {
+                    "query": "Stone"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter =
+              `{
+                "match": {
+                  "gemstones.type": {
+                    "query": "Diamond"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+
           }
           else if(key == 'proDateFrom' || key == 'proDateTo'){
             if(key == 'proDateFrom'){
@@ -407,7 +435,6 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             var filterSplit = [];
             // var vals = value.split(',');
             var vals = value.replace(',',' ');
-            // vals.forEach((val)=>{
             var mapField =
                   `{
                       "match": {
@@ -428,7 +455,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           }
           else if(key == 'hierarchy'){
             var filterSplit = [];
-            console.log('hierarchy value-->', value)
+            // console.log('hierarchy value-->', value)
             var vals = value.split(',');
             vals.forEach((val)=>{
               var mapField =
@@ -440,7 +467,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                           }
                         }
                       }`;
-              console.log('mapField-->',mapField);
+              // console.log('mapField-->',mapField);
               filterSplit.push(JSON.parse(mapField));
             });
             filter =
@@ -465,7 +492,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           }
           // console.log('objRange-->',objRange);
           // console.log('objRange.length-->',objRange.length);
-          // console.log('filter-->',filter);
+          console.log('filter-->',filter);
           if(filter != ''){
             internals.filters.push(JSON.parse(filter));
             // console.log('internals.filters-->',JSON.stringify(internals.filters));

@@ -203,9 +203,9 @@ class InventorySearch extends Component {
     }
 
     filters.push({'userCurrency':userLogin.currency});
-    console.log('filters-->',filters);
+    // console.log('filters-->',filters);
     this.props.setCurrentPage(1);
-    // this.context.router.push('/searchresult');
+    this.context.router.push('/searchresult');
   }
 
   render(){

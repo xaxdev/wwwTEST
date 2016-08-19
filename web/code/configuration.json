@@ -78,7 +78,7 @@
               },
               "test": {
                 "host": "192.168.1.91",
-                "database": "mol_test",
+                "database": "mol",
                 "user": "root"
               },
               "staging": {
