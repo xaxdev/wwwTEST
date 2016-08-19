@@ -445,14 +445,14 @@ class InventoryWatch extends Component {
       }
       if (props.options.dominantStones) {
         dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
-          if (dominantStone.name === 'ONY') {
-            return ({value: dominantStone.code + 's',label:dominantStone.name});
-          }else if(dominantStone.name === 'PER'){
-            return ({value: dominantStone.code + 's',label:dominantStone.name});
-          }else{
+          // if (dominantStone.name === 'ONY') {
+          //   return ({value: dominantStone.code + 's',label:dominantStone.name});
+          // }else if(dominantStone.name === 'PER'){
+          //   return ({value: dominantStone.code + 's',label:dominantStone.name});
+          // }else{
+          //   return ({value: dominantStone.code,label:dominantStone.name});
+          // }
             return ({value: dominantStone.code,label:dominantStone.name});
-          }
-            // return ({value: dominantStone.code,label:dominantStone.name});
           })
         )
         dataDropDowntDominantStone = dataDropDowntDominantStone[0];
