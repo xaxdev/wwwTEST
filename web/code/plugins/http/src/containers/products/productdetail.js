@@ -322,6 +322,7 @@ class productdetail extends Component {
           <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
         );
       }
+
       if(setreference.products.length > 0){
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
         const currency = logindata.currency;
@@ -345,6 +346,8 @@ class productdetail extends Component {
     }
 
     clickSet(){
+
+      jQuery('#popupset').click();
       jQuery('#popupset').magnificPopup({
         key: 'my-popup2',
         items: {
@@ -637,10 +640,9 @@ class productdetail extends Component {
     const productId = this.props.params.id;
     const productIndex = this.props.productindex;
     const productindexplus = this.props.productindexplus;
-    const { type} = this.props.productdetail;
+    const { type,setReference} = this.props.productdetail;
 
     let pructdetailurl = '/productdetail/';
-
     return(
       <div id="page-wrapper">
 
@@ -672,7 +674,7 @@ class productdetail extends Component {
                   <div className="col-md-12 col-sm-12">
                     {this.renderDesc()}
                   </div>
-                <div className="col-md-12 col-sm-12 top-line-detail">
+                <div className={`${type != 'JLY' || !setReference ? 'hidden' : 'col-md-12 col-sm-12 top-line-detail'}`}>
                     {this.renderSetreference()}
                 </div>
                 <div className="col-md-12 col-sm-12 top-line-detail">
