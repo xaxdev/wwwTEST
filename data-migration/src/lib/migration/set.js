@@ -7,6 +7,7 @@ import { es } from '../utils/es';
 
 const getitemSets = async (index, exchangeRates) => {
     try {
+        console.log('Set!!!');
         const query = await file.read(Path.resolve(constant.SET_QUERY))
         const records = await db.exec(query, config.db)
         const itemSets = [];
