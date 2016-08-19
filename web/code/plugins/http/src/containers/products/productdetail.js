@@ -59,13 +59,16 @@ class productdetail extends Component {
       this.props.getProductRelete(Detail.subType,1,productId)
       }
 
-      if(Detail.setReference){
-        this.props.getSetreference(Detail.setReference,productId);
+      if(Detail.type == 'JLY'){
+        if(Detail.setReference){
+          this.props.getSetreference(Detail.setReference,productId);
+        }
       }
     });
 
   }
   componentDidMount() {
+
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
@@ -94,6 +97,42 @@ class productdetail extends Component {
                 } else {
                   zoomimg = false;
                   jQuery('#galleryimg').css({'width': 'auto' ,'max-width':'500px'});
+                }
+
+            });
+          }
+        }
+      });
+
+
+      jQuery('#popupset').magnificPopup({
+        key: 'my-popup',
+        items: {
+          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimgset"/></div><div class="white-popup-right"><button id="btnupset" class="btn btn-primary btn-radius">Up</button><button id="btndownset" class="btn btn-primary btn-radius">Down</button><button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button></div></div>'),
+          type: 'inline'
+        },
+        callbacks: {
+          open: function() {
+            console.log("dddddd");
+            let activegallery = jQuery('#popupset img').attr('src');
+
+            jQuery('#galleryimg').attr('src',activegallery);
+            let rotatecount = 0;
+            jQuery('#btnupset').click(function(){
+              jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
+            });
+            jQuery('#btndownset').click(function(){
+
+              jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
+            });
+            let zoomimg = false;
+            jQuery('#btnzoomset').click(function(){
+                if(zoomimg == false){
+                  zoomimg = true;
+                  jQuery('#galleryimgset').css({'width': jQuery('#galleryimgset').width() * 2 ,'max-width':'700px'});
+                } else {
+                  zoomimg = false;
+                  jQuery('#galleryimgset').css({'width': 'auto' ,'max-width':'500px'});
                 }
 
             });
@@ -142,8 +181,11 @@ class productdetail extends Component {
       this.props.getProductDetail(productId,productlist).then(()=>{
         const  Detail  = this.props.productdetail;
         this.props.getProductRelete(Detail.subType,1,productId)
-        if(Detail.setReference){
-          this.props.getSetreference(Detail.setReference,productId);
+
+        if(Detail.type == 'JLY'){
+          if(Detail.setReference){
+            this.props.getSetreference(Detail.setReference,productId);
+          }
         }
         this.setState({
           productdetailLoading: false
@@ -283,18 +325,15 @@ class productdetail extends Component {
       if(setreference.products.length > 0){
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
         const currency = logindata.currency;
-        console.log(setreference.totalprice);
-        console.log(currency);
-        console.log(setreference.totalprice[currency]);
         return(
-            <div>
-              <h2>SET DETAILS</h2>
-              <div className="col-md-3 col-sm-3 bd-img nopadding"  >
-                <input type="hidden" ref="totalsetprice" value={setreference.totalprice[currency]} />
-                <img src={'/images/blank.gif'}  responsive width={120} height={120}/>
-              </div>
-              <Setreference productset={setreference}/>
+          <div>
+            <h2>SET DETAILS</h2>
+            <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
+              <input id="totalsetprice" type="hidden" value={setreference.totalprice[currency]} />
+              <img id="imgset" src={'/images/blank.gif'}  responsive width={120} />
             </div>
+            <Setreference productset={setreference}/>
+          </div>
           );
       } else {
         return(
@@ -303,6 +342,48 @@ class productdetail extends Component {
             </div>
           );
       }
+    }
+
+    clickSet(){
+      jQuery('#popupset').magnificPopup({
+        key: 'my-popup2',
+        items: {
+          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimgset"/><div id="showtotal"></div></div><div class="white-popup-right"><button id="btnupset" class="btn btn-primary btn-radius">Up</button><button id="btndownset" class="btn btn-primary btn-radius">Down</button><button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button></div></div>'),
+          type: 'inline'
+        },
+        callbacks: {
+          open: function() {
+
+            let activegallery = jQuery('#imgset').attr('src');
+            let totalprice = jQuery('#totalsetprice').val();
+
+            const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+            const currency = logindata.currency;
+
+            jQuery('#galleryimgset').attr('src',activegallery);
+            jQuery('#showtotal').text('Total Public Price: '+numberFormat(totalprice)+' '+currency);
+            let rotatecount = 0;
+            jQuery('#btnupset').click(function(){
+              jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
+            });
+            jQuery('#btndownset').click(function(){
+
+              jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
+            });
+            let zoomimg = false;
+            jQuery('#btnzoomset').click(function(){
+                if(zoomimg == false){
+                  zoomimg = true;
+                  jQuery('#galleryimgset').css({'width': jQuery('#galleryimgset').width() * 2 ,'max-width':'700px'});
+                } else {
+                  zoomimg = false;
+                  jQuery('#galleryimgset').css({'width': 'auto' ,'max-width':'500px'});
+                }
+
+            });
+          }
+        }
+      });
     }
 
     renderFooterAttr(){

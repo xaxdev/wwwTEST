@@ -23,6 +23,7 @@ const Gemstoneattr =  (props) =>{
                <th>Fluorescence</th>
                <th>Certificate Number</th>
                <th>Certificate Date </th>
+               <th>Certificate agency </th>
              </tr>
            </thead>
            <tbody>

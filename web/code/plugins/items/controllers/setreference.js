@@ -28,13 +28,6 @@ module.exports = {
                          "setReference": "${setReference}"
                        }
                      }
-                   ],
-                   "must_not": [
-                     {
-                       "match": {
-                         "id": "${productId}"
-                       }
-                     }
                    ]
                  }
                }
@@ -74,29 +67,33 @@ module.exports = {
            totalSAR += parseInt(productResult[i].price.SAR);
            totalUSD += parseInt(productResult[i].price.USD);
            totalAED += parseInt(productResult[i].price.AED);
-          productdata.push({
-              id: productResult[i].id,
-              image:productResult[i].gallery
-          });
+           if(productId !== productResult[i].id){
+              productdata.push({
+                  id: productResult[i].id,
+                  image:productResult[i].gallery
+              });
+           }
         }
 
         let price = {
-            CHF: parseInt(totalCHF),
-            EUR: parseInt(totalEUR),
-            JOD: parseInt(totalJOD),
-            KWD: parseInt(totalKWD),
-            LBP: parseInt(totalLBP),
-            OMR: parseInt(totalOMR),
-            QAR: parseInt(totalQAR),
-            SAR: parseInt(totalSAR),
-            USD: parseInt(totalUSD),
-            AED: parseInt(totalAED)
+            "CHF": parseInt(totalCHF),
+            "EUR": parseInt(totalEUR),
+            "JOD": parseInt(totalJOD),
+            "KWD": parseInt(totalKWD),
+            "LBP": parseInt(totalLBP),
+            "OMR": parseInt(totalOMR),
+            "QAR": parseInt(totalQAR),
+            "SAR": parseInt(totalSAR),
+            "USD": parseInt(totalUSD),
+            "AED": parseInt(totalAED)
           }
 
         const responseData = {
-          products:productdata,
-          totalprice:price
+          totalprice:price,
+          products:productdata
+
         }
+
         elastic.close();
         return reply(JSON.stringify(responseData, null, 4));
       })
