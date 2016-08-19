@@ -5,5 +5,5 @@ SELECT DISTINCT
     ELSE LTRIM(RTRIM([DominantStoneName]))
     END AS 'name'
 FROM [ITORAMA].[dbo].[Items]
-WHERE [DominantStone] <> ''
+WHERE [DominantStone] <> ''  AND (LTRIM(RTRIM([DominantStoneName])) <> '' OR [DominantStoneName] <> NULL )
 ORDER BY name
