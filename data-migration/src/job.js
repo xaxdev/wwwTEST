@@ -13,6 +13,8 @@ const init = async _ => {
         const index = `mol_${moment().format('YYYYMMDD_HHmm')}`;
         await migration.migrate(index);
         await migration.alias(index, name);
+        await migration.productHierarchy()
+        await migration.itemSets(index)
     } catch (err) {
         throw err;
     }

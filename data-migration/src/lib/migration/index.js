@@ -2,6 +2,7 @@ import * as item from './item';
 import * as master from './master';
 import * as es from './es';
 import * as hierarchy from './hierarchy'
+import * as set from './set'
 
 import * as constant from './constant';
 
@@ -69,4 +70,13 @@ const productHierarchy = async _ => {
     }
 }
 
-export { alias, migrate, productHierarchy };
+const itemSets= async index => {
+    try {
+        const exchangeRates = await item.getExchangeRates()
+        await set.getitemSets(index, exchangeRates)
+    } catch (err) {
+        throw err
+    }
+}
+
+export { alias, migrate, productHierarchy, itemSets };
