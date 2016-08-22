@@ -247,14 +247,14 @@ class InventoryJewelry extends Component {
       }
       if (props.options.collections) {
         dataDropDowntCollection.push(props.options.collections.map(collection =>{
-            return ({value: collection.code,label:collection.name});
+            return ({value: collection.code,label:collection.code + ' [' + collection.name + ']'});
           })
         )
         dataDropDowntCollection = dataDropDowntCollection[0];
       }
       if (props.options.brands) {
         dataDropDowntBrand.push(props.options.brands.map(brand =>{
-            return ({value: brand.code,label:brand.name});
+            return ({value: brand.code,label:brand.code + ' [' + brand.name + ']'});
           })
         )
         dataDropDowntBrand = dataDropDowntBrand[0];

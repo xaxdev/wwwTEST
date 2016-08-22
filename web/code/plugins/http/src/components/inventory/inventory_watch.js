@@ -417,14 +417,14 @@ class InventoryWatch extends Component {
       }
       if (props.options.collections) {
         dataDropDowntCollection.push(props.options.collections.map(collection =>{
-            return ({value: collection.code,label:collection.name});
+            return ({value: collection.code,label:collection.code + ' [' + collection.name + ']'});
           })
         )
         dataDropDowntCollection = dataDropDowntCollection[0];
       }
       if (props.options.brands) {
         dataDropDowntBrand.push(props.options.brands.map(brand =>{
-            return ({value: brand.code,label:brand.name});
+            return ({value: brand.code,label:brand.code + ' [' + brand.name + ']'});
           })
         )
         dataDropDowntBrand = dataDropDowntBrand[0];
@@ -466,42 +466,42 @@ class InventoryWatch extends Component {
       }
       if (props.options.dialIndexs) {
         dataDropDowntDialIndex.push(props.options.dialIndexs.map(dialIndex =>{
-            return ({value: dialIndex.code,label:dialIndex.name});
+            return ({value: dialIndex.code,label:dialIndex.code + ' [' + dialIndex.name + ']'});
           })
         )
         dataDropDowntDialIndex = dataDropDowntDialIndex[0];
       }
       if (props.options.dialColors) {
         dataDropDowntDialColor.push(props.options.dialColors.map(dialColor =>{
-            return ({value: dialColor.code,label:dialColor.name});
+            return ({value: dialColor.code,label:dialColor.code + ' [' + dialColor.name + ']'});
           })
         )
         dataDropDowntDialColor = dataDropDowntDialColor[0];
       }
       if (props.options.dialMetals) {
         dataDropDowntDialMetal.push(props.options.dialMetals.map(dialMetal =>{
-            return ({value: dialMetal.code,label:dialMetal.name});
+            return ({value: dialMetal.code,label:dialMetal.code + ' [' + dialMetal.name + ']'});
           })
         )
         dataDropDowntDialMetal = dataDropDowntDialMetal[0];
       }
       if (props.options.buckleTypes) {
         dataDropDowntBuckleType.push(props.options.buckleTypes.map(buckleType =>{
-            return ({value: buckleType.code,label:buckleType.name});
+            return ({value: buckleType.code,label:buckleType.code + ' [' + buckleType.name + ']'});
           })
         )
         dataDropDowntBuckleType = dataDropDowntBuckleType[0];
       }
       if (props.options.strapTypes) {
         dataDropDowntStrapType.push(props.options.strapTypes.map(strapType =>{
-            return ({value: strapType.code,label:strapType.name});
+            return ({value: strapType.code,label:strapType.code + ' [' + strapType.name + ']'});
           })
         )
         dataDropDowntStrapType = dataDropDowntStrapType[0];
       }
       if (props.options.strapColors) {
         dataDropDowntStrapColor.push(props.options.strapColors.map(strapColor =>{
-            return ({value: strapColor.code,label:strapColor.name});
+            return ({value: strapColor.code,label:strapColor.code + ' [' + strapColor.name + ']'});
           })
         )
         dataDropDowntStrapColor = dataDropDowntStrapColor[0];
