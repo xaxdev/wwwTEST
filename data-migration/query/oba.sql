@@ -79,7 +79,7 @@ LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
   ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
   AND certimage.[Company] = 'mme'
 LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
-  ON cert.[CERTIFICATIONNO] = certmaster.[SKU]
+  ON cert.[CERTIFICATIONNO] = certmaster.[Item]
   AND item.[Company] = certmaster.[Company]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]
