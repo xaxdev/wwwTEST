@@ -432,7 +432,7 @@ class productreletedetail extends Component {
            if(checkInarrayObjectOther("type",gemstoneAttr)){
            return(
                <div>
-                 <h2>RAWMATERIAL ATTRIBUTES</h2>
+                 <h2>RAW MATERIAL ATTRIBUTES</h2>
                  <ProductRawmatirialAttributes gemstoneAttrData={gemstoneAttr} />
                </div>
              );

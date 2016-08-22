@@ -1307,6 +1307,9 @@ select.form-searchresult option{
 		}
 		.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
 			border: 1px solid #5c5954;
+      vertical-align: middle;
+      white-space: nowrap;
+      padding: 5px;
 		}
 		.table thead tr th span{
 			float: left;
@@ -1316,7 +1319,6 @@ select.form-searchresult option{
 			font-weight: normal;
 		}
 		.sort-icon:after{float:none !important;}
-
 
 ul.nav-tabs > li:nth-child(6),ul.nav-tabs > li:nth-child(4) ,ul.nav-tabs > li:nth-child(5)   {display: none;}
 .icon-add{display: none;}
