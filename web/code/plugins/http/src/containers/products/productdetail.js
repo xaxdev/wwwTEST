@@ -364,7 +364,7 @@ class productdetail extends Component {
             const currency = logindata.currency;
 
             jQuery('#galleryimgset').attr('src',activegallery);
-            jQuery('#showtotal').text('Total Public Price: '+numberFormat(totalprice)+' '+currency);
+            jQuery('#showtotal').text('Total Public Price (Set): '+numberFormat(totalprice)+' '+currency);
             let rotatecount = 0;
             jQuery('#btnupset').click(function(){
               jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
