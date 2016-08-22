@@ -682,11 +682,18 @@ select.form-searchresult option{
     font-family: 'open_sanssemibold';
 }
 .bg-or{
-		background-color: #ddbe6a;
+		background-color: #debe6b;
     float: left;
     width: 100%;
     padding: 15px 0;
-    margin: 20px 0;
+    margin: 20px 0 1px 0;
+}
+.bg-f7d886{
+		background-color: #f7d886;
+    float: left;
+    width: 100%;
+    padding: 10px 0;
+    margin: 0px;
 }
 .icon-add-28{
 	background: url(/images/icon-add-28.png) no-repeat center;
