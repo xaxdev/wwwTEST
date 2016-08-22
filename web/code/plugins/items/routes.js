@@ -24,5 +24,10 @@ module.exports = [
     method: 'GET',
     path: '/{id}',
     config: controllers.item
+  },
+  {
+    method: 'GET',
+    path: '/setreference/{setReference}/{productId}',
+    config: controllers.setreference
   }
 ];

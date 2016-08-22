@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
-const allowGemstone = ["Stone"];
+const allowGemstone = ["Loose Diamond","Stone"];
     var styles ={
       colmd12:{
         width:'100%',
@@ -69,40 +69,17 @@ const Gemstoneattr =  (props) =>{
            <thead style={styles.th}>
              <tr style={styles.border}>
                <th style={styles.border}>Stone Type</th>
-               <th style={styles.border}>Clarity</th>
-               <th style={styles.border}>Cut</th>
-
-               <th style={styles.border}>Color</th>
-               <th style={styles.border}>QTY Of Stones</th>
                <th style={styles.border}>Total Carat Weight</th>
-
-               <th style={styles.border}>Symmetry</th>
-               <th style={styles.border}>Fluorescence</th>
-               <th style={styles.border}>Certificate Number</th>
-               <th style={styles.border}>Certificate Date </th>
-               <th style={styles.border}>Certificate agency </th>
              </tr>
            </thead>
            <tbody>
            {newprops.map(function(data, index){
 
-             if(checkInarray(allowGemstone, data.type)){
+             if(!checkInarray(allowGemstone, data.type)){
                  return (
                    <tr key={index}>
                      <td title="Stone Type" style={styles.textcenter}>{convertBlanktodash(data.stoneTypeName)}</td>
-                     <td title="Clarity" style={styles.textcenter}>{convertBlanktodash(data.clarityName)}</td>
-                     <td title="Cut" style={styles.textcenter}>{convertBlanktodash(data.cutName)}</td>
-
-                     <td title="Color" style={styles.textcenter}>{convertBlanktodash(data.colorName)}</td>
-                     <td title="QTY Of Stones" style={styles.textcenter}>{convertBlanktodash(data.quantity)}</td>
                      <td title="Total Carat Weight" style={styles.textcenter}>{convertBlanktodash(data.carat)}</td>
-
-                     <td title="Symmetry" style={styles.textcenter}>{convertBlanktodash(data.symmetry)}</td>
-                     <td title="Fluorescence" style={styles.textcenter}>{convertBlanktodash(data.fluorescence)}</td>
-                     <td title="Certificate Number," style={styles.textcenter}>{!!data.certificate ? data.certificate.number: '-'}</td>
-                     <td title="Certificate Date" style={styles.textcenter}>{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
-                     <td title="Certificate agency" style={styles.textcenter}>{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
-
                    </tr>
                 )
               }

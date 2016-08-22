@@ -35,7 +35,7 @@ module.exports = {
          if (gemstone && gemstone.certificate && gemstone.certificate.images) {
            data = gemstone.certificate.images;
          }
-
+         
          return accumulator.concat(data);
         }, []);
 

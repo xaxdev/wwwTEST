@@ -5,8 +5,7 @@ import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
 const pructdetailurl = '/productreletedetail/';
-const allowGemstone = ["Stone"];
-
+const allowGemstone = ["Loose Diamond"];
 const Gemstoneattr =  (props) =>{
 
   let newprops = props.gemstoneAttrData.sort(function(a, b) {
@@ -29,6 +28,7 @@ const Gemstoneattr =  (props) =>{
         // names must be equal
         return 0;
   });
+
   return (
     <div className="table-responsive">
       <Table responsive className="table table-bordered">
