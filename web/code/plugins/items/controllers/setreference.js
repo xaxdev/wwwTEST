@@ -9,15 +9,11 @@ module.exports = {
   handler: (request, reply) => {
 
     const elastic = request.server.plugins.elastic.client;
-    console.log('request.payload-->',request.params.setReference);
     const setReference = request.params.setReference;
     const productId = request.params.productId;
 
     internals.query = JSON.parse(
       `{
-        "sort" : [
-             { "reference" : "desc" }
-          ],
         "query":{
              "constant_score": {
                "filter": {
@@ -25,7 +21,7 @@ module.exports = {
                    "must": [
                      {
                        "match": {
-                         "setReference": "${setReference}"
+                         "reference": "${setReference}"
                        }
                      }
                    ]
@@ -38,62 +34,34 @@ module.exports = {
     elastic
       .search({
         index: 'mol',
-        type: 'items',
+        type: 'setitems',
         body: internals.query
       }).then(function (response) {
 
-        let productdata = [];
+
+         let productdata = [];
         const productResult = response.hits.hits.map((element) => element._source);
-        let len = productResult.length;
-        let totalprice = "";
-        let totalCHF = 0;
-        let totalEUR = 0;
-        let totalJOD = 0;
-        let totalKWD = 0;
-        let totalLBP = 0;
-        let totalOMR = 0;
-        let totalQAR = 0;
-        let totalSAR = 0;
-        let totalUSD = 0;
-        let totalAED = 0;
+
+        let len = productResult[0].items.length;
+
         for (let i = 0; i < len; i++) {
-           totalCHF += parseInt(productResult[i].price.CHF);
-           totalEUR += parseInt(productResult[i].price.EUR);
-           totalJOD += parseInt(productResult[i].price.JOD);
-           totalKWD += parseInt(productResult[i].price.KWD);
-           totalLBP += parseInt(productResult[i].price.LBP);
-           totalOMR += parseInt(productResult[i].price.OMR);
-           totalQAR += parseInt(productResult[i].price.QAR);
-           totalSAR += parseInt(productResult[i].price.SAR);
-           totalUSD += parseInt(productResult[i].price.USD);
-           totalAED += parseInt(productResult[i].price.AED);
-           if(productId !== productResult[i].id){
+           if(productId !== productResult[0].items[i].id){
               productdata.push({
-                  id: productResult[i].id,
-                  image:productResult[i].gallery
+                  id: productResult[0].items[i].id,
+                  image:productResult[0].items[i].image
               });
            }
         }
 
-        let price = {
-            "CHF": parseInt(totalCHF),
-            "EUR": parseInt(totalEUR),
-            "JOD": parseInt(totalJOD),
-            "KWD": parseInt(totalKWD),
-            "LBP": parseInt(totalLBP),
-            "OMR": parseInt(totalOMR),
-            "QAR": parseInt(totalQAR),
-            "SAR": parseInt(totalSAR),
-            "USD": parseInt(totalUSD),
-            "AED": parseInt(totalAED)
-          }
+
 
         const responseData = {
-          totalprice:price,
+          totalprice:productResult[0].totalPrice,
+          setimage:productResult[0].image.original,
           products:productdata
 
         }
-
+        console.log(responseData);
         elastic.close();
         return reply(JSON.stringify(responseData, null, 4));
       })
