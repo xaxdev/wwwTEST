@@ -42,9 +42,10 @@ const Gemstoneattr =  (props) =>{
                <th>Total Carat Weight</th>
                <th>Symmetry</th>
                <th>Fluorescence</th>
+               <th>Certificate Agency </th>
                <th>Certificate Number</th>
                <th>Certificate Date </th>
-               <th>Certificate agency </th>
+
              </tr>
            </thead>
            <tbody>
@@ -60,9 +61,10 @@ const Gemstoneattr =  (props) =>{
                      <td title="Total Carat Weight" className="text-center">{convertBlanktodash(data.carat)}</td>
                      <td title="Symmetry" className="text-center">{convertBlanktodash(data.symmetry)}</td>
                      <td title="Fluorescence" className="text-center">{convertBlanktodash(data.fluorescence)}</td>
+                     <td title="Certificate agency" className="text-center">{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                      <td title="Certificate Number," className="text-center">{!!data.certificate ? data.certificate.number: '-'}</td>
                      <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
-                     <td title="Certificate agency" className="text-center">{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
+
                    </tr>
                 )
               }
