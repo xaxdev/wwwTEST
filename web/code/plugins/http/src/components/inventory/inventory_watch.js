@@ -431,14 +431,14 @@ class InventoryWatch extends Component {
       }
       if (props.options.metalTypes) {
         dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
-            return ({value: metalType.code,label:metalType.name});
+            return ({value: metalType.code,label:metalType.code + ' [' + metalType.name + ']'});
           })
         )
         dataDropDowntMetalType = dataDropDowntMetalType[0];
       }
       if (props.options.metalColours) {
         dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
-            return ({value: metalColour.code,label:metalColour.name});
+            return ({value: metalColour.code,label:metalColour.code + ' [' + metalColour.name + ']'});
           })
         )
         dataDropDowntMetalColour = dataDropDowntMetalColour[0];
@@ -452,7 +452,7 @@ class InventoryWatch extends Component {
           // }else{
           //   return ({value: dominantStone.code,label:dominantStone.name});
           // }
-            return ({value: dominantStone.code,label:dominantStone.name});
+            return ({value: dominantStone.code,label:dominantStone.code + ' [' + dominantStone.name + ']'});
           })
         )
         dataDropDowntDominantStone = dataDropDowntDominantStone[0];
