@@ -26,7 +26,7 @@ export function getProductRelete(collection,page,productId){
 export function getSetreference(setreference,productId){
   return {
       type: FETCH_SETREFERENCE,
-      promise: fetch( `${ROOT_URL}api/items/setreference/${setreference}/${productId}`,{
+      promise: fetch( `${ROOT_URL}api/items/setreference/${encodeURIComponent(setreference)}/${productId}`,{
         method:'GET'
       })
   }
