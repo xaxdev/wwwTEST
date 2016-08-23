@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
-import numberFormat from '../../utils/convertNumberformatwithcomma';
+import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 const allowGemstone = ["Loose Diamond","Diamond"];
     var styles ={
       colmd12:{

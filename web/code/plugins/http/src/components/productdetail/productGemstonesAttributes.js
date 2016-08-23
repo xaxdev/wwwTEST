@@ -6,7 +6,7 @@ import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
 const pructdetailurl = '/productreletedetail/';
 const allowGemstone = ["Stone"];
-import numberFormat from '../../utils/convertNumberformatwithcomma';
+import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 const Gemstoneattr =  (props) =>{
 
   let newprops = props.gemstoneAttrData.sort(function(a, b) {

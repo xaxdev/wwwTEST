@@ -2,11 +2,11 @@ import React,{PropTypes} from 'react';
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
-import numberFormat from '../../utils/convertNumberformatwithcomma';
+import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
 const pructdetailurl = '/productreletedetail/';
-const allowGemstone = ["Loose Diamond","Stone"];
+const allowGemstone = ["Loose Diamond","Stone","Diamond"];
 const Gemstoneattr =  (props) =>{
 
   let newprops = props.gemstoneAttrData.sort(function(a, b) {

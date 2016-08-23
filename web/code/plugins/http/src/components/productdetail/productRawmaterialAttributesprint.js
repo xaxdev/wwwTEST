@@ -2,10 +2,10 @@ import React,{PropTypes} from 'react';
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
-import numberFormat from '../../utils/convertNumberformatwithcomma';
+import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
-const allowGemstone = ["Loose Diamond","Stone"];
+const allowGemstone = ["Loose Diamond","Stone","Diamond"];
     var styles ={
       colmd12:{
         width:'100%',
