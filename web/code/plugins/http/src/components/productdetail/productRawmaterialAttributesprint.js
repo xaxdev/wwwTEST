@@ -70,7 +70,7 @@ const Gemstoneattr =  (props) =>{
            <thead style={styles.th}>
              <tr style={styles.border}>
                <th style={styles.border}>Stone Type</th>
-               <th style={styles.border}>Total Carat Weight(gram)</th>
+               <th style={styles.border}>Total Carat Weight (Grams)</th>
              </tr>
            </thead>
            <tbody>
