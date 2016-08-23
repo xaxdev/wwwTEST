@@ -6,7 +6,7 @@ import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
 const pructdetailurl = '/productreletedetail/';
 const allowGemstone = ["Stone"];
-
+import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 const Gemstoneattr =  (props) =>{
 
   let newprops = props.gemstoneAttrData.sort(function(a, b) {
@@ -42,9 +42,10 @@ const Gemstoneattr =  (props) =>{
                <th>Total Carat Weight</th>
                <th>Symmetry</th>
                <th>Fluorescence</th>
+               <th>Certificate Agency </th>
                <th>Certificate Number</th>
                <th>Certificate Date </th>
-               <th>Certificate agency </th>
+
              </tr>
            </thead>
            <tbody>
@@ -57,12 +58,13 @@ const Gemstoneattr =  (props) =>{
                      <td title="Cut" className="text-center">{convertBlanktodash(data.cutName)}</td>
                      <td title="Color" className="text-center">{convertBlanktodash(data.colorName)}</td>
                      <td title="QTY Of Stones" className="text-center">{convertBlanktodash(data.quantity)}</td>
-                     <td title="Total Carat Weight" className="text-center">{convertBlanktodash(data.carat)}</td>
+                     <td title="Total Carat Weight" className="text-center">{numberFormat(data.carat)}</td>
                      <td title="Symmetry" className="text-center">{convertBlanktodash(data.symmetry)}</td>
                      <td title="Fluorescence" className="text-center">{convertBlanktodash(data.fluorescence)}</td>
+                     <td title="Certificate agency" className="text-center">{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                      <td title="Certificate Number," className="text-center">{!!data.certificate ? data.certificate.number: '-'}</td>
                      <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
-                     <td title="Certificate agency" className="text-center">{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
+
                    </tr>
                 )
               }

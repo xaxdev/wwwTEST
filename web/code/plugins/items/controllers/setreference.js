@@ -61,7 +61,6 @@ module.exports = {
           products:productdata
 
         }
-        console.log(responseData);
         elastic.close();
         return reply(JSON.stringify(responseData, null, 4));
       })

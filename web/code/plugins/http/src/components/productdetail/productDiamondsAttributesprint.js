@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
-const allowGemstone = ["Loose Diamond"];
+import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
+const allowGemstone = ["Loose Diamond","Diamond"];
     var styles ={
       colmd12:{
         width:'100%',
@@ -79,9 +80,10 @@ const Gemstoneattr =  (props) =>{
 
                <th style={styles.border}>Symmetry</th>
                <th style={styles.border}>Fluorescence</th>
+               <th style={styles.border}>Certificate Agency </th>
                <th style={styles.border}>Certificate Number</th>
                <th style={styles.border}>Certificate Date </th>
-               <th style={styles.border}>Certificate agency </th>
+
              </tr>
            </thead>
            <tbody>
@@ -96,13 +98,14 @@ const Gemstoneattr =  (props) =>{
 
                      <td title="Color" style={styles.textcenter}>{convertBlanktodash(data.colorName)}</td>
                      <td title="QTY Of Stones" style={styles.textcenter}>{convertBlanktodash(data.quantity)}</td>
-                     <td title="Total Carat Weight" style={styles.textcenter}>{convertBlanktodash(data.carat)}</td>
+                     <td title="Total Carat Weight" style={styles.textcenter}>{numberFormat(data.carat)}</td>
 
                      <td title="Symmetry" style={styles.textcenter}>{convertBlanktodash(data.symmetry)}</td>
                      <td title="Fluorescence" style={styles.textcenter}>{convertBlanktodash(data.fluorescence)}</td>
+                     <td title="Certificate agency" style={styles.textcenter}>{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                      <td title="Certificate Number," style={styles.textcenter}>{!!data.certificate ? data.certificate.number: '-'}</td>
                      <td title="Certificate Date" style={styles.textcenter}>{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
-                     <td title="Certificate agency" style={styles.textcenter}>{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
+
                    </tr>
                 )
               }

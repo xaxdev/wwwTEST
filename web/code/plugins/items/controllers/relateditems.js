@@ -9,7 +9,6 @@ module.exports = {
   handler: (request, reply) => {
 
     const elastic = request.server.plugins.elastic.client;
-    console.log('request.payload-->',request.params.collection);
     // const keys = Object.keys(request.payload);
     const collection = request.params.collection;
     const page = request.params.page;

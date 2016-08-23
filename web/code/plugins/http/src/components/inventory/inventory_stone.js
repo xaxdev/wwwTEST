@@ -351,14 +351,14 @@ class InventoryStone extends Component {
     if(props.options != undefined){
       if (props.options.stoneType) {
         dataDropDowntstoneType.push(props.options.stoneType.map(stoneType =>{
-            return ({value: stoneType.code,label:stoneType.name});
+            return ({value: stoneType.code,label:stoneType.code + ' [' + stoneType.name + ']'});
           })
         )
         dataDropDowntstoneType = dataDropDowntstoneType[0];
       }
       if (props.options.cut) {
         dataDropDowntCut.push(props.options.cut.map(cut =>{
-            return ({value: cut.code,label:cut.name});
+            return ({value: cut.code,label:cut.code + ' [' + cut.name + ']'});
           })
         )
         dataDropDowntCut = dataDropDowntCut[0];
@@ -433,7 +433,7 @@ class InventoryStone extends Component {
       }
       if (props.options.origins) {
         dataDropDowntOrigin.push(props.options.origins.map(origin =>{
-            return ({value: origin.code,label:origin.name});
+            return ({value: origin.code,label:origin.code + ' [' + origin.name + ']'});
           })
         )
         dataDropDowntOrigin = dataDropDowntOrigin[0];

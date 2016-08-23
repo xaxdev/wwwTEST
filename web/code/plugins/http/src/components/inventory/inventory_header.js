@@ -142,7 +142,7 @@ class InventoryHeader extends Component {
           // }else{
           //   return ({value: dominantStone.code,label:dominantStone.name});
           // }
-            return ({value: dominantStone.code,label:dominantStone.name});
+            return ({value: dominantStone.code,label:dominantStone.code + ' [' + dominantStone.name + ']'});
           })
         )
         dataDropDowntDominantStone = dataDropDowntDominantStone[0];
