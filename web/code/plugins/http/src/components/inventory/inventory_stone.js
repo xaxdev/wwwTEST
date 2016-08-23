@@ -351,14 +351,14 @@ class InventoryStone extends Component {
     if(props.options != undefined){
       if (props.options.stoneType) {
         dataDropDowntstoneType.push(props.options.stoneType.map(stoneType =>{
-            return ({value: stoneType.code,label:stoneType.name});
+            return ({value: stoneType.code,label:stoneType.code + ' [' + stoneType.name + ']'});
           })
         )
         dataDropDowntstoneType = dataDropDowntstoneType[0];
       }
       if (props.options.cut) {
         dataDropDowntCut.push(props.options.cut.map(cut =>{
-            return ({value: cut.code,label:cut.name});
+            return ({value: cut.code,label:cut.code + ' [' + cut.name + ']'});
           })
         )
         dataDropDowntCut = dataDropDowntCut[0];
@@ -433,7 +433,7 @@ class InventoryStone extends Component {
       }
       if (props.options.origins) {
         dataDropDowntOrigin.push(props.options.origins.map(origin =>{
-            return ({value: origin.code,label:origin.name});
+            return ({value: origin.code,label:origin.code + ' [' + origin.name + ']'});
           })
         )
         dataDropDowntOrigin = dataDropDowntOrigin[0];
@@ -556,6 +556,9 @@ class InventoryStone extends Component {
                   </div>
                 </div>
               </div>
+
+            </div>
+            <div className="col-lg-6 form-horizontal">
               <div className="form-group">
                 <label className="col-sm-4 control-label">Total Carat Weight</label>
                 <div className="col-sm-7">
@@ -569,9 +572,7 @@ class InventoryStone extends Component {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col-lg-6 form-horizontal">
-              <div className={`form-group ${(userLogin.permission.price == 'All') ?
+              {/*<div className={`form-group ${(userLogin.permission.price == 'All') ?
                   '' : 'hidden'}`}>
                 <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
@@ -615,7 +616,7 @@ class InventoryStone extends Component {
                     <input type="text" className="form-control" {...publicPriceTo}/>
                   </div>
                 </div>
-              </div>
+              </div>*/}
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>

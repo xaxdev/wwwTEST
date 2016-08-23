@@ -31,6 +31,14 @@ export default function ResetCategory(that){
   that.props.inventoryActions.setDataLocation(location.value);
   warehouse.onChange(warehouse.value);
   that.props.inventoryActions.setDataWarehouse(warehouse.value);
+  dominantStone.onChange(dominantStone.value);
+  that.props.inventoryActions.setDataDominantStone(dominantStone.value);
+  totalCostFrom.onChange(totalCostFrom.value);
+  totalCostTo.onChange(totalCostTo.value);
+  totalUpdatedCostFrom.onChange(totalUpdatedCostFrom.value);
+  totalUpdatedCostTo.onChange(totalUpdatedCostTo.value);
+  publicPriceFrom.onChange(publicPriceFrom.value);
+  publicPriceTo.onChange(publicPriceTo.value);
 
   stoneType.value = '';
   cut.value = '';
@@ -49,7 +57,7 @@ export default function ResetCategory(that){
   brand.value = '';
   mustHave.value = '';
   ringSize.value = '';
-  dominantStone.value = '';
+  // dominantStone.value = '';
   metalType.value = '';
   metalColour.value = '';
   collection.value = '';
@@ -72,7 +80,7 @@ export default function ResetCategory(that){
   mustHave.value = '';
   metalType.value = '';
   metalColour.value = '';
-  dominantStone.value = '';
+  // dominantStone.value = '';
   limitedEdition.value = '';
   movement.value = '';
   dialIndex.value = '';

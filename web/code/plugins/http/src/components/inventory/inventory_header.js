@@ -13,6 +13,7 @@ class InventoryHeader extends Component {
 
     this.handleWarehouseSelectChange = this.handleWarehouseSelectChange.bind(this);
     this.handleLocationSelectChange = this.handleLocationSelectChange.bind(this);
+    this.handleDominantStoneSelectChange = this.handleDominantStoneSelectChange.bind(this);
     this.readFile = this.readFile.bind(this);
   }
   handleWarehouseSelectChange (WarehouseSelectValue) {
@@ -46,6 +47,19 @@ class InventoryHeader extends Component {
     this.props.props.inventoryActions.setDataLocation(LocationSelectValue);
     let vlues = LocationSelectValue.split(',');
     this.props.props.masterDataActions.getOnHandWarehouse(vlues);
+  }
+  handleDominantStoneSelectChange(DominantStoneSelectValue){
+    const { props } = this.props;
+    var { fields: { dominantStone }, searchResult } = props;
+
+    var paramsSearch = (searchResult.paramsSearch != null)?
+                          searchResult.paramsSearch:
+                          null;
+    if(paramsSearch != null)
+      paramsSearch.dominantStone = DominantStoneSelectValue;
+
+    dominantStone.onChange(DominantStoneSelectValue);
+    props.inventoryActions.setDataDominantStone(DominantStoneSelectValue);
   }
   componentDidMount() {
       jQuery('#file').hide();
@@ -90,9 +104,11 @@ class InventoryHeader extends Component {
   }
   render() {
     // console.log('props-->',this.props.props);
+    const { props } = this.props;
     var { fields:
             {
-              reference,description,venderReference,vendorName,certificatedNumber,sku,location,warehouse,attachment
+              reference,description,venderReference,vendorName,certificatedNumber,sku,location,warehouse,attachment,
+              totalCostFrom, totalCostTo,totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo,
             }
           } = this.props.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
@@ -103,6 +119,7 @@ class InventoryHeader extends Component {
 
     var dataDropDowntLocations = [];
     var dataDropDowntWareHouse = [];
+    var dataDropDowntDominantStone = [];
     var that = this;
 
     if(userLogin.permission.onhandLocation != undefined){
@@ -116,6 +133,21 @@ class InventoryHeader extends Component {
       }
     }
     if (this.props.props.options != undefined){
+      if (this.props.props.options.dominantStones) {
+        dataDropDowntDominantStone.push(this.props.props.options.dominantStones.map(dominantStone =>{
+          // if (dominantStone.name === 'ONY') {
+          //   return ({value: dominantStone.code + 's',label:dominantStone.name});
+          // }else if(dominantStone.name === 'PER'){
+          //   return ({value: dominantStone.code + 's',label:dominantStone.name});
+          // }else{
+          //   return ({value: dominantStone.code,label:dominantStone.name});
+          // }
+            return ({value: dominantStone.code,label:dominantStone.code + ' [' + dominantStone.name + ']'});
+          })
+        )
+        dataDropDowntDominantStone = dataDropDowntDominantStone[0];
+      }
+
       if (this.props.props.options.warehouses) {
         var newDate = [];
         var data = [];
@@ -197,14 +229,6 @@ class InventoryHeader extends Component {
                             <input type="text" className="form-control" {...certificatedNumber}/>
                         </div>
                       </div>
-                  </div>
-                  <div className="col-sm-6 form-horizontal">
-                      <div className="form-group">
-                        <label className="col-sm-4 control-label">SKU</label>
-                        <div className="col-sm-7">
-                            <input type="text" className="form-control" {...sku}/>
-                        </div>
-                      </div>
                       <div className={`form-group ${(userLogin.permission.onhandLocation != undefined) ? '' :
                                         'hidden'}` }>
                         <label className="col-sm-4 control-label">Site</label>
@@ -230,6 +254,70 @@ class InventoryHeader extends Component {
                               disabled={(userLogin.permission.onhandWarehouse != undefined) ? false : true}/>
                         </div>
                       </div>
+                  </div>
+                  <div className="col-sm-6 form-horizontal">
+                      <div className="form-group">
+                        <label className="col-sm-4 control-label">SKU</label>
+                        <div className="col-sm-7">
+                            <input type="text" className="form-control" {...sku}/>
+                        </div>
+                      </div>
+
+                      <div className="form-group">
+                        <label className="col-sm-4 control-label">Dominant Stone</label>
+                        <div className="col-sm-7">
+                          <Select multi simpleValue value={props.DominantStoneValue}
+                            placeholder="Select your Dominant Stone"
+                            options={dataDropDowntDominantStone}
+                            onChange={this.handleDominantStoneSelectChange} />
+                        </div>
+                      </div>
+                      <div className={`form-group ${(userLogin.permission.price == 'All') ?
+                          '' : 'hidden'}`}>
+                        <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
+                        <div className="col-sm-7">
+                          <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                          <div className="col-sm-4 nopadding">
+                            <input type="text" className="form-control" {...totalCostFrom}/>
+                          </div>
+                          <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                          <div className="col-sm-4 nopadding">
+                            <input type="text" className="form-control" {...totalCostTo}/>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={`form-group ${(userLogin.permission.price == 'Updated'
+                                                    || userLogin.permission.price == 'All') ?
+                                                    '' : 'hidden'}`}>
+                        <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
+                        <div className="col-sm-7">
+                          <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                          <div className="col-sm-4 nopadding">
+                            <input type="text" className="form-control" {...totalUpdatedCostFrom}/>
+                          </div>
+                          <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                          <div className="col-sm-4 nopadding">
+                            <input type="text" className="form-control" {...totalUpdatedCostTo}/>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={`form-group ${(userLogin.permission.price == 'Public'
+                                                    || userLogin.permission.price == 'Updated'
+                                                    || userLogin.permission.price == 'All') ?
+                                                  '' : 'hidden'}`}>
+                        <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
+                         <div className="col-sm-7">
+                          <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                          <div className="col-sm-4 nopadding">
+                            <input type="text" className="form-control" {...publicPriceFrom}/>
+                          </div>
+                          <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                          <div className="col-sm-4 nopadding">
+                            <input type="text" className="form-control" {...publicPriceTo}/>
+                          </div>
+                        </div>
+                      </div>
+
                       <div className="form-group">
                         <label className="col-sm-4 control-label">Attachment</label>
                         <div className="col-sm-7">

@@ -9,9 +9,12 @@ import ProductStoneAttributes from '../../components/productdetail/productStoneA
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributesprint';
 import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributesprint';
 import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelryprint';
-
+import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributesprint';
+import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributesprint';
 import '../../../public/css/productdetail.css';
 
+import checkInarrayObject from '../../utils/checkInarrayObject';
+import checkInarrayObjectOther from '../../utils/checkInarrayObjectOther';
 let styles ={
   imgwidth:{
     width: '100%',
@@ -163,17 +166,73 @@ class productprint extends Component {
 
       } else {
         if(gemstoneAttr.length > 0){
-        return(
-            <div>
-              <h2>GEMSTONES ATTRIBUTES</h2>
-              <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} subType={subType}/>
-            </div>
-          );
+          if(checkInarrayObject("type","Stone",gemstoneAttr)){
+            return(
+                <div>
+                  <h2>GEMSTONES ATTRIBUTES</h2>
+                  <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} subType={subType}/>
+                </div>
+              );
+          }
         }
       }
 
      }
+     renderFooterDiamondsAttr(){
 
+       const Detail  = this.props.productdetail;
+       const gemstoneAttr = Detail.gemstones;
+       const subType = Detail.subType;
+       if(Detail.type == 'STO'){
+
+       } else {
+         if(!gemstoneAttr){
+           return(
+            <div>Loading...</div>
+           );
+         }
+         if(gemstoneAttr.length > 0){
+           if(checkInarrayObject("type","Loose Diamond",gemstoneAttr)){
+             return(
+                 <div>
+                   <h2>DIAMONDS ATTRIBUTES</h2>
+                   <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} />
+                 </div>
+               );
+           }
+         } else {
+
+         }
+       }
+     }
+
+     renderFooterRawmatirialAttr(){
+
+       const Detail  = this.props.productdetail;
+       const gemstoneAttr = Detail.gemstones;
+       const subType = Detail.subType;
+       if(Detail.type == 'STO'){
+
+       } else {
+         if(!gemstoneAttr){
+           return(
+             <div>Loading...</div>
+           );
+         }
+         if(gemstoneAttr.length > 0){
+           if(checkInarrayObjectOther("type",gemstoneAttr)){
+             return(
+                 <div>
+                   <h2>RAW MATERIAL ATTRIBUTES</h2>
+                   <ProductRawmatirialAttributes gemstoneAttrData={gemstoneAttr} />
+                 </div>
+               );
+           }
+         } else {
+
+         }
+       }
+     }
     renderImagegallery(){
       const { gallery } = this.props.productdetail;
       if(!gallery){
@@ -256,13 +315,22 @@ class productprint extends Component {
             <div style={styles.colmd12}>
               {this.renderDesc()}
             </div>
+
+
             <div style={styles.colmd12}>
                 {this.renderAttr()}
             </div>
+
+
           </div>
         </div>
-
+        <div style={styles.colmd12}>
+            {this.renderFooterDiamondsAttr()}
+        </div>
         <div style={styles.colmd12}>{this.renderFooterAttr()}</div>
+        <div style={styles.colmd12}>
+            {this.renderFooterRawmatirialAttr()}
+        </div>
 
       </div>
     );

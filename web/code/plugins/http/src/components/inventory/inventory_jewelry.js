@@ -247,14 +247,14 @@ class InventoryJewelry extends Component {
       }
       if (props.options.collections) {
         dataDropDowntCollection.push(props.options.collections.map(collection =>{
-            return ({value: collection.code,label:collection.name});
+            return ({value: collection.code,label:collection.code + ' [' + collection.name + ']'});
           })
         )
         dataDropDowntCollection = dataDropDowntCollection[0];
       }
       if (props.options.brands) {
         dataDropDowntBrand.push(props.options.brands.map(brand =>{
-            return ({value: brand.code,label:brand.name});
+            return ({value: brand.code,label:brand.code + ' [' + brand.name + ']'});
           })
         )
         dataDropDowntBrand = dataDropDowntBrand[0];
@@ -268,21 +268,21 @@ class InventoryJewelry extends Component {
       }
       if (props.options.dominantStones) {
         dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
-            return ({value: dominantStone.code,label:dominantStone.name});
+            return ({value: dominantStone.code,label:dominantStone.code + ' [' + dominantStone.name + ']'});
           })
         )
         dataDropDowntDominantStone = dataDropDowntDominantStone[0];
       }
       if (props.options.metalTypes) {
         dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
-            return ({value: metalType.code,label:metalType.name});
+            return ({value: metalType.code,label:metalType.code + ' [' + metalType.name + ']'});
           })
         )
         dataDropDowntMetalType = dataDropDowntMetalType[0];
       }
       if (props.options.metalColours) {
         dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
-            return ({value: metalColour.code,label:metalColour.name});
+            return ({value: metalColour.code,label:metalColour.code + ' [' + metalColour.name + ']'});
           })
         )
         dataDropDowntMetalColour = dataDropDowntMetalColour[0];
@@ -375,7 +375,7 @@ class InventoryJewelry extends Component {
                   <input type="text" className="form-control" {...ringSize}/>
                 </div>
               </div>
-              <div className="form-group">
+              {/*<div className="form-group">
                 <label className="col-sm-4 control-label">Set Reference Number</label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...setReference}/>
@@ -389,11 +389,11 @@ class InventoryJewelry extends Component {
                     options={dataDropDowntDominantStone}
                     onChange={this.handleDominantStoneSelectChange} />
                 </div>
-              </div>
+              </div>*/}
             </div>
 
             <div className="col-lg-6 form-horizontal">
-              <div className={`form-group ${(userLogin.permission.price == 'All') ?
+              {/*<div className={`form-group ${(userLogin.permission.price == 'All') ?
                   '' : 'hidden'}`}>
                 <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
                 <div className="col-sm-7">
@@ -437,7 +437,7 @@ class InventoryJewelry extends Component {
                     <input type="text" className="form-control" {...publicPriceTo}/>
                   </div>
                 </div>
-              </div>
+              </div>*/}
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
@@ -505,6 +505,12 @@ class InventoryJewelry extends Component {
                     placeholder="Select your Metal Colour"
                     options={dataDropDowntMetalColour}
                     onChange={this.handleMetalColourSelectChange} />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label">Set Reference Number</label>
+                <div className="col-sm-7">
+                  <input type="text" className="form-control" {...setReference}/>
                 </div>
               </div>
             </div>

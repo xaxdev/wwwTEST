@@ -18,7 +18,7 @@ SELECT item.[Id] AS 'id'
     , item.[MetalColor] AS 'metalColor'
     , ISNULL(item.[MetalColorName], '') AS 'metalColorName'
     , item.[DominantStone] AS 'dominant'
-    , ISNULL(item.[DominantStoneName], '') AS 'dominantStoneName'
+    , ISNULL(dominantstone.[Name], '') AS 'dominantStoneName'
     , item.[ItemCreatedDate] AS 'itemCreatedDate'
     , item.[Hierarchy] AS 'hierarchy'
     , item.[SKU] AS 'sku'
@@ -100,5 +100,7 @@ LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
 LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
   ON cert.[CERTIFICATIONNO] = certmaster.[Item]
   AND item.[Company] = certmaster.[Company]
+LEFT JOIN [ITORAMA].[dbo].[DominantStone] dominantstone
+  ON dominantstone.[Code] = item.[DominantStone]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]

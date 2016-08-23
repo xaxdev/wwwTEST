@@ -5,7 +5,7 @@ import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
 import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
-const allowGemstone = ["Stone"];
+const allowGemstone = ["Loose Diamond","Diamond"];
     var styles ={
       colmd12:{
         width:'100%',
@@ -42,6 +42,7 @@ const allowGemstone = ["Stone"];
       }
     };
 const pructdetailurl = '/productreletedetail/';
+
 const Gemstoneattr =  (props) =>{
 
   let newprops = props.gemstoneAttrData.sort(function(a, b) {
@@ -104,7 +105,6 @@ const Gemstoneattr =  (props) =>{
                      <td title="Certificate agency" style={styles.textcenter}>{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                      <td title="Certificate Number," style={styles.textcenter}>{!!data.certificate ? data.certificate.number: '-'}</td>
                      <td title="Certificate Date" style={styles.textcenter}>{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
-
 
                    </tr>
                 )

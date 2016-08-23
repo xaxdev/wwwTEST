@@ -49,6 +49,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
 
     if (keys.length != 3 ){
       keys.forEach((key) => {
+        filter = '';
         // console.log('keys-->',key);
         var value = obj[key];
         if(key == 'reference' || key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity'
@@ -131,7 +132,37 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
               valToCarat = value;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'totalCaratWeight':{'from':valFromCarat,'to':valToCarat},'length':objLength};
+            objRange = {...objRange,'carat':{'from':valFromCarat,'to':valToCarat},'length':objLength};
+            filter =
+              `{
+                "match": {
+                  "gemstoneType": {
+                    "query": "Loose Diamond"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter = '';
+            filter =
+              `{
+                "match": {
+                  "gemstoneType": {
+                    "query": "Stone"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter = '';
+            filter =
+              `{
+                "match": {
+                  "gemstoneType": {
+                    "query": "Diamond"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter = '';
           }
           else if(key == 'totalCostFrom' || key == 'totalCostTo'){
             keyFromCost = 'costUSD';
@@ -368,6 +399,36 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             }
             var objLength = objRange.length +1;
             objRange = {...objRange,'gemstones.carat':{'from':valFromCost,'to':valToCost},'length':objLength};
+            filter =
+              `{
+                "match": {
+                  "gemstones.type": {
+                    "query": "Loose Diamond"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter = '';
+            filter =
+              `{
+                "match": {
+                  "gemstones.type": {
+                    "query": "Stone"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter = '';
+            filter =
+              `{
+                "match": {
+                  "gemstones.type": {
+                    "query": "Diamond"
+                  }
+                }
+              }`;
+            internals.filters.push(JSON.parse(filter));
+            filter = '';
           }
           else if(key == 'proDateFrom' || key == 'proDateTo'){
             if(key == 'proDateFrom'){
@@ -407,7 +468,6 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             var filterSplit = [];
             // var vals = value.split(',');
             var vals = value.replace(',',' ');
-            // vals.forEach((val)=>{
             var mapField =
                   `{
                       "match": {
@@ -428,7 +488,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           }
           else if(key == 'hierarchy'){
             var filterSplit = [];
-            console.log('hierarchy value-->', value)
+            // console.log('hierarchy value-->', value)
             var vals = value.split(',');
             vals.forEach((val)=>{
               var mapField =
@@ -440,7 +500,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                           }
                         }
                       }`;
-              console.log('mapField-->',mapField);
+              // console.log('mapField-->',mapField);
               filterSplit.push(JSON.parse(mapField));
             });
             filter =
@@ -468,6 +528,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           // console.log('filter-->',filter);
           if(filter != ''){
             internals.filters.push(JSON.parse(filter));
+            filter = '';
             // console.log('internals.filters-->',JSON.stringify(internals.filters));
           }
         }
@@ -499,6 +560,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                 }`;
             }
             internals.filters.push(JSON.parse(filter));
+            filter = '';
           }
         });
       }

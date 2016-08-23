@@ -13,6 +13,7 @@ const init = async _ => {
         await migration.migrate(index);
         await migration.alias(index, name);
         await migration.productHierarchy()
+        await migration.itemSets(index)
     } catch (err) {
         throw err;
     }

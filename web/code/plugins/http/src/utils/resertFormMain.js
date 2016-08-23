@@ -48,8 +48,8 @@ export default function ResetFormMain(that){
   totalCostTo.value = '';
   totalUpdatedCostFrom.value = '';
   totalUpdatedCostTo.value = '';
-  publicPriceFrom.value = '';
-  publicPriceTo.value = '';
+  // publicPriceFrom.value = '';
+  // publicPriceTo.value = '';
   markupFrom.value = '';
   markupTo.value = '';
   certificatedNumber.value = '';
@@ -72,8 +72,8 @@ export default function ResetFormMain(that){
   totalCostTo.value = '';
   totalUpdatedCostFrom.value = '';
   totalUpdatedCostTo.value = '';
-  publicPriceFrom.value = '';
-  publicPriceTo.value = '';
+  // publicPriceFrom.value = '';
+  // publicPriceTo.value = '';
   markupFrom.value = '';
   markupTo.value = '';
   grossWeightFrom.value = '';
@@ -120,8 +120,8 @@ export default function ResetFormMain(that){
   totalCostTo.value = '';
   totalUpdatedCostFrom.value = '';
   totalUpdatedCostTo.value = '';
-  publicPriceFrom.value = '';
-  publicPriceTo.value = '';
+  // publicPriceFrom.value = '';
+  // publicPriceTo.value = '';
   markupFrom.value = '';
   markupTo.value = '';
   grossWeightFrom.value = '';

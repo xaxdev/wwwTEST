@@ -417,35 +417,42 @@ class InventoryWatch extends Component {
       }
       if (props.options.collections) {
         dataDropDowntCollection.push(props.options.collections.map(collection =>{
-            return ({value: collection.code,label:collection.name});
+            return ({value: collection.code,label:collection.code + ' [' + collection.name + ']'});
           })
         )
         dataDropDowntCollection = dataDropDowntCollection[0];
       }
       if (props.options.brands) {
         dataDropDowntBrand.push(props.options.brands.map(brand =>{
-            return ({value: brand.code,label:brand.name});
+            return ({value: brand.code,label:brand.code + ' [' + brand.name + ']'});
           })
         )
         dataDropDowntBrand = dataDropDowntBrand[0];
       }
       if (props.options.metalTypes) {
         dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
-            return ({value: metalType.code,label:metalType.name});
+            return ({value: metalType.code,label:metalType.code + ' [' + metalType.name + ']'});
           })
         )
         dataDropDowntMetalType = dataDropDowntMetalType[0];
       }
       if (props.options.metalColours) {
         dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
-            return ({value: metalColour.code,label:metalColour.name});
+            return ({value: metalColour.code,label:metalColour.code + ' [' + metalColour.name + ']'});
           })
         )
         dataDropDowntMetalColour = dataDropDowntMetalColour[0];
       }
       if (props.options.dominantStones) {
         dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
-            return ({value: dominantStone.code,label:dominantStone.name});
+          // if (dominantStone.name === 'ONY') {
+          //   return ({value: dominantStone.code + 's',label:dominantStone.name});
+          // }else if(dominantStone.name === 'PER'){
+          //   return ({value: dominantStone.code + 's',label:dominantStone.name});
+          // }else{
+          //   return ({value: dominantStone.code,label:dominantStone.name});
+          // }
+            return ({value: dominantStone.code,label:dominantStone.code + ' [' + dominantStone.name + ']'});
           })
         )
         dataDropDowntDominantStone = dataDropDowntDominantStone[0];
@@ -459,42 +466,42 @@ class InventoryWatch extends Component {
       }
       if (props.options.dialIndexs) {
         dataDropDowntDialIndex.push(props.options.dialIndexs.map(dialIndex =>{
-            return ({value: dialIndex.code,label:dialIndex.name});
+            return ({value: dialIndex.code,label:dialIndex.code + ' [' + dialIndex.name + ']'});
           })
         )
         dataDropDowntDialIndex = dataDropDowntDialIndex[0];
       }
       if (props.options.dialColors) {
         dataDropDowntDialColor.push(props.options.dialColors.map(dialColor =>{
-            return ({value: dialColor.code,label:dialColor.name});
+            return ({value: dialColor.code,label:dialColor.code + ' [' + dialColor.name + ']'});
           })
         )
         dataDropDowntDialColor = dataDropDowntDialColor[0];
       }
       if (props.options.dialMetals) {
         dataDropDowntDialMetal.push(props.options.dialMetals.map(dialMetal =>{
-            return ({value: dialMetal.code,label:dialMetal.name});
+            return ({value: dialMetal.code,label:dialMetal.code + ' [' + dialMetal.name + ']'});
           })
         )
         dataDropDowntDialMetal = dataDropDowntDialMetal[0];
       }
       if (props.options.buckleTypes) {
         dataDropDowntBuckleType.push(props.options.buckleTypes.map(buckleType =>{
-            return ({value: buckleType.code,label:buckleType.name});
+            return ({value: buckleType.code,label:buckleType.code + ' [' + buckleType.name + ']'});
           })
         )
         dataDropDowntBuckleType = dataDropDowntBuckleType[0];
       }
       if (props.options.strapTypes) {
         dataDropDowntStrapType.push(props.options.strapTypes.map(strapType =>{
-            return ({value: strapType.code,label:strapType.name});
+            return ({value: strapType.code,label:strapType.code + ' [' + strapType.name + ']'});
           })
         )
         dataDropDowntStrapType = dataDropDowntStrapType[0];
       }
       if (props.options.strapColors) {
         dataDropDowntStrapColor.push(props.options.strapColors.map(strapColor =>{
-            return ({value: strapColor.code,label:strapColor.name});
+            return ({value: strapColor.code,label:strapColor.code + ' [' + strapColor.name + ']'});
           })
         )
         dataDropDowntStrapColor = dataDropDowntStrapColor[0];
@@ -606,7 +613,7 @@ class InventoryWatch extends Component {
                     onChange={this.handleMetalColourSelectChange} />
                   </div>
               </div>
-              <div className="form-group">
+              {/*<div className="form-group">
                 <label className="col-sm-4 control-label">Dominant Stone</label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.DominantStoneValue}
@@ -614,7 +621,7 @@ class InventoryWatch extends Component {
                     options={dataDropDowntDominantStone}
                     onChange={this.handleDominantStoneSelectChange} />
                   </div>
-              </div>
+              </div>*/}
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Limited Edition
                   <OverlayTrigger placement="top" overlay={tooltipLimitedEdition}>
@@ -669,12 +676,9 @@ class InventoryWatch extends Component {
 
             </div>
             <div className="col-lg-6 form-horizontal">
-              <div className={`form-group ${(userLogin.permission.price == 'All') ?
+              {/*<div className={`form-group ${(userLogin.permission.price == 'All') ?
                   '' : 'hidden'}`}>
                 <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})
-                  {/*<OverlayTrigger placement="top" overlay={tooltipTotalCost}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>*/}
                 </label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -717,7 +721,7 @@ class InventoryWatch extends Component {
                     <input type="text" className="form-control" {...publicPriceTo}/>
                   </div>
                 </div>
-              </div>
+              </div>*/}
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
@@ -886,6 +890,7 @@ class InventoryWatch extends Component {
                     onChange={this.handleComplicationSelectChange} />
                 </div>
               </div>*/}
+
             </div>
           </div>
         </div>

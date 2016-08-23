@@ -50,3 +50,6 @@ export const PRODUCTGROUP_DATA = '../../../query/master/productGroup.js';
 
 // Hierarchy
 export const HIERARCHY_TREE_QUERY = './query/hierarchy.sql';
+
+// set
+export const SET_QUERY = './query/set.sql';

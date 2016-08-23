@@ -40,3 +40,9 @@ public
 
 *.js.save
 *.json.save
+web/code/plugins/http/src/utils/treeview/accessory.json
+web/code/plugins/http/src/utils/treeview/jewelry.json
+web/code/plugins/http/src/utils/treeview/oba.json
+web/code/plugins/http/src/utils/treeview/spare.json
+web/code/plugins/http/src/utils/treeview/stone.json
+web/code/plugins/http/src/utils/treeview/watch.json
