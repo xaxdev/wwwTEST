@@ -650,14 +650,14 @@ class productdetail extends Component {
           <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding"><h1>PRODUCT DETAIL</h1></div>
           {this.renderNavigation()}
         </div>
-        <div className={`${this.state.productdetailLoading == true ? '' : 'hidden'}` }>
+        <div className={`${this.state.productdetailLoading == true ? 'centerloading' : 'hidden'}` }>
           <center>
             <br/><br/><br/><br/><br/><br/>
               <Loading type="spin" color="#202020" width="10%"/>
           </center>
           <br/><br/><br/><br/><br/><br/>
         </div>
-        <div className={`${this.state.productdetailLoading == true ? 'hidden' : 'row'}`}>
+        <div className="row">
 
           <div className="col-sm-12">
               <div className="panel panel-default">
