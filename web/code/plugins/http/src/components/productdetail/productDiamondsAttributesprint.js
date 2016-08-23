@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
-const allowGemstone = ["Loose Diamond"];
+import numberFormat from '../../utils/convertNumberformatwithcomma';
+const allowGemstone = ["Loose Diamond","Diamond"];
     var styles ={
       colmd12:{
         width:'100%',
@@ -97,7 +98,7 @@ const Gemstoneattr =  (props) =>{
 
                      <td title="Color" style={styles.textcenter}>{convertBlanktodash(data.colorName)}</td>
                      <td title="QTY Of Stones" style={styles.textcenter}>{convertBlanktodash(data.quantity)}</td>
-                     <td title="Total Carat Weight" style={styles.textcenter}>{convertBlanktodash(data.carat)}</td>
+                     <td title="Total Carat Weight" style={styles.textcenter}>{numberFormat(data.carat)}</td>
 
                      <td title="Symmetry" style={styles.textcenter}>{convertBlanktodash(data.symmetry)}</td>
                      <td title="Fluorescence" style={styles.textcenter}>{convertBlanktodash(data.fluorescence)}</td>
