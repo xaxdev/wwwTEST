@@ -40,3 +40,12 @@
   right:0;
   border: 5px solid #fff;
 }
+.centerloading{
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  width: 50%;
+  margin: 0 auto;
+  top: 13%;
+}
