@@ -196,7 +196,6 @@ module.exports = {
 
     })
     .catch(function (error) {
-      console.log(error);
       elastic.close();
       return reply(Boom.badImplementation(err));
     });
