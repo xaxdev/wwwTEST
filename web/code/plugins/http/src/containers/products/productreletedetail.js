@@ -61,6 +61,7 @@ class productreletedetail extends Component {
         this.setState({
           productdetailLoading: false
         });
+        console.log(this.state.productdetailLoading);
       });
 
 
@@ -142,6 +143,8 @@ class productreletedetail extends Component {
         this.setState({
           productdetailLoading: false
         });
+
+        console.log(this.state.productdetailLoading);
       });
     }
   }
@@ -511,9 +514,9 @@ class productreletedetail extends Component {
       const productId = this.props.params.id;
       const { totalpage} = this.props.productrelete;
       const getPage = parseInt(data.reletepage);
-      const { collection } = this.props.productdetail;
+      const { collection,subType } = this.props.productdetail;
       if((getPage <= totalpage) && (getPage != 0)){
-      this.props.getProductRelete(collection,getPage,productId);
+      this.props.getProductRelete(subType,getPage,productId);
       }
     }
 

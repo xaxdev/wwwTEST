@@ -54,21 +54,12 @@ class productdetail extends Component {
 
       const  Detail  = this.props.productdetail;
       if(Detail.type != 'STO'){
-        this.props.getProductRelete(Detail.subType,1,productId).then( ()=>{
-          this.setState({
-            productdetailLoading: false
-          });
-          //
-          // if(Detail.type == 'JLY'){
-          //   if(Detail.setReference){
-          //     this.props.getSetreference(Detail.setReference,productId);
-          //   }
-          // }
-          // console.log("componentWillMount this.setState",productdetailLoading);
-        });
+        this.props.getProductRelete(Detail.subType,1,productId);
       }
-
-
+      this.setState({
+        productdetailLoading: false
+      });
+      console.log(this.state.productdetailLoading);
     });
 
   }
@@ -188,6 +179,7 @@ class productdetail extends Component {
         this.setState({
           productdetailLoading: false
         });
+        console.log(this.state.productdetailLoading);
       });
     }
   }
@@ -603,9 +595,9 @@ class productdetail extends Component {
       const productId = this.props.params.id;
       const { totalpage} = this.props.productrelete;
       const getPage = parseInt(data.reletepage);
-      const { collection } = this.props.productdetail;
+      const { collection,subType } = this.props.productdetail;
       if((getPage <= totalpage) && (getPage != 0)){
-      this.props.getProductRelete(collection,getPage,productId);
+      this.props.getProductRelete(subType,getPage,productId);
       }
     }
 
