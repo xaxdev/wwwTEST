@@ -3,6 +3,7 @@ import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
+import ReactImageFallback from 'react-image-fallback';
 
 class ListItemsView extends Component {
   constructor(props) {
@@ -45,7 +46,12 @@ class ListItemsView extends Component {
   }
   renderImage=
    (val,row) =>
-    <img src={row.imageThumbnail} width="60"></img>;
+    <ReactImageFallback
+           src={row.imageThumbnail}
+           fallbackImage="/images/blank.gif"
+           initialImage="/images/blank.gif"
+           width="60"
+           />;
 
   renderCheckItem =
     (val, row) =>
@@ -84,6 +90,18 @@ class ListItemsView extends Component {
         return {...col}
       });
 
+      let jewelsWeight = 0;
+      items = items.map(function (col, idx) {
+        // console.log('col.gemstones-->',col.gemstones);
+        col.gemstones.forEach(function(gemstone) {
+          if(gemstone.carat != undefined){
+            jewelsWeight = jewelsWeight + gemstone.carat;
+          }
+        });
+        col.jewelsWeight = jewelsWeight;
+        return {...col}
+      });
+
       const tableColumns = [
         // { title: '', render: this.renderCheckItem },
         { title: 'Images', render: this.renderImage },
@@ -93,7 +111,7 @@ class ListItemsView extends Component {
         { title: 'Location', prop: 'siteName' },
         { title: 'Warehouse', prop: 'warehouseName' },
         { title: 'Size', prop: 'size' },
-        { title: 'Jewelry Weight', prop: '' },
+        { title: 'Jewelry Weight', prop: 'jewelsWeight' },
         { title: 'Gross Weight', prop: 'grossWeight' },
         { title: 'Public Price', prop: 'priceUSD' },
         { title: '', render: this.renderAction, className: 'text-center' },

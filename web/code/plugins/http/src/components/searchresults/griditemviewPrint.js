@@ -4,6 +4,7 @@ import { responsive } from 'react-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import convertDate from '../../utils/convertDate';
+import ReactImageFallback from 'react-image-fallback';
 
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
@@ -206,7 +207,17 @@ class GridItemsView extends Component {
                       </div>
                     </div>
 
-                    <div className="thumbnaillgrid"><img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/></div>
+                    <div className="thumbnaillgrid">
+                      {/*<img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/>
+                      <ReactImageFallback
+                             src={imagesProduct }
+                             fallbackImage="/images/blank.gif"
+                             initialImage="/images/blank.gif"
+                             name={item.id}
+                             id={item.id}
+                             onClick={btnEvent}
+                             />*/}
+                    </div>
 
                     <p className="font-b fc-000">
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>

@@ -3,6 +3,7 @@ import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
+import ReactImageFallback from 'react-image-fallback';
 
 class ListItemsView extends Component {
   constructor(props) {
@@ -45,7 +46,12 @@ class ListItemsView extends Component {
   }
   renderImage=
    (val,row) =>
-    <img src={row.imageThumbnail} width="60"></img>;
+   <ReactImageFallback
+          src={row.imageThumbnail}
+          fallbackImage="/images/blank.gif"
+          initialImage="/images/blank.gif"
+          width="60"
+          />;
 
   renderCheckItem =
     (val, row) =>
