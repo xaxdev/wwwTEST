@@ -6,7 +6,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack --progress --color --define HOSTNAME='\"185.3.154.146\"'",
     "build:test": "NODE_ENV=test webpack --progress --color --define HOSTNAME='\"192.168.1.92\"'",
-    "build:dev": "webpack --progress --color  --watch --define HOSTNAME='\"localhost\"'"
+    "build:dev": "webpack --progress --color  --watch --define HOSTNAME='\"192.168.3.24\"'"
   },
   "author": "",
   "license": "ISC",
@@ -53,6 +53,7 @@
     "react-checkbox-list": "0.0.2",
     "react-data-components": "^0.6.0",
     "react-dom": "0.14.x",
+    "react-image-fallback": "^3.1.1",
     "react-image-gallery": "^0.6.0",
     "react-input-calendar": "^0.1.20",
     "react-loading": "0.0.9",

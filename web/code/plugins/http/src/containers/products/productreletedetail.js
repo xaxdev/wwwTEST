@@ -10,7 +10,6 @@ import ProductJewelryAttributes from '../../components/productdetail/productJewa
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
 import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributes';
-//import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelry';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
 import ProductPrint from '../../components/productdetail/productPrint';
@@ -22,6 +21,7 @@ import numberFormat from '../../utils/convertNumberformatwithcomma';
 
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributes';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributes';
+import ReactImageFallback from "react-image-fallback";
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
@@ -53,18 +53,14 @@ class productreletedetail extends Component {
         productdetailLoading: true
       });
       this.props.getProductDetail(productId).then(()=>{
+
+        const  Detail  = this.props.productdetail;
+        if(Detail.type != 'STO'){
+          this.props.getProductRelete(Detail.subType,1,productId);
+        }
         this.setState({
           productdetailLoading: false
         });
-        const  Detail  = this.props.productdetail;
-        if(Detail.type != 'STO'){
-        this.props.getProductRelete(Detail.subType,1,productId)
-        }
-        if(Detail.type == 'JLY'){
-          if(Detail.setReference){
-            this.props.getSetreference(Detail.setReference,productId);
-          }
-        }
       });
 
 
@@ -142,18 +138,11 @@ class productreletedetail extends Component {
       const productlist = this.props.productlist;
       this.props.getProductDetail(productId).then(()=>{
         const  Detail  = this.props.productdetail;
-        this.props.getProductRelete(Detail.subType,1,productId)
-
-        if(Detail.type == 'JLY'){
-          if(Detail.setReference){
-            this.props.getSetreference(Detail.setReference,productId);
-          }
-        }
-
+        this.props.getProductRelete(Detail.subType,1,productId);
         this.setState({
           productdetailLoading: false
         });
-      })
+      });
     }
   }
 
@@ -291,23 +280,30 @@ class productreletedetail extends Component {
 
     renderSetreference(){
 
-      const setreference = this.props.setreference;
-      if(!!!setreference){
+      const { setReferenceData } = this.props.productdetail;
+      if(!!!setReferenceData){
         return(
           <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
         );
       }
-      if(setreference.products.length > 0){
+      if(setReferenceData.products.length > 0){
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
         const currency = logindata.currency;
         return(
           <div>
             <h2>SET DETAILS</h2>
             <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-              <input id="totalsetprice" type="hidden" value={parseInt(setreference.totalprice[currency])} />
-              <img id="imgset" src={setreference.setimage}  responsive width={120} />
+              <input id="totalsetprice" type="hidden" value={parseInt(setReferenceData.totalprice[currency])} />
+              <ReactImageFallback
+                    id="imgset"
+                     src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                     fallbackImage='/images/blank.gif'
+                     initialImage='/images/blank.gif'
+                     width={120}
+                     height={120}
+                     className='img-responsive' />
             </div>
-            <Setreference productset={setreference}/>
+            <Setreference productset={setReferenceData}/>
           </div>
           );
       } else {
@@ -444,13 +440,13 @@ class productreletedetail extends Component {
      }
     renderImagegallery(){
         const { gallery } = this.props.productdetail;
-        if(!gallery){
-          return(
-            <div><img src="/images/blank.gif" width="100%"/></div>
-          );
-        }
-
-        if(gallery.length > 0 ) {
+        // if(!gallery){
+        //   return(
+        //     <div><img src="/images/blank.gif" width="100%"/></div>
+        //   );
+        // }
+        if(gallery !== undefined){
+        if(gallery.length > 0) {
           return(
             <div>
               <ProductGallery imagegallery={gallery}/>
@@ -461,7 +457,7 @@ class productreletedetail extends Component {
               <div><img src="/images/blank.gif" width="100%"/></div>
             );
         }
-
+      }
      }
      renderReleteproduct(){
 
@@ -606,8 +602,7 @@ class productreletedetail extends Component {
                             {this.renderDesc()}
                          </div>
                          <div className={`${type != 'JLY' || !setReference ? 'hidden' : 'col-md-12 col-sm-12 top-line-detail'}`}>
-
-                             {this.renderSetreference()}
+                            {this.renderSetreference()}
                          </div>
                          <div className="col-md-12 col-sm-12 top-line-detail">
                            {this.renderReleteproduct()}
@@ -639,7 +634,7 @@ function mapStateToProps(state) {
     initialValues: state.productdetail,
     productdetail: state.productdetail.detail,
     productrelete: state.productdetail.relete,
-    setreference:state.productdetail.setreference
+    //setreference:state.productdetail.setreference
     //productreletepage: state.productdetail.reletepage
    }
 }
