@@ -39,7 +39,7 @@ module.exports = {
       }).then(function (response) {
 
 
-         let productdata = [];
+        let productdata = [];
         const productResult = response.hits.hits.map((element) => element._source);
 
         let len = productResult[0].items.length;
