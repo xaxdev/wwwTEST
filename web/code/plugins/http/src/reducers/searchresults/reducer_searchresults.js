@@ -175,7 +175,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
       case FETCH_ALLITEMS:
         // console.log('action-->',action.type);
         // console.log('action.data.summary-->',action.data.summary);
-        return { ...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/8),
+        return { ...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/16),
                 totalpublicprice: action.data.summary.price, totalupdatedcost: action.data.summary.cost,
                 currentPage:action.currPage, allItems: action.data.allData, exportItems: action.data.exportData,
                 maxPrice: action.data.summary.maxPrice,minPrice: action.data.summary.minPrice,
