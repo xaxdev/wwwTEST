@@ -70,27 +70,31 @@ module.exports = {
 
           productResult.gallery = productResult.gallery.concat(images);
 
+
           const [setReferenceData] = setReference.hits.hits.map((element) => element._source);
+          if(typeof setReferenceData === 'undefined'){
+            productResult.setReferenceData = '';
 
-          let len = setReferenceData.items.length;
+          } else {
+            let len = setReferenceData.items.length;
 
-          let productdata = [];
-          for (let i = 0; i < len; i++) {
-             if(productResult.id !== setReferenceData.items[i].id){
-                productdata.push({
-                    id: setReferenceData.items[i].id,
-                    image:setReferenceData.items[i].image
-                });
-             }
+            let productdata = [];
+            for (let i = 0; i < len; i++) {
+               if(productResult.id !== setReferenceData.items[i].id){
+                  productdata.push({
+                      id: setReferenceData.items[i].id,
+                      image:setReferenceData.items[i].image
+                  });
+               }
+            }
+            const responseSetData = {
+              totalprice:setReferenceData.totalPrice,
+              setimage:setReferenceData.image.original,
+              products:productdata
+            }
+
+            productResult.setReferenceData = responseSetData;
           }
-          const responseSetData = {
-            totalprice:setReferenceData.totalPrice,
-            setimage:setReferenceData.image.original,
-            products:productdata
-          }
-
-          productResult.setReferenceData = responseSetData;
-
           elastic.close();
           return reply(JSON.stringify(productResult, null, 4));
     })
