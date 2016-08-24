@@ -14,7 +14,7 @@ class ListItemsView extends Component {
     this.onClickGrid = this.onClickGrid.bind(this);
 
     this.state = {
-      initialPageLength:8
+      initialPageLength:16
     };
 
   }

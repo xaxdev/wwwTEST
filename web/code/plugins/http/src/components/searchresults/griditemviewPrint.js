@@ -26,6 +26,14 @@ class GridItemsView extends Component {
       isOpen5: false,
       isOpen6: false,
       isOpen7: false,
+      isOpen8: false,
+      isOpen9: false,
+      isOpen10: false,
+      isOpen11: false,
+      isOpen12: false,
+      isOpen13: false,
+      isOpen14: false,
+      isOpen15: false,
     };
   }
   static propTypes = {
@@ -67,6 +75,30 @@ class GridItemsView extends Component {
     case '7':
       this.setState({isOpen7:true});
       break;
+    case '8':
+      this.setState({isOpen8:true});
+      break;
+    case '9':
+      this.setState({isOpen9:true});
+      break;
+    case '10':
+      this.setState({isOpen10:true});
+      break;
+    case '11':
+      this.setState({isOpen11:true});
+      break;
+    case '12':
+      this.setState({isOpen12:true});
+      break;
+    case '13':
+      this.setState({isOpen13:true});
+      break;
+    case '14':
+      this.setState({isOpen14:true});
+      break;
+    case '15':
+      this.setState({isOpen15:true});
+      break;
     default:
       break;
     }
@@ -97,6 +129,30 @@ class GridItemsView extends Component {
       break;
     case '7':
       this.setState({isOpen7:false});
+      break;
+    case '8':
+      this.setState({isOpen8:false});
+      break;
+    case '9':
+      this.setState({isOpen9:false});
+      break;
+    case '10':
+      this.setState({isOpen10:false});
+      break;
+    case '11':
+      this.setState({isOpen11:false});
+      break;
+    case '12':
+      this.setState({isOpen12:false});
+      break;
+    case '13':
+      this.setState({isOpen13:false});
+      break;
+    case '14':
+      this.setState({isOpen14:false});
+      break;
+    case '15':
+      this.setState({isOpen15:false});
       break;
     default:
       break;
@@ -162,15 +218,24 @@ class GridItemsView extends Component {
                  </div>
                     <div name={item.id} id={item.id} onClick={btnEvent}>
                      <div key={item.id}  id={index} style={{
-                            display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
-                                    (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
-                                    (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:
-                                    (index==3)?`${that.state.isOpen3 ? '' : 'none'}`:
-                                    (index==4)?`${that.state.isOpen4 ? '' : 'none'}`:
-                                    (index==5)?`${that.state.isOpen5 ? '' : 'none'}`:
-                                    (index==6)?`${that.state.isOpen6 ? '' : 'none'}`:
-                                    (index==7)?`${that.state.isOpen7 ? '' : 'none'}`:'',
-                            }} className={(index==3||index==7)?'over-searchresult-left':'over-searchresult' }>
+                       display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
+                               (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
+                               (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:
+                               (index==3)?`${that.state.isOpen3 ? '' : 'none'}`:
+                               (index==4)?`${that.state.isOpen4 ? '' : 'none'}`:
+                               (index==5)?`${that.state.isOpen5 ? '' : 'none'}`:
+                               (index==6)?`${that.state.isOpen6 ? '' : 'none'}`:
+                               (index==7)?`${that.state.isOpen7 ? '' : 'none'}`:
+                               (index==8)?`${that.state.isOpen8 ? '' : 'none'}`:
+                               (index==9)?`${that.state.isOpen9 ? '' : 'none'}`:
+                               (index==10)?`${that.state.isOpen10 ? '' : 'none'}`:
+                               (index==11)?`${that.state.isOpen11 ? '' : 'none'}`:
+                               (index==12)?`${that.state.isOpen12 ? '' : 'none'}`:
+                               (index==13)?`${that.state.isOpen13 ? '' : 'none'}`:
+                               (index==14)?`${that.state.isOpen14 ? '' : 'none'}`:
+                               (index==15)?`${that.state.isOpen15 ? '' : 'none'}`:
+                               '',
+                            }} className={(index==3||index==7 || index==11||index==15)?'over-searchresult-left':'over-searchresult' }>
                             <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                             <span className="width-f100">{item.reference}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
