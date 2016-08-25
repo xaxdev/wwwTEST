@@ -52,20 +52,22 @@ class productreletedetail extends Component {
       this.setState({
         productdetailLoading: true
       });
+
       this.props.getProductDetail(productId).then(()=>{
 
         const  Detail  = this.props.productdetail;
         if(Detail.type != 'STO'){
           const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
           const currency = logindata.currency;
-         this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
+          if(Detail.dominant){
+            this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+          }
         }
 
-        }
         this.setState({
           productdetailLoading: false
         });
-        console.log(this.state.productdetailLoading);
+
       });
 
 
@@ -145,13 +147,13 @@ class productreletedetail extends Component {
         const  Detail  = this.props.productdetail;
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
         const currency = logindata.currency;
+        if(Detail.dominant){
         this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
-
+        }
         this.setState({
           productdetailLoading: false
         });
 
-        console.log(this.state.productdetailLoading);
       });
     }
   }
@@ -478,14 +480,13 @@ class productreletedetail extends Component {
        const { fields: { reletepage },handleSubmit} = this.props;
        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
        const currency = logindata.currency;
-       console.log("dominant",dominant);
        if(!products){
          return(
-           <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
+           <div></div>
          );
        }
 
-       if(type != 'STO' && products.length > 0){
+       if(type != 'STO' && dominant){
        return(
            <div className="col-md-12 col-sm-12 nopadding">
               <h2>RELATED DETAILS</h2>
@@ -515,7 +516,9 @@ class productreletedetail extends Component {
            </div>
          );
        } else {
-
+         return(
+           <div></div>
+         );
        }
     }
 
