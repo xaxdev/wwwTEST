@@ -12,7 +12,7 @@ const productSet =  (props) =>{
               <div key={data.id} className="col-md-3 col-sm-3 bd-img nopadding">
                 <Link to={{pathname: `${pructdetailurl}${data.id}`}}>
                 <ReactImageFallback
-                       src={data.image.length > 0 ? data.image[0].original :'/images/blank.gif' }
+                       src={data.image? data.image.original :'/images/blank.gif' }
                        fallbackImage='/images/blank.gif'
                        initialImage='/images/blank.gif'
                        width={120}
