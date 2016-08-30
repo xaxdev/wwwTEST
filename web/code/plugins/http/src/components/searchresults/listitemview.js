@@ -102,14 +102,20 @@ class ListItemsView extends Component {
 
         col.jewelsWeight = jewelsWeight;
 
-        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size}
+        let itemName = (col.type != 'CER')
+                          ?
+                          (col.description != undefined) ? col.description: '-' :
+                          col.name
+                          ;
+
+        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,itemName: itemName}
       });
 
       const tableColumns = [
         // { title: '', render: this.renderCheckItem },
         { title: 'Images', render: this.renderImage },
         { title: 'Item Reference', prop: 'reference' },
-        { title: 'Description', prop: 'description' },
+        { title: 'Description', prop: 'itemName' },
         { title: 'SKU', prop: 'sku' },
         { title: 'Location', prop: 'siteName' },
         { title: 'Warehouse', prop: 'warehouseName' },
