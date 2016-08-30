@@ -181,29 +181,30 @@ class InventorySearch extends Component {
       var productArray = [];
       const productGroup = ProductGroup(userLogin);
       if(productGroup.productGroupJLY){
-        productArray.push('JLY');;
+        productArray.push('JLY');
       }
       if(productGroup.productGroupWAT){
-        productArray.push('WAT');;
+        productArray.push('WAT');
       }
       if(productGroup.productGroupSTO){
-        productArray.push('STO');;
+        productArray.push('STO');
       }
       if(productGroup.productGroupACC){
-        productArray.push('ACC');;
+        productArray.push('ACC');
       }
       if(productGroup.productGroupOBA){
-        productArray.push('OBA');;
+        productArray.push('OBA');
       }
       if(productGroup.productGroupSPP){
-        productArray.push('SPP');;
+        productArray.push('SPP');
       }
+      productArray.push('CER');
       // console.log('productGroup-->',productArray.join(' '));
       filters.push({'type':productArray.join(' ')});
     }
 
     filters.push({'userCurrency':userLogin.currency});
-    // console.log('filters-->',filters);
+    console.log('filters-->',filters);
     this.props.setCurrentPage(1);
     this.context.router.push('/searchresult');
   }

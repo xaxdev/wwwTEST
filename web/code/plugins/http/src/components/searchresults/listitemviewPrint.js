@@ -90,6 +90,23 @@ class ListItemsView extends Component {
         return {...col}
       });
 
+      let jewelsWeight = 0;
+      items = items.map(function (col, idx) {
+        // console.log('col.gemstones-->',col.gemstones);
+        if (col.gemstones != undefined) {
+          col.gemstones.forEach(function(gemstone) {
+            if(gemstone.carat != undefined){
+              jewelsWeight = jewelsWeight + gemstone.carat;
+            }
+          });
+        } else {
+          jewelsWeight = 0;
+        }
+
+        col.jewelsWeight = jewelsWeight;
+        return {...col}
+      });
+
       const tableColumns = [
         { title: '', render: this.renderCheckItem },
         { title: 'Images', render: this.renderImage },
@@ -99,7 +116,7 @@ class ListItemsView extends Component {
         { title: 'Location', prop: 'siteName' },
         { title: 'Warehouse', prop: 'warehouseName' },
         { title: 'Size', prop: 'size' },
-        { title: 'Jewelry Weight', prop: '' },
+        { title: 'Jewelry Weight', prop: 'jewelsWeight' },
         { title: 'Gross Weight', prop: 'grossWeight' },
         { title: 'Public Price', prop: 'priceUSD' },
         { title: '', render: this.renderAction, className: 'text-center' },

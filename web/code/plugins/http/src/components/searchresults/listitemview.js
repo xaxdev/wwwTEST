@@ -93,11 +93,16 @@ class ListItemsView extends Component {
       let jewelsWeight = 0;
       items = items.map(function (col, idx) {
         // console.log('col.gemstones-->',col.gemstones);
-        col.gemstones.forEach(function(gemstone) {
-          if(gemstone.carat != undefined){
-            jewelsWeight = jewelsWeight + gemstone.carat;
-          }
-        });
+        if (col.gemstones != undefined) {
+          col.gemstones.forEach(function(gemstone) {
+            if(gemstone.carat != undefined){
+              jewelsWeight = jewelsWeight + gemstone.carat;
+            }
+          });
+        } else {
+          jewelsWeight = 0;
+        }
+
         col.jewelsWeight = jewelsWeight;
         return {...col}
       });
