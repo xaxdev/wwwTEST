@@ -11,6 +11,15 @@ body{
 	font-family: 'open_sanslight';
 	color: #383735;
 }
+#scroller{
+    height:60px;
+}
+.stuck{
+    position:fixed;
+    z-index:100;
+    width: 100%;
+    top:0;
+}
 h1{
   color: #fff !important;
   padding: 17px 0;
@@ -41,7 +50,11 @@ input[type=checkbox]{margin: 4px 5px 0 0px;}
   border: 1px solid #ddbe6a !important;
   color: #ddbe6a;
 }
-#page-wrapper{border:1px solid #dfdfdf;}
+#page-wrapper{
+  border:1px solid #dfdfdf;
+  top: 0;
+  position: relative;
+}
 .btn{
 	font-size:14px;
 	font-family: 'open_sanssemibold';
@@ -673,6 +686,7 @@ select.form-searchresult option{
 .searchresult-navi input{margin:0 5px; text-align: center;}
 .searchresult-navi span{padding:0 3px;}
 .searchresult-navi div, .searchresult-navi ul{float:left; margin-bottom:10px;}
+.relete ul{width:100%;}
 .searchresult-navi	button	{
 		background-color: #ddbe6a;
     border-color: #ddbe6a;
@@ -690,11 +704,11 @@ select.form-searchresult option{
     margin: 20px 0 1px 0;
 }
 .bg-f7d886{
-		background-color: #f7d886;
+		background-color: #dddddd;
     float: left;
     width: 100%;
     padding: 10px 0;
-    margin: 0px;
+    margin: 0px 0 10px 0;
 }
 .icon-add-28{
 	background: url(/images/icon-add-28.png) no-repeat center;
