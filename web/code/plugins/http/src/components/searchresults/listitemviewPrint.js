@@ -81,18 +81,15 @@ class ListItemsView extends Component {
           default:
             break;
         }
-        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size}
-      });
 
-      items = items.map(function (col, idx) {
-        // col.priceUSD = col.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-        col.priceUSD = GetPriceWithCurrency(col,'price');
-        return {...col}
-      });
+        if (col.type != 'CER') {
+          col.priceUSD = GetPriceWithCurrency(col,'price');
+        } else {
+          col.priceUSD = '';
+        }
 
-      let jewelsWeight = 0;
-      items = items.map(function (col, idx) {
-        // console.log('col.gemstones-->',col.gemstones);
+        let jewelsWeight = 0;
+
         if (col.gemstones != undefined) {
           col.gemstones.forEach(function(gemstone) {
             if(gemstone.carat != undefined){
@@ -100,11 +97,12 @@ class ListItemsView extends Component {
             }
           });
         } else {
-          jewelsWeight = 0;
+          jewelsWeight = '';
         }
 
         col.jewelsWeight = jewelsWeight;
-        return {...col}
+
+        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size}
       });
 
       const tableColumns = [
