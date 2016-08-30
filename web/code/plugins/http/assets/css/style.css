@@ -20,6 +20,8 @@ body{
     width: 100%;
     top:0;
 }
+.text-wrap{word-wrap: break-word;}
+.text-overflowhidden{overflow: hidden; max-height: 70px; height: auto;}
 h1{
   color: #fff !important;
   padding: 17px 0;
@@ -762,7 +764,6 @@ select.form-searchresult option{
 }
 .over-searchresult{
 	font-size:13px;
-	// margin:-3px auto; over
   margin:0px auto;
 	position: absolute;
 	text-align: left;
@@ -770,14 +771,13 @@ select.form-searchresult option{
 	color:#fff;
 	top:0;
 	left: 275px;
-	padding: 20px 20px;
+	padding: 10px 20px;
   z-index: 9;
   width:285px;
 	height:418px;
 }
 .over-searchresult-left {
 	font-size:13px;
-	// margin:-3px auto; over
   margin:0px auto;
 	position: absolute;
 	text-align: left;
@@ -785,7 +785,7 @@ select.form-searchresult option{
 	color:#fff;
 	top:0;
 	left: -265px;
-	padding: 20px 20px;
+	padding: 10px 20px;
   z-index: 9;
   width:265px;
   height:418px;
@@ -813,6 +813,7 @@ select.form-searchresult option{
 	height:auto;
 	height:60px;
 	overflow: hidden;
+  word-wrap: break-word;
 }
 .searchresult-list-icon	button{
     background-color: #ddbe6a;

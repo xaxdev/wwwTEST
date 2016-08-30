@@ -256,7 +256,7 @@ class GridItemsView extends Component {
                             <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                             <span className="width-f100">{item.reference}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
-                            <span className="width-f100">{itemName}</span>
+                            <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
                             <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
