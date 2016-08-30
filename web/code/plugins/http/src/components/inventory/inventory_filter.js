@@ -91,6 +91,28 @@ class InventoryFilter extends Component {
     this.refs.accessory.treeOnUnClick();
     this.refs.oba.treeOnUnClick();
     this.refs.sparepart.treeOnUnClick();
+
+    // $(window).scroll(function () {
+    //     if ($(window).scrollTop() > 10) {
+    //         $('#scroller').css('top', $(window).scrollTop());
+    //     }
+    // }
+    // );
+
+    $(window).scroll(function() {
+        var w = $('#page-wrapper').width();
+				if ($(window).scrollTop() > 100) {
+					$('#scroller').addClass('stuck');
+				} else {
+					$('#scroller').removeClass('stuck').css({'width':w});
+				}
+
+			});
+    $( window ).resize(function() {
+        var w = $('#page-wrapper').width();
+      $('#scroller').removeClass('stuck').css({'width':w});
+    });
+
   }
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
@@ -397,7 +419,7 @@ class InventoryFilter extends Component {
           <br/><br/><br/><br/><br/><br/>
         </div>
         <div id="page-wrapper" className={`${this.state.showLoading ? 'hidden' : ''}` }>
-          <div className="col-sm-12 bg-hearder bg-header-inventories">
+          <div id="scroller" className="col-sm-12 bg-hearder bg-header-inventories">
             <div className="col-sm-6 m-width-60 ft-white m-nopadding"><h1>Inventory Report</h1></div>
             <div className="col-sm-6 m-width-40 m-nopadding">
             <div className="text-right maring-t15">
