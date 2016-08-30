@@ -6,6 +6,7 @@ import jQuery from 'jquery';
 import { reduxForm,reset } from 'redux-form';
 import * as productdetailaction from '../../actions/productdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/productDescription';
+import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptioncer';
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
@@ -54,7 +55,7 @@ class productdetail extends Component {
     this.props.getProductDetail(productId,productlist).then(()=>{
 
       const  Detail  = this.props.productdetail;
-      if(Detail.type != 'STO'){
+      if(Detail.type != 'STO' || Detail.type != 'CER'){
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
         const currency = logindata.currency;
         if(Detail.dominant){
@@ -249,6 +250,14 @@ class productdetail extends Component {
                     <ProductDescriptionBlock {...Detail} />
                   </div>
                 );
+          case 'CER':
+              Detailtitle='CERTIFICATE DETAILS';
+              return(
+                  <div>
+                    <h2>{Detailtitle}</h2>
+                    <ProductDescriptioncerBlock {...Detail} />
+                  </div>
+                );
         }
    }
    renderAttr(){
@@ -401,7 +410,7 @@ class productdetail extends Component {
       const subType = Detail.subType;
 
 
-      if(Detail.type == 'STO'){
+      if(Detail.type == 'STO' || Detail.type == 'CER'){
 
       } else {
         if(!gemstoneAttr){
@@ -429,7 +438,7 @@ class productdetail extends Component {
       const Detail  = this.props.productdetail;
       const gemstoneAttr = Detail.gemstones;
       const subType = Detail.subType;
-      if(Detail.type == 'STO'){
+      if(Detail.type == 'STO' || Detail.type == 'CER'){
 
       } else {
         if(!gemstoneAttr){
@@ -457,7 +466,7 @@ class productdetail extends Component {
       const Detail  = this.props.productdetail;
       const gemstoneAttr = Detail.gemstones;
       const subType = Detail.subType;
-      if(Detail.type == 'STO'){
+      if(Detail.type == 'STO' || Detail.type == 'CER'){
 
       } else {
         if(!gemstoneAttr){
@@ -512,7 +521,7 @@ class productdetail extends Component {
        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
        const currency = logindata.currency;
 
-       if(type != 'STO' && !products){
+       if(type != 'STO' && !products && type != 'CER'){
          return(
            <div></div>
          );

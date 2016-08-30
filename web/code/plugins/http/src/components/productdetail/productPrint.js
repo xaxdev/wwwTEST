@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { Button,FormControl,Pagination } from 'react-bootstrap';
 import * as productdetailaction from '../../actions/productdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/productDescriptionprint';
+import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptionprintcer';
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributesprint';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributesprint';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributesprint';
@@ -88,6 +89,14 @@ class productprint extends Component {
                         <ProductDescriptionBlock {...Detail} />
                       </div>
                     );
+              case 'CER':
+                  Detailtitle='CERTIFICATE DETAILS';
+                  return(
+                      <div>
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptioncerBlock {...Detail} />
+                      </div>
+                    );
             }
    }
 
@@ -157,12 +166,18 @@ class productprint extends Component {
       const Detail  = this.props.productdetail;
       const gemstoneAttr = Detail.gemstones;
       const subType = Detail.subType;
+
+      if(Detail.type == 'CER'){
+        return(
+          <div></div>
+        );
+      }
       if(!gemstoneAttr){
         return(
           <div>Loading...</div>
         );
       }
-      if(Detail.type == 'STO'){
+      if(Detail.type == 'STO' || Detail.type == 'CER'){
 
       } else {
         if(gemstoneAttr.length > 0){
@@ -183,7 +198,7 @@ class productprint extends Component {
        const Detail  = this.props.productdetail;
        const gemstoneAttr = Detail.gemstones;
        const subType = Detail.subType;
-       if(Detail.type == 'STO'){
+       if(Detail.type == 'STO' || Detail.type == 'CER'){
 
        } else {
          if(!gemstoneAttr){
@@ -211,7 +226,7 @@ class productprint extends Component {
        const Detail  = this.props.productdetail;
        const gemstoneAttr = Detail.gemstones;
        const subType = Detail.subType;
-       if(Detail.type == 'STO'){
+       if(Detail.type == 'STO' || Detail.type == 'CER'){
 
        } else {
          if(!gemstoneAttr){

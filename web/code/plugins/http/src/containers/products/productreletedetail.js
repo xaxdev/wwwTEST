@@ -6,6 +6,7 @@ import jQuery from 'jquery';
 import { reduxForm,reset } from 'redux-form';
 import * as gemstoneattrdetailaction from '../../actions/gemstoneattrdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/productDescription';
+import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptioncer';
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
@@ -56,7 +57,7 @@ class productreletedetail extends Component {
       this.props.getProductDetail(productId).then(()=>{
 
         const  Detail  = this.props.productdetail;
-        if(Detail.type != 'STO'){
+        if(Detail.type != 'STO' || Detail.type != 'CER'){
           const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
           const currency = logindata.currency;
           if(Detail.dominant){
@@ -218,6 +219,14 @@ class productreletedetail extends Component {
                     <ProductDescriptionBlock {...Detail} />
                   </div>
                 );
+          case 'CER':
+              Detailtitle='CERTIFICATE DETAILS';
+              return(
+                  <div>
+                    <h2>{Detailtitle}</h2>
+                    <ProductDescriptioncerBlock {...Detail} />
+                  </div>
+                );
         }
 
     return(
@@ -374,7 +383,7 @@ class productreletedetail extends Component {
       const gemstoneAttr = Detail.gemstones;
       const relatedJewelry = Detail.relatedJewelry;
 
-      if(Detail.type == 'STO'){
+      if(Detail.type == 'STO' || Detail.type == 'CER'){
 
       } else {
         if(!gemstoneAttr){
@@ -400,7 +409,7 @@ class productreletedetail extends Component {
        const Detail  = this.props.productdetail;
        const gemstoneAttr = Detail.gemstones;
        const subType = Detail.subType;
-       if(Detail.type == 'STO'){
+       if(Detail.type == 'STO' || Detail.type == 'CER'){
 
        } else {
          if(!gemstoneAttr){
@@ -428,7 +437,7 @@ class productreletedetail extends Component {
        const Detail  = this.props.productdetail;
        const gemstoneAttr = Detail.gemstones;
        const subType = Detail.subType;
-       if(Detail.type == 'STO'){
+       if(Detail.type == 'STO' || Detail.type == 'CER'){
 
        } else {
          if(!gemstoneAttr){
@@ -486,7 +495,7 @@ class productreletedetail extends Component {
          );
        }
 
-       if(type != 'STO' && dominant){
+       if(type != 'STO' && dominant && type != 'CER'){
        return(
            <div className="col-md-12 col-sm-12 nopadding">
               <h2>RELATED DETAILS</h2>
