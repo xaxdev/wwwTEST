@@ -17,6 +17,7 @@ class GridItemsView extends Component {
     this.onClickGrid = this.onClickGrid.bind(this);
     this.onMouseOverGrid = this.onMouseOverGrid.bind(this);
     this.onMouseOutGrid = this.onMouseOutGrid.bind(this);
+    this.onClickQuickView = this.onClickQuickView.bind(this);
 
     this.state = {
       isOpen0: false,
@@ -48,8 +49,30 @@ class GridItemsView extends Component {
     event.preventDefault();
     this.props.onClickGrid(event.currentTarget.id);
   }
+  onClickQuickView(event) {
+    console.log('onClickQuickView->',event.currentTarget.id);
+    event.preventDefault();
+    // this.props.onClickGrid(event.currentTarget.id);
+  }
   onMouseOverGrid(e){
-    // console.log('onMouseOverGrid e->',e);
+    console.log('onMouseOverGrid e->',e.currentTarget.id);
+
+    this.setState({isOpen0:false});
+    this.setState({isOpen1:false});
+    this.setState({isOpen2:false});
+    this.setState({isOpen3:false});
+    this.setState({isOpen4:false});
+    this.setState({isOpen5:false});
+    this.setState({isOpen6:false});
+    this.setState({isOpen7:false});
+    this.setState({isOpen8:false});
+    this.setState({isOpen9:false});
+    this.setState({isOpen10:false});
+    this.setState({isOpen11:false});
+    this.setState({isOpen12:false});
+    this.setState({isOpen13:false});
+    this.setState({isOpen14:false});
+    this.setState({isOpen15:false});
 
     switch(e.currentTarget.id){
     case '0':
@@ -169,6 +192,7 @@ class GridItemsView extends Component {
     // console.log('this.props.items-->',this.props.items);
     const { submitting } = this.props;
     var btnEvent = this.onClickGrid;
+    var btnQuickView = this.onClickQuickView;
     var showDetails = this.onMouseOverGrid;
     var hideDetails = this.onMouseOutGrid;
     // console.log('this.state.isOpen-->',this.state.isOpen);
@@ -193,7 +217,7 @@ class GridItemsView extends Component {
                             ;
 
            return (
-             <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding" onMouseOver={showDetails} onMouseOut={hideDetails}>
+              <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
                  <div className="searchresult-prodcut">
                     <div className="pull-right margin-r20">
                       <div className="grid-add"
@@ -211,6 +235,7 @@ class GridItemsView extends Component {
                         />
                           <label className="checkbox1"></label>
                       </div>
+                      <img  src="/images/quick-view.jpg" responsive name={item.id} id={index} onClick={showDetails}/>
                     </div>
 
                     <div className="thumbnaillgrid">
@@ -253,6 +278,7 @@ class GridItemsView extends Component {
                                     (index==15)?`${that.state.isOpen15 ? '' : 'none'}`:
                                     '',
                             }} className={(index==3||index==7 || index==11||index==15)?'over-searchresult-left':'over-searchresult' }>
+                            <img  src="/images/quick-view.jpg" responsive name={item.id} id={index} onClick={hideDetails}/>
                             <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                             <span className="width-f100">{item.reference}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
