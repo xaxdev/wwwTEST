@@ -44,6 +44,10 @@ const Detail = (props) =>{
           <div style={styles.colmd5}>{convertBlanktodash(props.warehouseName)}</div>
         </div>
         <div style={styles.colmd12}>
+          <div style={styles.colmd5}>Laboratory</div>
+          <div style={styles.colmd5}>{convertBlanktodash(props.agency)}</div>
+        </div>
+        <div style={styles.colmd12}>
           <div style={styles.colmd5}>SKU</div>
           <div style={styles.colmd5}>{convertBlanktodash(props.sku)}</div>
         </div>
