@@ -735,7 +735,6 @@ select.form-searchresult option{
 	padding:15px 25px 0 25px;
 	height:418px;
   cursor: pointer;
-  margin-right: -3px;
 }
 /*.searchresult-prodcut:hover{
 	border:3px solid #464646;
@@ -772,10 +771,10 @@ select.form-searchresult option{
 	background: #464646;
 	color:#fff;
 	top:0;
-	left: 282px;
+	left: 285px;
 	padding: 10px 20px;
   z-index: 9;
-  width:288px;
+  width:285px;
 	height:418px;
 }
 .over-searchresult-left {
@@ -801,11 +800,10 @@ select.form-searchresult option{
 }
 .searchresult-border{
   border: 3px solid #464646;
-  height: 418px;
-  top: 0;
-  position: absolute;
-  width: 100%;
-  z-index: 3px;
+}
+.quick-view{
+  margin-right: 0px;
+  max-width: 23px;
 }
 .searchresult-close{
   position: absolute;

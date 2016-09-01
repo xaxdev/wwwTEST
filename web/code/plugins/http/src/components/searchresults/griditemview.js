@@ -222,7 +222,7 @@ class GridItemsView extends Component {
 
            return (
               <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
-                 <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`: 
+                 <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
                                  (index==1)? `searchresult-prodcut ${that.state.isOpen1? 'searchresult-border': ''}`:
                                  (index==2)? `searchresult-prodcut ${that.state.isOpen2? 'searchresult-border': ''}`:
                                  (index==3)? `searchresult-prodcut ${that.state.isOpen3? 'searchresult-border': ''}`:
@@ -255,7 +255,7 @@ class GridItemsView extends Component {
                         />
                           <label className="checkbox1"></label>
                       </div>
-                      <img  src="/images/quick-view.jpg" responsive name={item.id} id={index} onClick={showDetails}/>
+                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive name={item.id} id={index} onClick={showDetails}/></span>
                     </div>
 
                     <div className="thumbnaillgrid">
