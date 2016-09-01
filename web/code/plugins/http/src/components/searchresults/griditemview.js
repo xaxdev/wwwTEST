@@ -5,8 +5,9 @@ import shallowCompare from 'react-addons-shallow-compare';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import convertDate from '../../utils/convertDate';
 import ReactImageFallback from 'react-image-fallback';
+
 function showDiv() {
-   document.getElementById('searchresult-border').style.display = "block";
+   document.getElementById('searchresult-border').style.display = 'block';
 }
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
@@ -221,7 +222,23 @@ class GridItemsView extends Component {
 
            return (
               <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
-                 <div className="searchresult-prodcut">
+                 <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`: 
+                                 (index==1)? `searchresult-prodcut ${that.state.isOpen1? 'searchresult-border': ''}`:
+                                 (index==2)? `searchresult-prodcut ${that.state.isOpen2? 'searchresult-border': ''}`:
+                                 (index==3)? `searchresult-prodcut ${that.state.isOpen3? 'searchresult-border': ''}`:
+                                 (index==4)? `searchresult-prodcut ${that.state.isOpen4? 'searchresult-border': ''}`:
+                                 (index==5)? `searchresult-prodcut ${that.state.isOpen5? 'searchresult-border': ''}`:
+                                 (index==6)? `searchresult-prodcut ${that.state.isOpen6? 'searchresult-border': ''}`:
+                                 (index==7)? `searchresult-prodcut ${that.state.isOpen7? 'searchresult-border': ''}`:
+                                 (index==8)? `searchresult-prodcut ${that.state.isOpen8? 'searchresult-border': ''}`:
+                                 (index==9)? `searchresult-prodcut ${that.state.isOpen9? 'searchresult-border': ''}`:
+                                 (index==10)? `searchresult-prodcut ${that.state.isOpen10? 'searchresult-border': ''}`:
+                                 (index==11)? `searchresult-prodcut ${that.state.isOpen11? 'searchresult-border': ''}`:
+                                 (index==12)? `searchresult-prodcut ${that.state.isOpen12? 'searchresult-border': ''}`:
+                                 (index==13)? `searchresult-prodcut ${that.state.isOpen13? 'searchresult-border': ''}`:
+                                 (index==14)? `searchresult-prodcut ${that.state.isOpen14? 'searchresult-border': ''}`:
+                                 (index==15)? `searchresult-prodcut ${that.state.isOpen15? 'searchresult-border': ''}`:
+                                  ''}>
                     <div className="pull-right">
                       <div className="grid-add"
                           onClick={
