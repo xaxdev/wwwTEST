@@ -5,7 +5,9 @@ import shallowCompare from 'react-addons-shallow-compare';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import convertDate from '../../utils/convertDate';
 import ReactImageFallback from 'react-image-fallback';
-
+function showDiv() {
+   document.getElementById('searchresult-border').style.display = "block";
+}
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
 
@@ -188,6 +190,7 @@ class GridItemsView extends Component {
         <div style={{margin: '0 auto', textAlign: 'center'}} ><h1> pop up header </h1> <p> pop up content </p></div>
       );
   }
+
   render(){
     // console.log('this.props.items-->',this.props.items);
     const { submitting } = this.props;
@@ -219,7 +222,7 @@ class GridItemsView extends Component {
            return (
               <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
                  <div className="searchresult-prodcut">
-                    <div className="pull-right margin-r20">
+                    <div className="pull-right">
                       <div className="grid-add"
                           onClick={
                             (eventKey) => {
@@ -278,7 +281,7 @@ class GridItemsView extends Component {
                                     (index==15)?`${that.state.isOpen15 ? '' : 'none'}`:
                                     '',
                             }} className={(index==3||index==7 || index==11||index==15)?'over-searchresult-left':'over-searchresult' }>
-                            <img  src="/images/quick-view.jpg" responsive name={item.id} id={index} onClick={hideDetails}/>
+                            <img className="searchresult-close"  src="/images/icon-close.png" responsive name={item.id} id={index} onClick={hideDetails}/>
                             <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                             <span className="width-f100">{item.reference}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
