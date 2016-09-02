@@ -56,8 +56,11 @@ module.exports = {
     });
 
     Promise.all([getProductDetail, getSetreference]).spread((productDetail, setReference) => {
+
           const [productResult] = productDetail.hits.hits.map((element) => element._source);
 
+
+          if(typeof productResult.gemstones !== 'undefined'){
           const images = productResult.gemstones.reduce((accumulator, gemstone) => {
            let data = [];
 
@@ -69,8 +72,8 @@ module.exports = {
           }, []);
 
           productResult.gallery = productResult.gallery.concat(images);
-
-
+          }
+          
           const [setReferenceData] = setReference.hits.hits.map((element) => element._source);
           if(typeof setReferenceData === 'undefined'){
             productResult.setReferenceData = '';

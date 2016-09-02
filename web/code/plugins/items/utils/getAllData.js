@@ -24,12 +24,20 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
 
   data.forEach(function(item){
     allData.push({'id': item.id,'reference':item.reference});
-    maxPrice = Math.max(maxPrice, item.price[userCurrency]);
+    if(item.price != undefined){
+      maxPrice = Math.max(maxPrice, item.price[userCurrency]);
+    }else{
+      maxPrice = 0;
+    }
   });
 
   let minPrice = maxPrice;
   data.forEach(function(item){
-    minPrice = Math.min(minPrice, item.price[userCurrency]);
+    if(item.price != undefined){
+      minPrice = Math.min(minPrice, item.price[userCurrency]);
+    }else{
+      minPrice = 0;
+    }
   });
 
   // let pageData = data.max(size) ;

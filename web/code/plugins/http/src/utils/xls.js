@@ -9,7 +9,7 @@ function to_csv(workbook) {
       csv.forEach(function(val,key){
         // console.log('key-->',key);
         // console.log('val-->',val.item);
-        result.push(val.item);
+        result.push(val.item_reference);
       });
     }
   });

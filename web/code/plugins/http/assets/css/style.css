@@ -20,6 +20,8 @@ body{
     width: 100%;
     top:0;
 }
+.text-wrap{word-wrap: break-word;}
+.text-overflowhidden{overflow: hidden; max-height: 70px; height: auto;}
 h1{
   color: #fff !important;
   padding: 17px 0;
@@ -730,16 +732,17 @@ select.form-searchresult option{
 	font-size:14px;
 	position: relative;
 	z-index: 2;
-	padding:20px 25px 0 25px;
+	padding:15px 25px 0 25px;
 	height:418px;
+  cursor: pointer;
 }
-.searchresult-prodcut:hover{
+/*.searchresult-prodcut:hover{
 	border:3px solid #464646;
 	padding:20px 25px 0 25px;
 	cursor:pointer;
 	position: relative;
 	z-index: 9999;
-}
+}*/
 .over-product{
 	margin:0 0 0 -15px;
 	text-align: center;
@@ -762,22 +765,20 @@ select.form-searchresult option{
 }
 .over-searchresult{
 	font-size:13px;
-	// margin:-3px auto; over
   margin:0px auto;
 	position: absolute;
 	text-align: left;
 	background: #464646;
 	color:#fff;
 	top:0;
-	left: 275px;
-	padding: 20px 20px;
+	left: 285px;
+	padding: 10px 20px;
   z-index: 9;
   width:285px;
 	height:418px;
 }
 .over-searchresult-left {
 	font-size:13px;
-	// margin:-3px auto; over
   margin:0px auto;
 	position: absolute;
 	text-align: left;
@@ -785,7 +786,7 @@ select.form-searchresult option{
 	color:#fff;
 	top:0;
 	left: -265px;
-	padding: 20px 20px;
+	padding: 10px 20px;
   z-index: 9;
   width:265px;
   height:418px;
@@ -796,6 +797,18 @@ select.form-searchresult option{
 .print-search-results{
   height: 98%;
   margin: 0 auto;
+}
+.searchresult-border{
+  border: 3px solid #464646;
+}
+.quick-view{
+  margin-right: 0px;
+  max-width: 23px;
+}
+.searchresult-close{
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
 }
 .search-product{
 	position: relative;
@@ -813,6 +826,7 @@ select.form-searchresult option{
 	height:auto;
 	height:60px;
 	overflow: hidden;
+  word-wrap: break-word;
 }
 .searchresult-list-icon	button{
     background-color: #ddbe6a;
@@ -1338,7 +1352,10 @@ select.form-searchresult option{
 ul.nav-tabs > li:nth-child(6),ul.nav-tabs > li:nth-child(4) ,ul.nav-tabs > li:nth-child(5)   {display: none;}
 .icon-add{display: none;}
 .searchresult-prodcut .pull-right div{display: none;}
-.searchresult-prodcut .pull-right {width: 28px; height: 28px;}
+.searchresult-prodcut .pull-right {
+  position: absolute;
+  right: 0;
+}
 
 #galleryimgset {
     width: auto;

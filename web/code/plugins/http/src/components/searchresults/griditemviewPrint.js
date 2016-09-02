@@ -179,12 +179,18 @@ class GridItemsView extends Component {
         {this.props.items.map(function(item, index){
           // console.log('item-->',item);
           let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
-          let itemDate = convertDate(item.itemCreatedDate);
+          let itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.certifiedDate);
           // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
 
           let price = GetPriceWithCurrency(item,'price');
           let actualCost = GetPriceWithCurrency(item,'actualCost');
           let updatedCost = GetPriceWithCurrency(item,'updatedCost');
+
+          let itemName = (item.type != 'CER')
+                            ?
+                            (item.description != undefined) ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...': '-' :
+                            item.name
+                            ;
 
            return (
              <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding print-search-results" onMouseOver={showDetails} onMouseOut={hideDetails}>
@@ -223,8 +229,8 @@ class GridItemsView extends Component {
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
                     </p>
-                    <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{item.description}</p>
-                    <span className="fc-ae8f3b font-b price">{price}</span>
+                    <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{itemName}</p>
+                    <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{price}</span>
                     <span className="line"></span>
                  </div>
                     <div name={item.id} id={item.id} onClick={btnEvent}>
@@ -250,20 +256,20 @@ class GridItemsView extends Component {
                             <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                             <span className="width-f100">{item.reference}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
-                            <span className="width-f100">{item.description}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') ?
+                            <span className="width-f100">{itemName}</span>
+                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER')?
                                 '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${(userLogin.permission.price == 'All') ?
+                            <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{actualCost}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                            <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{updatedCost}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                || userLogin.permission.price == 'All') ?
+                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                || userLogin.permission.price == 'All')) && (item.type != 'CER')  ?
                                 '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                || userLogin.permission.price == 'All') ?
+                            <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                || userLogin.permission.price == 'All')) && (item.type != 'CER')  ?
                                 '' : 'hidden'}`}>{price}</span>
                             <span className="width-f100 fc-ddbe6a font-b">Location : </span>
                             <span className="width-f100">{item.siteName}</span>
