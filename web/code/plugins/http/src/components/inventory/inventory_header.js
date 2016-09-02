@@ -334,7 +334,7 @@ class InventoryHeader extends Component {
                       <div className="form-group">
                         <label className="col-sm-4 control-label"></label>
                         <div className="col-sm-7">
-                          <label >The system able to import only excel file. Click here to download a format file <a href={ROOT_URL+"/upload_file/Mol_upload_items.xlsx"} >Mol upload items.xlsx</a></label>
+                          <label className="control-label">The system able to import only excel file. Click here to download a format file <a href={ROOT_URL+"/upload_file/Mol_upload_items.xlsx"} >Mol upload items.xlsx</a></label>
                         </div>
                       </div>
                   </div>
