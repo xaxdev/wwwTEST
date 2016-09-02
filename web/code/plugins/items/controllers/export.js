@@ -235,7 +235,7 @@ module.exports = {
 
           if(fields.allFields){
             arrayItems.push('Main',
-                            (item.hierarchy != undefined) ? item.hierarchy : '',
+                            (item.hierarchy != undefined) ? item.hierarchy.split('\\').pop() : '',
                             (item.type == 'ACC' || item.type == 'OBA' || item.type == 'SPP') ? item.subType : '', // category
                             (item.type == 'JLY' || item.type == 'WAT' || item.type == 'STO') ? item.subType : '', // article
                             (item.collectionName != undefined) ? item.collectionName : '',
@@ -282,7 +282,7 @@ module.exports = {
 
           }else{
             if(fields.ingredients) arrayItems.push('Main');
-            if(fields.categoryName) arrayItems.push((item.hierarchy != undefined) ? item.hierarchy : '');
+            if(fields.categoryName) arrayItems.push((item.hierarchy != undefined) ? item.hierarchy.split('\\').pop() : '');
             if(fields.category) arrayItems.push((item.type == 'ACC' || item.type == 'OBA' || item.type == 'SPP') ? item.subType : '');
             if(fields.article) arrayItems.push((item.type == 'JLY' || item.type == 'WAT' || item.type == 'STO') ? item.subType : '');
             if(fields.collection) arrayItems.push((item.collectionName != undefined) ? item.collectionName : '');
