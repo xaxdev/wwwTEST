@@ -16,19 +16,21 @@ var paths = {
     "lib": "./plugins/http/assets/js/lib/",
     "css": "./plugins/http/assets/css/",
     "fonts": "./plugins/http/assets/fonts/",
-    "images": "./plugins/http/assets/images/"
+    "images": "./plugins/http/assets/images/",
+    "uploadFile": "./plugins/http/assets/upload_file/"
   },
   "destination": {
     "root": "./plugins/http/public/",
     "js": "./plugins/http/public/js/",
     "css": "./plugins/http/public/css/",
     "fonts": "./plugins/http/public/fonts/",
-    "images": "./plugins/http/public/images"
+    "images": "./plugins/http/public/images",
+    "uploadFile": "./plugins/http/public/upload_file/"
   }
 };
 
 // gulp.task("default", ["bower", "fonts", "images", "bundle","html"]);
-gulp.task("default", ["css", "fonts", "images", "js"]);
+gulp.task("default", ["css", "fonts", "images", "js","uploadFile"]);
 
 gulp.task("clean", function () {
 
@@ -71,6 +73,15 @@ gulp.task("images", function() {
     .pipe(plumber())
     .pipe(changed(paths.destination.images))
     //.pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true }))
+    .pipe(destination);
+
+});
+gulp.task("uploadFile", function () {
+
+  var destination = gulp.dest(paths.destination.uploadFile);
+
+  gulp.src(paths.source.uploadFile + "**/*.xlsx")
+    .pipe(plumber())
     .pipe(destination);
 
 });

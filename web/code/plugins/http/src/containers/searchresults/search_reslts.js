@@ -741,78 +741,107 @@ class SearchResult extends Component {
 
     // console.log('chunks-->',chunks);
 
+    let addContentListener = [];
+    let sa = '';
+
     chunks.forEach(function (chunk) {
+      // console.log('chunk-->',chunk.length);
       file++;
       var tab_text = GenHtmlExportExcel(that, chunk, userLogin, ROOT_URL);
+        var data_type = 'data:application/vnd.ms-excel;base64';
 
-      var data_type = 'data:application/vnd.ms-excel;base64';
+        var ua = window.navigator.userAgent;
+        let isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+        // console.log(isSafari);
+        var msie = ua.indexOf('MSIE');
+        var edge = ua.indexOf('Edge');
 
-      var ua = window.navigator.userAgent;
-      let isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
-      // console.log(isSafari);
-      var msie = ua.indexOf('MSIE');
-      var edge = ua.indexOf('Edge');
-      var sa = '';
-      var uriContent = '';
-      var startDate = new Date();
-      var exportDate = moment(startDate,'MM-DD-YYYY');
-      exportDate = exportDate.format('YYYYMMDD_HHmm');
-      var fileName = 'download_'+exportDate+'_'+file+'.xls';
-      let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>{table}</body></html>';
+        var uriContent = '';
+        var startDate = new Date();
+        var exportDate = moment(startDate,'MM-DD-YYYY');
+        exportDate = exportDate.format('YYYYMMDD_HHmm');
+        var fileName = 'download_'+exportDate+'_'+file+'.xls';
+        let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>{table}</body></html>';
 
-      if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-          if (window.navigator.msSaveBlob) {
-              var blob = new Blob([tab_text], {
-                  type: 'data:application/vnd.ms-excel,'
-              });
-              that.setState({
-                isOpen: false,
-              });
-              navigator.msSaveBlob(blob, fileName);
-          }
-      } else {
-          var isFirefox = typeof InstallTrigger !== 'undefined';
-          if(!isFirefox){
-            if(isSafari){
-              let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
-              let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) };
-
-              // let ctx = { worksheet: exportDate || 'Worksheet', table: tab_text }
-              uriContent = 'data:application/vnd.ms-excel,' + base64(tab_text);
-              that.setState({
-                isOpen: false,
-              });
-              sa = window.open(uriContent,fileName);
-
-            }else{
-              // chrome or other
-              that.setState({
-                isOpen: false,
-              });
-              let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
-              let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
-              let ctx = { worksheet: 'Worksheet', table: tab_text };
-              // uri = 'data:application/vnd.ms-excel;base64,'
-              uriContent = 'data:application/vnd.ms-excel;base64,' + base64(tab_text);
-              // sa = window.open(uri + base64(format(template, ctx)),fileName);
-              sa = window.open(uriContent,fileName);
-              // return sa;
-              // window.open(uri + base64(format(template, ctx)));
+        if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+            if (window.navigator.msSaveBlob) {
+                var blob = new Blob([tab_text], {
+                    type: 'data:application/vnd.ms-excel,'
+                });
+                that.setState({
+                  isOpen: false,
+                });
+                navigator.msSaveBlob(blob, fileName);
             }
-          } else {
-              var uri = 'data:application/vnd.ms-excel;base64,'
-              // uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
-              // sa = window.open(uriContent,'download.xlsx');
-              // let wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});
-              that.setState({
-                isOpen: false,
-              });
-              // window.open(uriContent,'download.xls')
-              window.location.href = uri + $.base64.encode(tab_text)
-          }
-      }
+        } else {
+            var isFirefox = typeof InstallTrigger !== 'undefined';
+            if(!isFirefox){
+              if(isSafari){
+                let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
+                let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) };
 
-    });
+                // let ctx = { worksheet: exportDate || 'Worksheet', table: tab_text }
+                uriContent = 'data:application/vnd.ms-excel,' + base64(tab_text);
+                that.setState({
+                  isOpen: false,
+                });
+                // addContentListener.push(uriContent);
+                sa = window.open(uriContent,fileName);
+                // sa.close();
+
+              }else{
+                // chrome or other
+                that.setState({
+                  isOpen: false,
+                });
+                let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
+                let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
+                let ctx = { worksheet: 'Worksheet', table: tab_text };
+                // uri = 'data:application/vnd.ms-excel;base64,'
+                uriContent = 'data:application/vnd.ms-excel;base64,' + base64(tab_text);
+                // sa = window.open(uri + base64(format(template, ctx)),fileName);
+                // addContentListener.push(uriContent);
+                sa = window.open(uriContent,fileName);
+                // sa.close();
+                // return sa;
+                // window.open(uri + base64(format(template, ctx)));
+              }
+            } else {
+                var uri = 'data:application/vnd.ms-excel;base64,'
+                // uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
+                // sa = window.open(uriContent,'download.xlsx');
+                // let wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});
+                that.setState({
+                  isOpen: false,
+                });
+                // window.open(uriContent,'download.xls')
+                window.location.href = uri + $.base64.encode(tab_text)
+            }
+        }
+      });
+
+      // console.log('addContentListener-->',addContentListener);
+      // addContentListener.forEach(function (content) {
+      //
+      //   window.setTimeout(function() {
+      //     sa = window.open(content);
+      //   }, 10e3);
+      // });
+
+      // var loop = function(prevWin) {
+      //   if (!addContentListener.length) {
+      //     return false;
+      //   }
+      //
+      //   var currWin = window.open(addContentListener.shift());
+      //
+      //   (prevWin && prevWin.focus && prevWin.close());
+      //   window.setTimeout(function() {
+      //     loop(currWin);
+      //   }, 10e3);
+      // };
+      //
+      // loop();
 
   }
   renderExportExcelDialog(){

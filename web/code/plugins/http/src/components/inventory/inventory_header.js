@@ -84,20 +84,21 @@ class InventoryHeader extends Component {
     var use_worker = false;
 
     var files = e.target.files;
+    // console.log('files-->',files);
     var f = files[0];
     {
-		var reader = new FileReader();
-		var name = f.name;
-		reader.onload = function(e) {
-			// if(typeof console !== 'undefined') console.log('onload', new Date(), rABS, use_worker);
-			var data = e.target.result;
+  		var reader = new FileReader();
+  		var name = f.name;
+  		reader.onload = function(e) {
+  			// if(typeof console !== 'undefined') console.log('onload', new Date(), rABS, use_worker);
+  			var data = e.target.result;
 
-				var arr = xls.fixdata(data);
-				var wb = X.read(btoa(arr), {type: 'base64'});
-				var items = xls.process_wb(wb);
-        reference.onChange(items);
-        // console.log(JSON.stringify(items, 2, 2));
-			}
+  				var arr = xls.fixdata(data);
+  				var wb = X.read(btoa(arr), {type: 'base64'});
+  				var items = xls.process_wb(wb);
+          reference.onChange(items);
+          // console.log(JSON.stringify(items, 2, 2));
+  			}
 		};
 		if(rABS) reader.readAsBinaryString(f);
 		else reader.readAsArrayBuffer(f);
@@ -114,6 +115,9 @@ class InventoryHeader extends Component {
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     // console.log('userLogin-->',userLogin);
+    const host = HOSTNAME || 'localhost';
+    const ROOT_URL = `//${host}:3005`;
+    // console.log('ROOT_URL-->',ROOT_URL);
 
     InitModifyData(this.props.props);
 
@@ -325,6 +329,12 @@ class InventoryHeader extends Component {
                           <input id="file" type="file" field={reference} onChange={this.readFile}/>
                           <span id="fileName"></span>
                           <input type="button" id="btn-browsefile" value=" "/>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <label className="col-sm-4 control-label"></label>
+                        <div className="col-sm-7">
+                          <label >The system able to import only excel file. Click here to download a format file <a href={ROOT_URL+"/upload_file/Mol_upload_items.xlsx"} >Mol upload items.xlsx</a></label>
                         </div>
                       </div>
                   </div>

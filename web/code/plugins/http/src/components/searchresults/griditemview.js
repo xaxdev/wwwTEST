@@ -53,12 +53,12 @@ class GridItemsView extends Component {
     this.props.onClickGrid(event.currentTarget.id);
   }
   onClickQuickView(event) {
-    console.log('onClickQuickView->',event.currentTarget.id);
+    // console.log('onClickQuickView->',event.currentTarget.id);
     event.preventDefault();
     // this.props.onClickGrid(event.currentTarget.id);
   }
   onMouseOverGrid(e){
-    console.log('onMouseOverGrid e->',e.currentTarget.id);
+    // console.log('onMouseOverGrid e->',e.currentTarget.id);
 
     this.setState({isOpen0:false});
     this.setState({isOpen1:false});
