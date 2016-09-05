@@ -1,0 +1,69 @@
+{
+    "id": "11",
+    "label": "Accessories",
+    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories",
+    "children": [
+        {
+            "id": "12",
+            "label": "Accessories (Mouawad)",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)",
+            "children": [
+                {
+                    "id": "13",
+                    "label": "New Category2",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\New Category2"
+                }
+            ]
+        },
+        {
+            "id": "14",
+            "label": "Business Card Holder",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Business Card Holder"
+        },
+        {
+            "id": "15",
+            "label": "Key Holder",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Key Holder"
+        },
+        {
+            "id": "16",
+            "label": "Leather Goods",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Leather Goods"
+        },
+        {
+            "id": "17",
+            "label": "Lighter",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Lighter"
+        },
+        {
+            "id": "18",
+            "label": "Neck Tie",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Neck Tie"
+        },
+        {
+            "id": "19",
+            "label": "Others",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Others"
+        },
+        {
+            "id": "20",
+            "label": "Pen",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Pen"
+        },
+        {
+            "id": "21",
+            "label": "Perfume",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Perfume"
+        },
+        {
+            "id": "22",
+            "label": "Shemagh",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Shemagh"
+        },
+        {
+            "id": "23",
+            "label": "Wall Clock",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Wall Clock"
+        }
+    ]
+}
