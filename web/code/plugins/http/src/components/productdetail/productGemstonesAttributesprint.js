@@ -5,6 +5,7 @@ import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
 import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
+import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 const allowGemstone = ["Stone"];
     var styles ={
       colmd12:{
@@ -94,7 +95,7 @@ const Gemstoneattr =  (props) =>{
                      <td title="Clarity" style={styles.textcenter}>{convertBlanktodash(data.clarityName)}</td>
                      <td title="Cut" style={styles.textcenter}>{convertBlanktodash(data.cutName)}</td>
                      <td title="Color" style={styles.textcenter}>{convertBlanktodash(data.colorName)}</td>
-                     <td title="QTY Of Stones" style={styles.textcenter}>{convertBlanktodash(data.quantity)}</td>
+                     <td title="QTY Of Stones" style={styles.textcenter}>{numberFormatComma(data.quantity)}</td>
                      <td title="Total Carat Weight" style={styles.textcenter}>{numberFormat(data.carat)}</td>
                      <td title="Origin" style={styles.textcenter}>{convertBlanktodash(data.origin)}</td>
                      <td title="Fluorescence" style={styles.textcenter}>{convertBlanktodash(data.fluorescence)}</td>
