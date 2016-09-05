@@ -1,8 +1,5 @@
 'use strict';
 
-require('newrelic');
-require('babel-register')();
-
 const Confidence = require('confidence');
 const Glue = require('glue');
 const Hoek = require('hoek');
@@ -15,7 +12,6 @@ internals.options = {
   relativeTo: __dirname
 };
 
-// console.log(internals.manifest.connections);
 internals.init = () => {
 
   Glue.compose(internals.manifest, internals.options, (err, server) => {
