@@ -398,7 +398,7 @@ class InventoryStone extends Component {
       }
       if (props.options.certificateAgencys) {
         dataDropDowntCertificateLab.push(props.options.certificateAgencys.map(certificateAgency =>{
-            return ({value: certificateAgency.code,label:certificateAgency.name});
+            return ({value: certificateAgency.code,label:certificateAgency.code + ' [' + certificateAgency.name + ']'});
           })
         )
         dataDropDowntCertificateLab = dataDropDowntCertificateLab[0];

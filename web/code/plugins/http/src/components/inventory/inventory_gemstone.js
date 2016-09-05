@@ -337,7 +337,7 @@ class InventoryGemStone extends Component {
       }
       if (props.options.certificateAgencys) {
         dataDropDowntCertificateAgency.push(props.options.certificateAgencys.map(certificateAgency =>{
-            return ({value: certificateAgency.code,label:certificateAgency.name});
+            return ({value: certificateAgency.code,label:certificateAgency.code + ' [' + certificateAgency.name + ']'});
           })
         )
         dataDropDowntCertificateAgency = dataDropDowntCertificateAgency[0];
