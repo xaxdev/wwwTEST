@@ -398,7 +398,7 @@ class InventoryStone extends Component {
       }
       if (props.options.certificateAgencys) {
         dataDropDowntCertificateLab.push(props.options.certificateAgencys.map(certificateAgency =>{
-            return ({value: certificateAgency.code,label:certificateAgency.name});
+            return ({value: certificateAgency.code,label:certificateAgency.code + ' [' + certificateAgency.name + ']'});
           })
         )
         dataDropDowntCertificateLab = dataDropDowntCertificateLab[0];
@@ -639,14 +639,14 @@ class InventoryStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label tooltiop-span">Certificate Agency
+                <label className="col-sm-4 control-label tooltiop-span">Laboratory
                   {/*<OverlayTrigger placement="top" overlay={tooltipCertificateAgency}>
                     <img src="/images/alphanumeric.png" />
                   </OverlayTrigger>*/}
                 </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.CertificateAgencyValue}
-                    placeholder="Select your Certificate Agency"
+                    placeholder="Select your Laboratory"
                     options={dataDropDowntCertificateLab}
                     onChange={this.handleCertificateLabsSelectChange}/>
                 </div>

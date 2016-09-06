@@ -14,10 +14,10 @@ export function getProductDetail(productId,productlist){
   }
 }
 
-export function getProductRelete(collection,page,productId){
+export function getProductRelete(collection,page,productId,dominant,currency,price){
   return {
       type: FETCH_PRODUCTRELETED,
-      promise: fetch( `${ROOT_URL}api/items/relateditems/${collection}/${page}/${productId}`,{
+      promise: fetch( `${ROOT_URL}api/items/relateditems/${collection}/${page}/${productId}/${dominant}/${currency}/${price}`,{
         method:'GET'
       }),
       page:page

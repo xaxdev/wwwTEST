@@ -21,7 +21,7 @@ module.exports = {
     var userCurrency = request.payload.userCurrency;
     var keys = Object.keys(obj);
 
-    var size = 8;
+    var size = 16;
 
     internals.query = GetSearch(request, 0, 100000);
 

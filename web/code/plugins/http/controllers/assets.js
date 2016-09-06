@@ -32,5 +32,13 @@ module.exports = {
     app: {
       name: 'js'
     }
+  },
+  uploadFile: {
+    handler: {
+      directory:   { path: Path.resolve(__dirname, '../public/upload_file') }
+    },
+    app: {
+      name: 'uploadFile'
+    }
   }
 };

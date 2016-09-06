@@ -3,6 +3,8 @@ import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
+import ReactImageFallback from 'react-image-fallback';
+import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 
 class ListItemsView extends Component {
   constructor(props) {
@@ -14,7 +16,7 @@ class ListItemsView extends Component {
     this.onClickGrid = this.onClickGrid.bind(this);
 
     this.state = {
-      initialPageLength:8
+      initialPageLength:16
     };
 
   }
@@ -45,7 +47,12 @@ class ListItemsView extends Component {
   }
   renderImage=
    (val,row) =>
-    <img src={row.imageThumbnail} width="60"></img>;
+    <ReactImageFallback
+           src={row.imageThumbnail}
+           fallbackImage="/images/blank.gif"
+           initialImage="/images/blank.gif"
+           width="60"
+           />;
 
   renderCheckItem =
     (val, row) =>
@@ -75,25 +82,47 @@ class ListItemsView extends Component {
           default:
             break;
         }
-        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size}
-      });
 
-      items = items.map(function (col, idx) {
-        // col.priceUSD = col.priceUSD.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-        col.priceUSD = GetPriceWithCurrency(col,'price');
-        return {...col}
+        if (col.type != 'CER') {
+          col.priceUSD = GetPriceWithCurrency(col,'price');
+        } else {
+          col.priceUSD = '';
+        }
+
+        let jewelsWeight = 0;
+
+        if (col.gemstones != undefined) {
+          col.gemstones.forEach(function(gemstone) {
+            if(gemstone.carat != undefined){
+              jewelsWeight = jewelsWeight + gemstone.carat;
+            }
+          });
+        } else {
+          jewelsWeight = '';
+        }
+
+        col.jewelsWeight = numberFormat(jewelsWeight);
+
+        let itemName = (col.type != 'CER')
+                          ?
+                          (col.description != undefined) ? col.description: '-' :
+                          col.name
+                          ;
+
+        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
+                itemName: itemName,grossWeight:numberFormat(col.grossWeight)}
       });
 
       const tableColumns = [
         // { title: '', render: this.renderCheckItem },
         { title: 'Images', render: this.renderImage },
         { title: 'Item Reference', prop: 'reference' },
-        { title: 'Description', prop: 'description' },
+        { title: 'Description', prop: 'itemName' },
         { title: 'SKU', prop: 'sku' },
         { title: 'Location', prop: 'siteName' },
         { title: 'Warehouse', prop: 'warehouseName' },
         { title: 'Size', prop: 'size' },
-        { title: 'Jewelry Weight', prop: '' },
+        { title: 'Jewelry Weight', prop: 'jewelsWeight' },
         { title: 'Gross Weight', prop: 'grossWeight' },
         { title: 'Public Price', prop: 'priceUSD' },
         { title: '', render: this.renderAction, className: 'text-center' },

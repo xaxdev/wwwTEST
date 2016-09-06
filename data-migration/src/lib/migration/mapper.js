@@ -214,4 +214,23 @@ const mapMaster = recordset => {
     return records;
 };
 
-export { mapItem, mapMaster };
+const mapCertificate = recordset => {
+    const items = []
+    let id = 0
+
+    for (let record of recordset) {
+        if (id != record.id) {
+            id = Number(record.id)
+            const item = {...record}
+            item.gallery = []
+            items.push(item)
+        }
+
+        const latest = items[items.length - 1]
+        mapProperties(latest, record, null)
+    }
+
+    return items
+}
+
+export { mapItem, mapMaster, mapCertificate };

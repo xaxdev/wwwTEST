@@ -337,7 +337,7 @@ class InventoryGemStone extends Component {
       }
       if (props.options.certificateAgencys) {
         dataDropDowntCertificateAgency.push(props.options.certificateAgencys.map(certificateAgency =>{
-            return ({value: certificateAgency.code,label:certificateAgency.name});
+            return ({value: certificateAgency.code,label:certificateAgency.code + ' [' + certificateAgency.name + ']'});
           })
         )
         dataDropDowntCertificateAgency = dataDropDowntCertificateAgency[0];
@@ -592,10 +592,10 @@ class InventoryGemStone extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Certificate Agency</label>
+                <label className="col-sm-4 control-label">Laboratory</label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.CertificateAgencyValue}
-                    placeholder="Select your Certificate Agency"
+                    placeholder="Select your Laboratory"
                     options={dataDropDowntCertificateAgency}
                     onChange={this.handleCertificateAgencySelectChange}/>
                 </div>

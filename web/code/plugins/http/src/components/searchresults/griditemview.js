@@ -4,7 +4,11 @@ import { responsive } from 'react-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import convertDate from '../../utils/convertDate';
+import ReactImageFallback from 'react-image-fallback';
 
+function showDiv() {
+   document.getElementById('searchresult-border').style.display = 'block';
+}
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
 
@@ -16,6 +20,7 @@ class GridItemsView extends Component {
     this.onClickGrid = this.onClickGrid.bind(this);
     this.onMouseOverGrid = this.onMouseOverGrid.bind(this);
     this.onMouseOutGrid = this.onMouseOutGrid.bind(this);
+    this.onClickQuickView = this.onClickQuickView.bind(this);
 
     this.state = {
       isOpen0: false,
@@ -26,6 +31,14 @@ class GridItemsView extends Component {
       isOpen5: false,
       isOpen6: false,
       isOpen7: false,
+      isOpen8: false,
+      isOpen9: false,
+      isOpen10: false,
+      isOpen11: false,
+      isOpen12: false,
+      isOpen13: false,
+      isOpen14: false,
+      isOpen15: false,
     };
   }
   static propTypes = {
@@ -39,8 +52,30 @@ class GridItemsView extends Component {
     event.preventDefault();
     this.props.onClickGrid(event.currentTarget.id);
   }
+  onClickQuickView(event) {
+    // console.log('onClickQuickView->',event.currentTarget.id);
+    event.preventDefault();
+    // this.props.onClickGrid(event.currentTarget.id);
+  }
   onMouseOverGrid(e){
-    // console.log('onMouseOverGrid e->',e);
+    // console.log('onMouseOverGrid e->',e.currentTarget.id);
+
+    this.setState({isOpen0:false});
+    this.setState({isOpen1:false});
+    this.setState({isOpen2:false});
+    this.setState({isOpen3:false});
+    this.setState({isOpen4:false});
+    this.setState({isOpen5:false});
+    this.setState({isOpen6:false});
+    this.setState({isOpen7:false});
+    this.setState({isOpen8:false});
+    this.setState({isOpen9:false});
+    this.setState({isOpen10:false});
+    this.setState({isOpen11:false});
+    this.setState({isOpen12:false});
+    this.setState({isOpen13:false});
+    this.setState({isOpen14:false});
+    this.setState({isOpen15:false});
 
     switch(e.currentTarget.id){
     case '0':
@@ -66,6 +101,30 @@ class GridItemsView extends Component {
       break;
     case '7':
       this.setState({isOpen7:true});
+      break;
+    case '8':
+      this.setState({isOpen8:true});
+      break;
+    case '9':
+      this.setState({isOpen9:true});
+      break;
+    case '10':
+      this.setState({isOpen10:true});
+      break;
+    case '11':
+      this.setState({isOpen11:true});
+      break;
+    case '12':
+      this.setState({isOpen12:true});
+      break;
+    case '13':
+      this.setState({isOpen13:true});
+      break;
+    case '14':
+      this.setState({isOpen14:true});
+      break;
+    case '15':
+      this.setState({isOpen15:true});
       break;
     default:
       break;
@@ -98,6 +157,30 @@ class GridItemsView extends Component {
     case '7':
       this.setState({isOpen7:false});
       break;
+    case '8':
+      this.setState({isOpen8:false});
+      break;
+    case '9':
+      this.setState({isOpen9:false});
+      break;
+    case '10':
+      this.setState({isOpen10:false});
+      break;
+    case '11':
+      this.setState({isOpen11:false});
+      break;
+    case '12':
+      this.setState({isOpen12:false});
+      break;
+    case '13':
+      this.setState({isOpen13:false});
+      break;
+    case '14':
+      this.setState({isOpen14:false});
+      break;
+    case '15':
+      this.setState({isOpen15:false});
+      break;
     default:
       break;
     }
@@ -108,10 +191,12 @@ class GridItemsView extends Component {
         <div style={{margin: '0 auto', textAlign: 'center'}} ><h1> pop up header </h1> <p> pop up content </p></div>
       );
   }
+
   render(){
     // console.log('this.props.items-->',this.props.items);
     const { submitting } = this.props;
     var btnEvent = this.onClickGrid;
+    var btnQuickView = this.onClickQuickView;
     var showDetails = this.onMouseOverGrid;
     var hideDetails = this.onMouseOutGrid;
     // console.log('this.state.isOpen-->',this.state.isOpen);
@@ -122,17 +207,40 @@ class GridItemsView extends Component {
         {this.props.items.map(function(item, index){
           // console.log('item-->',item);
           let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
-          let itemDate = convertDate(item.itemCreatedDate);
+          let itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.certifiedDate);
+          let lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
           // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
 
           let price = GetPriceWithCurrency(item,'price');
           let actualCost = GetPriceWithCurrency(item,'actualCost');
           let updatedCost = GetPriceWithCurrency(item,'updatedCost');
 
+          let itemName = (item.type != 'CER')
+                            ?
+                            (item.description != undefined) ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...': '-' :
+                            item.name
+                            ;
+
            return (
-             <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding" onMouseOver={showDetails} onMouseOut={hideDetails}>
-                 <div className="searchresult-prodcut">
-                    <div className="pull-right margin-r20">
+              <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
+                 <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
+                                 (index==1)? `searchresult-prodcut ${that.state.isOpen1? 'searchresult-border': ''}`:
+                                 (index==2)? `searchresult-prodcut ${that.state.isOpen2? 'searchresult-border': ''}`:
+                                 (index==3)? `searchresult-prodcut ${that.state.isOpen3? 'searchresult-border': ''}`:
+                                 (index==4)? `searchresult-prodcut ${that.state.isOpen4? 'searchresult-border': ''}`:
+                                 (index==5)? `searchresult-prodcut ${that.state.isOpen5? 'searchresult-border': ''}`:
+                                 (index==6)? `searchresult-prodcut ${that.state.isOpen6? 'searchresult-border': ''}`:
+                                 (index==7)? `searchresult-prodcut ${that.state.isOpen7? 'searchresult-border': ''}`:
+                                 (index==8)? `searchresult-prodcut ${that.state.isOpen8? 'searchresult-border': ''}`:
+                                 (index==9)? `searchresult-prodcut ${that.state.isOpen9? 'searchresult-border': ''}`:
+                                 (index==10)? `searchresult-prodcut ${that.state.isOpen10? 'searchresult-border': ''}`:
+                                 (index==11)? `searchresult-prodcut ${that.state.isOpen11? 'searchresult-border': ''}`:
+                                 (index==12)? `searchresult-prodcut ${that.state.isOpen12? 'searchresult-border': ''}`:
+                                 (index==13)? `searchresult-prodcut ${that.state.isOpen13? 'searchresult-border': ''}`:
+                                 (index==14)? `searchresult-prodcut ${that.state.isOpen14? 'searchresult-border': ''}`:
+                                 (index==15)? `searchresult-prodcut ${that.state.isOpen15? 'searchresult-border': ''}`:
+                                  ''}>
+                    <div className="pull-right">
                       <div className="grid-add"
                           onClick={
                             (eventKey) => {
@@ -148,16 +256,27 @@ class GridItemsView extends Component {
                         />
                           <label className="checkbox1"></label>
                       </div>
+                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive name={item.id} id={index} onClick={showDetails}/></span>
                     </div>
 
-                    <div className="thumbnaillgrid"><img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/></div>
+                    <div className="thumbnaillgrid">
+                      {/*<img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/>*/}
+                      <ReactImageFallback
+                             src={imagesProduct }
+                             fallbackImage="/images/blank.gif"
+                             initialImage="/images/blank.gif"
+                             name={item.id}
+                             id={item.id}
+                             onClick={btnEvent}
+                             />
+                    </div>
 
                     <p className="font-b fc-000">
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
                     </p>
-                    <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{item.description}</p>
-                    <span className="fc-ae8f3b font-b price">{price}</span>
+                    <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{itemName}</p>
+                    <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{price}</span>
                     <span className="line"></span>
                  </div>
                     <div>
@@ -169,31 +288,41 @@ class GridItemsView extends Component {
                                     (index==4)?`${that.state.isOpen4 ? '' : 'none'}`:
                                     (index==5)?`${that.state.isOpen5 ? '' : 'none'}`:
                                     (index==6)?`${that.state.isOpen6 ? '' : 'none'}`:
-                                    (index==7)?`${that.state.isOpen7 ? '' : 'none'}`:'',
-                            }} className={(index==3||index==7)?'over-searchresult-left':'over-searchresult' }>
+                                    (index==7)?`${that.state.isOpen7 ? '' : 'none'}`:
+                                    (index==8)?`${that.state.isOpen8 ? '' : 'none'}`:
+                                    (index==9)?`${that.state.isOpen9 ? '' : 'none'}`:
+                                    (index==10)?`${that.state.isOpen10 ? '' : 'none'}`:
+                                    (index==11)?`${that.state.isOpen11 ? '' : 'none'}`:
+                                    (index==12)?`${that.state.isOpen12 ? '' : 'none'}`:
+                                    (index==13)?`${that.state.isOpen13 ? '' : 'none'}`:
+                                    (index==14)?`${that.state.isOpen14 ? '' : 'none'}`:
+                                    (index==15)?`${that.state.isOpen15 ? '' : 'none'}`:
+                                    '',
+                            }} className={(index==3||index==7 || index==11||index==15)?'over-searchresult-left':'over-searchresult' }>
+                            <img className="searchresult-close"  src="/images/icon-close.png" responsive name={item.id} id={index} onClick={hideDetails}/>
                             <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                             <span className="width-f100">{item.reference}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
-                            <span className="width-f100">{(item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') ?
+                            <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
+                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${(userLogin.permission.price == 'All') ?
+                            <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
                                 '' : 'hidden'}`}>{actualCost}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                            <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{updatedCost}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                || userLogin.permission.price == 'All') ?
+                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                || userLogin.permission.price == 'All') ?
+                            <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{price}</span>
                             <span className="width-f100 fc-ddbe6a font-b">Site : </span>
                             <span className="width-f100">{item.siteName}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
                             <span className="width-f100">{item.warehouseName}</span>
-                            <span className="fc-ddbe6a width-f100 font-b">Created Date: </span>
+                            <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
                             <span className="width-f100">{itemDate}</span>
                         </div>
                     </div>

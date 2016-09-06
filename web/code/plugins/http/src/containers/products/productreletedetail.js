@@ -6,6 +6,7 @@ import jQuery from 'jquery';
 import { reduxForm,reset } from 'redux-form';
 import * as gemstoneattrdetailaction from '../../actions/gemstoneattrdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/productDescription';
+import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptioncer';
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
@@ -52,16 +53,22 @@ class productreletedetail extends Component {
       this.setState({
         productdetailLoading: true
       });
+
       this.props.getProductDetail(productId).then(()=>{
 
         const  Detail  = this.props.productdetail;
-        if(Detail.type != 'STO'){
-          this.props.getProductRelete(Detail.subType,1,productId);
+        if(Detail.type != 'STO' || Detail.type != 'CER'){
+          const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+          const currency = logindata.currency;
+          if(Detail.dominant){
+            this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+          }
         }
+
         this.setState({
           productdetailLoading: false
         });
-        console.log(this.state.productdetailLoading);
+
       });
 
 
@@ -139,12 +146,15 @@ class productreletedetail extends Component {
       const productlist = this.props.productlist;
       this.props.getProductDetail(productId).then(()=>{
         const  Detail  = this.props.productdetail;
-        this.props.getProductRelete(Detail.subType,1,productId);
+        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+        const currency = logindata.currency;
+        if(Detail.dominant){
+        this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
+        }
         this.setState({
           productdetailLoading: false
         });
 
-        console.log(this.state.productdetailLoading);
       });
     }
   }
@@ -207,6 +217,14 @@ class productreletedetail extends Component {
                   <div>
                     <h2>{Detailtitle}</h2>
                     <ProductDescriptionBlock {...Detail} />
+                  </div>
+                );
+          case 'CER':
+              Detailtitle='CERTIFICATE DETAILS';
+              return(
+                  <div>
+                    <h2>{Detailtitle}</h2>
+                    <ProductDescriptioncerBlock {...Detail} />
                   </div>
                 );
         }
@@ -365,7 +383,7 @@ class productreletedetail extends Component {
       const gemstoneAttr = Detail.gemstones;
       const relatedJewelry = Detail.relatedJewelry;
 
-      if(Detail.type == 'STO'){
+      if(Detail.type == 'STO' || Detail.type == 'CER'){
 
       } else {
         if(!gemstoneAttr){
@@ -391,7 +409,7 @@ class productreletedetail extends Component {
        const Detail  = this.props.productdetail;
        const gemstoneAttr = Detail.gemstones;
        const subType = Detail.subType;
-       if(Detail.type == 'STO'){
+       if(Detail.type == 'STO' || Detail.type == 'CER'){
 
        } else {
          if(!gemstoneAttr){
@@ -419,7 +437,7 @@ class productreletedetail extends Component {
        const Detail  = this.props.productdetail;
        const gemstoneAttr = Detail.gemstones;
        const subType = Detail.subType;
-       if(Detail.type == 'STO'){
+       if(Detail.type == 'STO' || Detail.type == 'CER'){
 
        } else {
          if(!gemstoneAttr){
@@ -467,15 +485,17 @@ class productreletedetail extends Component {
        const { totalpage,products,page } = this.props.productrelete;
        //const reletepage = this.props.productreletepage;
        const productId = this.props.params.id;
-       const { type,collection,subType } = this.props.productdetail;
+       const { type,collection,subType,price,dominant } = this.props.productdetail;
        const { fields: { reletepage },handleSubmit} = this.props;
+       const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+       const currency = logindata.currency;
        if(!products){
          return(
-           <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
+           <div></div>
          );
        }
 
-       if(type != 'STO' && products.length > 0){
+       if(type != 'STO' && dominant && type != 'CER' && products.length > 1){
        return(
            <div className="col-md-12 col-sm-12 nopadding">
               <h2>RELATED DETAILS</h2>
@@ -491,7 +511,7 @@ class productreletedetail extends Component {
                 items={totalpage}
                 maxButtons={3}
                 activePage={reletepage.defaultValue}
-                onSelect={(eventKey) => { this.props.getProductRelete(subType,eventKey,productId); }} />
+                onSelect={(eventKey) => { this.props.getProductRelete(subType,eventKey,productId,dominant,currency,price[currency]); }} />
                 <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
                   <span>Page</span>
                   <form onSubmit={handleSubmit(this.handleGo)} >
@@ -505,7 +525,9 @@ class productreletedetail extends Component {
            </div>
          );
        } else {
-
+         return(
+           <div></div>
+         );
        }
     }
 
@@ -514,9 +536,11 @@ class productreletedetail extends Component {
       const productId = this.props.params.id;
       const { totalpage} = this.props.productrelete;
       const getPage = parseInt(data.reletepage);
-      const { collection,subType } = this.props.productdetail;
+      const { collection,subType,price,dominant } = this.props.productdetail;
       if((getPage <= totalpage) && (getPage != 0)){
-      this.props.getProductRelete(subType,getPage,productId);
+        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+        const currency = logindata.currency;
+        this.props.getProductRelete(subType,getPage,productId,dominant,currency,price[currency]);
       }
     }
 
@@ -612,7 +636,7 @@ class productreletedetail extends Component {
                           </div>
                         </div>
                         <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
-                          <div className="line-border"></div>
+                          <div className={`${type != 'CER' ? 'line-border' : ''}`}></div>
                         </div>
                         <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{this.renderAttr()}</div>
                         <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterDiamondsAttr()}</div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { responsive } from 'react-bootstrap';
 import { Link } from 'react-router';
-import ReactImageFallback from "react-image-fallback";
+import ReactImageFallback from 'react-image-fallback';
 const pructdetailurl = '/productreletedetail/';
 const productreleted = (props) =>{
   return (
@@ -12,11 +12,11 @@ const productreleted = (props) =>{
              <Link to={{pathname: `${pructdetailurl}${data.id}`}}>
              <ReactImageFallback
                     src={data.image.length > 0 ? data.image[0].thumbnail :'/images/blank.gif' }
-                    fallbackImage='/images/blank.gif'
-                    initialImage='/images/blank.gif'
+                    fallbackImage="/images/blank.gif"
+                    initialImage="/images/blank.gif"
                     width={120}
                     height={120}
-                    className='img-responsive' />
+                    className="img-responsive" />
                     </Link>
            </div>
         )

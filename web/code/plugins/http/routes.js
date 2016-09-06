@@ -27,6 +27,11 @@ module.exports = [
   },
   {
     method: 'GET',
+    path: '/upload_file/{path*}',
+    config: controller.assets.uploadFile
+  },
+  {
+    method: 'GET',
     path: '/{path*}',
     handler: {
       file: Path.join(__dirname, 'index.htm')

@@ -11,10 +11,17 @@ module.exports = {
     const elastic = request.server.plugins.elastic.client;
     // const keys = Object.keys(request.payload);
     const collection = request.params.collection;
+    const currency = request.params.currency;
+    const currentprice = request.params.price;
+    const dominant = request.params.dominant;
     const page = request.params.page;
     const productId = request.params.productId;
     const itemperpage = 8;
     const offset = (page-1) * itemperpage;
+    const price = `price.${currency}`;
+
+    const pricegte = parseInt(currentprice) - (parseInt(currentprice) * 10) / 100 ;
+    const pricelt = parseInt(currentprice) + (parseInt(currentprice) * 10) / 100 ;
 
     internals.query = JSON.parse(
     `{
@@ -23,29 +30,43 @@ module.exports = {
       "sort" : [
            { "reference" : "desc" }
         ],
-      "query":{
-           "constant_score": {
-             "filter": {
-               "bool": {
-                 "must": [
-                   {
-                     "match": {
-                       "subType": "${collection}"
-                     }
-                   }
-                 ],
-                 "must_not": [
-                   {
-                     "match": {
-                       "id": "${productId}"
-                     }
-                   }
-                 ]
-               }
-             }
-           }
-        }
+        "query": {
+            "constant_score": {
+              "filter": {
+                "bool": {
+                  "must": [
+                    {
+                      "match": {
+                        "dominant": "${dominant}"
+                      }
+                    },
+                    {
+                      "match": {
+                        "subType": "${collection}"
+                      }
+                    },
+                    {
+                      "range" : {
+                           "${price}" : {
+                              "gte" : "${pricegte}",
+                              "lt"  : "${pricelt}"
+                          }
+                        }
+                    }
+                  ],
+                  "must_not": [
+                    {
+                      "match": {
+                        "id": "${productId}"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
       }`);
+
 
     elastic
       .search({
