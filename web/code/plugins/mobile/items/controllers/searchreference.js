@@ -108,33 +108,6 @@ module.exports = {
 
             return reply(JSON.stringify(productResult, null, 4));
         })
-        .then((item) => {
-
-            (async _ => {
-
-                const history = request.history
-
-                try {
-                    if (!!item) {
-
-                        const result = await history.save(item)
-
-                        if (result.status && result.status == 'success') {
-                            
-                            return reply(item)
-                        }
-
-                        return reply(Boom.badImplementation('Failed to add an item to history!!'))
-                    }
-
-                    return reply(Boom.badRequest('Failed to find any items matching!!'))
-
-                } catch (err) {
-
-                    return reply(Boom.badImplementation('Fake Error!!'))
-                }
-            })();
-        })
         .catch(function(error) {
 
             elastic.close();
