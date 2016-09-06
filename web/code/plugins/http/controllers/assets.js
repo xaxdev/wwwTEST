@@ -1,5 +1,5 @@
 const Path = require('path');
-console.log(Path.resolve(__dirname, '../public/js'));
+
 module.exports = {
   images: {
     handler: {
