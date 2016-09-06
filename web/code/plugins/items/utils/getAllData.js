@@ -11,11 +11,11 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
   let avrgPrice = 0;
 
   let data = response.hits.hits.map((element) => element._source);
-  if(sortDirections == 'desc'){
-    data = _.sortBy(data,sortBy,sortDirections).reverse();
-  }else{
-    data = _.sortBy(data,sortBy,sortDirections);
-  }
+  // if(sortDirections == 'desc'){
+  //   data = _.sortBy(data,sortBy,sortDirections).reverse();
+  // }else{
+  //   data = _.sortBy(data,sortBy,sortDirections);
+  // }
 
   exportData = data;
   // console.log('data-->',data);

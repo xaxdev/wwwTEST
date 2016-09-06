@@ -9,7 +9,7 @@ const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata
 const Detail = (props) =>{
   if(logindata){
     const currency = logindata.currency;
-    let invoicedDate = convertDate(props.certifiedDate);
+    let invoicedDate = convertDate(props.itemCreatedDate);
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     return (
