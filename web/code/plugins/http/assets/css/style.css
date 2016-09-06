@@ -13,6 +13,7 @@ body{
 }
 #scroller{
     height:60px;
+    width: 100% !important;
 }
 .stuck{
     position:fixed;
@@ -62,6 +63,7 @@ input[type=checkbox]{margin: 4px 5px 0 0px;}
 	font-family: 'open_sanssemibold';
 }
 .btn.focus, .btn:focus, .btn:hover, .btn-radius:focus, .checkbox input:focus, .checkbox input:hover{outline: none;}
+.btn.focus, .btn:focus, .btn-radius:focus{color: #333;}
 .btn-searchresult {
     border-radius: 15px;
     margin-left: 0px;
@@ -951,6 +953,7 @@ select.form-searchresult option{
 .image-gallery-image{text-align: center; margin:0 auto;}
 .image-gallery-image img{width: auto !important;}
 
+.image-gallery-content .image-gallery-left-nav:hover, .image-gallery-content .image-gallery-right-nav:hover{text-decoration: inherit;}
 @media (min-width:1201px){
  .bd-box{width: 79%;}
 }
@@ -1337,7 +1340,6 @@ select.form-searchresult option{
 		.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
 			border: 1px solid #5c5954;
       vertical-align: middle;
-      white-space: nowrap;
       padding: 5px;
 		}
 		.table thead tr th span{

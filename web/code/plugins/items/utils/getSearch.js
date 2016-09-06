@@ -45,6 +45,19 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
     var valFromGrossW = 0;
     var valToGrossW = 0;
 
+    let valStoneFromCost = 0;
+    let valStoneToCost = 0;
+    let valQuantityFrom = 0;
+    let valQuantityTo = 0;
+    let valCaratWeightFrom = 0;
+    let valCaratWeightTo = 0;
+    let valFromProDate = '';
+    let valToProDate = '';
+    let valDimensionFrom = 0;
+    let valDimensionTo = 0;
+    let valMetalWeightFrom = 0;
+    let valMetalWeightTo = 0;
+
     internals.filters = [];
 
     if (keys.length != 3 ){
@@ -341,64 +354,64 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           }
           else if(key == 'gemstones.stoneCostFrom' || key == 'gemstones.stoneCostTo'){
             if(key == 'gemstones.stoneCostFrom'){
-              valFromCost = value;
+              valStoneFromCost = value;
             }
             if(key == 'gemstones.stoneCostTo'){
-              valToCost = value;
+              valStoneToCost = value;
             }
             var objLength = objRange.length +1;
             switch(userCurrency){
               case 'AED':
-                objRange = {...objRange,'gemstones.cost.AED':{'from':valFromCost,'to':valToCost},'length':objLength};
+                objRange = {...objRange,'gemstones.cost.AED':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
                 break;
               case 'CHF':
-                objRange = {...objRange,'gemstones.cost.CHF':{'from':valFromCost,'to':valToCost},'length':objLength};
+                objRange = {...objRange,'gemstones.cost.CHF':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
                 break;
               case 'EUR':
-                objRange = {...objRange,'gemstones.cost.EUR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                objRange = {...objRange,'gemstones.cost.EUR':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
                 break;
               case 'JOD':
-                objRange = {...objRange,'gemstones.cost.JOD':{'from':valFromCost,'to':valToCost},'length':objLength};
+                objRange = {...objRange,'gemstones.cost.JOD':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
                 break;
               case 'KWD':
-                objRange = {...objRange,'gemstones.cost.KWD':{'from':valFromCost,'to':valToCost},'length':objLength};
+                objRange = {...objRange,'gemstones.cost.KWD':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
                 break;
               case 'LBP':
-                objRange = {...objRange,'gemstones.cost.LBP':{'from':valFromCost,'to':valToCost},'length':objLength};
+                objRange = {...objRange,'gemstones.cost.LBP':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
                 break;
               case 'OMR':
-                objRange = {...objRange,'gemstones.cost.OMR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                objRange = {...objRange,'gemstones.cost.OMR':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
                 break;
               case 'QAR':
-                objRange = {...objRange,'gemstones.cost.QAR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                objRange = {...objRange,'gemstones.cost.QAR':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
                 break;
               case 'SAR':
-                objRange = {...objRange,'gemstones.cost.SAR':{'from':valFromCost,'to':valToCost},'length':objLength};
+                objRange = {...objRange,'gemstones.cost.SAR':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
                 break;
               default:
-                objRange = {...objRange,'gemstones.cost.USD':{'from':valFromCost,'to':valToCost},'length':objLength};
+                objRange = {...objRange,'gemstones.cost.USD':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
                 break;
             }
           }
           else if(key == 'gemstones.quantityFrom' || key == 'gemstones.quantityTo'){
             if(key == 'gemstones.quantityFrom'){
-              valFromCost = value;
+              valQuantityFrom = value;
             }
             if(key == 'gemstones.quantityTo'){
-              valToCost = value;
+              valQuantityTo = value;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'gemstones.quantity':{'from':valFromCost,'to':valToCost},'length':objLength};
+            objRange = {...objRange,'gemstones.quantity':{'from':valQuantityFrom,'to':valQuantityTo},'length':objLength};
           }
           else if(key == 'gemstones.totalCaratWeightFrom' || key == 'gemstones.totalCaratWeightTo'){
             if(key == 'gemstones.totalCaratWeightFrom'){
-              valFromCost = value;
+              valCaratWeightFrom = value;
             }
             if(key == 'gemstones.totalCaratWeightTo'){
-              valToCost = value;
+              valCaratWeightTo = value;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'gemstones.carat':{'from':valFromCost,'to':valToCost},'length':objLength};
+            objRange = {...objRange,'gemstones.carat':{'from':valCaratWeightFrom,'to':valCaratWeightTo},'length':objLength};
             filter =
               `{
                 "match": {
@@ -434,35 +447,35 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'proDateFrom'){
               // MM-dd-YYYY to YYYY-MM-dd
               var d = value.split('-');
-              valFromCerDate = `${d[2]}-${d[0]}-${d[1]}`;
+              valFromProDate = `${d[2]}-${d[0]}-${d[1]}`;
             }
             if(key == 'proDateTo'){
               // MM-dd-YYYY to YYYY-MM-dd
               var d = value.split('-');
-              valToCerDate= `${d[2]}-${d[0]}-${d[1]}`;
+              valToProDate= `${d[2]}-${d[0]}-${d[1]}`;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'productionDate':{'from':valFromCerDate,'to':valToCerDate},'length':objLength};
+            objRange = {...objRange,'productionDate':{'from':valFromProDate,'to':valToProDate},'length':objLength};
           }
           else if(key == 'caseDimensionFrom' || key == 'caseDimensionTo'){
             if(key == 'caseDimensionFrom'){
-              valFromGrossW = value;
+              valDimensionFrom = value;
             }
             if(key == 'caseDimensionTo'){
-              valToGrossW= value;
+              valDimensionTo= value;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'caseDimension':{'from':valFromGrossW,'to':valToGrossW},'length':objLength};
+            objRange = {...objRange,'caseDimension':{'from':valDimensionFrom,'to':valDimensionTo},'length':objLength};
           }
           else if(key == 'preciousMetalWeightFrom' || key == 'preciousMetalWeightTo'){
             if(key == 'preciousMetalWeightFrom'){
-              valFromGrossW = value;
+              valMetalWeightFrom = value;
             }
             if(key == 'preciousMetalWeightTo'){
-              valToGrossW= value;
+              valMetalWeightTo= value;
             }
             var objLength = objRange.length +1;
-            objRange = {...objRange,'preciousMetalWeight':{'from':valFromGrossW,'to':valToGrossW},'length':objLength};
+            objRange = {...objRange,'preciousMetalWeight':{'from':valMetalWeightFrom,'to':valMetalWeightTo},'length':objLength};
           }
           else if(key == 'description'){
             var filterSplit = [];

@@ -526,7 +526,7 @@ class productdetail extends Component {
            <div></div>
          );
        }
-       if(type != 'STO' && dominant){
+       if(type != 'STO' && dominant && type != 'CER' && products.length > 1){
        return(
            <div className="col-md-12 col-sm-12 nopadding">
               <h2>RELATED DETAILS</h2>
@@ -705,7 +705,7 @@ class productdetail extends Component {
                 </div>
                 </div>
                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
-                  <div className="line-border"></div>
+                  <div className={`${type != 'CER' ? 'line-border' : ''}`}></div>
                 </div>
                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{this.renderAttr()}</div>
                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterDiamondsAttr()}</div>

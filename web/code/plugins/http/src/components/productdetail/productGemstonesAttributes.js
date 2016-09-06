@@ -7,6 +7,7 @@ import checkInarray from '../../utils/checkInarray';
 const pructdetailurl = '/productreletedetail/';
 const allowGemstone = ["Stone"];
 import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
+import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 const Gemstoneattr =  (props) =>{
 
   let newprops = props.gemstoneAttrData.sort(function(a, b) {
@@ -57,7 +58,7 @@ const Gemstoneattr =  (props) =>{
                      <td title="Clarity" className="text-center">{convertBlanktodash(data.clarityName)}</td>
                      <td title="Cut" className="text-center">{convertBlanktodash(data.cutName)}</td>
                      <td title="Color" className="text-center">{convertBlanktodash(data.colorName)}</td>
-                     <td title="QTY Of Stones" className="text-center">{convertBlanktodash(data.quantity)}</td>
+                     <td title="QTY Of Stones" className="text-center">{numberFormatComma(data.quantity)}</td>
                      <td title="Total Carat Weight" className="text-center">{numberFormat(data.carat)}</td>
                      <td title="Origin" className="text-center">{convertBlanktodash(data.origin)}</td>
                      <td title="Fluorescence" className="text-center">{convertBlanktodash(data.fluorescence)}</td>

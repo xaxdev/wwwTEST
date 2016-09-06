@@ -16,30 +16,30 @@ const Detail = (props) =>{
       <div className="line-h">
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Item Reference</div>
-          <div className="col-md-8 col-sm-8">{props.reference}</div>
+          <div className="col-md-8 col-sm-8">{convertBlanktodash(props.reference)}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Description</div>
-          <div className="col-md-8 col-sm-8 text-wrap">{props.name}</div>
+          <div className="col-md-8 col-sm-8 text-wrap">{convertBlanktodash(props.name)}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Site</div>
-          <div className="col-md-8 col-sm-8">{props.siteName}</div>
+          <div className="col-md-8 col-sm-8">{convertBlanktodash(props.siteName)}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Warehouse</div>
-          <div className="col-md-8 col-sm-8">{props.warehouseName}</div>
+          <div className="col-md-8 col-sm-8">{convertBlanktodash(props.warehouseName)}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Laboratory</div>
-          <div className="col-md-8 col-sm-8">{props.agency}</div>
+          <div className="col-md-8 col-sm-8">{convertBlanktodash(props.agency)}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">SKU</div>
-          <div className="col-md-8 col-sm-8">{props.sku}</div>
+          <div className="col-md-8 col-sm-8">{convertBlanktodash(props.sku)}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
-          <div className="col-md-4 col-sm-4 nopadding font-b">Date Created</div>
+          <div className="col-md-4 col-sm-4 nopadding font-b">Certificate Date</div>
           <div className="col-md-8 col-sm-8">{invoicedDate}</div>
         </div>
       </div>

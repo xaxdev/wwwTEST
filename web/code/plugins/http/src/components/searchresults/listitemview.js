@@ -4,6 +4,7 @@ import { responsive } from 'react-bootstrap';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
 import ReactImageFallback from 'react-image-fallback';
+import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 
 class ListItemsView extends Component {
   constructor(props) {
@@ -100,7 +101,7 @@ class ListItemsView extends Component {
           jewelsWeight = '';
         }
 
-        col.jewelsWeight = jewelsWeight;
+        col.jewelsWeight = numberFormat(jewelsWeight);
 
         let itemName = (col.type != 'CER')
                           ?
@@ -108,7 +109,8 @@ class ListItemsView extends Component {
                           col.name
                           ;
 
-        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,itemName: itemName}
+        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
+                itemName: itemName,grossWeight:numberFormat(col.grossWeight)}
       });
 
       const tableColumns = [

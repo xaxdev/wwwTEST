@@ -21,13 +21,20 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
   // console.log('data-->',data);
   let maxPrice = 0;
 
-
   data.forEach(function(item){
     allData.push({'id': item.id,'reference':item.reference});
     if(item.price != undefined){
+      if(item.price[userCurrency] != 0){
+        // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
+      }
       maxPrice = Math.max(maxPrice, item.price[userCurrency]);
+      // console.log('maxPrice-->',maxPrice);
     }else{
-      maxPrice = 0;
+      if(maxPrice > 0){
+        maxPrice = maxPrice;
+      }else{
+        maxPrice = 0;
+      }
     }
   });
 

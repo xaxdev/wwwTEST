@@ -464,13 +464,13 @@ class InventoryFilter extends Component {
                               <InventoryGemStone props={this.props}/>
                             </div>
                           </div>
-                          <div className="col-sm-12 text-center">
+                          {/*<div className="col-sm-12 text-center">
                             <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
                             <button type="button" className="btn btn-primary btn-radius btn-inventories"
                               disabled={submitting} onClick={this.resetFormInventory}>
                               <i/> Reset
                             </button>
-                          </div>
+                          </div>*/}
                         </Tab>
                         <Tab eventKey={2} title="Watch" disabled={!productGroupWAT}>
                           <InventoryWatch props={this.props} ref="watch"/>
@@ -486,23 +486,23 @@ class InventoryFilter extends Component {
                               <InventoryGemStone props={this.props}/>
                             </div>
                           </div>
-                          <div className="col-sm-12 text-center">
-                            <button type="submit" className="btn btn-primary btn-radius btn-inventories btn-inventories">Search</button>
-                            <button type="button" className="btn btn-primary btn-radius btn-inventories btn-inventories"
+                          {/*<div className="col-sm-12 text-center">
+                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
+                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
                               disabled={submitting} onClick={this.resetFormInventory}>
                               <i/> Reset
                             </button>
-                          </div>
+                          </div>*/}
                         </Tab>
                         <Tab eventKey={3} title="Stone" disabled={!productGroupSTO}>
                           <InventoryStone props={this.props} ref="stone"/>
-                          <div className="col-sm-12 text-center">
-                            <button type="submit" className="btn btn-primary btn-radius">Search</button>
-                            <button type="button" className="btn btn-primary btn-radius"
+                          {/*<div className="col-sm-12 text-center">
+                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
+                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
                               disabled={submitting} onClick={this.resetFormInventory}>
                               <i/> Reset
                             </button>
-                          </div>
+                          </div>*/}
                         </Tab>
                         <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC} className="hidden">
                           <InventoryAcc props={this.props} ref="accessory"/>
@@ -518,13 +518,13 @@ class InventoryFilter extends Component {
                               <InventoryGemStone props={this.props}/>
                             </div>
                           </div>
-                          <div className="col-sm-12 text-center">
+                          {/*<div className="col-sm-12 text-center">
                             <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
                             <button type="button" className="btn btn-primary btn-radius btn-inventories"
                               disabled={submitting} onClick={this.resetFormInventory}>
                               <i/> Reset
                             </button>
-                          </div>
+                          </div>*/}
                         </Tab>
                         <Tab eventKey={5} title="OBJECT OF ART" disabled={!productGroupOBA}>
                           <InventoryOBA props={this.props}  ref="oba"/>
@@ -540,13 +540,13 @@ class InventoryFilter extends Component {
                               <InventoryGemStone props={this.props}/>
                             </div>
                           </div>
-                          <div className="col-sm-12 text-center">
+                          {/*<div className="col-sm-12 text-center">
                             <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
                             <button type="button" className="btn btn-primary btn-radius btn-inventories"
                               disabled={submitting} onClick={this.resetFormInventory}>
                               <i/> Reset
                             </button>
-                          </div>
+                          </div>*/}
                         </Tab>
                         <Tab eventKey={6} title="SPARE PART" disabled={!productGroupSPP}>
                           <InventorySparePart props={this.props}  ref="sparepart"/>
@@ -562,13 +562,13 @@ class InventoryFilter extends Component {
                               <InventoryGemStone props={this.props}/>
                             </div>
                           </div>
-                          <div className="col-sm-12 text-center">
+                          {/*<div className="col-sm-12 text-center">
                             <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
                             <button type="button" className="btn btn-primary btn-radius btn-inventories"
                               disabled={submitting} onClick={this.resetFormInventory}>
                               <i/> Reset
                             </button>
-                          </div>
+                          </div>*/}
                         </Tab>
                       </Tabs>
                     </div>

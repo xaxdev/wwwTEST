@@ -208,6 +208,7 @@ class GridItemsView extends Component {
           // console.log('item-->',item);
           let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
           let itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.certifiedDate);
+          let lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
           // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
 
           let price = GetPriceWithCurrency(item,'price');
@@ -321,7 +322,7 @@ class GridItemsView extends Component {
                             <span className="width-f100">{item.siteName}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
                             <span className="width-f100">{item.warehouseName}</span>
-                            <span className="fc-ddbe6a width-f100 font-b">Created Date: </span>
+                            <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
                             <span className="width-f100">{itemDate}</span>
                         </div>
                     </div>
