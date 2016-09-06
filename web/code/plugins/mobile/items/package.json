@@ -1,5 +1,5 @@
 {
-    "name": "mobile",
+    "name": "mobile-items",
     "version": "1.0.0",
     "dependencies": "hapi-mongodb"
 }
