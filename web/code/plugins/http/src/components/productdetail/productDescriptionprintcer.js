@@ -52,7 +52,7 @@ const Detail = (props) =>{
           <div style={styles.colmd5}>{convertBlanktodash(props.sku)}</div>
         </div>
         <div style={styles.colmd12}>
-          <div style={styles.colmd5}>Date Created</div>
+          <div style={styles.colmd5}>Certificate Date</div>
           <div style={styles.colmd5}>{invoicedDate}</div>
         </div>
       </div>
