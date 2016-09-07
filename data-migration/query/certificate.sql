@@ -8,7 +8,7 @@ SELECT [ITORAMA].[dbo].[CertificateMaster].[RecId] AS 'id'
       ,[ITORAMA].[dbo].[CertificateMaster].[SiteName] AS 'siteName'
       ,[ITORAMA].[dbo].[CertificateMaster].[Warehouse] AS 'warehouse'
       ,[ITORAMA].[dbo].[CertificateMaster].[WarehouseName] AS 'warehouseName'
-      ,[ITORAMA].[dbo].[CertificateMaster].[CertificateCreateDate] AS 'certifiedDate'
+      ,[ITORAMA].[dbo].[CertificateMaster].[CertificateCreateDate] AS 'itemCreatedDate'
       ,[ITORAMA].[dbo].[CertificateMaster].[Company] AS 'company'
       ,ISNULL(certimage.[FILENAME], '') AS [imageName]
       ,ISNULL(certimage.[FILETYPE], '') AS [imageType]
