@@ -5,7 +5,8 @@ import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CU
           SET_BRAND, SET_MUSTHAVE, SET_RINGSIZE, SET_DOMINANTSTONE, SET_METALTYPE, SET_METALCOLOUR, SET_CERTIFICATEAGENCY,
           SET_WATCHCATEORY, SET_LIMITEDEDITION, SET_MOVEMENT, SET_DIALINDEX, SET_DIALCOLOR, SET_DIALMETAL, SET_BUCKLETYPE, SET_STRAPTYPE,
           SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE,
-          SET_HIERARCHY
+          SET_HIERARCHY,SET_GEMS_CERTIFICATE_DATE_FROM,SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM,
+          SET_STONE_CERTIFICATE_DATE_TO,SET_PRODUCTION_DATE_FROM,SET_PRODUCTION_DATE_TO
         } from '../../constants/inventoryConstants';
 
 const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, currentPage:1, totalpage:null, totalpublicprice:null,
@@ -17,7 +18,9 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                         StrapTypeValue:[], BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[], DialIndexValue:[],
                         MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[], activeTabCategory:1,allItems:[],
                         filters:[], AccessoryTypeValue:[],SparePartTypeValue:[], paramsSearch:null,IsAdvance:false,
-                        HierarchyValue:null,SearchAction:'New',exportItems:[],maxPrice:null,minPrice:null,avrgPrice:null
+                        HierarchyValue:null,SearchAction:'New',exportItems:[],maxPrice:null,minPrice:null,avrgPrice:null,
+                        GemCertificateDateFrom:null,GemCertificateDateTo:null,StoneCertificateDateFrom:null,
+                        StoneCertificateDateTo:null,ProductionDateFrom:null,ProductionDateTo:null
                       };
 
   export default function(state = INITIAL_STATE, action){
@@ -32,11 +35,30 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[],
                 BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[],
                 LimitedEditionValue:[], WatchCategoryValue:[],filters:[], AccessoryTypeValue:[], paramsSearch:null,
-                SparePartTypeValue:[],SearchAction:'New'
+                SparePartTypeValue:[],SearchAction:'New',GemCertificateDateFrom:null,GemCertificateDateTo:null,
+                StoneCertificateDateFrom:null,StoneCertificateDateTo:null,ProductionDateFrom:null,ProductionDateTo:null
               };
       case SET_CURRENTPAGE :
         // console.log('SET_POLISH -->',action);
         return {...state, currentPage: action.currentPage };
+      case SET_PRODUCTION_DATE_FROM :
+        // console.log('SET_POLISH -->',action);
+        return {...state, ProductionDateFrom: action.productionDateFrom };
+      case SET_PRODUCTION_DATE_TO :
+        // console.log('SET_POLISH -->',action);
+        return {...state, ProductionDateTo: action.productionDateTo };
+      case SET_STONE_CERTIFICATE_DATE_FROM :
+        // console.log('SET_POLISH -->',action);
+        return {...state, StoneCertificateDateFrom: action.stoneCertificateDateFrom };
+      case SET_STONE_CERTIFICATE_DATE_TO :
+        // console.log('SET_POLISH -->',action);
+        return {...state, StoneCertificateDateTo: action.stoneCertificateDateTo };
+      case SET_GEMS_CERTIFICATE_DATE_FROM :
+        // console.log('SET_POLISH -->',action);
+        return {...state, GemCertificateDateFrom: action.certificateDateFrom };
+      case SET_GEMS_CERTIFICATE_DATE_TO :
+        // console.log('SET_POLISH -->',action);
+        return {...state, GemCertificateDateTo: action.certificateDateTo };
       case SET_ACCESSORYTYPE :
         // console.log('SET_POLISH -->',action);
         return {...state, AccessoryTypeValue: action.accessoryType };
@@ -163,7 +185,9 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[],
                 LimitedEditionValue:[], WatchCategoryValue:[], currentPage:1,datas:null,allItems:[], totalpage:null,
                 totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[],SparePartTypeValue:[],SearchAction:'New',
-                exporttems:[],maxPrice:null,minPrice:null,avrgPrice:null
+                exporttems:[],maxPrice:null,minPrice:null,avrgPrice:null,GemCertificateDateFrom:null,
+                GemCertificateDateTo:null,StoneCertificateDateFrom:null,StoneCertificateDateTo:null,ProductionDateFrom:null,
+                ProductionDateTo:null
               }
       case SET_PARAMS:
         // console.log('action.params-->',action.params);

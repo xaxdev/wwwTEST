@@ -329,7 +329,7 @@ class InventoryHeader extends Component {
                           <input id="file" type="file" field={reference} onChange={this.readFile}/>
                           <span id="fileName"></span>
                           <input type="button" id="btn-browsefile" value=" "/>
-                          <span className="font-nor control-label">The system able to import only excel file. Click here to download a format file <a href={ROOT_URL+'/upload_file/Mol_upload_items.xlsx'} >Mol upload items.xlsx</a></span>
+                          <div className="font-nor control-label">The system able to import only excel file. Click here to download a format file <a href={ROOT_URL+'/upload_file/Mol_upload_items.xlsx'} >Mol upload items.xlsx</a></div>
                         </div>
                       </div>
                   </div>

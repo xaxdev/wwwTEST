@@ -5,12 +5,50 @@ import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CU
         SET_POLISH, SET_SYMMETRY, SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN, SET_JEWELRYCATEGORY, SET_COLLECTION,
         SET_BRAND, SET_MUSTHAVE, SET_RINGSIZE, SET_DOMINANTSTONE, SET_METALTYPE, SET_METALCOLOUR, SET_CERTIFICATEAGENCY,
         SET_WATCHCATEORY, SET_LIMITEDEDITION, SET_MOVEMENT, SET_DIALINDEX, SET_DIALCOLOR, SET_DIALMETAL, SET_BUCKLETYPE, SET_STRAPTYPE,
-        SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE,SET_HIERARCHY
+        SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE,SET_HIERARCHY,
+        SET_GEMS_CERTIFICATE_DATE_FROM,SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM,SET_STONE_CERTIFICATE_DATE_TO,
+        SET_PRODUCTION_DATE_FROM,SET_PRODUCTION_DATE_TO
       } from '../constants/inventoryConstants';
 
 export function resetForm(){
   return {
           type: RESET_FORM
+  }
+}
+export function setProductionDateFrom(value){
+  return {
+          type: SET_PRODUCTION_DATE_FROM,
+          productionDateFrom: value
+  }
+}
+export function setProductionDateTo(value){
+  return {
+          type: SET_PRODUCTION_DATE_TO,
+          productionDateTo: value
+  }
+}
+export function setStoneCertificateDateFrom(value){
+  return {
+          type: SET_STONE_CERTIFICATE_DATE_FROM,
+          stoneCertificateDateFrom: value
+  }
+}
+export function setStoneCertificateDateTo(value){
+  return {
+          type: SET_STONE_CERTIFICATE_DATE_TO,
+          stoneCertificateDateTo: value
+  }
+}
+export function setGemsCertificateDateFrom(value){
+  return {
+          type: SET_GEMS_CERTIFICATE_DATE_FROM,
+          certificateDateFrom: value
+  }
+}
+export function setGemsCertificateDateTo(value){
+  return {
+          type: SET_GEMS_CERTIFICATE_DATE_TO,
+          certificateDateTo: value
   }
 }
 export function setHierarchy(value){
