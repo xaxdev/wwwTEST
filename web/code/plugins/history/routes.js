@@ -3,12 +3,12 @@ import * as controllers from './controllers'
 export default [
     {
         method: 'GET',
-        path: '/history',
+        path: '/',
         config: controllers.history
     },
     {
         method: 'POST',
-        path: '/updatehistory',
+        path: '/update',
         config: controllers.updatehistory
     }
 ]
