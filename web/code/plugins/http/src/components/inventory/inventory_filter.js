@@ -641,7 +641,9 @@ function mapStateToProps(state) {
     GemCertificateDateFrom: state.searchResult.GemCertificateDateFrom,
     GemCertificateDateTo: state.searchResult.GemCertificateDateTo,
     StoneCertificateDateFrom: state.searchResult.StoneCertificateDateFrom,
-    StoneCertificateDateTo: state.searchResult.StoneCertificateDateTo
+    StoneCertificateDateTo: state.searchResult.StoneCertificateDateTo,
+    ProductionDateFrom: state.searchResult.ProductionDateFrom,
+    ProductionDateTo: state.searchResult.ProductionDateTo
   };
 }
 function mapDispatchToProps(dispatch) {
