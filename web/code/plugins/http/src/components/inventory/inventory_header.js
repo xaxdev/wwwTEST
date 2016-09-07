@@ -116,7 +116,7 @@ class InventoryHeader extends Component {
 
     // console.log('userLogin-->',userLogin);
     const host = HOSTNAME || 'localhost';
-    const ROOT_URL = `//${host}:3005`;
+    const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
     // console.log('ROOT_URL-->',ROOT_URL);
 
     InitModifyData(this.props.props);
