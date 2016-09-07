@@ -291,6 +291,24 @@
           "prefix": "/api/masterdata"
         }
       }
+    },
+    {
+      "plugin": "./plugins/history",
+      "options": {
+        "select": "api",
+        "routes": {
+          "prefix": "/api/history"
+        }
+      }
+    },
+    {
+      "plugin": "./plugins/mobile/items",
+      "options": {
+        "select": "api",
+        "routes": {
+          "prefix": "/api/v2/items"
+        }
+      }
     }
   ]
 }
