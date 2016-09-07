@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "NODE_ENV=production webpack --progress --color --define HOSTNAME='\"185.3.154.146\"'",
+    "build": "NODE_ENV=production webpack --progress --color --define HOSTNAME='\"mol.mouawad.com\"'",
     "build:test": "NODE_ENV=test webpack --progress --color --define HOSTNAME='\"192.168.1.92\"'",
     "build:dev": "webpack --progress --color  --watch --define HOSTNAME='\"localhost\"'"
   },
