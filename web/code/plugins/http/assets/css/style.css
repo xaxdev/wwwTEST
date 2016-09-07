@@ -13,7 +13,6 @@ body{
 }
 #scroller{
     height:60px;
-    width: 100% !important;
 }
 .stuck{
     position:fixed;
