@@ -4,6 +4,7 @@ import Calendar from 'react-input-calendar';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
+import shallowCompare from 'react-addons-shallow-compare';
 
 class InventoryGemStone extends Component {
   constructor(props) {
@@ -25,11 +26,41 @@ class InventoryGemStone extends Component {
     this.handleSymmetrySelectChange = this.handleSymmetrySelectChange.bind(this);
     this.handleTreatmentSelectChange = this.handleTreatmentSelectChange.bind(this);
     this.handleFluorescenceSelectChange = this.handleFluorescenceSelectChange.bind(this);
+    this.resetDate = this.resetDate.bind(this);
     // console.log('moment-->',moment());
     this.state = {
       startDate: null,
       endDate: null
     };
+  }
+  // componentWillReceiveProps(nextProps) {
+  //   const { props } = this.props;
+  //   console.log('nextProps-->',this.state.startDate);
+  //   // console.log('props.SearchAction-->',props.SearchAction);
+  //
+  //   // if(nextProps.props.SearchAction != props.SearchAction){
+  //   //   if(props.HierarchyValue != null){
+  //   //     if(nextProps.props.SearchAction == 'New'){
+  //   //       if(props.HierarchyValue.length != 0){
+  //   //         props.HierarchyValue[0].checked = false;
+  //   //         props.HierarchyValue[0].key = props.HierarchyValue[0].code;
+  //   //         this.refs.treeview.handleChange(props.HierarchyValue[0]);
+  //   //       }
+  //   //       props.inventoryActions.setHierarchy(null);
+  //   //     }
+  //   //   }
+  //   // }
+  //
+  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    // console.log('startDate-->',nextProps);
+    return shallowCompare(this, nextProps, nextState);
+    // this.setState({ startDate: nextState.startDate })
+  }
+  resetDate(vals){
+    console.log('gemstone reset date');
+
+    this.setState({ startDate: '' })
   }
   handlestoneTypeSelectChange(stoneTypeSelectValue){
     const { props } = this.props;
@@ -97,6 +128,7 @@ class InventoryGemStone extends Component {
     props.inventoryActions.setDataClarity(ClaritySelectValue);
   }
   handleChangeDate ({ startDate, endDate }) {
+    const { props } = this.props;
 
     var startDateM = (typeof startDate !== 'undefined')? moment(startDate,'MM-DD-YYYY') : moment(this.state.startDate,'MM-DD-YYYY');
     var endDateM = (typeof endDate !== 'undefined')? moment(endDate,'MM-DD-YYYY') : moment(this.state.endDate,'MM-DD-YYYY');
@@ -114,7 +146,8 @@ class InventoryGemStone extends Component {
       }
     }
 
-    this.setState({ startDate, endDate })
+    props.inventoryActions.setGemsCertificateDateFrom(startDate);
+    props.inventoryActions.setGemsCertificateDateTo(endDate);
   }
   handleChangeStart(startDate){
     const { props } = this.props;
@@ -225,6 +258,7 @@ class InventoryGemStone extends Component {
   }
   render() {
     const { props } = this.props;
+    // console.log('props-->',props);
 
     var { fields:
           {
@@ -607,7 +641,7 @@ class InventoryGemStone extends Component {
                   <div className="col-sm-10 nopadding">
                     <Calendar
                       format="MM-DD-YYYY"
-                      date={(paramsSearch != null)?paramsSearch.gemstone_cerDateFrom:this.state.startDate}
+                      date={(paramsSearch != null)?paramsSearch.gemstone_cerDateFrom:props.GemCertificateDateFrom}
                       closeOnSelect = {true}
                       onChange={this.handleChangeStart}
                     />
@@ -616,7 +650,7 @@ class InventoryGemStone extends Component {
                   <div className="col-sm-10 nopadding">
                     <Calendar
                       format="MM-DD-YYYY"
-                      date={(paramsSearch != null)?paramsSearch.gemstone_cerDateTo:this.state.endDate}
+                      date={(paramsSearch != null)?paramsSearch.gemstone_cerDateTo:props.GemCertificateDateTo}
                       closeOnSelect = {true}
                       onChange={this.handleChangeEnd}
                     />

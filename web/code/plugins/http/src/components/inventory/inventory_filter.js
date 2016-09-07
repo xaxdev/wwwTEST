@@ -325,6 +325,7 @@ class InventoryFilter extends Component {
     this.refs.accessory.treeOnUnClick();
     this.refs.oba.treeOnUnClick();
     this.refs.sparepart.treeOnUnClick();
+    this.refs.gemstone.resetDate();
   }
 
   render() {
@@ -559,7 +560,7 @@ class InventoryFilter extends Component {
                               </h2>
                             </div>
                             <div>
-                              <InventoryGemStone props={this.props}/>
+                              <InventoryGemStone props={this.props} ref="gemstone"/>
                             </div>
                           </div>
                           {/*<div className="col-sm-12 text-center">
@@ -636,7 +637,13 @@ function mapStateToProps(state) {
     IsAdvance: state.searchResult.IsAdvance,
     AccessoryTypeValue: state.searchResult.AccessoryTypeValue,
     SparePartTypeValue: state.searchResult.SparePartTypeValue,
-    SearchAction: state.searchResult.SearchAction
+    SearchAction: state.searchResult.SearchAction,
+    GemCertificateDateFrom: state.searchResult.GemCertificateDateFrom,
+    GemCertificateDateTo: state.searchResult.GemCertificateDateTo,
+    StoneCertificateDateFrom: state.searchResult.StoneCertificateDateFrom,
+    StoneCertificateDateTo: state.searchResult.StoneCertificateDateTo,
+    ProductionDateFrom: state.searchResult.ProductionDateFrom,
+    ProductionDateTo: state.searchResult.ProductionDateTo
   };
 }
 function mapDispatchToProps(dispatch) {

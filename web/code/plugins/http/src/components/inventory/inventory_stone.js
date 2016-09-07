@@ -203,6 +203,7 @@ class InventoryStone extends Component {
     props.inventoryActions.setDataCertificateAgency(CertificateLabSelectValue);
   }
   handleChangeDate ({ startDate, endDate }) {
+    const { props } = this.props;
 
     var startDateM = (typeof startDate !== 'undefined')? moment(startDate,'MM-DD-YYYY') : moment(this.state.startDate,'MM-DD-YYYY');
     var endDateM = (typeof endDate !== 'undefined')? moment(endDate,'MM-DD-YYYY') : moment(this.state.endDate,'MM-DD-YYYY');
@@ -221,6 +222,8 @@ class InventoryStone extends Component {
     }
 
     this.setState({ startDate, endDate })
+    props.inventoryActions.setStoneCertificateDateFrom(startDate);
+    props.inventoryActions.setStoneCertificateDateTo(endDate);
   }
   handleChangeStart(startDate){
     const { props } = this.props;
@@ -658,7 +661,7 @@ class InventoryStone extends Component {
                   <div className="col-sm-10 nopadding">
                     <Calendar
                       format="MM-DD-YYYY"
-                      date={(paramsSearch != null)?paramsSearch.cerDateFrom:this.state.startDate}
+                      date={(paramsSearch != null)?paramsSearch.cerDateFrom:props.StoneCertificateDateFrom}
                       closeOnSelect = {true}
                       onChange={this.handleChangeStart}
                     />
@@ -667,7 +670,7 @@ class InventoryStone extends Component {
                   <div className="col-sm-10 nopadding">
                     <Calendar
                       format="MM-DD-YYYY"
-                      date={(paramsSearch != null)?paramsSearch.cerDateTo:this.state.endDate}
+                      date={(paramsSearch != null)?paramsSearch.cerDateTo:props.StoneCertificateDateTo}
                       closeOnSelect = {true}
                       onChange={this.handleChangeEnd}
                     />

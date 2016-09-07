@@ -231,6 +231,8 @@ class InventoryWatch extends Component {
     props.inventoryActions.setDataMovement(movementSelectValue);
   }
   handleChangeDate ({ startDate, endDate }) {
+    const { props } = this.props;
+
     var startDateM = (typeof startDate !== 'undefined')? moment(startDate,'MM-DD-YYYY') : moment(this.state.startDate,'MM-DD-YYYY');
     var endDateM = (typeof endDate !== 'undefined')? moment(endDate,'MM-DD-YYYY') : moment(this.state.endDate,'MM-DD-YYYY');
 
@@ -248,6 +250,8 @@ class InventoryWatch extends Component {
     }
 
     this.setState({ startDate, endDate })
+    props.inventoryActions.setProductionDateFrom(startDate);
+    props.inventoryActions.setProductionDateTo(endDate);
   }
   handleChangeStart(startDate){
     // console.log('handleChangeStart-->',startDate);
@@ -757,7 +761,7 @@ class InventoryWatch extends Component {
                   <div className="col-sm-10 nopadding">
                     <Calendar
                       format="MM-DD-YYYY"
-                      date={(paramsSearch != null)?paramsSearch.proDateFrom:this.state.startDate}
+                      date={(paramsSearch != null)?paramsSearch.proDateFrom:props.ProductionDateFrom}
                       closeOnSelect = {true}
                       onChange={this.handleChangeStart}
                     />
@@ -766,7 +770,7 @@ class InventoryWatch extends Component {
                   <div className="col-sm-10 nopadding">
                     <Calendar
                       format="MM-DD-YYYY"
-                      date={(paramsSearch != null)?paramsSearch.proDateTo:this.state.endDate}
+                      date={(paramsSearch != null)?paramsSearch.proDateTo:props.ProductionDateTo}
                       closeOnSelect = {true}
                       onChange={this.handleChangeEnd}
                     />
