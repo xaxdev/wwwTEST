@@ -16,6 +16,7 @@ class InventoryHeader extends Component {
     this.handleDominantStoneSelectChange = this.handleDominantStoneSelectChange.bind(this);
     this.readFile = this.readFile.bind(this);
   }
+
   handleWarehouseSelectChange (WarehouseSelectValue) {
     // console.log('WarehouseValue-->',WarehouseValue);
     var {fields:{ warehouse}, searchResult} = this.props.props;
@@ -297,11 +298,11 @@ class InventoryHeader extends Component {
                         <div className="col-sm-7">
                           <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                           <div className="col-sm-4 nopadding">
-                            <input type="text" className="form-control" {...totalUpdatedCostFrom}/>
+                            <input type="number" className="form-control" {...totalUpdatedCostFrom}/>
                           </div>
                           <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                           <div className="col-sm-4 nopadding">
-                            <input type="text" className="form-control" {...totalUpdatedCostTo}/>
+                            <input type="number" className="form-control" {...totalUpdatedCostTo}/>
                           </div>
                         </div>
                       </div>
@@ -313,11 +314,11 @@ class InventoryHeader extends Component {
                          <div className="col-sm-7">
                           <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                           <div className="col-sm-4 nopadding">
-                            <input type="text" className="form-control" {...publicPriceFrom}/>
+                            <input type="number" className="form-control" {...publicPriceFrom}/>
                           </div>
                           <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                           <div className="col-sm-4 nopadding">
-                            <input type="text" className="form-control" {...publicPriceTo}/>
+                            <input type="number" className="form-control" {...publicPriceTo}/>
                           </div>
                         </div>
                       </div>
