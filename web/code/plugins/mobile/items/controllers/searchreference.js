@@ -12,6 +12,7 @@ module.exports = {
 
         const elastic = request.server.plugins.elastic.client;
         const reference = request.params.reference;
+        const history = request.history;
 
         internals.query = JSON.parse(
         `{
@@ -107,13 +108,22 @@ module.exports = {
 
             elastic.close();
 
-            return reply(JSON.stringify(productResult, null, 4));
+            // return reply(JSON.stringify(productResult, null, 4));
+            return productResult;
+        })
+        .then(function(item){
+
+            history.save(request, reply, item)
+
+            return reply(JSON.stringify(item, null, 4));
         })
         .catch(function(error) {
 
+            console.log(error);
+
             elastic.close();
 
-            return reply(Boom.badImplementation(err));
+            return reply(Boom.badImplementation(error));
         });
     }
 };

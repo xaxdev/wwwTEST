@@ -1,47 +1,52 @@
-export default {
+const Boom = require('boom');
+const Promise = require('bluebird');
+const _ = require('lodash');
 
-    save: (request, item) => {
+export default {
+    save: (request, reply, item) => {
+
+        var item = item;
+        item = _.assign({ "userId": request.auth.credentials.id }, item)
+        item = _.assign({ "displayStatus": true }, item)
+        item = _.assign({ "lookUpDate": _.now() }, item)
+
+        // console.log("------------------------------------------------------------input item", item);
 
         try {
+            var db = request.server.plugins['hapi-mongodb'].db;
+            db.collection('History').findOne({ "userId": item.userId, "id": item.id }, (err, result) => {
 
-            (async _ => {
+                console.log("------------------------------------------------------------find error", err);
+                // if (err) return new Promise.reject(Boom.badImplementation('', err));
 
-                // var db = request.server.plugins['hapi-mongodb'].db;
-                // var ObjectID = request.server.plugins['hapi-mongodb'].ObjectID;
-                //
-                // db.collection('User').findOne({  "_id" : new ObjectID('577ddaec73b1eb082aab4bfc') }, function(err, result) {
-                //
-                //     if (err) return console.log('Internal MongoDB error', err);
-                //
-                //     console.log(result);
-                // });
+                // console.log("------------------------------------------------------------find result", result);
+                if (result) {
+                    db.collection('History').updateOne({ "userId": item.userId, "id": item.id }, { $set: { "displayStatus": true, "lookUpDate": _.now() } }, (err, result) => {
 
-                // const Users = request.collections.user;
-                // const Authentication = request.collections.authentication;
-                // const Permissions = request.collections.permission;
+                        console.log("------------------------------------------------------------update error", err);
+                        // if (err) return new Promise.reject(Boom.badImplementation('', err));
 
-                // const username = request.payload.username;
-                // const password = request.payload.password;
+                        // console.log("------------------------------------------------------------update result", result);
+                        console.log("matchedCount", result.matchedCount);
+                        console.log("modifiedCount", result.modifiedCount);
+                        // return new Promise.resolve(result);
+                    });
+                }
+                else {
+                    db.collection('History').insertOne(item, (err, result) => {
 
-                console.log("read user");
-                // console.log(Users);
-                // console.log(Authentication);
-                // console.log(Permissions);
-                // console.log(username);
-                // console.log(password);
-                console.log(request.auth.isAuthenticated);
-            })();
+                        console.log("------------------------------------------------------------insert error", err);
+                        // if (err) Promise.reject(Boom.badImplementation('', err));
+
+                        console.log("insertedCount", result.insertedCount);
+                        // Promise.resolve(result);
+                    });
+                }
+            });
+
         } catch (e) {
 
             console.log(e);
         }
-
-
-        // return new Promise((resolve, reject) => {
-        //
-        //     console.log('Save History OK!');
-        //
-        //     setTimeout(resolve.bind(null, { status: 'success' }), 2500);
-        // });
     }
 }
