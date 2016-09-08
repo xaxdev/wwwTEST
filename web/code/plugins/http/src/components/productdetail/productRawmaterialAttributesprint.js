@@ -69,8 +69,8 @@ const Gemstoneattr =  (props) =>{
       <Table responsive style={styles.table}>
            <thead style={styles.th}>
              <tr style={styles.border}>
-               <th style={styles.border}>Stone Type</th>
-               <th style={styles.border}>Total Carat Weight (Grams)</th>
+               <th style={styles.border}>Material Type</th>
+               <th style={styles.border}>Total Weight (Grams)</th>
              </tr>
            </thead>
            <tbody>
