@@ -520,11 +520,11 @@ class InventoryGemStone extends Component {
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...gemstone_stoneCostFrom}/>
+                    <input type="number" className="form-control" {...gemstone_stoneCostFrom}/>
                   </div>
                   <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...gemstone_stoneCostTo}/>
+                    <input type="number" className="form-control" {...gemstone_stoneCostTo}/>
                   </div>
                 </div>
               </div>
@@ -533,11 +533,11 @@ class InventoryGemStone extends Component {
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...gemstone_quantityFrom}/>
+                    <input type="number" className="form-control" {...gemstone_quantityFrom}/>
                   </div>
                   <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...gemstone_quantityTo}/>
+                    <input type="number" className="form-control" {...gemstone_quantityTo}/>
                   </div>
                 </div>
               </div>
@@ -546,11 +546,11 @@ class InventoryGemStone extends Component {
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...gemstone_totalCaratWeightFrom}/>
+                    <input type="number" className="form-control" {...gemstone_totalCaratWeightFrom}/>
                   </div>
                   <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...gemstone_totalCaratWeightTo}/>
+                    <input type="number" className="form-control" {...gemstone_totalCaratWeightTo}/>
                   </div>
                 </div>
               </div>
