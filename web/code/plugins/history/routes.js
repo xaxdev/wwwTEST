@@ -8,7 +8,7 @@ export default [
     },
     {
         method: 'POST',
-        path: '/update',
-        config: controllers.updatehistory
+        path: '/hide',
+        config: controllers.hidehistory
     }
 ]
