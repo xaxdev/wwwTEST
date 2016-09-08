@@ -495,7 +495,7 @@ class productreletedetail extends Component {
          );
        }
 
-       if(type != 'STO' && dominant && type != 'CER' && products.length > 1){
+       if(type != 'STO' && dominant && type != 'CER' && products.length >= 1){
        return(
            <div className="col-md-12 col-sm-12 nopadding">
               <h2>RELATED DETAILS</h2>
