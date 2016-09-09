@@ -1,3 +1,5 @@
+const Boom = require('boom')
+
 export default {
     auth: {
         strategy: 'authentication'
@@ -6,8 +8,13 @@ export default {
 
         (async _ => {
 
-            const db = request.server.plugins['hapi-mongodb'].db
-            reply(await db.collection('History').find({ "userId": request.auth.credentials.id }).toArray())
+            try {
+                const db = request.server.plugins['hapi-mongodb'].db
+                reply(await db.collection('History').find({ "userId": request.auth.credentials.id }).toArray())
+            } catch (e) {
+
+                reply(Boom.badImplementation('', e))
+            }
         })();
     }
 }
