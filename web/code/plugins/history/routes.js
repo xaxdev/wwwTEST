@@ -7,7 +7,7 @@ export default [
         config: controllers.history
     },
     {
-        method: 'POST',
+        method: 'PATCH',
         path: '/hide',
         config: controllers.hidehistory
     }
