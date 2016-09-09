@@ -177,6 +177,14 @@
                     }
                 },
                 {
+                    "gemstones": {
+                        "match": "gemstones",
+                        "mapping": {
+                            "type": "nested"
+                         }
+                    }
+                },
+                {
                     "partial_matching": {
                         "index": "analyzed",
                         "match_mapping_type": "string",
