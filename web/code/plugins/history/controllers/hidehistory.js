@@ -9,8 +9,17 @@ export default {
         (async _ => {
 
             try {
+                let items = request.payload.data
                 const db = request.server.plugins['hapi-mongodb'].db
-                reply(await db.collection('History').updateOne({ "userId": request.auth.credentials.id, "id": request.payload.id.toString().trim() }, { $set: { "displayStatus": false } }))
+
+                items.forEach(({id}) => {
+
+                    db.collection('History').updateOne({ "userId": request.auth.credentials.id, "id": id.trim() }, { $set: { "displayStatus": false } }, (err, result) => {
+                        if (err) reply(Boom.badImplementation('', err))
+                    })
+                })
+
+                reply({ status: true })
             } catch (e) {
 
                 reply(Boom.badImplementation('', e))

@@ -111,15 +111,15 @@ module.exports = {
             // return reply(JSON.stringify(productResult, null, 4));
             return productResult;
         })
-        .then(function(item){
+        .then(async (item) => {
 
-            history.save(request, reply, item)
+            return await history.save(request, reply, item)
+        })
+        .then((item) => {
 
-            return reply(JSON.stringify(item, null, 4));
+            return reply(JSON.stringify(item, null, 4))
         })
         .catch(function(error) {
-
-            console.log(error);
 
             elastic.close();
 
