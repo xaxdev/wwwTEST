@@ -309,6 +309,15 @@
           "prefix": "/api/v2/items"
         }
       }
+    },
+    {
+      "plugin": "./plugins/wishlist",
+      "options": {
+        "select": "api",
+        "routes": {
+          "prefix": "/api/wishlist"
+        }
+      }
     }
   ]
 }
