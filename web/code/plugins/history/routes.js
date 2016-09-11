@@ -3,11 +3,11 @@ import * as controllers from './controllers'
 export default [
     {
         method: 'GET',
-        path: '/',
+        path: '/{display}/{page}',
         config: controllers.history
     },
     {
-        method: 'PATCH',
+        method: 'PUT',
         path: '/hide',
         config: controllers.hidehistory
     }
