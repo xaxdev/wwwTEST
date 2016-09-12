@@ -50,8 +50,11 @@ SELECT item.[Id] AS 'id'
     , ISNULL(gemstone.[StoneTypeName], '') AS 'gemstone_stoneTypeName'
     , ISNULL(gemstone.[Type], '') AS 'gemstone_type'
     , ISNULL(gemstone.[Unit], '') AS 'gemstone_unit'
-    , 'OBA' AS 'type'
-    , ISNULL(oba.[Dimensions], '') AS 'dimensions'
+    , 'SPA' AS 'type'
+    , ISNULL(spareparts.[Type], '') AS 'subType'
+    , ISNULL(spareparts.[TypeName], '') AS 'subTypeName'
+	, ISNULL(spareparts.[BuckleType], '') AS 'buckleType'
+	, ISNULL(spareparts.[BuckleTypeName], '') AS 'buckleTypeName'
     , ISNULL(img.[FILENAME], '') AS 'imageName'
     , ISNULL(img.[FILETYPE], '') AS 'imageType'
     , ISNULL(cert.CERTIFICATIONNO, '') AS [CertificateNo]
@@ -64,9 +67,9 @@ FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
   ON item.[Reference] = gemstone.[ItemReference]
   AND item.[Company] = gemstone.[Company]
-INNER JOIN [ITORAMA].[dbo].[OBA] oba
-  ON item.[Reference] = oba.[ItemReference]
-  AND item.[Company] = oba.[Company]
+INNER JOIN [ITORAMA].[dbo].[SparePart] spareparts
+  ON item.[Reference] = spareparts.[ItemReference]
+  AND item.[Company] = spareparts.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
   ON item.[Id] = img.[ITEMRECID]
   AND item.[Company] = img.[Company]
