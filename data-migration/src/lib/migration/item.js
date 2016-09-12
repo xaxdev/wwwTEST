@@ -82,6 +82,26 @@ const getCertificates = async index => {
     }
 }
 
+const getAccessory = async (index, exchangeRates) => {
+    try {
+        console.log('Accessory!!!');
+        const total = await core.parallelize(await settings(index, exchangeRates, constant.ACCESSORY_QUERY, mapper.mapItem));
+        console.log(`${total} items were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getSpareParts = async (index, exchangeRates) => {
+    try {
+        console.log('Spare Parts!!!');
+        const total = await core.parallelize(await settings(index, exchangeRates, constant.SPARE_PARTS_QUERY, mapper.mapItem));
+        console.log(`${total} items were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
 const test = async (index, exchangeRates) => {
     try {
         console.log('TEST!!!');
@@ -94,4 +114,4 @@ const test = async (index, exchangeRates) => {
     }
 };
 
-export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, test };
+export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, getAccessory, getSpareParts };
