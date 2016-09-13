@@ -412,36 +412,36 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             }
             var objLength = objRange.length +1;
             objRange = {...objRange,'gemstones.carat':{'from':valCaratWeightFrom,'to':valCaratWeightTo},'length':objLength};
-            filter =
-              `{
-                "match": {
-                  "gemstones.type": {
-                    "query": "Loose Diamond"
-                  }
-                }
-              }`;
-            internals.filters.push(JSON.parse(filter));
-            filter = '';
-            filter =
-              `{
-                "match": {
-                  "gemstones.type": {
-                    "query": "Stone"
-                  }
-                }
-              }`;
-            internals.filters.push(JSON.parse(filter));
-            filter = '';
-            filter =
-              `{
-                "match": {
-                  "gemstones.type": {
-                    "query": "Diamond"
-                  }
-                }
-              }`;
-            internals.filters.push(JSON.parse(filter));
-            filter = '';
+            // filter =
+            //   `{
+            //     "match": {
+            //       "gemstones.type": {
+            //         "query": "Loose Diamond"
+            //       }
+            //     }
+            //   }`;
+            // internals.filters.push(JSON.parse(filter));
+            // filter = '';
+            // filter =
+            //   `{
+            //     "match": {
+            //       "gemstones.type": {
+            //         "query": "Stone"
+            //       }
+            //     }
+            //   }`;
+            // internals.filters.push(JSON.parse(filter));
+            // filter = '';
+            // filter =
+            //   `{
+            //     "match": {
+            //       "gemstones.type": {
+            //         "query": "Diamond"
+            //       }
+            //     }
+            //   }`;
+            // internals.filters.push(JSON.parse(filter));
+            // filter = '';
           }
           else if(key == 'proDateFrom' || key == 'proDateTo'){
             if(key == 'proDateFrom'){
