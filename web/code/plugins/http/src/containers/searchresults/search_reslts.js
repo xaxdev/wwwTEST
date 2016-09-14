@@ -146,14 +146,31 @@ class SearchResult extends Component {
       };  // default search params
 
       const { filters } =  this.props;
+      let gemstoneFilter = {};
       // console.log('filters-->',filters);
       filters.forEach(function(filter){
         let keys = Object.keys(filter);
         keys.forEach((key) => {
           const value = filter[key];
-          params[key] = value;
+          const gemstoneFields = keys[0].split('.');
+          if(gemstoneFields[0] == 'gemstones'){
+            gemstoneFilter[gemstoneFields[1]] = value;
+          }else if(gemstoneFields[0] == 'certificatedNumber'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'certificateAgency'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'cerDateFrom'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }
+          else{
+            params[key] = value;
+          }
         });
       });
+
+      if(Object.keys(gemstoneFilter).length != 0){
+        params['gemstones'] = gemstoneFilter;
+      }
       // console.log('params-->',params);
       this.props.getItems(params);
   }
@@ -229,13 +246,39 @@ class SearchResult extends Component {
       };
       const { filters } =  this.props;
 
+      // filters.forEach(function(filter){
+      //   let keys = Object.keys(filter);
+      //   keys.forEach((key) => {
+      //     const value = filter[key];
+      //     params[key] = value;
+      //   });
+      // });
+
+      let gemstoneFilter = {};
+      // console.log('filters-->',filters);
       filters.forEach(function(filter){
         let keys = Object.keys(filter);
         keys.forEach((key) => {
           const value = filter[key];
-          params[key] = value;
+          const gemstoneFields = keys[0].split('.');
+          if(gemstoneFields[0] == 'gemstones'){
+            gemstoneFilter[gemstoneFields[1]] = value;
+          }else if(gemstoneFields[0] == 'certificatedNumber'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'certificateAgency'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'cerDateFrom'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }
+          else{
+            params[key] = value;
+          }
         });
       });
+
+      if(Object.keys(gemstoneFilter).length != 0){
+        params['gemstones'] = gemstoneFilter;
+      }
 
       let girdView = this.state.showGridView;
       let listView = this.state.showListView;
@@ -289,13 +332,39 @@ class SearchResult extends Component {
     };
     let { filters } =  this.props;
 
+    // filters.forEach(function(filter){
+    //   let keys = Object.keys(filter);
+    //   keys.forEach((key) => {
+    //     const value = filter[key];
+    //     params[key] = value;
+    //   });
+    // });
+
+    let gemstoneFilter = {};
+    // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
       keys.forEach((key) => {
         const value = filter[key];
-        params[key] = value;
+        const gemstoneFields = keys[0].split('.');
+        if(gemstoneFields[0] == 'gemstones'){
+          gemstoneFilter[gemstoneFields[1]] = value;
+        }else if(gemstoneFields[0] == 'certificatedNumber'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'certificateAgency'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'cerDateFrom'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }
+        else{
+          params[key] = value;
+        }
       });
     });
+
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
 
     let girdView = this.state.showGridView;
     let listView = this.state.showListView;
@@ -443,13 +512,39 @@ class SearchResult extends Component {
 
     let { filters } =  this.props;
 
+    // filters.forEach(function(filter){
+    //   let keys = Object.keys(filter);
+    //   keys.forEach((key) => {
+    //     const value = filter[key];
+    //     params[key] = value;
+    //   });
+    // });
+
+    let gemstoneFilter = {};
+    // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
       keys.forEach((key) => {
         const value = filter[key];
-        params[key] = value;
+        const gemstoneFields = keys[0].split('.');
+        if(gemstoneFields[0] == 'gemstones'){
+          gemstoneFilter[gemstoneFields[1]] = value;
+        }else if(gemstoneFields[0] == 'certificatedNumber'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'certificateAgency'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'cerDateFrom'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }
+        else{
+          params[key] = value;
+        }
       });
     });
+
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
 
     let girdView = this.state.showGridView;
     let listView = this.state.showListView;
@@ -505,13 +600,39 @@ class SearchResult extends Component {
 
     let { filters } =  this.props;
 
+    // filters.forEach(function(filter){
+    //   let keys = Object.keys(filter);
+    //   keys.forEach((key) => {
+    //     const value = filter[key];
+    //     params[key] = value;
+    //   });
+    // });
+
+    let gemstoneFilter = {};
+    // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
       keys.forEach((key) => {
         const value = filter[key];
-        params[key] = value;
+        const gemstoneFields = keys[0].split('.');
+        if(gemstoneFields[0] == 'gemstones'){
+          gemstoneFilter[gemstoneFields[1]] = value;
+        }else if(gemstoneFields[0] == 'certificatedNumber'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'certificateAgency'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'cerDateFrom'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }
+        else{
+          params[key] = value;
+        }
       });
     });
+
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
 
     let girdView = this.state.showGridView;
     let listView = this.state.showListView;
