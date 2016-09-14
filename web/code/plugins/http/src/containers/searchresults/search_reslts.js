@@ -167,7 +167,10 @@ class SearchResult extends Component {
           }
         });
       });
-      params['gemstones'] = gemstoneFilter;
+
+      if(Object.keys(gemstoneFilter).length != 0){
+        params['gemstones'] = gemstoneFilter;
+      }
       // console.log('params-->',params);
       this.props.getItems(params);
   }
@@ -272,7 +275,10 @@ class SearchResult extends Component {
           }
         });
       });
-      params['gemstones'] = gemstoneFilter;
+
+      if(Object.keys(gemstoneFilter).length != 0){
+        params['gemstones'] = gemstoneFilter;
+      }
 
       let girdView = this.state.showGridView;
       let listView = this.state.showListView;
@@ -355,7 +361,10 @@ class SearchResult extends Component {
         }
       });
     });
-    params['gemstones'] = gemstoneFilter;
+
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
 
     let girdView = this.state.showGridView;
     let listView = this.state.showListView;
@@ -532,7 +541,10 @@ class SearchResult extends Component {
         }
       });
     });
-    params['gemstones'] = gemstoneFilter;
+
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
 
     let girdView = this.state.showGridView;
     let listView = this.state.showListView;
@@ -617,7 +629,10 @@ class SearchResult extends Component {
         }
       });
     });
-    params['gemstones'] = gemstoneFilter;
+
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
 
     let girdView = this.state.showGridView;
     let listView = this.state.showListView;
