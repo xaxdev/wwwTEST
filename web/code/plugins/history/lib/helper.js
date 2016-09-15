@@ -8,15 +8,11 @@ export default {
         return (async (request, reply, item) => {
 
             try {
-                item = _.assign({ "userId": request.auth.credentials.id }, item)
-                item = _.assign({ "displayStatus": true }, item)
-                item = _.assign({ "lookUpDate": _.now() }, item)
-
                 const db = request.server.plugins['hapi-mongodb'].db;
                 return await db.collection('History')
-                    .findOneAndReplace({ "userId": item.userId, "id": item.id }, item, { returnOriginal: false, upsert: true })
+                    .findOneAndUpdate({ "userId": request.auth.credentials.id, "itemId": item.id } , { $set: { "displayStatus": true, "lookUpDate": _.now() }}, { returnOriginal: false, upsert: true })
                     .then((value, err) => {
-                        if (err) Promise.reject(err)
+                        if (err) return Promise.reject(err)
                         return Promise.resolve(item)
                     })
             } catch (e) {
