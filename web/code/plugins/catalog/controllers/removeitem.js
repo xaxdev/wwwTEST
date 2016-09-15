@@ -11,10 +11,17 @@ export default {
             try {
                 const db = request.server.plugins['hapi-mongodb'].db
                 const ObjectID = request.server.plugins['hapi-mongodb'].ObjectID
+                let items = request.payload.items
 
-                await db.collection('WishlistName').deleteOne({ "_id" : new ObjectID(request.params.id) })
-                await db.collection('WishlistItem').deleteMany({ "wishlistId" : new ObjectID(request.params.id) })
-                reply({ "status": true })
+                items.forEach(({id}) => {
+
+                    db.collection('CatalogItem').deleteMany({ "catalogId": new ObjectID(request.payload.id), "id": id }, (err, result) => {
+                        if (err) reply(Boom.badImplementation('', err))
+                    })
+                })
+                reply({
+                    "status": true
+                })
             } catch (e) {
 
                 reply(Boom.badImplementation('', e))

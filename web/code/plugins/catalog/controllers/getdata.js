@@ -15,14 +15,14 @@ export default {
                 const page = request.params.page || 1
                 const size = 8
 
-                let wlistName = await db.collection('WishlistName').findOne({ "_id" : new ObjectID(request.params.id) })
-                let wlistItems = await db.collection('WishlistItem').find({ "wishlistId" : new ObjectID(request.params.id) }, { "itemId": 1 }).sort({ "updatedDate": -1 }).toArray()
-                let dataItems = await db.collection('Items').find({ "id": { $in: _.map(wlistItems, "itemId") } }).toArray()
+                let catalogName = await db.collection('CatalogName').findOne({ "_id" : new ObjectID(request.params.id) })
+                let catalogItems = await db.collection('CatalogItem').find({ "catalogId" : new ObjectID(request.params.id) }, { "itemId": 1 }).toArray()
+                let dataItems = await db.collection('Items').find({ "id": { $in: _.map(catalogItems, "itemId") } }).toArray()
 
                 reply({
-                    "_id": new ObjectID(wlistName._id),
-                    "wishlist": wlistName.wishlist,
-                    "userId": wlistName.userId,
+                    "_id": new ObjectID(catalogName._id),
+                    "catalog": catalogName.catalog,
+                    "userId": catalogName.userId,
                     "items": dataItems.slice((page - 1) * size, page * size),
                     "page": parseInt(page),
                     "total_items": dataItems.length,
