@@ -37,13 +37,17 @@ export default {
                     .find(fCondition)
                     .sort({ "lookUpDate": -1 })
                     .toArray()
+                let items = await
+                    db.collection('Items')
+                    .find({ "id": { $in: _.map(data, "itemId") } })
+                    .toArray()
 
                 reply({
                     "status": true,
                     "page": parseInt(page),
-                    "total_items": data.length,
-                    "total_pages": Math.ceil(data.length / size),
-                    "items": data.slice((page - 1) * size, page * size)
+                    "total_items": items.length,
+                    "total_pages": Math.ceil(items.length / size),
+                    "items": items.slice((page - 1) * size, page * size)
                 })
             } catch (e) {
 

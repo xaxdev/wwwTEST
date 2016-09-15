@@ -1,4 +1,5 @@
 const Boom = require('boom')
+const _ = require('lodash')
 
 export default {
     auth: {
@@ -6,15 +7,17 @@ export default {
     },
     handler: (request, reply) => {
 
-        (async _ => {
+        (async () => {
 
             try {
-                let items = request.payload.data
+                let dataPayload = request.payload.data
                 const db = request.server.plugins['hapi-mongodb'].db
+
+                let items = await db.collection('Items').find({ "id": { $in: _.map(dataPayload, "id") } }, { "id": 1 }).toArray()
 
                 items.forEach(({id}) => {
 
-                    db.collection('History').updateOne({ "userId": request.auth.credentials.id, "id": id.trim() }, { $set: { "displayStatus": false } }, (err, result) => {
+                    db.collection('History').updateOne({ "userId": request.auth.credentials.id, "itemId": id.trim() }, { $set: { "displayStatus": false } }, (err, result) => {
                         if (err) reply(Boom.badImplementation('', err))
                     })
                 })
