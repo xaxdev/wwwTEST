@@ -89,6 +89,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
           'data':pageData,
           'allData':allData,
           'exportData': exportData,
+          'pageSize': size,
           'summary':{
               'count': allData.length,
               'price': sumPrice,

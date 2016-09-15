@@ -85,6 +85,7 @@ class SearchResult extends Component {
     this.confirmExport = this.confirmExport.bind(this);
     this.hideModalNoResults = this.hideModalNoResults.bind(this);
     this.printResults = this.printResults.bind(this);
+    this.selectedPageSize = this.selectedPageSize.bind(this);
 
     // console.log('this.props.items-->',this.props.searchResult.datas);
 
@@ -142,7 +143,8 @@ class SearchResult extends Component {
       let params = {
         'page' : this.props.currentPage,
         'sortBy': 'itemCreatedDate',
-        'sortDirections': 'desc'
+        'sortDirections': 'desc',
+        'pageSize' : 8
       };  // default search params
 
       const { filters } =  this.props;
@@ -238,21 +240,15 @@ class SearchResult extends Component {
       }
 
       const sortingDirection = this.refs.sortingDirection.value;
+      const pageSize = this.refs.pageSize.value;
 
       let params = {
         'page' : eventKey,
         'sortBy': sortingBy,
-        'sortDirections': sortingDirection
+        'sortDirections': sortingDirection,
+        'pageSize' : pageSize
       };
       const { filters } =  this.props;
-
-      // filters.forEach(function(filter){
-      //   let keys = Object.keys(filter);
-      //   keys.forEach((key) => {
-      //     const value = filter[key];
-      //     params[key] = value;
-      //   });
-      // });
 
       let gemstoneFilter = {};
       // console.log('filters-->',filters);
@@ -305,7 +301,6 @@ class SearchResult extends Component {
   handleGo(e){
     e.preventDefault();
     // console.log('handleGo-->',this.refs.reletego.value);
-
     const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
 
     const userLogin = JSON.parse(sessionStorage.logindata);
@@ -322,23 +317,17 @@ class SearchResult extends Component {
     }
 
     const sortingDirection = this.refs.sortingDirection.value;
+    const pageSize = this.refs.pageSize.value;
 
     this.setState({activePage: getPage});
     // console.log('getPage-->',getPage);
     let params = {
       'page' : getPage,
       'sortBy': sortingBy,
-      'sortDirections': sortingDirection
+      'sortDirections': sortingDirection,
+      'pageSize' : pageSize
     };
     let { filters } =  this.props;
-
-    // filters.forEach(function(filter){
-    //   let keys = Object.keys(filter);
-    //   keys.forEach((key) => {
-    //     const value = filter[key];
-    //     params[key] = value;
-    //   });
-    // });
 
     let gemstoneFilter = {};
     // console.log('filters-->',filters);
@@ -393,7 +382,7 @@ class SearchResult extends Component {
             handleSubmit,
             resetForm,
             submitting } = this.props;
-    // console.log('currPage-->',currPage);
+    // console.log('totalPages-->',totalPages);
     // console.log('this.state.activePage-->',this.state.activePage);
     const page = this.state.activePage;
     // currPage.value = this.state.activePage;
@@ -503,22 +492,16 @@ class SearchResult extends Component {
 
     const { searchResult } = this.props;
     const sortingDirection = this.refs.sortingDirection.value;
+    const pageSize = this.refs.pageSize.value;
     // this.props.sortBy(searchResult, sortingBy, sortingDirection);
     let params = {
       'page' : 1,
       'sortBy': sortingBy,
-      'sortDirections': sortingDirection
+      'sortDirections': sortingDirection,
+      'pageSize' : pageSize
     };
 
     let { filters } =  this.props;
-
-    // filters.forEach(function(filter){
-    //   let keys = Object.keys(filter);
-    //   keys.forEach((key) => {
-    //     const value = filter[key];
-    //     params[key] = value;
-    //   });
-    // });
 
     let gemstoneFilter = {};
     // console.log('filters-->',filters);
@@ -592,21 +575,16 @@ class SearchResult extends Component {
 
     this.setState({activePage: 1});
 
+    const pageSize = this.refs.pageSize.value;
+
     let params = {
       'page' : 1,
       'sortBy': sortingBy,
-      'sortDirections': sortingDirection
+      'sortDirections': sortingDirection,
+      'pageSize' : pageSize
     };
 
     let { filters } =  this.props;
-
-    // filters.forEach(function(filter){
-    //   let keys = Object.keys(filter);
-    //   keys.forEach((key) => {
-    //     const value = filter[key];
-    //     params[key] = value;
-    //   });
-    // });
 
     let gemstoneFilter = {};
     // console.log('filters-->',filters);
@@ -656,6 +634,86 @@ class SearchResult extends Component {
     let { currPage } = this.props.fields;
     currPage.onChange(1);
     currPage.value = 1;
+  }
+  selectedPageSize(e){
+    e.preventDefault();
+
+    const pageSize = e.target.value;
+
+    const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
+
+    const userLogin = JSON.parse(sessionStorage.logindata);
+
+    let sortingBy = '';
+
+    switch (this.refs.sortingBy.value) {
+      case 'price':
+        sortingBy = 'price.' + userLogin.currency;
+        break;
+      default:
+        sortingBy = this.refs.sortingBy.value;
+        break;
+    }
+
+    const sortingDirection = this.refs.sortingDirection.value;
+
+    this.setState({activePage: getPage});
+    // console.log('getPage-->',getPage);
+    let params = {
+      'page' : getPage,
+      'sortBy': sortingBy,
+      'sortDirections': sortingDirection,
+      'pageSize' : pageSize
+    };
+    let { filters } =  this.props;
+
+    let gemstoneFilter = {};
+    // console.log('filters-->',filters);
+    filters.forEach(function(filter){
+      let keys = Object.keys(filter);
+      keys.forEach((key) => {
+        const value = filter[key];
+        const gemstoneFields = keys[0].split('.');
+        if(gemstoneFields[0] == 'gemstones'){
+          gemstoneFilter[gemstoneFields[1]] = value;
+        }else if(gemstoneFields[0] == 'certificatedNumber'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'certificateAgency'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'cerDateFrom'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }
+        else{
+          params[key] = value;
+        }
+      });
+    });
+
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
+
+    let girdView = this.state.showGridView;
+    let listView = this.state.showListView;
+
+    this.setState({
+      showGridView: false,
+      showListView: false,
+      showLoading: true
+    });
+
+    this.props.setPageSize(pageSize);
+
+    this.props.getItems(params)
+    .then((value) => {
+      this.setState({showLoading: false});
+      if(girdView){
+        this.setState({showGridView: true});
+      }else if (listView) {
+        this.setState({showListView: true});
+      }
+    });
+
   }
   newSearch(e){
     e.preventDefault();
@@ -1032,7 +1090,7 @@ class SearchResult extends Component {
 
   render() {
     const { totalPages,
-            currentPage,allItems,
+            currentPage,allItems,pageSize,
             items,totalPublicPrice,totalUpdatedCost,
             handleSubmit,
             resetForm,
@@ -1044,7 +1102,7 @@ class SearchResult extends Component {
 
     // console.log('this.state.activePage-->',this.state.activePage);
 
-    // console.log('userLogin-->',userLogin);
+    // console.log('pageSize-->',pageSize);
     if(items == null){
       return (
         <center ><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center>
@@ -1191,6 +1249,16 @@ class SearchResult extends Component {
                                 </div>
                             </a>
                           </div>
+                          <div className="col-md-3 col-sm-4 nopadding">
+                            view
+                            <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
+                              <option key="8" value="8">8</option>
+                              <option key="16" value="16">16</option>
+                              <option key="32" value="32">32</option>
+                              <option key="60" value="60">60</option>
+                            </select>
+                            per page
+                          </div>
                           <div className="col-md-9 col-sm-8 pagenavi">
                             <div className="searchresult-navi search-right">
                                 {this.renderPagination()}
@@ -1212,10 +1280,10 @@ class SearchResult extends Component {
                             <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
                           </div>
                           <div className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
-                            <ListItemsView items={items} onClickGrid={this.onClickGrid}/>
+                            <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}/>
                           </div>
                           <div id="dvListview" className="col-sm-12 search-product hidden">
-                            <ListItemsViewPrint items={items} onClickGrid={this.onClickGrid}/>
+                            <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}/>
                           </div>
                           <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                             <center>
@@ -1261,6 +1329,7 @@ function mapStateToProps(state) {
     maxPrice: state.searchResult.maxPrice,
     minPrice: state.searchResult.minPrice,
     avrgPrice: state.searchResult.avrgPrice,
+    pageSize: state.searchResult.PageSize,
    }
 }
 SearchResult.propTypes = {

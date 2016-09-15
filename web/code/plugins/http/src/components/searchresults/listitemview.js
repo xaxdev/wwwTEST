@@ -15,14 +15,19 @@ class ListItemsView extends Component {
     this.renderAction = this.renderAction.bind(this);
     this.onClickGrid = this.onClickGrid.bind(this);
 
+
     this.state = {
-      initialPageLength:16
+      initialPageLength:8
     };
 
   }
   static propTypes = {
     onClickGrid: PropTypes.func.isRequired
   };
+  componentWillReceiveProps(nextProps) {
+    // console.log('list view pageSize componentWillReceiveProps-->',this.props.pageSize);
+    this.setState({initialPageLength: this.props.pageSize});
+  }
   renderAction(val,row){
     return(
       <div className="searchresult-list-icon">
@@ -62,6 +67,7 @@ class ListItemsView extends Component {
 
   render(){
     var items = null;
+    // console.log('list view pageSize-->',this.props.pageSize);
     if (this.props.items.length != 0){
       items = this.props.items.map(function (col, idx) {
         // console.log('col-->',col);
