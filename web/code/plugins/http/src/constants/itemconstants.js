@@ -9,3 +9,5 @@ export const MODIFY_SEARCH = 'MODIFY_SEARCH';
 export const SET_PARAMS = 'SET_PARAMS';
 export const SET_CURRENTPAGE = 'SET_CURRENTPAGE';
 export const SET_PAGESIZE = 'SET_PAGESIZE';
+export const SET_SORTBY = 'SET_SORTBY';
+export const SET_SORTDIRECTION = 'SET_SORTDIRECTION';
