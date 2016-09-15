@@ -16,6 +16,8 @@ export default {
                 const size = 8
 
                 let catalogName = await db.collection('CatalogName').findOne({ "_id" : new ObjectID(request.params.id) })
+                if (_.isNull(catalogName)) return reply(Boom.badRequest("Invalid item."))
+
                 let catalogItems = await db.collection('CatalogItem').find({ "catalogId" : new ObjectID(request.params.id) }, { "itemId": 1 }).toArray()
                 let dataItems = await db.collection('Items').find({ "id": { $in: _.map(catalogItems, "itemId") } }).toArray()
 

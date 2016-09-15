@@ -16,6 +16,8 @@ export default {
                 const size = 8
 
                 let wlistName = await db.collection('WishlistName').findOne({ "_id" : new ObjectID(request.params.id) })
+                if (_.isNull(wlistName)) return reply(Boom.badRequest("Invalid item."))
+
                 let wlistItems = await db.collection('WishlistItem').find({ "wishlistId" : new ObjectID(request.params.id) }, { "itemId": 1 }).sort({ "updatedDate": -1 }).toArray()
                 let dataItems = await db.collection('Items').find({ "id": { $in: _.map(wlistItems, "itemId") } }).toArray()
 
