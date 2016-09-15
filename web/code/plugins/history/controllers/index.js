@@ -1,5 +1,5 @@
 import history from './history'
-import updatehistory from './updatehistory'
+import hidehistory from './hidehistory'
 
 export { history }
-export { updatehistory }
+export { hidehistory }
