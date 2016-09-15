@@ -318,6 +318,15 @@
           "prefix": "/api/wishlist"
         }
       }
+    },
+    {
+      "plugin": "./plugins/catalog",
+      "options": {
+        "select": "api",
+        "routes": {
+          "prefix": "/api/catalog"
+        }
+      }
     }
   ]
 }

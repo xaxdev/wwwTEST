@@ -13,33 +13,33 @@ export default {
             try {
                 const db = request.server.plugins['hapi-mongodb'].db
                 const ObjectID = request.server.plugins['hapi-mongodb'].ObjectID
-                const wlistPayload = request.payload
-                const wlistPayloadId = request.payload.id
-                const wlistPayloadItems = request.payload.items
+                const catalogPayload = request.payload
+                const catalogPayloadId = request.payload.id
+                const catalogPayloadItems = request.payload.items
                 const item = request.item
 
-                let wlistName = {
-                    "wishlist": request.payload.wishlist,
+                let catalogName = {
+                    "catalog": request.payload.catalog,
                     "userId": request.auth.credentials.id,
                     "updatedDate": _.now()
                 }
 
-                if (_.isNull(wlistPayloadId)) {
-                    db.collection('WishlistName').insertOne(wlistName, function(err, r) {
+                if (_.isNull(catalogPayloadId)) {
+                    db.collection('CatalogName').insertOne(catalogName, function(err, r) {
 
-                        db.collection('WishlistName').findOne(wlistName, function(err, r) {
+                        db.collection('CatalogName').findOne(catalogName, function(err, r) {
 
-                            wlistPayloadItems.forEach(({id}) => {
+                            catalogPayloadItems.forEach(({id}) => {
 
-                                db.collection('WishlistItem').insertOne({ "wishlistId": r._id, "updatedDate": _.now(), "itemId": id })
+                                db.collection('CatalogItem').insertOne({ "catalogId": r._id, "updatedDate": _.now(), "itemId": id })
                             })
                         })
                     })
                 }
                 else {
-                    wlistPayloadItems.forEach(({id}) => {
+                    catalogPayloadItems.forEach(({id}) => {
 
-                        db.collection('WishlistItem').findAndModify({"wishlistId": new ObjectID(wlistPayloadId), "itemId": id.toString() },
+                        db.collection('CatalogItem').findAndModify({ "catalogId": new ObjectID(catalogPayloadId), "itemId": id.toString() },
                             [['itemId', 1]],
                             { $set: { "updatedDate": _.now() }},
                             { new: true, upsert: true });

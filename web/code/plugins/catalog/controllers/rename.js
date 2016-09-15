@@ -12,13 +12,15 @@ export default {
                 const db = request.server.plugins['hapi-mongodb'].db
                 const ObjectID = request.server.plugins['hapi-mongodb'].ObjectID
 
-                var findExist = await db.collection('WishlistName').find({ "_id" : new ObjectID(request.payload.id), "wishlist": request.payload.wishlist }).toArray()
+                var findExist = await db.collection('CatalogName').find({ "_id" : new ObjectID(request.payload.id), "catalog": request.payload.catalog }).toArray()
                 if (findExist.length) {
                     reply(Boom.badRequest("Your require name is existing."))
                 }
                 else {
-                    await db.collection('WishlistName').updateOne({ "_id" : new ObjectID(request.payload.id) }, { $set: { "wishlist": request.payload.wishlist } })
-                    reply({ "status": true })
+                    await db.collection('CatalogName').updateOne({ "_id" : new ObjectID(request.payload.id) }, { $set: { "catalog": request.payload.catalog } })
+                    reply({
+                        "status": true
+                    })
                 }
             } catch (e) {
 
