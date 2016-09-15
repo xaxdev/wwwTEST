@@ -14,7 +14,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
 
     var objRange={length:0};
     var filter = '';
-    var size = 8;
+    var size = request.payload.pageSize;;
     var fromitem = (page-1)*size;
 
     var keyFromLot = '';
@@ -72,7 +72,8 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
         }
 
         // console.log('key.value-->',value);
-        if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' ){
+        if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
+            && key != 'price' && key != 'pageSize' ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
              || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'fluorescence'
              || key == 'jewelryCategory' || key == 'collection' || key == 'brand'|| key == 'mustHave' || key == 'ringSize'

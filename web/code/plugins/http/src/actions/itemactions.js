@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS,
-  SET_CURRENTPAGE} from '../constants/itemconstants';
+  SET_CURRENTPAGE,SET_PAGESIZE} from '../constants/itemconstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
 export function getItems(params){
@@ -21,7 +21,7 @@ export function getItems(params){
               'Authorization': token
             },
           }),
-          currPage:params.page
+          currPage: params.page
   }
 }
 
@@ -41,7 +41,7 @@ export function exportDatas(params){
               'Authorization': token
             },
           }),
-          currPage:params.page
+          currPage: params.page
   }
 }
 
@@ -49,9 +49,9 @@ export function sortBy(data,sortBy,sortDirections){
   const token = sessionStorage.token;
   return {
           type: FETCH_SORTING,
-    		  sortBy:sortBy,
-          sortDirections:sortDirections,
-          data:data
+    		  sortBy: sortBy,
+          sortDirections: sortDirections,
+          data: data
   }
 }
 
@@ -65,19 +65,25 @@ export function modifySearch(paramsSearch){
   const token = sessionStorage.token;
   return {
           type: MODIFY_SEARCH,
-          params:paramsSearch
+          params: paramsSearch
   }
 }
 export function setParams(params){
   const token = sessionStorage.token;
   return {
           type: SET_PARAMS,
-          params:params
+          params: params
   }
 }
 export function setCurrentPage(value){
   return {
           type: SET_CURRENTPAGE,
-          currentPage:value
+          currentPage: value
+  }
+}
+export function setPageSize(value){
+  return {
+          type: SET_PAGESIZE,
+          pageSize: value
   }
 }
