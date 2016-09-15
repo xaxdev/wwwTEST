@@ -175,6 +175,9 @@ module.exports = {
         }
 
         let newdata = [];
+
+        console.log('data export-->',data.length);
+
         data.forEach(function(item){
           // console.log('item-->',item);
           let arrayItems = [];
@@ -189,44 +192,51 @@ module.exports = {
 
           if (userCurrency != 'USD') {
             if (price == 'All') {
-              arrayItems.push(numberFormat(item.actualCost[userCurrency]));
+              // console.log('item.actualCost-->',item.actualCost);
+              arrayItems.push(numberFormat((item.actualCost != undefined)? item.actualCost[userCurrency]: 0 ));
             }
             if (price == 'Updated' || price == 'All') {
-              arrayItems.push(numberFormat(item.updatedCost[userCurrency]));
+              arrayItems.push(numberFormat((item.updatedCost != undefined)? item.updatedCost[userCurrency]: 0 ));
             }
             if (price == 'Public' || price == 'Updated'
                 || price == 'All') {
-              arrayItems.push(numberFormat(item.price[userCurrency]));
+              arrayItems.push(numberFormat((item.price != undefined)? item.price[userCurrency]: 0 ));
             }
 
             if (price == 'All') {
-              arrayItems.push(numberFormat(item.actualCost['USD']));
+              arrayItems.push(numberFormat((item.actualCost != undefined)? item.actualCost['USD']: 0));
             }
             if (price == 'Updated' || price == 'All') {
-              arrayItems.push(numberFormat(item.updatedCost['USD']));
+              arrayItems.push(numberFormat((item.updatedCost != undefined)? item.updatedCost['USD']: 0));
             }
             if (price == 'Public' || price == 'Updated'
                 || price == 'All') {
-              arrayItems.push(numberFormat(item.price['USD']));
+              arrayItems.push(numberFormat((item.price != undefined)? item.price['USD']: 0));
             }
           }else{
             if (price == 'All') {
-              arrayItems.push(numberFormat(item.actualCost['USD']));
+              // console.log('item.actualCost-->',item.actualCost);
+              arrayItems.push(numberFormat((item.actualCost != undefined)? item.actualCost['USD']: 0));
             }
             if (price == 'Updated' || price == 'All') {
-              arrayItems.push(numberFormat(item.updatedCost['USD']));
+              arrayItems.push(numberFormat((item.updatedCost != undefined)? item.updatedCost['USD']: 0));
             }
             if (price == 'Public' || price == 'Updated'
                 || price == 'All') {
-              arrayItems.push(numberFormat(item.price['USD']));
+              arrayItems.push(numberFormat((item.price != undefined)? item.price['USD']: 0));
             }
           }
           let jewelsWeight = 0;
-          item.gemstones.forEach(function(gemstone) {
-            if(gemstone.carat != undefined){
-              jewelsWeight = jewelsWeight + gemstone.carat;
-            }
-          });
+          // console.log('forEach-->1');
+          if(item.gemstones != undefined){
+            item.gemstones.forEach(function(gemstone) {
+              // console.log('forEach-->1.1');
+              if(gemstone.carat != undefined){
+                jewelsWeight = jewelsWeight + gemstone.carat;
+              }
+            });
+          }
+
           arrayItems.push((item.grossWeight != undefined) ? item.grossWeight : '',
                           (item.size != undefined) ? item.size : '',
                           jewelsWeight,
@@ -255,11 +265,13 @@ module.exports = {
                             (item.netWeight != undefined) ? item.netWeight : ''
                           );
                             let stoneQty = 0;
-                            item.gemstones.forEach(function(gemstone) {
-                              if(gemstone.quantity != undefined){
-                                stoneQty = stoneQty + gemstone.quantity;
-                              }
-                            });
+                            if(item.gemstones != undefined){
+                              item.gemstones.forEach(function(gemstone) {
+                                if(gemstone.quantity != undefined){
+                                  stoneQty = stoneQty + gemstone.quantity;
+                                }
+                              });
+                            }
             arrayItems.push(stoneQty,
                             (item.dominantStoneName != undefined) ? item.dominantStoneName : '',
                             (item.markup != undefined) ? item.markup : '',
@@ -302,11 +314,14 @@ module.exports = {
             if(fields.batch) arrayItems.push((item.lotNumber != undefined) ? item.lotNumber : '');
             if(fields.netWeight) arrayItems.push((item.netWeight != undefined) ? item.netWeight : '');
             let stoneQty = 0;
-                            item.gemstones.forEach(function(gemstone) {
-                              if(gemstone.quantity != undefined){
-                                stoneQty = stoneQty + gemstone.quantity;
-                              }
-                            });
+                if(item.gemstones != undefined){
+                  item.gemstones.forEach(function(gemstone) {
+                    if(gemstone.quantity != undefined){
+                      stoneQty = stoneQty + gemstone.quantity;
+                    }
+                  });
+                }
+
             if(fields.stoneQty) arrayItems.push((stoneQty != 0) ? stoneQty : 0);
             if(fields.dominantStone) arrayItems.push((item.dominantStoneName != undefined) ? item.dominantStoneName : '');
             if(fields.markup) arrayItems.push((item.markup != undefined) ? item.markup : '');
@@ -329,108 +344,111 @@ module.exports = {
             if(fields.limitedEditionNumber) arrayItems.push((item.limitedEditionNumber != undefined) ? item.limitedEditionNumber : '');
           }
 
-          if(item.gemstones.length == 0){
-            newdata.push(arrayItems);
+          if(item.gemstones != undefined){
+            if(item.gemstones.length == 0){
+              newdata.push(arrayItems);
 
-          }else{
-            newdata.push(arrayItems);
+            }else{
+              newdata.push(arrayItems);
 
-            if(fields.ingredients || fields.allFields){
-              item.gemstones.forEach(function(gemstone) {
-                arrayItems = [];
-              if (fields.showImages)
-                  arrayItems.push(''); // images
+              if(fields.ingredients || fields.allFields){
+                item.gemstones.forEach(function(gemstone) {
+                  arrayItems = [];
+                if (fields.showImages)
+                    arrayItems.push(''); // images
 
-                arrayItems.push(itemReference, // Item Reference
-                                '', // Item Description
-                                (gemstone.stoneTypeId != undefined) ? gemstone.stoneTypeId : '', // sku
-                                ''); // Vendor ref
-                if (userCurrency != 'USD') {
-                  if (price == 'All') {
-                    arrayItems.push(numberFormat(gemstone.cost[userCurrency])); // actual Price
-                  }
-                  if (price == 'Updated' || price == 'All') {
-                    arrayItems.push(''); // updated Price
-                  }
-                  if (price == 'Public' || price == 'Updated'
-                    || price == 'All') {
-                    arrayItems.push('');// Public Price
-                  }
+                  arrayItems.push(itemReference, // Item Reference
+                                  '', // Item Description
+                                  (gemstone.stoneTypeId != undefined) ? gemstone.stoneTypeId : '', // sku
+                                  ''); // Vendor ref
+                  if (userCurrency != 'USD') {
+                    if (price == 'All') {
+                      arrayItems.push(numberFormat((gemstone.cost[userCurrency] != undefined)? gemstone.cost[userCurrency]: 0 )); // actual Price
+                    }
+                    if (price == 'Updated' || price == 'All') {
+                      arrayItems.push(''); // updated Price
+                    }
+                    if (price == 'Public' || price == 'Updated'
+                      || price == 'All') {
+                      arrayItems.push('');// Public Price
+                    }
 
-                  if (price == 'All') {
-                      arrayItems.push(numberFormat(gemstone.cost['USD'])); // actual Price (USD)
-                  }
-                  if (price == 'Updated' || price == 'All') {
+                    if (price == 'All') {
+                        arrayItems.push(numberFormat((gemstone.cost['USD'] != undefined)? gemstone.cost['USD']: 0 )); // actual Price (USD)
+                    }
+                    if (price == 'Updated' || price == 'All') {
+                        arrayItems.push(''); // updated Price (USD)
+                    }
+                    if (price == 'Public' || price == 'Updated'
+                        || price == 'All') {
+                        arrayItems.push('');// Public Price (USD)
+                    }
+                  }else{
+                    if (price == 'All') {
+                      arrayItems.push(numberFormat((gemstone.cost['USD'] != undefined)? gemstone.cost['USD']: 0 ));// actual Price (USD)
+                    }
+                    if (price == 'Updated' || price == 'All') {
                       arrayItems.push(''); // updated Price (USD)
-                  }
-                  if (price == 'Public' || price == 'Updated'
-                      || price == 'All') {
+                    }
+                    if (price == 'Public' || price == 'Updated'
+                        || price == 'All') {
                       arrayItems.push('');// Public Price (USD)
+                    }
                   }
-                }else{
-                  if (price == 'All') {
-                    arrayItems.push(numberFormat(gemstone.cost['USD']));// actual Price (USD)
-                  }
-                  if (price == 'Updated' || price == 'All') {
-                    arrayItems.push(''); // updated Price (USD)
-                  }
-                  if (price == 'Public' || price == 'Updated'
-                      || price == 'All') {
-                    arrayItems.push('');// Public Price (USD)
-                  }
-                }
 
-                arrayItems.push('', // Gross Weight
-                                '', // Ring Size
-                                '', // Jewels Weight
-                                '', // Site
-                                '', // Company
-                                ''); // Warehouse
+                  arrayItems.push('', // Gross Weight
+                                  '', // Ring Size
+                                  '', // Jewels Weight
+                                  '', // Site
+                                  '', // Company
+                                  ''); // Warehouse
 
-                arrayItems.push('Ingredient');
-                  if(fields.categoryName || fields.allFields) arrayItems.push(''); // Category Name
-                  if(fields.category || fields.allFields) arrayItems.push(''); // Category
-                  if(fields.article || fields.allFields) arrayItems.push(''); // article
-                  if(fields.collection || fields.allFields) arrayItems.push(''); // Collection
-                  if(fields.setReferenceNumber || fields.allFields) arrayItems.push(''); // Set Reference Number
-                  if(fields.cut || fields.allFields) arrayItems.push((gemstone.cut != undefined) ? gemstone.cut : ''); // Cut
-                  if(fields.color || fields.allFields) arrayItems.push((gemstone.color != undefined) ? gemstone.color : ''); // Color
-                  if(fields.clarity || fields.allFields) arrayItems.push((gemstone.clarity != undefined) ? gemstone.clarity : ''); // Clarity
-                  if(fields.caratWt || fields.allFields) arrayItems.push((gemstone.carat != undefined) ? gemstone.carat : ''); // Carat Wt
-                  if(fields.unit || fields.allFields) arrayItems.push((gemstone.unit != undefined) ? gemstone.unit : ''); // Unit
-                  if(fields.qty || fields.allFields) arrayItems.push((gemstone.quantity != undefined) ? gemstone.quantity : ''); // Qty
-                  if(fields.origin || fields.allFields) arrayItems.push((gemstone.origin != undefined) ? gemstone.origin : ''); // Origin
-                  if(fields.symmetry || fields.allFields) arrayItems.push((gemstone.symmetry != undefined) ? gemstone.symmetry : ''); // symmetry
-                  if(fields.flourance || fields.allFields) arrayItems.push((gemstone.fluorescence != undefined) ? gemstone.fluorescence : ''); // Flourance
-                  if(fields.batch || fields.allFields) arrayItems.push(''); // Batch lot number
-                  if(fields.netWeight || fields.allFields) arrayItems.push(''); // Net Weight
-                  if(fields.stoneQty || fields.allFields) arrayItems.push(0); // Stone Qty
-                  if(fields.dominantStone || fields.allFields) arrayItems.push(''); // Dominant Stone
-                  if(fields.markup || fields.allFields) arrayItems.push(''); // Markup%
-                  if(fields.certificatedNumber || fields.allFields) arrayItems.push((gemstone.certificate != undefined) ? gemstone.certificate.number : ''); // Certificate Number
-                  if(fields.certificateDate || fields.allFields) arrayItems.push((gemstone.certificate != undefined) ? convertDate(gemstone.certificate.issuedDate) : ''); // Certificate Date
-                  if(fields.vendorCode || fields.allFields) arrayItems.push(''); // Vendor Code
-                  if(fields.vendorName || fields.allFields) arrayItems.push(''); // Vendor Name
-                  if(fields.metalColor || fields.allFields) arrayItems.push(''); // Metal Color
-                  if(fields.metalType || fields.allFields) arrayItems.push(''); // Metal
-                  if(fields.brand || fields.allFields) arrayItems.push(''); // Brand
-                  if(fields.complication || fields.allFields) arrayItems.push(''); // Complication
-                  if(fields.strapType || fields.allFields) arrayItems.push(''); // Strap Type
-                  if(fields.strapColor || fields.allFields) arrayItems.push(''); // Strap Color
-                  if(fields.buckleType || fields.allFields) arrayItems.push(''); // Buckle Type
-                  if(fields.dialIndex || fields.allFields) arrayItems.push(''); // Dial Index
-                  if(fields.dialColor || fields.allFields) arrayItems.push(''); // Dial Color
-                  if(fields.movement || fields.allFields) arrayItems.push(''); // Movement
-                  if(fields.serial || fields.allFields) arrayItems.push(''); // Serial #
-                  if(fields.limitedEdition || fields.allFields) arrayItems.push((item.limitedEdition != undefined) ? (item.limitedEdition) ? 'Yes' : 'No' : 'No'); // Limited Edition
-                  if(fields.limitedEditionNumber || fields.allFields) arrayItems.push(''); // Limited Edition #
-                newdata.push(arrayItems);
-              });
+                  arrayItems.push('Ingredient');
+                    if(fields.categoryName || fields.allFields) arrayItems.push(''); // Category Name
+                    if(fields.category || fields.allFields) arrayItems.push(''); // Category
+                    if(fields.article || fields.allFields) arrayItems.push(''); // article
+                    if(fields.collection || fields.allFields) arrayItems.push(''); // Collection
+                    if(fields.setReferenceNumber || fields.allFields) arrayItems.push(''); // Set Reference Number
+                    if(fields.cut || fields.allFields) arrayItems.push((gemstone.cut != undefined) ? gemstone.cut : ''); // Cut
+                    if(fields.color || fields.allFields) arrayItems.push((gemstone.color != undefined) ? gemstone.color : ''); // Color
+                    if(fields.clarity || fields.allFields) arrayItems.push((gemstone.clarity != undefined) ? gemstone.clarity : ''); // Clarity
+                    if(fields.caratWt || fields.allFields) arrayItems.push((gemstone.carat != undefined) ? gemstone.carat : ''); // Carat Wt
+                    if(fields.unit || fields.allFields) arrayItems.push((gemstone.unit != undefined) ? gemstone.unit : ''); // Unit
+                    if(fields.qty || fields.allFields) arrayItems.push((gemstone.quantity != undefined) ? gemstone.quantity : ''); // Qty
+                    if(fields.origin || fields.allFields) arrayItems.push((gemstone.origin != undefined) ? gemstone.origin : ''); // Origin
+                    if(fields.symmetry || fields.allFields) arrayItems.push((gemstone.symmetry != undefined) ? gemstone.symmetry : ''); // symmetry
+                    if(fields.flourance || fields.allFields) arrayItems.push((gemstone.fluorescence != undefined) ? gemstone.fluorescence : ''); // Flourance
+                    if(fields.batch || fields.allFields) arrayItems.push(''); // Batch lot number
+                    if(fields.netWeight || fields.allFields) arrayItems.push(''); // Net Weight
+                    if(fields.stoneQty || fields.allFields) arrayItems.push(0); // Stone Qty
+                    if(fields.dominantStone || fields.allFields) arrayItems.push(''); // Dominant Stone
+                    if(fields.markup || fields.allFields) arrayItems.push(''); // Markup%
+                    if(fields.certificatedNumber || fields.allFields) arrayItems.push((gemstone.certificate != undefined) ? gemstone.certificate.number : ''); // Certificate Number
+                    if(fields.certificateDate || fields.allFields) arrayItems.push((gemstone.certificate != undefined) ? convertDate(gemstone.certificate.issuedDate) : ''); // Certificate Date
+                    if(fields.vendorCode || fields.allFields) arrayItems.push(''); // Vendor Code
+                    if(fields.vendorName || fields.allFields) arrayItems.push(''); // Vendor Name
+                    if(fields.metalColor || fields.allFields) arrayItems.push(''); // Metal Color
+                    if(fields.metalType || fields.allFields) arrayItems.push(''); // Metal
+                    if(fields.brand || fields.allFields) arrayItems.push(''); // Brand
+                    if(fields.complication || fields.allFields) arrayItems.push(''); // Complication
+                    if(fields.strapType || fields.allFields) arrayItems.push(''); // Strap Type
+                    if(fields.strapColor || fields.allFields) arrayItems.push(''); // Strap Color
+                    if(fields.buckleType || fields.allFields) arrayItems.push(''); // Buckle Type
+                    if(fields.dialIndex || fields.allFields) arrayItems.push(''); // Dial Index
+                    if(fields.dialColor || fields.allFields) arrayItems.push(''); // Dial Color
+                    if(fields.movement || fields.allFields) arrayItems.push(''); // Movement
+                    if(fields.serial || fields.allFields) arrayItems.push(''); // Serial #
+                    if(fields.limitedEdition || fields.allFields) arrayItems.push((item.limitedEdition != undefined) ? (item.limitedEdition) ? 'Yes' : 'No' : 'No'); // Limited Edition
+                    if(fields.limitedEditionNumber || fields.allFields) arrayItems.push(''); // Limited Edition #
+                  newdata.push(arrayItems);
+                });
+              }
             }
           }
         });
 
         let alldata = newdata.length;
+        console.log('alldata-->',newdata.length);
         let exportSize = Math.ceil(alldata/5000);
 
         let chunks = [];
