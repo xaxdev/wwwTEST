@@ -2,9 +2,21 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS,
-  SET_CURRENTPAGE,SET_PAGESIZE} from '../constants/itemconstants';
+  SET_CURRENTPAGE,SET_PAGESIZE,SET_SORTBY,SET_SORTDIRECTION} from '../constants/itemconstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
+export function setSortingBy(value){
+  return {
+          type: SET_SORTBY,
+          sortingBy: value
+  }
+}
+export function setSortDirection(value){
+  return {
+          type: SET_SORTDIRECTION,
+          sortDirection: value
+  }
+}
 export function getItems(params){
   const token = sessionStorage.token;
   var url = `${ROOT_URL}/api/items/search`;

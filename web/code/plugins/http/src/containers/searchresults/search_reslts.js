@@ -139,12 +139,25 @@ class SearchResult extends Component {
     };
   }
   componentWillMount() {
-      // console.log('this.props.currentPage->',this.props.currentPage);
+      console.log('this.props.sortingBy->',this.props.sortingBy);
+      console.log('this.props.sortDirection->',this.props.sortDirection);
+      const userLogin = JSON.parse(sessionStorage.logindata);
+
+      let sortingBy = '';
+
+      switch (this.props.sortingBy) {
+        case 'price':
+          sortingBy = 'price.' + userLogin.currency;
+          break;
+        default:
+          sortingBy = this.props.sortingBy;
+          break;
+      }
       let params = {
         'page' : this.props.currentPage,
-        'sortBy': 'itemCreatedDate',
-        'sortDirections': 'desc',
-        'pageSize' : 8
+        'sortBy': sortingBy,
+        'sortDirections': this.props.sortDirection,
+        'pageSize' : this.props.pageSize
       };  // default search params
 
       const { filters } =  this.props;
@@ -176,7 +189,52 @@ class SearchResult extends Component {
       // console.log('params-->',params);
       this.props.getItems(params);
   }
+  componentDidMount() {
+    console.log('sortingBy->',this.refs.sortingBy);
+    let that = this;
+    if(this.refs.sortingBy != undefined){
+      // var select = React.findDOMNode(this.refs.sortingBy);
+      var values = [].filter.call(this.refs.sortingBy.options, function (o) {
+            o.selected = false;
 
+            if(o.value == that.props.sortingBy){
+              o.selected = true
+            }
+            return o.selected;
+          }).map(function (o) {
+            return o.value;
+          });
+    }
+
+    if(this.refs.sortingDirection != undefined){
+      // var select = React.findDOMNode(this.refs.sortingBy);
+      var values = [].filter.call(this.refs.sortingDirection.options, function (o) {
+            o.selected = false;
+
+            if(o.value == that.props.sortDirection){
+              o.selected = true
+            }
+            return o.selected;
+          }).map(function (o) {
+            return o.value;
+          });
+    }
+
+    if(this.refs.pageSize != undefined){
+      // var select = React.findDOMNode(this.refs.sortingBy);
+      var values = [].filter.call(this.refs.pageSize.options, function (o) {
+            o.selected = false;
+
+            if(o.value == that.props.pageSize){
+              o.selected = true
+            }
+            return o.selected;
+          }).map(function (o) {
+            return o.value;
+          });
+    }
+
+  }
   shouldComponentUpdate(nextProps, nextState) {
     // console.log('nextProps.currentPage-->',nextProps.currentPage);
     // console.log('nextState-->',nextState);
@@ -538,6 +596,8 @@ class SearchResult extends Component {
       showLoading: true
     });
 
+    this.props.setSortingBy(e.target.value);
+
     this.props.getItems(params)
     .then((value) => {
       this.setState({showLoading: false});
@@ -620,6 +680,8 @@ class SearchResult extends Component {
       showListView: false,
       showLoading: true
     });
+
+    this.props.setSortDirection(e.target.value);
 
     this.props.getItems(params)
     .then((value) => {
@@ -720,6 +782,9 @@ class SearchResult extends Component {
 
     const token = sessionStorage.token;
 
+    this.props.setSortingBy('itemCreatedDate');
+    this.props.setSortDirection('desc');
+
     this.props.newSearch();
     if(token){
       this.context.router.push('/inventories');
@@ -729,6 +794,9 @@ class SearchResult extends Component {
     e.preventDefault();
 
     const token = sessionStorage.token;
+
+    this.props.setSortingBy('itemCreatedDate');
+    this.props.setSortDirection('desc');
 
     this.props.modifySearch(this.props.paramsSearch);
     if(token){
@@ -1131,7 +1199,8 @@ class SearchResult extends Component {
                 </div>
                 <div className="col-sm-2 col-xs-12 nopadding">
                   <div className="styled-select">
-                    <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy">
+                    <select className="form-searchresult"
+                      onChange={this.sortingBy} ref="sortingBy" >
                       <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
                       <option key={'price'} value={'price'}>{'Public Price'}</option>
                       <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
@@ -1330,6 +1399,8 @@ function mapStateToProps(state) {
     minPrice: state.searchResult.minPrice,
     avrgPrice: state.searchResult.avrgPrice,
     pageSize: state.searchResult.PageSize,
+    sortingBy: state.searchResult.SortingBy,
+    sortDirection: state.searchResult.SortDirection
    }
 }
 SearchResult.propTypes = {
