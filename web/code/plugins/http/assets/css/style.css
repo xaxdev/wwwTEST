@@ -127,6 +127,7 @@ select:focus::-ms-value {background: none;}
 .margin-r10{margin-right:10px;}
 .margin-r15{margin-right: 15px;}
 .margin-r20{margin-right: 20px;}
+.margin-r50 {margin-right: 50px;}
 .margin-l10{margin-left:10px;}
 .margin-l30{margin-left:30px;}
 .margin-t-17{margin-top: -17px;}
@@ -139,6 +140,7 @@ select:focus::-ms-value {background: none;}
 .padding-l-80{padding-left:63px;}
 .padding-ft0{padding:15px 0;}
 .padding-l10{padding-left: 10px;}
+.padding-r10{padding-right: 10px;}
 .margin-allr-15{margin-right: -15px;}
 .margin-allr-9{margin-right: -9%;}
 .hiddenViewProductGroup {
@@ -319,7 +321,7 @@ select.form-searchresult option{
 .ft-white, .forgot a{color:#fff;}
 
 .body-login{
-  margin-top: 20%;
+  margin-top: 15%;
   position: relative;
 }
 .body-login label{color: #fff;}
@@ -685,7 +687,7 @@ select.form-searchresult option{
 	cursor:pointer;
 }
 .searchresult-navi{float:right;}
-.searchresult-navi div {margin-left:30px; margin-top: 0px;}
+.searchresult-navi div {margin-top: 0px;}
 .searchresult-navi input{margin:0 5px; text-align: center;}
 .searchresult-navi span{padding:0 3px;}
 .searchresult-navi div, .searchresult-navi ul{float:left; margin-bottom:10px;}
@@ -992,6 +994,7 @@ select.form-searchresult option{
 }
 
 @media screen and (max-width: 991px) and (min-width: 767px){
+  .m-margin{margin:0;}
   .thumbnaillgrid {
     position: relative;
     width: 100% !important;
@@ -1108,6 +1111,7 @@ select.form-searchresult option{
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px){
+  .m-margin{margin:0;}
   .bg-hearder-rel{height:100px;}
   .navbar-nav {
     margin: 7.5px 0;

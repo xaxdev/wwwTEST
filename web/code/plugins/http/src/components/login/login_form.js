@@ -10,9 +10,11 @@ class Loginform extends Component {
       username,password
     },handleSubmit,invalid } = this.props;
     return (
-      <form onSubmit={handleSubmit} className="form-signin">
-        <div className="login">
-         <div className="logo"></div>
+      <form onSubmit={handleSubmit}>
+      <div className="margin-t50 text-center">
+        <img src="/images/logo-mouawad.png" />
+      </div>
+      <div className="login form-signin">
           <div className={`form-group ${username.touched && username.invalid ? 'has-danger' : ''}` }>
             <input type="text" className="login-height form-control" {...username} placeholder="Username"/>
             <div className="text-help">

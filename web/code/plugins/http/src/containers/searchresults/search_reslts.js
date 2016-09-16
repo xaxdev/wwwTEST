@@ -456,7 +456,7 @@ class SearchResult extends Component {
              ellipsis
              boundaryLinks
              items={totalPages}
-             maxButtons={5}
+             maxButtons={4}
              activePage={this.state.activePage}
              onSelect={this.handleSelect} />
 
@@ -1308,7 +1308,7 @@ class SearchResult extends Component {
                   <div className="panel panel-default">
                       <div className="panel-body padding-ft0">
                         <div className="col-sm-12 ">
-                          <div className="col-md-3 col-sm-4 nopadding">
+                          <div className="col-md-2 col-sm-3 col-xs-12 nopadding">
 
                             <a><div className="icon-add margin-l10"></div></a>
                             <a><div className="icon-excel margin-l10" disabled={submitting}
@@ -1318,19 +1318,23 @@ class SearchResult extends Component {
                                 </div>
                             </a>
                           </div>
-                          <div className="col-md-3 col-sm-4 nopadding">
-                            view
-                            <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
-                              <option key="8" value="8">8</option>
-                              <option key="16" value="16">16</option>
-                              <option key="32" value="32">32</option>
-                              <option key="60" value="60">60</option>
-                            </select>
-                            per page
-                          </div>
-                          <div className="col-md-9 col-sm-8 pagenavi">
+                          <div className="col-md-10 col-sm-9 col-xs-12 pagenavi">
                             <div className="searchresult-navi search-right">
                                 {this.renderPagination()}
+                            </div>
+                            <div className="pull-right maring-b10">
+                              <div className="pull-left padding-r10 margin-t7">view</div>
+                              <div className="pull-left">
+                              <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
+                                <option key="8" value="8">8</option>
+                                <option key="16" value="16">16</option>
+                                <option key="32" value="32">32</option>
+                                <option key="60" value="60">60</option>
+                              </select>
+                              </div>
+                              <div className="pull-left padding-l10 margin-t7 margin-r10 m-margin">
+                              per page
+                              </div>
                             </div>
                           </div>
                         </div>
