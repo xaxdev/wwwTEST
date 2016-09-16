@@ -1,5 +1,5 @@
-import { LOGIN_USER,LOGOUT_USER,RESETPASSWORD_USER,VALIDATE_USER } from '../../constants/userConstants';
-const INITIAL_STATE = {  loginstatus: false,logindata: null,msg:''};
+import { LOGIN_USER,LOGOUT_USER,RESETPASSWORD_USER,VALIDATE_USER,CHANGEPASSWORD_USER } from '../../constants/userConstants';
+const INITIAL_STATE = {  loginstatus: false,logindata: null,msg:'',changePasswordStatus:false};
 export default function(state = INITIAL_STATE, action){
 
   switch(action.type){
@@ -28,7 +28,8 @@ export default function(state = INITIAL_STATE, action){
   case LOGOUT_USER:
     sessionStorage.clear();
     return INITIAL_STATE;
-
+  case CHANGEPASSWORD_USER:
+    return {...state, changePasswordStatus: action.data.changePasswordStatus}
   default:
     const token = sessionStorage.getItem('token');
     const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;

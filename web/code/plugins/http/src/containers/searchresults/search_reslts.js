@@ -139,8 +139,8 @@ class SearchResult extends Component {
     };
   }
   componentWillMount() {
-      console.log('this.props.sortingBy->',this.props.sortingBy);
-      console.log('this.props.sortDirection->',this.props.sortDirection);
+      // console.log('this.props.sortingBy->',this.props.sortingBy);
+      // console.log('this.props.sortDirection->',this.props.sortDirection);
       const userLogin = JSON.parse(sessionStorage.logindata);
 
       let sortingBy = '';
@@ -190,7 +190,7 @@ class SearchResult extends Component {
       this.props.getItems(params);
   }
   componentDidMount() {
-    console.log('sortingBy->',this.refs.sortingBy);
+    // console.log('sortingBy->',this.refs.sortingBy);
     let that = this;
     if(this.refs.sortingBy != undefined){
       // var select = React.findDOMNode(this.refs.sortingBy);

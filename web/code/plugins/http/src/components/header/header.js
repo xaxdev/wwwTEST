@@ -8,7 +8,30 @@ class Header extends Component {
   constructor(props, context) {
 		super(props, context);
 		this.handleLogoutButton = this.handleLogoutButton.bind(this);
+    this.handleNameClick = this.handleNameClick.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
+
+    this.state = {
+      isChangePassword: false
+    };
 	}
+
+  handleNameClick(e){
+    e.preventDefault();
+
+    if(this.state.isChangePassword){
+      this.setState({isChangePassword: false});
+      this.context.router.push('/');
+    }else{
+      this.setState({isChangePassword: true});
+    }
+  }
+
+  handleChangePassword(e){
+    e.preventDefault();
+
+    this.context.router.push('/changepassword');
+  }
 
 	handleLogoutButton() {
 		this.props.logout();
@@ -26,8 +49,11 @@ class Header extends Component {
                         <div className="logo-detail"></div>
                       </div>
                       <div className="navbar-right top-bar col-md-6">
-                         <a href="#">{firstName}  {lastName}</a><span className="top-line">|</span>
+                         <a onClick={this.handleNameClick}>{firstName}  {lastName}</a><span className="top-line">|</span>
                           <span className="marginbtnlogout" onClick={this.handleLogoutButton}>Logout</span>
+                      </div>
+                      <div className={`navbar-right top-bar col-md-6 ${(this.state.isChangePassword) ? '' : 'hidden'}`}>
+                         <span className="marginbtnlogout" onClick={this.handleChangePassword}>Change Password</span>
                       </div>
                   </div>
               </div>
@@ -38,7 +64,8 @@ class Header extends Component {
 
 function mapStateToProps(state) {
 	return {
-		member: state.login
+		member: state.login,
+    changePasswordStatus: state.login.changePasswordStatus
 	}
 }
 
