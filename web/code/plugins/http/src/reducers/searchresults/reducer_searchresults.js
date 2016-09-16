@@ -44,7 +44,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
         // console.log('SET_POLISH -->',action);
         return {...state, currentPage: action.currentPage };
       case SET_SORTBY :
-        console.log('SET_SORTBY -->',action.sortingBy);
+        // console.log('SET_SORTBY -->',action.sortingBy);
         return {...state, SortingBy: action.sortingBy };
       case SET_SORTDIRECTION :
         // console.log('SET_PAGESIZE -->',action.pageSize);

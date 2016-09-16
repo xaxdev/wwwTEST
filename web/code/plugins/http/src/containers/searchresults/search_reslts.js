@@ -189,7 +189,52 @@ class SearchResult extends Component {
       // console.log('params-->',params);
       this.props.getItems(params);
   }
+  componentDidMount() {
+    console.log('sortingBy->',this.refs.sortingBy);
+    let that = this;
+    if(this.refs.sortingBy != undefined){
+      // var select = React.findDOMNode(this.refs.sortingBy);
+      var values = [].filter.call(this.refs.sortingBy.options, function (o) {
+            o.selected = false;
 
+            if(o.value == that.props.sortingBy){
+              o.selected = true
+            }
+            return o.selected;
+          }).map(function (o) {
+            return o.value;
+          });
+    }
+
+    if(this.refs.sortingDirection != undefined){
+      // var select = React.findDOMNode(this.refs.sortingBy);
+      var values = [].filter.call(this.refs.sortingDirection.options, function (o) {
+            o.selected = false;
+
+            if(o.value == that.props.sortDirection){
+              o.selected = true
+            }
+            return o.selected;
+          }).map(function (o) {
+            return o.value;
+          });
+    }
+
+    if(this.refs.pageSize != undefined){
+      // var select = React.findDOMNode(this.refs.sortingBy);
+      var values = [].filter.call(this.refs.pageSize.options, function (o) {
+            o.selected = false;
+
+            if(o.value == that.props.pageSize){
+              o.selected = true
+            }
+            return o.selected;
+          }).map(function (o) {
+            return o.value;
+          });
+    }
+
+  }
   shouldComponentUpdate(nextProps, nextState) {
     // console.log('nextProps.currentPage-->',nextProps.currentPage);
     // console.log('nextState-->',nextState);
@@ -1154,7 +1199,8 @@ class SearchResult extends Component {
                 </div>
                 <div className="col-sm-2 col-xs-12 nopadding">
                   <div className="styled-select">
-                    <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy">
+                    <select className="form-searchresult"
+                      onChange={this.sortingBy} ref="sortingBy" >
                       <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
                       <option key={'price'} value={'price'}>{'Public Price'}</option>
                       <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
