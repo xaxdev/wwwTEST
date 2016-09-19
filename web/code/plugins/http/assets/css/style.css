@@ -345,7 +345,7 @@ select.form-searchresult option{
 }
 .bar-line{color:#d9c06e;}
 .top-bar{
-	margin:10px 0 0 0;
+	margin:0;
 	padding:0;
 	text-align: right;
 }
@@ -354,10 +354,11 @@ select.form-searchresult option{
   float: right;
   background-color: transparent;
   border-color: transparent;
+  margin-bottom: 0px;
   }
-.top-bar .container{width:auto;}
+.top-bar .container{width:auto; padding:0;}
 .top-bar .navbar-inverse .navbar-collapse{border-color: transparent;}
-.top-bar .navbar-nav>li>a{border-bottom: 0px solid transparent;}
+.top-bar .navbar-nav>li>a{border-bottom: 0px solid transparent; font-size:14px;}
 .top-bar .navbar-nav>li>a:hover{border-bottom: 0px solid transparent;}
 .top-bar .navbar-nav>li {
     padding-right: 0;
@@ -371,7 +372,7 @@ select.form-searchresult option{
   background-color: #5b595a;
   border-radius: 0;
 }
-.top-bar .dropdown-menu>li>a{color:#ddbd66;}
+.top-bar .dropdown-menu>li>a{color:#ddbd66; padding: 3px 15px;}
 .top-bar .dropdown-menu>li>a:hover{background: transparent;}
 .navbar-collapse{
 	padding-left:0;
@@ -839,6 +840,7 @@ select.form-searchresult option{
 .search-product{
 	position: relative;
 }
+.list-search td:nth-child(7),.list-search td:nth-child(8),.list-search td:nth-child(9),.list-search td:nth-child(10){text-align: right;}
 .block-product{
 	position: relative;
 	z-index: 1;

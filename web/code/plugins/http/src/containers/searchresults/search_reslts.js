@@ -1326,7 +1326,7 @@ class SearchResult extends Component {
                                 {this.renderPagination()}
                             </div>
                             <div className="pull-right maring-b10">
-                              <div className="pull-left padding-r10 margin-t7">view</div>
+                              <div className="pull-left padding-r10 margin-t7">View</div>
                               <div className="pull-left">
                               <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
                                 <option key="16" value="16">16</option>
@@ -1348,13 +1348,13 @@ class SearchResult extends Component {
                             </div>
                           {/* End Total Data */}
                           {/* Grid Product */}
-                          <div className={`search-product ${this.state.showGridView ? '' : 'hidden'}` }>
+                          <div className={`search-product  ${this.state.showGridView ? '' : 'hidden'}` }>
                             <GridItemsView  items={items} onClickGrid={this.onClickGrid} />
                           </div>
                           <div id="dvGridview" className="search-product hidden">
                             <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
                           </div>
-                          <div className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
+                          <div className={`col-sm-12 search-product list-search ${this.state.showListView ? '' : 'hidden'}` }>
                             <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}/>
                           </div>
                           <div id="dvListview" className="col-sm-12 search-product hidden">
