@@ -59,7 +59,7 @@ class Header extends Component {
                       <NavDropdown href="/inventories" title={userName}>
                         <MenuItem onClick={this.handleChangePassword}>Change Password</MenuItem>
                       </NavDropdown>
-                      <NavItem onClick={this.handleLogoutButton}>Logout</NavItem>
+                      <NavItem onClick={this.handleLogoutButton} className="margin-l5"><span className="top-line">|</span> Logout</NavItem>
                     </Nav>
                   </Navbar.Collapse>
                 </Navbar>
