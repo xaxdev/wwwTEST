@@ -1326,7 +1326,6 @@ class SearchResult extends Component {
                               <div className="pull-left padding-r10 margin-t7">view</div>
                               <div className="pull-left">
                               <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
-                                <option key="8" value="8">8</option>
                                 <option key="16" value="16">16</option>
                                 <option key="32" value="32">32</option>
                                 <option key="60" value="60">60</option>

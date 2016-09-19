@@ -29,7 +29,7 @@ export default function(state = INITIAL_STATE, action){
     sessionStorage.clear();
     return INITIAL_STATE;
   case CHANGEPASSWORD_USER:
-    return {...state, changePasswordStatus: action.data.changePasswordStatus}
+    return {...state, changePasswordStatus: action.changePasswordStatus}
   default:
     const token = sessionStorage.getItem('token');
     const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;

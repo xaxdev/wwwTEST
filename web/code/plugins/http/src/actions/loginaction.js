@@ -48,7 +48,7 @@ export function sendreset(props){
 }
 export function setChangePasswordStatus(value){
   return {
-          type: SET_SORTDIRECTION,
+          type: CHANGEPASSWORD_USER,
           changePasswordStatus: value
   }
 }
