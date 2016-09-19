@@ -160,7 +160,8 @@ class SearchResult extends Component {
         'pageSize' : this.props.pageSize
       };  // default search params
 
-      const { filters } =  this.props;
+      // const { filters } =  this.props;
+      const filters =  JSON.parse(sessionStorage.filters);
       let gemstoneFilter = {};
       // console.log('filters-->',filters);
       filters.forEach(function(filter){
@@ -187,6 +188,8 @@ class SearchResult extends Component {
         params['gemstones'] = gemstoneFilter;
       }
       // console.log('params-->',params);
+      const paramsSearchStorage =  JSON.parse(sessionStorage.paramsSearch);
+      this.props.setParams(paramsSearchStorage)
       this.props.getItems(params);
   }
   componentDidMount() {

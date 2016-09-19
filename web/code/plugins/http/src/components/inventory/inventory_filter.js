@@ -92,13 +92,6 @@ class InventoryFilter extends Component {
     this.refs.oba.treeOnUnClick();
     this.refs.sparepart.treeOnUnClick();
 
-    // $(window).scroll(function () {
-    //     if ($(window).scrollTop() > 10) {
-    //         $('#scroller').css('top', $(window).scrollTop());
-    //     }
-    // }
-    // );
-
     var numbers = document.querySelectorAll('input[type="number"]');
 
     numbers.forEach(function(number){
@@ -321,8 +314,6 @@ class InventoryFilter extends Component {
   }
   resetFormInventory() {
     // console.log('ResetFormMain-->');
-    // jQuery("input[type='checkbox']").attr('checked',false);
-    // this.props.itemActions.newSearch();
 
     let fileName = jQuery('#fileName');
 
@@ -424,7 +415,6 @@ class InventoryFilter extends Component {
           break;
       }
     });
-    // jQuery("input[type='checkbox']").attr('checked',false);
     // console.log('this.state.showLoading-->',this.state.showLoading);
       return (
 
