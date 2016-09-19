@@ -800,6 +800,7 @@ class SearchResult extends Component {
 
     this.props.setSortingBy('itemCreatedDate');
     this.props.setSortDirection('desc');
+    this.props.setPageSize(16);
 
     this.props.modifySearch(this.props.paramsSearch);
     if(token){
