@@ -21,7 +21,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                         filters:[], AccessoryTypeValue:[],SparePartTypeValue:[], paramsSearch:null,IsAdvance:false,
                         HierarchyValue:null,SearchAction:'New',exportItems:[],maxPrice:null,minPrice:null,avrgPrice:null,
                         GemCertificateDateFrom:null,GemCertificateDateTo:null,StoneCertificateDateFrom:null,
-                        StoneCertificateDateTo:null,ProductionDateFrom:null,ProductionDateTo:null,PageSize:8,
+                        StoneCertificateDateTo:null,ProductionDateFrom:null,ProductionDateTo:null,PageSize:16,
                         SortingBy:'itemCreatedDate',SortDirection:'desc'
                       };
 

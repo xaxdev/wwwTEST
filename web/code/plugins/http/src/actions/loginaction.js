@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
-import { ROOT_URL,LOGIN_USER,LOGOUT_USER,RESETPASSWORD_USER,VALIDATE_USER } from '../constants/userConstants';
+import { ROOT_URL,LOGIN_USER,LOGOUT_USER,RESETPASSWORD_USER,VALIDATE_USER,CHANGEPASSWORD_USER } from '../constants/userConstants';
 
 export function login(props){
   return {
@@ -45,4 +45,10 @@ export function sendreset(props){
           body: JSON.stringify(props)
           })
 	}
+}
+export function setChangePasswordStatus(value){
+  return {
+          type: CHANGEPASSWORD_USER,
+          changePasswordStatus: value
+  }
 }
