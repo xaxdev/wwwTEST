@@ -2,7 +2,7 @@ const _ = require('lodash');
 const GetPriceCurrency = require('./getPriceCurrency');
 
 module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb) => {
-  console.log(response.hits.total)
+  // console.log(response.hits.total)
   let allData = [];
   let sumPriceData = [];
   let sumCostData = [];
@@ -52,9 +52,9 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
   let sumPrice = 0;
   let sumCost = 0;
 
-  console.log('pageData-->',pageData.length);
-  console.log('maxPrice-->',maxPrice);
-  console.log('minPrice-->',minPrice);
+  // console.log('pageData-->',pageData.length);
+  // console.log('maxPrice-->',maxPrice);
+  // console.log('minPrice-->',minPrice);
 
   if(pageData.length != 0){
     data.forEach(function(item){
@@ -73,12 +73,12 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
 
       sumCostData.push(GetPriceCurrency(item,'updatedCost',userCurrency));
     });
-    console.log('sumCostData-->',sumCostData.length);
+    // console.log('sumCostData-->',sumCostData.length);
     sumCostData.forEach(function(cost) {
       // console.log('cost-->',cost);
       sumCost = sumCost+Math.round(cost);
     });
-    console.log('sumCost-->',sumCost);
+    // console.log('sumCost-->',sumCost);
 
     // cost = sumCostData.reduce(function(a, b) {
     //   return a + b;

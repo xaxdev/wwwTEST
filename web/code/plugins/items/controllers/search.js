@@ -25,7 +25,7 @@ module.exports = {
 
     internals.query = GetSearch(request, 0, 100000);
 
-    console.log(JSON.stringify(internals.query, null, 2));
+    // console.log(JSON.stringify(internals.query, null, 2));
 
     elastic
       .search({
