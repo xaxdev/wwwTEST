@@ -65,7 +65,8 @@ module.exports = {
   },
 
   onSort: function onSort(sortBy) {
-    // console.log('onSort -->');
+    // console.log('sortBy -->',sortBy);
+    // console.log('data -->',this.state.data);
     this.setState({
       sortBy: sortBy,
       data: sort(sortBy, this.state.data)

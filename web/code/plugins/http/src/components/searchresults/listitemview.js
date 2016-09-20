@@ -67,6 +67,8 @@ class ListItemsView extends Component {
 
   render(){
     var items = null;
+    const userLogin = JSON.parse(sessionStorage.logindata);
+    const currency = userLogin.currency;
     // console.log('list view pageSize-->',this.props.pageSize);
     if (this.props.items.length != 0){
       items = this.props.items.map(function (col, idx) {
@@ -89,11 +91,13 @@ class ListItemsView extends Component {
             break;
         }
 
-        if (col.type != 'CER') {
-          col.priceUSD = GetPriceWithCurrency(col,'price');
-        } else {
-          col.priceUSD = '';
-        }
+        // if (col.type != 'CER') {
+        //   col.priceUSD = GetPriceWithCurrency(col,'price');
+        // } else {
+        //   col.priceUSD = '';
+        // }
+
+        col.priceUSD = numberFormat(col.price[currency])
 
         let jewelsWeight = 0;
 
@@ -108,6 +112,7 @@ class ListItemsView extends Component {
         }
 
         col.jewelsWeight = numberFormat(jewelsWeight);
+        // col.jewelsWeight = jewelsWeight;
 
         let itemName = (col.type != 'CER')
                           ?
@@ -139,7 +144,7 @@ class ListItemsView extends Component {
           <DataTable
             className="col-sm-12"
             // keys={['', 'image','reference', 'description', 'sku', 'siteName', 'warehouseName', 'size', '', 'grossWeight','priceUSD','' ]}
-            keys={['image','reference', 'description', 'sku', 'siteName', 'warehouseName', 'size', '', 'grossWeight','priceUSD','' ]}
+            keys={['image','reference', 'description', 'sku', 'siteName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight','priceUSD','' ]}
             columns={tableColumns}
             initialData={items}
             initialPageLength={this.state.initialPageLength}
