@@ -1,5 +1,7 @@
 var sortBy = require('lodash.sortby');
 var some = require('lodash.some');
+import numberFormat from '../convertNumberformat';
+import numberFormat2digit from '../convertNumberformatwithcomma2digit';
 
 /**
  * @param {object} sortBy Object containing `prop` and `order`.
@@ -7,9 +9,52 @@ var some = require('lodash.some');
  * @return {array} Sorted array.
  */
 function sort(sortByValues, data) {
+  // console.log('sortByValues -->',sortByValues);
+  // console.log('data -->',data);
+  // Convert string to number for sorting
+  if(sortByValues.prop === 'priceUSD'){
+    data.forEach(function(item){
+      item.priceUSD = parseFloat(item.priceUSD.replace(/,/g, ''));
+      // console.log('item.priceUSD-->',item.priceUSD);
+    });
+  }
+  if(sortByValues.prop === 'jewelsWeight'){
+    data.forEach(function(item){
+      item.jewelsWeight = parseFloat(item.jewelsWeight);
+      // console.log('item.priceUSD-->',item.priceUSD);
+    });
+  }
+  if(sortByValues.prop === 'grossWeight'){
+    data.forEach(function(item){
+      item.grossWeight = parseFloat(item.grossWeight);
+      // console.log('item.priceUSD-->',item.priceUSD);
+    });
+  }
+  // sorting
   var sortedData = sortBy(data, sortByValues.prop);
+  // console.log('sortedData -->',sortedData);
   if (sortByValues.order === 'descending') {
     sortedData.reverse();
+  }
+  
+  // Convert number to string for show data
+  if(sortByValues.prop === 'priceUSD'){
+    data.forEach(function(item){
+      item.priceUSD = numberFormat(item.priceUSD);
+      // console.log('item.priceUSD-->',item.priceUSD);
+    });
+  }
+  if(sortByValues.prop === 'jewelsWeight'){
+    data.forEach(function(item){
+      item.jewelsWeight = numberFormat2digit(item.jewelsWeight);
+      // console.log('item.priceUSD-->',item.priceUSD);
+    });
+  }
+  if(sortByValues.prop === 'grossWeight'){
+    data.forEach(function(item){
+      item.grossWeight = numberFormat2digit(item.grossWeight);
+      // console.log('item.priceUSD-->',item.priceUSD);
+    });
   }
   return sortedData;
 }
