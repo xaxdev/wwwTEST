@@ -189,8 +189,8 @@ class SearchResult extends Component {
       }
       // console.log('params-->',params);
       const paramsSearchStorage =  JSON.parse(sessionStorage.paramsSearch);
-      this.props.setShowGridView(true);
-      this.props.setShowListView(false);
+      // this.props.setShowGridView(true);
+      // this.props.setShowListView(false);
       this.props.setParams(paramsSearchStorage)
       this.props.getItems(params);
   }
@@ -815,6 +815,9 @@ class SearchResult extends Component {
 
     this.props.setSortingBy('itemCreatedDate');
     this.props.setSortDirection('desc');
+    this.props.setPageSize(16);
+    this.props.setShowGridView(true);
+    this.props.setShowListView(false);
 
     this.props.newSearch();
     if(token){
@@ -829,6 +832,8 @@ class SearchResult extends Component {
     this.props.setSortingBy('itemCreatedDate');
     this.props.setSortDirection('desc');
     this.props.setPageSize(16);
+    this.props.setShowGridView(true);
+    this.props.setShowListView(false);
 
     this.props.modifySearch(this.props.paramsSearch);
     if(token){
