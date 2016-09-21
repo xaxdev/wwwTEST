@@ -82,11 +82,13 @@ class ListItemsView extends Component {
             break;
         }
 
-        if (col.type != 'CER') {
-          col.priceUSD = GetPriceWithCurrency(col,'price');
-        } else {
-          col.priceUSD = '';
-        }
+        // if (col.type != 'CER') {
+        //   col.priceUSD = GetPriceWithCurrency(col,'price');
+        // } else {
+        //   col.priceUSD = '';
+        // }
+
+        col.priceUSD = numberFormat((col.price[currency] != undefined)? col.price[currency] : 0)
 
         let jewelsWeight = 0;
 
