@@ -262,31 +262,65 @@ class SearchResult extends Component {
     let dvGridview = jQuery('#dvGridview').html();
     let dvListview = jQuery('#dvListview').html();
     // console.log('printproduct-->',dvContainerPrint);
-    let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
-    let printWindow = window.open('', '', options);
-    printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
-    printWindow.document.write('<html><head><title>Mol online 2016</title>');
-    printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-    printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-    printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-    printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-    printWindow.document.write('</head><body >');
+    // let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
+    // let printWindow = window.open('', '', options);
+    // printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
+    // printWindow.document.write('<html><head><title>Mol online 2016</title>');
+    // printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
+    // printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
+    // printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
+    // printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
+    // printWindow.document.write('</head><body >');
     if (showGridView) {
+        let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
+        let printWindow = window.open('', '', options);
+        printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
+        printWindow.document.write('<html><head><title>Mol online 2016</title>');
+        printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
+        printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
+        printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
+        printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
+        printWindow.document.write('</head><body >');
         printWindow.document.write(dvGridview);
         printWindow.document.write(dvTotal);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        setTimeout( function(){
+          printWindow.document.close();
+          printWindow.print();
+        },1500);
+        return true;
     }
     if (showListView) {
+      let options = 'toolbar=1,menubar=0,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1100';
+      let printWindow = window.open('', '', options);
+      printWindow.document.write('<style>@media print{@page {size: landscape;margin: 0;} body{margin: 0px;}}</style>');
+      printWindow.document.write('<html><head><title>Mol online 2016</title>');
+      printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
+      printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
+      printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
+      printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
+      printWindow.document.write('</head><body >');
       printWindow.document.write(dvListview);
-      printWindow.document.write(dvTotal);
-    }
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.focus();
-    setTimeout( function(){
+      // printWindow.document.write(dvTotal);
+      printWindow.document.write('</body></html>');
       printWindow.document.close();
-      printWindow.print();
-    },1500);
-    return true;
+      printWindow.focus();
+      setTimeout( function(){
+        printWindow.document.close();
+        printWindow.print();
+      },1500);
+      return true;
+    }
+    // printWindow.document.write('</body></html>');
+    // printWindow.document.close();
+    // printWindow.focus();
+    // setTimeout( function(){
+    //   printWindow.document.close();
+    //   printWindow.print();
+    // },1500);
+    // return true;
   }
   handleSelect(eventKey) {
       this.setState({activePage: eventKey});
