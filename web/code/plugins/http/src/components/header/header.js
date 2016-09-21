@@ -56,7 +56,7 @@ class Header extends Component {
                   </Navbar.Header>
                   <Navbar.Collapse>
                     <Nav>
-                      <NavDropdown href="/inventories" title={userName}>
+                      <NavDropdown id="username" href="/inventories" title={userName}>
                         <MenuItem onClick={this.handleChangePassword}>Change Password</MenuItem>
                       </NavDropdown>
                       <NavItem onClick={this.handleLogoutButton} className="margin-l5"><span className="top-line">|</span> Logout</NavItem>
