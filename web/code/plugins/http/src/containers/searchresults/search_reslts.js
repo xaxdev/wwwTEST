@@ -91,8 +91,8 @@ class SearchResult extends Component {
 
     this.state = {
       activePage: this.props.currentPage,
-      showGridView: true,
-      showListView: false,
+      // showGridView: true,
+      // showListView: false,
       isExport: false,
       isOpen: false,
       isOpenNoResults: true,
@@ -189,6 +189,8 @@ class SearchResult extends Component {
       }
       // console.log('params-->',params);
       const paramsSearchStorage =  JSON.parse(sessionStorage.paramsSearch);
+      this.props.setShowGridView(true);
+      this.props.setShowListView(false);
       this.props.setParams(paramsSearchStorage)
       this.props.getItems(params);
   }
@@ -254,6 +256,8 @@ class SearchResult extends Component {
     e.preventDefault();
     // console.log('printproductBind-->');
 
+    const { showGridView,showListView } = this.props;
+
     let dvTotal = jQuery('#dvTotalsub').html();
     let dvGridview = jQuery('#dvGridview').html();
     let dvListview = jQuery('#dvListview').html();
@@ -267,11 +271,11 @@ class SearchResult extends Component {
     printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
     printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
     printWindow.document.write('</head><body >');
-    if (this.state.showGridView) {
+    if (showGridView) {
         printWindow.document.write(dvGridview);
         printWindow.document.write(dvTotal);
     }
-    if (this.state.showListView) {
+    if (showListView) {
       printWindow.document.write(dvListview);
       printWindow.document.write(dvTotal);
     }
@@ -288,6 +292,7 @@ class SearchResult extends Component {
       this.setState({activePage: eventKey});
 
       const userLogin = JSON.parse(sessionStorage.logindata);
+      const { showGridView,showListView } = this.props;
 
       let sortingBy = '';
 
@@ -337,12 +342,13 @@ class SearchResult extends Component {
         params['gemstones'] = gemstoneFilter;
       }
 
-      let girdView = this.state.showGridView;
-      let listView = this.state.showListView;
+      let girdView = showGridView;
+      let listView = showListView;
+
+      this.props.setShowGridView(false);
+      this.props.setShowListView(false);
 
       this.setState({
-        showGridView: false,
-        showListView: false,
         showLoading: true
       });
 
@@ -350,9 +356,11 @@ class SearchResult extends Component {
       .then((value) => {
         this.setState({showLoading: false});
         if(girdView){
-          this.setState({showGridView: true});
+          // this.setState({showGridView: true});
+          this.props.setShowGridView(true);
         }else if (listView) {
-          this.setState({showListView: true});
+          // this.setState({showListView: true});
+          this.props.setShowListView(true);
         }
       });
 
@@ -365,6 +373,7 @@ class SearchResult extends Component {
     const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+    const { showGridView,showListView } = this.props;
 
     let sortingBy = '';
 
@@ -416,12 +425,13 @@ class SearchResult extends Component {
       params['gemstones'] = gemstoneFilter;
     }
 
-    let girdView = this.state.showGridView;
-    let listView = this.state.showListView;
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
 
     this.setState({
-      showGridView: false,
-      showListView: false,
       showLoading: true
     });
 
@@ -429,9 +439,11 @@ class SearchResult extends Component {
     .then((value) => {
       this.setState({showLoading: false});
       if(girdView){
-        this.setState({showGridView: true});
+        // this.setState({showGridView: true});
+        this.props.setShowGridView(true);
       }else if (listView) {
-        this.setState({showListView: true});
+        // this.setState({showListView: true});
+        this.props.setShowListView(true);
       }
     });
   }
@@ -522,21 +534,26 @@ class SearchResult extends Component {
     }
   }
   gridViewResults(){
-    this.setState({
-      showGridView: true,
-      showListView:false
-    });
+    this.props.setShowGridView(true);
+    this.props.setShowListView(false);
+    // this.setState({
+    //   showGridView: true,
+    //   showListView:false
+    // });
   }
   listViewResults(){
-    this.setState({
-      showGridView: false,
-      showListView: true
-    });
+    this.props.setShowGridView(false);
+    this.props.setShowListView(true);
+    // this.setState({
+    //   showGridView: false,
+    //   showListView: true
+    // });
   }
   sortingBy(e){
     e.preventDefault();
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+    const { showGridView,showListView } = this.props;
 
     let sortingBy = '';
 
@@ -590,12 +607,13 @@ class SearchResult extends Component {
       params['gemstones'] = gemstoneFilter;
     }
 
-    let girdView = this.state.showGridView;
-    let listView = this.state.showListView;
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
 
     this.setState({
-      showGridView: false,
-      showListView: false,
       showLoading: true
     });
 
@@ -605,9 +623,11 @@ class SearchResult extends Component {
     .then((value) => {
       this.setState({showLoading: false});
       if(girdView){
-        this.setState({showGridView: true});
+        // this.setState({showGridView: true});
+        this.props.setShowGridView(true);
       }else if (listView) {
-        this.setState({showListView: true});
+        // this.setState({showListView: true});
+        this.props.setShowListView(true);
       }
     });
 
@@ -622,6 +642,7 @@ class SearchResult extends Component {
 
     const sortingDirection = e.target.value;
     const { searchResult } = this.props;
+    const { showGridView,showListView } = this.props;
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -675,12 +696,13 @@ class SearchResult extends Component {
       params['gemstones'] = gemstoneFilter;
     }
 
-    let girdView = this.state.showGridView;
-    let listView = this.state.showListView;
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
 
     this.setState({
-      showGridView: false,
-      showListView: false,
       showLoading: true
     });
 
@@ -690,9 +712,11 @@ class SearchResult extends Component {
     .then((value) => {
       this.setState({showLoading: false});
       if(girdView){
-        this.setState({showGridView: true});
+        // this.setState({showGridView: true});
+        this.props.setShowGridView(true);
       }else if (listView) {
-        this.setState({showListView: true});
+        // this.setState({showListView: true});
+        this.props.setShowListView(true);
       }
     });
 
@@ -708,6 +732,7 @@ class SearchResult extends Component {
     const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+    const { showGridView,showListView } = this.props;
 
     let sortingBy = '';
 
@@ -758,12 +783,13 @@ class SearchResult extends Component {
       params['gemstones'] = gemstoneFilter;
     }
 
-    let girdView = this.state.showGridView;
-    let listView = this.state.showListView;
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
 
     this.setState({
-      showGridView: false,
-      showListView: false,
       showLoading: true
     });
 
@@ -773,9 +799,11 @@ class SearchResult extends Component {
     .then((value) => {
       this.setState({showLoading: false});
       if(girdView){
-        this.setState({showGridView: true});
+        // this.setState({showGridView: true});
+        this.props.setShowGridView(true);
       }else if (listView) {
-        this.setState({showListView: true});
+        // this.setState({showListView: true});
+        this.props.setShowListView(true);
       }
     });
 
@@ -1161,7 +1189,7 @@ class SearchResult extends Component {
   }
 
   render() {
-    const { totalPages,
+    const { totalPages,showGridView,showListView,
             currentPage,allItems,pageSize,
             items,totalPublicPrice,totalUpdatedCost,
             handleSubmit,
@@ -1295,11 +1323,11 @@ class SearchResult extends Component {
                 <div className="col-sm-2 ft-white nopadding pd-10">
                   <div
                     disabled={submitting} onClick={ this.gridViewResults } >
-                      <div className={`bd-white m-pt-mgl ${this.state.showGridView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-large"></span></div>
+                      <div className={`bd-white m-pt-mgl ${showGridView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-large"></span></div>
                   </div>
                   <div
                     disabled={submitting} onClick={ this.listViewResults } >
-                      <div className={`bd-white m-pt-mgl ${this.state.showListView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-list"></span></div>
+                      <div className={`bd-white m-pt-mgl ${showListView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-list"></span></div>
                   </div>
                 </div>
               </div>
@@ -1349,13 +1377,13 @@ class SearchResult extends Component {
                             </div>
                           {/* End Total Data */}
                           {/* Grid Product */}
-                          <div className={`search-product  ${this.state.showGridView ? '' : 'hidden'}` }>
+                          <div className={`search-product  ${showGridView ? '' : 'hidden'}` }>
                             <GridItemsView  items={items} onClickGrid={this.onClickGrid} />
                           </div>
                           <div id="dvGridview" className="search-product hidden">
                             <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
                           </div>
-                          <div className={`col-sm-12 search-product list-search ${this.state.showListView ? '' : 'hidden'}` }>
+                          <div className={`col-sm-12 search-product list-search ${showListView ? '' : 'hidden'}` }>
                             <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}/>
                           </div>
                           <div id="dvListview" className="col-sm-12 search-product hidden">
@@ -1407,7 +1435,9 @@ function mapStateToProps(state) {
     avrgPrice: state.searchResult.avrgPrice,
     pageSize: state.searchResult.PageSize,
     sortingBy: state.searchResult.SortingBy,
-    sortDirection: state.searchResult.SortDirection
+    sortDirection: state.searchResult.SortDirection,
+    showGridView: state.searchResult.ShowGridView,
+    showListView: state.searchResult.ShowListView
    }
 }
 SearchResult.propTypes = {
