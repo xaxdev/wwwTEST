@@ -64,7 +64,7 @@ class ListItemsView extends Component {
     var items = null;
     const userLogin = JSON.parse(sessionStorage.logindata);
     const currency = userLogin.currency;
-    
+
     if (this.props.items.length != 0){
       items = this.props.items.map(function (col, idx) {
         // console.log('col-->',col);
@@ -106,7 +106,7 @@ class ListItemsView extends Component {
           jewelsWeight = '';
         }
 
-        col.jewelsWeight = jewelsWeight;
+        col.jewelsWeight = numberFormat(jewelsWeight);
 
         let itemName = (col.type != 'CER')
                           ?
@@ -114,7 +114,8 @@ class ListItemsView extends Component {
                           col.name
                           ;
 
-        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,itemName: itemName}
+        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
+                itemName: itemName,grossWeight:numberFormat(col.grossWeight)}
       });
 
       const tableColumns = [
