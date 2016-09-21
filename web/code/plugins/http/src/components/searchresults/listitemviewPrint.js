@@ -62,6 +62,9 @@ class ListItemsView extends Component {
 
   render(){
     var items = null;
+    const userLogin = JSON.parse(sessionStorage.logindata);
+    const currency = userLogin.currency;
+    
     if (this.props.items.length != 0){
       items = this.props.items.map(function (col, idx) {
         // console.log('col-->',col);
