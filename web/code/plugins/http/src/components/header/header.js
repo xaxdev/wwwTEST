@@ -50,7 +50,7 @@ class Header extends Component {
                 <div className="logo-detail"></div>
               </div>
               <div className="navbar-right top-bar col-md-6">
-                <Navbar inverse >
+                <Navbar inverse className="collapse in" >
                   <Navbar.Header>
                     <Navbar.Toggle />
                   </Navbar.Header>

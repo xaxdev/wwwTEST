@@ -11,9 +11,11 @@ class ChangePasswordForm extends Component {
       username,password
     },handleSubmit,invalid,resetmsg } = this.props;
     return (
-      <form onSubmit={handleSubmit} className="form-signin">
-      <div className="login">
-      <div className="logo"></div>
+      <form onSubmit={handleSubmit}>
+      <div className="margin-t50 text-center">
+        <img src="/images/logo-mouawad.png" />
+      </div>
+      <div className="login form-signin">
          <h2 className="fc-fff">Reset Password</h2>
           <div className={`form-group ${username.touched && username.invalid ? 'has-danger' : ''}` }>
             <label>Username</label>
