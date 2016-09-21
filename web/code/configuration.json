@@ -327,6 +327,9 @@
           "prefix": "/api/catalog"
         }
       }
-    }
-  ]
+    },
+        {
+            "plugin": "./plugins/helper"
+        }
+    ]
 }
