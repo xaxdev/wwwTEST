@@ -17,7 +17,7 @@ class ListItemsView extends Component {
 
 
     this.state = {
-      initialPageLength:8
+      initialPageLength:16
     };
 
   }

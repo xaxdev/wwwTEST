@@ -23,6 +23,10 @@ class ListItemsView extends Component {
   static propTypes = {
     onClickGrid: PropTypes.func.isRequired
   };
+  componentWillReceiveProps(nextProps) {
+    // console.log('list view pageSize componentWillReceiveProps-->',this.props.pageSize);
+    this.setState({initialPageLength: this.props.pageSize});
+  }
   renderAction(val,row){
     return(
       <div className="searchresult-list-icon">
