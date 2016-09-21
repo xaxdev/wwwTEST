@@ -1,6 +1,5 @@
 import pkg from './package'
 import * as lib from './lib/'
-import routes from './routes'
 
 const register = (server, options, next) => {
 
