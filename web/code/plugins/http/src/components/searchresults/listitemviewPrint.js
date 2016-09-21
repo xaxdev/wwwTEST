@@ -4,6 +4,7 @@ import { responsive } from 'react-bootstrap';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
 import ReactImageFallback from 'react-image-fallback';
+import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 
 class ListItemsView extends Component {
   constructor(props) {
@@ -88,7 +89,7 @@ class ListItemsView extends Component {
         //   col.priceUSD = '';
         // }
 
-        col.priceUSD = numberFormat((col.price[currency] != undefined)? col.price[currency] : 0)
+        col.priceUSD = numberFormat((col.price != undefined)? col.price[currency] : 0)
 
         let jewelsWeight = 0;
 
