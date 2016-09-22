@@ -415,12 +415,25 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
 
       // console.log('sortBy-->',sortBy);
       // console.log('sortDirections-->',sortDirections);
+      let missing = '';
+
+      switch (sortDirections) {
+        case 'asc':
+          missing = '"missing" : "_first"';
+          missing = `{"${sortBy}" : {${missing}}},`;
+          break;
+        default:
+      }
+
+      // console.log('missing-->',missing);
+
       internals.query = JSON.parse(
       `{
         "timeout": "5s",
         "from": ${fromRecord},
         "size": ${sizeRecord},
         "sort" : [
+            ${missing}
             {"${sortBy}" : "${sortDirections}"}
          ],
         "query": {
@@ -442,6 +455,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
         "from": ${fromRecord},
         "size": ${sizeRecord},
         "sort" : [
+            ${missing}
             {"${sortBy}" : "${sortDirections}"}
          ],
         "query":
