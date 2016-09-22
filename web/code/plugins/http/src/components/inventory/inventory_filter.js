@@ -137,10 +137,20 @@ class InventoryFilter extends Component {
 				}
 
 			});
-    $( window ).resize(function() {
-        var w = $('#page-wrapper').width();
-      $('#scroller').removeClass('stuck').css({'width':w});
-    });
+    // $( window ).resize(function() {
+    //     var w = $('#page-wrapper').width();
+    //   $('#scroller').removeClass('stuck').css({'width':w});
+    // });
+
+    var oldWidth = $('#page-wrapper').width();
+       function elmResized() {
+           var width = $('#page-wrapper').width();
+           if (oldWidth != width) {
+               $('#page-wrapper').trigger('stuck', [width, oldWidth]);
+               oldWidth = width;
+           }
+       }
+
 
   }
   shouldComponentUpdate(nextProps, nextState) {
