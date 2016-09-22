@@ -1053,7 +1053,6 @@ select.form-searchresult option{
     margin-left: 0;
     margin-top: 0px;
   }
-  .search-right div, .search-right ul{float:right;}
   .over-searchresult {
     left: 180px !important;
   }
@@ -1096,7 +1095,6 @@ select.form-searchresult option{
 	}
 	.searchresult-navi div {
     margin-left: 8px;
-    margin-top: 10px;
 	}
 	.over-product, .over-product:hover, .searchresult-prodcut, .searchresult-prodcut:hover{width:100%; height:375px;}
 	.over-searchresult {

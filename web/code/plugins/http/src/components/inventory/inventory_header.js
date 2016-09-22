@@ -203,7 +203,7 @@ class InventoryHeader extends Component {
             <div className="panel panel-default">
               <div className="panel-body">
                 <div className="row margin-ft">
-                  <div className="col-sm-6 form-horizontal">
+                  <div className="col-md-6 col-sm-12 form-horizontal">
                       <div className="form-group">
                         <label className="col-sm-4 control-label">Item Reference</label>
                          <div className="col-sm-7">
@@ -260,7 +260,7 @@ class InventoryHeader extends Component {
                         </div>
                       </div>
                   </div>
-                  <div className="col-sm-6 form-horizontal">
+                  <div className="col-md-6 col-sm-12 form-horizontal">
                       <div className="form-group">
                         <label className="col-sm-4 control-label">SKU</label>
                         <div className="col-sm-7">
