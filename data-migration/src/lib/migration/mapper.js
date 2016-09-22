@@ -91,7 +91,9 @@ const mapProperties = (item, record, exchangeRates) => {
                     certificate.images = [];
                 }
 
-                certificate.images.push(image);
+                if (certificate.images.findIndex(image => image.original.match(new RegExp(`${record.CertificateImageName}.${record.CertificateImageType}$`)) !== null) === -1) {
+                    certificate.images.push(image);
+                }
             }
         } else {
             const gemstone = item.gemstones.find(gemstone => gemstone.id === record.gemstone_id);
@@ -101,7 +103,9 @@ const mapProperties = (item, record, exchangeRates) => {
                     gemstone.certificate.images = [];
                 }
 
-                gemstone.certificate.images.push(image);
+                if (gemstone.certificate.images.findIndex(image => image.original.match(new RegExp(`${record.CertificateImageName}.${record.CertificateImageType}$`)) !== null) === -1) {
+                    gemstone.certificate.images.push(image);
+                }
             }
         }
     }
