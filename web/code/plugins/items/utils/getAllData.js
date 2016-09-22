@@ -26,9 +26,15 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
     allData.push({'id': item.id,'reference':item.reference});
     if(item.price != undefined){
       if(item.price[userCurrency] != 0){
+        // console.log('item.reference-->',item.reference);
         // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
+        if(item.price[userCurrency] != undefined){
+          maxPrice = Math.max(maxPrice, item.price[userCurrency]);
+        }else{
+          maxPrice = Math.max(maxPrice, 0);
+        }
       }
-      maxPrice = Math.max(maxPrice, item.price[userCurrency]);
+
       // console.log('maxPrice-->',maxPrice);
     }else{
       if(maxPrice > 0){
@@ -42,7 +48,11 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
   let minPrice = maxPrice;
   data.forEach(function(item){
     if(item.price != undefined){
-      minPrice = Math.min(minPrice, item.price[userCurrency]);
+      if(item.price[userCurrency] != undefined){
+        minPrice = Math.min(minPrice, item.price[userCurrency]);
+      }else{
+        minPrice = Math.min(minPrice, 0);
+      }
     }else{
       minPrice = 0;
     }
