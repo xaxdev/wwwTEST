@@ -22,7 +22,7 @@ export default {
                 if (_.isNull(fWishlist)) return reply(Boom.badRequest("Invalid item."))
 
                 const countWlistItem = await db.collection('WishlistItem').find({ "wishlistId" : new ObjectID(request.params.id) }).count()
-                const popWlistItem = await db.collection('WishlistItem').find({ "wishlistId" : new ObjectID(request.params.id) }, { "itemId": 1 })
+                const popWlistItem = await db.collection('WishlistItem').find({ "wishlistId" : new ObjectID(request.params.id) }, { "_id": 0, "wishlistId": 0 })
                 .sort({ "updatedDate": -1 })
                 .limit(size)
                 .skip((page - 1) * size)
@@ -30,6 +30,7 @@ export default {
                 .then((data) => {
                     data.forEach((item) => {
                         item.id = item.itemId
+                        delete item.itemId
                     })
                     return data
                 })

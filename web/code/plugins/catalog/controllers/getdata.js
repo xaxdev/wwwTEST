@@ -11,6 +11,7 @@ export default {
 
             try {
                 const userHelper = request.user
+                const helper = request.helper
                 const db = request.server.plugins['hapi-mongodb'].db
                 const ObjectID = request.server.plugins['hapi-mongodb'].ObjectID
                 const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
@@ -21,7 +22,7 @@ export default {
                 if (_.isNull(fCatalog)) return reply(Boom.badRequest("Invalid item."))
 
                 const countCatalogItem = await db.collection('CatalogItem').find({ "catalogId" : new ObjectID(request.params.id) }).count()
-                const popCatalogItem = await db.collection('CatalogItem').find({ "catalogId" : new ObjectID(request.params.id) }, { "itemId": 1 })
+                const popCatalogItem = await db.collection('CatalogItem').find({ "catalogId" : new ObjectID(request.params.id) }, { "_id": 0, "catalogId": 0 })
                 .sort({ "updatedDate": -1 })
                 .limit(size)
                 .skip((page - 1) * size)
@@ -29,6 +30,7 @@ export default {
                 .then((data) => {
                     data.forEach((item) => {
                         item.id = item.itemId
+                        delete item.itemId
                     })
                     return data
                 })

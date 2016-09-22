@@ -18,9 +18,7 @@ export default {
                 }
                 else {
                     await db.collection('CatalogName').updateOne({ "_id" : new ObjectID(request.payload.id) }, { $set: { "catalog": request.payload.catalog } })
-                    reply({
-                        "status": true
-                    })
+                    reply({ "status": true })
                 }
             } catch (e) {
 

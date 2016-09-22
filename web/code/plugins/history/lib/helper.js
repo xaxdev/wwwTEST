@@ -15,12 +15,12 @@ export default {
 
                 return await db.collection('History').findOneAndUpdate({
                     "userId": request.auth.credentials.id,
-                    "itemId": item.id,
-                    "reference": item.reference,
-                    "name": item.name
+                    "itemId": item.id
                 },
                 {
                     $set: {
+                        "reference": item.reference,
+                        "description": item.description,
                         "displayStatus": true,
                         "updatedDate": _.now()
                     }

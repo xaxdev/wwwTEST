@@ -39,7 +39,7 @@ export default {
                         itemData.forEach((item) => {
 
                             db.collection('CatalogItem').insertOne({
-                                "catalogId": catalogData._id, "itemId": item.id, "reference": item.reference, "name": item.name, "updatedDate": _.now()
+                                "catalogId": catalogData._id, "itemId": item.id, "reference": item.reference, "description": item.description, "updatedDate": _.now()
                             })
                         })
                     })
@@ -48,26 +48,26 @@ export default {
                         reply(Boom.badImplementation('', err))
                     })
                 }
-                // else {
-                //
-                //     esItemData
-                //     .then((itemData) => {
-                //
-                //         itemData.forEach(({id}) => {
-                //
-                //             db.collection('CatalogItem').findAndModify({
-                //                 "catalogId": new ObjectID(catalogPayloadId), "itemId": id.toString()
-                //             },
-                //             [['itemId', 1]],
-                //             { $set: { "reference": item.reference, "name": item.name, "updatedDate": _.now() }},
-                //             { new: true, upsert: true });
-                //         })
-                //     })
-                //     .catch((err) => {
-                //
-                //         reply(Boom.badImplementation('', err))
-                //     })
-                // }
+                else {
+
+                    esItemData
+                    .then((itemData) => {
+
+                        itemData.forEach((item) => {
+
+                            db.collection('CatalogItem').findAndModify({
+                                "catalogId": new ObjectID(catalogPayloadId), "itemId": item.id.toString()
+                            },
+                            [['itemId', 1]],
+                            { $set: { "reference": item.reference, "description": item.description, "updatedDate": _.now() }},
+                            { new: true, upsert: true });
+                        })
+                    })
+                    .catch((err) => {
+
+                        reply(Boom.badImplementation('', err))
+                    })
+                }
 
                 reply({ "status": true })
             } catch (e) {

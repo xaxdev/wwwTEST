@@ -15,13 +15,11 @@ export default {
 
                 items.forEach(({id}) => {
 
-                    db.collection('CatalogItem').deleteMany({ "catalogId": new ObjectID(request.payload.id), "id": id }, (err, result) => {
+                    db.collection('CatalogItem').deleteMany({ "catalogId": new ObjectID(request.payload.id), "itemId": id.toString() }, (err, result) => {
                         if (err) reply(Boom.badImplementation('', err))
                     })
                 })
-                reply({
-                    "status": true
-                })
+                reply({ "status": true })
             } catch (e) {
 
                 reply(Boom.badImplementation('', e))
