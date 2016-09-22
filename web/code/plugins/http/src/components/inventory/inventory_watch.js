@@ -733,11 +733,11 @@ class InventoryWatch extends Component {
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...markupFrom}/>
+                    <input type="number" className="form-control" {...markupFrom}/>
                   </div>
                   <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...markupTo}/>
+                    <input type="number" className="form-control" {...markupTo}/>
                   </div>
                 </div>
               </div>
@@ -746,11 +746,11 @@ class InventoryWatch extends Component {
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...grossWeightFrom}/>
+                    <input type="number" className="form-control" {...grossWeightFrom}/>
                   </div>
                   <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...grossWeightTo}/>
+                    <input type="number" className="form-control" {...grossWeightTo}/>
                   </div>
                 </div>
               </div>

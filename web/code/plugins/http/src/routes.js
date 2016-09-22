@@ -120,6 +120,13 @@ export default ({ dispatch,getState}) => {
                     }, 'productreletedetail');
                 }
             }, {
+                path: 'changepassword',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/login/changepassword'));
+                    }, 'changepassword');
+                }
+            }, {
                 path: 'accessdenied',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {

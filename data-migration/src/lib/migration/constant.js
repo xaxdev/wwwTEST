@@ -10,6 +10,8 @@ export const JEWELRY_QUERY = './query/jewelry.sql';
 export const STONES_QUERY = './query/stones.sql';
 export const WATCHES_QUERY = './query/watches.sql';
 export const OBA_QUERY = './query/oba.sql';
+export const ACCESSORY_QUERY = './query/accessory.sql';
+export const SPARE_PARTS_QUERY = './query/spare_parts.sql';
 
 // Master
 export const COMPANY_QUERY = './query/master/company.sql';

@@ -4,6 +4,7 @@ import { responsive } from 'react-bootstrap';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
 import ReactImageFallback from 'react-image-fallback';
+import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 
 class ListItemsView extends Component {
   constructor(props) {
@@ -22,6 +23,10 @@ class ListItemsView extends Component {
   static propTypes = {
     onClickGrid: PropTypes.func.isRequired
   };
+  componentWillReceiveProps(nextProps) {
+    // console.log('list view pageSize componentWillReceiveProps-->',this.props.pageSize);
+    this.setState({initialPageLength: this.props.pageSize});
+  }
   renderAction(val,row){
     return(
       <div className="searchresult-list-icon">
@@ -61,6 +66,9 @@ class ListItemsView extends Component {
 
   render(){
     var items = null;
+    const userLogin = JSON.parse(sessionStorage.logindata);
+    const currency = userLogin.currency;
+
     if (this.props.items.length != 0){
       items = this.props.items.map(function (col, idx) {
         // console.log('col-->',col);
@@ -82,11 +90,13 @@ class ListItemsView extends Component {
             break;
         }
 
-        if (col.type != 'CER') {
-          col.priceUSD = GetPriceWithCurrency(col,'price');
-        } else {
-          col.priceUSD = '';
-        }
+        // if (col.type != 'CER') {
+        //   col.priceUSD = GetPriceWithCurrency(col,'price');
+        // } else {
+        //   col.priceUSD = '';
+        // }
+
+        col.priceUSD = numberFormat((col.price != undefined)? col.price[currency] : 0)
 
         let jewelsWeight = 0;
 
@@ -100,7 +110,7 @@ class ListItemsView extends Component {
           jewelsWeight = '';
         }
 
-        col.jewelsWeight = jewelsWeight;
+        col.jewelsWeight = numberFormat(jewelsWeight);
 
         let itemName = (col.type != 'CER')
                           ?
@@ -108,7 +118,8 @@ class ListItemsView extends Component {
                           col.name
                           ;
 
-        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,itemName: itemName}
+        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
+                itemName: itemName,grossWeight:numberFormat(col.grossWeight)}
       });
 
       const tableColumns = [

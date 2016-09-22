@@ -1,45 +1,56 @@
 import React,{ Component } from 'react';
-import { reduxForm } from 'redux-form';
+import { reduxForm,reset } from 'redux-form';
 import validateLogin from '../../utils/validatelogin';
 import { Link } from 'react-router';
 
-class Loginform extends Component {
+class ChangePasswordForm extends Component {
 
   render() {
+
     const { fields: {
       username,password
-    },handleSubmit,invalid } = this.props;
+    },handleSubmit,invalid,resetmsg } = this.props;
     return (
       <form onSubmit={handleSubmit}>
       <div className="margin-t50 text-center">
         <img src="/images/logo-mouawad.png" />
       </div>
       <div className="login form-signin">
+         <h2 className="fc-fff">Reset Password</h2>
           <div className={`form-group ${username.touched && username.invalid ? 'has-danger' : ''}` }>
-            <input type="text" className="login-height form-control" {...username} placeholder="Username"/>
+            <label>Username</label>
+            <input type="text" className="form-control" {...username} disabled placeholder="Username"/>
             <div className="text-help">
               { username.touched ? username.error : ''}
             </div>
           </div>
           <div className={`form-group ${password.touched && password.invalid ? 'has-danger' : ''}` }>
-            <input type="password" className="login-height form-control" {...password} placeholder="Password"/>
+            <label>Password</label>
+            <input type="password" className="form-control" {...password} placeholder="Password"/>
             <div className="text-help">
               { password.touched ? password.error : ''}
             </div>
           </div>
-            <div className={`${this.props.msg != '' ? 'text-danger' : ''}` }>{ (this.props.msg != '') ? this.props.msg : '' }</div>
-          <button type="submit" className="btn btn-lg btn-login btn-block" disabled={invalid}>
-          {this.props.loading ? 'Loading...' : 'LOGIN'}</button>
-          <div className="maring-t30 text-center forgot"><Link to="/forgotpassword">Forgot Password</Link></div>
-        </div>
+          <div className="margin-t50">
+          <div className={`${resetmsg != '' ? 'text-success' : ''}` }>{ (resetmsg != '') ? resetmsg : '' }</div>
+          <button type="submit" className="btn btn-lg btn-primary btn-block" disabled={invalid}>Reset</button>
+          <Link to="/" className="btn btn-lg btn-primary btn-block">Cancel</Link>
+          </div>
+          </div>
         </form>
-
       );
     }
+  }
+
+  function mapStateToProps(state) {
+    return {
+      initialValues: state.login.logindata,
+      resetdata: state.login.logindata
+    };
   }
 
   module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
     form: 'Loginform',
     fields: ['username','password'],
     validate:validateLogin
-  },null)(Loginform);
+  },mapStateToProps)(ChangePasswordForm);

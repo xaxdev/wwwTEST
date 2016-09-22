@@ -85,13 +85,14 @@ class SearchResult extends Component {
     this.confirmExport = this.confirmExport.bind(this);
     this.hideModalNoResults = this.hideModalNoResults.bind(this);
     this.printResults = this.printResults.bind(this);
+    this.selectedPageSize = this.selectedPageSize.bind(this);
 
     // console.log('this.props.items-->',this.props.searchResult.datas);
 
     this.state = {
       activePage: this.props.currentPage,
-      showGridView: true,
-      showListView: false,
+      // showGridView: true,
+      // showListView: false,
       isExport: false,
       isOpen: false,
       isOpenNoResults: true,
@@ -138,26 +139,107 @@ class SearchResult extends Component {
     };
   }
   componentWillMount() {
-      // console.log('this.props.currentPage->',this.props.currentPage);
+      // console.log('this.props.sortingBy->',this.props.sortingBy);
+      // console.log('this.props.sortDirection->',this.props.sortDirection);
+      const userLogin = JSON.parse(sessionStorage.logindata);
+
+      let sortingBy = '';
+
+      switch (this.props.sortingBy) {
+        case 'price':
+          sortingBy = 'price.' + userLogin.currency;
+          break;
+        default:
+          sortingBy = this.props.sortingBy;
+          break;
+      }
       let params = {
         'page' : this.props.currentPage,
-        'sortBy': 'itemCreatedDate',
-        'sortDirections': 'desc'
+        'sortBy': sortingBy,
+        'sortDirections': this.props.sortDirection,
+        'pageSize' : this.props.pageSize
       };  // default search params
 
-      const { filters } =  this.props;
+      // const { filters } =  this.props;
+      const filters =  JSON.parse(sessionStorage.filters);
+      let gemstoneFilter = {};
       // console.log('filters-->',filters);
       filters.forEach(function(filter){
         let keys = Object.keys(filter);
         keys.forEach((key) => {
           const value = filter[key];
-          params[key] = value;
+          const gemstoneFields = keys[0].split('.');
+          if(gemstoneFields[0] == 'gemstones'){
+            gemstoneFilter[gemstoneFields[1]] = value;
+          }else if(gemstoneFields[0] == 'certificatedNumber'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'certificateAgency'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'cerDateFrom'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }
+          else{
+            params[key] = value;
+          }
         });
       });
+
+      if(Object.keys(gemstoneFilter).length != 0){
+        params['gemstones'] = gemstoneFilter;
+      }
       // console.log('params-->',params);
+      const paramsSearchStorage =  JSON.parse(sessionStorage.paramsSearch);
+      // this.props.setShowGridView(true);
+      // this.props.setShowListView(false);
+      this.props.setParams(paramsSearchStorage)
       this.props.getItems(params);
   }
+  componentDidMount() {
+    // console.log('sortingBy->',this.refs.sortingBy);
+    let that = this;
+    if(this.refs.sortingBy != undefined){
+      // var select = React.findDOMNode(this.refs.sortingBy);
+      var values = [].filter.call(this.refs.sortingBy.options, function (o) {
+            o.selected = false;
 
+            if(o.value == that.props.sortingBy){
+              o.selected = true
+            }
+            return o.selected;
+          }).map(function (o) {
+            return o.value;
+          });
+    }
+
+    if(this.refs.sortingDirection != undefined){
+      // var select = React.findDOMNode(this.refs.sortingBy);
+      var values = [].filter.call(this.refs.sortingDirection.options, function (o) {
+            o.selected = false;
+
+            if(o.value == that.props.sortDirection){
+              o.selected = true
+            }
+            return o.selected;
+          }).map(function (o) {
+            return o.value;
+          });
+    }
+
+    if(this.refs.pageSize != undefined){
+      // var select = React.findDOMNode(this.refs.sortingBy);
+      var values = [].filter.call(this.refs.pageSize.options, function (o) {
+            o.selected = false;
+
+            if(o.value == that.props.pageSize){
+              o.selected = true
+            }
+            return o.selected;
+          }).map(function (o) {
+            return o.value;
+          });
+    }
+
+  }
   shouldComponentUpdate(nextProps, nextState) {
     // console.log('nextProps.currentPage-->',nextProps.currentPage);
     // console.log('nextState-->',nextState);
@@ -174,40 +256,77 @@ class SearchResult extends Component {
     e.preventDefault();
     // console.log('printproductBind-->');
 
+    const { showGridView,showListView } = this.props;
+
     let dvTotal = jQuery('#dvTotalsub').html();
     let dvGridview = jQuery('#dvGridview').html();
     let dvListview = jQuery('#dvListview').html();
     // console.log('printproduct-->',dvContainerPrint);
-    let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
-    let printWindow = window.open('', '', options);
-    printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
-    printWindow.document.write('<html><head><title>Mol online 2016</title>');
-    printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-    printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-    printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-    printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-    printWindow.document.write('</head><body >');
-    if (this.state.showGridView) {
+    // let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
+    // let printWindow = window.open('', '', options);
+    // printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
+    // printWindow.document.write('<html><head><title>Mol online 2016</title>');
+    // printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
+    // printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
+    // printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
+    // printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
+    // printWindow.document.write('</head><body >');
+    if (showGridView) {
+        let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
+        let printWindow = window.open('', '', options);
+        printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
+        printWindow.document.write('<html><head><title>Mol online 2016</title>');
+        printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
+        printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
+        printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
+        printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
+        printWindow.document.write('</head><body >');
         printWindow.document.write(dvGridview);
         printWindow.document.write(dvTotal);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        setTimeout( function(){
+          printWindow.document.close();
+          printWindow.print();
+        },1500);
+        return true;
     }
-    if (this.state.showListView) {
+    if (showListView) {
+      let options = 'toolbar=1,menubar=0,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1100';
+      let printWindow = window.open('', '', options);
+      printWindow.document.write('<style>@media print{@page {size: auto A4 landscape;margin: 0;} body{margin: 0px;}}</style>');
+      printWindow.document.write('<html><head><title>Mol online 2016</title>');
+      printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
+      printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
+      printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
+      printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
+      printWindow.document.write('</head><body >');
       printWindow.document.write(dvListview);
       printWindow.document.write(dvTotal);
-    }
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.focus();
-    setTimeout( function(){
+      printWindow.document.write('</body></html>');
       printWindow.document.close();
-      printWindow.print();
-    },1500);
-    return true;
+      printWindow.focus();
+      setTimeout( function(){
+        printWindow.document.close();
+        printWindow.print();
+      },1500);
+      return true;
+    }
+    // printWindow.document.write('</body></html>');
+    // printWindow.document.close();
+    // printWindow.focus();
+    // setTimeout( function(){
+    //   printWindow.document.close();
+    //   printWindow.print();
+    // },1500);
+    // return true;
   }
   handleSelect(eventKey) {
       this.setState({activePage: eventKey});
 
       const userLogin = JSON.parse(sessionStorage.logindata);
+      const { showGridView,showListView } = this.props;
 
       let sortingBy = '';
 
@@ -221,28 +340,49 @@ class SearchResult extends Component {
       }
 
       const sortingDirection = this.refs.sortingDirection.value;
+      const pageSize = this.refs.pageSize.value;
 
       let params = {
         'page' : eventKey,
         'sortBy': sortingBy,
-        'sortDirections': sortingDirection
+        'sortDirections': sortingDirection,
+        'pageSize' : pageSize
       };
       const { filters } =  this.props;
 
+      let gemstoneFilter = {};
+      // console.log('filters-->',filters);
       filters.forEach(function(filter){
         let keys = Object.keys(filter);
         keys.forEach((key) => {
           const value = filter[key];
-          params[key] = value;
+          const gemstoneFields = keys[0].split('.');
+          if(gemstoneFields[0] == 'gemstones'){
+            gemstoneFilter[gemstoneFields[1]] = value;
+          }else if(gemstoneFields[0] == 'certificatedNumber'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'certificateAgency'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'cerDateFrom'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }
+          else{
+            params[key] = value;
+          }
         });
       });
 
-      let girdView = this.state.showGridView;
-      let listView = this.state.showListView;
+      if(Object.keys(gemstoneFilter).length != 0){
+        params['gemstones'] = gemstoneFilter;
+      }
+
+      let girdView = showGridView;
+      let listView = showListView;
+
+      this.props.setShowGridView(false);
+      this.props.setShowListView(false);
 
       this.setState({
-        showGridView: false,
-        showListView: false,
         showLoading: true
       });
 
@@ -250,9 +390,11 @@ class SearchResult extends Component {
       .then((value) => {
         this.setState({showLoading: false});
         if(girdView){
-          this.setState({showGridView: true});
+          // this.setState({showGridView: true});
+          this.props.setShowGridView(true);
         }else if (listView) {
-          this.setState({showListView: true});
+          // this.setState({showListView: true});
+          this.props.setShowListView(true);
         }
       });
 
@@ -262,10 +404,10 @@ class SearchResult extends Component {
   handleGo(e){
     e.preventDefault();
     // console.log('handleGo-->',this.refs.reletego.value);
-
     const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+    const { showGridView,showListView } = this.props;
 
     let sortingBy = '';
 
@@ -279,30 +421,51 @@ class SearchResult extends Component {
     }
 
     const sortingDirection = this.refs.sortingDirection.value;
+    const pageSize = this.refs.pageSize.value;
 
     this.setState({activePage: getPage});
     // console.log('getPage-->',getPage);
     let params = {
       'page' : getPage,
       'sortBy': sortingBy,
-      'sortDirections': sortingDirection
+      'sortDirections': sortingDirection,
+      'pageSize' : pageSize
     };
     let { filters } =  this.props;
 
+    let gemstoneFilter = {};
+    // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
       keys.forEach((key) => {
         const value = filter[key];
-        params[key] = value;
+        const gemstoneFields = keys[0].split('.');
+        if(gemstoneFields[0] == 'gemstones'){
+          gemstoneFilter[gemstoneFields[1]] = value;
+        }else if(gemstoneFields[0] == 'certificatedNumber'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'certificateAgency'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'cerDateFrom'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }
+        else{
+          params[key] = value;
+        }
       });
     });
 
-    let girdView = this.state.showGridView;
-    let listView = this.state.showListView;
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
+
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
 
     this.setState({
-      showGridView: false,
-      showListView: false,
       showLoading: true
     });
 
@@ -310,9 +473,11 @@ class SearchResult extends Component {
     .then((value) => {
       this.setState({showLoading: false});
       if(girdView){
-        this.setState({showGridView: true});
+        // this.setState({showGridView: true});
+        this.props.setShowGridView(true);
       }else if (listView) {
-        this.setState({showListView: true});
+        // this.setState({showListView: true});
+        this.props.setShowListView(true);
       }
     });
   }
@@ -324,7 +489,7 @@ class SearchResult extends Component {
             handleSubmit,
             resetForm,
             submitting } = this.props;
-    // console.log('currPage-->',currPage);
+    // console.log('totalPages-->',totalPages);
     // console.log('this.state.activePage-->',this.state.activePage);
     const page = this.state.activePage;
     // currPage.value = this.state.activePage;
@@ -340,7 +505,7 @@ class SearchResult extends Component {
              ellipsis
              boundaryLinks
              items={totalPages}
-             maxButtons={5}
+             maxButtons={4}
              activePage={this.state.activePage}
              onSelect={this.handleSelect} />
 
@@ -403,21 +568,26 @@ class SearchResult extends Component {
     }
   }
   gridViewResults(){
-    this.setState({
-      showGridView: true,
-      showListView:false
-    });
+    this.props.setShowGridView(true);
+    this.props.setShowListView(false);
+    // this.setState({
+    //   showGridView: true,
+    //   showListView:false
+    // });
   }
   listViewResults(){
-    this.setState({
-      showGridView: false,
-      showListView: true
-    });
+    this.props.setShowGridView(false);
+    this.props.setShowListView(true);
+    // this.setState({
+    //   showGridView: false,
+    //   showListView: true
+    // });
   }
   sortingBy(e){
     e.preventDefault();
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+    const { showGridView,showListView } = this.props;
 
     let sortingBy = '';
 
@@ -434,39 +604,64 @@ class SearchResult extends Component {
 
     const { searchResult } = this.props;
     const sortingDirection = this.refs.sortingDirection.value;
+    const pageSize = this.refs.pageSize.value;
     // this.props.sortBy(searchResult, sortingBy, sortingDirection);
     let params = {
       'page' : 1,
       'sortBy': sortingBy,
-      'sortDirections': sortingDirection
+      'sortDirections': sortingDirection,
+      'pageSize' : pageSize
     };
 
     let { filters } =  this.props;
 
+    let gemstoneFilter = {};
+    // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
       keys.forEach((key) => {
         const value = filter[key];
-        params[key] = value;
+        const gemstoneFields = keys[0].split('.');
+        if(gemstoneFields[0] == 'gemstones'){
+          gemstoneFilter[gemstoneFields[1]] = value;
+        }else if(gemstoneFields[0] == 'certificatedNumber'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'certificateAgency'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'cerDateFrom'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }
+        else{
+          params[key] = value;
+        }
       });
     });
 
-    let girdView = this.state.showGridView;
-    let listView = this.state.showListView;
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
+
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
 
     this.setState({
-      showGridView: false,
-      showListView: false,
       showLoading: true
     });
+
+    this.props.setSortingBy(e.target.value);
 
     this.props.getItems(params)
     .then((value) => {
       this.setState({showLoading: false});
       if(girdView){
-        this.setState({showGridView: true});
+        // this.setState({showGridView: true});
+        this.props.setShowGridView(true);
       }else if (listView) {
-        this.setState({showListView: true});
+        // this.setState({showListView: true});
+        this.props.setShowListView(true);
       }
     });
 
@@ -481,6 +676,7 @@ class SearchResult extends Component {
 
     const sortingDirection = e.target.value;
     const { searchResult } = this.props;
+    const { showGridView,showListView } = this.props;
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -497,38 +693,64 @@ class SearchResult extends Component {
 
     this.setState({activePage: 1});
 
+    const pageSize = this.refs.pageSize.value;
+
     let params = {
       'page' : 1,
       'sortBy': sortingBy,
-      'sortDirections': sortingDirection
+      'sortDirections': sortingDirection,
+      'pageSize' : pageSize
     };
 
     let { filters } =  this.props;
 
+    let gemstoneFilter = {};
+    // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
       keys.forEach((key) => {
         const value = filter[key];
-        params[key] = value;
+        const gemstoneFields = keys[0].split('.');
+        if(gemstoneFields[0] == 'gemstones'){
+          gemstoneFilter[gemstoneFields[1]] = value;
+        }else if(gemstoneFields[0] == 'certificatedNumber'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'certificateAgency'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'cerDateFrom'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }
+        else{
+          params[key] = value;
+        }
       });
     });
 
-    let girdView = this.state.showGridView;
-    let listView = this.state.showListView;
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
+
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
 
     this.setState({
-      showGridView: false,
-      showListView: false,
       showLoading: true
     });
+
+    this.props.setSortDirection(e.target.value);
 
     this.props.getItems(params)
     .then((value) => {
       this.setState({showLoading: false});
       if(girdView){
-        this.setState({showGridView: true});
+        // this.setState({showGridView: true});
+        this.props.setShowGridView(true);
       }else if (listView) {
-        this.setState({showListView: true});
+        // this.setState({showListView: true});
+        this.props.setShowListView(true);
       }
     });
 
@@ -536,10 +758,100 @@ class SearchResult extends Component {
     currPage.onChange(1);
     currPage.value = 1;
   }
+  selectedPageSize(e){
+    e.preventDefault();
+
+    const pageSize = e.target.value;
+
+    const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
+
+    const userLogin = JSON.parse(sessionStorage.logindata);
+    const { showGridView,showListView } = this.props;
+
+    let sortingBy = '';
+
+    switch (this.refs.sortingBy.value) {
+      case 'price':
+        sortingBy = 'price.' + userLogin.currency;
+        break;
+      default:
+        sortingBy = this.refs.sortingBy.value;
+        break;
+    }
+
+    const sortingDirection = this.refs.sortingDirection.value;
+
+    this.setState({activePage: getPage});
+    // console.log('getPage-->',getPage);
+    let params = {
+      'page' : getPage,
+      'sortBy': sortingBy,
+      'sortDirections': sortingDirection,
+      'pageSize' : pageSize
+    };
+    let { filters } =  this.props;
+
+    let gemstoneFilter = {};
+    // console.log('filters-->',filters);
+    filters.forEach(function(filter){
+      let keys = Object.keys(filter);
+      keys.forEach((key) => {
+        const value = filter[key];
+        const gemstoneFields = keys[0].split('.');
+        if(gemstoneFields[0] == 'gemstones'){
+          gemstoneFilter[gemstoneFields[1]] = value;
+        }else if(gemstoneFields[0] == 'certificatedNumber'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'certificateAgency'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'cerDateFrom'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }
+        else{
+          params[key] = value;
+        }
+      });
+    });
+
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
+
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
+
+    this.setState({
+      showLoading: true
+    });
+
+    this.props.setPageSize(pageSize);
+
+    this.props.getItems(params)
+    .then((value) => {
+      this.setState({showLoading: false});
+      if(girdView){
+        // this.setState({showGridView: true});
+        this.props.setShowGridView(true);
+      }else if (listView) {
+        // this.setState({showListView: true});
+        this.props.setShowListView(true);
+      }
+    });
+
+  }
   newSearch(e){
     e.preventDefault();
 
     const token = sessionStorage.token;
+
+    this.props.setSortingBy('itemCreatedDate');
+    this.props.setSortDirection('desc');
+    this.props.setPageSize(16);
+    this.props.setShowGridView(true);
+    this.props.setShowListView(false);
 
     this.props.newSearch();
     if(token){
@@ -550,6 +862,12 @@ class SearchResult extends Component {
     e.preventDefault();
 
     const token = sessionStorage.token;
+
+    this.props.setSortingBy('itemCreatedDate');
+    this.props.setSortDirection('desc');
+    this.props.setPageSize(16);
+    this.props.setShowGridView(true);
+    this.props.setShowListView(false);
 
     this.props.modifySearch(this.props.paramsSearch);
     if(token){
@@ -910,8 +1228,8 @@ class SearchResult extends Component {
   }
 
   render() {
-    const { totalPages,
-            currentPage,allItems,
+    const { totalPages,showGridView,showListView,
+            currentPage,allItems,pageSize,
             items,totalPublicPrice,totalUpdatedCost,
             handleSubmit,
             resetForm,
@@ -923,7 +1241,7 @@ class SearchResult extends Component {
 
     // console.log('this.state.activePage-->',this.state.activePage);
 
-    // console.log('userLogin-->',userLogin);
+    // console.log('pageSize-->',pageSize);
     if(items == null){
       return (
         <center ><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center>
@@ -952,7 +1270,8 @@ class SearchResult extends Component {
                 </div>
                 <div className="col-sm-2 col-xs-12 nopadding">
                   <div className="styled-select">
-                    <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy">
+                    <select className="form-searchresult"
+                      onChange={this.sortingBy} ref="sortingBy" >
                       <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
                       <option key={'price'} value={'price'}>{'Public Price'}</option>
                       <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
@@ -1043,11 +1362,11 @@ class SearchResult extends Component {
                 <div className="col-sm-2 ft-white nopadding pd-10">
                   <div
                     disabled={submitting} onClick={ this.gridViewResults } >
-                      <div className={`bd-white m-pt-mgl ${this.state.showGridView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-large"></span></div>
+                      <div className={`bd-white m-pt-mgl ${showGridView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-large"></span></div>
                   </div>
                   <div
                     disabled={submitting} onClick={ this.listViewResults } >
-                      <div className={`bd-white m-pt-mgl ${this.state.showListView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-list"></span></div>
+                      <div className={`bd-white m-pt-mgl ${showListView ? 'active-bar' : ''}` }><span className="glyphicon glyphicon-th-list"></span></div>
                   </div>
                 </div>
               </div>
@@ -1060,7 +1379,7 @@ class SearchResult extends Component {
                   <div className="panel panel-default">
                       <div className="panel-body padding-ft0">
                         <div className="col-sm-12 ">
-                          <div className="col-md-3 col-sm-4 nopadding">
+                          <div className="col-md-2 col-sm-3 col-xs-12 nopadding">
 
                             <a><div className="icon-add margin-l10"></div></a>
                             <a><div className="icon-excel margin-l10" disabled={submitting}
@@ -1070,9 +1389,22 @@ class SearchResult extends Component {
                                 </div>
                             </a>
                           </div>
-                          <div className="col-md-9 col-sm-8 pagenavi">
+                          <div className="col-md-10 col-sm-9 col-xs-12 pagenavi">
                             <div className="searchresult-navi search-right">
                                 {this.renderPagination()}
+                            </div>
+                            <div className="pull-right maring-b10">
+                              <div className="pull-left padding-r10 margin-t7">View</div>
+                              <div className="pull-left">
+                              <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
+                                <option key="16" value="16">16</option>
+                                <option key="32" value="32">32</option>
+                                <option key="60" value="60">60</option>
+                              </select>
+                              </div>
+                              <div className="pull-left padding-l10 margin-t7 margin-r10 m-margin">
+                              per page
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1084,17 +1416,17 @@ class SearchResult extends Component {
                             </div>
                           {/* End Total Data */}
                           {/* Grid Product */}
-                          <div className={`search-product ${this.state.showGridView ? '' : 'hidden'}` }>
+                          <div className={`search-product  ${showGridView ? '' : 'hidden'}` }>
                             <GridItemsView  items={items} onClickGrid={this.onClickGrid} />
                           </div>
                           <div id="dvGridview" className="search-product hidden">
                             <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
                           </div>
-                          <div className={`col-sm-12 search-product ${this.state.showListView ? '' : 'hidden'}` }>
-                            <ListItemsView items={items} onClickGrid={this.onClickGrid}/>
+                          <div className={`col-sm-12 search-product list-search ${showListView ? '' : 'hidden'}` }>
+                            <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}/>
                           </div>
                           <div id="dvListview" className="col-sm-12 search-product hidden">
-                            <ListItemsViewPrint items={items} onClickGrid={this.onClickGrid}/>
+                            <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}/>
                           </div>
                           <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                             <center>
@@ -1140,6 +1472,11 @@ function mapStateToProps(state) {
     maxPrice: state.searchResult.maxPrice,
     minPrice: state.searchResult.minPrice,
     avrgPrice: state.searchResult.avrgPrice,
+    pageSize: state.searchResult.PageSize,
+    sortingBy: state.searchResult.SortingBy,
+    sortDirection: state.searchResult.SortDirection,
+    showGridView: state.searchResult.ShowGridView,
+    showListView: state.searchResult.ShowListView
    }
 }
 SearchResult.propTypes = {

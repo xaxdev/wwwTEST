@@ -92,12 +92,41 @@ class InventoryFilter extends Component {
     this.refs.oba.treeOnUnClick();
     this.refs.sparepart.treeOnUnClick();
 
-    // $(window).scroll(function () {
-    //     if ($(window).scrollTop() > 10) {
-    //         $('#scroller').css('top', $(window).scrollTop());
-    //     }
-    // }
-    // );
+    var numbers = document.querySelectorAll('input[type="number"]');
+
+    for (var i in numbers) {
+      if (numbers.hasOwnProperty(i)) {
+        numbers[i].onkeydown = function(e) {
+            if(!((e.keyCode > 95 && e.keyCode < 106)
+              || (e.keyCode > 47 && e.keyCode < 58)
+              || e.keyCode == 8
+              || e.keyCode == 37
+              || e.keyCode == 39
+              || e.keyCode == 46
+              || e.keyCode == 110
+              || e.keyCode == 190
+              )) {
+                return false;
+            }
+        }
+      }
+    }
+
+    // numbers.forEach(function(number){
+    //   number.onkeydown = function(e) {
+    //       if(!((e.keyCode > 95 && e.keyCode < 106)
+    //         || (e.keyCode > 47 && e.keyCode < 58)
+    //         || e.keyCode == 8
+    //         || e.keyCode == 37
+    //         || e.keyCode == 39
+    //         || e.keyCode == 46
+    //         || e.keyCode == 110
+    //         || e.keyCode == 190
+    //         )) {
+    //           return false;
+    //       }
+    //   }
+    // });
 
     $(window).scroll(function() {
         var w = $('#page-wrapper').width();
@@ -303,8 +332,6 @@ class InventoryFilter extends Component {
   }
   resetFormInventory() {
     // console.log('ResetFormMain-->');
-    // jQuery("input[type='checkbox']").attr('checked',false);
-    // this.props.itemActions.newSearch();
 
     let fileName = jQuery('#fileName');
 
@@ -406,7 +433,6 @@ class InventoryFilter extends Component {
           break;
       }
     });
-    // jQuery("input[type='checkbox']").attr('checked',false);
     // console.log('this.state.showLoading-->',this.state.showLoading);
       return (
 

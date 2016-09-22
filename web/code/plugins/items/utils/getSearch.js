@@ -1,3 +1,5 @@
+const GetSearchGemstone = require('../utils/getSearchGemstone');
+
 const internals = {
   filters: []
 };
@@ -12,7 +14,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
 
     var objRange={length:0};
     var filter = '';
-    var size = 8;
+    var size = request.payload.pageSize;;
     var fromitem = (page-1)*size;
 
     var keyFromLot = '';
@@ -39,18 +41,9 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
     var valFromMarkup = 0;
     var valToMarkup = 0;
 
-    var valFromCerDate = 0;
-    var valToCerDate = 0;
-
     var valFromGrossW = 0;
     var valToGrossW = 0;
 
-    let valStoneFromCost = 0;
-    let valStoneToCost = 0;
-    let valQuantityFrom = 0;
-    let valQuantityTo = 0;
-    let valCaratWeightFrom = 0;
-    let valCaratWeightTo = 0;
     let valFromProDate = '';
     let valToProDate = '';
     let valDimensionFrom = 0;
@@ -69,10 +62,8 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'location' || key == 'buckleType'
             || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
             || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType'
-            || key == 'metalColour' || key == 'gemstones.stoneType' || key == 'gemstones.cut' || key == 'gemstones.cutGrade'
-            || key == 'gemstones.color' || key == 'gemstones.clarity' || key == 'limitedEdition' || key == 'sku'
-            || key == 'origin' || key == 'gemstones.origin' || key == 'gemstones.polish' || key == 'gemstones.symmetry'
-            || key == 'gemstones.treatment' || key == 'gemstones.fluorescence' || key == 'watchCategory'
+            || key == 'metalColour' || key == 'gemstones' || key == 'limitedEdition' || key == 'sku'
+            || key == 'origin' || key == 'watchCategory'
             || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal'
             || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse'
         ){
@@ -81,23 +72,18 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
         }
 
         // console.log('key.value-->',value);
-        if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' ){
+        if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
+            && key != 'price' && key != 'pageSize' ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
              || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'fluorescence'
              || key == 'jewelryCategory' || key == 'collection' || key == 'brand'|| key == 'mustHave' || key == 'ringSize'
-             || key == 'dominantStone' || key == 'metalType' || key == 'metalColour' || key == 'gemstones.stoneType'
-             || key == 'gemstones.cut' || key == 'gemstones.cutGrade' || key == 'gemstones.color' || key == 'gemstones.clarity'
-             || key == 'gemstones.certificateAgency' || key == 'origin' || key == 'gemstones.origin' || key == 'gemstones.polish'
-             || key == 'gemstones.symmetry' || key == 'gemstones.treatment' || key == 'gemstones.fluorescence'
-             || key == 'watchCategory' || key == 'limitedEdition' || key == 'movement' || key == 'dialIndex'
+             || key == 'dominantStone' || key == 'metalType' || key == 'metalColour'
+             || key == 'origin' || key == 'watchCategory' || key == 'limitedEdition' || key == 'movement' || key == 'dialIndex'
              || key == 'dialColor' || key == 'dialMetal' || key == 'buckleType' || key == 'strapType' || key == 'strapColor'
              || key == 'complication' || key == 'warehouse' || key == 'location' || key=='certificatedNumber'
-             || key == 'gemstones.certificatedNumber'
           ){
             if(key == 'metalColour')
               key = 'metalColor'
-            if(key == 'gemstones.stoneType')
-              key = 'gemstones.stoneTypeId'
             if(key == 'location')
               key = 'site'
             if(key == 'jewelryCategory')
@@ -106,14 +92,6 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
               key = 'subType'
             if(key == 'ringSize')
               key = 'size'
-            if(key == 'certificatedNumber')
-              key = 'gemstones.certificate.number'
-            if(key == 'certificateAgency')
-              key = 'gemstones.certificate.agency'
-            if(key == 'gemstones.certificateAgency')
-              key = 'gemstones.certificate.agency'
-            if(key == 'gemstones.certificatedNumber')
-              key = 'gemstones.certificate.number'
             if(key == 'dominantStone')
               key = 'dominant'
             if(key == 'stoneType')
@@ -146,36 +124,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             }
             var objLength = objRange.length +1;
             objRange = {...objRange,'carat':{'from':valFromCarat,'to':valToCarat},'length':objLength};
-            filter =
-              `{
-                "match": {
-                  "gemstoneType": {
-                    "query": "Loose Diamond"
-                  }
-                }
-              }`;
-            internals.filters.push(JSON.parse(filter));
-            filter = '';
-            filter =
-              `{
-                "match": {
-                  "gemstoneType": {
-                    "query": "Stone"
-                  }
-                }
-              }`;
-            internals.filters.push(JSON.parse(filter));
-            filter = '';
-            filter =
-              `{
-                "match": {
-                  "gemstoneType": {
-                    "query": "Diamond"
-                  }
-                }
-              }`;
-            internals.filters.push(JSON.parse(filter));
-            filter = '';
+
           }
           else if(key == 'totalCostFrom' || key == 'totalCostTo'){
             keyFromCost = 'costUSD';
@@ -314,20 +263,6 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             var objLength = objRange.length +1;
             objRange = {...objRange,'markup':{'from':valFromMarkup,'to':valToMarkup},'length':objLength};
           }
-          else if(key == 'cerDateFrom' || key == 'cerDateTo'){
-            if(key == 'cerDateFrom'){
-              // MM-dd-YYYY to YYYY-MM-dd
-              var d = value.split('-');
-              valFromCerDate = `${d[2]}-${d[0]}-${d[1]}`;
-            }
-            if(key == 'cerDateTo'){
-              // MM-dd-YYYY to YYYY-MM-dd
-              var d = value.split('-');
-              valToCerDate= `${d[2]}-${d[0]}-${d[1]}`;
-            }
-            var objLength = objRange.length +1;
-            objRange = {...objRange,'gemstones.certificate.issuedDate':{'from':valFromCerDate,'to':valToCerDate},'length':objLength};
-          }
           else if(key == 'grossWeightFrom' || key == 'grossWeightTo'){
             if(key == 'grossWeightFrom'){
               valFromGrossW = value;
@@ -338,111 +273,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             var objLength = objRange.length +1;
             objRange = {...objRange,'grossWeight':{'from':valFromGrossW,'to':valToGrossW},'length':objLength};
           }
-          else if(key == 'gemstones.cerDateFrom' || key == 'gemstones.cerDateTo'){
-            if(key == 'gemstones.cerDateFrom'){
-              // MM-dd-YYYY to YYYY-MM-dd
-              var d = value.split('-');
-              valFromCerDate = `${d[2]}-${d[0]}-${d[1]}`;
-            }
-            if(key == 'gemstones.cerDateTo'){
-              // MM-dd-YYYY to YYYY-MM-dd
-              var d = value.split('-');
-              valToCerDate= `${d[2]}-${d[0]}-${d[1]}`;
-            }
-            var objLength = objRange.length +1;
-            objRange = {...objRange,'gemstones.certificate.issuedDate':{'from':valFromCerDate,'to':valToCerDate},'length':objLength};
-          }
-          else if(key == 'gemstones.stoneCostFrom' || key == 'gemstones.stoneCostTo'){
-            if(key == 'gemstones.stoneCostFrom'){
-              valStoneFromCost = value;
-            }
-            if(key == 'gemstones.stoneCostTo'){
-              valStoneToCost = value;
-            }
-            var objLength = objRange.length +1;
-            switch(userCurrency){
-              case 'AED':
-                objRange = {...objRange,'gemstones.cost.AED':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
-                break;
-              case 'CHF':
-                objRange = {...objRange,'gemstones.cost.CHF':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
-                break;
-              case 'EUR':
-                objRange = {...objRange,'gemstones.cost.EUR':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
-                break;
-              case 'JOD':
-                objRange = {...objRange,'gemstones.cost.JOD':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
-                break;
-              case 'KWD':
-                objRange = {...objRange,'gemstones.cost.KWD':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
-                break;
-              case 'LBP':
-                objRange = {...objRange,'gemstones.cost.LBP':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
-                break;
-              case 'OMR':
-                objRange = {...objRange,'gemstones.cost.OMR':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
-                break;
-              case 'QAR':
-                objRange = {...objRange,'gemstones.cost.QAR':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
-                break;
-              case 'SAR':
-                objRange = {...objRange,'gemstones.cost.SAR':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
-                break;
-              default:
-                objRange = {...objRange,'gemstones.cost.USD':{'from':valStoneFromCost,'to':valStoneToCost},'length':objLength};
-                break;
-            }
-          }
-          else if(key == 'gemstones.quantityFrom' || key == 'gemstones.quantityTo'){
-            if(key == 'gemstones.quantityFrom'){
-              valQuantityFrom = value;
-            }
-            if(key == 'gemstones.quantityTo'){
-              valQuantityTo = value;
-            }
-            var objLength = objRange.length +1;
-            objRange = {...objRange,'gemstones.quantity':{'from':valQuantityFrom,'to':valQuantityTo},'length':objLength};
-          }
-          else if(key == 'gemstones.totalCaratWeightFrom' || key == 'gemstones.totalCaratWeightTo'){
-            if(key == 'gemstones.totalCaratWeightFrom'){
-              valCaratWeightFrom = value;
-            }
-            if(key == 'gemstones.totalCaratWeightTo'){
-              valCaratWeightTo = value;
-            }
-            var objLength = objRange.length +1;
-            objRange = {...objRange,'gemstones.carat':{'from':valCaratWeightFrom,'to':valCaratWeightTo},'length':objLength};
-            filter =
-              `{
-                "match": {
-                  "gemstones.type": {
-                    "query": "Loose Diamond"
-                  }
-                }
-              }`;
-            internals.filters.push(JSON.parse(filter));
-            filter = '';
-            filter =
-              `{
-                "match": {
-                  "gemstones.type": {
-                    "query": "Stone"
-                  }
-                }
-              }`;
-            internals.filters.push(JSON.parse(filter));
-            filter = '';
-            filter =
-              `{
-                "match": {
-                  "gemstones.type": {
-                    "query": "Diamond"
-                  }
-                }
-              }`;
-            internals.filters.push(JSON.parse(filter));
-            filter = '';
-          }
+
           else if(key == 'proDateFrom' || key == 'proDateTo'){
             if(key == 'proDateFrom'){
               // MM-dd-YYYY to YYYY-MM-dd
@@ -524,6 +355,10 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                     ]
                   }
                 }`;
+          }
+          else if(key == 'gemstones'){
+
+            filter = GetSearchGemstone(key, obj, userCurrency);
           }
           else
           {

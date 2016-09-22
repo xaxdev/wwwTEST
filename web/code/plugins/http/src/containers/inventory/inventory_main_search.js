@@ -60,11 +60,13 @@ class InventorySearch extends Component {
 
     if(filters.length != 0){
       this.props.setParams(paramsSearch)
+      sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
       filters.splice(0, filters.length);
     }else{
       // if not have filters is mean new search
       // set params by new criterias
       this.props.setParams(data);
+      sessionStorage.setItem('paramsSearch', JSON.stringify(data));
     }
 
     var keyscat = Object.keys(data);
@@ -206,6 +208,7 @@ class InventorySearch extends Component {
     filters.push({'userCurrency':userLogin.currency});
     // console.log('filters-->',filters);
     this.props.setCurrentPage(1);
+    sessionStorage.setItem('filters', JSON.stringify(filters));
     this.context.router.push('/searchresult');
   }
 

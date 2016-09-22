@@ -15,6 +15,7 @@ class ListItemsView extends Component {
     this.renderAction = this.renderAction.bind(this);
     this.onClickGrid = this.onClickGrid.bind(this);
 
+
     this.state = {
       initialPageLength:16
     };
@@ -23,6 +24,10 @@ class ListItemsView extends Component {
   static propTypes = {
     onClickGrid: PropTypes.func.isRequired
   };
+  componentWillReceiveProps(nextProps) {
+    // console.log('list view pageSize componentWillReceiveProps-->',this.props.pageSize);
+    this.setState({initialPageLength: this.props.pageSize});
+  }
   renderAction(val,row){
     return(
       <div className="searchresult-list-icon">
@@ -62,6 +67,9 @@ class ListItemsView extends Component {
 
   render(){
     var items = null;
+    const userLogin = JSON.parse(sessionStorage.logindata);
+    const currency = userLogin.currency;
+    // console.log('list view pageSize-->',this.props.pageSize);
     if (this.props.items.length != 0){
       items = this.props.items.map(function (col, idx) {
         // console.log('col-->',col);
@@ -83,11 +91,13 @@ class ListItemsView extends Component {
             break;
         }
 
-        if (col.type != 'CER') {
-          col.priceUSD = GetPriceWithCurrency(col,'price');
-        } else {
-          col.priceUSD = '';
-        }
+        // if (col.type != 'CER') {
+        //   col.priceUSD = GetPriceWithCurrency(col,'price');
+        // } else {
+        //   col.priceUSD = '';
+        // }
+
+        col.priceUSD = numberFormat((col.price != undefined)? col.price[currency] : 0)
 
         let jewelsWeight = 0;
 
@@ -102,6 +112,7 @@ class ListItemsView extends Component {
         }
 
         col.jewelsWeight = numberFormat(jewelsWeight);
+        // col.jewelsWeight = jewelsWeight;
 
         let itemName = (col.type != 'CER')
                           ?
@@ -133,7 +144,7 @@ class ListItemsView extends Component {
           <DataTable
             className="col-sm-12"
             // keys={['', 'image','reference', 'description', 'sku', 'siteName', 'warehouseName', 'size', '', 'grossWeight','priceUSD','' ]}
-            keys={['image','reference', 'description', 'sku', 'siteName', 'warehouseName', 'size', '', 'grossWeight','priceUSD','' ]}
+            keys={['image','reference', 'description', 'sku', 'siteName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight','priceUSD','' ]}
             columns={tableColumns}
             initialData={items}
             initialPageLength={this.state.initialPageLength}

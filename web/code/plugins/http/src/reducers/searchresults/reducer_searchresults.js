@@ -1,4 +1,5 @@
-import { FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE
+import { FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE,
+          SET_PAGESIZE,SET_SORTBY,SET_SORTDIRECTION,SET_SHOWGRIDVIEW,SET_SHOWLISTVIEW
         } from '../../constants/itemconstants';
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY,
           SET_CERTIFICATELAB, SET_POLISH, SET_SYMMETRY, SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN, SET_JEWELRYCATEGORY, SET_COLLECTION,
@@ -20,7 +21,8 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                         filters:[], AccessoryTypeValue:[],SparePartTypeValue:[], paramsSearch:null,IsAdvance:false,
                         HierarchyValue:null,SearchAction:'New',exportItems:[],maxPrice:null,minPrice:null,avrgPrice:null,
                         GemCertificateDateFrom:null,GemCertificateDateTo:null,StoneCertificateDateFrom:null,
-                        StoneCertificateDateTo:null,ProductionDateFrom:null,ProductionDateTo:null
+                        StoneCertificateDateTo:null,ProductionDateFrom:null,ProductionDateTo:null,PageSize:16,
+                        SortingBy:'itemCreatedDate',SortDirection:'desc',ShowGridView: true,ShowListView: false
                       };
 
   export default function(state = INITIAL_STATE, action){
@@ -38,9 +40,24 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 SparePartTypeValue:[],SearchAction:'New',GemCertificateDateFrom:null,GemCertificateDateTo:null,
                 StoneCertificateDateFrom:null,StoneCertificateDateTo:null,ProductionDateFrom:null,ProductionDateTo:null
               };
+      case SET_SHOWGRIDVIEW :
+        // console.log('SET_POLISH -->',action);
+        return {...state, ShowGridView: action.showGridView };
+      case SET_SHOWLISTVIEW :
+        // console.log('SET_POLISH -->',action);
+        return {...state, ShowListView: action.showListView };
       case SET_CURRENTPAGE :
         // console.log('SET_POLISH -->',action);
         return {...state, currentPage: action.currentPage };
+      case SET_SORTBY :
+        // console.log('SET_SORTBY -->',action.sortingBy);
+        return {...state, SortingBy: action.sortingBy };
+      case SET_SORTDIRECTION :
+        // console.log('SET_PAGESIZE -->',action.pageSize);
+        return {...state, SortDirection: action.sortDirection };
+      case SET_PAGESIZE :
+        // console.log('SET_PAGESIZE -->',action.pageSize);
+        return {...state, PageSize: action.pageSize };
       case SET_PRODUCTION_DATE_FROM :
         // console.log('SET_POLISH -->',action);
         return {...state, ProductionDateFrom: action.productionDateFrom };
@@ -187,7 +204,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[],SparePartTypeValue:[],SearchAction:'New',
                 exporttems:[],maxPrice:null,minPrice:null,avrgPrice:null,GemCertificateDateFrom:null,
                 GemCertificateDateTo:null,StoneCertificateDateFrom:null,StoneCertificateDateTo:null,ProductionDateFrom:null,
-                ProductionDateTo:null
+                ProductionDateTo:null,PageSize:16,ShowGridView: true,showListView: false
               }
       case SET_PARAMS:
         // console.log('action.params-->',action.params);
@@ -199,7 +216,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
       case FETCH_ALLITEMS:
         // console.log('action-->',action.type);
         // console.log('action.data.summary-->',action.data.summary);
-        return { ...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/16),
+        return { ...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/action.data.pageSize),
                 totalpublicprice: action.data.summary.price, totalupdatedcost: action.data.summary.cost,
                 currentPage:action.currPage, allItems: action.data.allData, exportItems: action.data.exportData,
                 maxPrice: action.data.summary.maxPrice,minPrice: action.data.summary.minPrice,
