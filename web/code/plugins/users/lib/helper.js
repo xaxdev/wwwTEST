@@ -1,6 +1,5 @@
 const Boom = require('boom');
 const Promise = require('bluebird');
-const _ = require('lodash');
 
 export default {
     getUserById: (request, reply, userId) => {

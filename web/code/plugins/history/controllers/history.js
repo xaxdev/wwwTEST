@@ -9,7 +9,8 @@ export default {
 
         (async () => {
 
-            const history = request.history;
+            const userHelper = request.user
+            const helper = request.helper
             const display = request.params.display || "ACTIVE"
             const page = request.params.page || 1
             const size = 8
@@ -34,12 +35,22 @@ export default {
 
             try {
                 const db = request.server.plugins['hapi-mongodb'].db
-                const user = await history.getUserById(request, reply, request.auth.credentials.id)
-
-                db.collection('History')
-                .find(fCondition)
-                .sort({ "lookUpDate": -1 })
+                const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
+                const countHistory = await db.collection('History').find(fCondition).count()
+                const popHistory = await db.collection('History').find(fCondition, { _id: 0, "itemId": 1, "name": 1, "reference": 1 })
+                .sort({ "updatedDate": -1 })
+                .limit(size)
+                .skip((page - 1) * size)
                 .toArray()
+                .then((data) => {
+                    data.forEach((item) => {
+                        item.id = item.itemId
+                    })
+                    return data
+                })
+                const esItemData = helper.item.synchronize(request.server.plugins.elastic.client, popHistory)
+
+                esItemData
                 .then((data) => {
 
                     if (data) {
@@ -51,34 +62,24 @@ export default {
                             itemsCondition = _.assign({ "warehouse": { $in: user.permission.onhandWarehouse.places }}, itemsCondition)
                         }
 
-                        return db.collection('Items')
-                        .find(itemsCondition)
-                        .toArray()
-                        .then((data) => {
+                        data.forEach((item) => {
 
-                            if (!_.isNull(data)) {
-                                data.forEach((item) => {
+                            item.actualCost = _.hasIn(item.actualCost, user.currency) ? _.result(item.actualCost, user.currency) : 0
+                            item.updatedCost = _.hasIn(item.updatedCost, user.currency) ? _.result(item.updatedCost, user.currency) : 0
+                            item.price = _.hasIn(item.price, user.currency) ? _.result(item.price, user.currency) : 0
 
-                                    item.actualCost = _.hasIn(item.actualCost, user.currency) ? _.result(item.actualCost, user.currency) : 0
-                                    item.updatedCost = _.hasIn(item.updatedCost, user.currency) ? _.result(item.updatedCost, user.currency) : 0
-                                    item.price = _.hasIn(item.price, user.currency) ? _.result(item.price, user.currency) : 0
-
-                                    switch (user.permission.price.toUpperCase()) {
-                                        case "PUBLIC":
-                                            delete item.actualCost
-                                            delete item.updatedCost
-                                            break;
-                                        case "UPDATED":
-                                            delete item.actualCost
-                                            break;
-                                    }
-                                })
-
-                                return data;
+                            switch (user.permission.price.toUpperCase()) {
+                                case "PUBLIC":
+                                    delete item.actualCost
+                                    delete item.updatedCost
+                                    break;
+                                case "UPDATED":
+                                    delete item.actualCost
+                                    break;
                             }
-
-                            return reply(Boom.badRequest("Invalid item."))
                         })
+
+                        return data;
                     }
 
                     return reply(Boom.badRequest("Invalid item."))
@@ -86,11 +87,11 @@ export default {
                 .then((data) => {
 
                     return reply({
-                        "status": true,
+                        "items": data,
                         "page": parseInt(page),
-                        "total_items": data.length,
-                        "total_pages": Math.ceil(data.length / size),
-                        "items": data.slice((page - 1) * size, page * size)
+                        "total_items": countHistory,
+                        "total_pages": Math.ceil(countHistory / size),
+                        "status": true
                     })
                 })
 

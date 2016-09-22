@@ -16,35 +16,58 @@ export default {
                 const catalogPayload = request.payload
                 const catalogPayloadId = request.payload.id
                 const catalogPayloadItems = request.payload.items
-                const item = request.item
+                const helper = request.helper
+                const esItemData = helper.item.synchronize(request.server.plugins.elastic.client, catalogPayloadItems)
 
                 let catalogName = {
                     "catalog": request.payload.catalog,
                     "userId": request.auth.credentials.id,
+                    "status": true,
                     "updatedDate": _.now()
                 }
 
                 if (_.isNull(catalogPayloadId)) {
-                    db.collection('CatalogName').insertOne(catalogName, function(err, r) {
 
-                        db.collection('CatalogName').findOne(catalogName, function(err, r) {
+                    const addCatalog = db.collection('CatalogName').insertOne(catalogName)
+                    .then((result) => {
+                        return db.collection('CatalogName').findOne(catalogName)
+                    })
 
-                            catalogPayloadItems.forEach(({id}) => {
+                    Promise.all([addCatalog, esItemData])
+                    .spread((catalogData, itemData) => {
 
-                                db.collection('CatalogItem').insertOne({ "catalogId": r._id, "updatedDate": _.now(), "itemId": id })
+                        itemData.forEach((item) => {
+
+                            db.collection('CatalogItem').insertOne({
+                                "catalogId": catalogData._id, "itemId": item.id, "reference": item.reference, "name": item.name, "updatedDate": _.now()
                             })
                         })
                     })
-                }
-                else {
-                    catalogPayloadItems.forEach(({id}) => {
+                    .catch((err) => {
 
-                        db.collection('CatalogItem').findAndModify({ "catalogId": new ObjectID(catalogPayloadId), "itemId": id.toString() },
-                            [['itemId', 1]],
-                            { $set: { "updatedDate": _.now() }},
-                            { new: true, upsert: true });
+                        reply(Boom.badImplementation('', err))
                     })
                 }
+                // else {
+                //
+                //     esItemData
+                //     .then((itemData) => {
+                //
+                //         itemData.forEach(({id}) => {
+                //
+                //             db.collection('CatalogItem').findAndModify({
+                //                 "catalogId": new ObjectID(catalogPayloadId), "itemId": id.toString()
+                //             },
+                //             [['itemId', 1]],
+                //             { $set: { "reference": item.reference, "name": item.name, "updatedDate": _.now() }},
+                //             { new: true, upsert: true });
+                //         })
+                //     })
+                //     .catch((err) => {
+                //
+                //         reply(Boom.badImplementation('', err))
+                //     })
+                // }
 
                 reply({ "status": true })
             } catch (e) {

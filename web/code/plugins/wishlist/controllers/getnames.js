@@ -11,7 +11,7 @@ export default {
 
             try {
                 const db = request.server.plugins['hapi-mongodb'].db
-                reply(await db.collection('WishlistName').find({ "userId": request.auth.credentials.id }).toArray())
+                reply(await db.collection('WishlistName').find({ "userId": request.auth.credentials.id }).sort({ "wishlist": 1 }).toArray())
             } catch (e) {
 
                 reply(Boom.badImplementation('', e))

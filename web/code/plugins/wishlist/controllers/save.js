@@ -16,35 +16,58 @@ export default {
                 const wlistPayload = request.payload
                 const wlistPayloadId = request.payload.id
                 const wlistPayloadItems = request.payload.items
-                const item = request.item
+                const helper = request.helper
+                const esItemData = helper.item.synchronize(request.server.plugins.elastic.client, wlistPayloadItems)
 
                 let wlistName = {
                     "wishlist": request.payload.wishlist,
                     "userId": request.auth.credentials.id,
+                    "status": true,
                     "updatedDate": _.now()
                 }
 
                 if (_.isNull(wlistPayloadId)) {
-                    db.collection('WishlistName').insertOne(wlistName, function(err, r) {
 
-                        db.collection('WishlistName').findOne(wlistName, function(err, r) {
+                    const addWishlist = db.collection('WishlistName').insertOne(wlistName)
+                    .then((result) => {
+                        return db.collection('WishlistName').findOne(wlistName)
+                    })
 
-                            wlistPayloadItems.forEach(({id}) => {
+                    Promise.all([addWishlist, esItemData])
+                    .spread((wlistData, itemData) => {
 
-                                db.collection('WishlistItem').insertOne({ "wishlistId": r._id, "updatedDate": _.now(), "itemId": id })
+                        itemData.forEach((item) => {
+
+                            db.collection('WishlistItem').insertOne({
+                                "wishlistId": wlistData._id, "itemId": item.id, "reference": item.reference, "name": item.name, "updatedDate": _.now()
                             })
                         })
                     })
-                }
-                else {
-                    wlistPayloadItems.forEach(({id}) => {
+                    .catch((err) => {
 
-                        db.collection('WishlistItem').findAndModify({"wishlistId": new ObjectID(wlistPayloadId), "itemId": id.toString() },
-                            [['itemId', 1]],
-                            { $set: { "updatedDate": _.now() }},
-                            { new: true, upsert: true });
+                        reply(Boom.badImplementation('', err))
                     })
                 }
+                // else {
+                //
+                //     esItemData
+                //     .then((itemData) => {
+                //
+                //         itemData.forEach((item) => {
+                //
+                //             db.collection('WishlistItem').findAndModify({
+                //                 "wishlistId": new ObjectID(wlistPayloadId), "itemId": item.id.toString()
+                //             },
+                //             [['itemId', 1]],
+                //             { $set: { "reference": item.reference, "name": item.name, "updatedDate": _.now() } },
+                //             { new: true, upsert: true });
+                //         })
+                //     })
+                //     .catch((err) => {
+                //
+                //         reply(Boom.badImplementation('', err))
+                //     })
+                // }
 
                 reply({ "status": true })
             } catch (e) {

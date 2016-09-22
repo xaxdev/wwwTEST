@@ -44,6 +44,8 @@ const synchronize = async (es, items) => {
                 hoek.merge(item, { status: false })
             }
         })
+
+        return items
     } catch (err) {
         throw err
     } finally  {
