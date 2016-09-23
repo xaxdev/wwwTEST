@@ -112,22 +112,6 @@ class InventoryFilter extends Component {
       }
     }
 
-    // numbers.forEach(function(number){
-    //   number.onkeydown = function(e) {
-    //       if(!((e.keyCode > 95 && e.keyCode < 106)
-    //         || (e.keyCode > 47 && e.keyCode < 58)
-    //         || e.keyCode == 8
-    //         || e.keyCode == 37
-    //         || e.keyCode == 39
-    //         || e.keyCode == 46
-    //         || e.keyCode == 110
-    //         || e.keyCode == 190
-    //         )) {
-    //           return false;
-    //       }
-    //   }
-    // });
-
     $(window).scroll(function() {
         var w = $('#page-wrapper').width();
 				if ($(window).scrollTop() > 100) {
@@ -492,13 +476,6 @@ class InventoryFilter extends Component {
                               <InventoryGemStone props={this.props}/>
                             </div>
                           </div>
-                          {/*<div className="col-sm-12 text-center">
-                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
-                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
-                              disabled={submitting} onClick={this.resetFormInventory}>
-                              <i/> Reset
-                            </button>
-                          </div>*/}
                         </Tab>
                         <Tab eventKey={2} title="Watch" disabled={!productGroupWAT}>
                           <InventoryWatch props={this.props} ref="watch"/>
@@ -514,25 +491,11 @@ class InventoryFilter extends Component {
                               <InventoryGemStone props={this.props}/>
                             </div>
                           </div>
-                          {/*<div className="col-sm-12 text-center">
-                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
-                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
-                              disabled={submitting} onClick={this.resetFormInventory}>
-                              <i/> Reset
-                            </button>
-                          </div>*/}
                         </Tab>
                         <Tab eventKey={3} title="Stone" disabled={!productGroupSTO}>
                           <InventoryStone props={this.props} ref="stone"/>
-                          {/*<div className="col-sm-12 text-center">
-                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
-                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
-                              disabled={submitting} onClick={this.resetFormInventory}>
-                              <i/> Reset
-                            </button>
-                          </div>*/}
                         </Tab>
-                        <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC} className="hidden">
+                        <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC}>
                           <InventoryAcc props={this.props} ref="accessory"/>
                           <div className="panel-body">
                             <div className="row gemstone-bar">
@@ -546,13 +509,6 @@ class InventoryFilter extends Component {
                               <InventoryGemStone props={this.props}/>
                             </div>
                           </div>
-                          {/*<div className="col-sm-12 text-center">
-                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
-                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
-                              disabled={submitting} onClick={this.resetFormInventory}>
-                              <i/> Reset
-                            </button>
-                          </div>*/}
                         </Tab>
                         <Tab eventKey={5} title="OBJECT OF ART" disabled={!productGroupOBA}>
                           <InventoryOBA props={this.props}  ref="oba"/>

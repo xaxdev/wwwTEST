@@ -33,32 +33,14 @@ class InventoryGemStone extends Component {
       endDate: null
     };
   }
-  // componentWillReceiveProps(nextProps) {
-  //   const { props } = this.props;
-  //   console.log('nextProps-->',this.state.startDate);
-  //   // console.log('props.SearchAction-->',props.SearchAction);
-  //
-  //   // if(nextProps.props.SearchAction != props.SearchAction){
-  //   //   if(props.HierarchyValue != null){
-  //   //     if(nextProps.props.SearchAction == 'New'){
-  //   //       if(props.HierarchyValue.length != 0){
-  //   //         props.HierarchyValue[0].checked = false;
-  //   //         props.HierarchyValue[0].key = props.HierarchyValue[0].code;
-  //   //         this.refs.treeview.handleChange(props.HierarchyValue[0]);
-  //   //       }
-  //   //       props.inventoryActions.setHierarchy(null);
-  //   //     }
-  //   //   }
-  //   // }
-  //
-  // }
+  
   shouldComponentUpdate(nextProps, nextState) {
     // console.log('startDate-->',nextProps);
     return shallowCompare(this, nextProps, nextState);
     // this.setState({ startDate: nextState.startDate })
   }
   resetDate(vals){
-    console.log('gemstone reset date');
+    // console.log('gemstone reset date');
 
     this.setState({ startDate: '' })
   }
