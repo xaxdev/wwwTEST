@@ -19,7 +19,7 @@ module.exports = {
             "match_all" : {}
         }
     }`);
-    let type = 'roles,currencies,companies,locations,warehouses,countries,productGroups,stoneType,gemstoneStoneType,cut,cutShape,cutGrades,colors,colorGrades,clarities,certificateLabs,polishs,symmetries,treatments,fluorescences,origins,jewelryCategories,collections,brands,ringSizes,dominantStones,metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,buckleTypes,strapTypes,strapColors,complications,hierarchy'
+    let type = 'roles,currencies,companies,locations,warehouses,countries,productGroups,stoneType,gemstoneStoneType,cut,cutShape,cutGrades,colors,colorGrades,clarities,certificateLabs,polishs,symmetries,treatments,fluorescences,origins,jewelryCategories,collections,brands,ringSizes,dominantStones,metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,buckleTypes,strapTypes,strapColors,complications,hierarchy,accessoryTypes'
     // let type = 'roles,currencies';
     const alldata = elastic
       .search({
@@ -148,6 +148,10 @@ module.exports = {
       const hierarchyget = alldata.hits.hits.filter((element)=> {{
         return element._type == 'hierarchy';
       }})
+      const accessoryTypesget = alldata.hits.hits.filter((element)=> {{
+        return element._type == 'accessoryTypes';
+      }})
+
 
 
       const responsesata = {
@@ -189,7 +193,8 @@ module.exports = {
         strapTypes: _.sortBy(strapTypesget.map((element)=> element._source),'code'),
         strapColors: _.sortBy(strapColorsget.map((element)=> element._source),'code'),
         complications: _.sortBy(complicationsget.map((element)=> element._source),'name'),
-        hierarchy: _.sortBy(hierarchyget.map((element)=> element._source),'path')
+        hierarchy: _.sortBy(hierarchyget.map((element)=> element._source),'path'),
+        accessoryType: _.sortBy(accessoryTypesget.map((element)=> element._source),'code')
       };
       elastic.close();
       return reply(JSON.stringify(responsesata,null,4));
