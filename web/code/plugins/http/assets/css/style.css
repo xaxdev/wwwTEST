@@ -259,13 +259,14 @@ input[type=file] {
   float: left;
   border: 1px solid #ccc;
   height: 35px;
-  padding: 6px 7px;
+  padding: 10px 7px;
 	-webkit-border-top-left-radius: 4px;
 	-webkit-border-bottom-left-radius: 4px;
 	-moz-border-radius-topleft: 4px;
 	-moz-border-radius-bottomleft: 4px;
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
+  overflow: hidden;
 }
 select.form-searchresult option{
 	color:#000 !important;
@@ -717,7 +718,7 @@ select.form-searchresult option{
 }
 .searchresult-navi{float:right;}
 .searchresult-navi div {margin-top: 0px;}
-.searchresult-navi input{margin:0 5px; text-align: center;}
+.searchresult-navi input{margin:0 5px; text-align: center; height: 33px;}
 .searchresult-navi span{padding:0 3px;}
 .searchresult-navi div, .searchresult-navi ul{float:left; margin-bottom:10px;}
 .relete ul{width:100%;}
@@ -735,7 +736,7 @@ select.form-searchresult option{
     float: left;
     width: 100%;
     padding: 15px 0;
-    margin: 20px 0 1px 0;
+    margin: 0px 0 1px 0;
 }
 .bg-f7d886{
 		background-color: #dddddd;
@@ -971,7 +972,7 @@ select.form-searchresult option{
   top: 30px;
 }
 .width-100{width:100%}
-.width-50{width:57%; float:right;}
+.width-50{width:50%; float:right;}
 .width-90{width:90px;}
 .width-10{width:10%;}
 .width-f100{width:100%; float:left;}
@@ -985,6 +986,12 @@ select.form-searchresult option{
 .image-gallery-image img{width: auto !important;}
 
 .image-gallery-content .image-gallery-left-nav:hover, .image-gallery-content .image-gallery-right-nav:hover{text-decoration: inherit;}
+.bar-title-detail{
+  width: 61%;
+  float: right;
+  text-align: right;
+}
+.bar-title-detail .display-right{display: inline-block; vertical-align: top;}
 @media (min-width:1201px){
  .bd-box{width: 79%;}
 }
@@ -1032,10 +1039,11 @@ select.form-searchresult option{
     overflow: hidden;
   }
   #fileName {
-    width: 100%;
+    width: 70%;
     border-radius: 4px;
     margin-bottom: 5px;
   }
+  #btn-browsefile{margin-left: -2px;}
   .bg-hearder {
     background: #383735;
     height: 100%;
@@ -1045,7 +1053,6 @@ select.form-searchresult option{
     margin-left: 0;
     margin-top: 0px;
   }
-  .search-right div, .search-right ul{float:right;}
   .over-searchresult {
     left: 180px !important;
   }
@@ -1088,7 +1095,6 @@ select.form-searchresult option{
 	}
 	.searchresult-navi div {
     margin-left: 8px;
-    margin-top: 10px;
 	}
 	.over-product, .over-product:hover, .searchresult-prodcut, .searchresult-prodcut:hover{width:100%; height:375px;}
 	.over-searchresult {
@@ -1183,10 +1189,16 @@ select.form-searchresult option{
     width: 50px;
   }
   .over-searchresult{z-index: 9999;}
-  .m-prodcutdetail{height:155px !important;}
+  .m-prodcutdetail{height:130px !important;}
   .m-prodcutdetail-item{float:right; margin-top:10px;}
+  .bar-title-detail{width: 100%; text-align: center;}
+  .productdetail-search {
+    padding: 0 0px 10px 12px;
+    text-align: right;
+  }
 }
 @media screen and (max-width: 767px) and (min-width: 320px) and (orientation : portrait){
+  .m-none{display: none !important;}
 	.logo-detail {
 	    background: url(/images/logo-mouawad-detail.png) no-repeat center 20px;
 	    height: 45px;
@@ -1223,7 +1235,6 @@ select.form-searchresult option{
 	}
 	.searchresult-navi div {
     margin-left: 0;
-    margin-top: 12px;
 	}
 	.bd-img{text-align: center;}
 	.over-searchresult, .over-searchresult-left {
@@ -1232,6 +1243,9 @@ select.form-searchresult option{
 	}
 	.bg-header-searchresult{height:245px !important;}
 	.bg-header-inventories{height: 100px !important;}
+  .m-prodcutdetail {
+    height: 140px !important;
+  }
 }
 @media screen and (max-width: 767px) and (min-width: 320px) and (orientation : landscape){
 	.m-width-60{width:60%; float:left;}

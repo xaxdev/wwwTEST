@@ -581,15 +581,14 @@ class productdetail extends Component {
       if(productlist.length != 0){
       return(
 
-            <div className="width-50  maring-t15">
-                      <div className="col-md-3 col-sm-1 "></div>
-                      <div className="col-md-3 col-sm-3 ft-white productdetail-search">
+            <div className="bar-title-detail maring-t15">
+                      <div className="ft-white productdetail-search display-right">
                         <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
                       </div>
-                      <div className="col-md-1 col-sm-1 margin-t5 text-center m-none">
+                      <div className="margin-t5 text-center m-none display-right padding-lf15">
                         <span className="bar-line">|</span>
                       </div>
-                      <div className="col-md-5 col-sm-7 nopadding m-prodcutdetail-item">
+                      <div className="display-right">
                         <div className="float-l bar-detail-pre">
                                <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].id}`:''}}><span className="btn btn-primary btn-radius"><span className="glyphicon glyphicon-menu-left"></span></span></Link>
                         </div>

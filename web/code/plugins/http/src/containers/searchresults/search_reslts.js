@@ -1402,7 +1402,7 @@ class SearchResult extends Component {
                                 <option key="60" value="60">60</option>
                               </select>
                               </div>
-                              <div className="pull-left padding-l10 margin-t7 margin-r10 m-margin">
+                              <div className="pull-left padding-l10 margin-t7 margin-r10">
                               per page
                               </div>
                             </div>
