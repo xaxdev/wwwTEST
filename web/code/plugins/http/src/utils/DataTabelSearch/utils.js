@@ -14,19 +14,33 @@ function sort(sortByValues, data) {
   // Convert string to number for sorting
   if(sortByValues.prop === 'priceUSD'){
     data.forEach(function(item){
-      item.priceUSD = parseFloat(item.priceUSD.replace(/,/g, ''));
+      if(item.priceUSD.indexOf(',') != -1){
+        item.priceUSD = parseFloat(item.priceUSD.replace(/,/g, ''));
+      }else if(item.priceUSD.indexOf('-') != -1){
+        item.priceUSD = parseFloat(item.priceUSD.replace(/-/g, 0));
+      }
       // console.log('item.priceUSD-->',item.priceUSD);
     });
   }
   if(sortByValues.prop === 'jewelsWeight'){
     data.forEach(function(item){
-      item.jewelsWeight = parseFloat(item.jewelsWeight);
+      if(item.jewelsWeight.indexOf(',') != -1){
+        item.jewelsWeight = parseFloat(item.jewelsWeight.replace(/,/g, ''));
+      }else if(item.jewelsWeight.indexOf('-') != -1){
+        item.jewelsWeight = parseFloat(item.jewelsWeight.replace(/-/g, 0));
+      }
+      // item.jewelsWeight = parseFloat(item.jewelsWeight);
       // console.log('item.priceUSD-->',item.priceUSD);
     });
   }
   if(sortByValues.prop === 'grossWeight'){
     data.forEach(function(item){
-      item.grossWeight = parseFloat(item.grossWeight);
+      if(item.grossWeight.indexOf(',') != -1){
+        item.grossWeight = parseFloat(item.grossWeight.replace(/,/g, ''));
+      }else if(item.grossWeight.indexOf('-') != -1){
+        item.grossWeight = parseFloat(item.grossWeight.replace(/-/g, 0));
+      }
+      // item.grossWeight = parseFloat(item.grossWeight);
       // console.log('item.priceUSD-->',item.priceUSD);
     });
   }
@@ -36,7 +50,7 @@ function sort(sortByValues, data) {
   if (sortByValues.order === 'descending') {
     sortedData.reverse();
   }
-  
+
   // Convert number to string for show data
   if(sortByValues.prop === 'priceUSD'){
     data.forEach(function(item){

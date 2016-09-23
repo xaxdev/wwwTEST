@@ -142,6 +142,7 @@ class InventoryFilter extends Component {
       $('#scroller').removeClass('stuck').css({'width':w});
     });
 
+
   }
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
