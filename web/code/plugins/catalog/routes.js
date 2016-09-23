@@ -8,7 +8,7 @@ export default [
     },
     {
         method: 'GET',
-        path: '/data/{id}/{page}',
+        path: '/data/{id}/{page}/{reference?}',
         config: controllers.getdata
     },
     {

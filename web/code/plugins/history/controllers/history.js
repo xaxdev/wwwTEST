@@ -12,6 +12,7 @@ export default {
             const userHelper = request.user
             const helper = request.helper
             const display = request.params.display || "ACTIVE"
+            const itemRef = request.params.reference || ""
             const page = request.params.page || 1
             const size = 8
 
@@ -33,6 +34,10 @@ export default {
                 }
             }
 
+            if (!_.isNull(itemRef)) {
+                fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }})
+            }
+
             try {
                 const db = request.server.plugins['hapi-mongodb'].db
                 const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
@@ -42,6 +47,18 @@ export default {
                 .limit(size)
                 .skip((page - 1) * size)
                 .toArray()
+                .then((data) => {
+                    if (data.length == 0) {                        
+                        return reply({
+                            "items": data,
+                            "page": parseInt(page),
+                            "total_items": countHistory,
+                            "total_pages": Math.ceil(countHistory / size),
+                            "status": true
+                        })
+                    }
+                    return data;
+                })
                 .then((data) => {
                     data.forEach((item) => {
                         item.id = item.itemId

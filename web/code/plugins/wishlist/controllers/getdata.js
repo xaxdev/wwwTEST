@@ -15,18 +15,40 @@ export default {
                 const db = request.server.plugins['hapi-mongodb'].db
                 const ObjectID = request.server.plugins['hapi-mongodb'].ObjectID
                 const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
+                const wlistId = request.params.id || ""
+                const itemRef = request.params.reference || ""
                 const page = request.params.page || 1
                 const size = 8
 
-                let fWishlist = await db.collection('WishlistName').findOne({ "_id" : new ObjectID(request.params.id) })
+                let fWishlist = await db.collection('WishlistName').findOne({ "_id" : new ObjectID(wlistId) })
                 if (_.isNull(fWishlist)) return reply(Boom.badRequest("Invalid item."))
 
-                const countWlistItem = await db.collection('WishlistItem').find({ "wishlistId" : new ObjectID(request.params.id) }).count()
-                const popWlistItem = await db.collection('WishlistItem').find({ "wishlistId" : new ObjectID(request.params.id) }, { "_id": 0, "wishlistId": 0 })
+                let fCondition = { "wishlistId" : new ObjectID(wlistId) }
+                if (!_.isNull(itemRef)) {
+                    fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }})
+                }
+
+                const countWlistItem = await db.collection('WishlistItem').find(fCondition).count()
+                const popWlistItem = await db.collection('WishlistItem').find(fCondition, { "_id": 0, "wishlistId": 0 })
                 .sort({ "updatedDate": -1 })
                 .limit(size)
                 .skip((page - 1) * size)
                 .toArray()
+                .then((data) => {
+                    if (data.length == 0) {
+                        return reply({
+                            "_id": new ObjectID(fWishlist._id),
+                            "wishlist": fWishlist.wishlist,
+                            "userId": fWishlist.userId,
+                            "items": data,
+                            "page": parseInt(page),
+                            "total_items": countWlistItem,
+                            "total_pages": Math.ceil(countWlistItem / size),
+                            "status": fWishlist.status
+                        })
+                    }
+                    return data;
+                })
                 .then((data) => {
                     data.forEach((item) => {
                         item.id = item.itemId

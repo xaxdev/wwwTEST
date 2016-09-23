@@ -15,18 +15,40 @@ export default {
                 const db = request.server.plugins['hapi-mongodb'].db
                 const ObjectID = request.server.plugins['hapi-mongodb'].ObjectID
                 const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
+                const catalogId = request.params.id || ""
+                const itemRef = request.params.reference || ""
                 const page = request.params.page || 1
                 const size = 8
 
-                let fCatalog = await db.collection('CatalogName').findOne({ "_id" : new ObjectID(request.params.id) })
+                let fCatalog = await db.collection('CatalogName').findOne({ "_id" : new ObjectID(catalogId) })
                 if (_.isNull(fCatalog)) return reply(Boom.badRequest("Invalid item."))
 
-                const countCatalogItem = await db.collection('CatalogItem').find({ "catalogId" : new ObjectID(request.params.id) }).count()
-                const popCatalogItem = await db.collection('CatalogItem').find({ "catalogId" : new ObjectID(request.params.id) }, { "_id": 0, "catalogId": 0 })
+                let fCondition = { "catalogId" : new ObjectID(catalogId) }
+                if (!_.isNull(itemRef)) {
+                    fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }})
+                }
+
+                const countCatalogItem = await db.collection('CatalogItem').find(fCondition).count()
+                const popCatalogItem = await db.collection('CatalogItem').find(fCondition, { "_id": 0, "catalogId": 0 })
                 .sort({ "updatedDate": -1 })
                 .limit(size)
                 .skip((page - 1) * size)
                 .toArray()
+                .then((data) => {
+                    if (data.length == 0) {
+                        return reply({
+                            "_id": new ObjectID(fCatalog._id),
+                            "catalog": fCatalog.catalog,
+                            "userId": fCatalog.userId,
+                            "items": data,
+                            "page": parseInt(page),
+                            "total_items": countCatalogItem,
+                            "total_pages": Math.ceil(countCatalogItem / size),
+                            "status": fCatalog.status
+                        })
+                    }
+                    return data
+                })
                 .then((data) => {
                     data.forEach((item) => {
                         item.id = item.itemId
