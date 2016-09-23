@@ -22,12 +22,12 @@ export default {
                         "reference": item.reference,
                         "description": item.description,
                         "displayStatus": true,
-                        "updatedDate": _.now()
+                        "updatedDate": new Date()
                     }
                 },
                 {
-                    returnOriginal: false,
-                    upsert: true
+                    upsert: true,
+                    returnNewDocument: true
                 })
                 .then((value, err) => {
 

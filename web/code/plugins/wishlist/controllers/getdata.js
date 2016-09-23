@@ -24,8 +24,8 @@ export default {
                 if (_.isNull(fWishlist)) return reply(Boom.badRequest("Invalid item."))
 
                 let fCondition = { "wishlistId" : new ObjectID(wlistId) }
-                if (!_.isNull(itemRef)) {
-                    fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }})
+                if (itemRef) {
+                    fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }}, fCondition)
                 }
 
                 const countWlistItem = await db.collection('WishlistItem').find(fCondition).count()

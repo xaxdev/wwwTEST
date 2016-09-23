@@ -34,8 +34,8 @@ export default {
                 }
             }
 
-            if (!_.isNull(itemRef)) {
-                fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }})
+            if (itemRef) {
+                fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }}, fCondition)
             }
 
             try {
@@ -48,7 +48,7 @@ export default {
                 .skip((page - 1) * size)
                 .toArray()
                 .then((data) => {
-                    if (data.length == 0) {                        
+                    if (data.length == 0) {
                         return reply({
                             "items": data,
                             "page": parseInt(page),

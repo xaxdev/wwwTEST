@@ -23,7 +23,7 @@ export default {
                     "wishlist": request.payload.wishlist,
                     "userId": request.auth.credentials.id,
                     "status": true,
-                    "updatedDate": _.now()
+                    "updatedDate": new Date()
                 }
 
                 if (_.isNull(wlistPayloadId)) {
@@ -39,7 +39,7 @@ export default {
                         itemData.forEach((item) => {
 
                             db.collection('WishlistItem').insertOne({
-                                "wishlistId": wlistData._id, "itemId": item.id, "reference": item.reference, "description": item.description, "updatedDate": _.now()
+                                "wishlistId": wlistData._id, "itemId": item.id, "reference": item.reference, "description": item.description, "updatedDate": new Date()
                             })
                         })
                     })
@@ -59,7 +59,7 @@ export default {
                                 "wishlistId": new ObjectID(wlistPayloadId), "itemId": item.id.toString()
                             },
                             [['itemId', 1]],
-                            { $set: { "reference": item.reference, "description": item.description, "updatedDate": _.now() }},
+                            { $set: { "reference": item.reference, "description": item.description, "updatedDate": new Date() }},
                             { new: true, upsert: true });
                         })
                     })

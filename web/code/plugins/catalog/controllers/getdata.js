@@ -25,7 +25,7 @@ export default {
 
                 let fCondition = { "catalogId" : new ObjectID(catalogId) }
                 if (!_.isNull(itemRef)) {
-                    fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }})
+                    fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }}, fCondition)
                 }
 
                 const countCatalogItem = await db.collection('CatalogItem').find(fCondition).count()

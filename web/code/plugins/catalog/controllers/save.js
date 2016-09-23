@@ -23,7 +23,7 @@ export default {
                     "catalog": request.payload.catalog,
                     "userId": request.auth.credentials.id,
                     "status": true,
-                    "updatedDate": _.now()
+                    "updatedDate": new Date()
                 }
 
                 if (_.isNull(catalogPayloadId)) {
@@ -39,7 +39,7 @@ export default {
                         itemData.forEach((item) => {
 
                             db.collection('CatalogItem').insertOne({
-                                "catalogId": catalogData._id, "itemId": item.id, "reference": item.reference, "description": item.description, "updatedDate": _.now()
+                                "catalogId": catalogData._id, "itemId": item.id, "reference": item.reference, "description": item.description, "updatedDate": new Date()
                             })
                         })
                     })
@@ -59,7 +59,7 @@ export default {
                                 "catalogId": new ObjectID(catalogPayloadId), "itemId": item.id.toString()
                             },
                             [['itemId', 1]],
-                            { $set: { "reference": item.reference, "description": item.description, "updatedDate": _.now() }},
+                            { $set: { "reference": item.reference, "description": item.description, "updatedDate": new Date() }},
                             { new: true, upsert: true });
                         })
                     })
