@@ -1,6 +1,6 @@
 import React from 'react';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
-const sppAttr = (props) =>{
+const spaAttr = (props) =>{
   return (
     <div className="line-h">
         <div className="col-sm-6 nopadding">
@@ -34,4 +34,4 @@ const sppAttr = (props) =>{
     </div>
   );
 }
-module.exports = sppAttr
+module.exports = spaAttr

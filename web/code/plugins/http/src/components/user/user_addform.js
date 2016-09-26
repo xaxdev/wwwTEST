@@ -571,8 +571,8 @@ class UsersNewFrom extends Component {
     const { fields: {
               firstName,lastName,username,email,password,role,currency,status,company,location,warehouse
               ,productGroup,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT
-              ,productGroupACC,productGroupOBA,productGroupSPP,onhandValue,webOnly,onhandLocation,onhandAll
-              ,permissionId,onhandWarehouse,onhandWarehouseValue,onhandLocationValue
+              ,productGroupACC,productGroupOBA,productGroupSPA,onhandValue,webOnly,onhandLocation,onhandAll
+              ,permissionId,onhandWarehouse,onhandWarehouseValue,onhandLocationValue,productGroupErr
           },handleSubmit,invalid,submitting } = this.props;
     // const datas = [{value:'One',selected:true},{value:'Two'},{value:'Three'},{value:'Four',label:'Four Label'}];
 
@@ -794,10 +794,13 @@ class UsersNewFrom extends Component {
                                 <span>Object Of Art</span>
                               </div>
                               <div>
-                                <input type="checkbox"  value="SPP"
-                                  checked={productGroupSPP.value === 'SPP'}
-                                  {...productGroupSPP}/>
+                                <input type="checkbox"  value="SPA"
+                                  checked={productGroupSPA.value === 'SPA'}
+                                  {...productGroupSPA}/>
                                 <span>Spare Parts</span>
+                              </div>
+                              <div className="text-help">
+                                { productGroupErr.touched ? productGroupErr.error : ''}
                               </div>
                             </div>
                           </div>
@@ -915,7 +918,7 @@ module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
   form: 'UsersNewFrom',
   fields: ['firstName','lastName','username','email','password','role','currency','status','company',
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
-          ,'productGroupACC','productGroupOBA','productGroupSPP','onhandValue','webOnly','permissionId'
-          ,'onhandLocation','onhandAll','onhandWarehouse','onhandWarehouseValue','onhandLocationValue'],
+          ,'productGroupACC','productGroupOBA','productGroupSPA','onhandValue','webOnly','permissionId'
+          ,'onhandLocation','onhandAll','onhandWarehouse','onhandWarehouseValue','onhandLocationValue','productGroupErr'],
   validate:validateUserAdd
 },mapStateToProps, mapDispatchToProps)(UsersNewFrom);

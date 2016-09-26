@@ -16,7 +16,7 @@ import ProductRelete from '../../components/productdetail/productReleted';
 import ProductPrint from '../../components/productdetail/productPrint';
 import ProductObaAttributes from '../../components/productdetail/productObaAttributes';
 import ProductAccAttributes from '../../components/productdetail/productAccAttributes';
-import ProductSppAttributes from '../../components/productdetail/productSppAttributes';
+import ProductSpaAttributes from '../../components/productdetail/productSppAttributes';
 import Setreference from '../../components/productdetail/productset';
 import numberFormat from '../../utils/convertNumberformatwithcomma';
 import checkInarrayObject from '../../utils/checkInarrayObject';
@@ -242,7 +242,7 @@ class productdetail extends Component {
                     <ProductDescriptionBlock {...Detail} />
                   </div>
                 );
-          case 'SPP':
+          case 'SPA':
               Detailtitle='SPARE PARTS DETAILS';
               return(
                   <div>
@@ -310,12 +310,12 @@ class productdetail extends Component {
                           <ProductAccAttributes {...Detail} />
                     </div>
                   );
-         case 'SPP':
+         case 'SPA':
                Attrtitle='SPARE PARTS ART ATTRIBUTES';
                return(
                    <div>
                      <h2>{Attrtitle}</h2>
-                         <ProductSppAttributes {...Detail} />
+                         <ProductSpaAttributes {...Detail} />
                    </div>
                  );
         }

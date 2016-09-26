@@ -31,7 +31,7 @@ var productGroupJLY=false;
 var productGroupWAT=false;
 var productGroupACC=false;
 var productGroupOBA=false;
-var productGroupSPP=false;
+var productGroupSPA=false;
 
 class InventoryFilter extends Component {
   constructor(props) {
@@ -190,6 +190,7 @@ class InventoryFilter extends Component {
     var checkbits = bitwise.split('')
     var numberDiit = checkbits.length;
     var setActiveTab = activeTabCategory;
+    // console.log('numberDiit-->',numberDiit);
 
     checkbits.map(function(value,key){
       switch (numberDiit) {
@@ -238,7 +239,7 @@ class InventoryFilter extends Component {
           break;
         case 6:
           if(key == 0){
-            productGroupSPP = (value == '1')?true:false;
+            productGroupSPA = (value == '1')?true:false;
           }else if (key == 1) {
             productGroupOBA = (value == '1')?true:false;
           }else if (key == 2) {
@@ -268,8 +269,10 @@ class InventoryFilter extends Component {
         setActiveTab = 4;
       }else if (productGroupOBA) {
         setActiveTab = 5;
-      }else if (productGroupSPP) {
+      }else if (productGroupSPA) {
         setActiveTab = 6;
+      }else{
+        this.props.inventoryActions.setAdvance(false);
       }
 
       activeTabCategory = setActiveTab;
@@ -401,7 +404,7 @@ class InventoryFilter extends Component {
           break;
         case 6:
           if(key == 0){
-            productGroupSPP = (value == '1')?true:false;
+            productGroupSPA = (value == '1')?true:false;
           }else if (key == 1) {
             productGroupOBA = (value == '1')?true:false;
           }else if (key == 2) {
@@ -524,15 +527,8 @@ class InventoryFilter extends Component {
                               <InventoryGemStone props={this.props}/>
                             </div>
                           </div>
-                          {/*<div className="col-sm-12 text-center">
-                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
-                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
-                              disabled={submitting} onClick={this.resetFormInventory}>
-                              <i/> Reset
-                            </button>
-                          </div>*/}
                         </Tab>
-                        <Tab eventKey={6} title="SPARE PART" disabled={!productGroupSPP}>
+                        <Tab eventKey={6} title="SPARE PART" disabled={!productGroupSPA}>
                           <InventorySparePart props={this.props}  ref="sparepart"/>
                           <div className="panel-body">
                             <div className="row gemstone-bar">
@@ -546,13 +542,6 @@ class InventoryFilter extends Component {
                               <InventoryGemStone props={this.props} ref="gemstone"/>
                             </div>
                           </div>
-                          {/*<div className="col-sm-12 text-center">
-                            <button type="submit" className="btn btn-primary btn-radius btn-inventories">Search</button>
-                            <button type="button" className="btn btn-primary btn-radius btn-inventories"
-                              disabled={submitting} onClick={this.resetFormInventory}>
-                              <i/> Reset
-                            </button>
-                          </div>*/}
                         </Tab>
                       </Tabs>
                     </div>
