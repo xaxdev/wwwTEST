@@ -100,6 +100,7 @@ class InventoryAccessory extends Component {
 
     accessoryProductHierarchy.onChange(treeSelected);
   }
+
   handleAccessoryTypeSelectChange(accessoryTypeSelectValue){
     // console.log('accessoryTypeSelectValue-->',accessoryTypeSelectValue);
     const { props } = this.props;
@@ -114,6 +115,7 @@ class InventoryAccessory extends Component {
     accessoryType.onChange(accessoryTypeSelectValue);
     props.inventoryActions.setDataAccessoryType(accessoryTypeSelectValue);
   }
+
   handleCollectionSelectChange(collectionSelectValue){
     const { props } = this.props;
     var { fields: { collection }, searchResult } = props;
@@ -319,51 +321,6 @@ class InventoryAccessory extends Component {
               </div>
             </div>
             <div className="col-lg-6 form-horizontal">
-              {/*<div className={`form-group ${(userLogin.permission.price == 'All') ?
-                  '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalCostFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalCostTo}/>
-                  </div>
-                </div>
-              </div>
-              <div className={`form-group ${(userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All') ?
-                                            '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalUpdatedCostFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalUpdatedCostTo}/>
-                  </div>
-                </div>
-              </div>
-              <div className={`form-group ${(userLogin.permission.price == 'Public'
-                                            || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...publicPriceFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...publicPriceTo}/>
-                  </div>
-                </div>
-              </div>*/}
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
@@ -392,15 +349,6 @@ class InventoryAccessory extends Component {
                   </div>
                 </div>
               </div>
-              {/*<div className="form-group">
-                <label className="col-sm-4 control-label">Dominant Stone</label>
-                <div className="col-sm-7">
-                  <Select multi simpleValue value={props.DominantStoneValue}
-                    placeholder="Select your Dominant Stone"
-                    options={dataDropDowntDominantStone}
-                    onChange={this.handleDominantStoneSelectChange} />
-                  </div>
-              </div>*/}
               <div className="form-group">
                 <label className="col-sm-4 control-label">Metal Type</label>
                 <div className="col-sm-7">

@@ -12,6 +12,7 @@ import ProductGemstoneAttributes from '../../components/productdetail/productGem
 import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelryprint';
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributesprint';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributesprint';
+import ProductSpaAttributes from '../../components/productdetail/productSppAttributes';
 import '../../../public/css/productdetail.css';
 
 import checkInarrayObject from '../../utils/checkInarrayObject';
@@ -81,7 +82,7 @@ class productprint extends Component {
                         <ProductDescriptionBlock {...Detail} />
                       </div>
                     );
-              case 'SPP':
+              case 'SPA':
                   Detailtitle='SPARE PARTS DETAILS';
                   return(
                       <div>
@@ -150,12 +151,12 @@ class productprint extends Component {
                           <ProductAccAttributes {...Detail} />
                     </div>
                   );
-         case 'SPP':
+         case 'SPA':
                Attrtitle='SPARE PARTS ART ATTRIBUTES';
                return(
                    <div>
                      <h2>{Attrtitle}</h2>
-                         <ProductSppAttributes {...Detail} />
+                         <ProductSpaAttributes {...Detail} />
                    </div>
                  );
         }

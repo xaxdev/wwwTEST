@@ -31,7 +31,7 @@ class UserDetails extends Component {
     let FLAG_STO = 0x4; // 000100
     let FLAG_ACC = 0x8; // 001000
     let FLAG_OBA = 0x10; //010000
-    let FLAG_SPP = 0x20; //100000
+    let FLAG_SPA = 0x20; //100000
     let result = FLAG_ZERO;
     let permission = null;
     let onhandLocation = null;
@@ -39,7 +39,7 @@ class UserDetails extends Component {
 
     if(data.productGroup){
       if (data.productGroup == '1'){
-        data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPP}};
+        data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPA}};
       }else{
         if(data.productGroupJLY){
           result = result|FLAG_JLY;
@@ -56,13 +56,13 @@ class UserDetails extends Component {
         if(data.productGroupOBA){
           result = result|FLAG_OBA;
         }
-        if(data.productGroupSPP){
-          result = result|FLAG_SPP;
+        if(data.productGroupSPA){
+          result = result|FLAG_SPA;
         }
         data = { ...data, permission:{productGroup:result}};
       }
     }else{
-      data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPP} };
+      data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPA} };
     }
 
     onhandLocation = {
@@ -99,7 +99,7 @@ class UserDetails extends Component {
     delete data.productGroupACC;
     delete data.productGroupJLY;
     delete data.productGroupOBA;
-    delete data.productGroupSPP;
+    delete data.productGroupSPA;
     delete data.productGroupSTO;
     delete data.productGroupWAT;
     delete data.onhand;

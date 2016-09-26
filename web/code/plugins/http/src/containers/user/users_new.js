@@ -23,7 +23,7 @@ class UsersNew extends Component {
     var FLAG_STO = 0x4; // 000100
     var FLAG_ACC = 0x8; // 001000
     var FLAG_OBA = 0x10; //010000
-    var FLAG_SPP = 0x20; //100000
+    var FLAG_SPA = 0x20; //100000
     var result = FLAG_ZERO;
     var permission = {};
     var onhandLocation = null;
@@ -37,7 +37,7 @@ class UsersNew extends Component {
         if (data.productGroup == '1') {
             data = {...data,
                 permission: {
-                    productGroup: FLAG_ZERO | FLAG_JLY | FLAG_WAT | FLAG_STO | FLAG_ACC | FLAG_OBA | FLAG_SPP
+                    productGroup: FLAG_ZERO | FLAG_JLY | FLAG_WAT | FLAG_STO | FLAG_ACC | FLAG_OBA | FLAG_SPA
                 }
             };
         } else {
@@ -56,8 +56,8 @@ class UsersNew extends Component {
             if (data.productGroupOBA) {
                 result = result | FLAG_OBA;
             }
-            if (data.productGroupSPP) {
-                result = result | FLAG_SPP;
+            if (data.productGroupSPA) {
+                result = result | FLAG_SPA;
             }
             data = {...data,
                 permission: {
@@ -68,7 +68,7 @@ class UsersNew extends Component {
     } else {
         data = {...data,
             permission: {
-                productGroup: FLAG_ZERO | FLAG_JLY | FLAG_WAT | FLAG_STO | FLAG_ACC | FLAG_OBA | FLAG_SPP
+                productGroup: FLAG_ZERO | FLAG_JLY | FLAG_WAT | FLAG_STO | FLAG_ACC | FLAG_OBA | FLAG_SPA
             }
         };
     }
@@ -111,7 +111,7 @@ class UsersNew extends Component {
     delete data.productGroupACC;
     delete data.productGroupJLY;
     delete data.productGroupOBA;
-    delete data.productGroupSPP;
+    delete data.productGroupSPA;
     delete data.productGroupSTO;
     delete data.productGroupWAT;
     delete data.onhand;
