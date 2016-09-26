@@ -63,7 +63,7 @@
             "options": {
                 "$filter": "env",
                 "$base": {
-                  "settings": {}
+                    "decorate": true
                 },
                 "development": {
                     "url": "mongodb://192.168.1.93:27017/mol_development"
@@ -319,17 +319,26 @@
         }
       }
     },
-    {
-      "plugin": "./plugins/catalog",
-      "options": {
-        "select": "api",
-        "routes": {
-          "prefix": "/api/catalog"
-        }
-      }
-    },
+        {
+            "plugin": "./plugins/catalog",
+            "options": {
+            "select": "api",
+            "routes": {
+              "prefix": "/api/catalog"
+            }
+          }
+        },
         {
             "plugin": "./plugins/helper"
+        },
+        {
+            "plugin": "./plugins/ipad/comparison",
+            "options": {
+              "select": "api",
+              "routes": {
+                "prefix": "/api/comparison"
+              }
+            }
         }
     ]
 }
