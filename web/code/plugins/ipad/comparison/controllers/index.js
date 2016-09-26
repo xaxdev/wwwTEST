@@ -27,10 +27,11 @@ export default {
                                         comparisonId: 0,
                                         lastModified: 0
                                     }).sort({ lastModified: -1 }).toArray()
+                    let data = []
                     if (!!items.length) {
-                        await request.helper.item.synchronize(request.server.plugins.elastic.client, items)
+                        data = await request.helper.item.synchronize(request.server.plugins.elastic.client, items)
                     }
-                    return reply(items).type('application/json')
+                    return reply(data).type('application/json')
                 } catch (err) {
                     reply(Boom.badImplementation(err.message))
                 }

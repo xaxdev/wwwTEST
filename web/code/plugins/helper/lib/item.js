@@ -1,6 +1,16 @@
 import { Client as elasticsearch } from 'elasticsearch'
 import hoek from 'hoek'
 
+const compare = onHand => {
+
+    return item => {
+
+        const onHandItem = onHand.find(element => element.id === item.id)
+
+        return { ...item, ...onHandItem, status: !!onHandItem }
+    }
+}
+
 export default {
     synchronize: async (es, items) => {
 
@@ -33,18 +43,7 @@ export default {
 
             const result = await es.search(parameters)
             const onHand = result.hits.hits.map(record => record._source)
-
-            items.forEach(item => {
-
-                const onHandItem = onHand.find(element => element.id === item.id)
-
-                if (!!onHandItem) {
-                    hoek.merge(item, onHandItem)
-                    item.status = true
-                } else {
-                    hoek.merge(item, { status: false })
-                }
-            })
+            return items.map(compare(onHand))
         } catch (err) {
             throw err
         } finally  {
