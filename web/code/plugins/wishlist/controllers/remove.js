@@ -9,12 +9,12 @@ export default {
         (async () => {
 
             try {
-                const db = request.server.plugins['hapi-mongodb'].db
-                const ObjectID = request.server.plugins['hapi-mongodb'].ObjectID
+                const db = request.mongo.db
+                const ObjectID = request.mongo.ObjectID
 
                 await db.collection('WishlistName').deleteOne({ "_id" : new ObjectID(request.params.id) })
                 await db.collection('WishlistItem').deleteMany({ "wishlistId" : new ObjectID(request.params.id) })
-                reply({ "status": true })
+                reply.success()
             } catch (e) {
 
                 reply(Boom.badImplementation('', e))

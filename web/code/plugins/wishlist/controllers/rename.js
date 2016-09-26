@@ -9,8 +9,8 @@ export default {
         (async () => {
 
             try {
-                const db = request.server.plugins['hapi-mongodb'].db
-                const ObjectID = request.server.plugins['hapi-mongodb'].ObjectID
+                const db = request.mongo.db
+                const ObjectID = request.mongo.ObjectID
 
                 var findExist = await db.collection('WishlistName').find({ "_id" : new ObjectID(request.payload.id), "wishlist": request.payload.wishlist }).toArray()
                 if (findExist.length) {
@@ -18,7 +18,7 @@ export default {
                 }
                 else {
                     await db.collection('WishlistName').updateOne({ "_id" : new ObjectID(request.payload.id) }, { $set: { "wishlist": request.payload.wishlist } })
-                    reply({ "status": true })
+                    reply.success()
                 }
             } catch (e) {
 

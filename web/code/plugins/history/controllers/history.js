@@ -39,11 +39,11 @@ export default {
             }
 
             try {
-                const db = request.server.plugins['hapi-mongodb'].db
+                const db = request.mongo.db
                 const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
                 const countHistory = await db.collection('History').find(fCondition).count()
                 const popHistory = await db.collection('History').find(fCondition, { _id: 0, "itemId": 1, "name": 1, "reference": 1 })
-                .sort({ "updatedDate": -1 })
+                .sort({ "lastModified": -1 })
                 .limit(size)
                 .skip((page - 1) * size)
                 .toArray()
@@ -81,9 +81,9 @@ export default {
 
                         data.forEach((item) => {
 
-                            item.actualCost = _.hasIn(item.actualCost, user.currency) ? _.result(item.actualCost, user.currency) : 0
-                            item.updatedCost = _.hasIn(item.updatedCost, user.currency) ? _.result(item.updatedCost, user.currency) : 0
-                            item.price = _.hasIn(item.price, user.currency) ? _.result(item.price, user.currency) : 0
+                            item.actualCost = _.hasIn(item.actualCost, user.currency) ? _.result(item.actualCost, user.currency) : -1
+                            item.updatedCost = _.hasIn(item.updatedCost, user.currency) ? _.result(item.updatedCost, user.currency) : -1
+                            item.price = _.hasIn(item.price, user.currency) ? _.result(item.price, user.currency) : -1
 
                             switch (user.permission.price.toUpperCase()) {
                                 case "PUBLIC":

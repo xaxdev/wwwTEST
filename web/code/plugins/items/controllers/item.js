@@ -103,7 +103,7 @@ module.exports = {
     })
     .catch(function(err) {
         elastic.close();
-        return reply(Boom.badImplementation(err));
+        return reply(Boom.badImplementation(error));
     });
   }
 

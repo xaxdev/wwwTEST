@@ -10,8 +10,8 @@ export default {
         (async () => {
 
             try {
-                let dataPayload = request.payload.data
-                const db = request.server.plugins['hapi-mongodb'].db
+                const db = request.mongo.db
+                const dataPayload = request.payload.data
 
                 dataPayload.forEach(({id}) => {
 

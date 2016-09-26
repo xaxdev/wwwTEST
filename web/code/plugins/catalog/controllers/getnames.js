@@ -10,7 +10,7 @@ export default {
         (async () => {
 
             try {
-                const db = request.server.plugins['hapi-mongodb'].db
+                const db = request.mongo.db
                 reply(await db.collection('CatalogName').find({ "userId": request.auth.credentials.id }).sort({ "catalog": 1 }).toArray())
             } catch (e) {
 

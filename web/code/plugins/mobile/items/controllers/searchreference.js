@@ -117,9 +117,9 @@ module.exports = {
         .then((item) => {
 
             if (!_.isNull(item)) {
-                item.actualCost = _.hasIn(item.actualCost, user.currency) ? _.result(item.actualCost, user.currency) : 0
-                item.updatedCost = _.hasIn(item.updatedCost, user.currency) ? _.result(item.updatedCost, user.currency) : 0
-                item.price = _.hasIn(item.price, user.currency) ? _.result(item.price, user.currency) : 0
+                item.actualCost = _.hasIn(item.actualCost, user.currency) ? _.result(item.actualCost, user.currency) : -1
+                item.updatedCost = _.hasIn(item.updatedCost, user.currency) ? _.result(item.updatedCost, user.currency) : -1
+                item.price = _.hasIn(item.price, user.currency) ? _.result(item.price, user.currency) : -1
 
                 switch (user.permission.price.toUpperCase()) {
                     case "PUBLIC":

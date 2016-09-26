@@ -1,9 +1,5 @@
 const Boom = require('boom');
 const Promise = require('bluebird');
-const _ = require('lodash');
-const internals = {
-    filters: []
-};
 
 export default {
     save: (request, reply, item) => {
@@ -11,18 +7,20 @@ export default {
         return (async (request, reply, item) => {
 
             try {
-                const db = request.server.plugins['hapi-mongodb'].db
+                const db = request.mongo.db
 
                 return await db.collection('History').findOneAndUpdate({
                     "userId": request.auth.credentials.id,
                     "itemId": item.id
                 },
                 {
+                    $currentDate: {
+                        "lastModified": true
+                    },
                     $set: {
                         "reference": item.reference,
                         "description": item.description,
-                        "displayStatus": true,
-                        "updatedDate": new Date()
+                        "displayStatus": true
                     }
                 },
                 {

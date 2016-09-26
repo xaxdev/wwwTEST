@@ -9,9 +9,9 @@ export default {
         (async () => {
 
             try {
-                const db = request.server.plugins['hapi-mongodb'].db
-                const ObjectID = request.server.plugins['hapi-mongodb'].ObjectID
-                let items = request.payload.items
+                const db = request.mongo.db
+                const ObjectID = request.mongo.ObjectID
+                const items = request.payload.items
 
                 items.forEach(({id}) => {
 
@@ -19,7 +19,7 @@ export default {
                         if (err) reply(Boom.badImplementation('', err))
                     })
                 })
-                reply({ "status": true })
+                reply.success()
             } catch (e) {
 
                 reply(Boom.badImplementation('', e))

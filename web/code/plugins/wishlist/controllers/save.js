@@ -11,8 +11,8 @@ export default {
         (async () => {
 
             try {
-                const db = request.server.plugins['hapi-mongodb'].db
-                const ObjectID = request.server.plugins['hapi-mongodb'].ObjectID
+                const db = request.mongo.db
+                const ObjectID = request.mongo.ObjectID
                 const wlistPayload = request.payload
                 const wlistPayloadId = request.payload.id
                 const wlistPayloadItems = request.payload.items
@@ -23,7 +23,7 @@ export default {
                     "wishlist": request.payload.wishlist,
                     "userId": request.auth.credentials.id,
                     "status": true,
-                    "updatedDate": new Date()
+                    "lastModified": new Date()
                 }
 
                 if (_.isNull(wlistPayloadId)) {
@@ -39,7 +39,7 @@ export default {
                         itemData.forEach((item) => {
 
                             db.collection('WishlistItem').insertOne({
-                                "wishlistId": wlistData._id, "itemId": item.id, "reference": item.reference, "description": item.description, "updatedDate": new Date()
+                                "wishlistId": wlistData._id, "itemId": item.id, "reference": item.reference, "description": item.description, "lastModified": new Date()
                             })
                         })
                     })
@@ -59,7 +59,7 @@ export default {
                                 "wishlistId": new ObjectID(wlistPayloadId), "itemId": item.id.toString()
                             },
                             [['itemId', 1]],
-                            { $set: { "reference": item.reference, "description": item.description, "updatedDate": new Date() }},
+                            { $set: { "reference": item.reference, "description": item.description, "lastModified": new Date() }},
                             { new: true, upsert: true });
                         })
                     })
@@ -69,7 +69,7 @@ export default {
                     })
                 }
 
-                reply({ "status": true })
+                reply.success()
             } catch (e) {
 
                 reply(Boom.badImplementation('', e))
