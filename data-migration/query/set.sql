@@ -15,7 +15,7 @@ INNER JOIN [ITORAMA].[dbo].[Items] item
   AND item.[Company] = jewelry.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] setimg
   ON jewelry.[SetReference] = setimg.[ITEMID]
-  AND item.[Company] = setimg.[Company]
+  AND setimg.[Company] = 'mme'
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
   ON item.[Id] = img.[ITEMRECID]
   AND item.[Company] = img.[Company]
