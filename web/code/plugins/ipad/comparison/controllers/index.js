@@ -27,7 +27,9 @@ export default {
                                         comparisonId: 0,
                                         lastModified: 0
                                     }).sort({ lastModified: -1 }).toArray()
-                    await request.helper.item.synchronize(request.server.plugins.elastic.client, items)
+                    if (!!items.length) {
+                        await request.helper.item.synchronize(request.server.plugins.elastic.client, items)
+                    }
                     return reply(items).type('application/json')
                 } catch (err) {
                     reply(Boom.badImplementation(err.message))
