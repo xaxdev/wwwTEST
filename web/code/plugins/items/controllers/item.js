@@ -73,7 +73,7 @@ module.exports = {
 
           productResult.gallery = productResult.gallery.concat(images);
           }
-          
+
           const [setReferenceData] = setReference.hits.hits.map((element) => element._source);
           if(typeof setReferenceData === 'undefined'){
             productResult.setReferenceData = '';
@@ -92,7 +92,7 @@ module.exports = {
             }
             const responseSetData = {
               totalprice:setReferenceData.totalPrice,
-              setimage:setReferenceData.image.original,
+              setimage: (!!setReferenceData.image)? setReferenceData.image.original:null,
               products:productdata
             }
 
@@ -101,7 +101,7 @@ module.exports = {
           elastic.close();
           return reply(JSON.stringify(productResult, null, 4));
     })
-    .catch(function(error) {
+    .catch(function(err) {
         elastic.close();
         return reply(Boom.badImplementation(err));
     });
