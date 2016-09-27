@@ -1,0 +1,6 @@
+# Comparison
+db.getCollection('Comparison').createIndex({ 'user.id': 1 }, { name: '_user_id_' })
+
+# ComparisonList
+db.getCollection('ComparisonList').createIndex({ comparisonId: 1 }, { name: '_comparison_id_' })
+db.getCollection('ComparisonList').createIndex({ lastModified: 1 }, { name: '_last_modified_' })

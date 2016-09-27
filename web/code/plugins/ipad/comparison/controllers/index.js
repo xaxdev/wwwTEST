@@ -18,8 +18,9 @@ export default {
 
             (async _ => {
 
-                const page = request.query.page || request.pagination.page
-                const size = request.query.size || request.pagination.size
+                const page = Number(request.query.page || request.pagination.page)
+                const size = Number(request.query.size || request.pagination.size)
+                const offset = (page - 1) * size
 
                 try {
                     const db = request.mongo.db
@@ -29,7 +30,7 @@ export default {
                                         _id: 0,
                                         comparisonId: 0,
                                         lastModified: 0
-                                    }).sort({ lastModified: -1 }).toArray()
+                                    }).sort({ lastModified: -1 }).limit(size).skip(offset).toArray()
                     let data = []
                     if (!!items.length) {
                         data = await request.helper.item.synchronize(request.server.plugins.elastic.client, items)
