@@ -5,6 +5,12 @@ export default {
     auth: {
         strategy: 'authentication'
     },
+    validate: {
+        query: {
+            page: Joi.number().integer(),
+            size: Joi.number().integer()
+        }
+    },    
     handler: (request, reply) => {
 
         (async () => {

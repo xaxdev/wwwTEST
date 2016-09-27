@@ -1,9 +1,16 @@
 const Boom = require('boom')
 const _ = require('lodash')
+const Joi = require('joi');
 
 export default {
     auth: {
         strategy: 'authentication'
+    },
+    validate: {
+        query: {
+            page: Joi.number().integer(),
+            size: Joi.number().integer()
+        }
     },
     handler: (request, reply) => {
 
