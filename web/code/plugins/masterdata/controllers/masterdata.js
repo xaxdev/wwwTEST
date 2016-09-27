@@ -19,7 +19,7 @@ module.exports = {
             "match_all" : {}
         }
     }`);
-    let type = 'roles,currencies,companies,locations,warehouses,countries,productGroups,stoneType,gemstoneStoneType,cut,cutShape,cutGrades,colors,colorGrades,clarities,certificateLabs,polishs,symmetries,treatments,fluorescences,origins,jewelryCategories,collections,brands,ringSizes,dominantStones,metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,buckleTypes,strapTypes,strapColors,complications,hierarchy,accessoryTypes'
+    let type = 'roles,currencies,companies,locations,warehouses,countries,productGroups,stoneType,gemstoneStoneType,cut,cutShape,cutGrades,colors,colorGrades,clarities,certificateLabs,polishs,symmetries,treatments,fluorescences,origins,jewelryCategories,collections,brands,ringSizes,dominantStones,metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,buckleTypes,strapTypes,strapColors,complications,hierarchy,accessoryTypes,sparePartTypes'
     // let type = 'roles,currencies';
     const alldata = elastic
       .search({
@@ -151,8 +151,9 @@ module.exports = {
       const accessoryTypesget = alldata.hits.hits.filter((element)=> {{
         return element._type == 'accessoryTypes';
       }})
-
-
+      const sparePartTypesget = alldata.hits.hits.filter((element)=> {{
+        return element._type == 'sparePartTypes';
+      }})
 
       const responsesata = {
         roles: _.sortBy(rolesget.map((element)=> element._source),'name'),
@@ -194,7 +195,8 @@ module.exports = {
         strapColors: _.sortBy(strapColorsget.map((element)=> element._source),'code'),
         complications: _.sortBy(complicationsget.map((element)=> element._source),'name'),
         hierarchy: _.sortBy(hierarchyget.map((element)=> element._source),'path'),
-        accessoryType: _.sortBy(accessoryTypesget.map((element)=> element._source),'code')
+        accessoryType: _.sortBy(accessoryTypesget.map((element)=> element._source),'code'),
+        sparePartType: _.sortBy(sparePartTypesget.map((element)=> element._source),'code')
       };
       elastic.close();
       return reply(JSON.stringify(responsesata,null,4));
