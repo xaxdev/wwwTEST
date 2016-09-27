@@ -18,6 +18,9 @@ export default {
 
             (async _ => {
 
+                const page = request.query.page || request.pagination.page
+                const size = request.query.size || request.pagination.size
+
                 try {
                     const db = request.mongo.db
                     const { _id } = await db.collection('Comparison').findOne({ 'user.id': request.auth.credentials.id })
