@@ -17,8 +17,10 @@ export default {
                 const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
                 const catalogId = request.params.id || ""
                 const itemRef = request.params.reference || ""
-                const page = request.params.page || 1
-                const size = 8
+                const qPage = request.query.page || request.pagination.page
+                const qSize = request.query.size || request.pagination.size
+                const page = parseInt(qPage)
+                const size = parseInt(qSize)
 
                 let fCatalog = await db.collection('CatalogName').findOne({ "_id" : new ObjectID(catalogId) })
                 if (_.isNull(fCatalog)) return reply(Boom.badRequest("Invalid item."))
@@ -29,7 +31,7 @@ export default {
                 }
 
                 const countCatalogItem = await db.collection('CatalogItem').find(fCondition).count()
-                const popCatalogItem = await db.collection('CatalogItem').find(fCondition, { "_id": 0, "catalogId": 0 })
+                const popCatalogItem = await db.collection('CatalogItem').find(fCondition, { "_id": 0, "catalogId": 0, "lastModified": 0 })
                 .sort({ "lastModified": -1 })
                 .limit(size)
                 .skip((page - 1) * size)
@@ -41,7 +43,7 @@ export default {
                             "catalog": fCatalog.catalog,
                             "userId": fCatalog.userId,
                             "items": data,
-                            "page": parseInt(page),
+                            "page": page,
                             "total_items": countCatalogItem,
                             "total_pages": Math.ceil(countCatalogItem / size),
                             "status": fCatalog.status
@@ -50,10 +52,9 @@ export default {
                     return data
                 })
                 .then((data) => {
-                    data.forEach((item) => {
-                        item.id = item.itemId
-                        delete item.itemId
-                    })
+
+                    data.map((item) => { item.id = item.itemId })
+                    data.forEach((item) => { delete item.itemId })
                     return data
                 })
                 const esItemData = helper.item.synchronize(request.server.plugins.elastic.client, popCatalogItem)
@@ -61,35 +62,7 @@ export default {
                 esItemData
                 .then((data) => {
 
-                    if (data) {
-                        let itemsCondition = { "id": { $in: _.map(data, "itemId") }}
-                        if (user.permission.onhandLocation.places.length != 0) {
-                            itemsCondition = _.assign({ "site": { $in: user.permission.onhandLocation.places }}, itemsCondition)
-                        }
-                        if (user.permission.onhandWarehouse.places.length != 0) {
-                            itemsCondition = _.assign({ "warehouse": { $in: user.permission.onhandWarehouse.places }}, itemsCondition)
-                        }
-
-                        data.forEach((item) => {
-
-                            item.actualCost = _.hasIn(item.actualCost, user.currency) ? _.result(item.actualCost, user.currency) : -1
-                            item.updatedCost = _.hasIn(item.updatedCost, user.currency) ? _.result(item.updatedCost, user.currency) : -1
-                            item.price = _.hasIn(item.price, user.currency) ? _.result(item.price, user.currency) : -1
-
-                            switch (user.permission.price.toUpperCase()) {
-                                case "PUBLIC":
-                                    delete item.actualCost
-                                    delete item.updatedCost
-                                    break;
-                                case "UPDATED":
-                                    delete item.actualCost
-                                    break;
-                            }
-                        })
-
-                        return data;
-                    }
-
+                    if (data) return helper.item.applyPermission(data, user)
                     return reply(Boom.badRequest("Invalid item."))
                 })
                 .then((data) => {
@@ -99,7 +72,7 @@ export default {
                         "catalog": fCatalog.catalog,
                         "userId": fCatalog.userId,
                         "items": data,
-                        "page": parseInt(page),
+                        "page": page,
                         "total_items": countCatalogItem,
                         "total_pages": Math.ceil(countCatalogItem / size),
                         "status": fCatalog.status

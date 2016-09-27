@@ -13,8 +13,10 @@ export default {
             const helper = request.helper
             const display = request.params.display || "ACTIVE"
             const itemRef = request.params.reference || ""
-            const page = request.params.page || 1
-            const size = 8
+            const qPage = request.query.page || request.pagination.page
+            const qSize = request.query.size || request.pagination.size
+            const page = parseInt(qPage)
+            const size = parseInt(qSize)
 
             let fCondition = { "userId": request.auth.credentials.id }
 
@@ -51,7 +53,7 @@ export default {
                     if (data.length == 0) {
                         return reply({
                             "items": data,
-                            "page": parseInt(page),
+                            "page": page,
                             "total_items": countHistory,
                             "total_pages": Math.ceil(countHistory / size),
                             "status": true
@@ -60,9 +62,9 @@ export default {
                     return data;
                 })
                 .then((data) => {
-                    data.forEach((item) => {
-                        item.id = item.itemId
-                    })
+
+                    data.map((item) => { item.id = item.itemId })
+                    data.forEach((item) => { delete item.itemId })
                     return data
                 })
                 const esItemData = helper.item.synchronize(request.server.plugins.elastic.client, popHistory)
@@ -70,42 +72,14 @@ export default {
                 esItemData
                 .then((data) => {
 
-                    if (data) {
-                        let itemsCondition = { "id": { $in: _.map(data, "itemId") }}
-                        if (user.permission.onhandLocation.places.length != 0) {
-                            itemsCondition = _.assign({ "site": { $in: user.permission.onhandLocation.places }}, itemsCondition)
-                        }
-                        if (user.permission.onhandWarehouse.places.length != 0) {
-                            itemsCondition = _.assign({ "warehouse": { $in: user.permission.onhandWarehouse.places }}, itemsCondition)
-                        }
-
-                        data.forEach((item) => {
-
-                            item.actualCost = _.hasIn(item.actualCost, user.currency) ? _.result(item.actualCost, user.currency) : -1
-                            item.updatedCost = _.hasIn(item.updatedCost, user.currency) ? _.result(item.updatedCost, user.currency) : -1
-                            item.price = _.hasIn(item.price, user.currency) ? _.result(item.price, user.currency) : -1
-
-                            switch (user.permission.price.toUpperCase()) {
-                                case "PUBLIC":
-                                    delete item.actualCost
-                                    delete item.updatedCost
-                                    break;
-                                case "UPDATED":
-                                    delete item.actualCost
-                                    break;
-                            }
-                        })
-
-                        return data;
-                    }
-
+                    if (data) return helper.item.applyPermission(data, user)
                     return reply(Boom.badRequest("Invalid item."))
                 })
                 .then((data) => {
 
                     return reply({
                         "items": data,
-                        "page": parseInt(page),
+                        "page": page,
                         "total_items": countHistory,
                         "total_pages": Math.ceil(countHistory / size),
                         "status": true

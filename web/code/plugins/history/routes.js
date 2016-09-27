@@ -3,7 +3,7 @@ import * as controllers from './controllers'
 export default [
     {
         method: 'GET',
-        path: '/{display}/{page}/{reference?}',
+        path: '/{display}/{reference?}',
         config: controllers.history
     },
     {
