@@ -6,7 +6,8 @@ const GetAllData = require('../utils/getAllData');
 // Require library export excel
 const xl = require('excel4node');
 const _ = require('lodash');
-const express = require('express');
+const fs = require('fs');
+const Path = require('path');
 
 import numberFormat from '../../http/src/utils/convertNumberformat';
 import convertDate from '../../http/src/utils/convertDate';
@@ -473,33 +474,39 @@ module.exports = {
           // console.log('item.description-->',item[1]);
           // ws.cell(i,1).string(item[0]).style(style);
           // ws.cell(i,2).string(item[1]).style(style);
+
+          let startDate = new Date();
+          let exportDate = moment(startDate,'MM-DD-YYYY');
+          exportDate = exportDate.format('YYYYMMDD_HHmm');
+
+          let fileName = file + '_' + 'Excel_' + userName + '_' + exportDate + '.xlsx';
+
+          wb.write(fileName, function (err, stats) {
+              if (err) {
+                  console.error(err);
+              }
+              console.log('Write excel done.'); // Prints out an instance of a node.js fs.Stats object
+
+              console.log(Path.resolve(__dirname, '../../../../code/' + fileName));
+
+              let _pathDistFile = Path.resolve(__dirname, '../../../../code/plugins/http/public/export_files');
+              let _pathSourceFile = Path.resolve(__dirname, '../../../../code/' + fileName);
+              let readStream = fs.createReadStream(_pathSourceFile); // current file
+              let writeStream = fs.createWriteStream(_pathDistFile + '/' + fileName);
+
+              readStream   // reads current file
+              .pipe(writeStream)  // writes to out file
+              .on('finish', function () {  // all done
+                console.log('copy done');
+                fs.unlink(_pathSourceFile,function(err){
+                  if(err) return console.log(err);
+                  console.log('file deleted successfully');
+                  elastic.close();
+                  return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency));
+                });
+              });
+          });
         });
-
-
-        // // Set value of cell A1 to 100 as a number type styled with paramaters of style
-        // ws.cell(1,1).number(100).style(style);
-        //
-        // // Set value of cell B1 to 300 as a number type styled with paramaters of style
-        // ws.cell(1,2).number(200).style(style);
-        //
-        // // Set value of cell C1 to a formula styled with paramaters of style
-        // ws.cell(1,3).formula('A1 + B1').style(style);
-        //
-        // // Set value of cell A2 to 'string' styled with paramaters of style
-        // ws.cell(2,1).string('string').style(style);
-        //
-        // // Set value of cell A3 to true as a boolean type styled with paramaters of style but with an adjustment to the font size.
-        // ws.cell(3,1).bool(true).style(style).style({font: {size: 14}});
-
-        let startDate = new Date();
-        let exportDate = moment(startDate,'MM-DD-YYYY');
-        exportDate = exportDate.format('YYYYMMDD_HHmm');
-
-        wb.write('Excel' + exportDate + '.xlsx');
-        console.log('Write excel done.');
-
-        elastic.close();
-        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency));
 
       })
       .catch(function (error) {
