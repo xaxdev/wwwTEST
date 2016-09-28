@@ -9,6 +9,7 @@ const _ = require('lodash');
 
 import numberFormat from '../../http/src/utils/convertNumberformat';
 import convertDate from '../../http/src/utils/convertDate';
+import moment from 'moment';
 
 const internals = {
   filters: []
@@ -22,21 +23,22 @@ module.exports = {
 
     // console.log('request.payload-->',request.payload);
 
-    var obj = request.payload;
-    var page = request.payload.page;
-    var sortBy = request.payload.sortBy;
-    var sortDirections = request.payload.sortDirections;
-    var userCurrency = request.payload.userCurrency;
-    var keys = Object.keys(obj);
+    let obj = request.payload;
+    let page = request.payload.page;
+    let sortBy = request.payload.sortBy;
+    let sortDirections = request.payload.sortDirections;
+    let userCurrency = request.payload.userCurrency;
+    let keys = Object.keys(obj);
     let fields = request.payload.fields;
     let price = request.payload.price;
+    let ROOT_URL = request.payload.ROOT_URL;
 
-    var size = 8;
+    let size = 16;
 
     internals.query = GetSearch(request, 0, 100000);
     console.log('searching...');
 
-    // console.log(JSON.stringify(internals.query, null, 2));
+    console.log(JSON.stringify(internals.query, null, 2));
 
     elastic
       .search({
@@ -44,11 +46,11 @@ module.exports = {
         type: 'items',
         body: internals.query
       }).then(function (response) {
-        var allData = [];
-        var exportData = null;
+        let allData = [];
+        let exportData = null;
         console.log('Response Data');
 
-        var data = response.hits.hits.map((element) => element._source);
+        let data = response.hits.hits.map((element) => element._source);
         if(sortDirections == 'desc'){
           data = _.sortBy(data,sortBy,sortDirections).reverse();
         }else{
@@ -66,15 +68,15 @@ module.exports = {
         const totalRecord = response.hits.total;
 
         // Create a new instance of a Workbook class
-        var wb = new xl.Workbook();
+        let wb = new xl.Workbook();
 
         // Add Worksheets to the workbook
-        var ws = wb.addWorksheet('Items');
+        let ws = wb.addWorksheet('Items');
 
         // Create a reusable style
-        var style = wb.createStyle({
+        let style = wb.createStyle({
             font: {
-                color: '#FF0800',
+                color: '#000000',
                 size: 12
             },
             numberFormat: '$#,##0.00; ($#,##0.00); -'
@@ -439,18 +441,37 @@ module.exports = {
           i++;
           // allData.push({'id': item.id,'reference':item.reference});
           // Set value of cell A1 to 100 as a number type styled with paramaters of style
-          if(i==2){
-            console.log('t-->',t);
+          if(i>=2){
+            // console.log('t-->',t);
             // console.log('item-->',item);
-            for (var j = 0; j < t; j++) {
-              console.log('i-->',i);
-              console.log('j-->',j);
-              console.log('item[j]-->',item[j]);
-              ws.cell(i,j).string((item[j] != '') ? item[j].toString() : '').style(style);
+            for (let j = 0; j < t; j++) {
+              // console.log('i-->',i);
+              // console.log('j-->',j);
+              // console.log('item[j]-->',item[j]);
+              let row = i;
+              let column = j+1;
+              ws.cell(row,column).string((item[j] != '') ? item[j].toString() : '').style(style);
+              if (fields.showImages){
+                ws.addImage({
+                    path: './plugins/http/assets/images/blank.gif',
+                    type: 'picture',
+                    position: {
+                        type: 'oneCellAnchor',
+                        from: {
+                            col: 1,
+                            colOff: '0.0in',
+                            row: 1,
+                            rowOff: 0
+                        }
+                    }
+                });
+              }
             }
           }
-          // ws.cell(i,1).string(item.id).style(style);
-          // ws.cell(i,2).string(item.reference).style(style);
+          // console.log('item.reference-->',item[0]);
+          // console.log('item.description-->',item[1]);
+          // ws.cell(i,1).string(item[0]).style(style);
+          // ws.cell(i,2).string(item[1]).style(style);
         });
 
 
@@ -469,7 +490,11 @@ module.exports = {
         // // Set value of cell A3 to true as a boolean type styled with paramaters of style but with an adjustment to the font size.
         // ws.cell(3,1).bool(true).style(style).style({font: {size: 14}});
 
-        wb.write('Excel.xlsx');
+        let startDate = new Date();
+        let exportDate = moment(startDate,'MM-DD-YYYY');
+        exportDate = exportDate.format('YYYYMMDD_HHmm');
+
+        wb.write('Excel' + exportDate + '.xlsx');
         console.log('Write excel done.');
 
         elastic.close();

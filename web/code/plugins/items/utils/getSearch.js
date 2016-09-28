@@ -72,8 +72,8 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
         }
 
         // console.log('key.value-->',value);
-        if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
-            && key != 'price' && key != 'pageSize' ){
+if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
+    && key != 'price' && key != 'ROOT_URL' ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
              || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'fluorescence'
              || key == 'jewelryCategory' || key == 'collection' || key == 'brand'|| key == 'mustHave' || key == 'ringSize'
