@@ -8,11 +8,13 @@ import ProductDescriptioncerBlock from '../../components/productdetail/productDe
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributesprint';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributesprint';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributesprint';
+import ProductObaAttributes from '../../components/productdetail/productObaAttributesprint';
+import ProductAccAttributes from '../../components/productdetail/productAccAttributesprint';
+import ProductSpaAttributes from '../../components/productdetail/productSppAttributesprint';
 import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributesprint';
 import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelryprint';
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributesprint';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributesprint';
-import ProductSpaAttributes from '../../components/productdetail/productSppAttributes';
 import '../../../public/css/productdetail.css';
 
 import checkInarrayObject from '../../utils/checkInarrayObject';
