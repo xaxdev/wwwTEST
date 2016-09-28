@@ -51,38 +51,52 @@ export default {
             es && es.close()
         }
     },
+    authorize: user => record => {
 
-    applyPermission: (items, user) => {
+        if (!record.availability) {
+            return record
+        }
 
         try {
-            const userLocation = user.permission.onhandLocation.places
-            const userWarehouse = user.permission.onhandWarehouse.places
+            // authorization flag
+            const sites = user.permission.onhandLocation.places
+            const warehouses = user.permission.onhandWarehouse.places
+            const isSiteOK = sites.length === 0 || sites.indexOf(record.site) !== -1
+            const isWarehouseOK = warehouses.length === 0 || warehouses.indexOf(record.warehouse) !== -1
+            const authorization = isSiteOK && isWarehouseOK
 
-            items.forEach((item) => {
+            if (authorization) {
+                const item = { ...record, authorization }
 
-                const location = userLocation.length != 0 ? userLocation.find(place => place === item.site) : true
-                const warehouse = userWarehouse.length != 0 ? userWarehouse.find(place => place === item.warehouse) : true
+                // costs & price
+                const getPriceIn = currency => price => price[currency]
+                item.actualCost = getPriceIn(user.currency)(item.actualCost) || -1
+                item.updatedCost = getPriceIn(user.currency)(item.updatedCost) || -1
+                item.price = getPriceIn(user.currency)(item.price) || -1
 
-                item.authorization = !!location && !!warehouse
-                item.actualCost = _.hasIn(item.actualCost, user.currency) ? _.result(item.actualCost, user.currency) : -1
-                item.updatedCost = _.hasIn(item.updatedCost, user.currency) ? _.result(item.updatedCost, user.currency) : -1
-                item.price = _.hasIn(item.price, user.currency) ? _.result(item.price, user.currency) : -1
-
+                // show or hide costs
                 switch (user.permission.price.toUpperCase()) {
                     case "PUBLIC":
-                        delete item.actualCost
-                        delete item.updatedCost
-                        break;
+                    delete item.actualCost
+                    delete item.updatedCost
+                    break;
                     case "UPDATED":
-                        delete item.actualCost
-                        break;
+                    delete item.actualCost
+                    break;
                 }
-            })
 
-            return items
-        } catch (err) {
-
-            throw err
+                return item
+            } else {
+                return {
+                    id: record.id,
+                    reference: record.reference,
+                    description: record.description,
+                    availability: record.availability,
+                    authorization
+                }
+            }
+        } catch (e) {
+            throw e
         }
     }
 }

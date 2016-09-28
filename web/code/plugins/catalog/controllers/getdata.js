@@ -1,5 +1,6 @@
-const Boom = require('boom')
-const _ = require('lodash')
+import Joi from 'joi'
+import Boom from 'boom'
+import _  from 'lodash'
 
 export default {
     auth: {
@@ -10,7 +11,7 @@ export default {
             page: Joi.number().integer(),
             size: Joi.number().integer()
         }
-    },    
+    },
     handler: (request, reply) => {
 
         (async () => {
@@ -68,7 +69,9 @@ export default {
                 esItemData
                 .then((data) => {
 
-                    if (data) return helper.item.applyPermission(data, user)
+                    if (data) {
+                        return data.map(helper.item.authorize(user))
+                    }
                     return reply(Boom.badRequest("Invalid item."))
                 })
                 .then((data) => {

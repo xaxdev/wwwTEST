@@ -69,7 +69,9 @@ export default {
                 esItemData
                 .then((data) => {
 
-                    if (data) return helper.item.applyPermission(data, user)
+                    if (data) {
+                        return data.map(helper.item.authorize(user))
+                    }
                     return reply(Boom.badRequest("Invalid item."))
                 })
                 .then((data) => {
