@@ -337,7 +337,7 @@ class productdetail extends Component {
           <div>
             <h2>SET DETAILS</h2>
             <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-              <input id="totalsetprice" type="hidden" value={parseInt(setReferenceData.totalprice[currency])} />
+              <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice[currency] ? parseInt(setReferenceData.totalprice[currency]) : "-"} />
               <ReactImageFallback
                     id="imgset"
                      src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
