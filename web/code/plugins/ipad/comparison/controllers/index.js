@@ -33,7 +33,7 @@ export default {
                                     }).sort({ lastModified: -1 }).limit(size).skip((page - 1) * size).toArray()
                     let data = []
                     if (!!items.length) {
-                        data = await request.helper.item.synchronize(request.server.plugins.elastic.client, items)
+                        data = await request.helper.item.parse(items, user, request.elasticsearch)
                     }
                     return reply(data).type('application/json')
                 } catch (err) {

@@ -6,15 +6,17 @@ const internals = {};
 
 exports.register = (server, options, next) => {
 
-  internals.client = new Elasticsearch.Client({
-    host: options.host
-  });
+    internals.client = new Elasticsearch.Client({
+        host: options.host
+    });
 
-  server.expose({
-    client: internals.client
-  });
+    server.decorate('request', 'elasticsearch', internals.client);
 
-  next();
+    server.expose({
+        client: internals.client
+    });
+
+    next();
 };
 
 exports.register.attributes = {
