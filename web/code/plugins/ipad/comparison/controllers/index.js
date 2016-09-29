@@ -56,31 +56,37 @@ export default {
             (async _ => {
 
                 try {
-
-                    const db = request.mongo.db
-                    const result = await db.collection('Comparison').findOneAndUpdate(
-                        {
-                            'user.id': request.auth.credentials.id
-                        },
-                        {
-                            $setOnInsert: {
-                                user: {
-                                    id: request.auth.credentials.id,
-                                    email: request.auth.credentials.email
-                                },
-                                lastModified: new Date()
+                    const user = await request.user.getUserById(request, reply, request.auth.credentials.id)
+                    const data = await request.helper.item.parse(request.payload.items, user, request.elasticsearch)
+                    const failed = data.filter(item => !item.availability || !item.authorization)
+                    if (failed.length > 0) {
+                        return reply.invalidItems(failed)
+                    } else {
+                        const db = request.mongo.db
+                        const result = await db.collection('Comparison').findOneAndUpdate(
+                            {
+                                'user.id': request.auth.credentials.id
+                            },
+                            {
+                                $setOnInsert: {
+                                    user: {
+                                        id: request.auth.credentials.id,
+                                        email: request.auth.credentials.email
+                                    },
+                                    lastModified: new Date()
+                                }
+                            },
+                            {
+                                upsert: true
                             }
-                        },
-                        {
-                            upsert: true
-                        }
-                    )
-                    const comparisonId = (result.lastErrorObject.updatedExisting) ? result.value._id : result.lastErrorObject.upserted
-                    const items = request.payload.items.map(request.helper.mongo.operation.upsert({ comparisonId }))
-                    await db.collection('ComparisonList').bulkWrite(items)
-                    reply.success()
+                        )
+                        const comparisonId = (result.lastErrorObject.updatedExisting) ? result.value._id : result.lastErrorObject.upserted
+                        const items = data.map(request.helper.mongo.operation.upsert({ comparisonId }))
+                        await db.collection('ComparisonList').bulkWrite(items)
+                        reply.success()
+                    }
                 } catch (err) {
-                    reply(Boom.badImplementation(err.message))
+                    return reply(Boom.badImplementation(err.message))
                 }
             })(request, reply);
         }
@@ -99,7 +105,6 @@ export default {
             (async _ => {
 
                 try {
-
                     const db = request.mongo.db
                     const { _id } = await db.collection('Comparison').findOne({ 'user.id': request.auth.credentials.id })
                     const items = request.payload.items.map(request.helper.mongo.operation.delete({ comparisonId: _id }))

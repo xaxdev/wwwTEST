@@ -7,7 +7,9 @@ const internals = {};
 exports.register = (server, options, next) => {
 
     internals.client = new Elasticsearch.Client({
-        host: options.host
+        host: options.host,
+        keepAlive: true,
+        maxSockets: 20
     });
 
     server.decorate('request', 'elasticsearch', internals.client);

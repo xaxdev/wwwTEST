@@ -44,8 +44,6 @@ const searchES = async (es, items) => {
         return await es.search(parameters)
     } catch (e) {
         throw e
-    } finally {
-        es && es.close()
     }
 }
 
@@ -56,9 +54,9 @@ const get = es => item => {
     return { ...item, ...oh, availability: !!oh }
 }
 
-const authorize = u => {
-    const sites = u.permission.onhandLocation.places
-    const warehouses = u.permission.onhandWarehouse.places
+const authorize = user => {
+    const sites = user.permission.onhandLocation.places
+    const warehouses = user.permission.onhandWarehouse.places
 
     return x => x.map(item => {
         const authorization = ((sites.length === 0 || (item.site && sites.indexOf(item.site) !== -1))
@@ -69,18 +67,26 @@ const authorize = u => {
 
 const getPriceIn = currency => price => price[currency]
 
-const permission = view => x => x.map(item => {
+const permission = user => x => x.map(item => {
     if (item.authorization) {
         const actualCost = getPriceIn(user.currency)(item.actualCost) || -1
         const updatedCost = getPriceIn(user.currency)(item.updatedCost) || -1
         const price = getPriceIn(user.currency)(item.price) || -1
+        const result = { ...item, actualCost, updatedCost, price }
 
-        switch (view.toUpperCase()) {
+        result.gemstones.forEach(gemstone => delete gemstone.cost)
+
+        switch (user.permission.price.toUpperCase()) {
             case "PUBLIC":
-                return { ...item, price }
+                delete result.actualCost
+                delete result.updatedCost
+                break;
             case "UPDATED":
-                return { ...item, updatedCost, price }
+                delete result.actualCost
+                break;
         }
+
+        return result
     } else {
         return {
             id: item.id,
@@ -185,7 +191,7 @@ export default {
         try {
             const stock = await searchES(es, items)
             const inStock = x => x.map(get(stock.hits.hits))
-            return compose(inStock, authorize(user), permission(user.permission.price))(items)
+            return compose(inStock, authorize(user), permission(user))(items)
         } catch (e) {
             throw e
         }
