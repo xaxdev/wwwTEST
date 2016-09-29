@@ -18,19 +18,19 @@ export default {
 
             (async _ => {
 
+                const user = await request.user.getUserById(request, reply, request.auth.credentials.id)
                 const page = Number(request.query.page || request.pagination.page)
                 const size = Number(request.query.size || request.pagination.size)
-                const offset = (page - 1) * size
 
                 try {
                     const db = request.mongo.db
-                    const { _id } = await db.collection('Comparison').findOne({ 'user.id': request.auth.credentials.id })
-                    const items = await db.collection('ComparisonList').find({ comparisonId: _id },
+                    const { _id: comparisonId } = await db.collection('Comparison').findOne({ 'user.id': request.auth.credentials.id })
+                    const items = await db.collection('ComparisonList').find({ comparisonId },
                                     {
                                         _id: 0,
                                         comparisonId: 0,
                                         lastModified: 0
-                                    }).sort({ lastModified: -1 }).limit(size).skip(offset).toArray()
+                                    }).sort({ lastModified: -1 }).limit(size).skip((page - 1) * size).toArray()
                     let data = []
                     if (!!items.length) {
                         data = await request.helper.item.synchronize(request.server.plugins.elastic.client, items)
