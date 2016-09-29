@@ -1,4 +1,4 @@
-const Boom = require('boom')
+import Boom from 'boom'
 
 export default {
     auth: {

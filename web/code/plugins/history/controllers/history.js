@@ -1,6 +1,6 @@
-const Boom = require('boom')
-const _ = require('lodash')
-const Joi = require('joi');
+import Joi from 'joi'
+import Boom from 'boom'
+import _ from 'lodash'
 
 export default {
     auth: {
@@ -49,7 +49,7 @@ export default {
 
             try {
                 const db = request.mongo.db
-                const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
+                const user = await userHelper.getUserById(request, request.auth.credentials.id)
                 const countHistory = await db.collection('History').find(fCondition).count()
                 const popHistory = await db.collection('History').find(fCondition, { _id: 0, "itemId": 1, "name": 1, "reference": 1 })
                 .sort({ "lastModified": -1 })
@@ -74,25 +74,16 @@ export default {
                     data.forEach((item) => { delete item.itemId })
                     return data
                 })
-                const esItemData = helper.item.synchronize(request.server.plugins.elastic.client, popHistory)
+                const esItemData = await request.helper.item.parse(popHistory, user, request.elasticsearch)
 
-                esItemData
-                .then((data) => {
+                if (!esItemData) return reply(Boom.badRequest("Invalid item."))
 
-                    if (data) {
-                        return data.map(helper.item.authorize(user))
-                    }
-                    return reply(Boom.badRequest("Invalid item."))
-                })
-                .then((data) => {
-
-                    return reply({
-                        "items": data,
-                        "page": page,
-                        "total_items": countHistory,
-                        "total_pages": Math.ceil(countHistory / size),
-                        "status": true
-                    })
+                return reply({
+                    "items": esItemData,
+                    "page": page,
+                    "total_items": countHistory,
+                    "total_pages": Math.ceil(countHistory / size),
+                    "status": true
                 })
 
             } catch (e) {

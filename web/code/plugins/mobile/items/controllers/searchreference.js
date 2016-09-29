@@ -15,7 +15,7 @@ module.exports = {
         const reference = request.params.reference
         const historyHelper = request.history
         const userHelper = request.user
-        const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
+        const user = await userHelper.getUserById(request, request.auth.credentials.id)
 
         internals.query = JSON.parse(
             `{

@@ -1,5 +1,5 @@
-const Boom = require('boom')
-const _ = require('lodash')
+import Boom from 'boom'
+import _ from 'lodash'
 
 export default {
     auth: {

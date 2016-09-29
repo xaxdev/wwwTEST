@@ -1,6 +1,6 @@
-const Boom = require('boom')
-const _ = require('lodash')
-const Joi = require('joi');
+import Joi from 'joi'
+import Boom from 'boom'
+import _ from 'lodash'
 
 export default {
     auth: {
@@ -21,7 +21,7 @@ export default {
                 const helper = request.helper
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
-                const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
+                const user = await userHelper.getUserById(request, request.auth.credentials.id)
                 const wlistId = request.params.id || ""
                 const itemRef = request.params.reference || ""
                 const qPage = request.query.page || request.pagination.page
@@ -30,7 +30,9 @@ export default {
                 const size = parseInt(qSize)
 
                 let fWishlist = await db.collection('WishlistName').findOne({ "_id" : new ObjectID(wlistId) })
-                if (_.isNull(fWishlist)) return reply(Boom.badRequest("Invalid item."))
+                if (_.isNull(fWishlist)) {
+                    return reply(Boom.badRequest("Invalid item."))
+                }
 
                 let fCondition = { "wishlistId" : new ObjectID(wlistId) }
                 if (itemRef) {
@@ -64,28 +66,19 @@ export default {
                     data.forEach((item) => { delete item.itemId })
                     return data
                 })
-                const esItemData = helper.item.synchronize(request.server.plugins.elastic.client, popWlistItem)
+                const esItemData = await request.helper.item.parse(popWlistItem, user, request.elasticsearch)
 
-                esItemData
-                .then((data) => {
+                if (!esItemData) return reply(Boom.badRequest("Invalid item."))
 
-                    if (data) {
-                        return data.map(helper.item.authorize(user))
-                    }
-                    return reply(Boom.badRequest("Invalid item."))
-                })
-                .then((data) => {
-
-                    return reply({
-                        "_id": new ObjectID(fWishlist._id),
-                        "wishlist": fWishlist.wishlist,
-                        "userId": fWishlist.userId,
-                        "items": data,
-                        "page": page,
-                        "total_items": countWlistItem,
-                        "total_pages": Math.ceil(countWlistItem / size),
-                        "status": fWishlist.status
-                    })
+                return reply({
+                    "_id": new ObjectID(fWishlist._id),
+                    "wishlist": fWishlist.wishlist,
+                    "userId": fWishlist.userId,
+                    "items": esItemData,
+                    "page": page,
+                    "total_items": countWlistItem,
+                    "total_pages": Math.ceil(countWlistItem / size),
+                    "status": fWishlist.status
                 })
 
             } catch (e) {

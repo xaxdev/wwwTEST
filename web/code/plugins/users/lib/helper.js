@@ -2,9 +2,9 @@ const Boom = require('boom');
 const Promise = require('bluebird');
 
 export default {
-    getUserById: (request, reply, userId) => {
+    getUserById: (request, userId) => {
 
-        return (async (request, reply, userId) => {
+        return (async (request, userId) => {
 
             try {
                 const Users = request.collections.user
@@ -33,6 +33,6 @@ export default {
 
                 return Boom.badImplementation('', e)
             }
-        })(request, reply, userId);
+        })(request, userId);
     }
 }

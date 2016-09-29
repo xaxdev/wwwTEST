@@ -1,6 +1,6 @@
 import Joi from 'joi'
 import Boom from 'boom'
-import _  from 'lodash'
+import _ from 'lodash'
 
 export default {
     auth: {
@@ -21,7 +21,7 @@ export default {
                 const helper = request.helper
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
-                const user = await userHelper.getUserById(request, reply, request.auth.credentials.id)
+                const user = await userHelper.getUserById(request, request.auth.credentials.id)
                 const catalogId = request.params.id || ""
                 const itemRef = request.params.reference || ""
                 const qPage = request.query.page || request.pagination.page
@@ -64,28 +64,19 @@ export default {
                     data.forEach((item) => { delete item.itemId })
                     return data
                 })
-                const esItemData = helper.item.synchronize(request.server.plugins.elastic.client, popCatalogItem)
+                const esItemData = await request.helper.item.parse(popCatalogItem, user, request.elasticsearch)
 
-                esItemData
-                .then((data) => {
+                if (!esItemData) return reply(Boom.badRequest("Invalid item."))
 
-                    if (data) {
-                        return data.map(helper.item.authorize(user))
-                    }
-                    return reply(Boom.badRequest("Invalid item."))
-                })
-                .then((data) => {
-
-                    return reply({
-                        "_id": new ObjectID(fCatalog._id),
-                        "catalog": fCatalog.catalog,
-                        "userId": fCatalog.userId,
-                        "items": data,
-                        "page": page,
-                        "total_items": countCatalogItem,
-                        "total_pages": Math.ceil(countCatalogItem / size),
-                        "status": fCatalog.status
-                    })
+                return reply({
+                    "_id": new ObjectID(fCatalog._id),
+                    "catalog": fCatalog.catalog,
+                    "userId": fCatalog.userId,
+                    "items": esItemData,
+                    "page": page,
+                    "total_items": countCatalogItem,
+                    "total_pages": Math.ceil(countCatalogItem / size),
+                    "status": fCatalog.status
                 })
 
             } catch (e) {

@@ -18,7 +18,7 @@ export default {
 
             (async _ => {
 
-                const user = await request.user.getUserById(request, reply, request.auth.credentials.id)
+                const user = await request.user.getUserById(request, request.auth.credentials.id)
                 const page = Number(request.query.page || request.pagination.page)
                 const size = Number(request.query.size || request.pagination.size)
 
@@ -56,7 +56,7 @@ export default {
             (async _ => {
 
                 try {
-                    const user = await request.user.getUserById(request, reply, request.auth.credentials.id)
+                    const user = await request.user.getUserById(request, request.auth.credentials.id)
                     const data = await request.helper.item.parse(request.payload.items, user, request.elasticsearch)
                     const failed = data.filter(item => !item.availability || !item.authorization)
                     if (failed.length > 0) {

@@ -1,6 +1,6 @@
-const Promise = require('bluebird');
-const Boom = require('boom')
-const _ = require('lodash')
+import Promise from 'bluebird'
+import Boom from 'boom'
+import _  from 'lodash'
 
 export default {
     auth: {
@@ -17,59 +17,51 @@ export default {
                 const wlistPayloadId = request.payload.id
                 const wlistPayloadItems = request.payload.items
                 const helper = request.helper
-                const esItemData = helper.item.synchronize(request.server.plugins.elastic.client, wlistPayloadItems)
+                const user = await request.user.getUserById(request, request.auth.credentials.id)
+                const esItemData = await request.helper.item.parse(request.payload.items, user, request.elasticsearch)
+                const refuseItem = esItemData.filter((item) => { return !item.availability || !item.authorization })
 
-                let wlistName = {
-                    "wishlist": request.payload.wishlist,
-                    "userId": request.auth.credentials.id,
-                    "status": true,
-                    "lastModified": new Date()
-                }
+                if(refuseItem.length > 0) return reply.invalidItems(refuseItem)
 
-                if (_.isNull(wlistPayloadId)) {
-
-                    const addWishlist = db.collection('WishlistName').insertOne(wlistName)
-                    .then((result) => {
-                        return db.collection('WishlistName').findOne(wlistName)
+                const wlistCollection = await db.collection('WishlistName').findOneAndUpdate(
+                    {
+                        _id: new ObjectID(wlistPayloadId)
+                    },
+                    {
+                        $set: {
+                            "wishlist": request.payload.wishlist,
+                            "userId": request.auth.credentials.id,
+                            "lastModified": new Date()
+                        }
+                    },
+                    {
+                        upsert: true,
+                        returnOriginal: false
                     })
+                const wlistColId = wlistCollection.lastErrorObject.updatedExisting ? wlistCollection.value._id : wlistCollection.lastErrorObject.upserted
 
-                    Promise.all([addWishlist, esItemData])
-                    .spread((wlistData, itemData) => {
+                esItemData.forEach(async (item) => {
 
-                        itemData.forEach((item) => {
-
-                            db.collection('WishlistItem').insertOne({
-                                "wishlistId": wlistData._id, "itemId": item.id, "reference": item.reference, "description": item.description, "lastModified": new Date()
-                            })
+                    await db.collection('WishlistItem').findOneAndUpdate(
+                        {
+                            "wishlistId": new ObjectID(wlistColId),
+                            "itemId": item.id.toString()
+                        },
+                        {
+                            $set: {
+                                "reference": item.reference,
+                                "description": item.description,
+                                "lastModified": new Date()
+                            }
+                        },
+                        {
+                            upsert: true,
+                            returnOriginal: false
                         })
-                    })
-                    .catch((err) => {
-
-                        reply(Boom.badImplementation('', err))
-                    })
-                }
-                else {
-
-                    esItemData
-                    .then((itemData) => {
-
-                        itemData.forEach((item) => {
-
-                            db.collection('WishlistItem').findAndModify({
-                                "wishlistId": new ObjectID(wlistPayloadId), "itemId": item.id.toString()
-                            },
-                            [['itemId', 1]],
-                            { $set: { "reference": item.reference, "description": item.description, "lastModified": new Date() }},
-                            { new: true, upsert: true });
-                        })
-                    })
-                    .catch((err) => {
-
-                        reply(Boom.badImplementation('', err))
-                    })
-                }
+                })
 
                 reply.success()
+
             } catch (e) {
 
                 reply(Boom.badImplementation('', e))
