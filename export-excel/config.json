@@ -1,0 +1,11 @@
+{
+    "elasticsearch": {
+        "server": {
+            "host": "192.168.1.94:9200"
+        },
+        "metadata": {
+            "index": "mol",
+            "type": "items"
+        }
+    }
+}
