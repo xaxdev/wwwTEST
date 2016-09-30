@@ -44,6 +44,8 @@ const searchES = async (es, items) => {
         return await es.search(parameters)
     } catch (e) {
         throw e
+    } finally {
+        es && es.close()
     }
 }
 

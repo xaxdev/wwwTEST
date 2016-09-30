@@ -8,11 +8,10 @@ exports.register = (server, options, next) => {
 
     internals.client = new Elasticsearch.Client({
         host: options.host,
-        keepAlive: true,
-        maxSockets: 20
+        keepAlive: false
     });
 
-    server.decorate('request', 'elasticsearch', internals.client);
+    server.decorate('request', 'elasticsearch', { host: options.host });
 
     server.expose({
         client: internals.client

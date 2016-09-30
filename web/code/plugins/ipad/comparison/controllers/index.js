@@ -1,4 +1,5 @@
 import Boom from 'boom'
+import Elasticsearch from 'elasticsearch'
 import Hoek from 'hoek'
 import Joi from 'joi'
 import Moment from 'moment'
@@ -17,7 +18,11 @@ export default {
         handler: (request, reply) => {
 
             (async _ => {
-
+                
+                const client = new Elasticsearch.Client({
+                                host: request.elasticsearch.host,
+                                keepAlive: false
+                            })
                 const user = await request.user.getUserById(request, request.auth.credentials.id)
                 const page = Number(request.query.page || request.pagination.page)
                 const size = Number(request.query.size || request.pagination.size)
@@ -33,7 +38,7 @@ export default {
                                     }).sort({ lastModified: -1 }).limit(size).skip((page - 1) * size).toArray()
                     let data = []
                     if (!!items.length) {
-                        data = await request.helper.item.parse(items, user, request.elasticsearch)
+                        data = await request.helper.item.parse(items, user, client)
                     }
                     return reply(data).type('application/json')
                 } catch (err) {

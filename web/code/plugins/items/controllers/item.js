@@ -1,14 +1,20 @@
 const Boom = require('boom');
+import Elasticsearch from 'elasticsearch'
 const Promise = require('bluebird');
 const internals = {
   filters: []
 };
 
 module.exports = {
-  auth: false,
+    auth: {
+        strategy: 'authentication'
+    },
   handler: (request, reply) => {
 
-    const elastic = request.server.plugins.elastic.client;
+    const elastic = new Elasticsearch.Client({
+                    host: request.elasticsearch.host,
+                    keepAlive: false
+                });
     const id = request.params.id;
 
     internals.query = JSON.parse(
