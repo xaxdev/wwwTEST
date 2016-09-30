@@ -1,5 +1,6 @@
 import Joi from 'joi'
 import Boom from 'boom'
+import Elasticsearch from 'elasticsearch'
 import _ from 'lodash'
 
 export default {
@@ -66,7 +67,11 @@ export default {
                     data.forEach((item) => { delete item.itemId })
                     return data
                 })
-                const esItemData = await request.helper.item.parse(popWlistItem, user, request.elasticsearch)
+                const client = new Elasticsearch.Client({
+                                host: request.elasticsearch.host,
+                                keepAlive: false
+                            })
+                const esItemData = await request.helper.item.parse(popWlistItem, user, client)
 
                 if (!esItemData) return reply(Boom.badRequest("Invalid item."))
 

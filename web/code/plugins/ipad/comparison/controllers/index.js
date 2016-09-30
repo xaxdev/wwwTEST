@@ -18,7 +18,7 @@ export default {
         handler: (request, reply) => {
 
             (async _ => {
-                
+
                 const client = new Elasticsearch.Client({
                                 host: request.elasticsearch.host,
                                 keepAlive: false
@@ -62,7 +62,11 @@ export default {
 
                 try {
                     const user = await request.user.getUserById(request, request.auth.credentials.id)
-                    const data = await request.helper.item.parse(request.payload.items, user, request.elasticsearch)
+                    const client = new Elasticsearch.Client({
+                                    host: request.elasticsearch.host,
+                                    keepAlive: false
+                                })
+                    const data = await request.helper.item.parse(request.payload.items, user, client)
                     const failed = data.filter(item => !item.availability || !item.authorization)
                     if (failed.length > 0) {
                         return reply.invalidItems(failed)

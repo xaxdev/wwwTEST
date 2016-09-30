@@ -44,26 +44,36 @@ export default {
                 })
                 if (responseItem.hits.hits.length > 0) {
                     const item = responseItem.hits.hits[0]._source
-                            // const responseItemSet = await client.search("index": 'mol',
-                            // "type": 'items',
-                            // "filter_path": "**._source",
-                            // "body": {
-                            //     "query": {
-                            //         "constant_score": {
-                            //             "filter": {
-                            //                 "bool": {
-                            //                     "must": [
-                            //                         {
-                            //                             "id": { "id": 5637251941 }
-                            //                         }
-                            //                     ]
-                            //                 }
-                            //             }
-                            //         }
-                            //     }
-                            // })
-                }
+                    const responseItemSet = await client.search({
+                        "index": 'mol',
+                        "type": 'setitems',
+                        "filter_path": "**._source",
+                        "body": {
+                            "query": {
+                                "constant_score": {
+                                    "filter": {
+                                        "bool": {
+                                            "must": [
+                                                {
+                                                    "match": { "reference": item.setReference }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
 
+                    if (responseItemSet.hits.hits.length > 0) {
+                        const itemSet = responseItemSet.hits.hits[0]._source
+                        reply(item).type('application/json')
+                    } else {
+                        reply(item).type('application/json')
+                    }
+                } else {
+                    reply(Boom.badRequest('Invalid item id'))
+                }
             } catch (e) {
                 reply(Boom.badImplementation(err.message))
             } finally {

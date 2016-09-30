@@ -1,5 +1,5 @@
-import Promise from 'bluebird'
 import Boom from 'boom'
+import Elasticsearch from 'elasticsearch'
 import _  from 'lodash'
 
 export default {
@@ -18,7 +18,11 @@ export default {
                 const wlistPayloadItems = request.payload.items
                 const helper = request.helper
                 const user = await request.user.getUserById(request, request.auth.credentials.id)
-                const esItemData = await request.helper.item.parse(request.payload.items, user, request.elasticsearch)
+                const client = new Elasticsearch.Client({
+                                host: request.elasticsearch.host,
+                                keepAlive: false
+                            })
+                const esItemData = await request.helper.item.parse(request.payload.items, user, client)
                 const refuseItem = esItemData.filter((item) => { return !item.availability || !item.authorization })
 
                 if(refuseItem.length > 0) return reply.invalidItems(refuseItem)
