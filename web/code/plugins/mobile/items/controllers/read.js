@@ -42,7 +42,7 @@ export default {
                         }
                     }
                 })
-                if (responseItem.hits.hits.length > 0) {
+                if (responseItem.hits && responseItem.hits.hits.length > 0) {
                     const item = responseItem.hits.hits[0]._source
 
                     // add certificate images to item gallery

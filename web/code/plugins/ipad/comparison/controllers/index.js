@@ -15,6 +15,13 @@ export default {
         auth: {
             strategy: 'authentication'
         },
+        validate: {
+            query: {
+                page: Joi.number().integer(),
+                size: Joi.number().integer(),
+                q: Joi.string()
+            }
+        },
         handler: (request, reply) => {
 
             (async _ => {
@@ -30,7 +37,8 @@ export default {
                 try {
                     const db = request.mongo.db
                     const { _id: comparisonId } = await db.collection('Comparison').findOne({ 'user.id': request.auth.credentials.id })
-                    const items = await db.collection('ComparisonList').find({ comparisonId },
+                    const condition = (!!request.query.q)? { comparisonId, reference: { "$regex": request.query.q, "$options": "i"  } } : { comparisonId }
+                    const items = await db.collection('ComparisonList').find(condition,
                                     {
                                         _id: 0,
                                         comparisonId: 0,
