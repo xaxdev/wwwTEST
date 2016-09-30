@@ -38,6 +38,7 @@ export default {
                     const db = request.mongo.db
                     const { _id: comparisonId } = await db.collection('Comparison').findOne({ 'user.id': request.auth.credentials.id })
                     const condition = (!!request.query.q)? { comparisonId, reference: { "$regex": request.query.q, "$options": "i"  } } : { comparisonId }
+                    const count = await db.collection('ComparisonList').find(condition).count()
                     const items = await db.collection('ComparisonList').find(condition,
                                     {
                                         _id: 0,
@@ -48,7 +49,12 @@ export default {
                     if (!!items.length) {
                         data = await request.helper.item.parse(items, user, client)
                     }
-                    return reply(data).type('application/json')
+                    return reply({
+                        items: data,
+                        total_items: count,
+                        total_pages: Math.ceil(count/size)
+
+                    }).type('application/json')
                 } catch (err) {
                     reply(Boom.badImplementation(err.message))
                 }
