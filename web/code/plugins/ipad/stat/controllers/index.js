@@ -11,26 +11,68 @@ export default {
 
                 try {
                     const db = request.mongo.db
-                    const cursor = db.collection('WishlistName').aggregate([
-                        {
-                            $lookup: {
-                                from: 'WishlistItem',
-                                localField: '_id',
-                                foreignField: 'wishlistId',
-                                as: 'items'
-                            }
-                        },
-                        {
-                            $project: {
-                                items: {
-                                    $slice: ['$items', 10, 100]
-                                }
-                            }
+                    const wishlistData = await db.collection('WishlistName').aggregate([{
+                        $match: {
+                            userId: request.auth.credentials.id
                         }
-                    ])
-                    const result = await cursor.next()
-                    return reply({}).type('application/json')
+                    },
+                    {
+                    	$lookup: {
+                    		from: 'WishlistItem',
+                    		localField: '_id',
+                    		foreignField: 'wishlistId',
+                    		as: 'items'
+                    	}
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            userId: 1,
+                            count: { $size: "$items" }
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: "$userId",
+                            total: { $sum: "$count" }
+                        }
+                    }])
+                    .toArray()
+
+                    const catalogData = await db.collection('CatalogName').aggregate([{
+                        $match: {
+                            userId: request.auth.credentials.id
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: 'CatalogItem',
+                            localField: '_id',
+                            foreignField: 'catalogId',
+                            as: 'items'
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            userId: 1,
+                            count: { $size: "$items" }
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: "$userId",
+                            total: { $sum: "$count" }
+                        }
+                    }])
+                    .toArray()
+
+                    reply({
+                        wishlist: wishlistData[0].total,
+                        catalog: catalogData[0].total
+                    })
                 } catch (err) {
+                    
                     reply(Boom.badImplementation(err.message))
                 }
             })(request, reply);
