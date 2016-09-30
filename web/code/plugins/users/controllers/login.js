@@ -47,7 +47,7 @@ module.exports = {
 
             if (iPad) {
                 if (version > 0 && version < release.iPad) {
-                    return reply(Boom.badRequest('version is not latest.'));
+                    return reply(Boom.badRequest('Version is not latest.'));
                 }
 
                 await Authentication.clear(user.email);
