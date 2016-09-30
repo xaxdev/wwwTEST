@@ -44,33 +44,14 @@ export default {
                 })
                 if (responseItem.hits.hits.length > 0) {
                     const item = responseItem.hits.hits[0]._source
-                    const responseItemSet = await client.search({
-                        "index": 'mol',
-                        "type": 'setitems',
-                        "filter_path": "**._source",
-                        "body": {
-                            "query": {
-                                "constant_score": {
-                                    "filter": {
-                                        "bool": {
-                                            "must": [
-                                                {
-                                                    "match": { "reference": item.setReference }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    })
 
-                    if (responseItemSet.hits.hits.length > 0) {
-                        const itemSet = responseItemSet.hits.hits[0]._source
-                        reply(item).type('application/json')
-                    } else {
-                        reply(item).type('application/json')
+                    // add certificate images to item gallery
+                    if (!!item.gemstones) {
+                        const certificateImages = item.gemstones.reduce((certificateImages, gemstone) => (gemstone.certificate && gemstone.certificate.images)? certificateImages.concat(gemstone.certificate.images) : certificateImages, [])
+                        item.gallery.push(...certificateImages)
                     }
+
+                    reply(item).type('application/json')
                 } else {
                     reply(Boom.badRequest('Invalid item id'))
                 }

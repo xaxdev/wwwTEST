@@ -63,28 +63,18 @@ module.exports = {
 
     Promise.all([getProductDetail, getSetreference]).spread((productDetail, setReference) => {
 
-          const [productResult] = productDetail.hits.hits.map((element) => element._source);
+        const [productResult] = productDetail.hits.hits.map((element) => element._source);
 
+        // add certificate images to item gallery
+        if (!!productResult.gemstones) {
+            const certificateImages = productResult.gemstones.reduce((certificateImages, gemstone) => (gemstone.certificate && gemstone.certificate.images)? certificateImages.concat(gemstone.certificate.images) : certificateImages, [])
+            productResult.gallery.push(...certificateImages)
+        }
 
-          if(typeof productResult.gemstones !== 'undefined'){
-          const images = productResult.gemstones.reduce((accumulator, gemstone) => {
-           let data = [];
-
-           if (gemstone && gemstone.certificate && gemstone.certificate.images) {
-             data = gemstone.certificate.images;
-           }
-
-           return accumulator.concat(data);
-          }, []);
-
-          productResult.gallery = productResult.gallery.concat(images);
-          }
-
-          const [setReferenceData] = setReference.hits.hits.map((element) => element._source);
-          if(typeof setReferenceData === 'undefined'){
+        const [setReferenceData] = setReference.hits.hits.map((element) => element._source);
+        if(typeof setReferenceData === 'undefined'){
             productResult.setReferenceData = '';
-
-          } else {
+        } else {
             let len = setReferenceData.items.length;
 
             let productdata = [];
@@ -103,9 +93,9 @@ module.exports = {
             }
 
             productResult.setReferenceData = responseSetData;
-          }
-          elastic.close();
-          return reply(JSON.stringify(productResult, null, 4));
+        }
+        elastic.close();
+        return reply(JSON.stringify(productResult, null, 4));
     })
     .catch(function(err) {
         elastic.close();
