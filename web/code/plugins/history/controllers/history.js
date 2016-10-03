@@ -48,40 +48,39 @@ export default {
                 fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }}, fCondition)
             }
 
+            const client = new Elasticsearch.Client({
+                            host: request.elasticsearch.host,
+                            keepAlive: false
+                        })
             try {
                 const db = request.mongo.db
                 const user = await userHelper.getUserById(request, request.auth.credentials.id)
                 const countHistory = await db.collection('History').find(fCondition).count()
-                const popHistory = await db.collection('History').find(fCondition, { _id: 0, "id": 1, "name": 1, "reference": 1 })
-                .sort({ "lastModified": -1 })
-                .limit(size)
-                .skip((page - 1) * size)
-                .toArray()
-                .then((data) => {
-                    if (data.length == 0) {
-                        return reply({
-                            "items": data,
-                            "page": page,
-                            "total_items": countHistory,
-                            "total_pages": Math.ceil(countHistory / size),
-                            "status": true
-                        })
-                    }
-                    return data;
-                })
-                .then((data) => {
+                const items = await db.collection('History').find(fCondition, { _id: 0, "id": 1, "name": 1, "reference": 1 })
+                                        .sort({ "lastModified": -1 }).limit(size).skip((page - 1) * size).toArray()
 
-                    data.map((item) => { item.id = item.id })
-                    data.forEach((item) => { delete item.id })
-                    return data
-                })
-                const client = new Elasticsearch.Client({
-                                host: request.elasticsearch.host,
-                                keepAlive: false
-                            })
-                const esItemData = await request.helper.item.parse(popHistory, user, client)
+                if (!!items.length) {
+                    const es = await client.search(request.helper.item.parameters(items))
+                    const inventory = await request.helper.item.inventory(items, es)
+                    const user = await userHelper.getUserById(request, request.auth.credentials.id)
+                    const response = await request.helper.item.authorization(user, inventory)
 
-                if (!esItemData) return reply(Boom.badRequest("Invalid item."))
+                    return reply({
+                        "items": response,
+                        "page": page,
+                        "total_items": countHistory,
+                        "total_pages": Math.ceil(countHistory / size),
+                        "status": true
+                    })
+                } else {
+                    return reply({
+                        "items": [],
+                        "page": page,
+                        "total_items": countHistory,
+                        "total_pages": Math.ceil(countHistory / size),
+                        "status": true
+                    })
+                }
 
                 return reply({
                     "items": esItemData,
@@ -92,8 +91,9 @@ export default {
                 })
 
             } catch (e) {
-
                 reply(Boom.badImplementation('', e))
+            } finally {
+                client && client.close()
             }
         })();
     }
