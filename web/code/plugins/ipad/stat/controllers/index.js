@@ -68,11 +68,11 @@ export default {
                     .toArray()
 
                     reply({
-                        wishlist: wishlistData[0].total,
-                        catalog: catalogData[0].total
+                        wishlist: wishlistData.length > 0 ? wishlistData[0].total : 0,
+                        catalog: catalogData.length > 0 ? catalogData[0].total : 0
                     })
                 } catch (err) {
-                    
+
                     reply(Boom.badImplementation(err.message))
                 }
             })(request, reply);
