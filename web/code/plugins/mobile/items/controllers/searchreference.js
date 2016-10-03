@@ -47,7 +47,7 @@ module.exports = {
                     }
                 })
                 if (responseItem.hits && responseItem.hits.hits.length > 0) {
-                    const item = responseItem.hits.hits[0]._source
+                    let item = responseItem.hits.hits[0]._source
 
                     // add certificate images to item gallery
                     if (!!item.gemstones) {
@@ -56,7 +56,9 @@ module.exports = {
                     }
 
                     const user = await request.user.getUserById(request, request.auth.credentials.id)
-                    reply({ ...request.helper.item.applyPermission(user, item), availability: true, authorization: true }).type('application/json')
+                    item = { ...request.helper.item.applyPermission(user, item), availability: true, authorization: true }
+                    await request.history.save(request, reply, item)
+                    reply(item).type('application/json')
                 } else {
                     reply(Boom.badRequest('Invalid item id'))
                 }

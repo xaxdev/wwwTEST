@@ -56,15 +56,16 @@ const get = es => item => {
     return { ...item, ...oh, availability: !!oh }
 }
 
-const authorize = user => {
+const applyAuthorization = (user, item) => {
     const sites = user.permission.onhandLocation.places
     const warehouses = user.permission.onhandWarehouse.places
+    const authorization = ((sites.length === 0 || (item.site && sites.indexOf(item.site) !== -1))
+        && (warehouses.length === 0 || (item.warehouse && warehouses.indexOf(item.warehouse) !== -1))) || false
+    return { ...item, authorization }
+}
 
-    return x => x.map(item => {
-        const authorization = ((sites.length === 0 || (item.site && sites.indexOf(item.site) !== -1))
-            && (warehouses.length === 0 || (item.warehouse && warehouses.indexOf(item.warehouse) !== -1))) || false
-        return { ...item, authorization }
-    })
+const authorize = user => {
+    return x => x.map(item => { return applyAuthorization(user, item) })
 }
 
 const getPriceIn = currency => price => price[currency]
@@ -77,12 +78,12 @@ const applyPermission = (user, item) => {
     const result = { ...item, actualCost, updatedCost, price }
 
     result.gemstones.forEach(gemstone => delete gemstone.cost)
-    delete result.markup
 
     switch (user.permission.price.toUpperCase()) {
         case "PUBLIC":
             delete result.actualCost
             delete result.updatedCost
+            delete result.markup
             break;
         case "UPDATED":
             delete result.actualCost
@@ -118,5 +119,6 @@ export default {
             throw e
         }
     },
+    applyAuthorization,
     applyPermission
 }
