@@ -51,12 +51,13 @@ export default {
                         item.gallery.push(...certificateImages)
                     }
 
-                    reply(item).type('application/json')
+                    const user = await request.user.getUserById(request, request.auth.credentials.id)
+                    reply({ ...request.helper.item.applyPermission(user, item), availability: true, authorization: true }).type('application/json')
                 } else {
                     reply(Boom.badRequest('Invalid item id'))
                 }
             } catch (e) {
-                reply(Boom.badImplementation(err.message))
+                reply(Boom.badImplementation(e.message))
             } finally {
                 client && client.close()
             }
