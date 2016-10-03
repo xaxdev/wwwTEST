@@ -15,7 +15,7 @@ export default {
 
                 items.forEach(({id}) => {
 
-                    db.collection('WishlistItem').deleteMany({ "wishlistId": new ObjectID(request.payload.id), "itemId": id.toString() }, (err, result) => {
+                    db.collection('WishlistItem').deleteMany({ "wishlistId": new ObjectID(request.payload.id), "id": id.toString() }, (err, result) => {
                         if (err) reply(Boom.badImplementation('', err))
                     })
                 })

@@ -15,7 +15,7 @@ export default {
 
                 dataPayload.forEach(({id}) => {
 
-                    db.collection('History').updateOne({ "userId": request.auth.credentials.id, "itemId": id.trim() }, { $set: { "displayStatus": false } }, (err, result) => {
+                    db.collection('History').updateOne({ "userId": request.auth.credentials.id, "id": id.trim() }, { $set: { "displayStatus": false } }, (err, result) => {
                         if (err) reply(Boom.badImplementation('', err))
                     })
                 })

@@ -49,7 +49,7 @@ export default {
                     await db.collection('CatalogItem').findOneAndUpdate(
                         {
                             "catalogId": new ObjectID(catalogColId),
-                            "itemId": item.id.toString()
+                            "id": item.id.toString()
                         },
                         {
                             $set: {

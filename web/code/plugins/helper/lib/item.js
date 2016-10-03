@@ -1,124 +1,98 @@
-import { Client as elasticsearch } from 'elasticsearch'
-import hoek from 'hoek'
-const _ = require('lodash')
-
-const compare = onHand => {
-
-    return item => {
-
-        const onHandItem = onHand.find(element => element.id === item.id)
-
-        return { ...item, ...onHandItem, availability: !!onHandItem }
-    }
-}
-
-const searchES = async (es, items) => {
-
-    try {
-        const ids = items.map(item => item.id)
-        const parameters = {
-            "index": "mol",
-            "type": "items",
-            "filter_path": "**._source",
-            "body": {
-                "query": {
-                    "constant_score": {
-                        "query": {
-                            "bool": {
-                                "should": []
-                            }
+const parameters = items => {
+    const parameters = {
+        "index": "mol",
+        "type": "items",
+        "size": items.length,
+        "filter_path": "**._source",
+        "body": {
+            "query": {
+                "constant_score": {
+                    "query": {
+                        "bool": {
+                            "should": []
                         }
                     }
                 }
             }
         }
-
-        parameters.body.query.constant_score.query.bool.should.push(ids.map(id => {
-            return {
-                "match": {
-                    "id": String(id)
-                }
-            }
-        }))
-
-        return await es.search(parameters)
-    } catch (e) {
-        throw e
-    } finally {
-        es && es.close()
     }
+
+    parameters.body.query.constant_score.query.bool.should.push(items.map(item => ({ "match": { "id": String(item.id) } })))
+
+    return parameters
 }
 
 const source = x => x._source
 
-const get = es => item => {
-    const oh = es.map(source).find(d => Number(d.id) === Number(item.id))
-    return { ...item, ...oh, availability: !!oh }
+const inventory = stock => item => {
+    if (!!stock.hits && !!stock.hits.hits) {
+        const onHand = stock.hits.hits.map(source).find(i => Number(i.id) === Number(item.id))
+        return { ...item, ...onHand, availability: !!onHand }
+    } else {
+        return { ...item, availability: false }
+    }
 }
 
 const applyAuthorization = (user, item) => {
     const sites = user.permission.onhandLocation.places
     const warehouses = user.permission.onhandWarehouse.places
-    const authorization = ((sites.length === 0 || (item.site && sites.indexOf(item.site) !== -1))
-        && (warehouses.length === 0 || (item.warehouse && warehouses.indexOf(item.warehouse) !== -1))) || false
+    const authorization = ((sites.length === 0 || (!!item.site && sites.indexOf(item.site) !== -1))
+        && (warehouses.length === 0 || (!!item.warehouse && warehouses.indexOf(item.warehouse) !== -1)))
     return { ...item, authorization }
-}
-
-const authorize = user => {
-    return x => x.map(item => { return applyAuthorization(user, item) })
 }
 
 const getPriceIn = currency => price => price[currency]
 
 const applyPermission = (user, item) => {
-    const currency = user.currency
-    const actualCost = getPriceIn(currency)(item.actualCost) || -1
-    const updatedCost = getPriceIn(currency)(item.updatedCost) || -1
-    const price = getPriceIn(currency)(item.price) || -1
-    const result = { ...item, actualCost, updatedCost, price }
+    if (item.availability && item.authorization) {
+        const actualCost = getPriceIn(currency)(item.actualCost) || -1
+        const currency = user.currency
+        const updatedCost = getPriceIn(currency)(item.updatedCost) || -1
+        const price = getPriceIn(currency)(item.price) || -1
+        const result = { ...item, actualCost, updatedCost, price }
 
-    result.gemstones.forEach(gemstone => delete gemstone.cost)
+        result.gemstones.forEach(gemstone => delete gemstone.cost)
 
-    switch (user.permission.price.toUpperCase()) {
-        case "PUBLIC":
+        switch (user.permission.price.toUpperCase()) {
+            case "PUBLIC":
             delete result.actualCost
             delete result.updatedCost
             delete result.markup
             break;
-        case "UPDATED":
+            case "UPDATED":
             delete result.actualCost
             break;
+        }
+        return result
     }
 
-    return result
+    return { ...item }
 }
 
-const permission = user => x => x.map(item => {
-    if (item.authorization) {
-        return applyPermission(user, item)
+const authorize = user => data => {
+    // console.log(JSON.stringify(data, null, 4))
+    if (Array.isArray(data)) {
+        return data.map(item => applyAuthorization(user, item))
     } else {
-        return {
-            id: item.id,
-            reference: item.reference,
-            description: item.description,
-            availability: item.availability,
-            authorization: item.authorization
-        }
+        return applyAuthorization(user, data)
     }
-})
+}
+
+const permission = user => data => {
+    // console.log(JSON.stringify(data, null, 4))
+    if (Array.isArray(data)) {
+        return data.map(item => applyPermission(user, item))
+    } else {
+        return applyPermission(user, data)
+    }
+}
 
 const compose = (...fs) => x => fs.reduce((p, f) => f(p), x)
 
 export default {
-    parse: async (items, user, es) => {
-        try {
-            const stock = await searchES(es, items)
-            const inStock = x => x.map(get(stock.hits.hits))
-            return compose(inStock, authorize(user), permission(user))(items)
-        } catch (e) {
-            throw e
-        }
-    },
-    applyAuthorization,
-    applyPermission
+    parameters,
+    inventory: (data, stock) => data.map(inventory(stock)),
+    authorization: (user, data) => {
+      return compose(authorize(user), permission(user))(data)
+    }
 }

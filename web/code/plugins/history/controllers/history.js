@@ -52,7 +52,7 @@ export default {
                 const db = request.mongo.db
                 const user = await userHelper.getUserById(request, request.auth.credentials.id)
                 const countHistory = await db.collection('History').find(fCondition).count()
-                const popHistory = await db.collection('History').find(fCondition, { _id: 0, "itemId": 1, "name": 1, "reference": 1 })
+                const popHistory = await db.collection('History').find(fCondition, { _id: 0, "id": 1, "name": 1, "reference": 1 })
                 .sort({ "lastModified": -1 })
                 .limit(size)
                 .skip((page - 1) * size)
@@ -71,8 +71,8 @@ export default {
                 })
                 .then((data) => {
 
-                    data.map((item) => { item.id = item.itemId })
-                    data.forEach((item) => { delete item.itemId })
+                    data.map((item) => { item.id = item.id })
+                    data.forEach((item) => { delete item.id })
                     return data
                 })
                 const client = new Elasticsearch.Client({

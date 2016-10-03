@@ -49,7 +49,7 @@ export default {
                     await db.collection('WishlistItem').findOneAndUpdate(
                         {
                             "wishlistId": new ObjectID(wlistColId),
-                            "itemId": item.id.toString()
+                            "id": item.id.toString()
                         },
                         {
                             $set: {

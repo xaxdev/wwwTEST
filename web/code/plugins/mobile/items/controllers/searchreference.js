@@ -19,12 +19,11 @@ module.exports = {
 
         (async (request, reply) => {
 
-            let client = null
+            const client = new Elasticsearch.Client({
+                            host: request.elasticsearch.host,
+                            keepAlive: false
+                        })
             try {
-                client = new Elasticsearch.Client({
-                                host: request.elasticsearch.host,
-                                keepAlive: false
-                            })
                 const reference = request.params.reference
                 const responseItem = await client.search({
                     "index": 'mol',
@@ -47,7 +46,7 @@ module.exports = {
                     }
                 })
                 if (responseItem.hits && responseItem.hits.hits.length > 0) {
-                    let item = responseItem.hits.hits[0]._source
+                    const item = responseItem.hits.hits[0]._source
 
                     // add certificate images to item gallery
                     if (!!item.gemstones) {
@@ -56,9 +55,9 @@ module.exports = {
                     }
 
                     const user = await request.user.getUserById(request, request.auth.credentials.id)
-                    item = { ...request.helper.item.applyPermission(user, item), availability: true, authorization: true }
-                    await request.history.save(request, reply, item)
-                    reply(item).type('application/json')
+                    const response = { ...request.helper.item.authorization(user, item) }
+                    await request.history.save(request, reply, response)
+                    reply(response).type('application/json')
                 } else {
                     reply(Boom.badRequest('Invalid item id'))
                 }

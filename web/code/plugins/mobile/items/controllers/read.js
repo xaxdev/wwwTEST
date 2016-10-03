@@ -15,12 +15,11 @@ export default {
 
         (async (request, reply) => {
 
-            let client = null
+            const client = new Elasticsearch.Client({
+                            host: request.elasticsearch.host,
+                            keepAlive: false
+                        })
             try {
-                client = new Elasticsearch.Client({
-                                host: request.elasticsearch.host,
-                                keepAlive: false
-                            })
                 const id = request.params.id
                 const responseItem = await client.search({
                     "index": 'mol',
@@ -52,7 +51,8 @@ export default {
                     }
 
                     const user = await request.user.getUserById(request, request.auth.credentials.id)
-                    reply({ ...request.helper.item.applyPermission(user, item), availability: true, authorization: true }).type('application/json')
+                    const response = { ...request.helper.item.authorization(user, item) }
+                    reply(response).type('application/json')
                 } else {
                     reply(Boom.badRequest('Invalid item id'))
                 }

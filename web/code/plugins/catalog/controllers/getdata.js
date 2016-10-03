@@ -17,12 +17,15 @@ export default {
 
         (async () => {
 
+            const client = new Elasticsearch.Client({
+                        host: request.elasticsearch.host,
+                        keepAlive: false
+                    })
             try {
                 const userHelper = request.user
                 const helper = request.helper
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
-                const user = await userHelper.getUserById(request, request.auth.credentials.id)
                 const catalogId = request.params.id || ""
                 const itemRef = request.params.reference || ""
                 const qPage = request.query.page || request.pagination.page
@@ -39,55 +42,41 @@ export default {
                 }
 
                 const countCatalogItem = await db.collection('CatalogItem').find(fCondition).count()
-                const popCatalogItem = await db.collection('CatalogItem').find(fCondition, { "_id": 0, "catalogId": 0, "lastModified": 0 })
-                .sort({ "lastModified": -1 })
-                .limit(size)
-                .skip((page - 1) * size)
-                .toArray()
-                .then((data) => {
-                    if (data.length == 0) {
-                        return reply({
-                            "_id": new ObjectID(fCatalog._id),
-                            "catalog": fCatalog.catalog,
-                            "userId": fCatalog.userId,
-                            "items": data,
-                            "page": page,
-                            "total_items": countCatalogItem,
-                            "total_pages": Math.ceil(countCatalogItem / size),
-                            "status": fCatalog.status
-                        })
-                    }
-                    return data
-                })
-                .then((data) => {
+                const items = await db.collection('CatalogItem').find(fCondition, { "_id": 0, "catalogId": 0, "lastModified": 0 })
+                                        .sort({ "lastModified": -1 }).limit(size).skip((page - 1) * size).toArray()
 
-                    data.map((item) => { item.id = item.itemId })
-                    data.forEach((item) => { delete item.itemId })
-                    return data
-                })
+                if (!!items.length) {
+                    const es = await client.search(request.helper.item.parameters(items))
+                    const inventory = await request.helper.item.inventory(items, es)
+                    const user = await userHelper.getUserById(request, request.auth.credentials.id)
+                    const response = await request.helper.item.authorization(user, inventory)
 
-                const client = new Elasticsearch.Client({
-                                host: request.elasticsearch.host,
-                                keepAlive: false
-                            })
-                const esItemData = await request.helper.item.parse(popCatalogItem, user, client)
-
-                if (!esItemData) return reply(Boom.badRequest("Invalid item."))
-
-                return reply({
-                    "_id": new ObjectID(fCatalog._id),
-                    "catalog": fCatalog.catalog,
-                    "userId": fCatalog.userId,
-                    "items": esItemData,
-                    "page": page,
-                    "total_items": countCatalogItem,
-                    "total_pages": Math.ceil(countCatalogItem / size),
-                    "status": fCatalog.status
-                })
-
+                    return reply({
+                        "_id": new ObjectID(fCatalog._id),
+                        "catalog": fCatalog.catalog,
+                        "userId": fCatalog.userId,
+                        "items": response,
+                        "page": page,
+                        "total_items": countCatalogItem,
+                        "total_pages": Math.ceil(countCatalogItem / size),
+                        "status": fCatalog.status
+                    })
+                } else {
+                    return reply({
+                        "_id": new ObjectID(fCatalog._id),
+                        "catalog": fCatalog.catalog,
+                        "userId": fCatalog.userId,
+                        "items": [],
+                        "page": page,
+                        "total_items": countCatalogItem,
+                        "total_pages": Math.ceil(countCatalogItem / size),
+                        "status": fCatalog.status
+                    })
+                }
             } catch (e) {
-
                 reply(Boom.badImplementation('', e))
+            } finally {
+                client && client.close()
             }
         })();
     }

@@ -11,7 +11,7 @@ export default {
 
                 return await db.collection('History').findOneAndUpdate({
                     "userId": request.auth.credentials.id,
-                    "itemId": item.id
+                    "id": item.id
                 },
                 {
                     $currentDate: {

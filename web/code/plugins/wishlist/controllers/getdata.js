@@ -63,8 +63,8 @@ export default {
                 })
                 .then((data) => {
 
-                    data.map((item) => { item.id = item.itemId })
-                    data.forEach((item) => { delete item.itemId })
+                    data.map((item) => { item.id = item.id })
+                    data.forEach((item) => { delete item.id })
                     return data
                 })
                 const client = new Elasticsearch.Client({
