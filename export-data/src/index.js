@@ -1,63 +1,37 @@
 'use strict';
+import * as process from './process';
 
-var amqp = require('amqplib/callback_api');
+import config from '../config';
 
-amqp.connect('amqp://guest:guest@192.168.1.92:5672', function(err, conn) {
-  conn.createChannel(function(err, ch) {
-    var q = 'hello';
+const amqp = require('amqplib/callback_api');
 
-    ch.assertQueue(q, {durable: false});
+const init = async _ => {
+  try {
+    amqp.connect(config.rabbit.url, function(err, conn) {
+      conn.createChannel(function(err, ch) {
+        let q = 'excel';
 
-    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
-    ch.consume(q, function(msg) {
-      console.log(" [x] Received %s", msg.content.toString());
-    }, {noAck: true});
-  });
-});
+        ch.assertQueue(q, {durable: false});
 
+        console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
+        ch.consume(q, function(msg) {
+          process.search(msg);
+        }, {noAck: true});
+      });
+    });
+  } catch (err) {
+      console.log('err-->',err);
+      throw err
+  }
+}
 
-// var Hapi = require('hapi');
-// var server = new Hapi.Server();
-// var hapiRabbit = require('hapi-rabbit');
-//
-// server.connection(
-//     {
-//         port: "3003"
-//     }
-// );
-//
-// var plugins = [{
-//     register: hapiRabbit,
-//     options: {
-//         url: "amqp://guest:guest@192.168.1.92:5672"
-//     }
-// }];
-//
-// server.register(plugins, function (err) {
-//     if (err) {
-//         console.log('error when registering modules', error);
-//     }
-// });
-//
-// server.start(function (err) {
-//     if (err) {
-//         console.log('error when starting server', error);
-//     }
-//
-    // var rabbit = server.plugins['hapi-rabbit'];
-    // rabbit.createContext(function(err, context){
-    //     if(err){
-    //         console.log('err', err);
-    //     }
-    //
-    //     rabbit.subscribe(context, 'exchange', function(err, message){
-    //         console.log('message', message);
-    //     });
-    // });
-//
-//     console.log('service started');
-// });
-
+init()
+      .then(_ => {
+          console.log('Export data start');
+      })
+      .catch(err => {
+          console.log(err);
+      });
 
 // const es = {
 //   "hits": {

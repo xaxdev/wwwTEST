@@ -1,49 +1,10 @@
 {
-  "server": {
-    "app": {
-
-    }
-  },
-  "connections": [
-    {
-      "$filter": "env",
-      "development": {
-        "port": 3003
-      },
-      "test": {
-        "port": 3003
-      },
-      "production": {
-        "port": 3003
-      }
-    }
-  ],
-  "registrations": [
-    {
-      "plugin": {
-        "register": "hapi-rabbit",
-        "options": {
-          "url": "amqp://guest:guest@192.168.1.92:5672"
-        }
-      }
+    "elasticsearch": {
+        "host": "192.168.1.94:9200 ",
+        "index": "mol",
+        "type": "items"
     },
-    {
-      "plugin": {
-        "register": "./elastic",
-        "options": {
-          "$filter": "env",
-          "development": {
-                "host": "192.168.1.94:9200"
-          },
-          "test": {
-                "host": "192.168.1.94:9200"
-          },
-          "production": {
-                "host": "10.128.133.77:9200"
-          }
-        }
-      }
+    "rabbit": {
+        "url": "amqp://guest:guest@192.168.1.92:5672"
     }
-
-  ]
 }

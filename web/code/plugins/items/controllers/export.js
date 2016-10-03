@@ -36,7 +36,7 @@ module.exports = {
     // });
     amqp.connect('amqp://guest:guest@192.168.1.92:5672', function(err, conn) {
       conn.createChannel(function(err, ch) {
-        var q = 'hello';
+        var q = 'excel';
 
         ch.assertQueue(q, {durable: false});
         // Note: on Node 6 Buffer.from(msg) should be used
