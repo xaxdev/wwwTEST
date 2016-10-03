@@ -17,12 +17,15 @@ export default {
 
         (async () => {
 
+            const client = new Elasticsearch.Client({
+                        host: request.elasticsearch.host,
+                        keepAlive: false
+                    })
             try {
                 const userHelper = request.user
                 const helper = request.helper
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
-                const user = await userHelper.getUserById(request, request.auth.credentials.id)
                 const wlistId = request.params.id || ""
                 const itemRef = request.params.reference || ""
                 const qPage = request.query.page || request.pagination.page
@@ -31,9 +34,7 @@ export default {
                 const size = parseInt(qSize)
 
                 let fWishlist = await db.collection('WishlistName').findOne({ "_id" : new ObjectID(wlistId) })
-                if (_.isNull(fWishlist)) {
-                    return reply(Boom.badRequest("Invalid item."))
-                }
+                if (_.isNull(fWishlist)) return reply(Boom.badRequest("Invalid item."))
 
                 let fCondition = { "wishlistId" : new ObjectID(wlistId) }
                 if (itemRef) {
@@ -41,54 +42,42 @@ export default {
                 }
 
                 const countWlistItem = await db.collection('WishlistItem').find(fCondition).count()
-                const popWlistItem = await db.collection('WishlistItem').find(fCondition, { "_id": 0, "wishlistId": 0, "lastModified": 0 })
-                .sort({ "lastModified": -1 })
-                .limit(size)
-                .skip((page - 1) * size)
-                .toArray()
-                .then((data) => {
-                    if (data.length == 0) {
-                        return reply({
-                            "_id": new ObjectID(fWishlist._id),
-                            "wishlist": fWishlist.wishlist,
-                            "userId": fWishlist.userId,
-                            "items": data,
-                            "page": page,
-                            "total_items": countWlistItem,
-                            "total_pages": Math.ceil(countWlistItem / size),
-                            "status": fWishlist.status
-                        })
-                    }
-                    return data;
-                })
-                .then((data) => {
+                const items = await db.collection('WishlistItem').find(fCondition, { "_id": 0, "wishlistId": 0, "lastModified": 0 })
+                                        .sort({ "lastModified": -1 }).limit(size).skip((page - 1) * size).toArray()
 
-                    data.map((item) => { item.id = item.id })
-                    data.forEach((item) => { delete item.id })
-                    return data
-                })
-                const client = new Elasticsearch.Client({
-                                host: request.elasticsearch.host,
-                                keepAlive: false
-                            })
-                const esItemData = await request.helper.item.parse(popWlistItem, user, client)
+                if (!!items.length) {
+                    const es = await client.search(request.helper.item.parameters(items))
+                    const inventory = await request.helper.item.inventory(items, es)
+                    const user = await userHelper.getUserById(request, request.auth.credentials.id)
+                    const response = await request.helper.item.authorization(user, inventory)
 
-                if (!esItemData) return reply(Boom.badRequest("Invalid item."))
-
-                return reply({
-                    "_id": new ObjectID(fWishlist._id),
-                    "wishlist": fWishlist.wishlist,
-                    "userId": fWishlist.userId,
-                    "items": esItemData,
-                    "page": page,
-                    "total_items": countWlistItem,
-                    "total_pages": Math.ceil(countWlistItem / size),
-                    "status": fWishlist.status
-                })
-
+                    return reply({
+                        "_id": new ObjectID(fWishlist._id),
+                        "wishlist": fWishlist.wishlist,
+                        "userId": fWishlist.userId,
+                        "items": response,
+                        "page": page,
+                        "total_items": countWlistItem,
+                        "total_pages": Math.ceil(countWlistItem / size),
+                        "status": fWishlist.status
+                    })
+                }
+                else {
+                    return reply({
+                        "_id": new ObjectID(fWishlist._id),
+                        "wishlist": fWishlist.wishlist,
+                        "userId": fWishlist.userId,
+                        "items": [],
+                        "page": page,
+                        "total_items": countWlistItem,
+                        "total_pages": Math.ceil(countWlistItem / size),
+                        "status": fWishlist.status
+                    })
+                }
             } catch (e) {
-
                 reply(Boom.badImplementation('', e))
+            } finally {
+                client && client.close()
             }
         })();
     }
