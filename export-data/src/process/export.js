@@ -493,27 +493,27 @@ const excel = async (responseData, request) => {
             }
             console.log('Write excel done.'); // Prints out an instance of a node.js fs.Stats object
 
-            console.log(Path.resolve(__dirname, '../../../export-data/' + fileName));
-            listFileName.push(ROOT_URL +'/export_files/'+ fileName);
-            // console.log('listFileName-->',listFileName[0]);
-
-            let _pathDistFile = Path.resolve(__dirname, '../../../export-data/export_files');
-            let _pathSourceFile = Path.resolve(__dirname, '../../../export-data/' + fileName);
-            let readStream = fs.createReadStream(_pathSourceFile); // current file
-            let writeStream = fs.createWriteStream(_pathDistFile + '/' + fileName);
-
-            readStream   // reads current file
-            .pipe(writeStream)  // writes to out file
-            .on('finish', function () {  // all done
-              console.log('copy done');
-              fs.unlink(_pathSourceFile,function(err){
-                if(err) return console.log(err);
-                console.log('file deleted successfully');
-                // elastic.close();
-                // // console.log('Write excel done.');
-                // return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
-              });
-            });
+            // console.log(Path.resolve(__dirname, '../../../export-data/' + fileName));
+            // listFileName.push(ROOT_URL +'/export_files/'+ fileName);
+            // // console.log('listFileName-->',listFileName[0]);
+            //
+            // let _pathDistFile = Path.resolve(__dirname, '../../../export-data/export_files');
+            // let _pathSourceFile = Path.resolve(__dirname, '../../../export-data/' + fileName);
+            // let readStream = fs.createReadStream(_pathSourceFile); // current file
+            // let writeStream = fs.createWriteStream(_pathDistFile + '/' + fileName);
+            //
+            // readStream   // reads current file
+            // .pipe(writeStream)  // writes to out file
+            // .on('finish', function () {  // all done
+            //   console.log('copy done');
+            //   fs.unlink(_pathSourceFile,function(err){
+            //     if(err) return console.log(err);
+            //     console.log('file deleted successfully');
+            //     // elastic.close();
+            //     // // console.log('Write excel done.');
+            //     // return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
+            //   });
+            // });
         });
       });
 
