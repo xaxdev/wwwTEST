@@ -48,25 +48,32 @@ const applyPermission = (user, item) => {
     // and it exists in inventory
     item.availability = item.availability || true
     if (item.availability && item.authorization) {
-        const actualCost = getPriceIn(currency)(item.actualCost) || -1
         const currency = user.currency
+        const actualCost = getPriceIn(currency)(item.actualCost) || -1
         const updatedCost = getPriceIn(currency)(item.updatedCost) || -1
         const price = getPriceIn(currency)(item.price) || -1
         const result = { ...item, actualCost, updatedCost, price }
-
         result.gemstones.forEach(gemstone => delete gemstone.cost)
 
         switch (user.permission.price.toUpperCase()) {
             case "PUBLIC":
-            delete result.actualCost
-            delete result.updatedCost
-            delete result.markup
-            break;
+                delete result.actualCost
+                delete result.updatedCost
+                delete result.markup
+                break;
             case "UPDATED":
-            delete result.actualCost
-            break;
+                delete result.actualCost
+                break;
         }
         return result
+    } else {
+        return {
+            id: item.id,
+            reference: item.reference,
+            description: item.description,
+            availability: item.availability,
+            authorization: item.authorization
+        }
     }
 
     return { ...item }
