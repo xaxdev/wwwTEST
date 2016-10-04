@@ -9,27 +9,27 @@ export default (item, type)=> {
       if(item.actualCost != undefined){
         return (item.actualCost[currency] != undefined) ?
                numberFormat(item.actualCost[currency]) + ' ' + currency :
-               '0 ' + currency;
+               '- ' + currency;
       }else{
-        return '0 ' + currency;
+        return '- ' + currency;
       }
       break;
     case 'updatedCost':
       if(item.updatedCost != undefined){
         return (item.updatedCost[currency] != undefined) ?
                numberFormat(item.updatedCost[currency]) + ' ' + currency :
-               '0 ' + currency;
+               '- ' + currency;
       }else{
-        return '0 ' + currency;
+        return '- ' + currency;
       }
       break;
     default :
       if(item.price != undefined){
         return (item.price[currency] != undefined) ?
                numberFormat(item.price[currency]) + ' ' + currency :
-               '0 ' + currency;
+               '- ' + currency;
       }else{
-        return '0 ' + currency;
+        return '- ' + currency;
       }
       break;
   }
