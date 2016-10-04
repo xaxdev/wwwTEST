@@ -44,6 +44,9 @@ const applyAuthorization = (user, item) => {
 const getPriceIn = currency => price => price[currency]
 
 const applyPermission = (user, item) => {
+    // if no availability is set, assume it's from single-item api
+    // and it exists in inventory
+    item.availability = item.availability || true
     if (item.availability && item.authorization) {
         const actualCost = getPriceIn(currency)(item.actualCost) || -1
         const currency = user.currency
