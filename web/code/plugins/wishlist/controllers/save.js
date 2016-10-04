@@ -30,6 +30,12 @@ export default {
 
                 if(refuseItem.length > 0) return reply.invalidItems(refuseItem)
 
+                if (!!!wlistPayloadId) {
+                    const existingWlist = await db.collection('WishlistName').find({ "wishlist": request.payload.wishlist, "userId": request.auth.credentials.id }).toArray()
+
+                    if(existingWlist.length > 0) return reply(Boom.badRequest("Your required name is existing."))
+                }
+
                 const wlistCollection = await db.collection('WishlistName').findOneAndUpdate(
                     {
                         _id: new ObjectID(wlistPayloadId)

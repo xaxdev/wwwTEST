@@ -30,6 +30,12 @@ export default {
 
                 if(refuseItem.length > 0) return reply.invalidItems(refuseItem)
 
+                if (!!!catalogPayloadId) {
+                    const existingCatalog = await db.collection('CatalogName').find({ "catalog": request.payload.catalog, "userId": request.auth.credentials.id }).toArray()
+
+                    if(existingCatalog.length > 0) return reply(Boom.badRequest("Your required name is existing."))
+                }
+
                 const catalogCollection = await db.collection('CatalogName').findOneAndUpdate(
                     {
                         _id: new ObjectID(catalogPayloadId)
