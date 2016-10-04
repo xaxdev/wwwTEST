@@ -33,11 +33,22 @@ const inventory = stock => item => {
     }
 }
 
+const productGroups = {
+    JLY: 1,
+    WAT: 2,
+    STO: 4,
+    ACC: 8,
+    OBA: 16,
+    SPA: 32
+}
+
+const productGroupPermission = (user, item) => (user.permission.productGroup & productGroups[item.type]) === 1
+
 const applyAuthorization = (user, item) => {
     const sites = user.permission.onhandLocation.places
     const warehouses = user.permission.onhandWarehouse.places
     const authorization = ((sites.length === 0 || (!!item.site && sites.indexOf(item.site) !== -1))
-        && (warehouses.length === 0 || (!!item.warehouse && warehouses.indexOf(item.warehouse) !== -1)))
+        && (warehouses.length === 0 || (!!item.warehouse && warehouses.indexOf(item.warehouse) !== -1))) && productGroupPermission(user, item)
     return { ...item, authorization }
 }
 
@@ -104,5 +115,6 @@ export default {
     inventory: (data, stock) => data.map(inventory(stock)),
     authorization: (user, data) => {
       return compose(authorize(user), permission(user))(data)
-    }
+    },
+    productGroupPermission
 }

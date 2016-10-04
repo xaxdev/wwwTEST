@@ -56,13 +56,16 @@ module.exports = {
 
                     const user = await request.user.getUserById(request, request.auth.credentials.id)
                     const response = { ...request.helper.item.authorization(user, item) }
-                    await request.history.save(request, reply, response)
-                    reply(response).type('application/json')
+                    if (response.authorization) {
+                        await request.history.save(request, reply, response)
+                        return reply(response).type('application/json')
+                    }
+                    return reply(Boom.badRequest('No authorization to view this item.'))
                 } else {
-                    reply(Boom.badRequest('Invalid item id'))
+                    return reply(Boom.badRequest('Invalid item id'))
                 }
             } catch (e) {
-                reply(Boom.badImplementation(e.message))
+                return reply(Boom.badImplementation(e.message))
             } finally {
                 client && client.close()
             }
