@@ -94,9 +94,9 @@ class ListItemsView extends Component {
         if(col.price != undefined){
           col.priceUSD = (col.price[currency] != undefined) ?
                  numberFormat(col.price[currency]) :
-                 '0 ';
+                 '- ';
         }else{
-          col.priceUSD = '0 ';
+          col.priceUSD = '- ';
         }
 
         let jewelsWeight = 0;
