@@ -42,7 +42,7 @@ const productGroups = {
     SPA: 32
 }
 
-const productGroupPermission = (user, item) => (user.permission.productGroup & productGroups[item.type]) === 1
+const productGroupPermission = (user, item) => (user.permission.productGroup & productGroups[item.type]) === productGroups[item.type]
 
 const applyAuthorization = (user, item) => {
     const sites = user.permission.onhandLocation.places
