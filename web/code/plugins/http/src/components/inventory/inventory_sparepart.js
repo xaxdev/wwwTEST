@@ -264,13 +264,13 @@ class InventorySparePart extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Dominant Stone</label>
+                <label className="col-sm-4 control-label">Metal Type</label>
                 <div className="col-sm-7">
-                  <Select multi simpleValue value={props.DominantStoneValue}
-                    placeholder="Select your Dominant Stone"
-                    options={dataDropDowntDominantStone}
-                    onChange={this.handleDominantStoneSelectChange} />
-                </div>
+                  <Select multi simpleValue value={props.MetalTypeValue}
+                    placeholder="Select your Metal Type"
+                    options={dataDropDowntMetalType}
+                    onChange={this.handleMetalTypeSelectChange} />
+                  </div>
               </div>
             </div>
             <div className="col-lg-6 form-horizontal">
@@ -301,16 +301,6 @@ class InventorySparePart extends Component {
                     <input type="number" className="form-control" {...grossWeightTo}/>
                   </div>
                 </div>
-              </div>
-
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Type</label>
-                <div className="col-sm-7">
-                  <Select multi simpleValue value={props.MetalTypeValue}
-                    placeholder="Select your Metal Type"
-                    options={dataDropDowntMetalType}
-                    onChange={this.handleMetalTypeSelectChange} />
-                  </div>
               </div>
               <div className="form-group">
                 <label className="col-sm-4 control-label">Metal Colour</label>
