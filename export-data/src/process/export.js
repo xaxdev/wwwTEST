@@ -10,6 +10,19 @@ const Path = require('path');
 const fs = require('fs');
 
 const excel = async (responseData, request) => {
+    const wb = new xl.Workbook()
+    const ws = wb.addWorksheet('Data')
+
+    const save = file => new Promise((resolve, reject) => {
+        wb.write(file, err => {
+            if (err) {
+                return reject(err)
+            }
+            console.log('Write excel done.');
+            return resolve()
+        })
+    })
+
     try {
       let allData = [];
       let exportData = null;
@@ -398,12 +411,8 @@ const excel = async (responseData, request) => {
       let file = 0;
 
       while (i < alldata) {
-        chunks.push(newdata.slice(i, i += 5000));
+        chunks.push(newdata.slice(i, i += 500));
       }
-
-      console.log('chunks-->',chunks.length);
-      const wb = new xl.Workbook()
-      const ws = wb.addWorksheet('Data')
 
       // Create a reusable style
       let style = wb.createStyle({
@@ -420,105 +429,148 @@ const excel = async (responseData, request) => {
         ws.cell(1,cell).string(title).style(style);
       });
 
-      chunks.forEach(function (chunk) {
+      const count = newdata.length;
 
-        Promise.all(saveExcel.save(titles,chunk,userName,file,wb,ws,cell,style));
-        file++;
-        console.log('file-->',file);
+      // const size = 1000
+      // const rounds = Math.ceil(count/500)
+      let rounds = 0;
+      console.log('All rounds-->',chunks.length);
+      let row = 2
 
-        // // Create a reusable style
-        // let style = wb.createStyle({
-        //     font: {
-        //         color: '#000000',
-        //         size: 12
-        //     },
-        //     numberFormat: '$#,##0.00; ($#,##0.00); -'
-        // });
-        //
-        // let  t = 0;
-        // titles.forEach(function(title){
-        //   t++;
-        //   ws.cell(1,t).string(title).style(style);
-        // });
-        // // await save('test.xlsx');
-        //
-        // let i = 1;
-        // chunk.forEach(function(item){
-        //   i++;
-        //   // allData.push({'id': item.id,'reference':item.reference});
-        //   // Set value of cell A1 to 100 as a number type styled with paramaters of style
-        //   if(i>=2){
-        //     // console.log('t-->',t);
-        //     // console.log('item-->',item);
-        //     for (let j = 0; j < t; j++) {
-        //       // console.log('i-->',i);
-        //       // console.log('j-->',j);
-        //       // console.log('item[j]-->',item[j]);
-        //       let row = i;
-        //       let column = j+1;
-        //       ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
-        //       if (fields.showImages){
-        //         ws.addImage({
-        //             path: './plugins/http/assets/images/blank.gif',
-        //             type: 'picture',
-        //             position: {
-        //                 type: 'oneCellAnchor',
-        //                 from: {
-        //                     col: 1,
-        //                     colOff: '0.0in',
-        //                     row: 1,
-        //                     rowOff: 0
-        //                 }
-        //             }
-        //         });
-        //       }
-        //     }
-        //   }
-        //   // console.log('item.reference-->',item[0]);
-        //   // console.log('item.description-->',item[1]);
-        //   // ws.cell(i,1).string(item[0]).style(style);
-        //   // ws.cell(i,2).string(item[1]).style(style);
-        //
-        // });
-        //
-        // let startDate = new Date();
-        // let exportDate = moment(startDate,'MM-DD-YYYY');
-        // exportDate = exportDate.format('YYYYMMDD_HHmm');
-        //
-        // let fileName = 'Excel_' + userName + '_' + exportDate + '.xlsx';
-        // console.log('fileName-->',fileName);
-        //
-        // // console.log('save-->',save);
-        //
-        // // wb.write(fileName, function (err, stats) {
-        // //     if (err) {
-        // //         console.error(err);
-        // //     }
-        // //     console.log('Write excel done.'); // Prints out an instance of a node.js fs.Stats object
-        // //
-        // //     // console.log(Path.resolve(__dirname, '../../../export-data/' + fileName));
-        // //     // listFileName.push(ROOT_URL +'/export_files/'+ fileName);
-        // //     // // console.log('listFileName-->',listFileName[0]);
-        // //     //
-        // //     // let _pathDistFile = Path.resolve(__dirname, '../../../export-data/export_files');
-        // //     // let _pathSourceFile = Path.resolve(__dirname, '../../../export-data/' + fileName);
-        // //     // let readStream = fs.createReadStream(_pathSourceFile); // current file
-        // //     // let writeStream = fs.createWriteStream(_pathDistFile + '/' + fileName);
-        // //     //
-        // //     // readStream   // reads current file
-        // //     // .pipe(writeStream)  // writes to out file
-        // //     // .on('finish', function () {  // all done
-        // //     //   console.log('copy done');
-        // //     //   fs.unlink(_pathSourceFile,function(err){
-        // //     //     if(err) return console.log(err);
-        // //     //     console.log('file deleted successfully');
-        // //     //     // elastic.close();
-        // //     //     // // console.log('Write excel done.');
-        // //     //     // return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
-        // //     //   });
-        // //     // });
-        // // });
-      });
+      for (let i = 0; i < chunks.length; i++) {
+        console.log('rounds-->',i);
+        Promise.all(chunks[i].map(function (item) {
+          // console.log('ws row-->',row);
+          for (let j = 0; j < cell; j++) {
+            let column = j+1;
+            ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+          }
+          row++
+        }),await save('test.xlsx'));
+      }
+      // chunks.forEach(function (chunk) {
+      //     rounds++;
+      //     // chunk.forEach(function(item){
+      //     //   // console.log(item);
+      //     //   for (let j = 0; j < cell; j++) {
+      //     //     let column = j+1;
+      //     //     ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+      //     //   }
+      //     //   row++
+      //     // });
+      //     console.log('rounds-->',rounds);
+      //     // wb.write('mol.xlsx')
+      //     chunk.forEach(function(item){
+      //       // console.log(item);
+      //       for (let j = 0; j < cell; j++) {
+      //         let column = j+1;
+      //         ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+      //       }
+      //       row++
+      //     }
+      //
+      // }),save('test.xlsx'));
+      // await save('test.xlsx');
+
+      // chunks.forEach(function (chunk) {
+      //
+      //   Promise.all(saveExcel.save(titles,chunk,userName,file,wb,ws,cell,style));
+      //   file++;
+      //   console.log('file-->',file);
+      //
+      //   // // Create a reusable style
+      //   // let style = wb.createStyle({
+      //   //     font: {
+      //   //         color: '#000000',
+      //   //         size: 12
+      //   //     },
+      //   //     numberFormat: '$#,##0.00; ($#,##0.00); -'
+      //   // });
+      //   //
+      //   // let  t = 0;
+      //   // titles.forEach(function(title){
+      //   //   t++;
+      //   //   ws.cell(1,t).string(title).style(style);
+      //   // });
+      //   // // await save('test.xlsx');
+      //   //
+      //   // let i = 1;
+      //   // chunk.forEach(function(item){
+      //   //   i++;
+      //   //   // allData.push({'id': item.id,'reference':item.reference});
+      //   //   // Set value of cell A1 to 100 as a number type styled with paramaters of style
+      //   //   if(i>=2){
+      //   //     // console.log('t-->',t);
+      //   //     // console.log('item-->',item);
+      //   //     for (let j = 0; j < t; j++) {
+      //   //       // console.log('i-->',i);
+      //   //       // console.log('j-->',j);
+      //   //       // console.log('item[j]-->',item[j]);
+      //   //       let row = i;
+      //   //       let column = j+1;
+      //   //       ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+      //   //       if (fields.showImages){
+      //   //         ws.addImage({
+      //   //             path: './plugins/http/assets/images/blank.gif',
+      //   //             type: 'picture',
+      //   //             position: {
+      //   //                 type: 'oneCellAnchor',
+      //   //                 from: {
+      //   //                     col: 1,
+      //   //                     colOff: '0.0in',
+      //   //                     row: 1,
+      //   //                     rowOff: 0
+      //   //                 }
+      //   //             }
+      //   //         });
+      //   //       }
+      //   //     }
+      //   //   }
+      //   //   // console.log('item.reference-->',item[0]);
+      //   //   // console.log('item.description-->',item[1]);
+      //   //   // ws.cell(i,1).string(item[0]).style(style);
+      //   //   // ws.cell(i,2).string(item[1]).style(style);
+      //   //
+      //   // });
+      //   //
+      //   // let startDate = new Date();
+      //   // let exportDate = moment(startDate,'MM-DD-YYYY');
+      //   // exportDate = exportDate.format('YYYYMMDD_HHmm');
+      //   //
+      //   // let fileName = 'Excel_' + userName + '_' + exportDate + '.xlsx';
+      //   // console.log('fileName-->',fileName);
+      //   //
+      //   // // console.log('save-->',save);
+      //   //
+      //   // // wb.write(fileName, function (err, stats) {
+      //   // //     if (err) {
+      //   // //         console.error(err);
+      //   // //     }
+      //   // //     console.log('Write excel done.'); // Prints out an instance of a node.js fs.Stats object
+      //   // //
+      //   // //     // console.log(Path.resolve(__dirname, '../../../export-data/' + fileName));
+      //   // //     // listFileName.push(ROOT_URL +'/export_files/'+ fileName);
+      //   // //     // // console.log('listFileName-->',listFileName[0]);
+      //   // //     //
+      //   // //     // let _pathDistFile = Path.resolve(__dirname, '../../../export-data/export_files');
+      //   // //     // let _pathSourceFile = Path.resolve(__dirname, '../../../export-data/' + fileName);
+      //   // //     // let readStream = fs.createReadStream(_pathSourceFile); // current file
+      //   // //     // let writeStream = fs.createWriteStream(_pathDistFile + '/' + fileName);
+      //   // //     //
+      //   // //     // readStream   // reads current file
+      //   // //     // .pipe(writeStream)  // writes to out file
+      //   // //     // .on('finish', function () {  // all done
+      //   // //     //   console.log('copy done');
+      //   // //     //   fs.unlink(_pathSourceFile,function(err){
+      //   // //     //     if(err) return console.log(err);
+      //   // //     //     console.log('file deleted successfully');
+      //   // //     //     // elastic.close();
+      //   // //     //     // // console.log('Write excel done.');
+      //   // //     //     // return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
+      //   // //     //   });
+      //   // //     // });
+      //   // // });
+      // });
 
       // await save('test.xlsx');
 

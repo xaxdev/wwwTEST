@@ -62,8 +62,8 @@ const save = async (titles, data,userName,file,wb,ws,cell,style) => {
      let exportDate = moment(startDate,'MM-DD-YYYY');
      exportDate = exportDate.format('YYYYMMDD_HHmm');
 
-     let fileName = 'Excel_' + userName + '_' + exportDate + '.xlsx';
-     console.log('fileName-->',fileName);
+    //  let fileName = 'Excel_' + userName + '_' + exportDate + '.xlsx';
+    //  console.log('fileName-->',fileName);
 
      // console.log('save-->',save);
 
