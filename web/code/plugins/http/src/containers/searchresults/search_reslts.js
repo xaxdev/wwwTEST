@@ -95,6 +95,7 @@ class SearchResult extends Component {
       // showListView: false,
       isExport: false,
       isOpen: false,
+      isOpenDownload: false,
       isOpenNoResults: true,
       allFields: false,
       showImages: false,
@@ -886,6 +887,12 @@ class SearchResult extends Component {
     this.setState({isOpen: false});
   }
 
+  hideModalDownload = (e) => {
+    e.preventDefault();
+
+    this.setState({isOpenDownload: false});
+  }
+
   hideModalNoResults = (e) => {
     e.preventDefault();
 
@@ -1026,13 +1033,40 @@ class SearchResult extends Component {
     };  // default search params
 
     // console.log('filters-->',filters);
+
+    // filters.forEach(function(filter){
+    //   let keys = Object.keys(filter);
+    //   keys.forEach((key) => {
+    //     const value = filter[key];
+    //     params[key] = value;
+    //   });
+    // });
+
+    let gemstoneFilter = {};
+    // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
       keys.forEach((key) => {
         const value = filter[key];
-        params[key] = value;
+        const gemstoneFields = keys[0].split('.');
+        if(gemstoneFields[0] == 'gemstones'){
+          gemstoneFilter[gemstoneFields[1]] = value;
+        }else if(gemstoneFields[0] == 'certificatedNumber'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'certificateAgency'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'cerDateFrom'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }
+        else{
+          params[key] = value;
+        }
       });
     });
+
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
 
     this.setState({
       showLoading: true,
@@ -1042,9 +1076,11 @@ class SearchResult extends Component {
     console.log('params--:>',params);
     this.props.exportDatas(params)
         .then((value) => {
+          console.log('value-->',value);
           console.log('export done!');
           this.setState({
-            showLoading: false
+            showLoading: false,
+            isOpenDownload: true
           });
         });
 
@@ -1205,17 +1241,96 @@ class SearchResult extends Component {
     );
   }
 
+  renderDownloadDialog(){
+    let that = this;
+    const { listFileName } = that.props;
+    const userLogin = JSON.parse(sessionStorage.logindata);
+    if(listFileName != null){
+      return(
+        <div>
+        <div  className="popexport">
+          <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
+            <div className="modal-header">
+              <ModalClose onClick={this.hideModalDownload}/>
+              <h1 className="modal-title">Export</h1>
+            </div>
+            <div className="modal-body">
+              <h3>Please download files as follow link.</h3>
+              <a href={listFileName[0]} target="_blank" >{listFileName[0]}</a>
+              <link></link>
+              <br/>
+              <div className="col-sm-12">
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+              </div>
+              <div className="col-md-12">
+
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
+                Close
+              </button>
+            </div>
+          </Modal>
+          </div>
+         </div>
+      );
+    }else{
+      return(
+        <div>
+        <div  className="popexport">
+          <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
+            <div className="modal-header">
+              <ModalClose onClick={this.hideModalDownload}/>
+              <h1 className="modal-title">Export</h1>
+            </div>
+            <div className="modal-body">
+              <h3>Please download files as follow link.</h3>
+              <br/>
+              <div className="col-sm-12">
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+              </div>
+              <div className="col-md-12">
+
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
+                Close
+              </button>
+            </div>
+          </Modal>
+          </div>
+         </div>
+      );
+    }
+  }
+
   render() {
     const { totalPages,showGridView,showListView,
-            currentPage,allItems,pageSize,
-            items,totalPublicPrice,totalUpdatedCost,
-            handleSubmit,
-            resetForm,
-            submitting } = this.props;
+             currentPage,allItems,pageSize,
+             items,totalPublicPrice,totalUpdatedCost,
+             handleSubmit,
+             resetForm,
+             submitting } = this.props;
 
-    const userLogin = JSON.parse(sessionStorage.logindata);
+     const userLogin = JSON.parse(sessionStorage.logindata);
 
-    const { isOpenMessage } = this.state;
+     const { isOpenMessage } = this.state;
 
     var numbers = document.querySelectorAll('input[type="number"]');
 
@@ -1239,7 +1354,7 @@ class SearchResult extends Component {
 
     // console.log('this.state.activePage-->',this.state.activePage);
 
-    // console.log('pageSize-->',pageSize);
+     // console.log('pageSize-->',pageSize);
     if(items == null){
       return (
         <center ><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center>
@@ -1447,6 +1562,7 @@ class SearchResult extends Component {
               </div>
             </div>
             {this.renderExportExcelDialog()}
+            {this.renderDownloadDialog()}
           </form>
         );
       }

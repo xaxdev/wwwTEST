@@ -22,6 +22,8 @@ module.exports = {
   handler: (request, reply) => {
 
     const elastic = request.server.plugins.elastic.client;
+    // const host = HOSTNAME || 'localhost';
+    // const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
 
     // console.log('request.payload-->',request.payload);
 
@@ -34,6 +36,8 @@ module.exports = {
     let fields = request.payload.fields;
     let price = request.payload.price;
     let ROOT_URL = request.payload.ROOT_URL;
+    let listFileName = [];
+    let userName = request.payload.userName;
 
     let size = 16;
 
@@ -53,18 +57,12 @@ module.exports = {
         console.log('Response Data');
 
         let data = response.hits.hits.map((element) => element._source);
-        if(sortDirections == 'desc'){
-          data = _.sortBy(data,sortBy,sortDirections).reverse();
-        }else{
-          data = _.sortBy(data,sortBy,sortDirections);
-        }
 
         exportData = data;
         // console.log('data-->',data);
         console.log('fields.showImages-->',fields.showImages);
         console.log('userCurrency-->',userCurrency);
         console.log('price-->',price);
-
 
         // console.log(response.hits.total)
         const totalRecord = response.hits.total;
@@ -432,11 +430,38 @@ module.exports = {
           }
         });
 
-        let  t = 0;
-        titles.forEach(function(title){
-          t++;
-          ws.cell(1,t).string(title).style(style);
-        });
+        let alldata = newdata.length;
+        let exportSize = Math.ceil(alldata/5000);
+
+        let chunks = [];
+        let i = 0;
+        let file = 0;
+
+        while (i < alldata) {
+          chunks.push(newdata.slice(i, i += 5000));
+        }
+
+        chunks.forEach(function (chunk) {
+          // Create a new instance of a Workbook class
+          let wb = new xl.Workbook();
+
+          // Add Worksheets to the workbook
+          let ws = wb.addWorksheet('Items');
+
+          // Create a reusable style
+          let style = wb.createStyle({
+              font: {
+                  color: '#000000',
+                  size: 12
+              },
+              numberFormat: '$#,##0.00; ($#,##0.00); -'
+          });
+
+          let  t = 0;
+          titles.forEach(function(title){
+            t++;
+            ws.cell(1,t).string(title).style(style);
+          });
 
         let i = 1;
         newdata.forEach(function(item){
@@ -488,6 +513,8 @@ module.exports = {
               console.log('Write excel done.'); // Prints out an instance of a node.js fs.Stats object
 
               console.log(Path.resolve(__dirname, '../../../../code/' + fileName));
+              listFileName.push(ROOT_URL +'/export_files/'+ fileName);
+              // console.log('listFileName-->',listFileName[0]);
 
               let _pathDistFile = Path.resolve(__dirname, '../../../../code/plugins/http/public/export_files');
               let _pathSourceFile = Path.resolve(__dirname, '../../../../code/' + fileName);
@@ -502,7 +529,7 @@ module.exports = {
                   if(err) return console.log(err);
                   console.log('file deleted successfully');
                   elastic.close();
-                  return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency));
+                  return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency, listFileName));
                 });
               });
           });

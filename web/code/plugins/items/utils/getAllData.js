@@ -90,6 +90,8 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
     });
   }
 
+  // console.log('getAllData listFileName-->',listFileName[0]);
+
   const sendData = {
           'data':pageData,
           'allData':allData,

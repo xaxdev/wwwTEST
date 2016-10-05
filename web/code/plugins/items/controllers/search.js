@@ -34,7 +34,7 @@ module.exports = {
         const totalRecord = response.hits.total;
 
         elastic.close();
-        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency));
+        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency, null));
 
       })
       .catch(function (error) {
