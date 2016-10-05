@@ -62,7 +62,7 @@ module.exports = {
                     }
                     return reply(Boom.badRequest('No authorization to view this item.'))
                 } else {
-                    return reply(Boom.badRequest('Invalid item id'))
+                    return reply(Boom.badRequest('Scan Results Invalid item id reference.'))
                 }
             } catch (e) {
                 return reply(Boom.badImplementation(e.message))
