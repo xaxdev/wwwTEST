@@ -311,7 +311,7 @@ class productdetail extends Component {
                     </div>
                   );
          case 'SPA':
-               Attrtitle='SPARE PARTS ART ATTRIBUTES';
+               Attrtitle='SPARE PARTS ATTRIBUTES';
                return(
                    <div>
                      <h2>{Attrtitle}</h2>
