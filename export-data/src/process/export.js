@@ -3,6 +3,7 @@ import { get } from './utils/es';
 import numberFormat from './utils/convertNumberformat';
 import convertDate from './utils/convertDate';
 import moment from 'moment';
+import * as saveExcel from './save';
 
 const xl = require('excel4node');
 const Path = require('path');
@@ -23,21 +24,6 @@ const excel = async (responseData, request) => {
       let data = responseData.hits.hits.map((element) => element._source);
 
       exportData = data;
-
-      // Create a new instance of a Workbook class
-      let wb = new xl.Workbook();
-
-      // Add Worksheets to the workbook
-      let ws = wb.addWorksheet('Items');
-
-      // Create a reusable style
-      let style = wb.createStyle({
-          font: {
-              color: '#000000',
-              size: 12
-          },
-          numberFormat: '$#,##0.00; ($#,##0.00); -'
-      });
 
       console.log('Wirting excel.');
 
@@ -406,116 +392,135 @@ const excel = async (responseData, request) => {
 
       let alldata = newdata.length;
       console.log('alldata-->',newdata.length);
-      let exportSize = Math.ceil(alldata/40000);
 
       let chunks = [];
       let i = 0;
       let file = 0;
 
       while (i < alldata) {
-        chunks.push(newdata.slice(i, i += 40000));
+        chunks.push(newdata.slice(i, i += 5000));
       }
 
       console.log('chunks-->',chunks.length);
+      const wb = new xl.Workbook()
+      const ws = wb.addWorksheet('Data')
+
+      // Create a reusable style
+      let style = wb.createStyle({
+          font: {
+              color: '#000000',
+              size: 12
+          },
+          numberFormat: '$#,##0.00; ($#,##0.00); -'
+      });
+
+      let  cell = 0;
+      titles.forEach(function(title){
+        cell++;
+        ws.cell(1,cell).string(title).style(style);
+      });
 
       chunks.forEach(function (chunk) {
+
+        Promise.all(saveExcel.save(titles,chunk,userName,file,wb,ws,cell,style));
         file++;
         console.log('file-->',file);
-        // Create a new instance of a Workbook class
-        let wb = new xl.Workbook();
 
-        // Add Worksheets to the workbook
-        let ws = wb.addWorksheet('Items');
-
-        // Create a reusable style
-        let style = wb.createStyle({
-            font: {
-                color: '#000000',
-                size: 12
-            },
-            numberFormat: '$#,##0.00; ($#,##0.00); -'
-        });
-
-        let  t = 0;
-        titles.forEach(function(title){
-          t++;
-          ws.cell(1,t).string(title).style(style);
-        });
-
-        let i = 1;
-        chunk.forEach(function(item){
-          i++;
-          // allData.push({'id': item.id,'reference':item.reference});
-          // Set value of cell A1 to 100 as a number type styled with paramaters of style
-          if(i>=2){
-            // console.log('t-->',t);
-            // console.log('item-->',item);
-            for (let j = 0; j < t; j++) {
-              // console.log('i-->',i);
-              // console.log('j-->',j);
-              // console.log('item[j]-->',item[j]);
-              let row = i;
-              let column = j+1;
-              ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
-              if (fields.showImages){
-                ws.addImage({
-                    path: './plugins/http/assets/images/blank.gif',
-                    type: 'picture',
-                    position: {
-                        type: 'oneCellAnchor',
-                        from: {
-                            col: 1,
-                            colOff: '0.0in',
-                            row: 1,
-                            rowOff: 0
-                        }
-                    }
-                });
-              }
-            }
-          }
-          // console.log('item.reference-->',item[0]);
-          // console.log('item.description-->',item[1]);
-          // ws.cell(i,1).string(item[0]).style(style);
-          // ws.cell(i,2).string(item[1]).style(style);
-
-        });
-        let startDate = new Date();
-        let exportDate = moment(startDate,'MM-DD-YYYY');
-        exportDate = exportDate.format('YYYYMMDD_HHmm');
-
-        let fileName = file + '_' + 'Excel_' + userName + '_' + exportDate + '.xlsx';
-        console.log('fileName-->',fileName);
-
-        wb.write(fileName, function (err, stats) {
-            if (err) {
-                console.error(err);
-            }
-            console.log('Write excel done.'); // Prints out an instance of a node.js fs.Stats object
-
-            // console.log(Path.resolve(__dirname, '../../../export-data/' + fileName));
-            // listFileName.push(ROOT_URL +'/export_files/'+ fileName);
-            // // console.log('listFileName-->',listFileName[0]);
-            //
-            // let _pathDistFile = Path.resolve(__dirname, '../../../export-data/export_files');
-            // let _pathSourceFile = Path.resolve(__dirname, '../../../export-data/' + fileName);
-            // let readStream = fs.createReadStream(_pathSourceFile); // current file
-            // let writeStream = fs.createWriteStream(_pathDistFile + '/' + fileName);
-            //
-            // readStream   // reads current file
-            // .pipe(writeStream)  // writes to out file
-            // .on('finish', function () {  // all done
-            //   console.log('copy done');
-            //   fs.unlink(_pathSourceFile,function(err){
-            //     if(err) return console.log(err);
-            //     console.log('file deleted successfully');
-            //     // elastic.close();
-            //     // // console.log('Write excel done.');
-            //     // return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
-            //   });
-            // });
-        });
+        // // Create a reusable style
+        // let style = wb.createStyle({
+        //     font: {
+        //         color: '#000000',
+        //         size: 12
+        //     },
+        //     numberFormat: '$#,##0.00; ($#,##0.00); -'
+        // });
+        //
+        // let  t = 0;
+        // titles.forEach(function(title){
+        //   t++;
+        //   ws.cell(1,t).string(title).style(style);
+        // });
+        // // await save('test.xlsx');
+        //
+        // let i = 1;
+        // chunk.forEach(function(item){
+        //   i++;
+        //   // allData.push({'id': item.id,'reference':item.reference});
+        //   // Set value of cell A1 to 100 as a number type styled with paramaters of style
+        //   if(i>=2){
+        //     // console.log('t-->',t);
+        //     // console.log('item-->',item);
+        //     for (let j = 0; j < t; j++) {
+        //       // console.log('i-->',i);
+        //       // console.log('j-->',j);
+        //       // console.log('item[j]-->',item[j]);
+        //       let row = i;
+        //       let column = j+1;
+        //       ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+        //       if (fields.showImages){
+        //         ws.addImage({
+        //             path: './plugins/http/assets/images/blank.gif',
+        //             type: 'picture',
+        //             position: {
+        //                 type: 'oneCellAnchor',
+        //                 from: {
+        //                     col: 1,
+        //                     colOff: '0.0in',
+        //                     row: 1,
+        //                     rowOff: 0
+        //                 }
+        //             }
+        //         });
+        //       }
+        //     }
+        //   }
+        //   // console.log('item.reference-->',item[0]);
+        //   // console.log('item.description-->',item[1]);
+        //   // ws.cell(i,1).string(item[0]).style(style);
+        //   // ws.cell(i,2).string(item[1]).style(style);
+        //
+        // });
+        //
+        // let startDate = new Date();
+        // let exportDate = moment(startDate,'MM-DD-YYYY');
+        // exportDate = exportDate.format('YYYYMMDD_HHmm');
+        //
+        // let fileName = 'Excel_' + userName + '_' + exportDate + '.xlsx';
+        // console.log('fileName-->',fileName);
+        //
+        // // console.log('save-->',save);
+        //
+        // // wb.write(fileName, function (err, stats) {
+        // //     if (err) {
+        // //         console.error(err);
+        // //     }
+        // //     console.log('Write excel done.'); // Prints out an instance of a node.js fs.Stats object
+        // //
+        // //     // console.log(Path.resolve(__dirname, '../../../export-data/' + fileName));
+        // //     // listFileName.push(ROOT_URL +'/export_files/'+ fileName);
+        // //     // // console.log('listFileName-->',listFileName[0]);
+        // //     //
+        // //     // let _pathDistFile = Path.resolve(__dirname, '../../../export-data/export_files');
+        // //     // let _pathSourceFile = Path.resolve(__dirname, '../../../export-data/' + fileName);
+        // //     // let readStream = fs.createReadStream(_pathSourceFile); // current file
+        // //     // let writeStream = fs.createWriteStream(_pathDistFile + '/' + fileName);
+        // //     //
+        // //     // readStream   // reads current file
+        // //     // .pipe(writeStream)  // writes to out file
+        // //     // .on('finish', function () {  // all done
+        // //     //   console.log('copy done');
+        // //     //   fs.unlink(_pathSourceFile,function(err){
+        // //     //     if(err) return console.log(err);
+        // //     //     console.log('file deleted successfully');
+        // //     //     // elastic.close();
+        // //     //     // // console.log('Write excel done.');
+        // //     //     // return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
+        // //     //   });
+        // //     // });
+        // // });
       });
+
+      // await save('test.xlsx');
 
     } catch (err) {
         throw err;
