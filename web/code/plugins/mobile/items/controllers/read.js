@@ -52,7 +52,10 @@ export default {
 
                     const user = await request.user.getUserById(request, request.auth.credentials.id)
                     const response = { ...request.helper.item.authorization(user, item) }
-                    reply(response).type('application/json')
+                    if (response.authorization) {
+                        return reply(response).type('application/json')
+                    }
+                    return reply.invalidItems([response])
                 } else {
                     reply(Boom.badRequest('Invalid item id'))
                 }

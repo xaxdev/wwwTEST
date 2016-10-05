@@ -11,7 +11,7 @@ const register = (server, options, next) => {
     })
 
     server.decorate('reply', 'invalidItems', function (items) {
-        const error = Boom.badRequest('Some items are no longer valid.')
+        const error = Boom.create(490, 'Some items are no longer valid.')
         error.output.payload.items = items
         return this.response(error)
     })

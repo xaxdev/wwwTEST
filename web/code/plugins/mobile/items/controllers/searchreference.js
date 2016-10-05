@@ -60,7 +60,7 @@ module.exports = {
                         await request.history.save(request, reply, response)
                         return reply(response).type('application/json')
                     }
-                    return reply(Boom.badRequest('No authorization to view this item.'))
+                    return reply.invalidItems([response])
                 } else {
                     return reply(Boom.badRequest('Scan Results Invalid item id reference.'))
                 }
