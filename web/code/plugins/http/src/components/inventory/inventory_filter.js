@@ -54,10 +54,10 @@ class InventoryFilter extends Component {
       hideWatchSearch: true,
       hideGemStoneSearch: true,
       data: 'test',
-      alert:false,
+      alert: false,
       isOpen: true,
-      activeTab:1,
-      beforeActiveTab:1,
+      activeTab: 1,
+      beforeActiveTab: 1,
       showLoading: true
     };
   }
@@ -259,6 +259,7 @@ class InventoryFilter extends Component {
 
     if (productGroupJLY) {
       setActiveTab = setActiveTab;
+      this.setState({ beforeActiveTab: setActiveTab });
       this.props.inventoryActions.selectedTabCategory(setActiveTab);
     }else{
       if(productGroupWAT){
@@ -276,6 +277,7 @@ class InventoryFilter extends Component {
       }
 
       activeTabCategory = setActiveTab;
+      this.setState({ beforeActiveTab: setActiveTab });
       this.props.inventoryActions.selectedTabCategory(setActiveTab);
     }
   }
