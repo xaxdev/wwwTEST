@@ -8,6 +8,9 @@ import ProductDescriptioncerBlock from '../../components/productdetail/productDe
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributesprint';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributesprint';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributesprint';
+import ProductObaAttributes from '../../components/productdetail/productObaAttributesprint';
+import ProductAccAttributes from '../../components/productdetail/productAccAttributesprint';
+import ProductSpaAttributes from '../../components/productdetail/productSppAttributesprint';
 import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributesprint';
 import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelryprint';
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributesprint';
@@ -81,7 +84,7 @@ class productprint extends Component {
                         <ProductDescriptionBlock {...Detail} />
                       </div>
                     );
-              case 'SPP':
+              case 'SPA':
                   Detailtitle='SPARE PARTS DETAILS';
                   return(
                       <div>
@@ -150,12 +153,12 @@ class productprint extends Component {
                           <ProductAccAttributes {...Detail} />
                     </div>
                   );
-         case 'SPP':
-               Attrtitle='SPARE PARTS ART ATTRIBUTES';
+         case 'SPA':
+               Attrtitle='SPARE PARTS ATTRIBUTES';
                return(
                    <div>
                      <h2>{Attrtitle}</h2>
-                         <ProductSppAttributes {...Detail} />
+                         <ProductSpaAttributes {...Detail} />
                    </div>
                  );
         }

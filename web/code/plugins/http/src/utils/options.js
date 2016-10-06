@@ -244,7 +244,7 @@ export default
     ,{id:3,code: 'WAT',name: 'Watch'}
     ,{id:4,code: 'ACC',name: 'Accessory'}
     ,{id:5,code: 'OBA',name: 'Object Of Art'}
-    ,{id:6,code: 'SPP',name: 'Spare Parts'}
+    ,{id:6,code: 'SPA',name: 'Spare Parts'}
   ],
   // ----------------------------------
   stoneType:[

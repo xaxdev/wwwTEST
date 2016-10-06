@@ -56,7 +56,6 @@ class InventoryStone extends Component {
   }
   treeOnUnClick(vals){
     // console.log('unclick vals-->',this.state.treeViewData);
-
     if( this.state.treeViewData != null){
       this.state.treeViewData[0].checked = false;
       this.state.treeViewData[0].key = this.state.treeViewData[0].code;
@@ -559,7 +558,6 @@ class InventoryStone extends Component {
                   </div>
                 </div>
               </div>
-
             </div>
             <div className="col-lg-6 form-horizontal">
               <div className="form-group">

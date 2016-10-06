@@ -49,7 +49,7 @@ const setnewprops = (data) => {
   var productGroupWAT=false;
   var productGroupACC=false;
   var productGroupOBA=false;
-  var productGroupSPP=false;
+  var productGroupSPA=false;
   var onhandLocationValue = [];
 
   checkbits.map(function(value,key){
@@ -59,9 +59,9 @@ const setnewprops = (data) => {
         break;
       case 2:
         if(key == 0){
-          productGroupJLY = (value == '1')?true:false;
-        }else if (key == 1) {
           productGroupWAT = (value == '1')?true:false;
+        }else if (key == 1) {
+          productGroupJLY = (value == '1')?true:false;
         }
         break;
       case 3:
@@ -75,41 +75,41 @@ const setnewprops = (data) => {
         break;
       case 4:
         if(key == 0){
-          productGroupJLY = (value == '1')?true:false;
-        }else if (key == 1) {
-          productGroupWAT = (value == '1')?true:false;
-        }else if (key == 2) {
-          productGroupSTO = (value == '1')?true:false;
-        }else if (key == 3) {
           productGroupACC = (value == '1')?true:false;
+        }else if (key == 1) {
+          productGroupSTO = (value == '1')?true:false;
+        }else if (key == 2) {
+          productGroupWAT = (value == '1')?true:false;
+        }else if (key == 3) {
+          productGroupJLY = (value == '1')?true:false;
         }
         break;
       case 5:
         if(key == 0){
-          productGroupJLY = (value == '1')?true:false;
+          productGroupOBA = (value == '1')?true:false;
         }else if (key == 1) {
-          productGroupWAT = (value == '1')?true:false;
+          productGroupACC = (value == '1')?true:false;
         }else if (key == 2) {
           productGroupSTO = (value == '1')?true:false;
         }else if (key == 3) {
-          productGroupACC = (value == '1')?true:false;
+          productGroupWAT = (value == '1')?true:false;
         }else if (key == 4) {
-          productGroupOBA = (value == '1')?true:false;
+          productGroupJLY = (value == '1')?true:false;
         }
         break;
       case 6:
         if(key == 0){
-          productGroupJLY = (value == '1')?true:false;
+          productGroupSPA = (value == '1')?true:false;
         }else if (key == 1) {
-          productGroupWAT = (value == '1')?true:false;
-        }else if (key == 2) {
-          productGroupSTO = (value == '1')?true:false;
-        }else if (key == 3) {
-          productGroupACC = (value == '1')?true:false;
-        }else if (key == 4) {
           productGroupOBA = (value == '1')?true:false;
+        }else if (key == 2) {
+          productGroupACC = (value == '1')?true:false;
+        }else if (key == 3) {
+          productGroupSTO = (value == '1')?true:false;
+        }else if (key == 4) {
+          productGroupWAT = (value == '1')?true:false;
         }else if (key == 5) {
-          productGroupSPP = (value == '1')?true:false;
+          productGroupJLY = (value == '1')?true:false;
         }
         break;
       default:
@@ -127,7 +127,7 @@ const setnewprops = (data) => {
     productGroupWAT: productGroupWAT,
     productGroupACC: productGroupACC,
     productGroupOBA: productGroupOBA,
-    productGroupSPP: productGroupSPP,
+    productGroupSPA: productGroupSPA,
     onhandLocation: (permission.onhandLocation != null) ? (permission.onhandLocation.type.indexOf('All') != -1) ? true : false : false,
     onhandWarehouse: (permission.onhandWarehouse != null) ? (permission.onhandWarehouse != null && permission.onhandWarehouse.type.indexOf('AllWarehouse') != -1) ? true : false : false,
     onhandAll: (permission.onhandLocation != null) ? (permission.onhandLocation.type.indexOf('All') != -1) ? true : false : false,

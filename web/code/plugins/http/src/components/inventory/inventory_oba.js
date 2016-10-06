@@ -27,9 +27,25 @@ class InventoryOBA extends Component {
       treeViewData:null
     }
   }
+  componentWillReceiveProps(nextProps) {
+    const { props } = this.props;
+    // console.log('nextProps-->',nextProps.props.SearchAction);
+    // console.log('props.SearchAction-->',props.SearchAction);
+    if(nextProps.props.SearchAction != props.SearchAction){
+      if(props.HierarchyValue != null){
+        if(nextProps.props.SearchAction == 'New'){
+          if(props.HierarchyValue.length != 0){
+            props.HierarchyValue[0].checked = false;
+            props.HierarchyValue[0].key = props.HierarchyValue[0].code;
+            this.refs.treeview.handleChange(props.HierarchyValue[0]);
+          }
+          props.inventoryActions.setHierarchy(null);
+        }
+      }
+    }
+  }
   treeOnUnClick(vals){
     // console.log('unclick vals-->',this.state.treeViewData);
-
     if( this.state.treeViewData != null){
       this.state.treeViewData[0].checked = false;
       this.state.treeViewData[0].key = this.state.treeViewData[0].code;
@@ -72,6 +88,7 @@ class InventoryOBA extends Component {
     });
     // console.log('treeSelected-->',treeSelected);
     const { props } = this.props;
+
     var { fields: { obaProductHierarchy }, searchResult } = props;
 
     var paramsSearch = (searchResult.paramsSearch != null)?
@@ -191,35 +208,35 @@ class InventoryOBA extends Component {
     if(props.options != undefined){
       if (props.options.collections) {
         dataDropDowntCollection.push(props.options.collections.map(collection =>{
-            return ({value: collection.code,label:collection.name});
+            return ({value: collection.code,label:collection.code + ' [' + collection.name + ']'});
           })
         )
         dataDropDowntCollection = dataDropDowntCollection[0];
       }
       if (props.options.brands) {
         dataDropDowntBrand.push(props.options.brands.map(brand =>{
-            return ({value: brand.code,label:brand.name});
+            return ({value: brand.code,label:brand.code + ' [' + brand.name + ']'});
           })
         )
         dataDropDowntBrand = dataDropDowntBrand[0];
       }
       if (props.options.metalTypes) {
         dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
-            return ({value: metalType.code,label:metalType.name});
+            return ({value: metalType.code,label:metalType.code + ' [' + metalType.name + ']'});
           })
         )
         dataDropDowntMetalType = dataDropDowntMetalType[0];
       }
       if (props.options.metalColours) {
         dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
-            return ({value: metalColour.code,label:metalColour.name});
+            return ({value: metalColour.code,label:metalColour.code + ' [' + metalColour.name + ']'});
           })
         )
         dataDropDowntMetalColour = dataDropDowntMetalColour[0];
       }
       if (props.options.dominantStones) {
         dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
-            return ({value: dominantStone.code,label:dominantStone.name});
+            return ({value: dominantStone.code,label:dominantStone.code + ' [' + dominantStone.name + ']'});
           })
         )
         dataDropDowntDominantStone = dataDropDowntDominantStone[0];
@@ -234,13 +251,15 @@ class InventoryOBA extends Component {
       <div className="panel panel-default">
         <div className="panel-body">
           <div className="row margin-ft">
-            <div className="col-lg-6 form-horizontal">
-              <div className="form-group hidden">
-                <label className="col-sm-4 control-label">Product Hierarchy</label>
-                <div className="col-sm-7 bd-box">
+            <div className="col-lg-12  form-horizontal">
+              <div className="form-group">
+                <label className="col-lg-2 col-md-4 col-sm-4 control-label tooltiop-span">Product Hierarchy</label>
+                <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
                   <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview" />
                 </div>
               </div>
+            </div>
+            <div className="col-lg-6  form-horizontal">
               <div className="form-group">
                 <label className="col-sm-4 control-label">Collection</label>
                 <div className="col-sm-7">
@@ -268,53 +287,14 @@ class InventoryOBA extends Component {
                     onChange={this.handleMustHaveSelectChange} />
                   </div>
               </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label">OBA Dimension</label>
+                <div className="col-sm-7">
+                  <input type="text" className="form-control" {...obaDimension}/>
+                </div>
+              </div>
             </div>
             <div className="col-lg-6 form-horizontal">
-              <div className={`form-group ${(userLogin.permission.price == 'All') ?
-                  '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalCostFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalCostTo}/>
-                  </div>
-                </div>
-              </div>
-              <div className={`form-group ${(userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All') ?
-                                            '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalUpdatedCostFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalUpdatedCostTo}/>
-                  </div>
-                </div>
-              </div>
-              <div className={`form-group ${(userLogin.permission.price == 'Public'
-                                            || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...publicPriceFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...publicPriceTo}/>
-                  </div>
-                </div>
-              </div>
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
@@ -322,11 +302,11 @@ class InventoryOBA extends Component {
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...markupFrom}/>
+                    <input type="number" className="form-control" {...markupFrom}/>
                   </div>
                   <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...markupTo}/>
+                    <input type="number" className="form-control" {...markupTo}/>
                   </div>
                 </div>
               </div>
@@ -335,22 +315,13 @@ class InventoryOBA extends Component {
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...grossWeightFrom}/>
+                    <input type="number" className="form-control" {...grossWeightFrom}/>
                   </div>
                   <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                   <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...grossWeightTo}/>
+                    <input type="number" className="form-control" {...grossWeightTo}/>
                   </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Dominant Stone</label>
-                <div className="col-sm-7">
-                  <Select multi simpleValue value={props.DominantStoneValue}
-                    placeholder="Select your Dominant Stone"
-                    options={dataDropDowntDominantStone}
-                    onChange={this.handleDominantStoneSelectChange} />
-                  </div>
               </div>
               <div className="form-group">
                 <label className="col-sm-4 control-label">Metal Type</label>
@@ -369,12 +340,6 @@ class InventoryOBA extends Component {
                     options={dataDropDowntMetalColour}
                     onChange={this.handleMetalColourSelectChange} />
                   </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label">OBA Dimension</label>
-                <div className="col-sm-7">
-                  <input type="text" className="form-control" {...obaDimension}/>
-                </div>
               </div>
             </div>
           </div>

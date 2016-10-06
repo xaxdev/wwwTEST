@@ -78,7 +78,7 @@ module.exports = {
     const Permissions = request.collections.permission;
     const Authentication = request.collections.authentication;
 
-    console.log(request.payload);
+    // console.log(request.payload);
 
     Users
       .update({ id: request.params.id }, request.payload)

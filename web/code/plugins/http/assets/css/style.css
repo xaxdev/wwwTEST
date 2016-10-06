@@ -1399,7 +1399,6 @@ select.form-searchresult option{
 		}
 		.sort-icon:after{float:none !important;}
 
-ul.nav-tabs > li:nth-child(6),ul.nav-tabs > li:nth-child(4) ,ul.nav-tabs > li:nth-child(5)   {display: none;}
 .icon-add{display: none;}
 .searchresult-prodcut .pull-right div{display: none;}
 .searchresult-prodcut .pull-right {

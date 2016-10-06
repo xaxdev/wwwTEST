@@ -196,6 +196,7 @@ class SearchResult extends Component {
   }
   componentDidMount() {
     // console.log('sortingBy->',this.refs.sortingBy);
+
     let that = this;
     if(this.refs.sortingBy != undefined){
       // var select = React.findDOMNode(this.refs.sortingBy);
@@ -511,7 +512,7 @@ class SearchResult extends Component {
 
             <div>
               <span>Page</span>
-                <input type="text" placeholder={page} ref="reletego" {...currPage}/>
+                <input type="number" placeholder={page} ref="reletego" {...currPage}/>
               <span>of</span>
               <span>{numberFormat(totalPages)}</span>
               <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
@@ -781,10 +782,11 @@ class SearchResult extends Component {
 
     const sortingDirection = this.refs.sortingDirection.value;
 
-    this.setState({activePage: getPage});
+    // this.setState({activePage: getPage});
+    this.setState({activePage: 1});
     // console.log('getPage-->',getPage);
     let params = {
-      'page' : getPage,
+      'page' : 1,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection,
       'pageSize' : pageSize
@@ -1238,6 +1240,26 @@ class SearchResult extends Component {
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     const { isOpenMessage } = this.state;
+
+    var numbers = document.querySelectorAll('input[type="number"]');
+
+    for (var i in numbers) {
+      if (numbers.hasOwnProperty(i)) {
+        numbers[i].onkeydown = function(e) {
+            if(!((e.keyCode > 95 && e.keyCode < 106)
+              || (e.keyCode > 47 && e.keyCode < 58)
+              || e.keyCode == 8
+              || e.keyCode == 37
+              || e.keyCode == 39
+              || e.keyCode == 46
+              || e.keyCode == 110
+              || e.keyCode == 190
+              )) {
+                return false;
+            }
+        }
+      }
+    }
 
     // console.log('this.state.activePage-->',this.state.activePage);
 

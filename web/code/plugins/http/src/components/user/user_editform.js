@@ -12,8 +12,8 @@ let _ = require('lodash');
 
 export const fields = ['id','firstName','lastName','username','email','password','role','currency','status','company',
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
-          ,'productGroupACC','productGroupOBA','productGroupSPP','onhandLocationValue','webOnly','permissionId','onhandLocation'
-          ,'onhandAll','onhandWarehouse','onhandWarehouseValue'];
+          ,'productGroupACC','productGroupOBA','productGroupSPA','onhandLocationValue','webOnly','permissionId','onhandLocation'
+          ,'onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr'];
 export let countFirst = 0;
 
 class UserDetailsFrom extends Component {
@@ -168,20 +168,6 @@ class UserDetailsFrom extends Component {
           }).map(function(o) {
               return o.value;
           });
-          // // console.log('valuesWarehouseAll-->',valuesWarehouseAll.length);
-          // // console.log('valuesWarehouse-->',valuesWarehouse.length);
-          // if (valuesWarehouseAll.length == valuesWarehouse.length) {
-          //   _.each(selectWarehouse.options,function (o) {
-          //     o.selected = false;
-          //   });
-          // }else{
-          //   // console.log('valuesWarehouseAll.length != valuesWarehouse.length-->');
-          //   if(!this.state.changedOnHandLocation){
-          //     _.each(selectWarehouse.options,function (o) {
-          //       o.selected = false;
-          //     });
-          //   }
-          // }
         }else{
           // console.log('this.state.clickAllWarehouse-->true');
         }
@@ -604,8 +590,8 @@ class UserDetailsFrom extends Component {
     const { fields: {
               id,firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,productGroup
               ,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT,onhandLocation,onhandAll
-              ,productGroupACC,productGroupOBA,productGroupSPP,onhandLocationValue,webOnly,permissionId,onhandWarehouse
-              ,onhandWarehouseValue
+              ,productGroupACC,productGroupOBA,productGroupSPA,onhandLocationValue,webOnly,permissionId,onhandWarehouse
+              ,onhandWarehouseValue,productGroupErr
           },handleSubmit,submitting } = this.props;
     let dataDropDowntLocations = [];
     let dataDropDowntWareHouse = [];
@@ -709,9 +695,6 @@ class UserDetailsFrom extends Component {
       }
 
     }
-    // console.log('this.props.user.onhandLocation-->');
-    // if(this.props.user.permission.onhandLocation != undefined)
-    //   console.log('return type-->',this.props.user.permission.onhandWarehouse);
 
     return (
       <form onSubmit={handleSubmit}>
@@ -845,7 +828,7 @@ class UserDetailsFrom extends Component {
                       <label className="col-sm-2 control-label">View Product Group</label>
                       <div className="col-sm-5">
                         <select className="form-control" {...productGroup} onClick={this.selectedProductGroup}>
-                          {/*<option key={1} value={1}>{'All Prouct Group'}</option>*/}
+                          <option key={1} value={1}>{'All Prouct Group'}</option>
                           <option key={2} value={2}>{'Some Prouct Group'}</option>
                         </select>
                         <div id="checkboxlistProduct" className={`${this.state.hideProductGroups ? 'hiddenViewProductGroup' : ''}` }>
@@ -870,21 +853,24 @@ class UserDetailsFrom extends Component {
                           <div>
                             <input type="checkbox"  value="ACC"
                               checked={productGroupACC.value === 'ACC'}
-                              {...productGroupACC} disabled="disabled"/>
+                              {...productGroupACC}/>
                             <span>Accessory</span>
                           </div>
                           <div>
                             <input type="checkbox"  value="OBA"
                               checked={productGroupOBA.value === 'OBA'}
-                              {...productGroupOBA}  disabled="disabled"/>
+                              {...productGroupOBA}/>
                             <span>Object Of Art</span>
                           </div>
                           <div>
-                            <input type="checkbox"  value="SPP"
-                              checked={productGroupSPP.value === 'SPP'}
-                              {...productGroupSPP}  disabled="disabled"/>
+                            <input type="checkbox"  value="SPA"
+                              checked={productGroupSPA.value === 'SPA'}
+                              {...productGroupSPA}/>
                             <span>Spare Parts</span>
                           </div>
+                        </div>
+                        <div className="text-help">
+                          { productGroupErr.touched ? productGroupErr.error : ''}
                         </div>
                       </div>
                     </div>

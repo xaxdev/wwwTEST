@@ -152,7 +152,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
         // console.log('SET_POLISH -->',action);
         return {...state, JewelryCategoryValue: action.jewelryCategory };
       case SET_ORIGIN:
-        // console.log('SET_POLISH -->',action);
+        // console.log('SET_ORIGIN -->',action.origin);
         return {...state, OriginValue: action.origin };
       case SET_FLUORESCENCE:
         // console.log('SET_POLISH -->',action);

@@ -174,7 +174,7 @@ class InventorySearch extends Component {
           filters.push({'type':'OBA'});
           break;
         case 6:
-          filters.push({'type':'SPP'});
+          filters.push({'type':'SPA'});
           break;
         default:
           break;
@@ -197,8 +197,8 @@ class InventorySearch extends Component {
       if(productGroup.productGroupOBA){
         productArray.push('OBA');
       }
-      if(productGroup.productGroupSPP){
-        productArray.push('SPP');
+      if(productGroup.productGroupSPA){
+        productArray.push('SPA');
       }
       productArray.push('CER');
       // console.log('productGroup-->',productArray.join(' '));

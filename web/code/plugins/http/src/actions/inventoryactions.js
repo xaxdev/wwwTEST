@@ -210,7 +210,7 @@ export function setDataFluorescence(value){
 }
 export function setDataOrigin(value){
   return {
-          type: SET_TREATMENT,
+          type: SET_ORIGIN,
           origin:value
   }
 }

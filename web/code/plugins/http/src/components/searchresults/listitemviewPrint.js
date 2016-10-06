@@ -4,7 +4,8 @@ import { responsive } from 'react-bootstrap';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
 import ReactImageFallback from 'react-image-fallback';
-import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
+import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
+import numberFormat from '../../utils/convertNumberformat';
 
 class ListItemsView extends Component {
   constructor(props) {
@@ -90,13 +91,13 @@ class ListItemsView extends Component {
             break;
         }
 
-        // if (col.type != 'CER') {
-        //   col.priceUSD = GetPriceWithCurrency(col,'price');
-        // } else {
-        //   col.priceUSD = '';
-        // }
-
-        col.priceUSD = numberFormat((col.price != undefined)? col.price[currency] : 0)
+        if(col.price != undefined){
+          col.priceUSD = (col.price[currency] != undefined) ?
+                 numberFormat(col.price[currency]) :
+                 '- ';
+        }else{
+          col.priceUSD = '- ';
+        }
 
         let jewelsWeight = 0;
 
@@ -110,7 +111,7 @@ class ListItemsView extends Component {
           jewelsWeight = '';
         }
 
-        col.jewelsWeight = numberFormat(jewelsWeight);
+        col.jewelsWeight = numberFormat2digit(jewelsWeight);
 
         let itemName = (col.type != 'CER')
                           ?
@@ -119,7 +120,7 @@ class ListItemsView extends Component {
                           ;
 
         return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
-                itemName: itemName,grossWeight:numberFormat(col.grossWeight)}
+                itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
       });
 
       const tableColumns = [

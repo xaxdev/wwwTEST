@@ -4,7 +4,7 @@ export default function ProductGroup(userLogin){
   var productGroupWAT=false;
   var productGroupACC=false;
   var productGroupOBA=false;
-  var productGroupSPP=false;
+  var productGroupSPA=false;
 
   var permission = userLogin.permission;
   var bitwise = Number(permission.productGroup).toString(2);
@@ -60,7 +60,7 @@ export default function ProductGroup(userLogin){
         break;
       case 6:
         if(key == 0){
-          productGroupSPP = (value == '1')?true:false;
+          productGroupSPA = (value == '1')?true:false;
         }else if (key == 1) {
           productGroupOBA = (value == '1')?true:false;
         }else if (key == 2) {
@@ -78,7 +78,7 @@ export default function ProductGroup(userLogin){
     }
   });
   objProductGroup = {
-    productGroupSPP:productGroupSPP,
+    productGroupSPA:productGroupSPA,
     productGroupOBA:productGroupOBA,
     productGroupACC:productGroupACC,
     productGroupWAT:productGroupWAT,

@@ -155,7 +155,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     if(that.state.allFields){
       arrayItems.push('Main',
                       (item.hierarchy != undefined) ? item.hierarchy.split('\\').pop() : '',
-                      (item.type == 'ACC' || item.type == 'OBA' || item.type == 'SPP') ? item.subType : '', // category
+                      (item.type == 'ACC' || item.type == 'OBA' || item.type == 'SPA') ? item.subType : '', // category
                       (item.type == 'JLY' || item.type == 'WAT' || item.type == 'STO') ? item.subType : '', // article
                       (item.collectionName != undefined) ? item.collectionName : '',
                       (item.setReference != undefined) ? item.setReference : '',
@@ -202,7 +202,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }else{
       if(that.state.ingredients) arrayItems.push('Main');
       if(that.state.categoryName) arrayItems.push((item.hierarchy != undefined) ? item.hierarchy.split('\\').pop() : '');
-      if(that.state.category) arrayItems.push((item.type == 'ACC' || item.type == 'OBA' || item.type == 'SPP') ? item.subType : '');
+      if(that.state.category) arrayItems.push((item.type == 'ACC' || item.type == 'OBA' || item.type == 'SPA') ? item.subType : '');
       if(that.state.article) arrayItems.push((item.type == 'JLY' || item.type == 'WAT' || item.type == 'STO') ? item.subType : '');
       if(that.state.collection) arrayItems.push((item.collectionName != undefined) ? item.collectionName : '');
       if(that.state.setReferenceNumber) arrayItems.push((item.setReference != undefined) ? item.setReference : '');
