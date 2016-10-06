@@ -36,7 +36,7 @@ module.exports = {
                                     "bool": {
                                         "must": [
                                             {
-                                                "match": { "reference": reference }
+                                                "match": { "reference.raw": reference }
                                             }
                                         ]
                                     }
@@ -62,7 +62,7 @@ module.exports = {
                     }
                     return reply.invalidItems([response])
                 } else {
-                    return reply(Boom.badRequest('Scan Results Invalid item id reference.'))
+                    return reply(Boom.badRequest('Invalid item reference.'))
                 }
             } catch (e) {
                 return reply(Boom.badImplementation(e.message))
