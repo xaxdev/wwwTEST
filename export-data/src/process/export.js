@@ -411,7 +411,7 @@ const excel = async (responseData, request) => {
       let file = 0;
 
       while (i < alldata) {
-        chunks.push(newdata.slice(i, i += 500));
+        chunks.push(newdata.slice(i, i += 25000));
       }
 
       // Create a reusable style
@@ -437,17 +437,34 @@ const excel = async (responseData, request) => {
       console.log('All rounds-->',chunks.length);
       let row = 2
 
-      for (let i = 0; i < chunks.length; i++) {
-        console.log('rounds-->',i);
-        Promise.all(chunks[i].map(function (item) {
-          // console.log('ws row-->',row);
-          for (let j = 0; j < cell; j++) {
-            let column = j+1;
-            ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
-          }
-          row++
-        }),await save('test.xlsx'));
-      }
+      chunks.forEach(function (subChunks) {
+        let wrData = [];
+        rounds++;
+        console.log('rounds-->',rounds);
+        console.log('subChunks-->',subChunks.length);
+
+        let wr = 0;
+
+        while (wr < subChunks.length) {
+          wrData.push(subChunks.slice(wr, wr += 1000));
+        }
+        console.log('All rounds write-->',wrData.length);
+
+      });
+
+      // for (let i = 0; i < subChunks.length; i++) {
+      //
+      //   Promise.all(subChunks[i].map(function (item) {
+      //     // console.log('ws row-->',row);
+      //     for (let j = 0; j < cell; j++) {
+      //       let column = j+1;
+      //       ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+      //     }
+      //     row++
+      //   }),await save(rounds.toString() + 'test.xlsx'));
+      // }
+
+
       // chunks.forEach(function (chunk) {
       //     rounds++;
       //     // chunk.forEach(function(item){
