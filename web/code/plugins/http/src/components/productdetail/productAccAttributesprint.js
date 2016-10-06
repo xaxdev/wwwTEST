@@ -1,6 +1,6 @@
 import React from 'react';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
-
+import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
 const styles ={
   colmd12:{
     width:'100%',
@@ -14,6 +14,8 @@ const styles ={
 };
 
 const accAttr = (props) =>{
+
+  let grossWeight = numberFormat2digit(props.grossWeight)
   return (
     <div style={styles.colmd12}>
             <div style={styles.colmd12}>
@@ -42,7 +44,7 @@ const accAttr = (props) =>{
             </div>
             <div style={styles.colmd12}>
               <div style={styles.colmd5}>Gross Weight</div>
-              <div style={styles.colmd5}>{convertBlanktodash(props.grossWeight)}</div>
+              <div style={styles.colmd5}>{grossWeight}</div>
             </div>
     </div>
   );
