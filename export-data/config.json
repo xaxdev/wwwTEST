@@ -6,5 +6,8 @@
     },
     "rabbit": {
         "url": "amqp://guest:guest@192.168.1.92:5672"
+    },
+    "excel": {
+        "bufferSize": 500
     }
 }

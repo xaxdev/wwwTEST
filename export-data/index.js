@@ -49,7 +49,7 @@ import * as utils from './utils'
            }
            const client = new elasticsearch({ host: config.elasticsearch.host })
            const { count } = await client.count(parameter)
-           const size = 1000
+           const size = config.excel.bufferSize
            const rounds = Math.ceil(count/size)
            console.log(`Total rounds --> ${rounds}`);
            let file = 1
