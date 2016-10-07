@@ -23,27 +23,17 @@ module.exports = {
   auth: false,
   handler: (request, reply) => {
 
-    // var rabbit = request.server.plugins['hapi-rabbit'];
-    // // console.log(rabbit);
-    // rabbit.createContext(function(err, context){
-    //     if(err){
-    //         console.log('err', err);
-    //     }
-    //
-    //     rabbit.publish(context, 'exchange', 'messageType', JSON.stringify(request.payload, null, 2), function(err, data){
-    //         console.log('messageObject', data);
-    //     });
-    // });
     amqp.connect('amqp://guest:guest@192.168.1.92:5672', function(err, conn) {
       conn.createChannel(function(err, ch) {
-        var q = 'excel';
+        var q = 'export';
 
-        ch.assertQueue(q, {durable: false});
+        ch.assertQueue(q);
         // Note: on Node 6 Buffer.from(msg) should be used
         ch.sendToQueue(q, new Buffer(JSON.stringify(request.payload, null, 2)));
         // console.log(' [x] Sent "Parameter!"');
       });
     });
+
 
     const elastic = request.server.plugins.elastic.client;
     // const host = HOSTNAME || 'localhost';
