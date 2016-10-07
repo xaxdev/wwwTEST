@@ -25,15 +25,12 @@ module.exports = {
 
     internals.query = GetSearch(request, 0, 100000);
 
-    // console.log(JSON.stringify(internals.query, null, 2));
-
     elastic
       .search({
         index: 'mol',
         type: 'items',
         body: internals.query
       }).then(function (response) {
-        // console.log(response.hits.total)
         const totalRecord = response.hits.total;
 
         elastic.close();
@@ -41,7 +38,6 @@ module.exports = {
 
       })
       .catch(function (error) {
-        console.log('error-->',error)
         elastic.close();
         return reply(Boom.badImplementation(err));
       });

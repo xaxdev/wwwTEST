@@ -109,11 +109,11 @@ module.exports = {
       .then(function (user) {
 
         if (!user) {
-          return Boom.badRequest('no user with the username.');
+          return Boom.badRequest('Failed to find user with the username.');
         }
 
         if (!user.status) {
-          return Boom.badRequest('user is inactive.');
+          return Boom.badRequest('User is inactive.');
         }
 
         return user
@@ -121,7 +121,7 @@ module.exports = {
           .then(function (valid) {
 
             if (!valid) {
-              return Boom.badRequest('password is invalid.');
+              return Boom.badRequest('Password is invalid.');
             }
 
             return { data: user };

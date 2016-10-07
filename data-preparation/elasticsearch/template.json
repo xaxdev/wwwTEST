@@ -84,6 +84,26 @@
                     }
                 },
                 {
+                    "reference": {
+                        "match": "reference",
+                        "match_mapping_type": "string",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "ngram_filter_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            },
+                            "fields": {
+                                "raw": {
+                                    "type": "string",
+                                    "index": "not_analyzed"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
                     "dates": {
                         "match": ".*Date|date",
                         "match_pattern": "regex",
