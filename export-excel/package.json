@@ -13,6 +13,8 @@
     "babel-polyfill": "^6.13.0",
     "babel-register": "^6.14.0",
     "elasticsearch": "^11.0.1",
+    "hapi": "^15.1.1",
+    "hapi-rabbit": "0.0.4",
     "mongodb": "^2.2.9"
   },
   "devDependencies": {
