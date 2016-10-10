@@ -2,8 +2,8 @@ const _ = require('lodash');
 const GetPriceCurrency = require('./getPriceCurrency');
 // import numberFormat from '../../http/src/utils/convertNumberformatwithcomma2digit';
 
-module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb) => {
-  // console.log(response.hits.total)
+module.exports = (response, sortDirections, sortBy, size, page, userCurrency, listFileName, cb) => {
+  console.log(response.hits.total)
   let allData = [];
   let sumPriceData = [];
   let sumCostData = [];
@@ -62,9 +62,16 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
   });
 
   // let pageData = data.max(size) ;
+  // console.log('page-->',page);
+  // console.log('size-->',size);
+  // console.log('data-->',data.length);
   let pageData = data.slice( (page - 1) * size, page * size );
   let sumPrice = 0;
   let sumCost = 0;
+
+  // console.log('pageData-->',pageData.length);
+  // console.log('maxPrice-->',maxPrice);
+  // console.log('minPrice-->',minPrice);
 
   if(pageData.length != 0){
     data.forEach(function(item){
@@ -88,6 +95,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, cb
       // console.log('cost-->',cost);
       sumCost = sumCost+Math.round(cost);
     });
+    // console.log('sumCost-->',sumCost);
   }
 
   // console.log('getAllData listFileName-->',listFileName[0]);

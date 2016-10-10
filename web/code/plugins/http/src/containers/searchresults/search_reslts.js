@@ -200,8 +200,8 @@ class SearchResult extends Component {
 
     let that = this;
     if(this.refs.sortingBy != undefined){
-      // var select = React.findDOMNode(this.refs.sortingBy);
-      var values = [].filter.call(this.refs.sortingBy.options, function (o) {
+      // let select = React.findDOMNode(this.refs.sortingBy);
+      let values = [].filter.call(this.refs.sortingBy.options, function (o) {
             o.selected = false;
 
             if(o.value == that.props.sortingBy){
@@ -214,8 +214,8 @@ class SearchResult extends Component {
     }
 
     if(this.refs.sortingDirection != undefined){
-      // var select = React.findDOMNode(this.refs.sortingBy);
-      var values = [].filter.call(this.refs.sortingDirection.options, function (o) {
+      // let select = React.findDOMNode(this.refs.sortingBy);
+      let values = [].filter.call(this.refs.sortingDirection.options, function (o) {
             o.selected = false;
 
             if(o.value == that.props.sortDirection){
@@ -228,8 +228,8 @@ class SearchResult extends Component {
     }
 
     if(this.refs.pageSize != undefined){
-      // var select = React.findDOMNode(this.refs.sortingBy);
-      var values = [].filter.call(this.refs.pageSize.options, function (o) {
+      // let select = React.findDOMNode(this.refs.sortingBy);
+      let values = [].filter.call(this.refs.pageSize.options, function (o) {
             o.selected = false;
 
             if(o.value == that.props.pageSize){
@@ -889,8 +889,23 @@ class SearchResult extends Component {
 
   hideModalDownload = (e) => {
     e.preventDefault();
+    const { showGridView,showListView } = this.props;
 
     this.setState({isOpenDownload: false});
+
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
+
+    if(girdView){
+      // this.setState({showGridView: true});
+      this.props.setShowGridView(true);
+    }else if (listView) {
+      // this.setState({showListView: true});
+      this.props.setShowListView(true);
+    }
   }
 
   hideModalNoResults = (e) => {
@@ -966,7 +981,7 @@ class SearchResult extends Component {
     const ROOT_URL = `${host}`;
 
     const that = this;
-    const { items, exportItems, filters, paramsSearch } = this.props;
+    const { items, exportItems, filters, paramsSearch, showGridView,showListView } = this.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     let sortingBy = '';
@@ -1028,8 +1043,11 @@ class SearchResult extends Component {
       'page' : this.props.currentPage,
       'sortBy': sortingBy,
       'sortDirections': sortingDirection,
+      'pageSize' : this.props.pageSize,
       'fields': fields,
-      'price': userLogin.permission.price
+      'price': userLogin.permission.price,
+      'ROOT_URL': ROOT_URL,
+      'userName': userLogin.username
     };  // default search params
 
     // console.log('filters-->',filters);
@@ -1073,15 +1091,29 @@ class SearchResult extends Component {
       isOpen: false
     });
 
-    console.log('params--:>',params);
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
+
+    // console.log('params--:>',params);
     this.props.exportDatas(params)
         .then((value) => {
-          console.log('value-->',value);
+          // console.log('value-->',value);
           console.log('export done!');
-          this.setState({
+          if(girdView){
+            // this.setState({showGridView: true});
+            that.props.setShowGridView(true);
+          }else if (listView) {
+            // this.setState({showListView: true});
+            that.props.setShowListView(true);
+          }
+          that.setState({
             showLoading: false,
             isOpenDownload: true
           });
+
         });
 
   // let alldata = exportItems.length;
@@ -1103,25 +1135,25 @@ class SearchResult extends Component {
   // chunks.forEach(function (chunk) {
   //   // console.log('chunk-->',chunk.length);
   //   file++;
-  //   var tab_text = GenHtmlExportExcel(that, chunk, userLogin, ROOT_URL);
-  //     var data_type = 'data:application/vnd.ms-excel;base64';
+  //   let tab_text = GenHtmlExportExcel(that, chunk, userLogin, ROOT_URL);
+  //     let data_type = 'data:application/vnd.ms-excel;base64';
   //
-  //     var ua = window.navigator.userAgent;
+  //     let ua = window.navigator.userAgent;
   //     let isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
   //     // console.log(isSafari);
-  //     var msie = ua.indexOf('MSIE');
-  //     var edge = ua.indexOf('Edge');
+  //     let msie = ua.indexOf('MSIE');
+  //     let edge = ua.indexOf('Edge');
   //
-  //     var uriContent = '';
-  //     var startDate = new Date();
-  //     var exportDate = moment(startDate,'MM-DD-YYYY');
+  //     let uriContent = '';
+  //     let startDate = new Date();
+  //     let exportDate = moment(startDate,'MM-DD-YYYY');
   //     exportDate = exportDate.format('YYYYMMDD_HHmm');
-  //     var fileName = 'download_'+exportDate+'_'+file+'.xls';
+  //     let fileName = 'download_'+exportDate+'_'+file+'.xls';
   //     let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>{table}</body></html>';
   //
   //     if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
   //         if (window.navigator.msSaveBlob) {
-  //             var blob = new Blob([tab_text], {
+  //             let blob = new Blob([tab_text], {
   //                 type: 'data:application/vnd.ms-excel,'
   //             });
   //             that.setState({
@@ -1130,7 +1162,7 @@ class SearchResult extends Component {
   //             navigator.msSaveBlob(blob, fileName);
   //         }
   //     } else {
-  //         var isFirefox = typeof InstallTrigger !== 'undefined';
+  //         let isFirefox = typeof InstallTrigger !== 'undefined';
   //         if(!isFirefox){
   //           if(isSafari){
   //             let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
@@ -1163,7 +1195,7 @@ class SearchResult extends Component {
   //             // window.open(uri + base64(format(template, ctx)));
   //           }
   //         } else {
-  //             var uri = 'data:application/vnd.ms-excel;base64,'
+  //             let uri = 'data:application/vnd.ms-excel;base64,'
   //             // uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
   //             // sa = window.open(uriContent,'download.xlsx');
   //             // let wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});

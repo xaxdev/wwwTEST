@@ -39,30 +39,31 @@ module.exports = {
     let listFileName = [];
     let userName = request.payload.userName;
 
-    let size = 16;
+    let pageSize = request.payload.pageSize;
 
     internals.query = GetSearch(request, 0, 100000);
-    console.log('searching...');
+    // console.log('searching...');
 
-    console.log(JSON.stringify(internals.query, null, 2));
+    // console.log(JSON.stringify(internals.query, null, 2));
 
     elastic
       .search({
         index: 'mol',
         type: 'items',
         body: internals.query
-      }).then(function (response) {
+      })
+      .then(function (response) {
         let allData = [];
         let exportData = null;
-        console.log('Response Data');
+        // console.log('Response Data');
 
         let data = response.hits.hits.map((element) => element._source);
 
         exportData = data;
         // console.log('data-->',data);
-        console.log('fields.showImages-->',fields.showImages);
-        console.log('userCurrency-->',userCurrency);
-        console.log('price-->',price);
+        // console.log('fields.showImages-->',fields.showImages);
+        // console.log('userCurrency-->',userCurrency);
+        // console.log('price-->',price);
 
         // console.log(response.hits.total)
         const totalRecord = response.hits.total;
@@ -176,7 +177,7 @@ module.exports = {
 
         let newdata = [];
 
-        console.log('data export-->',data.length);
+        // console.log('data export-->',data.length);
 
         data.forEach(function(item){
           // console.log('item-->',item);
@@ -449,17 +450,21 @@ module.exports = {
 
         let alldata = newdata.length;
         console.log('alldata-->',newdata.length);
-        let exportSize = Math.ceil(alldata/5000);
+        let exportSize = Math.ceil(alldata/30000);
 
         let chunks = [];
         let i = 0;
         let file = 0;
 
         while (i < alldata) {
-          chunks.push(newdata.slice(i, i += 5000));
+          chunks.push(newdata.slice(i, i += 30000));
         }
 
+        console.log('chunks-->',chunks.length);
+
         chunks.forEach(function (chunk) {
+          file++;
+          console.log('file-->',file);
           // Create a new instance of a Workbook class
           let wb = new xl.Workbook();
 
@@ -481,48 +486,50 @@ module.exports = {
             ws.cell(1,t).string(title).style(style);
           });
 
-        let i = 1;
-        newdata.forEach(function(item){
-          i++;
-          // allData.push({'id': item.id,'reference':item.reference});
-          // Set value of cell A1 to 100 as a number type styled with paramaters of style
-          if(i>=2){
-            // console.log('t-->',t);
-            // console.log('item-->',item);
-            for (let j = 0; j < t; j++) {
-              // console.log('i-->',i);
-              // console.log('j-->',j);
-              // console.log('item[j]-->',item[j]);
-              let row = i;
-              let column = j+1;
-              ws.cell(row,column).string((item[j] != '') ? item[j].toString() : '').style(style);
-              if (fields.showImages){
-                ws.addImage({
-                    path: './plugins/http/assets/images/blank.gif',
-                    type: 'picture',
-                    position: {
-                        type: 'oneCellAnchor',
-                        from: {
-                            col: 1,
-                            colOff: '0.0in',
-                            row: 1,
-                            rowOff: 0
-                        }
-                    }
-                });
+          let i = 1;
+          chunk.forEach(function(item){
+            i++;
+            // allData.push({'id': item.id,'reference':item.reference});
+            // Set value of cell A1 to 100 as a number type styled with paramaters of style
+            if(i>=2){
+              // console.log('t-->',t);
+              // console.log('item-->',item);
+              for (let j = 0; j < t; j++) {
+                // console.log('i-->',i);
+                // console.log('j-->',j);
+                // console.log('item[j]-->',item[j]);
+                let row = i;
+                let column = j+1;
+                ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+                if (fields.showImages){
+                  ws.addImage({
+                      path: './plugins/http/assets/images/blank.gif',
+                      type: 'picture',
+                      position: {
+                          type: 'oneCellAnchor',
+                          from: {
+                              col: 1,
+                              colOff: '0.0in',
+                              row: 1,
+                              rowOff: 0
+                          }
+                      }
+                  });
+                }
               }
             }
-          }
-          // console.log('item.reference-->',item[0]);
-          // console.log('item.description-->',item[1]);
-          // ws.cell(i,1).string(item[0]).style(style);
-          // ws.cell(i,2).string(item[1]).style(style);
+            // console.log('item.reference-->',item[0]);
+            // console.log('item.description-->',item[1]);
+            // ws.cell(i,1).string(item[0]).style(style);
+            // ws.cell(i,2).string(item[1]).style(style);
 
+          });
           let startDate = new Date();
           let exportDate = moment(startDate,'MM-DD-YYYY');
           exportDate = exportDate.format('YYYYMMDD_HHmm');
 
           let fileName = file + '_' + 'Excel_' + userName + '_' + exportDate + '.xlsx';
+          console.log('fileName-->',fileName);
 
           wb.write(fileName, function (err, stats) {
               if (err) {
@@ -546,18 +553,20 @@ module.exports = {
                 fs.unlink(_pathSourceFile,function(err){
                   if(err) return console.log(err);
                   console.log('file deleted successfully');
-                  elastic.close();
-                  return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency, listFileName));
+                  // elastic.close();
+                  // // console.log('Write excel done.');
+                  // return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
                 });
               });
           });
         });
-
+        elastic.close();
+        return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
       })
       .catch(function (error) {
         console.log('error-->',error)
         elastic.close();
         return reply(Boom.badImplementation(err));
       });
-  }
+    }
 };

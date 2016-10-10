@@ -11,11 +11,15 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
     var sortDirections = request.payload.sortDirections;
     var userCurrency = request.payload.userCurrency;
     var keys = Object.keys(obj);
+    let fields = request.payload.fields;
+    let price = request.payload.price;
+    let userName = request.payload.userName;
+    let ROOT_URL = request.payload.ROOT_URL;
 
     var objRange={length:0};
     var filter = '';
-    var size = request.payload.pageSize;;
-    var fromitem = (page-1)*size;
+    var pageSize = request.payload.pageSize;
+    var fromitem = (page-1)*pageSize;
 
     var keyFromLot = '';
     var valFromLot = 0;
@@ -72,8 +76,8 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
         }
 
         // console.log('key.value-->',value);
-if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
-    && key != 'price' && key != 'ROOT_URL' ){
+        if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
+            && key != 'price' && key != 'pageSize' && key != 'ROOT_URL' && key != 'userName' ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
              || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'fluorescence'
              || key == 'jewelryCategory' || key == 'collection' || key == 'brand'|| key == 'mustHave' || key == 'ringSize'
