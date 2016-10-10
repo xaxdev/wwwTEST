@@ -41,7 +41,7 @@ module.exports = {
         ch.assertQueue(q, {durable: false});
         // Note: on Node 6 Buffer.from(msg) should be used
         ch.sendToQueue(q, new Buffer(JSON.stringify(request.payload, null, 2)));
-        console.log(' [x] Sent "Parameter!"');
+        // console.log(' [x] Sent "Parameter!"');
       });
     });
 
