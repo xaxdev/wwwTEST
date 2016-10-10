@@ -1,44 +1,62 @@
-var Hapi = require('hapi');
-var server = new Hapi.Server();
-var hapiRabbit = require('hapi-rabbit');
+'use strict';
 
-server.connection(
-    {
-        port: "3003"
-    }
-);
+var amqp = require('amqplib/callback_api');
 
-var plugins = [{
-    register: hapiRabbit,
-    options: {
-        url: "amqp://192.168.1.92:5672"
-    }
-}];
+amqp.connect('amqp://guest:guest@192.168.1.92:5672', function(err, conn) {
+  conn.createChannel(function(err, ch) {
+    var q = 'hello';
 
-server.register(plugins, function (err) {
-    if (err) {
-        console.log('error when registering modules', error);
-    }
+    ch.assertQueue(q, {durable: false});
+
+    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
+    ch.consume(q, function(msg) {
+      console.log(" [x] Received %s", msg.content.toString());
+    }, {noAck: true});
+  });
 });
 
-server.start(function (err) {
-    if (err) {
-        console.log('error when starting server', error);
-    }
 
-    var rabbit = server.plugins['hapi-rabbit'];
-    rabbit.createContext(function(err, context){
-        if(err){
-            console.log('err', err);
-        }
-
-        rabbit.subscribe(context, 'exchange', function(err, message){
-            console.log('message', message);
-        });
-    });
-
-    console.log('service started');
-});
+// var Hapi = require('hapi');
+// var server = new Hapi.Server();
+// var hapiRabbit = require('hapi-rabbit');
+//
+// server.connection(
+//     {
+//         port: "3003"
+//     }
+// );
+//
+// var plugins = [{
+//     register: hapiRabbit,
+//     options: {
+//         url: "amqp://guest:guest@192.168.1.92:5672"
+//     }
+// }];
+//
+// server.register(plugins, function (err) {
+//     if (err) {
+//         console.log('error when registering modules', error);
+//     }
+// });
+//
+// server.start(function (err) {
+//     if (err) {
+//         console.log('error when starting server', error);
+//     }
+//
+    // var rabbit = server.plugins['hapi-rabbit'];
+    // rabbit.createContext(function(err, context){
+    //     if(err){
+    //         console.log('err', err);
+    //     }
+    //
+    //     rabbit.subscribe(context, 'exchange', function(err, message){
+    //         console.log('message', message);
+    //     });
+    // });
+//
+//     console.log('service started');
+// });
 
 
 // const es = {

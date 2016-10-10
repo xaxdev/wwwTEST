@@ -1,0 +1,10 @@
+{
+  "apps" : [{
+    "name": "export-data",
+    "script"      : "./bootstrap.js",
+    "watch"       : false,
+    "env": {
+      "NODE_ENV": "test",
+    }
+  }]
+}

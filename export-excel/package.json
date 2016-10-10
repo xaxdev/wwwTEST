@@ -1,18 +1,21 @@
 {
-  "name": "playground",
+  "name": "export-data",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node bootstrap.js"
+    "start": "NODE_ENV=test && node bootstrap.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.4.2",
     "babel-polyfill": "^6.13.0",
     "babel-register": "^6.14.0",
+    "confidence": "^3.0.1",
     "elasticsearch": "^11.0.1",
+    "glue": "^4.0.0",
     "hapi": "^15.1.1",
     "hapi-rabbit": "0.0.4",
     "mongodb": "^2.2.9"
