@@ -72,7 +72,7 @@
                     "url": "mongodb://192.168.1.93:27017/mol_test"
                 },
                 "staging": {
-                    "url": "mongodb://192.168.1.93:27017/mol_staging"
+                    "url": "mongodb://127.0.0.1:27017/mol"
                 },
                 "production": {
                   "url": "mongodb://10.128.133.78:27017/mol"
@@ -107,8 +107,8 @@
                 "user": "root"
               },
               "staging": {
-                "host": "192.168.1.91",
-                "database": "mol_test",
+                "host": "192.168.1.98",
+                "database": "mol",
                 "user": "root"
               },
               "production": {
@@ -247,7 +247,7 @@
                 "host": "192.168.1.94:9200"
           },
           "staging": {
-                "host": "192.168.1.94:9200"
+                "host": "192.168.1.98:9200"
           },
           "production": {
                 "host": "10.128.133.77:9200"
