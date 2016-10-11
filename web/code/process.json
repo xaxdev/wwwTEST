@@ -1,7 +1,7 @@
 {
   "apps" : [{
     "name": "mol",
-    "script": "server.js",
+    "script": "bootstrap.js",
     "node_args": "--max_old_space_size=2048",
     "watch": false,
     "env": {
