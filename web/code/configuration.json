@@ -110,7 +110,8 @@
               "staging": {
                 "host": "127.0.0.1",
                 "database": "mol",
-                "user": "root"
+                "user": "root",
+                "password": "P@ssw0rd#431"
               },
               "production": {
                 "host": "localhost",
