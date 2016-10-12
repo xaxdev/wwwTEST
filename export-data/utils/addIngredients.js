@@ -28,12 +28,12 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
         let itemReference = item.reference;
 
         if (fields.showImages)
-            arrayItems.push('');
+            // arrayItems.push('');
 
-        // if (fields.showImages)
-        //   arrayItems.push((item.gallery.length) != 0
-        //                     ? 'http://' + ROOT_URL + item.gallery[0].thumbnail
-        //                     : 'http://' + ROOT_URL + '/images/blank.gif');
+        if (fields.showImages)
+          arrayItems.push((item.gallery.length) != 0
+                            ? item.gallery[0].thumbnail
+                            : '');
 
 
         arrayItems.push(item.reference,item.description,item.sku,item.venderReference);

@@ -3,7 +3,7 @@ const GetPriceCurrency = require('./getPriceCurrency');
 // import numberFormat from '../../http/src/utils/convertNumberformatwithcomma2digit';
 
 module.exports = (response, sortDirections, sortBy, size, page, userCurrency, listFileName, cb) => {
-  console.log(response.hits.total)
+  // console.log(response.hits.total)
   let allData = [];
   let sumPriceData = [];
   let sumCostData = [];
