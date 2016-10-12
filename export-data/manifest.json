@@ -1,0 +1,34 @@
+{
+    "db": {
+        "$filter": "env",
+        "$base": {
+            "requestTimeout": 25000
+        },
+        "development": {
+            "server": "localhost",
+            "user": "sa",
+            "password": "P@ssw0rd"
+        },
+        "production": {
+            "server": "10.128.133.74",
+            "user": "molintegration",
+            "password": "NGhRt%^-09"
+        }
+    },
+    "elasticsearch": {
+        "$filter": "env",
+        "development": {
+            "host": "192.168.1.94:9200"
+        },
+        "production": {
+            "host": "10.128.133.77:9200"
+        }
+    },
+    "parallelization": {
+        "size": 10000
+    },
+    "gallery": {
+        "original": "/images/products",
+        "thumbnail": "/images/products"
+    }
+}

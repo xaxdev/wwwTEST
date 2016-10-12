@@ -25,6 +25,8 @@ module.exports = {
 
     internals.query = GetSearch(request, 0, 100000);
 
+    // console.log(JSON.stringify(internals.query, null, 2));
+
     elastic
       .search({
         index: 'mol',
@@ -34,7 +36,7 @@ module.exports = {
         const totalRecord = response.hits.total;
 
         elastic.close();
-        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency));
+        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency, null));
 
       })
       .catch(function (error) {

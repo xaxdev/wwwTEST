@@ -1,0 +1,13 @@
+{
+    "elasticsearch": {
+        "host": "192.168.1.94:9200 ",
+        "index": "mol",
+        "type": "items"
+    },
+    "rabbit": {
+        "url": "amqp://192.168.1.92:5672"
+    },
+    "excel": {
+        "bufferSize": 500
+    }
+}

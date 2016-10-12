@@ -32,6 +32,11 @@ module.exports = [
   },
   {
     method: 'GET',
+    path: '/export_files/{path*}',
+    config: controller.assets.exportFile
+  },
+  {
+    method: 'GET',
     path: '/{path*}',
     handler: {
       file: Path.join(__dirname, 'index.htm')

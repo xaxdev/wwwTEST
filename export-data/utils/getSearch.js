@@ -1,52 +1,52 @@
-const GetSearchGemstone = require('../utils/getSearchGemstone');
+const GetSearchGemstone = require('./getSearchGemstone');
 
 const internals = {
   filters: []
 };
-module.exports = (request, fromRecord, sizeRecord, cb) => {
+module.exports = (obj, fromRecord, sizeRecord, cb) => {
     // console.log('request-->',request);
-    var obj = request.payload;
-    var page = request.payload.page;
-    var sortBy = request.payload.sortBy;
-    var sortDirections = request.payload.sortDirections;
-    var userCurrency = request.payload.userCurrency;
-    var keys = Object.keys(obj);
-    let fields = request.payload.fields;
-    let price = request.payload.price;
-    let userName = request.payload.userName;
-    let ROOT_URL = request.payload.ROOT_URL;
 
-    var objRange={length:0};
-    var filter = '';
-    var pageSize = request.payload.pageSize;
-    var fromitem = (page-1)*pageSize;
+    let page = obj.page;
+    let sortBy = obj.sortBy;
+    let sortDirections = obj.sortDirections;
+    let userCurrency = obj.userCurrency;
+    let keys = Object.keys(obj);
+    let fields = obj.fields;
+    let price = obj.price;
+    let userName = obj.userName;
+    let ROOT_URL = obj.ROOT_URL;
 
-    var keyFromLot = '';
-    var valFromLot = 0;
-    var valToLot = 0;
+    let objRange={length:0};
+    let filter = '';
+    let pageSize = obj.pageSize;
+    let fromitem = (page-1)*pageSize;
 
-    var keyFromCarat = '';
-    var valFromCarat = 0;
-    var valToCarat = 0;
+    let keyFromLot = '';
+    let valFromLot = 0;
+    let valToLot = 0;
 
-    var keyFromCost = '';
-    var valFromCost = 0;
-    var valToCost = 0;
+    let keyFromCarat = '';
+    let valFromCarat = 0;
+    let valToCarat = 0;
 
-    var keyFromUpdatedCost = '';
-    var valFromUpdatedCost = 0;
-    var valToUpdatedCost = 0;
+    let keyFromCost = '';
+    let valFromCost = 0;
+    let valToCost = 0;
 
-    var keyFromPPP = '';
-    var valFromPPP = 0;
-    var valToPPP = 0;
+    let keyFromUpdatedCost = '';
+    let valFromUpdatedCost = 0;
+    let valToUpdatedCost = 0;
 
-    var keyFromMarkup = '';
-    var valFromMarkup = 0;
-    var valToMarkup = 0;
+    let keyFromPPP = '';
+    let valFromPPP = 0;
+    let valToPPP = 0;
 
-    var valFromGrossW = 0;
-    var valToGrossW = 0;
+    let keyFromMarkup = '';
+    let valFromMarkup = 0;
+    let valToMarkup = 0;
+
+    let valFromGrossW = 0;
+    let valToGrossW = 0;
 
     let valFromProDate = '';
     let valToProDate = '';
@@ -61,7 +61,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
       keys.forEach((key) => {
         filter = '';
         // console.log('keys-->',key);
-        var value = obj[key];
+        let value = obj[key];
         if(key == 'reference' || key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity'
             || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'location' || key == 'buckleType'
             || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
@@ -115,7 +115,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'lotQuantityTo'){
               valToLot = value;
             }
-            var objLength = objRange.length +1;
+            let objLength = objRange.length +1;
             objRange = {...objRange,'quantity':{'from':valFromLot,'to':valToLot},'length':objLength};
           }
           else if(key == 'totalCaratWeightFrom' || key == 'totalCaratWeightTo'){
@@ -126,7 +126,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'totalCaratWeightTo'){
               valToCarat = value;
             }
-            var objLength = objRange.length +1;
+            let objLength = objRange.length +1;
             objRange = {...objRange,'carat':{'from':valFromCarat,'to':valToCarat},'length':objLength};
 
           }
@@ -138,7 +138,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'totalCostTo'){
               valToCost = value;
             }
-            var objLength = objRange.length +1;
+            let objLength = objRange.length +1;
             switch(userCurrency){
               case 'AED':
                 objRange = {...objRange,'actualCost.AED':{'from':valFromCost,'to':valToCost},'length':objLength};
@@ -180,7 +180,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'totalUpdatedCostTo'){
               valToUpdatedCost = value;
             }
-            var objLength = objRange.length +1;
+            let objLength = objRange.length +1;
             switch(userCurrency){
               case 'AED':
                 objRange = {...objRange,'updatedCost.AED':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
@@ -222,7 +222,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'publicPriceTo'){
               valToPPP = value;
             }
-            var objLength = objRange.length +1;
+            let objLength = objRange.length +1;
             switch(userCurrency){
               case 'AED':
                 objRange = {...objRange,'price.AED':{'from':valFromPPP,'to':valToPPP},'length':objLength};
@@ -264,7 +264,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'markupTo'){
               valToMarkup= value;
             }
-            var objLength = objRange.length +1;
+            let objLength = objRange.length +1;
             objRange = {...objRange,'markup':{'from':valFromMarkup,'to':valToMarkup},'length':objLength};
           }
           else if(key == 'grossWeightFrom' || key == 'grossWeightTo'){
@@ -274,22 +274,22 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'grossWeightTo'){
               valToGrossW= value;
             }
-            var objLength = objRange.length +1;
+            let objLength = objRange.length +1;
             objRange = {...objRange,'grossWeight':{'from':valFromGrossW,'to':valToGrossW},'length':objLength};
           }
 
           else if(key == 'proDateFrom' || key == 'proDateTo'){
             if(key == 'proDateFrom'){
               // MM-dd-YYYY to YYYY-MM-dd
-              var d = value.split('-');
+              let d = value.split('-');
               valFromProDate = `${d[2]}-${d[0]}-${d[1]}`;
             }
             if(key == 'proDateTo'){
               // MM-dd-YYYY to YYYY-MM-dd
-              var d = value.split('-');
+              let d = value.split('-');
               valToProDate= `${d[2]}-${d[0]}-${d[1]}`;
             }
-            var objLength = objRange.length +1;
+            let objLength = objRange.length +1;
             objRange = {...objRange,'productionDate':{'from':valFromProDate,'to':valToProDate},'length':objLength};
           }
           else if(key == 'caseDimensionFrom' || key == 'caseDimensionTo'){
@@ -299,7 +299,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'caseDimensionTo'){
               valDimensionTo= value;
             }
-            var objLength = objRange.length +1;
+            let objLength = objRange.length +1;
             objRange = {...objRange,'caseDimension':{'from':valDimensionFrom,'to':valDimensionTo},'length':objLength};
           }
           else if(key == 'preciousMetalWeightFrom' || key == 'preciousMetalWeightTo'){
@@ -309,14 +309,14 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'preciousMetalWeightTo'){
               valMetalWeightTo= value;
             }
-            var objLength = objRange.length +1;
+            let objLength = objRange.length +1;
             objRange = {...objRange,'preciousMetalWeight':{'from':valMetalWeightFrom,'to':valMetalWeightTo},'length':objLength};
           }
           else if(key == 'description'){
-            var filterSplit = [];
-            // var vals = value.split(',');
-            var vals = value.replace(',',' ');
-            var mapField =
+            let filterSplit = [];
+            // let vals = value.split(',');
+            let vals = value.replace(',',' ');
+            let mapField =
                   `{
                       "match": {
                         "description": {
@@ -335,11 +335,11 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                 }`;
           }
           else if(key == 'hierarchy'){
-            var filterSplit = [];
+            let filterSplit = [];
             // console.log('hierarchy value-->', value)
-            var vals = value.split(',');
+            let vals = value.split(',');
             vals.forEach((val)=>{
-              var mapField =
+              let mapField =
                     `{
                         "match": {
                           "hierarchy": {
@@ -386,7 +386,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
         }
       });
       if(objRange.length != 0){
-        var keysObjRange = Object.keys(objRange);
+        let keysObjRange = Object.keys(objRange);
         // console.log('keysObjRange-->',keysObjRange);
         keysObjRange.forEach((key) => {
           // console.log('keysObjRange[key]-->',objRange[key].from);
