@@ -247,9 +247,9 @@ const archiver = require('archiver');
                           };
                           row++
                         });
-                        const maxRow = (config.rabbit.maxRow*file);
+                        const maxRow = (config.excel.maxRow*file);
                         const div = (row > maxRow);
-                        console.log(`check ${row} > ${config.rabbit.maxRow} -->`,div);
+                        console.log(`check ${row} > ${config.excel.maxRow} -->`,div);
 
                         if (div) {
                             wb = new xl.Workbook();
