@@ -15,7 +15,7 @@ const archiver = require('archiver');
 
 (async _ => {
    // 'amqp://guest:guest@192.168.1.92:5672'
-   const q = 'mol';
+   const q = config.rabbit.channel;
    let emailBody = '';
    let listFileName = [];
    let userEmail = '';
@@ -247,9 +247,9 @@ const archiver = require('archiver');
                           };
                           row++
                         });
-                        const maxRow = (25000*file);
+                        const maxRow = (config.rabbit.maxRow*file);
                         const div = (row > maxRow);
-                        console.log(`check ${row} > ${25000} -->`,div);
+                        console.log(`check ${row} > ${config.rabbit.maxRow} -->`,div);
 
                         if (div) {
                             wb = new xl.Workbook();

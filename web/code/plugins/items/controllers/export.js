@@ -24,7 +24,10 @@ module.exports = {
   handler: (request, reply) => {
 
     const elastic = request.server.plugins.elastic.client;
-    // console.log(request.server.connections);
+    const amqpHost = request.server.plugins.amqp.host;
+    const amqpChannel = request.server.plugins.amqp.channel;
+    // console.log(amqpHost);
+    // console.log(amqpChannel);
 
     let obj = request.payload;
     let page = request.payload.page;
@@ -65,12 +68,11 @@ module.exports = {
         // console.log(response.hits.total)
         const totalRecord = response.hits.total;
 
-
         elastic.close();
 
-        amqp.connect('amqp://192.168.1.92:5672', function(err, conn) {
+        amqp.connect(amqpHost, function(err, conn) {
           conn.createChannel(function(err, ch) {
-            var q = 'mol';
+            var q = amqpChannel;
 
             ch.assertQueue(q);
             // Note: on Node 6 Buffer.from(msg) should be used

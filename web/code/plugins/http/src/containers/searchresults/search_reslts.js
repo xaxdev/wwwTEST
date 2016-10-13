@@ -1178,7 +1178,7 @@ class SearchResult extends Component {
               <h1 className="modal-title">Export</h1>
             </div>
             <div className="modal-body">
-              <h3>Please download files as follow link.</h3>
+              <h3>Please checking your email for download files.</h3>
               <br/>
               <div className="col-sm-12">
                 <div className="col-sm-3">

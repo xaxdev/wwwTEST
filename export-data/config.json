@@ -5,9 +5,11 @@
         "type": "items"
     },
     "rabbit": {
-        "url": "amqp://192.168.1.92:5672"
+        "url": "amqp://guest:guest@192.168.1.92:5672",
+        "channel": "mol"
     },
     "excel": {
-        "bufferSize": 500
+        "bufferSize": 500,
+        "maxRow": 10000
     }
 }
