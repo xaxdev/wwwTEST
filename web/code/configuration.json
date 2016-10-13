@@ -85,14 +85,6 @@
     },
     {
       "plugin": {
-        "register": "hapi-rabbit",
-        "options": {
-          "url": "amqp://guest:guest@192.168.1.92:5672"
-        }
-      }
-    },
-    {
-      "plugin": {
         "register": "./plugins/orm",
         "options": {
           "adapters": {
