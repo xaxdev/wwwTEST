@@ -24,6 +24,7 @@ module.exports = {
   handler: (request, reply) => {
 
     const elastic = request.server.plugins.elastic.client;
+    // console.log(request.server.connections);
 
     let obj = request.payload;
     let page = request.payload.page;

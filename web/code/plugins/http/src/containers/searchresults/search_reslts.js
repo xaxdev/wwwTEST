@@ -931,9 +931,8 @@ class SearchResult extends Component {
   confirmExport(e){
     e.preventDefault();
 
-    let host = HOSTNAME || 'localhost:3005';
-    host = (host == 'localhost') ? 'localhost:3005' : host;
-    const ROOT_URL = `${host}`;
+    const host = HOSTNAME || 'localhost';
+    const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
 
     const that = this;
     const { items, exportItems, filters, paramsSearch, showGridView,showListView } = this.props;
@@ -1142,7 +1141,7 @@ class SearchResult extends Component {
               <h1 className="modal-title">Export</h1>
             </div>
             <div className="modal-body">
-              <h3>Please download files as follow link.</h3>
+              <h3>Please checking your email for download files.</h3>
               <a href={listFileName[0]} target="_blank" >{listFileName[0]}</a>
               <link></link>
               <br/>
