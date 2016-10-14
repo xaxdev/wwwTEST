@@ -1,17 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-
-
 import { match, Router, browserHistory, useRouterHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import createBrowserHistory from '../../../node_modules/history/lib/createBrowserHistory';
 const appHistory = useRouterHistory(createBrowserHistory)();
 import getRoutes from './routes';
-
 import { Provider } from 'react-redux';
 import createStore from './createStore';
-
 import '../public/css/style.css';
 
 const store = createStore(window.__INITIAL_STATE__);

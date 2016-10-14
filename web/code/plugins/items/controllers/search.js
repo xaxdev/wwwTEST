@@ -33,15 +33,13 @@ module.exports = {
         type: 'items',
         body: internals.query
       }).then(function (response) {
-        // console.log(response.hits.total)
         const totalRecord = response.hits.total;
 
         elastic.close();
-        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency));
+        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency, null));
 
       })
       .catch(function (error) {
-        console.log('error-->',error)
         elastic.close();
         return reply(Boom.badImplementation(err));
       });

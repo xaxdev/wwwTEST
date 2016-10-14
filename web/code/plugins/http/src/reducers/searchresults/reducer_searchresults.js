@@ -212,7 +212,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
       case MODIFY_SEARCH:
         return { ...state, paramsSearch:action.params, datas:null,allItems:[], totalpage:null,
         totalpublicprice:null, totalupdatedcost:null,SearchAction:'Modify',exportItems:[],
-        maxPrice:null,minPrice:null,avrgPrice:null }
+        maxPrice:null,minPrice:null,avrgPrice:null,listFileName:null }
       case FETCH_ALLITEMS:
         // console.log('action-->',action.type);
         // console.log('action.data.summary-->',action.data.summary);
@@ -220,7 +220,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 totalpublicprice: action.data.summary.price, totalupdatedcost: action.data.summary.cost,
                 currentPage:action.currPage, allItems: action.data.allData, exportItems: action.data.exportData,
                 maxPrice: action.data.summary.maxPrice,minPrice: action.data.summary.minPrice,
-                avrgPrice: action.data.summary.avrgPrice};
+                avrgPrice: action.data.summary.avrgPrice,listFileName: action.data.listFileName};
       case FETCH_SORTING:
         // console.log('action-->',action);
         switch(action.sortDirections){

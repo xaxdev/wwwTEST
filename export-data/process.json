@@ -1,0 +1,14 @@
+{
+  "apps" : [{
+    "name": "export-data",
+    "script"      : "./bootstrap.js",
+    "watch"       : false,
+    "env": {
+      "NODE_ENV": "production",
+    },
+    "merge_logs": true,
+    "error_file": "./logs/export-data-err.log",
+    "out_file": "./logs/export-data-out.log",
+    "log_date_format": "YYYY-MM-DD HH:mm Z"
+  }]
+}

@@ -95,6 +95,7 @@ class SearchResult extends Component {
       // showListView: false,
       isExport: false,
       isOpen: false,
+      isOpenDownload: false,
       isOpenNoResults: true,
       allFields: false,
       showImages: false,
@@ -199,8 +200,8 @@ class SearchResult extends Component {
 
     let that = this;
     if(this.refs.sortingBy != undefined){
-      // var select = React.findDOMNode(this.refs.sortingBy);
-      var values = [].filter.call(this.refs.sortingBy.options, function (o) {
+      // let select = React.findDOMNode(this.refs.sortingBy);
+      let values = [].filter.call(this.refs.sortingBy.options, function (o) {
             o.selected = false;
 
             if(o.value == that.props.sortingBy){
@@ -213,8 +214,8 @@ class SearchResult extends Component {
     }
 
     if(this.refs.sortingDirection != undefined){
-      // var select = React.findDOMNode(this.refs.sortingBy);
-      var values = [].filter.call(this.refs.sortingDirection.options, function (o) {
+      // let select = React.findDOMNode(this.refs.sortingBy);
+      let values = [].filter.call(this.refs.sortingDirection.options, function (o) {
             o.selected = false;
 
             if(o.value == that.props.sortDirection){
@@ -227,8 +228,8 @@ class SearchResult extends Component {
     }
 
     if(this.refs.pageSize != undefined){
-      // var select = React.findDOMNode(this.refs.sortingBy);
-      var values = [].filter.call(this.refs.pageSize.options, function (o) {
+      // let select = React.findDOMNode(this.refs.sortingBy);
+      let values = [].filter.call(this.refs.pageSize.options, function (o) {
             o.selected = false;
 
             if(o.value == that.props.pageSize){
@@ -886,6 +887,27 @@ class SearchResult extends Component {
     this.setState({isOpen: false});
   }
 
+  hideModalDownload = (e) => {
+    e.preventDefault();
+    const { showGridView,showListView } = this.props;
+
+    this.setState({isOpenDownload: false});
+
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
+
+    if(girdView){
+      // this.setState({showGridView: true});
+      this.props.setShowGridView(true);
+    }else if (listView) {
+      // this.setState({showListView: true});
+      this.props.setShowListView(true);
+    }
+  }
+
   hideModalNoResults = (e) => {
     e.preventDefault();
 
@@ -903,63 +925,17 @@ class SearchResult extends Component {
       this.context.router.push('/inventories');
     }
   }
-
   exportExcel(){
     this.setState({isOpen: true});
-  }
-  s2ab(s) {
-  	let buf = new ArrayBuffer(s.length);
-  	let view = new Uint8Array(buf);
-  	for (let i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
-  	return buf;
-  }
-  sheet_from_array_of_arrays(data, opts) {
-  	let ws = {};
-  	let range = {s: {c:10000000, r:10000000}, e: {c:0, r:0 }};
-  	for(let R = 0; R != data.length; ++R) {
-  		for(let C = 0; C != data[R].length; ++C) {
-  			if(range.s.r > R) range.s.r = R;
-  			if(range.s.c > C) range.s.c = C;
-  			if(range.e.r < R) range.e.r = R;
-  			if(range.e.c < C) range.e.c = C;
-  			let cell = {v: data[R][C] };
-  			if(cell.v == null) continue;
-  			let cell_ref = XLSX.utils.encode_cell({c:C,r:R});
-
-  			if(typeof cell.v === 'number') cell.t = 'n';
-  			else if(typeof cell.v === 'boolean') cell.t = 'b';
-  			else if(cell.v instanceof Date) {
-  				cell.t = 'n'; cell.z = XLSX.SSF._table[14];
-  				cell.v = datenum(cell.v);
-  			}
-  			else cell.t = 's';
-
-  			ws[cell_ref] = cell;
-  		}
-  	}
-  	if(range.s.c < 10000000) ws['!ref'] = XLSX.utils.encode_range(range);
-  	return ws;
-  }
-  Workbook() {
-  	if(!(this instanceof Workbook)) return new Workbook();
-  	this.SheetNames = [];
-  	this.Sheets = {};
-  }
-  base64(s){
-    return window.btoa(unescape(encodeURIComponent(s)));
-  }
-  format(s, c){
-    return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; });
   }
   confirmExport(e){
     e.preventDefault();
 
-    let host = HOSTNAME || 'localhost:3005';
-    host = (host == 'localhost') ? 'localhost:3005' : host;
-    const ROOT_URL = `${host}`;
+    const host = HOSTNAME || 'localhost';
+    const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
 
     const that = this;
-    const { items, exportItems, filters, paramsSearch } = this.props;
+    const { items, exportItems, filters, paramsSearch, showGridView,showListView } = this.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     let sortingBy = '';
@@ -1017,152 +993,74 @@ class SearchResult extends Component {
       limitedEditionNumber: this.state.limitedEditionNumber,
     };
 
-    // let params = {
-    //   'page' : this.props.currentPage,
-    //   'sortBy': sortingBy,
-    //   'sortDirections': sortingDirection,
-    //   'fields': fields,
-    //   'price': userLogin.permission.price
-    // };  // default search params
-    //
-    // // console.log('filters-->',filters);
-    // filters.forEach(function(filter){
-    //   let keys = Object.keys(filter);
-    //   keys.forEach((key) => {
-    //     const value = filter[key];
-    //     params[key] = value;
-    //   });
-    // });
-    //
-    // this.setState({
-    //   showLoading: true,
-    //   isOpen: false
-    // });
-    //
-    // console.log('params--:>',params);
-    // this.props.exportDatas(params)
-    //     .then((value) => {
-    //       console.log('export done!');
-    //       this.setState({
-    //         showLoading: false
-    //       });
-    //     });
+    let params = {
+      'page' : this.props.currentPage,
+      'sortBy': sortingBy,
+      'sortDirections': sortingDirection,
+      'pageSize' : this.props.pageSize,
+      'fields': fields,
+      'price': userLogin.permission.price,
+      'ROOT_URL': ROOT_URL,
+      'userName': userLogin.username,
+      'userEmail': userLogin.email
+    };
 
-    let alldata = exportItems.length;
-    let size = Math.ceil(alldata/1500);
+    // default search params
 
-    let chunks = [];
-    let i = 0;
-    let file = 0;
-
-    while (i < alldata) {
-      chunks.push(exportItems.slice(i, i += 1500));
-    }
-
-    // console.log('chunks-->',chunks);
-
-    let addContentListener = [];
-    let sa = '';
-
-    chunks.forEach(function (chunk) {
-      // console.log('chunk-->',chunk.length);
-      file++;
-      var tab_text = GenHtmlExportExcel(that, chunk, userLogin, ROOT_URL);
-        var data_type = 'data:application/vnd.ms-excel;base64';
-
-        var ua = window.navigator.userAgent;
-        let isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
-        // console.log(isSafari);
-        var msie = ua.indexOf('MSIE');
-        var edge = ua.indexOf('Edge');
-
-        var uriContent = '';
-        var startDate = new Date();
-        var exportDate = moment(startDate,'MM-DD-YYYY');
-        exportDate = exportDate.format('YYYYMMDD_HHmm');
-        var fileName = 'download_'+exportDate+'_'+file+'.xls';
-        let template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>{table}</body></html>';
-
-        if (msie > 0 || edge > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-            if (window.navigator.msSaveBlob) {
-                var blob = new Blob([tab_text], {
-                    type: 'data:application/vnd.ms-excel,'
-                });
-                that.setState({
-                  isOpen: false,
-                });
-                navigator.msSaveBlob(blob, fileName);
-            }
-        } else {
-            var isFirefox = typeof InstallTrigger !== 'undefined';
-            if(!isFirefox){
-              if(isSafari){
-                let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
-                let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) };
-
-                // let ctx = { worksheet: exportDate || 'Worksheet', table: tab_text }
-                uriContent = 'data:application/vnd.ms-excel,' + base64(tab_text);
-                that.setState({
-                  isOpen: false,
-                });
-                // addContentListener.push(uriContent);
-                sa = window.open(uriContent,fileName);
-                // sa.close();
-
-              }else{
-                // chrome or other
-                that.setState({
-                  isOpen: false,
-                });
-                let base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) };
-                let format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };
-                let ctx = { worksheet: 'Worksheet', table: tab_text };
-                // uri = 'data:application/vnd.ms-excel;base64,'
-                uriContent = 'data:application/vnd.ms-excel;base64,' + base64(tab_text);
-                // sa = window.open(uri + base64(format(template, ctx)),fileName);
-                // addContentListener.push(uriContent);
-                sa = window.open(uriContent,fileName);
-                // sa.close();
-                // return sa;
-                // window.open(uri + base64(format(template, ctx)));
-              }
-            } else {
-                var uri = 'data:application/vnd.ms-excel;base64,'
-                // uriContent = 'data:application/octet-stream,' + encodeURIComponent(tab_text);
-                // sa = window.open(uriContent,'download.xlsx');
-                // let wbout = XLSX.write(tab_text, {bookType:'xlsx', bookSST:false, type: 'binary'});
-                that.setState({
-                  isOpen: false,
-                });
-                // window.open(uriContent,'download.xls')
-                window.location.href = uri + $.base64.encode(tab_text)
-            }
+    let gemstoneFilter = {};
+    // console.log('filters-->',filters);
+    filters.forEach(function(filter){
+      let keys = Object.keys(filter);
+      keys.forEach((key) => {
+        const value = filter[key];
+        const gemstoneFields = keys[0].split('.');
+        if(gemstoneFields[0] == 'gemstones'){
+          gemstoneFilter[gemstoneFields[1]] = value;
+        }else if(gemstoneFields[0] == 'certificatedNumber'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'certificateAgency'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'cerDateFrom'){
+          gemstoneFilter[gemstoneFields[0]] = value;
+        }
+        else{
+          params[key] = value;
         }
       });
+    });
 
-      // console.log('addContentListener-->',addContentListener);
-      // addContentListener.forEach(function (content) {
-      //
-      //   window.setTimeout(function() {
-      //     sa = window.open(content);
-      //   }, 10e3);
-      // });
+    if(Object.keys(gemstoneFilter).length != 0){
+      params['gemstones'] = gemstoneFilter;
+    }
 
-      // var loop = function(prevWin) {
-      //   if (!addContentListener.length) {
-      //     return false;
-      //   }
-      //
-      //   var currWin = window.open(addContentListener.shift());
-      //
-      //   (prevWin && prevWin.focus && prevWin.close());
-      //   window.setTimeout(function() {
-      //     loop(currWin);
-      //   }, 10e3);
-      // };
-      //
-      // loop();
+    this.setState({
+      showLoading: true,
+      isOpen: false
+    });
 
+    let girdView = showGridView;
+    let listView = showListView;
+
+    this.props.setShowGridView(false);
+    this.props.setShowListView(false);
+
+    // console.log('params--:>',params);
+    this.props.exportDatas(params)
+        .then((value) => {
+          // console.log('value-->',value);
+          console.log('export done!');
+          if(girdView){
+            // this.setState({showGridView: true});
+            that.props.setShowGridView(true);
+          }else if (listView) {
+            // this.setState({showListView: true});
+            that.props.setShowListView(true);
+          }
+          that.setState({
+            showLoading: false,
+            isOpenDownload: true
+          });
+        });
   }
   renderExportExcelDialog(){
     let that = this;
@@ -1229,17 +1127,96 @@ class SearchResult extends Component {
     );
   }
 
+  renderDownloadDialog(){
+    let that = this;
+    const { listFileName } = that.props;
+    const userLogin = JSON.parse(sessionStorage.logindata);
+    if(listFileName != null){
+      return(
+        <div>
+        <div  className="popexport">
+          <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
+            <div className="modal-header">
+              <ModalClose onClick={this.hideModalDownload}/>
+              <h1 className="modal-title">Export</h1>
+            </div>
+            <div className="modal-body">
+              <h3>Please checking your email for download files.</h3>
+              <a href={listFileName[0]} target="_blank" >{listFileName[0]}</a>
+              <link></link>
+              <br/>
+              <div className="col-sm-12">
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+              </div>
+              <div className="col-md-12">
+
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
+                Close
+              </button>
+            </div>
+          </Modal>
+          </div>
+         </div>
+      );
+    }else{
+      return(
+        <div>
+        <div  className="popexport">
+          <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
+            <div className="modal-header">
+              <ModalClose onClick={this.hideModalDownload}/>
+              <h1 className="modal-title">Export</h1>
+            </div>
+            <div className="modal-body">
+              <h3>Please checking your email for download files.</h3>
+              <br/>
+              <div className="col-sm-12">
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+              </div>
+              <div className="col-md-12">
+
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
+                Close
+              </button>
+            </div>
+          </Modal>
+          </div>
+         </div>
+      );
+    }
+  }
+
   render() {
     const { totalPages,showGridView,showListView,
-            currentPage,allItems,pageSize,
-            items,totalPublicPrice,totalUpdatedCost,
-            handleSubmit,
-            resetForm,
-            submitting } = this.props;
+             currentPage,allItems,pageSize,
+             items,totalPublicPrice,totalUpdatedCost,
+             handleSubmit,
+             resetForm,
+             submitting } = this.props;
 
-    const userLogin = JSON.parse(sessionStorage.logindata);
+     const userLogin = JSON.parse(sessionStorage.logindata);
 
-    const { isOpenMessage } = this.state;
+     const { isOpenMessage } = this.state;
 
     var numbers = document.querySelectorAll('input[type="number"]');
 
@@ -1263,7 +1240,7 @@ class SearchResult extends Component {
 
     // console.log('this.state.activePage-->',this.state.activePage);
 
-    // console.log('pageSize-->',pageSize);
+     // console.log('pageSize-->',pageSize);
     if(items == null){
       return (
         <center ><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center>
@@ -1471,6 +1448,7 @@ class SearchResult extends Component {
               </div>
             </div>
             {this.renderExportExcelDialog()}
+            {this.renderDownloadDialog()}
           </form>
         );
       }

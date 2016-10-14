@@ -1,5 +1,5 @@
 const Path = require('path');
-console.log(Path.resolve(__dirname, '../public/js'));
+
 module.exports = {
   images: {
     handler: {
@@ -39,6 +39,14 @@ module.exports = {
     },
     app: {
       name: 'uploadFile'
+    }
+  },
+  exportFile: {
+    handler: {
+      directory:   { path: Path.resolve(__dirname, '../public/export_files') }
+    },
+    app: {
+      name: 'exportFile'
     }
   }
 };

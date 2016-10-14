@@ -58,6 +58,32 @@
       }
     },
     {
+        "plugin": {
+            "register": "hapi-mongodb",
+            "options": {
+                "$filter": "env",
+                "$base": {
+                    "decorate": true
+                },
+                "development": {
+                    "url": "mongodb://192.168.1.93:27017/mol_development"
+                },
+                "test": {
+                    "url": "mongodb://192.168.1.93:27017/mol_test"
+                },
+                "staging": {
+                    "url": "mongodb://192.168.1.93:27017/mol_staging"
+                },
+                "production": {
+                  "url": "mongodb://10.128.133.76:27017/mol"
+                }
+            }
+        },
+        "options": {
+            "select": "api"
+        }
+    },
+    {
       "plugin": {
         "register": "./plugins/orm",
         "options": {
@@ -265,6 +291,95 @@
           "prefix": "/api/masterdata"
         }
       }
+    },
+    {
+        "plugin": "./plugins/history",
+        "options": {
+            "select": "api",
+            "routes": {
+                "prefix": "/api/history"
+            }
+        }
+    },
+    {
+        "plugin": "./plugins/mobile/items",
+        "options": {
+            "select": "api",
+            "routes": {
+                "prefix": "/api/v2/items"
+            }
+        }
+    },
+    {
+        "plugin": "./plugins/wishlist",
+        "options": {
+            "select": "api",
+            "routes": {
+                "prefix": "/api/wishlist"
+            }
+        }
+    },
+    {
+        "plugin": "./plugins/catalog",
+        "options": {
+        "select": "api",
+        "routes": {
+          "prefix": "/api/catalog"
+        }
+      }
+    },
+    {
+        "plugin": "./plugins/helper"
+    },
+    {
+        "plugin": "./plugins/ipad/comparison",
+        "options": {
+          "select": "api",
+          "routes": {
+            "prefix": "/api/comparison"
+          }
+        }
+    },
+    {
+        "plugin": "./plugins/ipad/stat",
+        "options": {
+            "select": "api",
+            "routes": {
+              "prefix": "/api/stat"
+            }
+        }
+    },
+    {
+        "plugin": {
+            "register": "./plugins/pagination",
+            "options": {
+                "page": 1,
+                "size": 8
+            }
+        },
+        "options": {
+            "select": "api"
+        }
+    },
+    {
+      "plugin": {
+        "register": "./plugins/amqp",
+        "options": {
+          "$filter": "env",
+          "development": {
+                "host": "amqp://guest:guest@192.168.1.92:5672",
+                "channel": "mol"
+          },
+          "test": {
+                "host": "amqp://guest:guest@192.168.1.92:5672",
+                "channel": "mol"
+          },
+          "production": {
+                "host": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
+                "channel": "mol"
+          }
+        }
+      }
     }
-  ]
+    ]
 }
