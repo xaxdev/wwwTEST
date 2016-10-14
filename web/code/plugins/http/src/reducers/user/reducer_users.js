@@ -15,7 +15,8 @@ export default function(state = INITIAL_STATE, action){
     return { ...state, datas: action.data.data };
   case 'FETCH_OPTIONS':
     // console.log('action.datas-->',action);
-    return { ...state, options: action.data, locationOnHand: action.data.locations, warehouseOnHand: action.data.warehouses };
+    // return { ...state, options: action.data, locationOnHand: action.data.locations, warehouseOnHand: action.data.warehouses };
+    return { ...state, options: action.data, locationOnHand: action.data.companies, warehouseOnHand: action.data.warehouses };
   case 'SELECTED_COMPANY':
     // console.log('FETCH_OPTIONS state-->',state);
     // console.log('SELECTED_COMPANY action.data-->',action.data);
@@ -26,7 +27,8 @@ export default function(state = INITIAL_STATE, action){
     return { ...state, options: action.data, selectedCompany: action.comid, selectedWarehouses: action.selected};
   case 'GED_ONHANDWAREHOUSES':
     // console.log('GED_ONHANDWAREHOUSES action-->',action);
-    return { ...state, options: action.data, locationOnHand: action.data.locations, warehouseOnHand: action.data.warehouses};
+    // return { ...state, options: action.data, locationOnHand: action.data.locations, warehouseOnHand: action.data.warehouses};
+    return { ...state, options: action.data, locationOnHand: action.data.companies, warehouseOnHand: action.data.warehouses};
   case 'CREATE_USER':
     // console.log('action-->',action);
     // console.log('FETCH_OPTIONS action.datas-->',action.datas);

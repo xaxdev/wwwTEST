@@ -841,7 +841,7 @@ class UsersNewFrom extends Component {
                               <input type="checkbox" value="Location" {...onhandLocation}
                                 checked={this.state.selectedOnHandLocation}
                                 onChange={this.selectedOnHandLocation}
-                              /> All Site
+                              /> All Company
                               <div className="user-edit">
                                 <select multiple
                                   {...onhandLocationValue}

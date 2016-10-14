@@ -236,11 +236,11 @@ class InventoryHeader extends Component {
                       </div>
                       <div className={`form-group ${(userLogin.permission.onhandLocation != undefined) ? '' :
                                         'hidden'}` }>
-                        <label className="col-sm-4 control-label">Site</label>
+                        <label className="col-sm-4 control-label">Company</label>
                         <div className= "col-sm-7">
                           <Select multi simpleValue
                               value={this.props.props.LocationValue}
-                              placeholder="Select your Site"
+                              placeholder="Select your Company"
                               options={dataDropDowntLocations}
                               onChange={this.handleLocationSelectChange}
                               disabled={(userLogin.permission.onhandLocation != undefined) ? false : true}

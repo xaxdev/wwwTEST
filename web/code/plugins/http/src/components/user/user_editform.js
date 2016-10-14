@@ -912,7 +912,7 @@ class UserDetailsFrom extends Component {
                             checked={this.state.selectedOnHandLocation}
                             onChange={this.selectedOnHandLocation}
                             ref="location"
-                          /> All Site
+                          /> All Company
                           <div className="user-edit">
                             <select multiple
                               {...onhandLocationValue}
