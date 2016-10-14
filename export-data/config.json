@@ -1,15 +1,50 @@
 {
     "elasticsearch": {
-        "host": "192.168.1.94:9200 ",
-        "index": "mol",
-        "type": "items"
+        "$filter": "env",
+        "development": {
+            "host": "192.168.1.94:9200 ",
+            "index": "mol",
+            "type": "items"
+        },
+        "test": {
+            "host": "192.168.1.94:9200 ",
+            "index": "mol",
+            "type": "items"
+        },
+        "production": {
+            "host": "10.128.133.77:9200 ",
+            "index": "mol",
+            "type": "items"
+        }
     },
     "rabbit": {
-        "url": "amqp://guest:guest@192.168.1.92:5672",
-        "channel": "mol"
+        "$filter": "env",
+        "development": {
+            "url": "amqp://guest:guest@192.168.1.92:5672",
+            "channel": "mol"
+        },
+        "test": {
+            "url": "amqp://guest:guest@192.168.1.92:5672",
+            "channel": "mol"
+        },
+        "production": {
+            "url": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
+            "channel": "mol"
+        }
     },
     "excel": {
-        "bufferSize": 500,
-        "maxRow": 10000
+        "$filter": "env",
+        "development": {
+            "bufferSize": 500,
+            "maxRow": 2000
+        },
+        "test": {
+            "bufferSize": 500,
+            "maxRow": 2000
+        },
+        "production": {
+            "bufferSize": 500,
+            "maxRow": 25000
+        }
     }
 }

@@ -4,7 +4,7 @@ import xl from 'excel4node'
 import moment from 'moment-timezone';
 import sendgrid from 'sendgrid'
 
-import config from './config'
+// import config from './config'
 import sendgridConfig from './sendgrid.json'
 import * as utils from './utils'
 
@@ -12,10 +12,10 @@ const fs = require('fs');
 const Path = require('path');
 const AdmZip = require('adm-zip');
 const archiver = require('archiver');
+const Confidence = require('confidence');
 
 (async _ => {
    // 'amqp://guest:guest@192.168.1.92:5672'
-   const q = config.rabbit.channel;
    let emailBody = '';
    let listFileName = [];
    let userEmail = '';
@@ -121,6 +121,11 @@ const archiver = require('archiver');
    };
 
    try {
+       const store = new Confidence.Store(require('./config'));
+       const config = store.get('/', { env: process.env.NODE_ENV || 'development' });
+    //    console.log(config);
+
+       const q = config.rabbit.channel;
        const connection = await amqp.connect(config.rabbit.url);
        const channel = await connection.createChannel();
        await channel.assertQueue(q);

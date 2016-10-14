@@ -1,34 +1,15 @@
 {
-    "db": {
-        "$filter": "env",
-        "$base": {
-            "requestTimeout": 25000
-        },
-        "development": {
-            "server": "localhost",
-            "user": "sa",
-            "password": "P@ssw0rd"
-        },
-        "production": {
-            "server": "10.128.133.74",
-            "user": "molintegration",
-            "password": "NGhRt%^-09"
-        }
-    },
     "elasticsearch": {
-        "$filter": "env",
-        "development": {
-            "host": "192.168.1.94:9200"
-        },
-        "production": {
-            "host": "10.128.133.77:9200"
-        }
+        "host": "192.168.1.94:9200 ",
+        "index": "mol",
+        "type": "items"
     },
-    "parallelization": {
-        "size": 10000
+    "rabbit": {
+        "url": "amqp://guest:guest@192.168.1.92:5672",
+        "channel": "mol"
     },
-    "gallery": {
-        "original": "/images/products",
-        "thumbnail": "/images/products"
+    "excel": {
+        "bufferSize": 500,
+        "maxRow": 2000
     }
 }
