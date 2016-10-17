@@ -1,8 +1,9 @@
 {
   "apps" : [{
     "name": "export-data",
-    "script"      : "./bootstrap.js",
-    "watch"       : false,
+    "script": "./bootstrap.js",
+    "node_args": "--max_old_space_size=2048",
+    "watch": false,
     "env": {
       "NODE_ENV": "production",
     },
