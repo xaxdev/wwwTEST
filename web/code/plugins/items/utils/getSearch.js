@@ -89,7 +89,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             if(key == 'metalColour')
               key = 'metalColor'
             if(key == 'location')
-              key = 'site'
+              key = 'company'
             if(key == 'jewelryCategory')
               key = 'subType'
             if(key == 'watchCategory')

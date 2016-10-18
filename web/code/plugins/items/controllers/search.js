@@ -9,7 +9,9 @@ const internals = {
 };
 
 module.exports = {
-  auth: false,
+    auth: {
+        strategy: 'authentication'
+    },
   handler: (request, reply) => {
 
     const elastic = request.server.plugins.elastic.client;
@@ -25,7 +27,7 @@ module.exports = {
 
     internals.query = GetSearch(request, 0, 100000);
 
-    // console.log(JSON.stringify(internals.query, null, 2));
+    console.log(JSON.stringify(internals.query, null, 2));
 
     elastic
       .search({

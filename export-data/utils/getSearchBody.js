@@ -89,7 +89,7 @@ module.exports = (obj) => {
             if(key == 'metalColour')
               key = 'metalColor'
             if(key == 'location')
-              key = 'site'
+              key = 'company'
             if(key == 'jewelryCategory')
               key = 'subType'
             if(key == 'watchCategory')

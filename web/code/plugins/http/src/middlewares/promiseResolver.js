@@ -60,7 +60,8 @@ export default function promiseMiddleware() {
           var ware = [];
           locationSelected.forEach(function(location) {
             data.warehouses.forEach(function(warehouse){
-              if(warehouse.locationid == location)
+            //   if(warehouse.locationid == location)
+              if(warehouse.comid == location)
                 ware.push(warehouse);
             });
             // ware.push(warehouses[0]);

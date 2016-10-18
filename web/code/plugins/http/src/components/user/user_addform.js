@@ -759,8 +759,8 @@ class UsersNewFrom extends Component {
                           <label className="col-sm-2 control-label">View Product Group</label>
                           <div className="col-sm-5">
                             <select className="form-control" {...productGroup} onClick={this.selectedProductGroup}>
-                              <option key={1} value={1}>{'All Prouct Group'}</option>
-                              <option key={2} value={2}>{'Some Prouct Group'}</option>
+                              <option key={1} value={1}>{'All Product Group'}</option>
+                              <option key={2} value={2}>{'Some Product Group'}</option>
                             </select>
                             <div id="checkboxlistProduct" className={`${this.state.hideProductGroups ? 'hiddenViewProductGroup' : ''}` }>
                               <div>
@@ -841,7 +841,7 @@ class UsersNewFrom extends Component {
                               <input type="checkbox" value="Location" {...onhandLocation}
                                 checked={this.state.selectedOnHandLocation}
                                 onChange={this.selectedOnHandLocation}
-                              /> All Site
+                              /> All Company
                               <div className="user-edit">
                                 <select multiple
                                   {...onhandLocationValue}
