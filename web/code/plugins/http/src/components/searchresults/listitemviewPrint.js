@@ -129,7 +129,7 @@ class ListItemsView extends Component {
         { title: 'Item Reference', prop: 'reference' },
         { title: 'Description', prop: 'itemName' },
         { title: 'SKU', prop: 'sku' },
-        { title: 'Location', prop: 'siteName' },
+        { title: 'Company', prop: 'companyName' },
         { title: 'Warehouse', prop: 'warehouseName' },
         { title: 'Size', prop: 'size' },
         { title: 'Jewelry Weight', prop: 'jewelsWeight' },
@@ -142,7 +142,7 @@ class ListItemsView extends Component {
         <div>
           <DataTable
             className="col-sm-12"
-            keys={['', 'image','reference', 'description', 'sku', 'siteName', 'warehouseName', 'size', '', 'grossWeight','priceUSD','' ]}
+            keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight','priceUSD','' ]}
             columns={tableColumns}
             initialData={items}
             initialPageLength={this.state.initialPageLength}

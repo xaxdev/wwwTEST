@@ -59,7 +59,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
         }
       }
 
-      titles.push('Gross Weight','Ring Size', 'Jewels Weight (text)','Site','company', 'Warehouse');
+      titles.push('Gross Weight','Ring Size', 'Jewels Weight (text)','Site','Company', 'Warehouse');
       if(fields.allFields){
         titles.push('Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color',
                     'Clarity','Carat Wt', 'Unit', 'Qty','Origin','Symmetry','Flourance','Batch','Net Weight',
