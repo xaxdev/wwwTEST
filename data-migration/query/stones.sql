@@ -38,8 +38,8 @@ SELECT item.[Id] AS 'id'
     , ISNULL(gemstone.[Type], '') AS 'gemstone_type'
     , ISNULL(gemstone.[Unit], '') AS 'gemstone_unit'
     , 'STO' AS 'type'
-    , ISNULL(stone.[Type],'') AS 'subType'
-    , ISNULL(stone.[Type],'') AS 'subTypeName'
+    , ISNULL(stone.[Name],'') AS 'subType'
+    , ISNULL(stone.[Name],'') AS 'subTypeName'
     , ISNULL(stone.[LotNumber],'') AS 'lotNumber'
     , ISNULL(stone.[Cut],'') AS 'cut'
     , ISNULL(stone.[CutName],'') AS 'cutName'
@@ -85,6 +85,6 @@ LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
 LEFT JOIN [ITORAMA].[dbo].[DominantStone] dominantstone
   ON dominantstone.[Code] = item.[DominantStone]
 LEFT JOIN [ITORAMA].[dbo].[Company] company
-  ON item.[Company] = company.[Code]  
+  ON item.[Company] = company.[Code]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]

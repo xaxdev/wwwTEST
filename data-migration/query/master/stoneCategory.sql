@@ -1,6 +1,6 @@
 SELECT DISTINCT
-  LTRIM(RTRIM([Type])) AS 'code',
-  LTRIM(RTRIM([Type])) AS 'name'
+  LTRIM(RTRIM([Name])) AS 'code',
+  LTRIM(RTRIM([Name])) AS 'name'
 FROM [ITORAMA].[dbo].[Stones]
-WHERE [Type] <> ''
+WHERE [Name] <> ''
 ORDER BY name
