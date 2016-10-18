@@ -63,7 +63,11 @@ export default function validate(values){
   }
   // console.log('result-->',result);
   if(result == 0){
-    errors.productGroupErr = 'Please selected some product group';
+      if (values.productGroup) {
+          if (Number(values.productGroup) != 1) {
+              errors.productGroupErr = 'Please selected some product group';
+          }
+      }
   }
 
   return errors;
