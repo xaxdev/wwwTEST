@@ -1,4 +1,4 @@
-export default function InitDataLocation(CompanyValue,userLogin){
+export default function InitDataCompany(CompanyValue,userLogin){
 
   var dataDropDowntCompanies = [];
   var newDate = [];
@@ -17,7 +17,7 @@ export default function InitDataLocation(CompanyValue,userLogin){
       })
     );
   }else{
-    dataDropDowntCompanies.push(LocationValue.map(company =>{
+    dataDropDowntCompanies.push(CompanyValue.map(company =>{
         // console.log('location-->',location);
         return ({value: company.code,label:company.code +' [' + company.name + ']'});
       })
