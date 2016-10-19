@@ -769,8 +769,8 @@ class GridItemsView extends Component {
                             <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{price}</span>
-                            <span className="width-f100 fc-ddbe6a font-b">Site : </span>
-                            <span className="width-f100">{item.siteName}</span>
+                            <span className="width-f100 fc-ddbe6a font-b">Company : </span>
+                            <span className="width-f100">{item.companyName}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
                             <span className="width-f100">{item.warehouseName}</span>
                             <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
