@@ -167,14 +167,14 @@ class InventoryHeader extends Component {
       if (this.props.props.options.warehouses) {
         var newDate = [];
         var data = [];
-        if(dataDropDowntLocations.length != 0){
-          dataDropDowntLocations.forEach(function(location){
-            newDate.push(_.filter(that.props.props.options.warehouses,
-              function(warehouse)
-              { return warehouse.comid == location.value})
-            );
-          });
-        }else{
+        // if(dataDropDowntLocations.length != 0){
+        //   dataDropDowntLocations.forEach(function(location){
+        //     newDate.push(_.filter(that.props.props.options.warehouses,
+        //       function(warehouse)
+        //       { return warehouse.comid == location.value})
+        //     );
+        //   });
+        // }else{
           if(userLogin.permission.onhandWarehouse != undefined){
             if (userLogin.permission.onhandWarehouse.type == 'Warehouse'
               || userLogin.permission.onhandWarehouse.type == 'All'){
@@ -190,7 +190,7 @@ class InventoryHeader extends Component {
               });
             }
           }
-        }
+        // }
 
         var subdata = [];
         newDate.forEach(newdata =>{

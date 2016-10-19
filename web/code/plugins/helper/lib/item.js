@@ -63,7 +63,8 @@ const applyPermission = (user, item) => {
         const actualCost = getPriceIn(currency)(item.actualCost) || -1
         const updatedCost = getPriceIn(currency)(item.updatedCost) || -1
         const price = getPriceIn(currency)(item.price) || -1
-        const result = { ...item, actualCost, updatedCost, price }
+        const priceInUSD = getPriceIn('USD')(item.price) || -1
+        const result = { ...item, actualCost, updatedCost, price, priceInUSD }
         result.gemstones.forEach(gemstone => delete gemstone.cost)
 
         switch (user.permission.price.toUpperCase()) {
