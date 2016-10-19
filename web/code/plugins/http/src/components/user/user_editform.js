@@ -616,7 +616,7 @@ class UserDetailsFrom extends Component {
             dataDropDowntLocations.forEach(function(location){
               newDate.push(_.filter(that.props.warehouseOnHand,
                 function(warehouse)
-                { return warehouse.locationid == location.value})
+                { return warehouse.comid == location.value})
               );
             });
           }else{
@@ -655,7 +655,7 @@ class UserDetailsFrom extends Component {
                         function(warehouse){
                           // console.log('warehouse.id-->',warehouse.id);
                           if(warehouse.code != undefined){
-                            return warehouse.locationid.toString() == settingLocation;
+                            return warehouse.comid.toString() == settingLocation;
                           }
                         })
                       );
