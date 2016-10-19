@@ -176,8 +176,7 @@ class InventoryHeader extends Component {
         //   });
         // }else{
           if(userLogin.permission.onhandWarehouse != undefined){
-            if (userLogin.permission.onhandWarehouse.type == 'Warehouse'
-              || userLogin.permission.onhandWarehouse.type == 'All'){
+            if (userLogin.permission.onhandWarehouse.type == 'Warehouse'){
               userLogin.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
                 newDate.push(_.filter(that.props.props.options.warehouses,
                   function(warehouse){
@@ -186,6 +185,24 @@ class InventoryHeader extends Component {
                       return warehouse.code.toString() == settingWarehouse;
                     }
                   })
+                );
+              });
+            }
+            if (userLogin.permission.onhandWarehouse.type == 'All'){
+            //   userLogin.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
+            //     newDate.push(_.filter(that.props.props.options.warehouses,
+            //       function(warehouse){
+            //         // console.log('warehouse.id-->',warehouse.id);
+            //         if(warehouse.code != undefined){
+            //           return warehouse.code.toString() == settingWarehouse;
+            //         }
+            //       })
+            //     );
+            //   });
+              dataDropDowntLocations.forEach(function(location){
+                newDate.push(_.filter(that.props.props.options.warehouses,
+                  function(warehouse)
+                  { return warehouse.comid == location.value})
                 );
               });
             }
