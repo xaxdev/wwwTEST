@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select';
 import InitDataLocation from '../../utils/initDataLocation';
+import InitDataCompany from '../../utils/initDataCompany';
 import InitModifyData from '../../utils/initModifyData';
 import * as xls from '../../utils/xls';
 import jQuery from 'jquery';
@@ -127,12 +128,22 @@ class InventoryHeader extends Component {
     var dataDropDowntDominantStone = [];
     var that = this;
 
+    // if(userLogin.permission.onhandLocation != undefined){
+    //   if(userLogin.permission.onhandLocation.type == 'Location'
+    //     || userLogin.permission.onhandLocation.type == 'All'){
+    //     if (this.props.props.options != undefined){
+    //       if (this.props.props.options.locations) {
+    //         dataDropDowntLocations = InitDataLocation(this.props.props.options.locations,userLogin);
+    //       }
+    //     }
+    //   }
+    // }
     if(userLogin.permission.onhandLocation != undefined){
       if(userLogin.permission.onhandLocation.type == 'Location'
         || userLogin.permission.onhandLocation.type == 'All'){
         if (this.props.props.options != undefined){
-          if (this.props.props.options.locations) {
-            dataDropDowntLocations = InitDataLocation(this.props.props.options.locations,userLogin);
+          if (this.props.props.options.companies) {
+            dataDropDowntLocations = InitDataCompany(this.props.props.options.companies,userLogin);
           }
         }
       }
@@ -160,7 +171,7 @@ class InventoryHeader extends Component {
           dataDropDowntLocations.forEach(function(location){
             newDate.push(_.filter(that.props.props.options.warehouses,
               function(warehouse)
-              { return warehouse.locationid == location.value})
+              { return warehouse.comid == location.value})
             );
           });
         }else{
@@ -236,11 +247,11 @@ class InventoryHeader extends Component {
                       </div>
                       <div className={`form-group ${(userLogin.permission.onhandLocation != undefined) ? '' :
                                         'hidden'}` }>
-                        <label className="col-sm-4 control-label">Site</label>
+                        <label className="col-sm-4 control-label">Company</label>
                         <div className= "col-sm-7">
                           <Select multi simpleValue
                               value={this.props.props.LocationValue}
-                              placeholder="Select your Site"
+                              placeholder="Select your Company"
                               options={dataDropDowntLocations}
                               onChange={this.handleLocationSelectChange}
                               disabled={(userLogin.permission.onhandLocation != undefined) ? false : true}

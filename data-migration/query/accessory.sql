@@ -3,6 +3,7 @@ SELECT item.[Id] AS 'id'
     , item.[Name] AS 'name'
     , item.[DESCRIPTION] AS 'description'
     , UPPER(item.[Company]) AS 'company'
+    , ISNULL(company.[Name], '') AS 'companyName'
     , item.[WAREHOUSE] AS 'warehouse'
     , item.[WarehouseName] AS 'warehouseName'
     , item.[Site] AS 'site'
@@ -82,5 +83,7 @@ LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
   AND item.[Company] = certmaster.[Company]
 LEFT JOIN [ITORAMA].[dbo].[DominantStone] dominantstone
   ON dominantstone.[Code] = item.[DominantStone]
+LEFT JOIN [ITORAMA].[dbo].[Company] company
+  ON item.[Company] = company.[Code]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]

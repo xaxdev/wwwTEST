@@ -6,8 +6,10 @@ export default function InitDataLocation(LocationValue,userLogin){
   if(userLogin.permission.onhandLocation.places.length != 0){
     userLogin.permission.onhandLocation.places.map(place =>{
       newDate.push(_.filter(LocationValue,
-        function(location)
-        { return location.code == place}));
+        // function(location)
+        // { return location.code == place}));
+        function(company)
+        { return company.comid == place}));
     });
     dataDropDowntLocations.push(newDate.map(location =>{
         // console.log('location-->',location);

@@ -6,7 +6,9 @@ const internals = {
 };
 
 module.exports = {
-  auth: false,
+  auth: {
+    strategy: 'authentication'
+  },
   handler: (request, reply) => {
 
     const elastic = request.server.plugins.elastic.client;

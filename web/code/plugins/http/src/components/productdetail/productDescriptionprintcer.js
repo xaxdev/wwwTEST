@@ -36,8 +36,8 @@ const Detail = (props) =>{
           <div style={styles.colmd5}>{convertBlanktodash(props.name)}</div>
         </div>
         <div style={styles.colmd12}>
-          <div style={styles.colmd5}>Site</div>
-          <div style={styles.colmd5}>{convertBlanktodash(props.siteName)}</div>
+          <div style={styles.colmd5}>Company</div>
+          <div style={styles.colmd5}>{convertBlanktodash(props.companyName)}</div>
         </div>
         <div style={styles.colmd12}>
           <div style={styles.colmd5}>Warehouse</div>

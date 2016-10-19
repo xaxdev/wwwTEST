@@ -51,8 +51,8 @@ const Detail = (props) =>{
           <div className="col-md-8 col-sm-8">{markUp}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
-          <div className="col-md-4 col-sm-4 nopadding font-b">Site</div>
-          <div className="col-md-8 col-sm-8">{props.siteName}</div>
+          <div className="col-md-4 col-sm-4 nopadding font-b">Company</div>
+          <div className="col-md-8 col-sm-8">{props.companyName}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Warehouse</div>
