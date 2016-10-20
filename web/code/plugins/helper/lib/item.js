@@ -80,11 +80,14 @@ const applyPermission = (user, item) => {
         switch (user.permission.price.toUpperCase()) {
             case "PUBLIC":
                 delete result.actualCost
+                delete result.actualCostInUSD
                 delete result.updatedCost
+                delete result.updatedCostInUSD
                 delete result.markup
                 break;
             case "UPDATED":
                 delete result.actualCost
+                delete result.actualCostInUSD
                 break;
         }
         return result
