@@ -67,6 +67,7 @@ const applyPermission = (user, item) => {
         const price = getPriceIn(currency)(item.price) || -1
         const priceInUSD = getPriceIn('USD')(item.price) || -1
         const priceInHomeCurrency = getPriceIn(item.currency)(item.price) || -1
+        const userCurrency = user.currency
         const result = {
             ...item,
             actualCost,
@@ -75,7 +76,8 @@ const applyPermission = (user, item) => {
             updatedCostInUSD,
             price,
             priceInUSD,
-            priceInHomeCurrency
+            priceInHomeCurrency,
+            userCurrency
         }
         result.gemstones.forEach(gemstone => delete gemstone.cost)
 
