@@ -46,6 +46,10 @@ module.exports = {
             }
 
             if (iPad) {
+                if (user.webOnly) {
+                    return reply(Boom.badRequest('Not authorized to use on iPad.'));
+                }
+
                 if (version > 0 && version < release.iPad) {
                     return reply(Boom.badRequest('Version is not latest.'));
                 }
