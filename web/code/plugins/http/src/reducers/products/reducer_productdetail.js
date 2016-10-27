@@ -1,5 +1,6 @@
 import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,FETCH_SETREFERENCE} from '../../constants/productdetailconstants';
-const INITIAL_STATE = {detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1,setreference:''};
+import { GET_CATALOGNAME} from '../../constants/itemconstants';
+const INITIAL_STATE = {detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1,setreference:'',ListCatalogName: []};
 
 
 export default function(state = INITIAL_STATE,action){
@@ -14,6 +15,8 @@ export default function(state = INITIAL_STATE,action){
         return {...state,relete:action.data,reletepage:action.page}
       case FETCH_SETREFERENCE:
         return {...state,setreference:action.data}
+      case GET_CATALOGNAME :
+        return {...state, ListCatalogName: action.data };
       default:
         return state;
     }
@@ -23,7 +26,6 @@ const findproductindex = (productlist, productid) => {
 
     for(let i = 0; i < productlist.length; i++)
     {
-
        if(productlist[i].id == productid){
          return i
        }

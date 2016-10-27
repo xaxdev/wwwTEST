@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE} from '../constants/productdetailconstants';
+import { GET_CATALOGNAME} from '../constants/itemconstants';
 // const fakeApiurl = 'http://localhost:4500/jewelry/';
 
 export function getProductDetail(productId,productlist){
@@ -49,5 +50,23 @@ export function getSetreference(setreference,productId){
         },
         method:'GET'
       })
+  }
+}
+
+export function getCatalogName(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}api/catalog/names`;
+  // console.log('getItems-->',url);
+
+  return {
+          type: GET_CATALOGNAME,
+    		  promise: fetch(url,{
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          })
   }
 }

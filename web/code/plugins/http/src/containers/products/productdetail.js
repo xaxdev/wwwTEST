@@ -10,7 +10,7 @@ import ProductDescriptioncerBlock from '../../components/productdetail/productDe
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
-
+import ModalMyCatalog from '../../utils/modalMyCatalog';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
 import ProductPrint from '../../components/productdetail/productPrint';
@@ -25,6 +25,7 @@ import ProductGemstoneAttributes from '../../components/productdetail/productGem
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributes';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributes';
 import ReactImageFallback from "react-image-fallback";
+import { Modal, ModalClose } from 'react-modal-bootstrap';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
@@ -41,7 +42,8 @@ class productdetail extends Component {
     this.handleGo = this.handleGo.bind(this);
 
     this.state = {
-      productdetailLoading: false
+      productdetailLoading: false,
+      isOpenAddMyCatalog: false
     };
   }
 
@@ -62,7 +64,7 @@ class productdetail extends Component {
         this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
         }
       }
-
+      this.props.getCatalogName();
       this.setState({
         productdetailLoading: false
       });
@@ -186,12 +188,23 @@ class productdetail extends Component {
         if(Detail.dominant){
         this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
        }
+       this.props.getCatalogName();
         this.setState({
           productdetailLoading: false
         });
       });
     }
   }
+
+  addMyCatalog = _=>{
+      this.setState({isOpenAddMyCatalog: true});
+  }
+  handleClose= _=>{
+      console.log(this);
+      this.setState({isOpenAddMyCatalog: false});
+
+  }
+
   renderDesc(){
 
     const  Detail  = this.props.productdetail;
@@ -612,6 +625,60 @@ class productdetail extends Component {
         }
    }
 
+   renderAddMyCatalog = _=> {
+       const { listCatalogName,
+                submitting } = this.props;
+     //   console.log('listCatalogName-->',listCatalogName);
+       if(listCatalogName.length != 0){
+           return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
+               isClose={this.handleClose}/>);
+       }else{
+           return(
+             <div>
+             <div  className="addMyCatalog">
+               <Modal isOpen={this.state.isOpenAddMyCatalog} onRequestHide={this.hideModalAddMyCatalog}>
+                 <div className="modal-header">
+                   <ModalClose onClick={this.hideModalAddMyCatalog}/>
+                   <h1 className="modal-title">ADD TO CATALOG</h1>
+                 </div>
+                 <div className="modal-body">
+                   Add this item to:
+                   <br/>
+                   <div className="col-sm-12">
+                     <div className="col-sm-6">
+                         <label className="col-sm-6 control-label">Catalog exits</label>
+                     </div>
+                     <div className="col-sm-6">
+                         <select className="form-control" >
+                           <option key={''} value={''}>{'Please selected'}</option>
+                         </select>
+                     </div>
+                   </div>
+                   <div className="col-md-12">
+                       <div className="col-sm-6">
+                           <label className="col-sm-6 control-label">Or New Catalog</label>
+                       </div>
+                       <div className="col-sm-6">
+                           <input type="text" className="form-control" />
+                       </div>
+                   </div>
+                 </div>
+                 <div className="modal-footer">
+                     <button className="btn btn-default btn-radius" onClick={this.confirmAddMyCatalog}>
+                         Submit
+                     </button>
+                     <button className="btn btn-default btn-radius" onClick={this.hideModalAddMyCatalog}>
+                         Close
+                     </button>
+                 </div>
+               </Modal>
+               </div>
+              </div>
+           );
+       }
+
+   }
+
     handleGo(data){
       //e.preventDefault();
       const productId = this.props.params.id;
@@ -680,13 +747,14 @@ class productdetail extends Component {
           <br/><br/><br/><br/><br/><br/>
         </div>
         <div className="row">
-
+        {this.renderAddMyCatalog()}
           <div className="col-sm-12">
               <div className="panel panel-default">
                   <div className="panel-body padding-ft0">
 
                 <div className="col-md-12 col-sm-12 icon-detail">
                   <a><div className="icon-add margin-l10"></div></a>
+                  <a><div className="icon-print margin-l10" onClick={ this.addMyCatalog }></div></a>
                   <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                   {this.zoomicon()}
                 </div>
@@ -734,6 +802,7 @@ function mapStateToProps(state) {
     productindex: state.productdetail.index,
     productindexplus: state.productdetail.indexplus,
     productrelete: state.productdetail.relete,
+    listCatalogName: state.productdetail.ListCatalogName,
     //setreference:state.productdetail.setreference,
     //productreletepage: state.productdetail.reletepage,
     productlist:state.productdetail.productlist
