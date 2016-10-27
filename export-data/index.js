@@ -252,6 +252,37 @@ const Confidence = require('confidence');
                                               }
                                           }
                                       }
+                                  }else{
+                                      let pathImage = '';
+
+                                      if (item[0] != '') {
+                                        let arrImages = item[0].split("/").slice(-1).pop();
+                                        //   pathImage = '/var/www/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                        // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                        pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
+                                      }else{
+                                        pathImage = './images/blank.gif';
+                                      }
+
+                                      ws.column(1).setWidth(35);
+                                      ws.row(row).setHeight(250);
+                                      let isExist = fileExists(pathImage);
+                                      if (!isExist) {
+                                          pathImage = './images/blank.gif';
+                                      }
+                                      ws.addImage({
+                                          path: pathImage,
+                                          type: 'picture',
+                                          position: {
+                                              type: 'oneCellAnchor',
+                                              from: {
+                                                  col: 1,
+                                                  colOff: '0.0in',
+                                                  row: row,
+                                                  rowOff: 0
+                                              }
+                                          }
+                                      });
                                   }
                               }
                           };
