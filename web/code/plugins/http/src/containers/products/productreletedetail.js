@@ -20,6 +20,11 @@ import ProductSpaAttributes from '../../components/productdetail/productSppAttri
 import Setreference from '../../components/productdetail/productset';
 import numberFormat from '../../utils/convertNumberformatwithcomma';
 
+import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
+import Modalalertmsg from '../../components/productdetail/modalalertmsg';
+import { Modal, ModalClose } from 'react-modal-bootstrap';
+import validateCatalog from '../../utils/validatecatalogproductdetail';
+
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributes';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributes';
 import ReactImageFallback from "react-image-fallback";
@@ -42,7 +47,9 @@ class productreletedetail extends Component {
     this.handleGo = this.handleGo.bind(this);
     this.handleKeyChangeNavigation = this.handleKeyChangeNavigation.bind(this);
     this.state = {
-      productdetailLoading: false
+      productdetailLoading: false,
+      isOpenAddMyCatalog: false,
+      isOpenAddMyCatalogmsg: false
     };
   }
 
@@ -589,6 +596,70 @@ class productreletedetail extends Component {
          );
   }
 
+  addMyCatalog = _=>{
+
+    this.props.getCatalogName().then(() =>{
+      const { fields: {
+                oldCatalogName,newCatalogName,validateCatalogName
+            } } = this.props;
+
+            oldCatalogName.value = ''
+            newCatalogName.value = ''
+        this.setState({isOpenAddMyCatalog: true});
+    })
+  }
+  handleClose= _=>{
+      this.setState({isOpenAddMyCatalog: false});
+  }
+
+  handleSubmitCatalog = (e)=>{
+      e.preventDefault();
+      this.setState({isOpenAddMyCatalog: false});
+      const { fields: {
+                oldCatalogName,newCatalogName,validateCatalogName
+            } } = this.props;
+      const  Detail  = this.props.productdetail;
+      const  listCatalogName  = this.props.listCatalogName;
+      let oldCatalogTitle = ''
+      if (oldCatalogName.value) {
+         oldCatalogTitle = listCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
+      }
+
+      const catalogdata = {
+         id:!!oldCatalogName.value ? oldCatalogName.value:null,
+         catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
+         items:[
+            {
+               id:Detail.id,
+               reference:Detail.reference,
+               description:Detail.description
+            }
+         ]
+      }
+      this.props.addCatalog(catalogdata).then( () =>{
+         this.setState({isOpenAddMyCatalogmsg: true});
+      })
+  }
+
+  handleClosemsg = _=>{
+      this.setState({isOpenAddMyCatalogmsg: false});
+  }
+
+  renderAddMyCatalog = _=> {
+      const { listCatalogName,
+               submitting } = this.props;
+
+     return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
+         isClose={this.handleClose} props={this.props}/>);
+  }
+
+  renderAlertmsg = _=> {
+
+    const { message } = this.props;
+    return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}/>);
+  }
+
+
   render(){
     const { totalpage,products,page } = this.props.productrelete;
     const reletepage = this.props.productreletepage;
@@ -613,12 +684,14 @@ class productreletedetail extends Component {
           <br/><br/><br/><br/><br/><br/>
         </div>
         <div className="row">
-
+        {this.renderAddMyCatalog()}
+        {this.renderAlertmsg()}
           <div className="col-sm-12">
               <div className="panel panel-default">
                   <div className="panel-body padding-ft0">
                         <div className="col-md-12 col-sm-12 icon-detail">
                           <a><div className="icon-add margin-l10"></div></a>
+                          <a><div className="icon-print margin-l10" onClick={ this.addMyCatalog }></div></a>
                           <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                           {this.zoomicon()}
                         </div>
@@ -661,11 +734,14 @@ function mapStateToProps(state) {
     initialValues: state.productdetail,
     productdetail: state.productdetail.detail,
     productrelete: state.productdetail.relete,
+    listCatalogName: state.productdetail.ListCatalogName,
+    message: state.productdetail.message
     //setreference:state.productdetail.setreference
     //productreletepage: state.productdetail.reletepage
    }
 }
 module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
   form: 'Pageform',
-  fields: ['reletepage']
+  fields: ['reletepage','oldCatalogName','newCatalogName','validateCatalogName'],
+  validate:validateCatalog
 },mapStateToProps,gemstoneattrdetailaction)(productreletedetail)
