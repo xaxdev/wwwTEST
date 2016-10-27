@@ -1,5 +1,7 @@
 import config from '../../../config';
 
+const sanitize = value => value.replace('(', '\\(').replace(')', '\\)').replace('.', '\\.');
+
 const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_cutName', 'gemstone_color', 'gemstone_colorName', 'gemstone_clarity', 'gemstone_clarityName', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence', 'gemstone_stoneTypeId', 'gemstone_stoneTypeName', 'gemstone_type', 'gemstone_unit'];
 
 const mapProperties = (item, record, exchangeRates) => {
@@ -67,7 +69,7 @@ const mapProperties = (item, record, exchangeRates) => {
     }
 
     // add image, if not existed
-    if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(`${record.imageName}.${record.imageType}$`)) !== null) === -1) {
+    if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
         const image = {
             original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
             thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
@@ -91,7 +93,7 @@ const mapProperties = (item, record, exchangeRates) => {
                     certificate.images = [];
                 }
 
-                if (certificate.images.findIndex(image => image.original.match(new RegExp(`${record.CertificateImageName}.${record.CertificateImageType}$`)) !== null) === -1) {
+                if (certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${record.CertificateImageName}.${record.CertificateImageType}$`))) !== null) === -1) {
                     certificate.images.push(image);
                 }
             }
@@ -103,7 +105,7 @@ const mapProperties = (item, record, exchangeRates) => {
                     gemstone.certificate.images = [];
                 }
 
-                if (gemstone.certificate.images.findIndex(image => image.original.match(new RegExp(`${record.CertificateImageName}.${record.CertificateImageType}$`)) !== null) === -1) {
+                if (gemstone.certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${record.CertificateImageName}.${record.CertificateImageType}$`))) !== null) === -1) {
                     gemstone.certificate.images.push(image);
                 }
             }
