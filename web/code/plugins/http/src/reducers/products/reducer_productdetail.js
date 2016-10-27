@@ -14,7 +14,6 @@ export default function(state = INITIAL_STATE,action){
       case FETCH_PRODUCTRELETED:
         return {...state,relete:action.data,reletepage:action.page}
       case ADD_CATALOG:
-        console.log(action.data);
         return {...state,message: action.data.statusCode >= 400? action.data.message: ADD_CATALOG_SUCCESS}
       case FETCH_SETREFERENCE:
         return {...state,setreference:action.data}

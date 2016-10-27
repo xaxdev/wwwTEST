@@ -29,7 +29,6 @@ class ModalMyCatalog extends Component {
     const { fields: {
               oldCatalogName,newCatalogName,validateCatalogName
           } } = props;
-    console.log(oldCatalogName.value);
   }
 
   render() {
