@@ -276,7 +276,7 @@ const Confidence = require('confidence');
                                 emailBody = emailBody + `${number}. ${name} (${obj.ROOT_URL}/export_files/${name})\n`;
                                 number++;
                             });
-                            emailBody = `Please download file follow as below link.\n` + emailBody;
+                            emailBody = `Please download the files from below link .\n` + emailBody;
                             // console.log('write file successfully');
                             client.close();
                             await notify('');
