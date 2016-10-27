@@ -129,12 +129,15 @@ const Confidence = require('confidence');
        const q = config.rabbit.channel;
        const connection = await amqp.connect(config.rabbit.url);
        const channel = await connection.createChannel();
-       await channel.assertQueue(q);
+       let TotalQueue = await channel.assertQueue(q);
+       console.log('Total Queue-->',TotalQueue.messageCount);
+
        channel.prefetch(1);
     //    const msg = await consume(channel, q)
-
         console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
         channel.consume(q, async msg => {
+            let queue = await channel.assertQueue(q);
+            console.log('queue-->',queue.messageCount);
             // channel.ack(msg)
             if (msg !== null) {
                 const obj = JSON.parse(msg.content.toString());
