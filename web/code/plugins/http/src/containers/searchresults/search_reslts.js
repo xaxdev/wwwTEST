@@ -19,6 +19,7 @@ import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 import ModalMyCatalog from '../../utils/modalMyCatalog';
 import moment from 'moment';
 import convertDate from '../../utils/convertDate';
+import validateCatalog from '../../utils/validatecatalog';
 
 // let XLSX = require('xlsx')
 
@@ -1242,12 +1243,18 @@ class SearchResult extends Component {
       this.setState({isOpenAddMyCatalog: true});
   }
   handleClose= _=>{
-      console.log(this);
+    //   console.log(this);
       this.setState({isOpenAddMyCatalog: false});
 
   }
-  handleSubmitCatalog(data) {
-    console.log('submit-->',data);
+  handleSubmitCatalog = (e)=>{
+      e.preventDefault();
+      this.setState({isOpenAddMyCatalog: false});
+      const { fields: {
+                oldCatalogName,newCatalogName,validateCatalogName
+            } } = this.props;
+      console.log('submit oldCatalogName-->',oldCatalogName.value);
+      console.log('submit newCatalogName-->',newCatalogName.value);
   }
   renderAddMyCatalog = _=> {
       const { listCatalogName,
@@ -1255,52 +1262,8 @@ class SearchResult extends Component {
     //   console.log('listCatalogName-->',listCatalogName);
       if(listCatalogName.length != 0){
           return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
-              isClose={this.handleClose}/>);
-      }else{
-          return(
-            <div>
-            <div  className="addMyCatalog">
-              <Modal isOpen={this.state.isOpenAddMyCatalog} onRequestHide={this.hideModalAddMyCatalog}>
-                <div className="modal-header">
-                  <ModalClose onClick={this.hideModalAddMyCatalog}/>
-                  <h1 className="modal-title">ADD TO CATALOG</h1>
-                </div>
-                <div className="modal-body">
-                  Add this item to:
-                  <br/>
-                  <div className="col-sm-12">
-                    <div className="col-sm-6">
-                        <label className="col-sm-6 control-label">Catalog exits</label>
-                    </div>
-                    <div className="col-sm-6">
-                        <select className="form-control" >
-                          <option key={''} value={''}>{'Please selected'}</option>
-                        </select>
-                    </div>
-                  </div>
-                  <div className="col-md-12">
-                      <div className="col-sm-6">
-                          <label className="col-sm-6 control-label">Or New Catalog</label>
-                      </div>
-                      <div className="col-sm-6">
-                          <input type="text" className="form-control" />
-                      </div>
-                  </div>
-                </div>
-                <div className="modal-footer">
-                    <button className="btn btn-default btn-radius" onClick={this.confirmAddMyCatalog}>
-                        Submit
-                    </button>
-                    <button className="btn btn-default btn-radius" onClick={this.hideModalAddMyCatalog}>
-                        Close
-                    </button>
-                </div>
-              </Modal>
-              </div>
-             </div>
-          );
+              isClose={this.handleClose} props={this.props}/>);
       }
-
   }
   hideModalAddMyCatalog = (e) => {
     e.preventDefault();
@@ -1310,11 +1273,13 @@ class SearchResult extends Component {
   confirmAddMyCatalog = (e) => {
     e.preventDefault();
 
-    console.log('hi');
+    // console.log('hi');
     this.setState({isOpenAddMyCatalog: false});
   }
   render() {
-    const { totalPages,showGridView,showListView,
+    const { fields: {
+              oldCatalogName,newCatalogName,validateCatalogName
+            }, totalPages,showGridView,showListView,
              currentPage,allItems,pageSize,
              items,totalPublicPrice,totalUpdatedCost,
              handleSubmit,
@@ -1600,5 +1565,6 @@ SearchResult.contextTypes = {
 };
 module.exports = reduxForm({
   form: 'SearchResult',
-  fields: [ 'currPage' ]
+  fields: [ 'currPage','oldCatalogName','newCatalogName','validateCatalogName' ],
+  validate:validateCatalog
 },mapStateToProps,itemactions)(SearchResult)

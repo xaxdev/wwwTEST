@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import { reduxForm } from 'redux-form';
-import validateCatalog from './validatecatalog';
+// import validateCatalog from './validatecatalog';
 let _ = require('lodash');
 
 class ModalMyCatalog extends Component {
@@ -15,7 +15,7 @@ class ModalMyCatalog extends Component {
 
   hideModalAddMyCatalog = (e) => {
     e.preventDefault();
-console.log('hi');
+    // console.log('hi');
     // this.setState({isOpenAddMyCatalog: false});
     let { isOpen } = this.props;
 
@@ -24,13 +24,14 @@ console.log('hi');
   }
 
   render() {
-    // console.log(this.state.isOpenAddMyCatalog);
+    const { props } = this.props;
+    // console.log('props-->',props);
     const { fields: {
               oldCatalogName,newCatalogName,validateCatalogName
-          },listCatalogName,isOpen, isClose, handleSubmitCatalog } = this.props;
-    console.log('validateCatalogName-->',validateCatalogName.error);
+          } } = props;
+    const { listCatalogName,isOpen, isClose, handleSubmitCatalog, onSubmit } = this.props;
+    // console.log('validateCatalogName-->',validateCatalogName.error);
     return(
-        <form onSubmit={handleSubmitCatalog}>
           <div  className="addMyCatalog">
             <Modal isOpen={isOpen} >
               <div className="modal-header">
@@ -65,7 +66,7 @@ console.log('hi');
                 </div>
               </div>
               <div className="modal-footer">
-                  <button type="submit" className="btn btn-default btn-radius" disabled={!validateCatalogName.error} onClick={this.confirmAddMyCatalog}>
+                  <button type="button" className="btn btn-default btn-radius" disabled={!validateCatalogName.error} onClick={onSubmit}>
                       Submit
                   </button>
                   <button type="button" className="btn btn-default btn-radius" onClick={isClose}>
@@ -74,13 +75,7 @@ console.log('hi');
               </div>
             </Modal>
           </div>
-        </form>
     );
   }
 }
-
-module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
-  form: 'SearchResult',
-  fields: ['oldCatalogName','newCatalogName','validateCatalogName'],
-  validate:validateCatalog
-},null)(ModalMyCatalog);
+module.exports = ModalMyCatalog;
