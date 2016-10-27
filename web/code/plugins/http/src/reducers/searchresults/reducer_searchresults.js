@@ -1,5 +1,5 @@
 import { FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE,
-          SET_PAGESIZE,SET_SORTBY,SET_SORTDIRECTION,SET_SHOWGRIDVIEW,SET_SHOWLISTVIEW
+          SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, GET_CATALOGNAME
         } from '../../constants/itemconstants';
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY,
           SET_CERTIFICATELAB, SET_POLISH, SET_SYMMETRY, SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN, SET_JEWELRYCATEGORY, SET_COLLECTION,
@@ -17,12 +17,13 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                         CollectionValue:[], BrandValue:[], MustHaveValue:[], RingSizeValue:[], DominantStoneValue:[], MetalTypeValue:[],
                         MetalColourValue:[], CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[],
                         StrapTypeValue:[], BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[], DialIndexValue:[],
-                        MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[], activeTabCategory:1,allItems:[],
-                        filters:[], AccessoryTypeValue:[],SparePartTypeValue:[], paramsSearch:null,IsAdvance:false,
-                        HierarchyValue:null,SearchAction:'New',exportItems:[],maxPrice:null,minPrice:null,avrgPrice:null,
-                        GemCertificateDateFrom:null,GemCertificateDateTo:null,StoneCertificateDateFrom:null,
-                        StoneCertificateDateTo:null,ProductionDateFrom:null,ProductionDateTo:null,PageSize:16,
-                        SortingBy:'itemCreatedDate',SortDirection:'desc',ShowGridView: true,ShowListView: false
+                        MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[], activeTabCategory:1, allItems:[],
+                        filters:[], AccessoryTypeValue:[], SparePartTypeValue:[], paramsSearch:null, IsAdvance:false,
+                        HierarchyValue:null, SearchAction:'New', exportItems:[], maxPrice:null, minPrice:null, avrgPrice:null,
+                        GemCertificateDateFrom:null, GemCertificateDateTo:null, StoneCertificateDateFrom:null,
+                        StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16,
+                        SortingBy:'itemCreatedDate', SortDirection:'desc', ShowGridView: true, ShowListView: false,
+                        ListCatalogName: []
                       };
 
   export default function(state = INITIAL_STATE, action){
@@ -36,13 +37,17 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 BrandValue:[], MustHaveValue:[], RingSizeValue:[], DominantStoneValue:[], MetalTypeValue:[], MetalColourValue:[],
                 CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[],
                 BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[],
-                LimitedEditionValue:[], WatchCategoryValue:[],filters:[], AccessoryTypeValue:[], paramsSearch:null,
-                SparePartTypeValue:[],SearchAction:'New',GemCertificateDateFrom:null,GemCertificateDateTo:null,
-                StoneCertificateDateFrom:null,StoneCertificateDateTo:null,ProductionDateFrom:null,ProductionDateTo:null
+                LimitedEditionValue:[], WatchCategoryValue:[], filters:[], AccessoryTypeValue:[], paramsSearch:null,
+                SparePartTypeValue:[], SearchAction:'New', GemCertificateDateFrom:null, GemCertificateDateTo:null,
+                StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null,
+                ListCatalogName: []
               };
       case SET_SHOWGRIDVIEW :
         // console.log('SET_POLISH -->',action);
         return {...state, ShowGridView: action.showGridView };
+      case GET_CATALOGNAME :
+        // console.log('action.data-->',action.data);
+        return {...state, ListCatalogName: action.data };
       case SET_SHOWLISTVIEW :
         // console.log('SET_POLISH -->',action);
         return {...state, ShowListView: action.showListView };
@@ -201,10 +206,10 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[],
                 BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[],
                 LimitedEditionValue:[], WatchCategoryValue:[], currentPage:1,datas:null,allItems:[], totalpage:null,
-                totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[],SparePartTypeValue:[],SearchAction:'New',
-                exporttems:[],maxPrice:null,minPrice:null,avrgPrice:null,GemCertificateDateFrom:null,
-                GemCertificateDateTo:null,StoneCertificateDateFrom:null,StoneCertificateDateTo:null,ProductionDateFrom:null,
-                ProductionDateTo:null,PageSize:16,ShowGridView: true,showListView: false
+                totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[], SparePartTypeValue:[], SearchAction:'New',
+                exporttems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null,
+                GemCertificateDateTo:null, StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null,
+                ProductionDateTo:null, PageSize:16, ShowGridView: true, showListView: false, ListCatalogName: []
               }
       case SET_PARAMS:
         // console.log('action.params-->',action.params);

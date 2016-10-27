@@ -16,6 +16,7 @@ import ListItemsView from '../../components/searchresults/listitemview';
 import ListItemsViewPrint from '../../components/searchresults/listitemviewPrint';
 import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
+import ModalMyCatalog from '../../utils/modalMyCatalog';
 import moment from 'moment';
 import convertDate from '../../utils/convertDate';
 
@@ -86,6 +87,7 @@ class SearchResult extends Component {
     this.hideModalNoResults = this.hideModalNoResults.bind(this);
     this.printResults = this.printResults.bind(this);
     this.selectedPageSize = this.selectedPageSize.bind(this);
+    this.addMyCatalog = this.addMyCatalog.bind(this);
 
     // console.log('this.props.items-->',this.props.searchResult.datas);
 
@@ -136,7 +138,8 @@ class SearchResult extends Component {
       serial: false,
       limitedEdition: false,
       limitedEditionNumber: false,
-      showLoading: false
+      showLoading: false,
+      isOpenAddMyCatalog: false
     };
   }
   componentWillMount() {
@@ -194,7 +197,11 @@ class SearchResult extends Component {
       // this.props.setShowGridView(true);
       // this.props.setShowListView(false);
       this.props.setParams(paramsSearchStorage)
-      this.props.getItems(params);
+      this.props.getItems(params)
+      .then((value) => {
+          this.props.getCatalogName();
+      });
+
   }
   componentDidMount() {
 
@@ -1231,7 +1238,81 @@ class SearchResult extends Component {
       );
     }
   }
+  addMyCatalog = _=>{
+      this.setState({isOpenAddMyCatalog: true});
+  }
+  handleClose= _=>{
+      console.log(this);
+      this.setState({isOpenAddMyCatalog: false});
 
+  }
+  handleSubmitCatalog(data) {
+    console.log('submit-->',data);
+  }
+  renderAddMyCatalog = _=> {
+      const { listCatalogName,
+               submitting } = this.props;
+    //   console.log('listCatalogName-->',listCatalogName);
+      if(listCatalogName.length != 0){
+          return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
+              isClose={this.handleClose}/>);
+      }else{
+          return(
+            <div>
+            <div  className="addMyCatalog">
+              <Modal isOpen={this.state.isOpenAddMyCatalog} onRequestHide={this.hideModalAddMyCatalog}>
+                <div className="modal-header">
+                  <ModalClose onClick={this.hideModalAddMyCatalog}/>
+                  <h1 className="modal-title">ADD TO CATALOG</h1>
+                </div>
+                <div className="modal-body">
+                  Add this item to:
+                  <br/>
+                  <div className="col-sm-12">
+                    <div className="col-sm-6">
+                        <label className="col-sm-6 control-label">Catalog exits</label>
+                    </div>
+                    <div className="col-sm-6">
+                        <select className="form-control" >
+                          <option key={''} value={''}>{'Please selected'}</option>
+                        </select>
+                    </div>
+                  </div>
+                  <div className="col-md-12">
+                      <div className="col-sm-6">
+                          <label className="col-sm-6 control-label">Or New Catalog</label>
+                      </div>
+                      <div className="col-sm-6">
+                          <input type="text" className="form-control" />
+                      </div>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                    <button className="btn btn-default btn-radius" onClick={this.confirmAddMyCatalog}>
+                        Submit
+                    </button>
+                    <button className="btn btn-default btn-radius" onClick={this.hideModalAddMyCatalog}>
+                        Close
+                    </button>
+                </div>
+              </Modal>
+              </div>
+             </div>
+          );
+      }
+
+  }
+  hideModalAddMyCatalog = (e) => {
+    e.preventDefault();
+
+    this.setState({isOpenAddMyCatalog: false});
+  }
+  confirmAddMyCatalog = (e) => {
+    e.preventDefault();
+
+    console.log('hi');
+    this.setState({isOpenAddMyCatalog: false});
+  }
   render() {
     const { totalPages,showGridView,showListView,
              currentPage,allItems,pageSize,
@@ -1406,7 +1487,8 @@ class SearchResult extends Component {
                         <div className="col-sm-12 ">
                           <div className="col-md-2 col-sm-3 col-xs-12 nopadding">
 
-                            <a><div className="icon-add margin-l10"></div></a>
+                            <a><div className="icon-excel margin-l10" disabled={submitting}
+                                onClick={ this.addMyCatalog }></div></a>
                             <a><div className="icon-excel margin-l10" disabled={submitting}
                                   onClick={ this.exportExcel }></div></a>
                             <a><div className="icon-print margin-l10" id="printproduct" disabled={submitting}
@@ -1475,6 +1557,7 @@ class SearchResult extends Component {
             </div>
             {this.renderExportExcelDialog()}
             {this.renderDownloadDialog()}
+            {this.renderAddMyCatalog()}
           </form>
         );
       }
@@ -1502,7 +1585,8 @@ function mapStateToProps(state) {
     sortingBy: state.searchResult.SortingBy,
     sortDirection: state.searchResult.SortDirection,
     showGridView: state.searchResult.ShowGridView,
-    showListView: state.searchResult.ShowListView
+    showListView: state.searchResult.ShowListView,
+    listCatalogName: state.searchResult.ListCatalogName
    }
 }
 SearchResult.propTypes = {

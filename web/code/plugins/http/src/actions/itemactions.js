@@ -2,7 +2,9 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS,
-  SET_CURRENTPAGE,SET_PAGESIZE,SET_SORTBY,SET_SORTDIRECTION,SET_SHOWGRIDVIEW,SET_SHOWLISTVIEW} from '../constants/itemconstants';
+  SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW,
+  GET_CATALOGNAME
+} from '../constants/itemconstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
 export function setShowGridView(value){
@@ -48,7 +50,23 @@ export function getItems(params){
           currPage: params.page
   }
 }
+export function getCatalogName(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog/names`;
+  // console.log('getItems-->',url);
 
+  return {
+          type: GET_CATALOGNAME,
+    		  promise: fetch(url,{
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          })
+  }
+}
 export function exportDatas(params){
   const token = sessionStorage.token;
   var url = `${ROOT_URL}/api/items/export`;
