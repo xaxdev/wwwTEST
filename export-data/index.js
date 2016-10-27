@@ -78,7 +78,8 @@ const Confidence = require('confidence');
                }
            ],
            from: {
-               email: 'dev@itorama.com'
+               email: 'dev@itorama.com',
+               name: 'Mouawad Admin'
            },
            content: [
                {
@@ -149,6 +150,8 @@ const Confidence = require('confidence');
                     const { count }  = await client.count(parameter);
                     const size = config.excel.bufferSize;
                     const rounds = Math.ceil(count/size);
+                    console.log(`User Name --> ${obj.userName}`);
+                    console.log(`Number of Item --> ${count}`);
                     console.log(`Total rounds --> ${rounds}`);
                     let wb = new xl.Workbook()
                     let ws = wb.addWorksheet('Data')
@@ -158,6 +161,7 @@ const Confidence = require('confidence');
                     let fileName = '';
                     let startDate = new Date();
                     let exportDate = moment(startDate,'MM-DD-YYYY');
+                    let totalRecord = 0;
                     exportDate = exportDate.format('YYYYMMDD_HHmm');
 
                     fileName = obj.userName + '_' + exportDate + '_' + file.toString() + '.xlsx';
@@ -201,7 +205,8 @@ const Confidence = require('confidence');
                         });
 
                         const data = await utils.getIngredients(result, obj);
-                        console.log(data.length);
+                        console.log(`write rows --> ${data.length}`);
+                        totalRecord = totalRecord + data.length;
 
                         data.map(function (item) {
                             // console.log('ws row-->',row);
@@ -255,7 +260,7 @@ const Confidence = require('confidence');
                         const maxRow = (config.excel.maxRow*file);
                         const div = (row > maxRow);
                         console.log(`check ${row} > ${config.excel.maxRow} -->`,div);
-
+                        console.log(`Total rows --> ${totalRecord}`);
                         if (div) {
                             wb = new xl.Workbook();
                             ws = wb.addWorksheet('Data');
