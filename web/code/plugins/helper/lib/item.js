@@ -62,8 +62,10 @@ const applyPermission = (user, item) => {
         const currency = user.currency
         const actualCost = getPriceIn(currency)(item.actualCost) || -1
         const actualCostInUSD = getPriceIn('USD')(item.actualCost) || -1
+        const actualCostInHomeCurrency = getPriceIn(item.currency)(item.actualCost) || -1
         const updatedCost = getPriceIn(currency)(item.updatedCost) || -1
         const updatedCostInUSD = getPriceIn('USD')(item.updatedCost) || -1
+        const updatedCostInHomeCurrency = getPriceIn(item.currency)(item.updatedCost) || -1
         const price = getPriceIn(currency)(item.price) || -1
         const priceInUSD = getPriceIn('USD')(item.price) || -1
         const priceInHomeCurrency = getPriceIn(item.currency)(item.price) || -1
@@ -72,8 +74,10 @@ const applyPermission = (user, item) => {
             ...item,
             actualCost,
             actualCostInUSD,
+            actualCostInHomeCurrency,
             updatedCost,
             updatedCostInUSD,
+            updatedCostInHomeCurrency,
             price,
             priceInUSD,
             priceInHomeCurrency,
@@ -85,13 +89,16 @@ const applyPermission = (user, item) => {
             case "PUBLIC":
                 delete result.actualCost
                 delete result.actualCostInUSD
+                delete result.actualCostInHomeCurrency
                 delete result.updatedCost
                 delete result.updatedCostInUSD
+                delete result.updatedCostInHomeCurrency
                 delete result.markup
                 break;
             case "UPDATED":
                 delete result.actualCost
                 delete result.actualCostInUSD
+                delete result.actualCostInHomeCurrency
                 break;
         }
         return result
