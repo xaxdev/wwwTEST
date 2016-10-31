@@ -1400,7 +1400,7 @@ select.form-searchresult option{
 		.sort-icon:after{float:none !important;}
 
 .icon-add{display: none;}
-.searchresult-prodcut .pull-right div{display: none;}
+.searchresult-prodcut .pull-right
 .searchresult-prodcut .pull-right {
   position: absolute;
   right: 0;

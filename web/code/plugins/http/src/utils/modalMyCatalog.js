@@ -11,48 +11,6 @@ class ModalMyCatalog extends Component {
     constructor(props) {
         super(props);
 
-        this.catalogSelected = this.catalogSelected.bind(this);
-
-        this.state = {
-            txtNewCatalog: false
-
-        }
-
-  }
-  componentDidMount= _=> {
-      const { props } = this.props;
-      const { fields: {
-                oldCatalogName,newCatalogName,validateCatalogName
-            } } = props;
-            console.log('oldCatalogName-->',oldCatalogName.value);
-            console.log('newCatalogName-->',newCatalogName.value);
-
-      if (oldCatalogName.value != undefined) {
-          if (oldCatalogName.value != '') {
-              this.setState({txtNewCatalog: true});
-          }
-      }else{
-          this.setState({txtNewCatalog: false});
-      }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
-
-  catalogSelected= (e) => {
-      e.preventDefault();
-
-      let { fields:{newCatalogName }} = this.props.props;
-      console.log('selected',e.target.value);
-      if (e.target.value != '') {
-          this.setState({txtNewCatalog: true});
-          newCatalogName.value = '';
-        //   newCatalogName.onChange('');
-      }else{
-          this.setState({txtNewCatalog: false});
-      }
-
   }
 
   hideModalAddMyCatalog = (e) => {
@@ -67,12 +25,15 @@ class ModalMyCatalog extends Component {
 
   render() {
     const { props } = this.props;
-    // let txtNewCatalog = this.refs.newCatalogName;
-    console.log('this.state.txtNewCatalog-->',this.state.txtNewCatalog);
     const { fields: {
               oldCatalogName,newCatalogName,validateCatalogName
           } } = props;
     const { listCatalogName,isOpen, isClose, handleSubmitCatalog, onSubmit } = this.props;
+    let nameDisable = false;
+
+    if(oldCatalogName.value){
+      nameDisable = true
+    }
 
     return(
           <div  className="addMyCatalog">
@@ -89,7 +50,7 @@ class ModalMyCatalog extends Component {
                       <label className="col-sm-6 control-label">Catalog exits</label>
                   </div>
                   <div className="col-sm-6">
-                      <select className="form-control" {...oldCatalogName} onChange={this.catalogSelected} ref="oldCatalogName">
+                      <select className="form-control" {...oldCatalogName} >
                         <option key={''} value={''}>{'Please selected'}</option>
                           {listCatalogName.map(catName =>
                               {
@@ -104,7 +65,7 @@ class ModalMyCatalog extends Component {
                         <label className="col-sm-6 control-label">Or New Catalog</label>
                     </div>
                     <div className="col-sm-6">
-                        <input type="text" className="form-control" {...newCatalogName} ref="newCatalogName" disabled={this.state.txtNewCatalog}/>
+                        <input type="text" className="form-control" {...newCatalogName} disabled={nameDisable}/>
                     </div>
                 </div>
               </div>

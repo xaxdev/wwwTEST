@@ -554,7 +554,7 @@ class GridItemsView extends Component {
 
   render(){
     // console.log('this.props.items-->',this.props.items);
-    const { submitting } = this.props;
+    const { submitting, onCheckedMyCatalog, onAddedMyCatalog } = this.props;
     var btnEvent = this.onClickGrid;
     var btnQuickView = this.onClickQuickView;
     var showDetails = this.onMouseOverGrid;
@@ -646,18 +646,14 @@ class GridItemsView extends Component {
                                  (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                   ''}>
                     <div className="pull-right">
-                      <div className="grid-add"
-                          onClick={
-                            (eventKey) => {
-                              // console.log('eventKey-->',item.id);
-                            }
-                          }>
-                        <span className="icon-add-28"></span>
+                      <div className="grid-add" >
+                        <span className="icon-add-28" name={item.id} id={index}
+                          value={item.id} onClick={onAddedMyCatalog}></span>
                       </div>
                      <div className="checkbox checkbox-warning">
-                      <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                        // checked={this.state.selectedStatus}
-                        // onChange={event => this.setState({ selectedStatus: event.target.checked })}
+                      <input type="checkbox" id="checkbox1" className="styled" type="checkbox" name={item.id} id={index}
+                        value={item.id}
+                        onChange={onCheckedMyCatalog}
                         />
                           <label className="checkbox1"></label>
                       </div>

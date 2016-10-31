@@ -8,7 +8,6 @@ export default function validate(values){
   }else{
       errorOld = true;
   }
-  // console.log('values.newCatalogName-->',values.newCatalogName);
   if(!values.newCatalogName){
       errorNew = false;
   }else{
