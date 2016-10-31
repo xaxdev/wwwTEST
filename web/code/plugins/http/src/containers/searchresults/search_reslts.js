@@ -142,6 +142,7 @@ class SearchResult extends Component {
   componentWillMount() {
       // console.log('this.props.sortingBy->',this.props.sortingBy);
       // console.log('this.props.sortDirection->',this.props.sortDirection);
+
       const userLogin = JSON.parse(sessionStorage.logindata);
 
       let sortingBy = '';
@@ -196,7 +197,6 @@ class SearchResult extends Component {
       this.props.getItems(params);
   }
   componentDidMount() {
-    // console.log('sortingBy->',this.refs.sortingBy);
 
     let that = this;
     if(this.refs.sortingBy != undefined){
@@ -249,6 +249,7 @@ class SearchResult extends Component {
   }
   componentWillReceiveProps(nextProps) {
     // console.log('nextProps-->',nextProps);
+
     if(this.props.currentPage != nextProps.currentPage){
       let { currPage } = this.props.fields;
       currPage.onChange(nextProps.currentPage);
@@ -884,6 +885,7 @@ class SearchResult extends Component {
   hideModal = (e) => {
     e.preventDefault();
 
+    this.setState({ showImages: false })
     this.setState({isOpen: false});
   }
 
@@ -926,7 +928,13 @@ class SearchResult extends Component {
     }
   }
   exportExcel(){
-    this.setState({isOpen: true});
+      const that = this;
+      checkFields.map(function(field, index){
+          that.setState({ [field]: false });
+      });
+      this.setState({ allFields: false });
+      this.setState({ showImages: false });
+      this.setState({isOpen: true});
   }
   confirmExport(e){
     e.preventDefault();
@@ -1048,7 +1056,7 @@ class SearchResult extends Component {
     this.props.exportDatas(params)
         .then((value) => {
           // console.log('value-->',value);
-          console.log('export done!');
+        //   console.log('export done!');
           if(girdView){
             // this.setState({showGridView: true});
             that.props.setShowGridView(true);
@@ -1086,11 +1094,24 @@ class SearchResult extends Component {
             <br/>
             <div className="col-sm-12">
               <div className="col-sm-3">
-                <input type="checkbox" onChange={event => that.setState({ allFields: event.target.checked })}/>
+                <input type="checkbox" checked={this.state.allFields} onChange={event => {
+                        // console.log('all checked-->',event.target.checked);
+                        that.setState({ allFields: event.target.checked });
+                        if (event.target.checked) {
+                            checkFields.map(function(field, index){
+                                that.setState({ [field]: true });
+                            });
+                        } else {
+                            checkFields.map(function(field, index){
+                                that.setState({ [field]: false });
+                            });
+                        }
+                    }
+                }/>
                 <label className="control-label">Select All</label>
               </div>
               <div className="col-sm-3">
-                <input type="checkbox" onChange={event => that.setState({ showImages: event.target.checked })}/>
+                <input type="checkbox" checked={this.state.showImages} onChange={event => that.setState({ showImages: event.target.checked })}/>
                 <label className="control-label">Show Images</label>
               </div>
               <div className="col-sm-3">
@@ -1103,8 +1124,13 @@ class SearchResult extends Component {
                   return(
                         <div className="col-md-3" key={index}>
                           <label key={index}>
-                            <input id={index} type="checkbox" disabled={`${that.state.allFields ? 'disabled' : ''}`}
-                              onChange={event => that.setState({ [field]: event.target.checked })}/>
+                            <input id={index} type="checkbox" checked={that.state[field]}
+                              onChange={event => {
+                                  that.setState({ [field]: event.target.checked });
+                                  that.setState({ allFields:false });
+                                }
+                              }
+                              />
                             {labels[ field ]}
                           </label>
                         </div>

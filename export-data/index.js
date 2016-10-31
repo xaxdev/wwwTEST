@@ -78,7 +78,8 @@ const Confidence = require('confidence');
                }
            ],
            from: {
-               email: 'dev@itorama.com'
+               email: 'dev@itorama.com',
+               name: 'Mouawad Admin'
            },
            content: [
                {
@@ -147,8 +148,10 @@ const Confidence = require('confidence');
                 const client = new elasticsearch({ host: config.elasticsearch.host });
                 try {
                     const { count }  = await client.count(parameter);
-                    const size = config.excel.bufferSize;
-                    const rounds = Math.ceil(count/size);
+                    const sizeWrite = config.excel.bufferSize;
+                    const rounds = Math.ceil(count/sizeWrite);
+                    console.log(`User Name --> ${obj.userName}`);
+                    console.log(`Number of Item --> ${count}`);
                     console.log(`Total rounds --> ${rounds}`);
                     let wb = new xl.Workbook()
                     let ws = wb.addWorksheet('Data')
@@ -158,6 +161,7 @@ const Confidence = require('confidence');
                     let fileName = '';
                     let startDate = new Date();
                     let exportDate = moment(startDate,'MM-DD-YYYY');
+                    let totalRecord = 0;
                     exportDate = exportDate.format('YYYYMMDD_HHmm');
 
                     fileName = obj.userName + '_' + exportDate + '_' + file.toString() + '.xlsx';
@@ -168,17 +172,20 @@ const Confidence = require('confidence');
 
                    for (let i = 0; i < rounds; i++) {
                         let chkRounds = i+1;
-                        const from = size * i;
+                        const from = sizeWrite * i;
                         const result = await client.search({
                            "index": config.elasticsearch.index,
                            "type": config.elasticsearch.type,
                            "sort": "id",
                            "from": from,
-                           "size": size,
+                           "size": sizeWrite,
                            "filter_path": "**._source",
                            "body": body
                        });
                         console.log(`round --> ${chkRounds}`);
+                        // console.log(`from --> ${from}`);
+                        // console.log(`sizeWrite --> ${sizeWrite}`);
+                        // console.log(`query --> ${JSON.stringify(body, null, 2)}`);
                         const titles = await utils.getTitles(result, obj);
                         // Create a reusable style
                         let style = wb.createStyle({
@@ -201,10 +208,14 @@ const Confidence = require('confidence');
                         });
 
                         const data = await utils.getIngredients(result, obj);
-                        console.log(data.length);
+                        console.log(`write rows --> ${data.length}`);
+                        totalRecord = totalRecord + data.length;
 
                         data.map(function (item) {
-                            // console.log('ws row-->',row);
+                            // console.log('item-->',item);
+                            // if(item[0] == 'V1002413'){
+                            //     console.log('V1002413');
+                            // }
                             for (let j = 0; j < cell; j++) {
                               let column = j+1;
                               ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
@@ -247,6 +258,39 @@ const Confidence = require('confidence');
                                               }
                                           }
                                       }
+                                  }else{
+                                      if(column == 1){
+                                          let pathImage = '';
+
+                                          if (item[0] != '') {
+                                            let arrImages = item[0].split("/").slice(-1).pop();
+                                            //   pathImage = '/var/www/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                            // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                            pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
+                                          }else{
+                                            pathImage = './images/blank.gif';
+                                          }
+
+                                          ws.column(1).setWidth(35);
+                                          ws.row(row).setHeight(250);
+                                          let isExist = fileExists(pathImage);
+                                          if (!isExist) {
+                                              pathImage = './images/blank.gif';
+                                          }
+                                          ws.addImage({
+                                              path: pathImage,
+                                              type: 'picture',
+                                              position: {
+                                                  type: 'oneCellAnchor',
+                                                  from: {
+                                                      col: 1,
+                                                      colOff: '0.0in',
+                                                      row: row,
+                                                      rowOff: 0
+                                                  }
+                                              }
+                                          });
+                                      }
                                   }
                               }
                           };
@@ -255,7 +299,7 @@ const Confidence = require('confidence');
                         const maxRow = (config.excel.maxRow*file);
                         const div = (row > maxRow);
                         console.log(`check ${row} > ${config.excel.maxRow} -->`,div);
-
+                        console.log(`Total rows --> ${totalRecord}`);
                         if (div) {
                             wb = new xl.Workbook();
                             ws = wb.addWorksheet('Data');
@@ -276,7 +320,7 @@ const Confidence = require('confidence');
                                 emailBody = emailBody + `${number}. ${name} (${obj.ROOT_URL}/export_files/${name})\n`;
                                 number++;
                             });
-                            emailBody = `Please download file follow as below link.\n` + emailBody;
+                            emailBody = `Please download the files from below link .\n` + emailBody;
                             // console.log('write file successfully');
                             client.close();
                             await notify('');

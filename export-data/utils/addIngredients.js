@@ -20,24 +20,24 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
 
       let newdata = [];
 
-      // console.log('data export-->',data.length);
+    //   console.log('data export-->',data.length);
+
+      let items = 0;
 
       data.forEach(function(item){
+          items = items+1;
         // console.log('item-->',item);
         let arrayItems = [];
         let itemReference = item.reference;
 
-        if (fields.showImages)
-            // arrayItems.push('');
-
-        if (fields.showImages)
+        if (fields.showImages){
           arrayItems.push((item.gallery.length) != 0
                             ? item.gallery[0].thumbnail
                             : '');
+        }
 
-
+        // console.log(`items: ${items}--> reference: ${item.reference}`);
         arrayItems.push(item.reference,item.description,item.sku,item.venderReference);
-
         if (userCurrency != 'USD') {
           if (price == 'All') {
             // console.log('item.actualCost-->',item.actualCost);
@@ -74,6 +74,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
             arrayItems.push(numberFormat((item.price != undefined)? item.price['USD']: 0));
           }
         }
+
         let jewelsWeight = 0;
         // console.log('forEach-->1');
         if(item.gemstones != undefined){
@@ -195,10 +196,10 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
         if(item.gemstones != undefined){
           if(item.gemstones.length == 0){
             newdata.push(arrayItems);
-
+            // console.log('newdata-->',newdata.length);
           }else{
             newdata.push(arrayItems);
-
+            // console.log('newdata-->',newdata.length);
             if(fields.ingredients || fields.allFields){
               item.gemstones.forEach(function(gemstone) {
                 arrayItems = [];
@@ -292,9 +293,11 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
               });
             }
           }
+        }else{
+            newdata.push(arrayItems);
         }
       });
-
+    //   console.log('newdata-->',newdata.length);
       return resolve(newdata)
 
     } catch (err) {
