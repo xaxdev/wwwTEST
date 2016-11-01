@@ -17,7 +17,7 @@ if [ $PROCESS -le 2 ]; then
   find $SOURCE -iname "*.jpg" -type f -ctime -2 | while read file
   do
     echo "Resizing file"
-    mogrify -resize 250x -strip -format jpg -compress jpeg -verbose -path $THUMBNAIL "$file"
+    mogrify -resize 120x -strip -format jpg -compress jpeg -verbose -path $THUMBNAIL "$file"
     mogrify -resize 500x -strip -format jpg -compress jpeg -verbose -path $ORIGINAL "$file"
   done
 else
