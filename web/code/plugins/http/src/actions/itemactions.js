@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 
 import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS,
   SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW,
-  GET_CATALOGNAME
+  GET_CATALOGNAME, ADD_CATALOG
 } from '../constants/itemconstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
@@ -38,7 +38,7 @@ export function getItems(params){
 
   return {
           type: FETCH_ALLITEMS,
-    		  promise: fetch(url,{
+    		promise: fetch(url,{
             method: 'POST',
             body: JSON.stringify(params),
             headers: {
@@ -57,13 +57,45 @@ export function getCatalogName(params){
 
   return {
           type: GET_CATALOGNAME,
-    		  promise: fetch(url,{
+    		promise: fetch(url,{
             method: 'GET',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
               'Authorization': token
             },
+          })
+  }
+}
+export function addCatalog(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog`;
+  return {
+          type: ADD_CATALOG,
+    		promise: fetch(url,{
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+            body: JSON.stringify(params)
+          })
+  }
+}
+export function getCatalogItems(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog/data`;
+  return {
+          type: ADD_CATALOG,
+    		promise: fetch(url,{
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+            body: JSON.stringify(params)
           })
   }
 }

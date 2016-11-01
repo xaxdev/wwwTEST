@@ -554,7 +554,7 @@ class GridItemsView extends Component {
 
   render(){
     // console.log('this.props.items-->',this.props.items);
-    const { submitting, onCheckedMyCatalog, onAddedMyCatalog } = this.props;
+    const { submitting, onCheckedOneItemMyCatalog, onAddedOneItemMyCatalog } = this.props;
     var btnEvent = this.onClickGrid;
     var btnQuickView = this.onClickQuickView;
     var showDetails = this.onMouseOverGrid;
@@ -575,12 +575,13 @@ class GridItemsView extends Component {
           let actualCost = GetPriceWithCurrency(item,'actualCost');
           let updatedCost = GetPriceWithCurrency(item,'updatedCost');
 
-          let itemName = (item.type != 'CER')
-                            ?
-                            (item.description != undefined) ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...': '-' :
+          let itemName = (item.type != 'CER')?
+                            (item.description != undefined) ?
+                                (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                            : '-' :
                             item.name
                             ;
-
+            let itemNameCat = (item.type != 'CER')? item.description: item.name;
            return (
               <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
@@ -647,13 +648,12 @@ class GridItemsView extends Component {
                                   ''}>
                     <div className="pull-right">
                       <div className="grid-add" >
-                        <span className="icon-add-28" name={item.id} id={index}
-                          value={item.id} onClick={onAddedMyCatalog}></span>
+                        <span className="icon-add-28" name={item.id} id={index} value={item.id}
+                          onClick={onAddedOneItemMyCatalog}></span>
                       </div>
                      <div className="checkbox checkbox-warning">
-                      <input type="checkbox" id="checkbox1" className="styled" type="checkbox" name={item.id} id={index}
-                        value={item.id}
-                        onChange={onCheckedMyCatalog}
+                      <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
+                        name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
                         />
                           <label className="checkbox1"></label>
                       </div>

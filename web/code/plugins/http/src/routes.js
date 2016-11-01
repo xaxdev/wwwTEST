@@ -134,6 +134,14 @@ export default ({ dispatch,getState}) => {
                     }, 'accessdenied');
                 }
             }, {
+                onEnter: requireAccess,
+                path: 'mycatalog',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/mycatalog/mycatalog_list'));
+                    }, 'mycatalog');
+                }
+            },{
                 path: '*',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {

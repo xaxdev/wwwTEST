@@ -8,7 +8,8 @@ const Menu =  (props) => {
   const lastPath = url.split('/')[countLastPath];
   const { role } = JSON.parse(sessionStorage.logindata);
   const UserManagement = role == 'Admin'? <NavItem href="/users" className={`${(props.currentLocation == '/users' || props.currentLocation == '/user' || props.currentLocation == '/user/new')?'active':''}`}>User Management</NavItem> : '';
-  
+  const MyCatalog = <NavItem href="/mycatalog" className={`${(props.currentLocation == '/users' || props.currentLocation == '/user' || props.currentLocation == '/user/new')?'active':''}`}>My Catalog</NavItem>;
+
   return(
 <Navbar inverse>
     <Navbar.Header>
@@ -23,6 +24,7 @@ const Menu =  (props) => {
           <MenuItem >Feedback</MenuItem>
           <MenuItem >Help</MenuItem>
         </NavDropdown>*/}
+        {MyCatalog}
         {UserManagement}
 
       </Nav>
