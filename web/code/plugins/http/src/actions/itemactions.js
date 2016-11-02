@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 
 import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS,
   SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW,
-  GET_CATALOGNAME, ADD_CATALOG
+  GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS
 } from '../constants/itemconstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
@@ -85,17 +85,16 @@ export function addCatalog(params){
 }
 export function getCatalogItems(params){
   const token = sessionStorage.token;
-  var url = `${ROOT_URL}/api/catalog/data`;
+  var url = `${ROOT_URL}/api/catalog/data/${params.id}?page=${params.page}&size=${params.size}`;
   return {
-          type: ADD_CATALOG,
+          type: GET_CATALOGITEMS,
     		promise: fetch(url,{
-            method: 'POST',
+            method: 'GET',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
               'Authorization': token
-            },
-            body: JSON.stringify(params)
+            }
           })
   }
 }

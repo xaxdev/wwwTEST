@@ -134,7 +134,7 @@ export default ({ dispatch,getState}) => {
                     }, 'accessdenied');
                 }
             }, {
-                onEnter: requireAccess,
+                onEnter: requireAuth,
                 path: 'mycatalog',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {

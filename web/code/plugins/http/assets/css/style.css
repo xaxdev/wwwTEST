@@ -415,6 +415,7 @@ select.form-searchresult option{
 }
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover{border-color: #dac06b;}
 .bg-hearder{background: #383735; height: 60px;}
+.bg-hearder-mycatalog{background: #E8C66F; height: 60px;}
 .btn-primary {
     color: #fff;
     background-color: #ddbe6a !important;
