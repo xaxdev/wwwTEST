@@ -17,6 +17,7 @@ import ListItemsViewPrint from '../../components/searchresults/listitemviewPrint
 import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 import ModalMyCatalog from '../../utils/modalMyCatalog';
+import Modalalertmsg from '../../utils/modalalertmsg';
 import moment from 'moment';
 import convertDate from '../../utils/convertDate';
 import validateCatalog from '../../utils/validatecatalog';
@@ -145,7 +146,8 @@ class SearchResult extends Component {
       limitedEditionNumber: false,
       showLoading: false,
       isOpenAddMyCatalog: false,
-      enabledMyCatalog:false
+      enabledMyCatalog:false,
+      isOpenAddMyCatalogmsg: false
     };
   }
   componentWillMount() {
@@ -1299,6 +1301,7 @@ class SearchResult extends Component {
         console.log('catalogdata-->',catalogdata);
         this.props.addCatalog(catalogdata).then( () =>{
            console.log('Added!');
+           this.setState({isOpenAddMyCatalogmsg: true});
         })
 
   }
@@ -1311,10 +1314,18 @@ class SearchResult extends Component {
               isClose={this.handleClose} props={this.props}/>);
       }
   }
+  renderAlertmsg = _=> {
+
+    const message = 'Add to catalog success';
+    return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}/>);
+  }
   hideModalAddMyCatalog = (e) => {
     e.preventDefault();
 
     this.setState({isOpenAddMyCatalog: false});
+  }
+  handleClosemsg = _=>{
+      this.setState({isOpenAddMyCatalogmsg: false});
   }
   confirmAddMyCatalog = (e) => {
     e.preventDefault();
@@ -1574,6 +1585,7 @@ class SearchResult extends Component {
             {this.renderExportExcelDialog()}
             {this.renderDownloadDialog()}
             {this.renderAddMyCatalog()}
+            {this.renderAlertmsg()}
           </form>
         );
       }
