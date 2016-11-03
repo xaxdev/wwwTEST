@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
-import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
+import numberFormat from '../../utils/convertNumberformat';
 import convertDate from '../../utils/convertDate';
 import ReactImageFallback from 'react-image-fallback';
 
@@ -554,7 +554,7 @@ class GridItemsView extends Component {
 
   render(){
     // console.log('this.props.items-->',this.props.items);
-    const { submitting, onCheckedOneItemMyCatalog, onAddedOneItemMyCatalog } = this.props;
+    const { submitting, onCheckedOneItemMyCatalog, onDeleteOneItemMyCatalog } = this.props;
     var btnEvent = this.onClickGrid;
     var btnQuickView = this.onClickQuickView;
     var showDetails = this.onMouseOverGrid;
@@ -565,15 +565,15 @@ class GridItemsView extends Component {
     return (
       <div>
         {this.props.items.map(function(item, index){
-          // console.log('item-->',item);
+        //   console.log('item-->',item);
           let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
           let itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate);
           let lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
           // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
 
-          let price = GetPriceWithCurrency(item,'price');
-          let actualCost = GetPriceWithCurrency(item,'actualCost');
-          let updatedCost = GetPriceWithCurrency(item,'updatedCost');
+          let price = (item.price != -1)? numberFormat(item.price) + ' ' + item.currency: '- ' + userLogin.currency;
+          let actualCost = numberFormat(item.actualCost) + ' ' + item.currency;
+          let updatedCost = numberFormat(item.updatedCost) + ' ' + item.currency;
 
           let itemName = (item.type != 'CER')?
                             (item.description != undefined) ?
@@ -649,7 +649,7 @@ class GridItemsView extends Component {
                     <div className="pull-right">
                       <div className="grid-add" >
                         <span className="icon-add-28" name={item.id} id={index} value={item.id}
-                          onClick={onAddedOneItemMyCatalog}></span>
+                          onClick={onDeleteOneItemMyCatalog}></span>
                       </div>
                      <div className="checkbox checkbox-warning">
                       <input type="checkbox" id="checkbox1" className="styled" type="checkbox"

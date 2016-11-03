@@ -5,8 +5,12 @@ import { Button,FormControl,Pagination, ControlLabel, DropdownButton, MenuItem }
 import * as itemactions from '../../actions/itemactions';
 import numberFormat from '../../utils/convertNumberformat';
 import GridItemsView from '../../components/mycatalog/griditemview';
+import ModalConfirmDelete from '../../utils/modalConfirmDelete.js';
+import Modalalertmsg from '../../utils/modalalertmsg';
 
 const Loading = require('react-loading');
+
+let listMyCatalog = []
 
 class MyCatalog extends Component {
     constructor(props) {
@@ -15,9 +19,14 @@ class MyCatalog extends Component {
         this.handleSelect = this.handleSelect.bind(this);
         this.handleGo = this.handleGo.bind(this);
         this.onClickGrid = this.onClickGrid.bind(this);
+        this.selectedCatalog = this.selectedCatalog.bind(this);
+        this.deleteOneItemMyCatalog = this.deleteOneItemMyCatalog.bind(this);
+        this.handleSubmitDeleteItem = this.handleSubmitDeleteItem.bind(this);
 
         this.state = {
-          activePage: this.props.currentPage
+          activePage: this.props.currentPage,
+          isOpenDeleteItem: false,
+          isOpenAddMyCatalogmsg: false
         }
 
     }
@@ -50,52 +59,60 @@ class MyCatalog extends Component {
     }
 
     handleGo(e){
-      e.preventDefault();
-      // console.log('handleGo-->',this.refs.reletego.value);
-      const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
+        e.preventDefault();
+        console.log('handleGo-->',this.refs.reletego.value);
 
-      const userLogin = JSON.parse(sessionStorage.logindata);
-      const { showGridView,showListView } = this.props;
+        const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
 
-      let sortingBy = '';
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const { catalogId, listCatalogItems } = this.props;
 
-      switch (this.refs.sortingBy.value) {
-        case 'price':
-          sortingBy = 'price.' + userLogin.currency;
-          break;
-        default:
-          sortingBy = this.refs.sortingBy.value;
-          break;
-      }
+        if (Number(this.refs.reletego.value) > listCatalogItems.total_pages || Number(this.refs.reletego.value) < 1) {
+            this.setState({isOpenAddMyCatalogmsg: true});
+        //   this.renderAlertmsg('Page is invalid.');
+        }else{
+            let sortingBy = '';
 
-      const sortingDirection = this.refs.sortingDirection.value;
-      const pageSize = 16;
+            switch (this.refs.sortingBy.value) {
+              case 'price':
+                sortingBy = 'price.' + userLogin.currency;
+                break;
+              default:
+                sortingBy = this.refs.sortingBy.value;
+                break;
+            }
 
-      this.setState({activePage: getPage});
-      // console.log('getPage-->',getPage);
-      let params = {
-        'page' : getPage,
-        'sortBy': sortingBy,
-        'sortDirections': sortingDirection,
-        'pageSize' : pageSize
-      };
+            const sortingDirection = this.refs.sortingDirection.value;
+            const pageSize = 16;
+
+            this.setState({activePage: getPage});
+            // console.log('getPage-->',getPage);
+          //   let params = {
+          //     'page' : getPage,
+          //     'sortBy': sortingBy,
+          //     'sortDirections': sortingDirection,
+          //     'pageSize' : pageSize
+          //   };
 
 
-      this.setState({
-        showLoading: true
-      });
+            this.setState({
+              showLoading: true
+            });
 
-      this.props.getItems(params)
-      .then((value) => {
-        this.setState({showLoading: false});
-        if(girdView){
-          // this.setState({showGridView: true});
-          this.props.setShowGridView(true);
-        }else if (listView) {
-          // this.setState({showListView: true});
-          this.props.setShowListView(true);
+            let parasm = {id: catalogId, page: getPage, size: pageSize};
+            this.props.getCatalogItems(parasm).then((value) => {
+                console.log(value);
+            });
         }
-      });
+    }
+
+    selectedCatalog = (e) =>{
+        e.preventDefault();
+
+        const catalogId = e.target.value;
+        console.log('catalogId-->',catalogId);
+        let parasm = {id: catalogId, page:1, size:16};
+        this.props.getCatalogItems(parasm);
     }
 
     handleSelect(eventKey) {
@@ -178,6 +195,55 @@ class MyCatalog extends Component {
         currPage.onChange(eventKey);
     }
 
+    deleteOneItemMyCatalog = (item) => {
+        let fileName = jQuery('input[type="checkbox"]');
+        fileName.removeAttr('checked');
+        listMyCatalog  = [];
+
+        const { items } = this.props.listCatalogItems;
+        const catalogId = this.props.listCatalogItems._id
+        let itemAdded = items.filter(oneItem => oneItem.id === item.target.attributes[3].value);
+        itemAdded = itemAdded[0];
+        let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
+        let objItem = {id: itemAdded.id, reference: itemAdded.reference, description: itemName, catalogId: catalogId}
+
+        listMyCatalog.push(objItem);
+
+        this.setState({isOpenDeleteItem: true});
+    }
+
+    handleSubmitDeleteItem = (e)=>{
+        e.preventDefault();
+        const { catalogId } = this.props;
+        let catalog = this.refs.catalog;
+
+        this.setState({isOpenDeleteItem: false});
+        // console.log('listMyCatalog-->',listMyCatalog);
+        let items = [];
+
+        listMyCatalog.map((item) => {
+            items.push({id: item.id});
+        })
+        let params ={id: catalogId, items: items};
+        // console.log('params-->',params);
+        this.props.deleteCatalogItems(params).then( () =>{
+            console.log('Deleted!');
+            let parasm = {id: catalogId, page:1, size:16};
+            this.props.getCatalogItems(parasm);
+
+        });
+        // console.log('catalog-->',catalog);
+
+    }
+
+    handleCloseDeleteItem = _=>{
+        this.setState({isOpenDeleteItem: false});
+    }
+
+    handleClosemsg = _=>{
+        this.setState({isOpenAddMyCatalogmsg: false});
+    }
+
     renderPagination(){
       const { fields: { currPage },
               currentPage,
@@ -187,7 +253,7 @@ class MyCatalog extends Component {
       // console.log('totalPages-->',totalPages);
       // console.log('this.state.activePage-->',this.state.activePage);
       const page = this.state.activePage;
-      const totalPages = this.props.listCatalogItems.total_items;
+      const totalPages = this.props.listCatalogItems.total_pages;
       // currPage.value = this.state.activePage;
       // console.log('renderPagination-->',this.state.activePage);
 
@@ -204,45 +270,60 @@ class MyCatalog extends Component {
         );
     }
 
+    renderModalConfirmDelete = _=> {
+        return(<ModalConfirmDelete onSubmit={this.handleSubmitDeleteItem} isOpen={this.state.isOpenDeleteItem}
+            isClose={this.handleCloseDeleteItem} props={this.props}/>);
+    }
+
     renderTotals(){
       const { fields: { currPage },
               totalPages,
               currentPage,
-              items,totalPublicPrice,totalUpdatedCost,listCatalogItems,maxPrice,minPrice,avrgPrice,
+              items,listCatalogItems,
               handleSubmit,
               resetForm,
               submitting } = this.props;
-        // let _totalUpdatedCost = new Intl.NumberFormat().format(totalUpdatedCost);
-      let _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
-      let _totalPublicPrice =  (totalPublicPrice!=null) ? numberFormat(totalPublicPrice) : 0;
 
-      const userLogin = JSON.parse(sessionStorage.logindata);
+        let totalPublicPrice = 0;
+        let totalUpdatedCost = 0;
+        listCatalogItems.items.map((item) => {
+            totalPublicPrice = totalPublicPrice + item.price;
+            totalUpdatedCost = totalUpdatedCost + item.updatedCost;
+        })
+        // console.log('totalPublicPrice-->',totalPublicPrice);
+        let _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
+        let _totalPublicPrice =  (totalPublicPrice!=null) ? numberFormat(totalPublicPrice) : 0;
+
+        const userLogin = JSON.parse(sessionStorage.logindata);
 
       return(
         <div>
           <div id="dvTotalsub" className="bg-f7d886 text-center">
-              <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(listCatalogItems.length) } Items </span><span className="padding-lf15">|</span></span>
-              <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                  || userLogin.permission.price == 'All') ?
-                  '' : 'hidden'}`}>
-                  <span className="font-b fc-000">Total Public Price :</span> <span className="font-w9">{ _totalPublicPrice } { userLogin.currency }</span><span className="padding-lf15">
-                  |
-                  </span>
-              </span>
-              <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
-                  '' : 'hidden'}`}>
-                  <span className="font-b fc-000">Total Updated Cost :</span> <span className="font-w9">{ _totalUpdatedCost } { userLogin.currency }
-                  </span>
-              </span>
-          </div>
-          <div id="dvTotalsub" className="bg-f7d886 text-center">
-              <span><span className="font-b fc-000">Highest Price :</span> <span className="font-w9">{ numberFormat(maxPrice) } { userLogin.currency } </span><span className="padding-lf15">|</span></span>
-              <span><span className="font-b fc-000">Lowest Price :</span> <span className="font-w9">{ numberFormat(minPrice) } { userLogin.currency } </span><span className="padding-lf15">|</span></span>
-              <span><span className="font-b fc-000">Average Price :</span> <span className="font-w9">{ numberFormat(avrgPrice) } { userLogin.currency } </span></span>
+                <span><span className="font-b fc-000">All Pages :</span> <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span><span className="padding-lf15">|</span></span>
+                <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(listCatalogItems.total_items) } Items </span><span className="padding-lf15">|</span></span>
+                <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                        || userLogin.permission.price == 'All') ?
+                        '' : 'hidden'}`}>
+                    <span className="font-b fc-000">Total Public Price :</span>
+                    <span className="font-w9">{ _totalPublicPrice } { userLogin.currency }</span>
+                    <span className="padding-lf15"> | </span>
+                </span>
+                <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                    '' : 'hidden'}`}>
+                    <span className="font-b fc-000">Total Updated Cost :</span>
+                    <span className="font-w9">{ _totalUpdatedCost } { userLogin.currency }
+                    </span>
+                </span>
           </div>
         </div>
-
       );
+    }
+
+    renderAlertmsg = _=> {
+
+      const message = 'Page is invalid.';
+      return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
+          props={this.props} message={message}/>);
     }
 
     render() {
@@ -268,7 +349,7 @@ class MyCatalog extends Component {
                                     </div>
                                     <div className="col-sm-2 col-xs-12 ft-white nopad-ipl">
                                         <div className="styled-select">
-                                          <select className="form-searchresult">
+                                          <select className="form-searchresult" onChange={this.selectedCatalog}  ref="catalog">
                                             {
                                                 this.props.listCatalogName.map((cat) => {
                                                     return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
@@ -335,12 +416,14 @@ class MyCatalog extends Component {
                                     <div className={'search-product' }>
                                           <GridItemsView  items={items} onClickGrid={this.onClickGrid}
                                           onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                          onAddedOneItemMyCatalog={this.addedOneItemMyCatalog} />
+                                          onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
                                     </div>
                                 </div>
                             </div>
                         </div>
                       </div>
+                      {this.renderModalConfirmDelete()}
+                      {this.renderAlertmsg()}
                     </form>
                 );
             }else{
@@ -362,8 +445,12 @@ function mapStateToProps(state) {
         listCatalogName: state.searchResult.ListCatalogName,
         listCatalogItems: state.myCatalog.listCatalogItems,
         currentPage: state.myCatalog.currentPage,
+        catalogId: state.myCatalog.catalogId
     }
 }
+MyCatalog.contextTypes = {
+  router: PropTypes.object
+};
 module.exports = reduxForm({
   form: 'MyCatalog',
   fields: ['currPage'],
