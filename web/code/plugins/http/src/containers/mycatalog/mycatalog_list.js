@@ -335,82 +335,80 @@ class MyCatalog extends Component {
                 return(
                     <form role="form">
                       {/* Header Search */}
-                      <div className="col-sm-12 bg-hearder bg-header-searchresult">
-                        <div className="col-md-12 col-sm-12 ft-white m-nopadding">
-                          <h1>MY CATALOG</h1>
-                        </div>
-                      </div>
                       <div className="col-sm-12 bg-hearder-mycatalog bg-header-searchresult">
-                          <div className="col-md-8 col-sm-12 nopadding">
-                              <div className="m-width-100 text-right maring-t15 float-r ip-font m-pt">
-                                <div className="col-sm-4 col-xs-12 nopadding">
-                                    <div className="col-sm-2 col-xs-12 ft-white nopad-ipl">
-                                      Catalog Name
+                          <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
+                          <div className="col-md-12 col-sm-12">
+                                <div className="col-md-6 col-sm-6 col-xs-12 nopadding">
+                                    <div className="col-md-6 col-sm-6 col-xs-12 nopadding">
+                                      <div className="col-md-4 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
+                                      <div className="col-md-8 col-sm-8 col-xs-12">
+                                          <div className="styled-select-black">
+                                            <select>
+                                              {
+                                                  this.props.listCatalogName.map((cat) => {
+                                                      return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
+                                                  })
+                                              }
+                                            </select>
+                                          </div>
+                                      </div>
                                     </div>
-                                    <div className="col-sm-2 col-xs-12 ft-white nopad-ipl">
-                                        <div className="styled-select">
-                                          <select className="form-searchresult" onChange={this.selectedCatalog}  ref="catalog">
-                                            {
-                                                this.props.listCatalogName.map((cat) => {
-                                                    return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
-                                                })
-                                            }
-                                          </select>
-                                        </div>
+
+                                    <div className="col-md-6 col-sm-6 col-xs-12 nopadding">
+                                      <a><div className="icon-edit"></div></a>
+                                      <a><div className="icon-del"></div></a>
+                                      <a><div className="icon-print"></div></a>
                                     </div>
-                                    <div className="col-sm-2 col-xs-12 ft-white nopad-ipl">
-                                        <a><div className="icon-excel margin-l10" ></div></a>
-                                    </div>
-                                    <div className="col-sm-2 col-xs-12 ft-white nopad-ipl">
-                                        <a><div className="icon-excel margin-l10" ></div></a>
-                                    </div>
-                                    <div className="col-sm-2 col-xs-12 ft-white nopad-ipl">
-                                        <a><div className="icon-excel margin-l10" ></div></a>
-                                    </div>
-                                </div>
-                                <div className="col-sm-4 col-xs-12 ft-white margin-t5">
-                                  <ControlLabel> <span className="fc-ddbe6a m-none">|</span> Sort By: </ControlLabel>
-                                </div>
-                                <div className="col-sm-2 col-xs-12 nopadding">
-                                  <div className="styled-select">
-                                    <select className="form-searchresult" ref="sortingBy">
-                                      <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                      <option key={'price'} value={'price'}>{'Public Price'}</option>
-                                      <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
-                                      <option key={'description'} value={'description'}>{'Description'}</option>
-                                    </select>
+
                                   </div>
-                                </div>
-                                <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
-                                  <div className="styled-select">
-                                      <select className="form-searchresult"  ref="sortingDirection">
-                                        <option key={'desc'} value={'desc'}>{'Descending'}</option>
-                                        <option key={'asc'} value={'asc'}>{'Ascending'}</option>
+                                <div className="col-md-6 col-sm-6 col-xs-12 nopadding">
+                                  <div className="cat-sort col-xs-12 margin-t5">
+                                    <ControlLabel>Sort By : </ControlLabel>
+                                  </div>
+                                  <div className="col-md-3 col-sm-3 col-xs-12 nopadding">
+                                    <div className="styled-select-black">
+                                      <select ref="sortingBy">
+                                        <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
+                                        <option key={'price'} value={'price'}>{'Public Price'}</option>
+                                        <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
+                                        <option key={'description'} value={'description'}>{'Description'}</option>
                                       </select>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-2 col-sm-2 col-xs-12 nopadding margin-l10">
+                                    <div className="styled-select-black">
+                                        <select ref="sortingDirection">
+                                          <option key={'desc'} value={'desc'}>{'Descending'}</option>
+                                          <option key={'asc'} value={'asc'}>{'Ascending'}</option>
+                                        </select>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-5 col-sm-5 pagenavi nopadding pull-right">
+                                      <div className="searchresult-navi cat-go">
+                                          {this.renderPagination()}
+                                      </div>
                                   </div>
                                 </div>
-                                <div className="col-sm-12 pagenavi maring-t20">
-                                    <div className="searchresult-navi pull-right margin-r20">
-                                        {this.renderPagination()}
-                                    </div>
-                                </div>
-                              </div>
                           </div>
                       </div>
                       <div id="dvTotal">
                         {this.renderTotals()}
                       </div>
-                      <div className="col-sm-2 pagenavi maring-t20">
-                            <div className="searchresult-navi pull-right margin-r20">
-                                <input type="checkbox" id="checkbox1" className="styled" type="checkbox" />
-                                <label className="checkbox1">Select All</label>
-                                <button type="submit" className="btn btn-primary btn-radius">Delete All</button>
-                            </div>
-                      </div>
                       {/* End Header Search */}
+
                       {/* Util&Pagination */}
                       <div className="row">
                         <div className="col-sm-12">
+                          <div className="col-sm-12 pagenavi maring-t20 cat-line">
+                                <div className="checkbox checkbox-warning">
+                                    <input type="checkbox" id="checkbox1" className="styled" type="checkbox" />
+                                    <label className="checkbox1"></label>
+                                    <span className="margin-l10 text-vertical">Select All</span>
+                                </div>
+                                <div>
+                                  <span className="icon-det-28"></span><span className="margin-l5 text-del">Delete All</span>
+                                </div>
+                          </div>
                             <div className="panel panel-default">
                                 <div className="panel-body padding-ft0">
                                     <div className={'search-product' }>

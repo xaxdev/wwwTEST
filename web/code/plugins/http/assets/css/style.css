@@ -11,6 +11,7 @@ body{
 	font-family: 'open_sanslight';
 	color: #383735;
 }
+
 #scroller{
     height:60px;
 }
@@ -22,6 +23,8 @@ body{
 }
 .text-wrap{word-wrap: break-word;}
 .text-overflowhidden{overflow: hidden; max-height: 70px; height: auto;}
+.text-vertical{vertical-align: bottom;}
+.text-del{padding-top: 6px; position: absolute;}
 h1{
   color: #fff !important;
   padding: 17px 0;
@@ -299,6 +302,33 @@ select.form-searchresult option{
 .styled-select select::-ms-expand{
   display:none;
 }
+
+.styled-select-black {
+   background: url(/images/arrow-seaech-b.png) no-repeat 96%;
+   height: 35px;
+   overflow: hidden;
+   width: 100%;
+   border: 1px solid #5b5959;
+   padding: 0px 12px 0 0;
+}
+
+.styled-select-black select {
+   background: transparent;
+   border: none;
+   font-size: 14px;
+   height: 33px;
+   padding: 5px 5px; /* If you add too much padding here, the options won't show in IE */
+   width: 100%;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  -o-appearance:none;
+   appearance:none;
+    -moz-appearance: none;
+}
+
+.styled-select-black select::-ms-expand{
+  display:none;
+}
 .modal-dialog{margin: 11% auto; width: 500px;}
 .modal-title{padding:0;}
 .popexport .modal-dialog{width:50%!important;}
@@ -415,7 +445,6 @@ select.form-searchresult option{
 }
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover{border-color: #dac06b;}
 .bg-hearder{background: #383735; height: 60px;}
-.bg-hearder-mycatalog{background: #E8C66F; height: 60px;}
 .btn-primary {
     color: #fff;
     background-color: #ddbe6a !important;
@@ -710,6 +739,20 @@ select.form-searchresult option{
 	float: left;
 	cursor:pointer;
 }
+.icon-edit{
+	background: url(/images/icon-edit.png) no-repeat center;
+	width:40px;
+	height: 40px;
+	float: left;
+	cursor:pointer;
+}
+.icon-del{
+	background: url(/images/icon-del.png) no-repeat center;
+	width:40px;
+	height: 40px;
+	float: left;
+	cursor:pointer;
+}
 .icon-search{
 	background: url(/images/icon-search-30.png) no-repeat center;
 	width:30px;
@@ -717,9 +760,11 @@ select.form-searchresult option{
 	float: left;
 	cursor:pointer;
 }
+
 .searchresult-navi{float:right;}
 .searchresult-navi div {margin-top: 0px;}
-.searchresult-navi input{margin:0 5px; text-align: center; height: 33px;}
+.searchresult-navi input{margin:0 5px; text-align: center; height: 33px; background: transparent;
+    border: 1px solid #5b5959;}
 .searchresult-navi span{padding:0 3px;}
 .searchresult-navi div, .searchresult-navi ul{float:left; margin-bottom:10px;}
 .relete ul{width:100%;}
@@ -744,10 +789,16 @@ select.form-searchresult option{
     float: left;
     width: 100%;
     padding: 10px 0;
-    margin: 0px 0 10px 0;
 }
 .icon-add-28{
 	background: url(/images/icon-add-28.png) no-repeat center;
+	width:28px;
+	height: 28px;
+	float: left;
+	cursor: pointer;
+}
+.icon-det-28{
+	background: url(/images/icon-delete-28.png) no-repeat center;
 	width:28px;
 	height: 28px;
 	float: left;
@@ -838,6 +889,8 @@ select.form-searchresult option{
 .quick-view{
   margin-right: 0px;
   max-width: 23px;
+  position: absolute;
+  right: 0px;
 }
 .searchresult-close{
   position: absolute;
@@ -1286,18 +1339,21 @@ select.form-searchresult option{
 
 /*All Page*/
 		.checkbox {
-		  padding-left: 20px; }
+		  padding-left: 10px;
+      padding-right: 10px;
+      margin-top:2px;}
 		  .checkbox label {
 		    display: inline-block;
 		    vertical-align: middle;
 		    position: relative;
-		    padding-left: 0px; }
+		    padding-left: 0px;
+        min-height: 24px;}
 		    .checkbox label::before {
 		      content: "";
 		      display: inline-block;
 		      position: absolute;
-		      width: 28px;
-		      height: 28px;
+		      width: 24px;
+		      height: 24px;
 		      left: 0;
 		      margin-left: -10px;
 		      border: 1px solid #ddbe6a;
@@ -1309,19 +1365,19 @@ select.form-searchresult option{
 		    .checkbox label::after {
 		      display: inline-block;
 			    position: absolute;
-			    width: 28px;
-			    height: 28px;
+			    width: 24px;
+			    height: 24px;
 			    left: 0;
 			    top: 0px;
-			    margin-left: -10px;
+			    margin-left: -9px;
 			    padding-left: 0px;
 			    padding-top: 0;
-			    font-size: 20px;
+			    font-size: 16px;
 			    color: #555555; }
 			.checkbox input[type="checkbox"]{
-					width:28px;
-					height:28px;
-					margin:0 0 0 -10px;
+					width:24px;
+					height:24px;
+					margin:0;
 					cursor:pointer;
 			}
 		  .checkbox input[type="checkbox"],
@@ -1378,6 +1434,10 @@ select.form-searchresult option{
 		.checkbox-warning input[type="radio"]:indeterminate + label::after {
 		  background-color: #fff;
 		}
+    .checkbox-del{
+      padding-left: 20px;
+      padding-right: 20px;
+    }
 		.table thead{
 			background-color: #383735;
 			color:#ffffff;
@@ -1400,7 +1460,6 @@ select.form-searchresult option{
 		}
 		.sort-icon:after{float:none !important;}
 
-.icon-add{display: none;}
 .searchresult-prodcut .pull-right
 .searchresult-prodcut .pull-right {
   position: absolute;
@@ -1421,4 +1480,33 @@ select.form-searchresult option{
     color: #cfbd8b;
     margin-top: 12px;
     font-size: 24px;
+}
+
+/*Mycatalog*/
+.bg-hearder-mycatalog{background: url(/images/bg-title-my-catalog.jpg) no-repeat center top;}
+.cat-title{
+  text-align: center;
+}
+.cat-title h1{
+  color: #000 !important;
+  font-size: 40px !important;
+}
+.cat-sort{
+  padding: 0 5px;
+  width: 12%;
+}
+.cat-go	button {
+    background-color: #383735;
+    border-color: #383735;
+    border-radius: 16px;
+    padding: 5px 20px;
+    border: none;
+    margin-left: 15px;
+    font-family: 'open_sanssemibold';
+    color: #ddbe6a;
+}
+.cat-line{border-bottom:1px solid #eaeaea;}
+.cat-label{margin:0 10px 0 20px;}
+.checkbox1 {
+    margin: 0 14px 0 10px;
 }
