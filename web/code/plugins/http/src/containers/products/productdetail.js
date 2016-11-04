@@ -759,8 +759,7 @@ class productdetail extends Component {
                   <div className="panel-body padding-ft0">
 
                 <div className="col-md-12 col-sm-12 icon-detail">
-                  <a><div className="icon-add margin-l10"></div></a>
-                  <a><div className="icon-print margin-l10" onClick={ this.addMyCatalog }></div></a>
+                  <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
                   <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                   {this.zoomicon()}
                 </div>

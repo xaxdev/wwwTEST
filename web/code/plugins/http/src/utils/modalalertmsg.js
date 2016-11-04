@@ -20,11 +20,11 @@ class ModalAlertmsg extends Component {
                 <h1 className="modal-title">ADD TO CATALOG</h1>
               </div>
               <div className="modal-body">
-                <div className="col-sm-12">
+                <div className="col-sm-12 text-center">
                   {message}
                 </div>
               </div>
-              <div className="modal-footer">
+              <div className="modal-footer maring-t20">
                   <button type="button" className="btn btn-default btn-radius" onClick={isClose}>
                       Ok
                   </button>

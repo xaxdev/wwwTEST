@@ -52,11 +52,11 @@ class ModalMyCatalog extends Component {
                 <h1 className="modal-title">ADD TO CATALOG</h1>
               </div>
               <div className="modal-body">
-                Add this item to:
+                <b>Add this item to:</b>
                 <br/>
-                <div className="col-sm-12">
+                <div className="col-sm-12 maring-b10 maring-t10">
                   <div className="col-sm-6">
-                      <label className="col-sm-6 control-label">Catalog exits</label>
+                      <label className="col-sm-12 control-label">Catalog exits</label>
                   </div>
                   <div className="col-sm-6">
                       <select className="form-control" {...oldCatalogName}>
@@ -69,9 +69,9 @@ class ModalMyCatalog extends Component {
                       </select>
                   </div>
                 </div>
-                <div className="col-md-12">
+                <div className="col-md-12 maring-b10">
                     <div className="col-sm-6">
-                        <label className="col-sm-6 control-label">Or New Catalog</label>
+                        <label className="col-sm-12 control-label">Or New Catalog</label>
                     </div>
                     <div className="col-sm-6">
                         <input type="text" className="form-control" {...newCatalogName} disabled={nameDisable}/>

@@ -335,15 +335,15 @@ class MyCatalog extends Component {
                 return(
                     <form role="form">
                       {/* Header Search */}
-                      <div className="col-sm-12 bg-hearder-mycatalog bg-header-searchresult">
+                      <div className="col-sm-12 col-xs-12 bg-hearder-mycatalog">
                           <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
-                          <div className="col-md-12 col-sm-12">
-                                <div className="col-md-6 col-sm-6 col-xs-12 nopadding">
-                                    <div className="col-md-6 col-sm-6 col-xs-12 nopadding">
-                                      <div className="col-md-4 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
-                                      <div className="col-md-8 col-sm-8 col-xs-12">
+                          <div className="col-md-12 col-sm-12 col-xs-12">
+                                <div className="col-lg-6 col-md-5 col-sm-12 col-xs-12 nopadding">
+                                    <div className="col-lg-6 col-md-7 col-sm-6 col-xs-12 nopadding">
+                                      <div className="col-lg-4 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
+                                      <div className="col-lg-8 col-md-7 col-sm-8 col-xs-12 m-nopadding">
                                           <div className="styled-select-black">
-                                            <select>
+                                            <select onChange={this.selectedCatalog}  ref="catalog">
                                               {
                                                   this.props.listCatalogName.map((cat) => {
                                                       return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
@@ -354,18 +354,18 @@ class MyCatalog extends Component {
                                       </div>
                                     </div>
 
-                                    <div className="col-md-6 col-sm-6 col-xs-12 nopadding">
+                                    <div className="col-lg-6 col-md-5 col-sm-6 col-xs-12 nopadding">
                                       <a><div className="icon-edit"></div></a>
                                       <a><div className="icon-del"></div></a>
                                       <a><div className="icon-print"></div></a>
                                     </div>
 
                                   </div>
-                                <div className="col-md-6 col-sm-6 col-xs-12 nopadding">
+                                <div className="col-lg-6 col-md-7 col-sm-12 col-xs-12 nopadding">
                                   <div className="cat-sort col-xs-12 margin-t5">
                                     <ControlLabel>Sort By : </ControlLabel>
                                   </div>
-                                  <div className="col-md-3 col-sm-3 col-xs-12 nopadding">
+                                  <div className="col-md-3 col-sm-3 col-xs-12 nopadding m-bottom-5">
                                     <div className="styled-select-black">
                                       <select ref="sortingBy">
                                         <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
@@ -375,7 +375,7 @@ class MyCatalog extends Component {
                                       </select>
                                     </div>
                                   </div>
-                                  <div className="col-md-2 col-sm-2 col-xs-12 nopadding margin-l10">
+                                  <div className="col-md-2 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
                                     <div className="styled-select-black">
                                         <select ref="sortingDirection">
                                           <option key={'desc'} value={'desc'}>{'Descending'}</option>
@@ -383,7 +383,7 @@ class MyCatalog extends Component {
                                         </select>
                                     </div>
                                   </div>
-                                  <div className="col-md-5 col-sm-5 pagenavi nopadding pull-right">
+                                  <div className="col-md-5 col-sm-4 pagenavi nopadding pull-right">
                                       <div className="searchresult-navi cat-go">
                                           {this.renderPagination()}
                                       </div>
@@ -398,11 +398,11 @@ class MyCatalog extends Component {
 
                       {/* Util&Pagination */}
                       <div className="row">
-                        <div className="col-sm-12">
-                          <div className="col-sm-12 pagenavi maring-t20 cat-line">
+                        <div className="col-sm-12 col-xs-12">
+                          <div className="col-sm-12 col-xs-12 pagenavi maring-t20 cat-line">
                                 <div className="checkbox checkbox-warning">
                                     <input type="checkbox" id="checkbox1" className="styled" type="checkbox" />
-                                    <label className="checkbox1"></label>
+                                    <label className="checkbox1 select"></label>
                                     <span className="margin-l10 text-vertical">Select All</span>
                                 </div>
                                 <div>

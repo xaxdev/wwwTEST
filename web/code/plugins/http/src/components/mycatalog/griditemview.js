@@ -655,7 +655,7 @@ class GridItemsView extends Component {
                       </div>
                       <div className="grid-add margin-r5">
                         <span className="icon-det-28" name={item.id} id={index} value={item.id}
-                          onClick={onAddedOneItemMyCatalog}></span>
+                          onClick={onDeleteOneItemMyCatalog}></span>
                       </div>
                       <span className="quick-view"><img  src="/images/quick-view.jpg" responsive name={item.id} id={index} onClick={showDetails}/></span>
                     </div>
