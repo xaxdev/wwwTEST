@@ -1,6 +1,8 @@
 import React, { Component, PropTypes }from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { Button,FormControl,Pagination, ControlLabel, DropdownButton, MenuItem } from 'react-bootstrap';
+import ToolTip from 'react-portal-tooltip';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import * as itemactions from '../../actions/itemactions';
 import numberFormat from '../../utils/convertNumberformat';
@@ -22,16 +24,19 @@ class MyCatalog extends Component {
         this.selectedCatalog = this.selectedCatalog.bind(this);
         this.deleteOneItemMyCatalog = this.deleteOneItemMyCatalog.bind(this);
         this.handleSubmitDeleteItem = this.handleSubmitDeleteItem.bind(this);
+        this.showTooltip = this.showTooltip.bind(this);
+        this.hideTooltip = this.hideTooltip.bind(this);
 
         this.state = {
           activePage: this.props.currentPage,
           isOpenDeleteItem: false,
-          isOpenAddMyCatalogmsg: false
+          isOpenAddMyCatalogmsg: false,
+          isTooltipActive: false
         }
 
     }
 
-    componentWillMount() {
+    componentWillMount = _=>{
         this.props.getCatalogName().then((value) => {
             if (value) {
                 // console.log('componentWillMount-->',this.props.listCatalogName);
@@ -43,11 +48,26 @@ class MyCatalog extends Component {
         });
     }
 
-    componentDidMount() {
+    componentDidMount = _=>{
         if(this.props.listCatalogName.length != 0){
             let parasm = {id: this.props.listCatalogName[0]._id, page:1, size:16};
             this.props.getCatalogItems(parasm);
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+      // console.log('nextProps.currentPage-->',nextProps.currentPage);
+      // console.log('nextState-->',nextState);
+      return shallowCompare(this, nextProps, nextState);
+    }
+
+    showTooltip = _=> {
+        console.log('showTooltip');
+        this.setState({isTooltipActive: true})
+    }
+    hideTooltip = _=>{
+        console.log('hideTooltip');
+        this.setState({isTooltipActive: false})
     }
 
     onClickGrid(pageNumber) {
@@ -327,6 +347,18 @@ class MyCatalog extends Component {
     }
 
     render() {
+            const { fields:{ catalog }, catalogId } = this.props;
+            let style = {
+                style: {
+                    background: 'rgba(0,0,0,.8)',
+                    padding: 20,
+                    boxShadow: '5px 5px 3px rgba(0,0,0,.5)'
+                },
+                arrowStyle: {
+                    color: 'rgba(0,0,0,.8)',
+                    borderColor: false
+                }
+            }
             console.log('listCatalogName-->',this.props.listCatalogName);
             console.log('listCatalogItems-->',this.props.listCatalogItems);
 
@@ -354,12 +386,21 @@ class MyCatalog extends Component {
                                       </div>
                                     </div>
 
-                                    <div className="col-lg-6 col-md-5 col-sm-6 col-xs-12 nopadding">
-                                      <a><div className="icon-edit"></div></a>
-                                      <a><div className="icon-del"></div></a>
-                                      <a><div className="icon-print"></div></a>
-                                    </div>
+                                    <div className="col-lg-6 col-md-5 col-sm-6 col-xs-12 nopadding"  >
 
+                                        <a><div className="icon-edit" id="edit" onMouseEnter={this.showTooltip}
+                                            onMouseLeave={this.hideTooltip}></div></a>
+                                        <ToolTip active={this.state.isTooltipActive} position="bottom"
+                                            arrow="center" parent="#edit" >
+                                            <div>
+                                                <p>Edit Catalog Name</p>
+                                                <input type="text" className="form-control" {...catalog} />
+                                                <img src="/images/blank.gif"/>
+                                            </div>
+                                        </ToolTip>
+                                        <a><div className="icon-del" ></div></a>
+                                        <a><div className="icon-print" ></div></a>
+                                    </div>
                                   </div>
                                 <div className="col-lg-6 col-md-7 col-sm-12 col-xs-12 nopadding">
                                   <div className="cat-sort col-xs-12 margin-t5">
@@ -440,6 +481,7 @@ class MyCatalog extends Component {
 }
 function mapStateToProps(state) {
     return {
+        initialValues: state.myCatalog.listCatalogItems,
         listCatalogName: state.searchResult.ListCatalogName,
         listCatalogItems: state.myCatalog.listCatalogItems,
         currentPage: state.myCatalog.currentPage,
@@ -451,5 +493,5 @@ MyCatalog.contextTypes = {
 };
 module.exports = reduxForm({
   form: 'MyCatalog',
-  fields: ['currPage'],
+  fields: ['currPage','catalog'],
 },mapStateToProps,itemactions)(MyCatalog)
