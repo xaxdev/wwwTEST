@@ -3,10 +3,44 @@ import fetch from 'isomorphic-fetch';
 
 import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS,
   SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW,
-  GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG
+  GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG,
+  SET_NEWCATALOGNAME, DELETE_CATALOG
 } from '../constants/itemconstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
+export function deleteCatalog(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog/${params.id}`;
+  return {
+            type: DELETE_CATALOG,
+    		promise: fetch(url,{
+                method: 'DELETE',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': token
+                }
+            }),
+            catalogId: params.id
+  }
+}
+export function setNewCatalogName(params){
+    const token = sessionStorage.token;
+    var url = `${ROOT_URL}/api/catalog/rename`;
+    return {
+            type: SET_NEWCATALOGNAME,
+      		promise: fetch(url,{
+                  method: 'PUT',
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                  },
+                  body: JSON.stringify(params)
+              }),
+            catalogName: params.catalog
+    }
+}
 export function setSelectedCatalog(value){
   return {
           type: SET_SLECTEDCATALOG,

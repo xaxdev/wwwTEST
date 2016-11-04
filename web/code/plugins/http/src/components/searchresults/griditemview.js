@@ -21,6 +21,7 @@ class GridItemsView extends Component {
     this.onMouseOverGrid = this.onMouseOverGrid.bind(this);
     this.onMouseOutGrid = this.onMouseOutGrid.bind(this);
     this.onClickQuickView = this.onClickQuickView.bind(this);
+    this.hideQuickView = this.hideQuickView.bind(this);
 
     this.state = {
       isOpen0: false,
@@ -545,6 +546,195 @@ class GridItemsView extends Component {
       break;
     }
   }
+  hideQuickView(e){
+      switch(e.currentTarget.id){
+      case '0':
+        this.setState({isOpen0:false});
+        break;
+      case '1':
+        this.setState({isOpen1:false});
+        break;
+      case '2':
+        this.setState({isOpen2:false});
+        break;
+      case '3':
+        this.setState({isOpen3:false});
+        break;
+      case '4':
+        this.setState({isOpen4:false});
+        break;
+      case '5':
+        this.setState({isOpen5:false});
+        break;
+      case '6':
+        this.setState({isOpen6:false});
+        break;
+      case '7':
+        this.setState({isOpen7:false});
+        break;
+      case '8':
+        this.setState({isOpen8:false});
+        break;
+      case '9':
+        this.setState({isOpen9:false});
+        break;
+      case '10':
+        this.setState({isOpen10:false});
+        break;
+      case '11':
+        this.setState({isOpen11:false});
+        break;
+      case '12':
+        this.setState({isOpen12:false});
+        break;
+      case '13':
+        this.setState({isOpen13:false});
+        break;
+      case '14':
+        this.setState({isOpen14:false});
+        break;
+      case '15':
+        this.setState({isOpen15:false});
+        break;
+      case '16':
+        this.setState({isOpen16:false});
+        break;
+      case '17':
+        this.setState({isOpen17:false});
+        break;
+      case '18':
+        this.setState({isOpen18:false});
+        break;
+      case '19':
+        this.setState({isOpen19:false});
+        break;
+      case '20':
+        this.setState({isOpen20:false});
+        break;
+      case '21':
+        this.setState({isOpen21:false});
+        break;
+      case '22':
+        this.setState({isOpen22:false});
+        break;
+      case '23':
+        this.setState({isOpen23:false});
+        break;
+      case '24':
+        this.setState({isOpen24:false});
+        break;
+      case '25':
+        this.setState({isOpen25:false});
+        break;
+      case '26':
+        this.setState({isOpen26:false});
+        break;
+      case '27':
+        this.setState({isOpen27:false});
+        break;
+      case '28':
+        this.setState({isOpen28:false});
+        break;
+      case '29':
+        this.setState({isOpen29:false});
+        break;
+      case '30':
+        this.setState({isOpen30:false});
+        break;
+      case '31':
+        this.setState({isOpen31:false});
+        break;
+      case '32':
+        this.setState({isOpen32:false});
+        break;
+      case '33':
+        this.setState({isOpen33:false});
+        break;
+      case '34':
+        this.setState({isOpen34:false});
+        break;
+      case '35':
+        this.setState({isOpen35:false});
+        break;
+      case '36':
+        this.setState({isOpen36:false});
+        break;
+      case '37':
+        this.setState({isOpen37:false});
+        break;
+      case '38':
+        this.setState({isOpen38:false});
+        break;
+      case '39':
+        this.setState({isOpen39:false});
+        break;
+      case '40':
+        this.setState({isOpen40:false});
+        break;
+      case '41':
+        this.setState({isOpen41:false});
+        break;
+      case '42':
+        this.setState({isOpen42:false});
+        break;
+      case '43':
+        this.setState({isOpen43:false});
+        break;
+      case '44':
+        this.setState({isOpen44:false});
+        break;
+      case '45':
+        this.setState({isOpen45:false});
+        break;
+      case '46':
+        this.setState({isOpen46:false});
+        break;
+      case '47':
+        this.setState({isOpen47:false});
+        break;
+      case '48':
+        this.setState({isOpen48:false});
+        break;
+      case '49':
+        this.setState({isOpen49:false});
+        break;
+      case '50':
+        this.setState({isOpen50:false});
+        break;
+      case '51':
+        this.setState({isOpen51:false});
+        break;
+      case '52':
+        this.setState({isOpen52:false});
+        break;
+      case '53':
+        this.setState({isOpen53:false});
+        break;
+      case '54':
+        this.setState({isOpen54:false});
+        break;
+      case '55':
+        this.setState({isOpen55:false});
+        break;
+      case '56':
+        this.setState({isOpen56:false});
+        break;
+      case '57':
+        this.setState({isOpen57:false});
+        break;
+      case '58':
+        this.setState({isOpen58:false});
+        break;
+      case '59':
+        this.setState({isOpen59:false});
+        break;
+      case '60':
+        this.setState({isOpen60:false});
+        break;
+      default:
+        break;
+      }
+  }
   renderShowDetails(){
     // console.log('renderShowDetails this.state.isOpen-->',this.state.isOpen);
       return(
@@ -583,7 +773,7 @@ class GridItemsView extends Component {
                             ;
             let itemNameCat = (item.type != 'CER')? item.description: item.name;
            return (
-              <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
+              <div onMouseLeave={that.hideQuickView} key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
                                  (index==1)? `searchresult-prodcut ${that.state.isOpen1? 'searchresult-border': ''}`:
                                  (index==2)? `searchresult-prodcut ${that.state.isOpen2? 'searchresult-border': ''}`:
@@ -681,7 +871,7 @@ class GridItemsView extends Component {
                     <span className="line"></span>
                  </div>
                     <div>
-                     <div key={item.id}  id={index} style={{
+                     <div onMouseLeave={that.hideQuickView} key={item.id}  id={index} style={{
                             display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
                                     (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
                                     (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:

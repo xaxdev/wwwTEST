@@ -26,12 +26,17 @@ class MyCatalog extends Component {
         this.handleSubmitDeleteItem = this.handleSubmitDeleteItem.bind(this);
         this.showTooltip = this.showTooltip.bind(this);
         this.hideTooltip = this.hideTooltip.bind(this);
+        this.changeCatalogName = this.changeCatalogName.bind(this);
+        this.saveCatalogName = this.saveCatalogName.bind(this);
+        this.deleteCatalog = this.deleteCatalog.bind(this);
+        this.handleSubmitDeleteCatalog = this.handleSubmitDeleteCatalog.bind(this);
 
         this.state = {
           activePage: this.props.currentPage,
           isOpenDeleteItem: false,
           isOpenAddMyCatalogmsg: false,
-          isTooltipActive: false
+          isTooltipActive: false,
+          isOpenDeleteCatalog: false
         }
 
     }
@@ -49,25 +54,52 @@ class MyCatalog extends Component {
     }
 
     componentDidMount = _=>{
+        // console.log('componentDidMount-->');
         if(this.props.listCatalogName.length != 0){
             let parasm = {id: this.props.listCatalogName[0]._id, page:1, size:16};
             this.props.getCatalogItems(parasm);
         }
     }
+    componentWillReceiveProps(nextProps) {
+      // console.log('nextProps-->',nextProps);
 
-    shouldComponentUpdate(nextProps, nextState) {
-      // console.log('nextProps.currentPage-->',nextProps.currentPage);
-      // console.log('nextState-->',nextState);
-      return shallowCompare(this, nextProps, nextState);
+    //   console.log('componentWillReceiveProps-->');
+      let inputCatalogName = this.refs.catalogName;
+      if (inputCatalogName != undefined) {
+          if (this.props.catalogName != nextProps.catalogName) {
+              inputCatalogName.value = nextProps.catalogName;
+          }
+      }
+    }
+
+    saveCatalogName = (e)=> {
+        e.preventDefault();
+        const { fields: { catalog }, catalogId } = this.props;
+        let params = {id: catalogId, catalog: catalog.value};
+        // console.log(params);
+        this.setState({isTooltipActive: false});
+        this.props.setNewCatalogName(params).then((value) => {
+            if(value){
+                this.props.getCatalogName();
+            }
+        });
+    }
+
+    changeCatalogName = (e)=> {
+        e.preventDefault();
+        const catalogName = e.target.value;
+        const { fields: { catalog } } = this.props;
+        // console.log('catalogName-->',catalogName);
+        catalog.onChange(catalogName);
     }
 
     showTooltip = _=> {
-        console.log('showTooltip');
+        // console.log('showTooltip');
         this.setState({isTooltipActive: true})
     }
     hideTooltip = _=>{
-        console.log('hideTooltip');
-        this.setState({isTooltipActive: false})
+        // console.log('hideTooltip');
+        this.setState({isTooltipActive: false});
     }
 
     onClickGrid(pageNumber) {
@@ -128,9 +160,9 @@ class MyCatalog extends Component {
 
     selectedCatalog = (e) =>{
         e.preventDefault();
-
+        const { fields: { catalog } } = this.props;
         const catalogId = e.target.value;
-        console.log('catalogId-->',catalogId);
+        // console.log('catalogId-->',catalogId);
         let parasm = {id: catalogId, page:1, size:16};
         this.props.getCatalogItems(parasm);
     }
@@ -232,6 +264,10 @@ class MyCatalog extends Component {
         this.setState({isOpenDeleteItem: true});
     }
 
+    deleteCatalog = _=> {
+        this.setState({isOpenDeleteCatalog: true});
+    }
+
     handleSubmitDeleteItem = (e)=>{
         e.preventDefault();
         const { catalogId } = this.props;
@@ -247,7 +283,7 @@ class MyCatalog extends Component {
         let params ={id: catalogId, items: items};
         // console.log('params-->',params);
         this.props.deleteCatalogItems(params).then( () =>{
-            console.log('Deleted!');
+            // console.log('Deleted!');
             let parasm = {id: catalogId, page:1, size:16};
             this.props.getCatalogItems(parasm);
 
@@ -256,12 +292,37 @@ class MyCatalog extends Component {
 
     }
 
+    handleSubmitDeleteCatalog = (e)=>{
+        e.preventDefault();
+        const { catalogId } = this.props;
+        // console.log('Deleted!-->',catalogId);
+        let params = {id: catalogId}
+        this.setState({isOpenDeleteCatalog: false});
+        this.props.deleteCatalog(params).then((valueDelete) => {
+            if (valueDelete) {
+                this.props.getCatalogName().then((valueGetCatalog) => {
+                    if (valueGetCatalog) {
+                        // console.log('componentWillMount-->',this.props.listCatalogName);
+                        if(this.props.listCatalogName.length != 0){
+                            let parasm = {id: this.props.listCatalogName[0]._id, page:1, size:16};
+                            this.props.getCatalogItems(parasm);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     handleCloseDeleteItem = _=>{
         this.setState({isOpenDeleteItem: false});
     }
 
     handleClosemsg = _=>{
         this.setState({isOpenAddMyCatalogmsg: false});
+    }
+
+    handleCloseDeleteCatalog = _=>{
+        this.setState({isOpenDeleteCatalog: false});
     }
 
     renderPagination(){
@@ -291,8 +352,17 @@ class MyCatalog extends Component {
     }
 
     renderModalConfirmDelete = _=> {
+        const title = 'Delete Item';
+        const msg = 'Are you sure you want to delete this item?';
         return(<ModalConfirmDelete onSubmit={this.handleSubmitDeleteItem} isOpen={this.state.isOpenDeleteItem}
-            isClose={this.handleCloseDeleteItem} props={this.props}/>);
+            isClose={this.handleCloseDeleteItem} props={this.props} message={msg} title={title}/>);
+    }
+
+    renderModalConfirmDeleteCatalog = _=> {
+        const title = 'Delete Catalog';
+        const msg = 'Are you sure you want to delete this catalog?';
+        return(<ModalConfirmDelete onSubmit={this.handleSubmitDeleteCatalog} isOpen={this.state.isOpenDeleteCatalog}
+            isClose={this.handleCloseDeleteCatalog} props={this.props} message={msg} title={title}/>);
     }
 
     renderTotals(){
@@ -347,7 +417,7 @@ class MyCatalog extends Component {
     }
 
     render() {
-            const { fields:{ catalog }, catalogId } = this.props;
+            const {  fields:{ catalog }, catalogId, catalogName } = this.props;
             let style = {
                 style: {
                     background: 'rgba(0,0,0,.8)',
@@ -359,8 +429,8 @@ class MyCatalog extends Component {
                     borderColor: false
                 }
             }
-            console.log('listCatalogName-->',this.props.listCatalogName);
-            console.log('listCatalogItems-->',this.props.listCatalogItems);
+            // console.log('catalogName-->',catalogName);
+            // console.log('listCatalogName-->',this.props.listCatalogName);
 
             let items = this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [];
             if(items.length != 0){
@@ -394,11 +464,15 @@ class MyCatalog extends Component {
                                             arrow="center" parent="#edit" >
                                             <div>
                                                 <p>Edit Catalog Name</p>
-                                                <input type="text" className="form-control" {...catalog} />
-                                                <img src="/images/blank.gif"/>
+                                                <input type="text" className="form-control" placeholder={catalogName}
+                                                onChange={this.changeCatalogName} ref="catalogName"/>
+                                                <button type="button" className="btn btn-default btn-radius"
+                                                    onClick={this.saveCatalogName}>
+                                                    save
+                                                </button>
                                             </div>
                                         </ToolTip>
-                                        <a><div className="icon-del" ></div></a>
+                                        <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
                                         <a><div className="icon-print" ></div></a>
                                     </div>
                                   </div>
@@ -462,6 +536,7 @@ class MyCatalog extends Component {
                         </div>
                       </div>
                       {this.renderModalConfirmDelete()}
+                      {this.renderModalConfirmDeleteCatalog()}
                       {this.renderAlertmsg()}
                     </form>
                 );
@@ -485,7 +560,8 @@ function mapStateToProps(state) {
         listCatalogName: state.searchResult.ListCatalogName,
         listCatalogItems: state.myCatalog.listCatalogItems,
         currentPage: state.myCatalog.currentPage,
-        catalogId: state.myCatalog.catalogId
+        catalogId: state.myCatalog.catalogId,
+        catalogName: state.myCatalog.catalogName
     }
 }
 MyCatalog.contextTypes = {
@@ -493,5 +569,5 @@ MyCatalog.contextTypes = {
 };
 module.exports = reduxForm({
   form: 'MyCatalog',
-  fields: ['currPage','catalog'],
+  fields: ['currPage', 'catalog'],
 },mapStateToProps,itemactions)(MyCatalog)

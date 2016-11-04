@@ -28,17 +28,17 @@ class ModalMyCatalog extends Component {
     const { fields: {
               oldCatalogName,newCatalogName,validateCatalogName
           } } = props;
-    const { isOpen, isClose, handleSubmitCatalog, onSubmit } = this.props;
+    const { isOpen, isClose, handleSubmitCatalog, onSubmit, message, title } = this.props;
 
     return(
           <div  className="addMyCatalog">
             <Modal isOpen={isOpen} >
               <div className="modal-header">
                 <ModalClose onClick={isClose}/>
-                <h1 className="modal-title">Delete Item</h1>
+                <h1 className="modal-title">{title}</h1>
               </div>
               <div className="modal-body">
-                Are you sure you want to delete this item?
+                {message}
                 <br/>
               </div>
               <div className="modal-footer">
