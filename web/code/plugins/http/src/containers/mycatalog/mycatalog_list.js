@@ -106,7 +106,7 @@ class MyCatalog extends Component {
       // console.log('onClickGrid==>',pageNumber);
       const token = sessionStorage.token;
       if(token){
-          this.context.router.push(`/productdetail/${pageNumber}`);
+          this.context.router.push(`/productreletedetail/${pageNumber}`);
       }
     }
 
@@ -483,8 +483,6 @@ class MyCatalog extends Component {
                                   <div className="col-md-3 col-sm-3 col-xs-12 nopadding m-bottom-5">
                                     <div className="styled-select-black">
                                       <select ref="sortingBy">
-                                        <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                        <option key={'price'} value={'price'}>{'Public Price'}</option>
                                         <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                         <option key={'description'} value={'description'}>{'Description'}</option>
                                       </select>

@@ -5,12 +5,14 @@ import shallowCompare from 'react-addons-shallow-compare';
 import numberFormat from '../../utils/convertNumberformat';
 import convertDate from '../../utils/convertDate';
 import ReactImageFallback from 'react-image-fallback';
+import {ReactPageClick} from 'react-page-click';
 
 function showDiv() {
    document.getElementById('searchresult-border').style.display = 'block';
 }
 // Used to cancel events.
-var preventDefault = e => e.preventDefault();
+let preventDefault = e => e.preventDefault();
+let gridView = 0;
 
 class GridItemsView extends Component {
   constructor(props) {
@@ -84,7 +86,8 @@ class GridItemsView extends Component {
       isOpen57: false,
       isOpen58: false,
       isOpen59: false,
-      isOpen60: false
+      isOpen60: false,
+      isOpenPop: false
     };
   }
   static propTypes = {
@@ -170,6 +173,11 @@ class GridItemsView extends Component {
 
     switch(e.currentTarget.id){
     case '0':
+        // console.log(this.refs.div0);
+        // var component = React.findDOMNode(this.refs.div0);
+        // component.on('click', function () {
+        //   $(this.hash).toggleClass('active').focus();
+        // });
       this.setState({isOpen0:true});
       break;
     case '1':
@@ -546,8 +554,8 @@ class GridItemsView extends Component {
       break;
     }
   }
-  hideQuickView(e){
-      switch(e.currentTarget.id){
+  hideQuickView(id){
+      switch(id.toString()){
       case '0':
         this.setState({isOpen0:false});
         break;
@@ -773,7 +781,7 @@ class GridItemsView extends Component {
                             ;
             let itemNameCat = (item.type != 'CER')? item.description: item.name;
            return (
-              <div onMouseLeave={that.hideQuickView} key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
+              <div key={item.id} name={item.id} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
                                  (index==1)? `searchresult-prodcut ${that.state.isOpen1? 'searchresult-border': ''}`:
                                  (index==2)? `searchresult-prodcut ${that.state.isOpen2? 'searchresult-border': ''}`:
@@ -872,98 +880,106 @@ class GridItemsView extends Component {
                     <span className="line"></span>
                  </div>
                     <div>
-                     <div onMouseLeave={that.hideQuickView} key={item.id}  id={index} style={{
-                            display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
-                                    (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
-                                    (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:
-                                    (index==3)?`${that.state.isOpen3 ? '' : 'none'}`:
-                                    (index==4)?`${that.state.isOpen4 ? '' : 'none'}`:
-                                    (index==5)?`${that.state.isOpen5 ? '' : 'none'}`:
-                                    (index==6)?`${that.state.isOpen6 ? '' : 'none'}`:
-                                    (index==7)?`${that.state.isOpen7 ? '' : 'none'}`:
-                                    (index==8)?`${that.state.isOpen8 ? '' : 'none'}`:
-                                    (index==9)?`${that.state.isOpen9 ? '' : 'none'}`:
-                                    (index==10)?`${that.state.isOpen10 ? '' : 'none'}`:
-                                    (index==11)?`${that.state.isOpen11 ? '' : 'none'}`:
-                                    (index==12)?`${that.state.isOpen12 ? '' : 'none'}`:
-                                    (index==13)?`${that.state.isOpen13 ? '' : 'none'}`:
-                                    (index==14)?`${that.state.isOpen14 ? '' : 'none'}`:
-                                    (index==15)?`${that.state.isOpen15 ? '' : 'none'}`:
-                                    (index==16)?`${that.state.isOpen16 ? '' : 'none'}`:
-                                    (index==17)?`${that.state.isOpen17 ? '' : 'none'}`:
-                                    (index==18)?`${that.state.isOpen18 ? '' : 'none'}`:
-                                    (index==19)?`${that.state.isOpen19 ? '' : 'none'}`:
-                                    (index==20)?`${that.state.isOpen20 ? '' : 'none'}`:
-                                    (index==21)?`${that.state.isOpen21 ? '' : 'none'}`:
-                                    (index==22)?`${that.state.isOpen22 ? '' : 'none'}`:
-                                    (index==23)?`${that.state.isOpen23 ? '' : 'none'}`:
-                                    (index==24)?`${that.state.isOpen24 ? '' : 'none'}`:
-                                    (index==25)?`${that.state.isOpen25 ? '' : 'none'}`:
-                                    (index==26)? `${that.state.isOpen26? '' : 'none'}`:
-                                    (index==27)? `${that.state.isOpen27? '' : 'none'}`:
-                                    (index==28)? `${that.state.isOpen28? '' : 'none'}`:
-                                    (index==29)? `${that.state.isOpen29? '' : 'none'}`:
-                                    (index==30)? `${that.state.isOpen30? '' : 'none'}`:
-                                    (index==31)? `${that.state.isOpen31? '' : 'none'}`:
-                                    (index==32)? `${that.state.isOpen32? '' : 'none'}`:
-                                    (index==33)? `${that.state.isOpen33? '' : 'none'}`:
-                                    (index==34)? `${that.state.isOpen34? '' : 'none'}`:
-                                    (index==35)? `${that.state.isOpen35? '' : 'none'}`:
-                                    (index==36)? `${that.state.isOpen36? '' : 'none'}`:
-                                    (index==37)? `${that.state.isOpen37? '' : 'none'}`:
-                                    (index==38)? `${that.state.isOpen38? '' : 'none'}`:
-                                    (index==39)? `${that.state.isOpen39? '' : 'none'}`:
-                                    (index==40)? `${that.state.isOpen40? '' : 'none'}`:
-                                    (index==41)? `${that.state.isOpen41? '' : 'none'}`:
-                                    (index==42)? `${that.state.isOpen42? '' : 'none'}`:
-                                    (index==43)? `${that.state.isOpen43? '' : 'none'}`:
-                                    (index==44)? `${that.state.isOpen44? '' : 'none'}`:
-                                    (index==45)? `${that.state.isOpen45? '' : 'none'}`:
-                                    (index==46)? `${that.state.isOpen46? '' : 'none'}`:
-                                    (index==47)? `${that.state.isOpen47? '' : 'none'}`:
-                                    (index==48)? `${that.state.isOpen48? '' : 'none'}`:
-                                    (index==49)? `${that.state.isOpen49? '' : 'none'}`:
-                                    (index==50)? `${that.state.isOpen50? '' : 'none'}`:
-                                    (index==51)? `${that.state.isOpen51? '' : 'none'}`:
-                                    (index==52)? `${that.state.isOpen52? '' : 'none'}`:
-                                    (index==53)? `${that.state.isOpen53? '' : 'none'}`:
-                                    (index==54)? `${that.state.isOpen54? '' : 'none'}`:
-                                    (index==55)? `${that.state.isOpen55? '' : 'none'}`:
-                                    (index==56)? `${that.state.isOpen56? '' : 'none'}`:
-                                    (index==57)? `${that.state.isOpen57? '' : 'none'}`:
-                                    (index==58)? `${that.state.isOpen58? '' : 'none'}`:
-                                    (index==59)? `${that.state.isOpen59? '' : 'none'}`:
-                                    (index==60)? `${that.state.isOpen60? '' : 'none'}`:
-                                    '',
-                            }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31
-                                ||index==35||index==39||index==43||index==47||index==51||index==55||index==59)?'over-searchresult-left':'over-searchresult' }>
-                            <img className="searchresult-close"  src="/images/icon-close.png" responsive
-                                name={item.id} id={index} onClick={hideDetails}/>
-                            <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
-                            <span className="width-f100">{item.reference}</span>
-                            <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
-                            <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
-                                '' : 'hidden'}`}>{actualCost}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>{updatedCost}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>{price}</span>
-                            <span className="width-f100 fc-ddbe6a font-b">Company : </span>
-                            <span className="width-f100">{item.companyName}</span>
-                            <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
-                            <span className="width-f100">{item.warehouseName}</span>
-                            <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
-                            <span className="width-f100">{itemDate}</span>
-                        </div>
+                        <ReactPageClick notify={(e) => {
+                                    if (e.target.id != '') {
+                                        gridView = e.target.id;
+                                    } else {
+                                        that.hideQuickView(gridView);
+                                    }
+                                }}>
+                             <div key={item.id}  id={index} ref={'div'+index} style={{
+                                    display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
+                                            (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
+                                            (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:
+                                            (index==3)?`${that.state.isOpen3 ? '' : 'none'}`:
+                                            (index==4)?`${that.state.isOpen4 ? '' : 'none'}`:
+                                            (index==5)?`${that.state.isOpen5 ? '' : 'none'}`:
+                                            (index==6)?`${that.state.isOpen6 ? '' : 'none'}`:
+                                            (index==7)?`${that.state.isOpen7 ? '' : 'none'}`:
+                                            (index==8)?`${that.state.isOpen8 ? '' : 'none'}`:
+                                            (index==9)?`${that.state.isOpen9 ? '' : 'none'}`:
+                                            (index==10)?`${that.state.isOpen10 ? '' : 'none'}`:
+                                            (index==11)?`${that.state.isOpen11 ? '' : 'none'}`:
+                                            (index==12)?`${that.state.isOpen12 ? '' : 'none'}`:
+                                            (index==13)?`${that.state.isOpen13 ? '' : 'none'}`:
+                                            (index==14)?`${that.state.isOpen14 ? '' : 'none'}`:
+                                            (index==15)?`${that.state.isOpen15 ? '' : 'none'}`:
+                                            (index==16)?`${that.state.isOpen16 ? '' : 'none'}`:
+                                            (index==17)?`${that.state.isOpen17 ? '' : 'none'}`:
+                                            (index==18)?`${that.state.isOpen18 ? '' : 'none'}`:
+                                            (index==19)?`${that.state.isOpen19 ? '' : 'none'}`:
+                                            (index==20)?`${that.state.isOpen20 ? '' : 'none'}`:
+                                            (index==21)?`${that.state.isOpen21 ? '' : 'none'}`:
+                                            (index==22)?`${that.state.isOpen22 ? '' : 'none'}`:
+                                            (index==23)?`${that.state.isOpen23 ? '' : 'none'}`:
+                                            (index==24)?`${that.state.isOpen24 ? '' : 'none'}`:
+                                            (index==25)?`${that.state.isOpen25 ? '' : 'none'}`:
+                                            (index==26)? `${that.state.isOpen26? '' : 'none'}`:
+                                            (index==27)? `${that.state.isOpen27? '' : 'none'}`:
+                                            (index==28)? `${that.state.isOpen28? '' : 'none'}`:
+                                            (index==29)? `${that.state.isOpen29? '' : 'none'}`:
+                                            (index==30)? `${that.state.isOpen30? '' : 'none'}`:
+                                            (index==31)? `${that.state.isOpen31? '' : 'none'}`:
+                                            (index==32)? `${that.state.isOpen32? '' : 'none'}`:
+                                            (index==33)? `${that.state.isOpen33? '' : 'none'}`:
+                                            (index==34)? `${that.state.isOpen34? '' : 'none'}`:
+                                            (index==35)? `${that.state.isOpen35? '' : 'none'}`:
+                                            (index==36)? `${that.state.isOpen36? '' : 'none'}`:
+                                            (index==37)? `${that.state.isOpen37? '' : 'none'}`:
+                                            (index==38)? `${that.state.isOpen38? '' : 'none'}`:
+                                            (index==39)? `${that.state.isOpen39? '' : 'none'}`:
+                                            (index==40)? `${that.state.isOpen40? '' : 'none'}`:
+                                            (index==41)? `${that.state.isOpen41? '' : 'none'}`:
+                                            (index==42)? `${that.state.isOpen42? '' : 'none'}`:
+                                            (index==43)? `${that.state.isOpen43? '' : 'none'}`:
+                                            (index==44)? `${that.state.isOpen44? '' : 'none'}`:
+                                            (index==45)? `${that.state.isOpen45? '' : 'none'}`:
+                                            (index==46)? `${that.state.isOpen46? '' : 'none'}`:
+                                            (index==47)? `${that.state.isOpen47? '' : 'none'}`:
+                                            (index==48)? `${that.state.isOpen48? '' : 'none'}`:
+                                            (index==49)? `${that.state.isOpen49? '' : 'none'}`:
+                                            (index==50)? `${that.state.isOpen50? '' : 'none'}`:
+                                            (index==51)? `${that.state.isOpen51? '' : 'none'}`:
+                                            (index==52)? `${that.state.isOpen52? '' : 'none'}`:
+                                            (index==53)? `${that.state.isOpen53? '' : 'none'}`:
+                                            (index==54)? `${that.state.isOpen54? '' : 'none'}`:
+                                            (index==55)? `${that.state.isOpen55? '' : 'none'}`:
+                                            (index==56)? `${that.state.isOpen56? '' : 'none'}`:
+                                            (index==57)? `${that.state.isOpen57? '' : 'none'}`:
+                                            (index==58)? `${that.state.isOpen58? '' : 'none'}`:
+                                            (index==59)? `${that.state.isOpen59? '' : 'none'}`:
+                                            (index==60)? `${that.state.isOpen60? '' : 'none'}`:
+                                            '',
+                                    }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31
+                                        ||index==35||index==39||index==43||index==47||index==51||index==55||index==59)?'over-searchresult-left':'over-searchresult' }>
+                                    <img className="searchresult-close"  src="/images/icon-close.png" responsive
+                                        name={item.id} id={index} onClick={hideDetails}/>
+                                    <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
+                                    <span className="width-f100">{item.reference}</span>
+                                    <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
+                                    <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
+                                    <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
+                                        '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
+                                    <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
+                                        '' : 'hidden'}`}>{actualCost}</span>
+                                    <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
+                                        '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
+                                    <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                        '' : 'hidden'}`}>{updatedCost}</span>
+                                    <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                        '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
+                                    <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                        '' : 'hidden'}`}>{price}</span>
+                                    <span className="width-f100 fc-ddbe6a font-b">Company : </span>
+                                    <span className="width-f100">{item.companyName}</span>
+                                    <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
+                                    <span className="width-f100">{item.warehouseName}</span>
+                                    <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
+                                    <span className="width-f100">{itemDate}</span>
+                             </div>
+                        </ReactPageClick>
                     </div>
             </div>
           )
