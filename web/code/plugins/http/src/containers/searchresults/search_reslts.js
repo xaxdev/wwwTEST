@@ -1614,7 +1614,7 @@ function mapStateToProps(state) {
     sortDirection: state.searchResult.SortDirection,
     showGridView: state.searchResult.ShowGridView,
     showListView: state.searchResult.ShowListView,
-    listCatalogName: state.searchResult.ListCatalogName
+    listCatalogName: state.myCatalog.ListCatalogName
    }
 }
 SearchResult.propTypes = {

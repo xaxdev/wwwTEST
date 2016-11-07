@@ -10,6 +10,8 @@ import GridItemsView from '../../components/mycatalog/griditemview';
 import ModalConfirmDelete from '../../utils/modalConfirmDelete.js';
 import Modalalertmsg from '../../utils/modalalertmsg';
 
+import { LASTMODIFIED, REFERENCE, DESCRIPTION, DESCENDING, ASCENDING } from '../../constants/itemconstants';
+
 const Loading = require('react-loading');
 
 let listMyCatalog = []
@@ -18,7 +20,6 @@ class MyCatalog extends Component {
     constructor(props) {
         super(props);
 
-        this.handleSelect = this.handleSelect.bind(this);
         this.handleGo = this.handleGo.bind(this);
         this.onClickGrid = this.onClickGrid.bind(this);
         this.selectedCatalog = this.selectedCatalog.bind(this);
@@ -30,6 +31,8 @@ class MyCatalog extends Component {
         this.saveCatalogName = this.saveCatalogName.bind(this);
         this.deleteCatalog = this.deleteCatalog.bind(this);
         this.handleSubmitDeleteCatalog = this.handleSubmitDeleteCatalog.bind(this);
+        this.changeSortingBy = this.changeSortingBy.bind(this);
+        this.changeSortingDirection = this.changeSortingDirection.bind(this);
 
         this.state = {
           activePage: this.props.currentPage,
@@ -45,9 +48,18 @@ class MyCatalog extends Component {
         this.props.getCatalogName().then((value) => {
             if (value) {
                 // console.log('componentWillMount-->',this.props.listCatalogName);
-                if(this.props.listCatalogName.length != 0){
-                    let parasm = {id: this.props.listCatalogName[0]._id, page:1, size:16};
-                    this.props.getCatalogItems(parasm);
+                if(this.props.listCatalogName != undefined){
+                    if(this.props.listCatalogName.length != 0){
+
+                        let parasm = {
+                                id: this.props.listCatalogName[0]._id,
+                                page: this.props.currentPage,
+                                size: 16,
+                                sort: this.props.catalogSortingBy,
+                                order: this.props.catalogSortDirection
+                            };
+                        this.props.getCatalogItems(parasm);
+                    }
                 }
             }
         });
@@ -55,9 +67,17 @@ class MyCatalog extends Component {
 
     componentDidMount = _=>{
         // console.log('componentDidMount-->');
-        if(this.props.listCatalogName.length != 0){
-            let parasm = {id: this.props.listCatalogName[0]._id, page:1, size:16};
-            this.props.getCatalogItems(parasm);
+        if(this.props.listCatalogName != undefined){
+            if(this.props.listCatalogName.length != 0){
+                let parasm = {
+                        id: this.props.listCatalogName[0]._id,
+                        page: this.props.currentPage,
+                        size: 16,
+                        sort: this.props.catalogSortingBy,
+                        order: this.props.catalogSortDirection
+                    };
+                this.props.getCatalogItems(parasm);
+            }
         }
     }
     componentWillReceiveProps(nextProps) {
@@ -70,6 +90,42 @@ class MyCatalog extends Component {
               inputCatalogName.value = nextProps.catalogName;
           }
       }
+    }
+
+    changeSortingDirection = (e)=> {
+        e.preventDefault();
+
+        let sortingDirection = e.target.value;
+        const pageSize = 16;
+        const { catalogId, listCatalogItems } = this.props;
+
+        let parasm = {
+                id: catalogId,
+                page: this.props.currentPage,
+                size: pageSize,
+                sort: this.props.catalogSortingBy,
+                order: sortingDirection
+            };
+        this.props.setCatalogSortDirection(sortingDirection);
+        this.props.getCatalogItems(parasm);
+    }
+
+    changeSortingBy = (e)=> {
+        e.preventDefault();
+
+        let sortingBy = e.target.value;
+        const pageSize = 16;
+        const { catalogId, listCatalogItems } = this.props;
+
+        let parasm = {
+                id: catalogId,
+                page: this.props.currentPage,
+                size: pageSize,
+                sort: sortingBy,
+                order: this.props.catalogSortDirection
+            };
+        this.props.setCatalogSortingBy(sortingBy);
+        this.props.getCatalogItems(parasm);
     }
 
     saveCatalogName = (e)=> {
@@ -112,7 +168,7 @@ class MyCatalog extends Component {
 
     handleGo(e){
         e.preventDefault();
-        console.log('handleGo-->',this.refs.reletego.value);
+        // console.log('handleGo-->',this.refs.reletego.value);
 
         const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
 
@@ -123,35 +179,23 @@ class MyCatalog extends Component {
             this.setState({isOpenAddMyCatalogmsg: true});
         //   this.renderAlertmsg('Page is invalid.');
         }else{
-            let sortingBy = '';
-
-            switch (this.refs.sortingBy.value) {
-              case 'price':
-                sortingBy = 'price.' + userLogin.currency;
-                break;
-              default:
-                sortingBy = this.refs.sortingBy.value;
-                break;
-            }
-
-            const sortingDirection = this.refs.sortingDirection.value;
             const pageSize = 16;
 
             this.setState({activePage: getPage});
-            // console.log('getPage-->',getPage);
-          //   let params = {
-          //     'page' : getPage,
-          //     'sortBy': sortingBy,
-          //     'sortDirections': sortingDirection,
-          //     'pageSize' : pageSize
-          //   };
-
 
             this.setState({
               showLoading: true
             });
 
-            let parasm = {id: catalogId, page: getPage, size: pageSize};
+            let parasm = {
+                    id: catalogId,
+                    page: getPage,
+                    size: pageSize,
+                    sort: this.props.catalogSortingBy,
+                    order: this.props.catalogSortDirection
+                };
+            this.props.setCatalogCurrentPage(getPage);
+
             this.props.getCatalogItems(parasm).then((value) => {
                 console.log(value);
             });
@@ -162,89 +206,17 @@ class MyCatalog extends Component {
         e.preventDefault();
         const { fields: { catalog } } = this.props;
         const catalogId = e.target.value;
+        this.setState({activePage: 1});
+        this.props.setCatalogCurrentPage(1);
         // console.log('catalogId-->',catalogId);
-        let parasm = {id: catalogId, page:1, size:16};
+        let parasm = {
+                    id: catalogId,
+                    page: 1,
+                    size: 16,
+                    sort: this.props.catalogSortingBy,
+                    order: this.props.catalogSortDirection
+                };
         this.props.getCatalogItems(parasm);
-    }
-
-    handleSelect(eventKey) {
-        this.setState({activePage: eventKey});
-
-        const userLogin = JSON.parse(sessionStorage.logindata);
-        const { showGridView,showListView } = this.props;
-
-        let sortingBy = '';
-
-        switch (this.refs.sortingBy.value) {
-          case 'price':
-            sortingBy = 'price.' + userLogin.currency;
-            break;
-          default:
-            sortingBy = this.refs.sortingBy.value;
-            break;
-        }
-
-        const sortingDirection = this.refs.sortingDirection.value;
-        const pageSize = 16;
-
-        let params = {
-          'page' : eventKey,
-          'sortBy': sortingBy,
-          'sortDirections': sortingDirection,
-          'pageSize' : pageSize
-        };
-        const { filters } =  this.props;
-
-        let gemstoneFilter = {};
-        // console.log('filters-->',filters);
-        filters.forEach(function(filter){
-          let keys = Object.keys(filter);
-          keys.forEach((key) => {
-            const value = filter[key];
-            const gemstoneFields = keys[0].split('.');
-            if(gemstoneFields[0] == 'gemstones'){
-              gemstoneFilter[gemstoneFields[1]] = value;
-            }else if(gemstoneFields[0] == 'certificatedNumber'){
-              gemstoneFilter[gemstoneFields[0]] = value;
-            }else if(gemstoneFields[0] == 'certificateAgency'){
-              gemstoneFilter[gemstoneFields[0]] = value;
-            }else if(gemstoneFields[0] == 'cerDateFrom'){
-              gemstoneFilter[gemstoneFields[0]] = value;
-            }
-            else{
-              params[key] = value;
-            }
-          });
-        });
-
-        if(Object.keys(gemstoneFilter).length != 0){
-          params['gemstones'] = gemstoneFilter;
-        }
-
-        let girdView = showGridView;
-        let listView = showListView;
-
-        this.props.setShowGridView(false);
-        this.props.setShowListView(false);
-
-        this.setState({
-          showLoading: true
-        });
-
-        this.props.getItems(params)
-        .then((value) => {
-          this.setState({showLoading: false});
-          if(girdView){
-            // this.setState({showGridView: true});
-            this.props.setShowGridView(true);
-          }else if (listView) {
-            // this.setState({showListView: true});
-            this.props.setShowListView(true);
-          }
-        });
-
-        let { currPage } = this.props.fields;
-        currPage.onChange(eventKey);
     }
 
     deleteOneItemMyCatalog = (item) => {
@@ -257,7 +229,12 @@ class MyCatalog extends Component {
         let itemAdded = items.filter(oneItem => oneItem.id === item.target.attributes[3].value);
         itemAdded = itemAdded[0];
         let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
-        let objItem = {id: itemAdded.id, reference: itemAdded.reference, description: itemName, catalogId: catalogId}
+        let objItem = {
+                        id: itemAdded.id,
+                        reference: itemAdded.reference,
+                        description: itemName,
+                        catalogId: catalogId
+                    };
 
         listMyCatalog.push(objItem);
 
@@ -284,7 +261,13 @@ class MyCatalog extends Component {
         // console.log('params-->',params);
         this.props.deleteCatalogItems(params).then( () =>{
             // console.log('Deleted!');
-            let parasm = {id: catalogId, page:1, size:16};
+            let parasm = {
+                            id: catalogId,
+                            page: this.props.currentPage,
+                            size: 16,
+                            sort: this.props.catalogSortingBy,
+                            order: this.props.catalogSortDirection
+                        };
             this.props.getCatalogItems(parasm);
 
         });
@@ -304,7 +287,13 @@ class MyCatalog extends Component {
                     if (valueGetCatalog) {
                         // console.log('componentWillMount-->',this.props.listCatalogName);
                         if(this.props.listCatalogName.length != 0){
-                            let parasm = {id: this.props.listCatalogName[0]._id, page:1, size:16};
+                            let parasm = {
+                                            id: this.props.listCatalogName[0]._id,
+                                            page: this.props.currentPage,
+                                            size: 16,
+                                            sort: this.props.catalogSortingBy,
+                                            order: this.props.catalogSortDirection
+                                        };
                             this.props.getCatalogItems(parasm);
                         }
                     }
@@ -482,17 +471,17 @@ class MyCatalog extends Component {
                                   </div>
                                   <div className="col-md-3 col-sm-3 col-xs-12 nopadding m-bottom-5">
                                     <div className="styled-select-black">
-                                      <select ref="sortingBy">
-                                        <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
-                                        <option key={'description'} value={'description'}>{'Description'}</option>
+                                      <select onChange={this.changeSortingBy} ref="sortingBy">
+                                        <option key={'reference'} value={2}>{'Item Reference'}</option>
+                                        <option key={'description'} value={3}>{'Description'}</option>
                                       </select>
                                     </div>
                                   </div>
                                   <div className="col-md-2 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
                                     <div className="styled-select-black">
-                                        <select ref="sortingDirection">
-                                          <option key={'desc'} value={'desc'}>{'Descending'}</option>
-                                          <option key={'asc'} value={'asc'}>{'Ascending'}</option>
+                                        <select onChange={this.changeSortingDirection} ref="sortingDirection">
+                                          <option key={'desc'} value={-1}>{'Descending'}</option>
+                                          <option key={'asc'} value={1}>{'Ascending'}</option>
                                         </select>
                                     </div>
                                   </div>
@@ -555,11 +544,13 @@ class MyCatalog extends Component {
 function mapStateToProps(state) {
     return {
         initialValues: state.myCatalog.listCatalogItems,
-        listCatalogName: state.searchResult.ListCatalogName,
+        listCatalogName: state.myCatalog.ListCatalogName,
         listCatalogItems: state.myCatalog.listCatalogItems,
         currentPage: state.myCatalog.currentPage,
         catalogId: state.myCatalog.catalogId,
-        catalogName: state.myCatalog.catalogName
+        catalogName: state.myCatalog.catalogName,
+        catalogSortingBy: state.myCatalog.catalogSortingBy,
+        catalogSortDirection: state.myCatalog.catalogSortDirection,
     }
 }
 MyCatalog.contextTypes = {
