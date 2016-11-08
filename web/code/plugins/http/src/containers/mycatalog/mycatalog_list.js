@@ -33,13 +33,19 @@ class MyCatalog extends Component {
         this.handleSubmitDeleteCatalog = this.handleSubmitDeleteCatalog.bind(this);
         this.changeSortingBy = this.changeSortingBy.bind(this);
         this.changeSortingDirection = this.changeSortingDirection.bind(this);
+        this.checkedOneItemMyCatalog = this.checkedOneItemMyCatalog.bind(this);
+        this.onCheckedAllItemMyCatalog = this.onCheckedAllItemMyCatalog.bind(this);
+        this.deleteAllItems = this.deleteAllItems.bind(this);
+        this.handleSubmitDeleteAllItem = this.handleSubmitDeleteAllItem.bind(this);
 
         this.state = {
           activePage: this.props.currentPage,
           isOpenDeleteItem: false,
           isOpenAddMyCatalogmsg: false,
           isTooltipActive: false,
-          isOpenDeleteCatalog: false
+          isOpenDeleteCatalog: false,
+          enabledMyCatalog: false,
+          isOpenDeleteAllItem: false
         }
 
     }
@@ -90,6 +96,122 @@ class MyCatalog extends Component {
               inputCatalogName.value = nextProps.catalogName;
           }
       }
+    }
+
+    handleSubmitDeleteAllItem = (e)=>{
+        e.preventDefault();
+        console.log('handleSubmitDeleteAllItem');
+        const { catalogId } = this.props;
+        let catalog = this.refs.catalog;
+
+        this.setState({isOpenDeleteAllItem: false});
+        // console.log('listMyCatalog-->',listMyCatalog);
+        let items = [];
+
+        listMyCatalog.map((item) => {
+            items.push({id: item.id});
+        })
+        let paramsItem ={id: catalogId, items: items};
+        // console.log('params-->',params);
+        this.props.deleteCatalogItems(paramsItem).then( () =>{
+            // console.log('Deleted!');
+            let params = {
+                            id: catalogId,
+                            page: this.props.currentPage,
+                            size: 16,
+                            sort: this.props.catalogSortingBy,
+                            order: this.props.catalogSortDirection
+                        };
+            this.props.getCatalogItems(params);
+
+        });
+        // console.log('catalog-->',catalog);
+    }
+
+    deleteAllItems = _=> {
+        const { catalogId } = this.props;
+        let catalog = this.refs.catalog;
+
+        // console.log('listMyCatalog-->',listMyCatalog);
+        let items = [];
+
+        listMyCatalog.map((item) => {
+            items.push({id: item.id});
+        })
+        let params ={id: catalogId, items: items};
+        console.log('params-->',params);
+        this.setState({isOpenDeleteAllItem: true});
+
+    }
+
+    onCheckedAllItemMyCatalog = (e)=> {
+        let fileName = jQuery('input[type="checkbox"]');
+        const { items } = this.props.listCatalogItems;
+        const { catalogId } = this.props;
+
+        if (e.target.checked) {
+            fileName.attr('checked','checked');
+            this.setState({enabledMyCatalog: true});
+            for(let i=0, n=fileName.length;i<n;i++) {
+                fileName[i].checked = true;
+              }
+            listMyCatalog = [];
+            items.map((item) => {
+                let itemName = (item.type != 'CER')? item.description: item.name;
+                let objItem = {
+                                id: item.id,
+                                reference: item.reference,
+                                description: itemName,
+                                catalogId: catalogId
+                            };
+                listMyCatalog.push(objItem);
+            });
+
+        } else {
+            fileName.removeAttr('checked');
+            listMyCatalog = [];
+            this.setState({enabledMyCatalog: false});
+        }
+        console.log(listMyCatalog);
+    }
+
+    checkedOneItemMyCatalog = (e)=> {
+        // console.log(e.target.value);
+        let fileName = jQuery('input[type="checkbox"]');
+        const { items } = this.props.listCatalogItems;
+        const { catalogId } = this.props;
+        let itemAdded = items.filter(oneItem => oneItem.id === e.target.value);
+        itemAdded = itemAdded[0];
+        let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
+        let objItem = {
+                        id: itemAdded.id,
+                        reference: itemAdded.reference,
+                        description: itemName,
+                        catalogId: catalogId
+                    };
+
+        if(!this.state.enabledMyCatalog){
+            listMyCatalog = [];
+        }
+
+        if (e.target.checked) {
+            listMyCatalog.push(objItem);
+            if (listMyCatalog.length == (fileName.length-1)) {
+                this.refs.selectAllItems.checked = true;
+            }
+        } else {
+            this.refs.selectAllItems.checked = false;
+            listMyCatalog = listMyCatalog.filter(inItem => inItem.id !== e.target.value);
+        }
+
+        if (listMyCatalog.length != 0) {
+          this.setState({enabledMyCatalog: true});
+        } else {
+          this.setState({enabledMyCatalog: false});
+        }
+        console.log('item -->',e.target.checked);
+        console.log('item -->',e.target.value);
+        console.log('listMyCatalog -->',listMyCatalog);
     }
 
     changeSortingDirection = (e)=> {
@@ -223,7 +345,7 @@ class MyCatalog extends Component {
         let fileName = jQuery('input[type="checkbox"]');
         fileName.removeAttr('checked');
         listMyCatalog  = [];
-
+        this.setState({enabledMyCatalog: false});
         const { items } = this.props.listCatalogItems;
         const catalogId = this.props.listCatalogItems._id
         let itemAdded = items.filter(oneItem => oneItem.id === item.target.attributes[3].value);
@@ -237,6 +359,8 @@ class MyCatalog extends Component {
                     };
 
         listMyCatalog.push(objItem);
+
+        this.refs.selectAllItems.checked = false;
 
         this.setState({isOpenDeleteItem: true});
     }
@@ -306,6 +430,10 @@ class MyCatalog extends Component {
         this.setState({isOpenDeleteItem: false});
     }
 
+    handleCloseDeleteAllItem = _=>{
+        this.setState({isOpenDeleteAllItem: false});
+    }
+
     handleClosemsg = _=>{
         this.setState({isOpenAddMyCatalogmsg: false});
     }
@@ -345,6 +473,14 @@ class MyCatalog extends Component {
         const msg = 'Are you sure you want to delete this item?';
         return(<ModalConfirmDelete onSubmit={this.handleSubmitDeleteItem} isOpen={this.state.isOpenDeleteItem}
             isClose={this.handleCloseDeleteItem} props={this.props} message={msg} title={title}/>);
+    }
+
+    renderModalConfirmDeleteAllItem = _=> {
+        const title = 'Delete Item';
+        const msg = 'Are you sure you want to delete items?';
+        return(<ModalConfirmDelete onSubmit={this.handleSubmitDeleteAllItem}
+            isOpen={this.state.isOpenDeleteAllItem} isClose={this.handleCloseDeleteAllItem}
+            props={this.props} message={msg} title={title}/>);
     }
 
     renderModalConfirmDeleteCatalog = _=> {
@@ -503,12 +639,17 @@ class MyCatalog extends Component {
                         <div className="col-sm-12 col-xs-12">
                           <div className="col-sm-12 col-xs-12 pagenavi maring-t20 cat-line">
                                 <div className="checkbox checkbox-warning">
-                                    <input type="checkbox" id="checkbox1" className="styled" type="checkbox" />
+                                    <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
+                                        onChange={this.onCheckedAllItemMyCatalog} ref="selectAllItems"/>
                                     <label className="checkbox1 select"></label>
                                     <span className="margin-l10 text-vertical">Select All</span>
                                 </div>
                                 <div>
-                                  <span className="icon-det-28"></span><span className="margin-l5 text-del">Delete All</span>
+                                    {this.state.enabledMyCatalog?
+                                        <span className="icon-det-28" onClick={this.deleteAllItems}></span> :
+                                        <span className="icon-det-28"></span>
+                                    }
+                                    <span className="margin-l5 text-del">Delete All</span>
                                 </div>
                           </div>
                             <div className="panel panel-default">
@@ -524,6 +665,7 @@ class MyCatalog extends Component {
                       </div>
                       {this.renderModalConfirmDelete()}
                       {this.renderModalConfirmDeleteCatalog()}
+                      {this.renderModalConfirmDeleteAllItem()}
                       {this.renderAlertmsg()}
                     </form>
                 );

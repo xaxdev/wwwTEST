@@ -13,6 +13,7 @@ function showDiv() {
 // Used to cancel events.
 let preventDefault = e => e.preventDefault();
 let gridView = 0;
+let oldView = 0;
 
 class GridItemsView extends Component {
   constructor(props) {
@@ -23,7 +24,6 @@ class GridItemsView extends Component {
     this.onMouseOverGrid = this.onMouseOverGrid.bind(this);
     this.onMouseOutGrid = this.onMouseOutGrid.bind(this);
     this.onClickQuickView = this.onClickQuickView.bind(this);
-    this.hideQuickView = this.hideQuickView.bind(this);
 
     this.state = {
       isOpen0: false,
@@ -87,7 +87,8 @@ class GridItemsView extends Component {
       isOpen58: false,
       isOpen59: false,
       isOpen60: false,
-      isOpenPop: false
+      isOpenPop: false,
+      toggleQuickView: false
     };
   }
   static propTypes = {
@@ -171,62 +172,262 @@ class GridItemsView extends Component {
     this.setState({isOpen59:false});
     this.setState({isOpen60:false});
 
+
     switch(e.currentTarget.id){
     case '0':
-        // console.log(this.refs.div0);
-        // var component = React.findDOMNode(this.refs.div0);
-        // component.on('click', function () {
-        //   $(this.hash).toggleClass('active').focus();
-        // });
-      this.setState({isOpen0:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen0: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen0: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen0:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen0:true});
       break;
     case '1':
-      this.setState({isOpen1:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen1: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen1: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen1:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen1:true});
       break;
     case '2':
-      this.setState({isOpen2:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen2: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen2: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen2:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen2:true});
       break;
     case '3':
-      this.setState({isOpen3:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen3: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen3: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen3:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen3:true});
       break;
     case '4':
-      this.setState({isOpen4:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen4: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen4: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen4:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen4:true});
       break;
     case '5':
-      this.setState({isOpen5:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen5: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen5: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen5:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen5:true});
       break;
     case '6':
-      this.setState({isOpen6:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen6: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen6: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen6:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen6:true});
       break;
     case '7':
-      this.setState({isOpen7:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen7: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen7: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen7:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen7:true});
       break;
     case '8':
-      this.setState({isOpen8:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen8: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen8: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen8:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen8:true});
       break;
     case '9':
-      this.setState({isOpen9:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen9: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen9: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen9:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen9:true});
       break;
     case '10':
-      this.setState({isOpen10:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen10: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen10: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen10:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen10:true});
       break;
     case '11':
-      this.setState({isOpen11:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen11: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen11: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen11:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen11:true});
       break;
     case '12':
-      this.setState({isOpen12:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen12: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen12: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen12:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen12:true});
       break;
     case '13':
-      this.setState({isOpen13:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen13: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen13: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen13:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen13:true});
       break;
     case '14':
-      this.setState({isOpen14:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen14: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen14: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen14:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen14:true});
       break;
     case '15':
-      this.setState({isOpen15:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen15: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen15: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen15:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen15:true});
       break;
     case '16':
-      this.setState({isOpen16:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen16: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen16: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen16:true});
+            this.setState({toggleQuickView: true});
+        }
+    //   this.setState({isOpen16:true});
       break;
     case '17':
       this.setState({isOpen17:true});
@@ -363,9 +564,11 @@ class GridItemsView extends Component {
     default:
       break;
     }
+    oldView = e.currentTarget.id;
   }
   onMouseOutGrid(e){
-    // console.log('onMouseOutGrid e->',e);
+    // console.log('onMouseOutGrid e->',e.currentTarget.id);
+    this.setState({toggleQuickView: false});
     switch(e.currentTarget.id){
     case '0':
       this.setState({isOpen0:false});
@@ -554,195 +757,7 @@ class GridItemsView extends Component {
       break;
     }
   }
-  hideQuickView(id){
-      switch(id.toString()){
-      case '0':
-        this.setState({isOpen0:false});
-        break;
-      case '1':
-        this.setState({isOpen1:false});
-        break;
-      case '2':
-        this.setState({isOpen2:false});
-        break;
-      case '3':
-        this.setState({isOpen3:false});
-        break;
-      case '4':
-        this.setState({isOpen4:false});
-        break;
-      case '5':
-        this.setState({isOpen5:false});
-        break;
-      case '6':
-        this.setState({isOpen6:false});
-        break;
-      case '7':
-        this.setState({isOpen7:false});
-        break;
-      case '8':
-        this.setState({isOpen8:false});
-        break;
-      case '9':
-        this.setState({isOpen9:false});
-        break;
-      case '10':
-        this.setState({isOpen10:false});
-        break;
-      case '11':
-        this.setState({isOpen11:false});
-        break;
-      case '12':
-        this.setState({isOpen12:false});
-        break;
-      case '13':
-        this.setState({isOpen13:false});
-        break;
-      case '14':
-        this.setState({isOpen14:false});
-        break;
-      case '15':
-        this.setState({isOpen15:false});
-        break;
-      case '16':
-        this.setState({isOpen16:false});
-        break;
-      case '17':
-        this.setState({isOpen17:false});
-        break;
-      case '18':
-        this.setState({isOpen18:false});
-        break;
-      case '19':
-        this.setState({isOpen19:false});
-        break;
-      case '20':
-        this.setState({isOpen20:false});
-        break;
-      case '21':
-        this.setState({isOpen21:false});
-        break;
-      case '22':
-        this.setState({isOpen22:false});
-        break;
-      case '23':
-        this.setState({isOpen23:false});
-        break;
-      case '24':
-        this.setState({isOpen24:false});
-        break;
-      case '25':
-        this.setState({isOpen25:false});
-        break;
-      case '26':
-        this.setState({isOpen26:false});
-        break;
-      case '27':
-        this.setState({isOpen27:false});
-        break;
-      case '28':
-        this.setState({isOpen28:false});
-        break;
-      case '29':
-        this.setState({isOpen29:false});
-        break;
-      case '30':
-        this.setState({isOpen30:false});
-        break;
-      case '31':
-        this.setState({isOpen31:false});
-        break;
-      case '32':
-        this.setState({isOpen32:false});
-        break;
-      case '33':
-        this.setState({isOpen33:false});
-        break;
-      case '34':
-        this.setState({isOpen34:false});
-        break;
-      case '35':
-        this.setState({isOpen35:false});
-        break;
-      case '36':
-        this.setState({isOpen36:false});
-        break;
-      case '37':
-        this.setState({isOpen37:false});
-        break;
-      case '38':
-        this.setState({isOpen38:false});
-        break;
-      case '39':
-        this.setState({isOpen39:false});
-        break;
-      case '40':
-        this.setState({isOpen40:false});
-        break;
-      case '41':
-        this.setState({isOpen41:false});
-        break;
-      case '42':
-        this.setState({isOpen42:false});
-        break;
-      case '43':
-        this.setState({isOpen43:false});
-        break;
-      case '44':
-        this.setState({isOpen44:false});
-        break;
-      case '45':
-        this.setState({isOpen45:false});
-        break;
-      case '46':
-        this.setState({isOpen46:false});
-        break;
-      case '47':
-        this.setState({isOpen47:false});
-        break;
-      case '48':
-        this.setState({isOpen48:false});
-        break;
-      case '49':
-        this.setState({isOpen49:false});
-        break;
-      case '50':
-        this.setState({isOpen50:false});
-        break;
-      case '51':
-        this.setState({isOpen51:false});
-        break;
-      case '52':
-        this.setState({isOpen52:false});
-        break;
-      case '53':
-        this.setState({isOpen53:false});
-        break;
-      case '54':
-        this.setState({isOpen54:false});
-        break;
-      case '55':
-        this.setState({isOpen55:false});
-        break;
-      case '56':
-        this.setState({isOpen56:false});
-        break;
-      case '57':
-        this.setState({isOpen57:false});
-        break;
-      case '58':
-        this.setState({isOpen58:false});
-        break;
-      case '59':
-        this.setState({isOpen59:false});
-        break;
-      case '60':
-        this.setState({isOpen60:false});
-        break;
-      default:
-        break;
-      }
-  }
+
   renderShowDetails(){
     // console.log('renderShowDetails this.state.isOpen-->',this.state.isOpen);
       return(
@@ -753,13 +768,14 @@ class GridItemsView extends Component {
   render(){
     // console.log('this.props.items-->',this.props.items);
     const { submitting, onCheckedOneItemMyCatalog, onDeleteOneItemMyCatalog } = this.props;
-    var btnEvent = this.onClickGrid;
-    var btnQuickView = this.onClickQuickView;
-    var showDetails = this.onMouseOverGrid;
-    var hideDetails = this.onMouseOutGrid;
+    let btnEvent = this.onClickGrid;
+    let btnQuickView = this.onClickQuickView;
+    let showDetails = this.onMouseOverGrid;
+    let hideDetails = this.onMouseOutGrid;
     // console.log('this.state.isOpen-->',this.state.isOpen);
-    var that = this;
+    let that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
+    // console.log('that.state.toggleQuickView-->',that.state.toggleQuickView);
     return (
       <div>
         {this.props.items.map(function(item, index){
@@ -856,7 +872,7 @@ class GridItemsView extends Component {
                           onClick={onDeleteOneItemMyCatalog}></span>
                       </div>
                       <span className="quick-view"><img  src="/images/quick-view.jpg" responsive
-                        name={item.id} id={index} onClick={showDetails}/></span>
+                          name={item.id} id={index} onClick={showDetails}/></span>
                     </div>
 
                     <div className="thumbnaillgrid">
@@ -880,13 +896,6 @@ class GridItemsView extends Component {
                     <span className="line"></span>
                  </div>
                     <div>
-                        <ReactPageClick notify={(e) => {
-                                    if (e.target.id != '') {
-                                        gridView = e.target.id;
-                                    } else {
-                                        that.hideQuickView(gridView);
-                                    }
-                                }}>
                              <div key={item.id}  id={index} ref={'div'+index} style={{
                                     display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
                                             (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
@@ -979,7 +988,6 @@ class GridItemsView extends Component {
                                     <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
                                     <span className="width-f100">{itemDate}</span>
                              </div>
-                        </ReactPageClick>
                     </div>
             </div>
           )
