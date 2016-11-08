@@ -49,7 +49,7 @@ export function setSelectedCatalog(value){
 }
 export function getCatalogItems(params){
   const token = sessionStorage.token;
-  var url = `${ROOT_URL}/api/catalog/data/${params.id}?page=${params.page}&size=${params.size}&sort=${params.sort}&order=${params.order}`;
+  var url = `${ROOT_URL}/api/catalog/${params.id}?page=${params.page}&size=${params.size}&sort=${params.sort}&order=${params.order}`;
   return {
             type: GET_CATALOGITEMS,
     		promise: fetch(url,{

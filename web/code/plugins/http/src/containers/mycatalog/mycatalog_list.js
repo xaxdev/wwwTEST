@@ -494,20 +494,14 @@ class MyCatalog extends Component {
       const { fields: { currPage },
               totalPages,
               currentPage,
-              items,listCatalogItems,
+              items,listCatalogItems,totalPrice,totalUpdatedCost,
               handleSubmit,
               resetForm,
               submitting } = this.props;
 
-        let totalPublicPrice = 0;
-        let totalUpdatedCost = 0;
-        listCatalogItems.items.map((item) => {
-            totalPublicPrice = totalPublicPrice + item.price;
-            totalUpdatedCost = totalUpdatedCost + item.updatedCost;
-        })
         // console.log('totalPublicPrice-->',totalPublicPrice);
         let _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
-        let _totalPublicPrice =  (totalPublicPrice!=null) ? numberFormat(totalPublicPrice) : 0;
+        let _totalPublicPrice =  (totalPrice!=null) ? numberFormat(totalPrice) : 0;
 
         const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -693,6 +687,8 @@ function mapStateToProps(state) {
         catalogName: state.myCatalog.catalogName,
         catalogSortingBy: state.myCatalog.catalogSortingBy,
         catalogSortDirection: state.myCatalog.catalogSortDirection,
+        totalPrice: state.myCatalog.totalPrice,
+        totalUpdatedCost: state.myCatalog.totalUpdatedCost
     }
 }
 MyCatalog.contextTypes = {

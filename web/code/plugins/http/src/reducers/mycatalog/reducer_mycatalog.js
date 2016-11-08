@@ -4,7 +4,8 @@ import  {
         } from '../../constants/itemconstants';
 
 const INITIAL_STATE = { datas:null, ListCatalogName: [], listCatalogItems:[], currentPage: 1, catalogId: null,
-                        catalogName: null, catalogSortingBy:2, catalogSortDirection:-1
+                        catalogName: null, catalogSortingBy:2, catalogSortDirection:-1, totalPrice: null,
+                        totalUpdatedCost: null
                         };
 
 export default function(state = INITIAL_STATE, action){
@@ -36,7 +37,8 @@ export default function(state = INITIAL_STATE, action){
         case GET_CATALOGITEMS :
           // console.log('action.data-->',action.data);
           return {...state, listCatalogItems: action.data, currentPage: action.data.page, catalogId: action.catalog,
-                    catalogName: action.data.catalog
+                    catalogName: action.data.catalog, totalPrice: action.data.price,
+                    totalUpdatedCost: action.data.updatedCost
                 };
         default:
             return {...state};
