@@ -4,10 +4,6 @@ import save from './save'
 import remove from './remove'
 import removeitem from './removeitem'
 import rename from './rename'
+import items from './items'
 
-export { getnames }
-export { getdata }
-export { save }
-export { remove }
-export { removeitem }
-export { rename }
+export { getnames, getdata, save, remove, removeitem, rename, items }
