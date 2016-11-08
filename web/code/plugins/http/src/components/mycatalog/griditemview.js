@@ -12,7 +12,6 @@ function showDiv() {
 }
 // Used to cancel events.
 let preventDefault = e => e.preventDefault();
-let gridView = 0;
 let oldView = 0;
 
 class GridItemsView extends Component {
