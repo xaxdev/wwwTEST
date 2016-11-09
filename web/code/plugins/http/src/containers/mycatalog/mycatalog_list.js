@@ -581,11 +581,13 @@ class MyCatalog extends Component {
                                             onMouseLeave={this.hideTooltip}></div></a>
                                         <ToolTip active={this.state.isTooltipActive} position="bottom"
                                             arrow="center" parent="#edit" >
-                                            <div>
-                                                <p>Edit Catalog Name</p>
+                                            <div className="cat-tooltip form-inline">
+                                              <p>Edit Catalog Name</p>
+                                              <div className="form-group">
                                                 <input type="text" className="form-control" placeholder={catalogName}
                                                 onChange={this.changeCatalogName} ref="catalogName"/>
-                                                <button type="button" className="btn btn-default btn-radius"
+                                              </div>
+                                                <button type="button" className="btn btn-default"
                                                     onClick={this.saveCatalogName}>
                                                     save
                                                 </button>

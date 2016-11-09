@@ -1220,6 +1220,17 @@ select.form-searchresult option{
     margin: 0 14px 0 10px;
 }
 .checkbox1.select::after{margin-left: -6px;}
+.cat-tooltip{padding:15px 15px;}
+.cat-tooltip button{
+  background-color: #383735;
+  border-color: #383735;
+  border-radius: 16px;
+  padding:6px 20px;
+  margin-left:10px;
+  border: none;
+  font-family: 'open_sanssemibold';
+  color: #ddbe6a;
+}
 @media (min-width:1201px){
  .bd-box{width: 79%;}
 }
