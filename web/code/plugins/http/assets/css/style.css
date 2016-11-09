@@ -1231,6 +1231,11 @@ select.form-searchresult option{
   font-family: 'open_sanssemibold';
   color: #ddbe6a;
 }
+.cat-tooltip button:hover, .cat-go button:hover{
+  color:#fff;
+  background-color: #383735;
+  border-color: #383735;
+}
 @media (min-width:1201px){
  .bd-box{width: 79%;}
 }
