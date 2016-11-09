@@ -239,8 +239,8 @@ const Confidence = require('confidence');
                                                     pathImage = './images/blank.gif';
                                                   }
 
-                                                  ws.column(1).setWidth(35);
-                                                  ws.row(row).setHeight(250);
+                                                  ws.column(1).setWidth(12);
+                                                  ws.row(row).setHeight(150);
                                                   let isExist = fileExists(pathImage);
                                                   if (!isExist) {
                                                       pathImage = './images/blank.gif';
@@ -274,8 +274,8 @@ const Confidence = require('confidence');
                                             pathImage = './images/blank.gif';
                                           }
 
-                                          ws.column(1).setWidth(35);
-                                          ws.row(row).setHeight(250);
+                                          ws.column(1).setWidth(20);
+                                          ws.row(row).setHeight(150);
                                           let isExist = fileExists(pathImage);
                                           if (!isExist) {
                                               pathImage = './images/blank.gif';

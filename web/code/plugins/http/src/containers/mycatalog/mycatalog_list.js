@@ -51,21 +51,31 @@ class MyCatalog extends Component {
     }
 
     componentWillMount = _=>{
+        console.log('componentWillMount-->');
+        console.log('this.props.catalogId-->',this.props.catalogId);
+        console.log('this.props.catalogSortingBy-->',this.props.catalogSortingBy);
+        console.log('this.props.catalogSortDirection-->',this.props.catalogSortDirection);
         this.props.getCatalogName().then((value) => {
             if (value) {
                 // console.log('componentWillMount-->',this.props.listCatalogName);
+                let catalogId = '';
                 if(this.props.listCatalogName != undefined){
-                    if(this.props.listCatalogName.length != 0){
-
-                        let parasm = {
-                                id: this.props.listCatalogName[0]._id,
-                                page: this.props.currentPage,
-                                size: 16,
-                                sort: this.props.catalogSortingBy,
-                                order: this.props.catalogSortDirection
-                            };
-                        this.props.getCatalogItems(parasm);
+                    if(this.props.catalogId != null){
+                        catalogId = this.props.catalogId;
+                    }else{
+                        if(this.props.listCatalogName.length != 0){
+                            catalogId = this.props.listCatalogName[0]._id;
+                        }
                     }
+
+                    let parasm = {
+                            id: catalogId,
+                            page: this.props.currentPage,
+                            size: 16,
+                            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+                        };
+                    this.props.getCatalogItems(parasm);
                 }
             }
         });
@@ -73,18 +83,27 @@ class MyCatalog extends Component {
 
     componentDidMount = _=>{
         // console.log('componentDidMount-->');
-        if(this.props.listCatalogName != undefined){
-            if(this.props.listCatalogName.length != 0){
-                let parasm = {
-                        id: this.props.listCatalogName[0]._id,
-                        page: this.props.currentPage,
-                        size: 16,
-                        sort: this.props.catalogSortingBy,
-                        order: this.props.catalogSortDirection
-                    };
-                this.props.getCatalogItems(parasm);
-            }
-        }
+        // console.log('this.props.catalogSortingBy-->',this.props.catalogSortingBy);
+        // console.log('this.props.catalogSortDirection-->',this.props.catalogSortDirection);
+        // let catalogId = '';
+        // if(this.props.listCatalogName != undefined){
+        //     if(this.props.catalogId != null){
+        //         catalogId = this.props.catalogId;
+        //     }else{
+        //         if(this.props.listCatalogName.length != 0){
+        //             catalogId = this.props.listCatalogName[0]._id;
+        //         }
+        //     }
+        //
+        //     let parasm = {
+        //             id: catalogId,
+        //             page: this.props.currentPage,
+        //             size: 16,
+        //             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+        //             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+        //         };
+        //     this.props.getCatalogItems(parasm);
+        // }
     }
     componentWillReceiveProps(nextProps) {
       // console.log('nextProps-->',nextProps);
@@ -119,8 +138,8 @@ class MyCatalog extends Component {
                             id: catalogId,
                             page: this.props.currentPage,
                             size: 16,
-                            sort: this.props.catalogSortingBy,
-                            order: this.props.catalogSortDirection
+                            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                         };
             this.props.getCatalogItems(params);
 
@@ -225,7 +244,7 @@ class MyCatalog extends Component {
                 id: catalogId,
                 page: this.props.currentPage,
                 size: pageSize,
-                sort: this.props.catalogSortingBy,
+                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                 order: sortingDirection
             };
         this.props.setCatalogSortDirection(sortingDirection);
@@ -244,7 +263,7 @@ class MyCatalog extends Component {
                 page: this.props.currentPage,
                 size: pageSize,
                 sort: sortingBy,
-                order: this.props.catalogSortDirection
+                order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
             };
         this.props.setCatalogSortingBy(sortingBy);
         this.props.getCatalogItems(parasm);
@@ -284,7 +303,7 @@ class MyCatalog extends Component {
       // console.log('onClickGrid==>',pageNumber);
       const token = sessionStorage.token;
       if(token){
-          this.context.router.push(`/productreletedetail/${pageNumber}`);
+          this.context.router.push(`/productmycatalog/${pageNumber}`);
       }
     }
 
@@ -313,8 +332,8 @@ class MyCatalog extends Component {
                     id: catalogId,
                     page: getPage,
                     size: pageSize,
-                    sort: this.props.catalogSortingBy,
-                    order: this.props.catalogSortDirection
+                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                    order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
             this.props.setCatalogCurrentPage(getPage);
 
@@ -335,8 +354,8 @@ class MyCatalog extends Component {
                     id: catalogId,
                     page: 1,
                     size: 16,
-                    sort: this.props.catalogSortingBy,
-                    order: this.props.catalogSortDirection
+                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                    order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
         this.props.getCatalogItems(parasm);
     }
@@ -389,8 +408,8 @@ class MyCatalog extends Component {
                             id: catalogId,
                             page: this.props.currentPage,
                             size: 16,
-                            sort: this.props.catalogSortingBy,
-                            order: this.props.catalogSortDirection
+                            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                         };
             this.props.getCatalogItems(parasm);
 
@@ -415,8 +434,8 @@ class MyCatalog extends Component {
                                             id: this.props.listCatalogName[0]._id,
                                             page: this.props.currentPage,
                                             size: 16,
-                                            sort: this.props.catalogSortingBy,
-                                            order: this.props.catalogSortDirection
+                                            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                                            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                                         };
                             this.props.getCatalogItems(parasm);
                         }
@@ -537,6 +556,8 @@ class MyCatalog extends Component {
 
     render() {
             const {  fields:{ catalog }, catalogId, catalogName } = this.props;
+            let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2;
+            let catalogSortDirection = (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1;
             let style = {
                 style: {
                     background: 'rgba(0,0,0,.8)',
@@ -549,7 +570,7 @@ class MyCatalog extends Component {
                 }
             }
             // console.log('catalogName-->',catalogName);
-            // console.log('listCatalogName-->',this.props.listCatalogName);
+            console.log('catalogId-->',catalogId);
 
             let items = this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [];
             if(items.length != 0){
@@ -564,7 +585,8 @@ class MyCatalog extends Component {
                                       <div className="col-lg-4 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
                                       <div className="col-lg-8 col-md-7 col-sm-8 col-xs-12 m-nopadding">
                                           <div className="styled-select-black">
-                                            <select onChange={this.selectedCatalog}  ref="catalog">
+                                            <select onChange={this.selectedCatalog}  value={catalogId}
+                                                ref="catalog">
                                               {
                                                   this.props.listCatalogName.map((cat) => {
                                                       return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
@@ -603,17 +625,19 @@ class MyCatalog extends Component {
                                   </div>
                                   <div className="col-md-3 col-sm-3 col-xs-12 nopadding m-bottom-5">
                                     <div className="styled-select-black">
-                                      <select onChange={this.changeSortingBy} ref="sortingBy">
-                                        <option key={'reference'} value={2}>{'Item Reference'}</option>
-                                        <option key={'description'} value={3}>{'Description'}</option>
+                                      <select onChange={this.changeSortingBy} value={catalogSortingBy}
+                                        ref="sortingBy">
+                                        <option key={2} value={2}>{'Item Reference'}</option>
+                                        <option key={3} value={3}>{'Description'}</option>
                                       </select>
                                     </div>
                                   </div>
                                   <div className="col-md-2 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
                                     <div className="styled-select-black">
-                                        <select onChange={this.changeSortingDirection} ref="sortingDirection">
-                                          <option key={'desc'} value={-1}>{'Descending'}</option>
-                                          <option key={'asc'} value={1}>{'Ascending'}</option>
+                                        <select onChange={this.changeSortingDirection} value={catalogSortDirection}
+                                            ref="sortingDirection">
+                                          <option key={-1} value={-1}>{'Descending'}</option>
+                                          <option key={1} value={1}>{'Ascending'}</option>
                                         </select>
                                     </div>
                                   </div>
