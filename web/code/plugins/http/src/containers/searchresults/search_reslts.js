@@ -592,9 +592,9 @@ class SearchResult extends Component {
     } else {
       this.setState({enabledMyCatalog: false});
     }
-    console.log('item -->',item.target.checked);
-    console.log('item -->',item.target.value);
-    console.log('listMyCatalog -->',listMyCatalog);
+    // console.log('item -->',item.target.checked);
+    // console.log('item -->',item.target.value);
+    // console.log('listMyCatalog -->',listMyCatalog);
   }
   addedOneItemMyCatalog = (item) => {
       let fileName = jQuery('input[type="checkbox"]');
@@ -1298,9 +1298,9 @@ class SearchResult extends Component {
            catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
            items:listMyCatalog
         }
-        console.log('catalogdata-->',catalogdata);
+        // console.log('catalogdata-->',catalogdata);
         this.props.addCatalog(catalogdata).then( () =>{
-           console.log('Added!');
+        //    console.log('Added!');
            this.setState({isOpenAddMyCatalogmsg: true});
         })
 
@@ -1308,11 +1308,8 @@ class SearchResult extends Component {
   renderAddMyCatalog = _=> {
       const { listCatalogName,
                submitting } = this.props;
-    //   console.log('listCatalogName-->',listCatalogName);
-      if(listCatalogName.length != 0){
-          return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
-              isClose={this.handleClose} props={this.props}/>);
-      }
+      return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
+          isClose={this.handleClose} props={this.props}/>);
   }
   renderAlertmsg = _=> {
 

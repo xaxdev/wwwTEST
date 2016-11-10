@@ -45,7 +45,8 @@ class MyCatalog extends Component {
           isTooltipActive: false,
           isOpenDeleteCatalog: false,
           enabledMyCatalog: false,
-          isOpenDeleteAllItem: false
+          isOpenDeleteAllItem: false,
+          isOpenZeroCatalog: true
         }
 
     }
@@ -75,7 +76,9 @@ class MyCatalog extends Component {
                             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                         };
-                    this.props.getCatalogItems(parasm);
+                    if (catalogId != '') {
+                        this.props.getCatalogItems(parasm);
+                    }
                 }
             }
         });
@@ -457,6 +460,14 @@ class MyCatalog extends Component {
         this.setState({isOpenAddMyCatalogmsg: false});
     }
 
+    handleClosemsgZeroCatalog = _=>{
+        this.setState({isOpenZeroCatalog: false});
+        // const token = sessionStorage.token;
+        // if(token){
+        //     this.context.router.push('/inventories');
+        // }
+    }
+
     handleCloseDeleteCatalog = _=>{
         this.setState({isOpenDeleteCatalog: false});
     }
@@ -569,138 +580,128 @@ class MyCatalog extends Component {
                     borderColor: false
                 }
             }
-            // console.log('catalogName-->',catalogName);
+            // let isOpenMsg =  this.state.isOpenAddMyCatalogmsg;
+            console.log('this.props.-->',this.props.listCatalogName);
             console.log('catalogId-->',catalogId);
 
             let items = this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [];
-            if(items.length != 0){
-                return(
-                    <form role="form">
-                      {/* Header Search */}
-                      <div className="col-sm-12 col-xs-12 bg-hearder-mycatalog">
-                          <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
-                          <div className="col-md-12 col-sm-12 col-xs-12">
-                                <div className="col-lg-6 col-md-5 col-sm-12 col-xs-12 nopadding">
-                                    <div className="col-lg-6 col-md-7 col-sm-6 col-xs-12 nopadding">
-                                      <div className="col-lg-4 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
-                                      <div className="col-lg-8 col-md-7 col-sm-8 col-xs-12 m-nopadding">
-                                          <div className="styled-select-black">
-                                            <select onChange={this.selectedCatalog}  value={catalogId}
-                                                ref="catalog">
-                                              {
-                                                  this.props.listCatalogName.map((cat) => {
-                                                      return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
-                                                  })
-                                              }
-                                            </select>
-                                          </div>
-                                      </div>
-                                    </div>
 
-                                    <div className="col-lg-6 col-md-5 col-sm-6 col-xs-12 nopadding"  >
-
-                                        <a><div className="icon-edit" id="edit" onMouseEnter={this.showTooltip}
-                                            onMouseLeave={this.hideTooltip}></div></a>
-                                        <ToolTip active={this.state.isTooltipActive} position="bottom"
-                                            arrow="center" parent="#edit" >
-                                            <div className="cat-tooltip form-inline">
-                                              <p>Edit Catalog Name</p>
-                                              <div className="form-group">
-                                                <input type="text" className="form-control" placeholder={catalogName}
-                                                onChange={this.changeCatalogName} ref="catalogName"/>
-                                              </div>
-                                                <button type="button" className="btn btn-default"
-                                                    onClick={this.saveCatalogName}>
-                                                    save
-                                                </button>
-                                            </div>
-                                        </ToolTip>
-                                        <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
-                                        <a><div className="icon-print" ></div></a>
-                                    </div>
-                                  </div>
-                                <div className="col-lg-6 col-md-7 col-sm-12 col-xs-12 nopadding">
-                                  <div className="cat-sort col-xs-12 margin-t5">
-                                    <ControlLabel>Sort By : </ControlLabel>
-                                  </div>
-                                  <div className="col-md-3 col-sm-3 col-xs-12 nopadding m-bottom-5">
-                                    <div className="styled-select-black">
-                                      <select onChange={this.changeSortingBy} value={catalogSortingBy}
-                                        ref="sortingBy">
-                                        <option key={2} value={2}>{'Item Reference'}</option>
-                                        <option key={3} value={3}>{'Description'}</option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                  <div className="col-md-2 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
-                                    <div className="styled-select-black">
-                                        <select onChange={this.changeSortingDirection} value={catalogSortDirection}
-                                            ref="sortingDirection">
-                                          <option key={-1} value={-1}>{'Descending'}</option>
-                                          <option key={1} value={1}>{'Ascending'}</option>
+            return(
+                <form role="form">
+                  {/* Header Search */}
+                  <div className="col-sm-12 col-xs-12 bg-hearder-mycatalog">
+                      <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
+                      <div className="col-md-12 col-sm-12 col-xs-12">
+                            <div className="col-lg-6 col-md-5 col-sm-12 col-xs-12 nopadding">
+                                <div className="col-lg-6 col-md-7 col-sm-6 col-xs-12 nopadding">
+                                  <div className="col-lg-4 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
+                                  <div className="col-lg-8 col-md-7 col-sm-8 col-xs-12 m-nopadding">
+                                      <div className="styled-select-black">
+                                        <select onChange={this.selectedCatalog}  value={catalogId}
+                                            ref="catalog">
+                                          {
+                                              this.props.listCatalogName.length != 0 ?
+                                              this.props.listCatalogName.map((cat) => {
+                                                  return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
+                                              }) : <option value="">Please select</option>
+                                          }
                                         </select>
-                                    </div>
-                                  </div>
-                                  <div className="col-md-5 col-sm-4 pagenavi nopadding pull-right">
-                                      <div className="searchresult-navi cat-go">
-                                          {this.renderPagination()}
                                       </div>
                                   </div>
                                 </div>
-                          </div>
-                      </div>
-                      <div id="dvTotal">
-                        {this.renderTotals()}
-                      </div>
-                      {/* End Header Search */}
 
-                      {/* Util&Pagination */}
-                      <div className="row">
-                        <div className="col-sm-12 col-xs-12">
-                          <div className="col-sm-12 col-xs-12 pagenavi maring-t20 cat-line">
-                                <div className="checkbox checkbox-warning">
-                                    <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                                        onChange={this.onCheckedAllItemMyCatalog} ref="selectAllItems"/>
-                                    <label className="checkbox1 select"></label>
-                                    <span className="margin-l10 text-vertical">Select All</span>
+                                <div className="col-lg-6 col-md-5 col-sm-6 col-xs-12 nopadding"  >
+
+                                    <a><div className="icon-edit" id="edit" onMouseEnter={this.showTooltip}
+                                        onMouseLeave={this.hideTooltip}></div></a>
+                                    <ToolTip active={this.state.isTooltipActive} position="bottom"
+                                        arrow="center" parent="#edit" >
+                                        <div className="cat-tooltip form-inline">
+                                          <p>Edit Catalog Name</p>
+                                          <div className="form-group">
+                                            <input type="text" className="form-control" placeholder={catalogName}
+                                            onChange={this.changeCatalogName} ref="catalogName"/>
+                                          </div>
+                                            <button type="button" className="btn btn-default"
+                                                onClick={this.saveCatalogName}>
+                                                save
+                                            </button>
+                                        </div>
+                                    </ToolTip>
+                                    <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
+                                    <a><div className="icon-print" ></div></a>
                                 </div>
-                                <div>
-                                    {this.state.enabledMyCatalog?
-                                        <span className="icon-det-28" onClick={this.deleteAllItems}></span> :
-                                        <span className="icon-det-28"></span>
-                                    }
-                                    <span className="margin-l5 text-del">Delete All</span>
+                              </div>
+                            <div className="col-lg-6 col-md-7 col-sm-12 col-xs-12 nopadding">
+                              <div className="cat-sort col-xs-12 margin-t5">
+                                <ControlLabel>Sort By : </ControlLabel>
+                              </div>
+                              <div className="col-md-3 col-sm-3 col-xs-12 nopadding m-bottom-5">
+                                <div className="styled-select-black">
+                                  <select onChange={this.changeSortingBy} value={catalogSortingBy}
+                                    ref="sortingBy">
+                                    <option key={2} value={2}>{'Item Reference'}</option>
+                                    <option key={3} value={3}>{'Description'}</option>
+                                  </select>
                                 </div>
-                          </div>
-                            <div className="panel panel-default">
-                                <div className="panel-body padding-ft0">
-                                    <div className={'search-product' }>
-                                          <GridItemsView  items={items} onClickGrid={this.onClickGrid}
-                                          onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                          onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
-                                    </div>
+                              </div>
+                              <div className="col-md-2 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
+                                <div className="styled-select-black">
+                                    <select onChange={this.changeSortingDirection} value={catalogSortDirection}
+                                        ref="sortingDirection">
+                                      <option key={-1} value={-1}>{'Descending'}</option>
+                                      <option key={1} value={1}>{'Ascending'}</option>
+                                    </select>
+                                </div>
+                              </div>
+                              <div className="col-md-5 col-sm-4 pagenavi nopadding pull-right">
+                                  <div className="searchresult-navi cat-go">
+                                      {this.renderPagination()}
+                                  </div>
+                              </div>
+                            </div>
+                      </div>
+                  </div>
+                  <div id="dvTotal">
+                    {this.renderTotals()}
+                  </div>
+                  {/* End Header Search */}
+
+                  {/* Util&Pagination */}
+                  <div className="row">
+                    <div className="col-sm-12 col-xs-12">
+                      <div className="col-sm-12 col-xs-12 pagenavi maring-t20 cat-line">
+                            <div className="checkbox checkbox-warning">
+                                <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
+                                    onChange={this.onCheckedAllItemMyCatalog} ref="selectAllItems"/>
+                                <label className="checkbox1 select"></label>
+                                <span className="margin-l10 text-vertical">Select All</span>
+                            </div>
+                            <div>
+                                {this.state.enabledMyCatalog?
+                                    <span className="icon-det-28" onClick={this.deleteAllItems}></span> :
+                                    <span className="icon-det-28"></span>
+                                }
+                                <span className="margin-l5 text-del">Delete All</span>
+                            </div>
+                      </div>
+                        <div className="panel panel-default">
+                            <div className="panel-body padding-ft0">
+                                <div className={'search-product' }>
+                                      <GridItemsView  items={items} onClickGrid={this.onClickGrid}
+                                      onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                      onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
                                 </div>
                             </div>
                         </div>
-                      </div>
-                      {this.renderModalConfirmDelete()}
-                      {this.renderModalConfirmDeleteCatalog()}
-                      {this.renderModalConfirmDeleteAllItem()}
-                      {this.renderAlertmsg()}
-                    </form>
-                );
-            }else{
-                return(
-                    <div>
-                      <center>
-                        <br/><br/><br/><br/><br/><br/>
-                          <Loading type="spin" color="#202020" width="10%"/>
-                      </center>
-                      <br/><br/><br/><br/><br/><br/>
                     </div>
-                );
-            }
-
+                  </div>
+                  {this.renderModalConfirmDelete()}
+                  {this.renderModalConfirmDeleteCatalog()}
+                  {this.renderModalConfirmDeleteAllItem()}
+                  {this.renderAlertmsg()}
+                </form>
+            );
     }
 }
 function mapStateToProps(state) {
