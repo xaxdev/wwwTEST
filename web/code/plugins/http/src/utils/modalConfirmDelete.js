@@ -38,7 +38,7 @@ class ModalMyCatalog extends Component {
                 <h1 className="modal-title">{title}</h1>
               </div>
               <div className="modal-body">
-                {message}
+                <div className="text-center maring-t20 font-b">{message}</div>
                 <br/>
               </div>
               <div className="modal-footer">

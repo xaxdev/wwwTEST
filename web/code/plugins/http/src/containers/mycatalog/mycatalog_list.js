@@ -607,9 +607,7 @@ class MyCatalog extends Component {
             return(
                 <form role="form">
                   {/* Header Search */}
-                  <script>
-                      $('.selectpicker').selectpicker();
-                  </script>
+
                   <div className="col-sm-12 col-xs-12 bg-hearder-mycatalog">
                       <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
                       <div className="col-md-12 col-sm-12 col-xs-12">
@@ -618,7 +616,7 @@ class MyCatalog extends Component {
                                   <div className="col-lg-5 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
                                   <div className="col-lg-7 col-md-7 col-sm-8 col-xs-12 nopadding">
                                       <div className="styled-select-black">
-                                        <select className="selectpicker" onChange={this.selectedCatalog}  value={catalogId}
+                                        <select onChange={this.selectedCatalog}  value={catalogId}
                                             ref="catalog">
                                           {
                                               this.props.listCatalogName.length != 0 ?
