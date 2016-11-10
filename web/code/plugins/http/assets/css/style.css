@@ -307,7 +307,7 @@ select.form-searchresult option{
    background: url(/images/arrow-seaech-b.png) no-repeat 96%;
    height: 35px;
    overflow: hidden;
-   width: 100%;
+   width: 95%;
    border: 1px solid #5b5959;
    padding: 0px 12px 0 0;
 }
@@ -1279,6 +1279,8 @@ select.form-searchresult option{
   .bg-hearder-mycatalog {
     background: url(/images/bg-title-my-catalog.jpg) repeat center top;
   }
+  .searchresult-navi input{width: 33px;}
+  .cat-go	button{margin-left:0;}
 }
 
 @media screen and (max-width: 991px) and (min-width: 767px){

@@ -607,15 +607,18 @@ class MyCatalog extends Component {
             return(
                 <form role="form">
                   {/* Header Search */}
+                  <script>
+                      $('.selectpicker').selectpicker();
+                  </script>
                   <div className="col-sm-12 col-xs-12 bg-hearder-mycatalog">
                       <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
                       <div className="col-md-12 col-sm-12 col-xs-12">
-                            <div className="col-lg-6 col-md-5 col-sm-12 col-xs-12 nopadding">
-                                <div className="col-lg-6 col-md-7 col-sm-6 col-xs-12 nopadding">
-                                  <div className="col-lg-4 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
-                                  <div className="col-lg-8 col-md-7 col-sm-8 col-xs-12 m-nopadding">
+                            <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 nopadding">
+                                <div className="col-lg-7 col-md-7 col-sm-6 col-xs-12 nopadding">
+                                  <div className="col-lg-5 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
+                                  <div className="col-lg-7 col-md-7 col-sm-8 col-xs-12 nopadding">
                                       <div className="styled-select-black">
-                                        <select onChange={this.selectedCatalog}  value={catalogId}
+                                        <select className="selectpicker" onChange={this.selectedCatalog}  value={catalogId}
                                             ref="catalog">
                                           {
                                               this.props.listCatalogName.length != 0 ?
@@ -628,7 +631,7 @@ class MyCatalog extends Component {
                                   </div>
                                 </div>
 
-                                <div className="col-lg-6 col-md-5 col-sm-6 col-xs-12 nopadding"  >
+                                <div className="col-lg-5 col-md-5 col-sm-6 col-xs-12 nopadding"  >
 
                                     <a><div className="icon-edit" id="edit" onMouseEnter={this.showTooltip}
                                         onMouseLeave={this.hideTooltip}></div></a>
@@ -650,7 +653,7 @@ class MyCatalog extends Component {
                                     <a><div className="icon-print" ></div></a>
                                 </div>
                               </div>
-                            <div className="col-lg-6 col-md-7 col-sm-12 col-xs-12 nopadding">
+                            <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 nopadding">
                               <div className="cat-sort col-xs-12 margin-t5">
                                 <ControlLabel>Sort By : </ControlLabel>
                               </div>
@@ -663,7 +666,7 @@ class MyCatalog extends Component {
                                   </select>
                                 </div>
                               </div>
-                              <div className="col-md-2 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
+                              <div className="col-md-3 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
                                 <div className="styled-select-black">
                                     <select onChange={this.changeSortingDirection} value={catalogSortDirection}
                                         ref="sortingDirection">
@@ -672,7 +675,7 @@ class MyCatalog extends Component {
                                     </select>
                                 </div>
                               </div>
-                              <div className="col-md-5 col-sm-4 pagenavi nopadding pull-right">
+                              <div className="col-md-4 col-sm-4 pagenavi nopadding pull-right">
                                   <div className="searchresult-navi cat-go">
                                       {this.renderPagination()}
                                   </div>
