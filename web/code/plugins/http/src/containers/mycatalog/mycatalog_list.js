@@ -135,18 +135,20 @@ class MyCatalog extends Component {
         })
         let paramsItem ={id: catalogId, items: items};
         // console.log('params-->',params);
-        this.props.deleteCatalogItems(paramsItem).then( () =>{
-            // console.log('Deleted!');
-            let params = {
-                            id: catalogId,
-                            page: this.props.currentPage,
-                            size: 16,
-                            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
-                            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-                        };
-            this.props.getCatalogItems(params);
+        if (catalogId != null) {
+            this.props.deleteCatalogItems(paramsItem).then( () =>{
+                // console.log('Deleted!');
+                let params = {
+                                id: catalogId,
+                                page: this.props.currentPage,
+                                size: 16,
+                                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                                order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+                            };
+                this.props.getCatalogItems(params);
 
-        });
+            });
+        }
         // console.log('catalog-->',catalog);
     }
 
@@ -171,28 +173,30 @@ class MyCatalog extends Component {
         const { items } = this.props.listCatalogItems;
         const { catalogId } = this.props;
 
-        if (e.target.checked) {
-            fileName.attr('checked','checked');
-            this.setState({enabledMyCatalog: true});
-            for(let i=0, n=fileName.length;i<n;i++) {
-                fileName[i].checked = true;
-              }
-            listMyCatalog = [];
-            items.map((item) => {
-                let itemName = (item.type != 'CER')? item.description: item.name;
-                let objItem = {
-                                id: item.id,
-                                reference: item.reference,
-                                description: itemName,
-                                catalogId: catalogId
-                            };
-                listMyCatalog.push(objItem);
-            });
+        if (catalogId != null) {
+            if (e.target.checked) {
+                fileName.attr('checked','checked');
+                this.setState({enabledMyCatalog: true});
+                for(let i=0, n=fileName.length;i<n;i++) {
+                    fileName[i].checked = true;
+                }
+                listMyCatalog = [];
+                items.map((item) => {
+                    let itemName = (item.type != 'CER')? item.description: item.name;
+                    let objItem = {
+                        id: item.id,
+                        reference: item.reference,
+                        description: itemName,
+                        catalogId: catalogId
+                    };
+                    listMyCatalog.push(objItem);
+                });
 
-        } else {
-            fileName.removeAttr('checked');
-            listMyCatalog = [];
-            this.setState({enabledMyCatalog: false});
+            } else {
+                fileName.removeAttr('checked');
+                listMyCatalog = [];
+                this.setState({enabledMyCatalog: false});
+            }
         }
         // console.log(listMyCatalog);
     }
@@ -251,7 +255,9 @@ class MyCatalog extends Component {
                 order: sortingDirection
             };
         this.props.setCatalogSortDirection(sortingDirection);
-        this.props.getCatalogItems(parasm);
+        if (catalogId != null) {
+            this.props.getCatalogItems(parasm);
+        }
     }
 
     changeSortingBy = (e)=> {
@@ -269,7 +275,9 @@ class MyCatalog extends Component {
                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
             };
         this.props.setCatalogSortingBy(sortingBy);
-        this.props.getCatalogItems(parasm);
+        if (catalogId != null) {
+            this.props.getCatalogItems(parasm);
+        }
     }
 
     saveCatalogName = (e)=> {
@@ -278,11 +286,13 @@ class MyCatalog extends Component {
         let params = {id: catalogId, catalog: catalog.value};
         // console.log(params);
         this.setState({isTooltipActive: false});
-        this.props.setNewCatalogName(params).then((value) => {
-            if(value){
-                this.props.getCatalogName();
-            }
-        });
+        if (catalogId != null) {
+            this.props.setNewCatalogName(params).then((value) => {
+                if(value){
+                    this.props.getCatalogName();
+                }
+            });
+        }
     }
 
     changeCatalogName = (e)=> {
@@ -339,10 +349,11 @@ class MyCatalog extends Component {
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
             this.props.setCatalogCurrentPage(getPage);
-
-            this.props.getCatalogItems(parasm).then((value) => {
-                console.log(value);
-            });
+            if (catalogId != null) {
+                this.props.getCatalogItems(parasm).then((value) => {
+                    console.log(value);
+                });
+            }
         }
     }
 
@@ -405,20 +416,21 @@ class MyCatalog extends Component {
         })
         let params ={id: catalogId, items: items};
         // console.log('params-->',params);
-        this.props.deleteCatalogItems(params).then( () =>{
-            // console.log('Deleted!');
-            let parasm = {
-                            id: catalogId,
-                            page: this.props.currentPage,
-                            size: 16,
-                            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
-                            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-                        };
-            this.props.getCatalogItems(parasm);
+        if (catalogId != null) {
+            this.props.deleteCatalogItems(params).then( () =>{
+                // console.log('Deleted!');
+                let parasm = {
+                    id: catalogId,
+                    page: this.props.currentPage,
+                    size: 16,
+                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                    order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+                };
+                this.props.getCatalogItems(parasm);
 
-        });
+            });
+        }
         // console.log('catalog-->',catalog);
-
     }
 
     handleSubmitDeleteCatalog = (e)=>{
@@ -427,25 +439,27 @@ class MyCatalog extends Component {
         // console.log('Deleted!-->',catalogId);
         let params = {id: catalogId}
         this.setState({isOpenDeleteCatalog: false});
-        this.props.deleteCatalog(params).then((valueDelete) => {
-            if (valueDelete) {
-                this.props.getCatalogName().then((valueGetCatalog) => {
-                    if (valueGetCatalog) {
-                        // console.log('componentWillMount-->',this.props.listCatalogName);
-                        if(this.props.listCatalogName.length != 0){
-                            let parasm = {
-                                            id: this.props.listCatalogName[0]._id,
-                                            page: this.props.currentPage,
-                                            size: 16,
-                                            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
-                                            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-                                        };
-                            this.props.getCatalogItems(parasm);
+        if (catalogId != null) {
+            this.props.deleteCatalog(params).then((valueDelete) => {
+                if (valueDelete) {
+                    this.props.getCatalogName().then((valueGetCatalog) => {
+                        if (valueGetCatalog) {
+                            // console.log('componentWillMount-->',this.props.listCatalogName);
+                            if(this.props.listCatalogName.length != 0){
+                                let parasm = {
+                                    id: this.props.listCatalogName[0]._id,
+                                    page: this.props.currentPage,
+                                    size: 16,
+                                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                                    order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+                                };
+                                this.props.getCatalogItems(parasm);
+                            }
                         }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
     }
 
     handleCloseDeleteItem = _=>{
@@ -584,7 +598,11 @@ class MyCatalog extends Component {
             // console.log('this.props.-->',this.props.listCatalogName);
             // console.log('catalogId-->',catalogId);
 
-            let items = this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [];
+            let items = this.props.listCatalogName != undefined ?
+                            this.props.listCatalogName.length != 0 ?
+                                this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [] :
+                            [] :
+                        [];
 
             return(
                 <form role="form">
@@ -688,9 +706,9 @@ class MyCatalog extends Component {
                         <div className="panel panel-default">
                             <div className="panel-body padding-ft0">
                                 <div className={'search-product' }>
-                                      <GridItemsView  items={items} onClickGrid={this.onClickGrid}
-                                      onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                      onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
+                                    <GridItemsView  items={items} onClickGrid={this.onClickGrid}
+                                    onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
                                 </div>
                             </div>
                         </div>
