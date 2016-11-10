@@ -52,10 +52,10 @@ class MyCatalog extends Component {
     }
 
     componentWillMount = _=>{
-        console.log('componentWillMount-->');
-        console.log('this.props.catalogId-->',this.props.catalogId);
-        console.log('this.props.catalogSortingBy-->',this.props.catalogSortingBy);
-        console.log('this.props.catalogSortDirection-->',this.props.catalogSortDirection);
+        // console.log('componentWillMount-->');
+        // console.log('this.props.catalogId-->',this.props.catalogId);
+        // console.log('this.props.catalogSortingBy-->',this.props.catalogSortingBy);
+        // console.log('this.props.catalogSortDirection-->',this.props.catalogSortDirection);
         this.props.getCatalogName().then((value) => {
             if (value) {
                 // console.log('componentWillMount-->',this.props.listCatalogName);
@@ -122,7 +122,7 @@ class MyCatalog extends Component {
 
     handleSubmitDeleteAllItem = (e)=>{
         e.preventDefault();
-        console.log('handleSubmitDeleteAllItem');
+        // console.log('handleSubmitDeleteAllItem');
         const { catalogId } = this.props;
         let catalog = this.refs.catalog;
 
@@ -161,7 +161,7 @@ class MyCatalog extends Component {
             items.push({id: item.id});
         })
         let params ={id: catalogId, items: items};
-        console.log('params-->',params);
+        // console.log('params-->',params);
         this.setState({isOpenDeleteAllItem: true});
 
     }
@@ -194,7 +194,7 @@ class MyCatalog extends Component {
             listMyCatalog = [];
             this.setState({enabledMyCatalog: false});
         }
-        console.log(listMyCatalog);
+        // console.log(listMyCatalog);
     }
 
     checkedOneItemMyCatalog = (e)=> {
@@ -231,9 +231,9 @@ class MyCatalog extends Component {
         } else {
           this.setState({enabledMyCatalog: false});
         }
-        console.log('item -->',e.target.checked);
-        console.log('item -->',e.target.value);
-        console.log('listMyCatalog -->',listMyCatalog);
+        // console.log('item -->',e.target.checked);
+        // console.log('item -->',e.target.value);
+        // console.log('listMyCatalog -->',listMyCatalog);
     }
 
     changeSortingDirection = (e)=> {
@@ -581,8 +581,8 @@ class MyCatalog extends Component {
                 }
             }
             // let isOpenMsg =  this.state.isOpenAddMyCatalogmsg;
-            console.log('this.props.-->',this.props.listCatalogName);
-            console.log('catalogId-->',catalogId);
+            // console.log('this.props.-->',this.props.listCatalogName);
+            // console.log('catalogId-->',catalogId);
 
             let items = this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [];
 
