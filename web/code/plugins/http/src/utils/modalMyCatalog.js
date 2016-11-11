@@ -11,15 +11,27 @@ class ModalMyCatalog extends Component {
     constructor(props) {
         super(props);
 
+        // this.changeCatalog = this.changeCatalog.bind(this);
+
+  }
+  componentWillMount = _=>{
+    //   console.log('componentWillMount modalMyCat-->');
+  }
+  componentDidMount = _=>{
+    //   console.log('componentDidMount modalMyCat-->');
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    //    console.log('shouldComponentUpdate modalMyCat-->');
+       return shallowCompare(this, nextProps, nextState);
   }
   componentWillReceiveProps = _=>{
       const { props } = this.props;
       const { fields: {
                 oldCatalogName,newCatalogName,validateCatalogName
             } } = props;
-        oldCatalogName.value = '';
-        newCatalogName.value = '';
-        console.log('componentWillReceiveProps modalMyCat-->',oldCatalogName.value);
+        // oldCatalogName.value = '';
+        // newCatalogName.value = '';
+        // console.log('componentWillReceiveProps modalMyCat-->',newCatalogName.value);
   }
 
   hideModalAddMyCatalog = (e) => {
@@ -45,7 +57,8 @@ class ModalMyCatalog extends Component {
       nameDisable = true
     }
     // oldCatalogName.value = '';
-    console.log('render modalMyCat-->',oldCatalogName.value);
+    // console.log('render modalMyCat oldCatalogName-->',oldCatalogName.value);
+    // console.log('render modalMyCat newCatalogName-->',newCatalogName.value);
     return(
           <div  className="addMyCatalog">
             <Modal isOpen={isOpen} >

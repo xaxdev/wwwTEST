@@ -1277,7 +1277,16 @@ class SearchResult extends Component {
   }
   handleClose= _=>{
     //   console.log(this);
-      this.setState({isOpenAddMyCatalog: false});
+    const { fields: {
+              oldCatalogName,newCatalogName,validateCatalogName
+          } } = this.props;
+
+    newCatalogName.value = '';
+    oldCatalogName.value = '';
+    newCatalogName.onChange('');
+    oldCatalogName.onChange('');
+
+    this.setState({isOpenAddMyCatalog: false});
 
   }
   handleSubmitCatalog = (e)=>{
@@ -1303,8 +1312,14 @@ class SearchResult extends Component {
         // console.log('catalogdata-->',catalogdata);
         this.props.addCatalog(catalogdata).then( () =>{
         //    console.log('Added!');
+            newCatalogName.value = '';
+            oldCatalogName.value = '';
+            newCatalogName.onChange('');
+            oldCatalogName.onChange('');
+
            this.setState({isOpenAddMyCatalogmsg: true});
            this.setState({enabledMyCatalog: false});
+           this.props.getCatalogName();
         })
 
   }
@@ -1552,7 +1567,8 @@ class SearchResult extends Component {
                           {/* Grid Product */}
                           <div className={`search-product  ${showGridView ? '' : 'hidden'}` }>
                             <GridItemsView  items={items} onClickGrid={this.onClickGrid}
-                            onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog} onAddedOneItemMyCatalog={this.addedOneItemMyCatalog} />
+                            onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                            onAddedOneItemMyCatalog={this.addedOneItemMyCatalog} />
                           </div>
                           <div id="dvGridview" className="search-product hidden">
                             <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />

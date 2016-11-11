@@ -313,7 +313,7 @@ class MyCatalog extends Component {
         // e.preventDefault();
         const catalogName = e.target.value;
         const { fields: { catalog } } = this.props;
-        console.log('catalogName-->',catalogName);
+        // console.log('catalogName-->',catalogName);
         catalog.value = catalogName;
         catalog.onChange(catalogName);
         this.props.setRenameCatalog(catalogName);
@@ -613,8 +613,8 @@ class MyCatalog extends Component {
             }
             // let isOpenMsg =  this.state.isOpenAddMyCatalogmsg;
             // console.log('this.props.-->',this.props.listCatalogName);
-            console.log('catalogName-->',catalogName);
-            console.log('catalog-->',catalog.value);
+            // console.log('catalogName-->',catalogName);
+            // console.log('catalog-->',catalog.value);
 
             let items = this.props.listCatalogName != undefined ?
                             this.props.listCatalogName.length != 0 ?

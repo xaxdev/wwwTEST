@@ -11,7 +11,9 @@ const Menu =  (props) => {
                                                                                 props.currentLocation == '/user' ||
                                                                                 props.currentLocation == '/user/new'
                                                                             )?'active':''}`}>User Management</NavItem> : '';
-  const MyCatalog = <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog')?'active':''}`}>My Catalog</NavItem>;
+  // const MyCatalog = <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog')?'active':''}`}>My Catalog</NavItem>;
+  const MyCatalog = role == 'Admin'? <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog')?
+                                                                            'active':''}`}>My Catalog</NavItem>: '';
 
   return(
 <Navbar inverse>
