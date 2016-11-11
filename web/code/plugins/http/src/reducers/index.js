@@ -6,6 +6,7 @@ import forgotReducer from '../reducers/login/reducer_forgotpassword';
 import { reducer as formReducer } from 'redux-form';
 import productdetailReducer from '../reducers/products/reducer_productdetail';
 import searchResultReducer from '../reducers/searchresults/reducer_searchresults';
+import myCatalogReducer from '../reducers/mycatalog/reducer_mycatalog';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   login:loginReducer,
   forgot:forgotReducer,
   productdetail:productdetailReducer,
-  searchResult: searchResultReducer
+  searchResult: searchResultReducer,
+  myCatalog: myCatalogReducer
 });
 
 export default rootReducer;

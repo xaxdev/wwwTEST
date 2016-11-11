@@ -134,6 +134,22 @@ export default ({ dispatch,getState}) => {
                     }, 'accessdenied');
                 }
             }, {
+                onEnter: requireAuth,
+                path: 'mycatalog',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/mycatalog/mycatalog_list'));
+                    }, 'mycatalog');
+                }
+            }, {
+                onEnter: requireAuth,
+                path: '/productmycatalog/:id',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/products/productmycatalog'));
+                    }, 'productmycatalog');
+                }
+            },{
                 path: '*',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {

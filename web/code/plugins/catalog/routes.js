@@ -30,5 +30,10 @@ export default [
         method: 'DELETE',
         path: '/item',
         config: controllers.removeitem
+    },
+    {
+        method: 'GET',
+        path: '/{id}',
+        config: controllers.items
     }
 ]

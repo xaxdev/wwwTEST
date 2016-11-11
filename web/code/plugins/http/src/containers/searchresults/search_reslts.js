@@ -16,8 +16,11 @@ import ListItemsView from '../../components/searchresults/listitemview';
 import ListItemsViewPrint from '../../components/searchresults/listitemviewPrint';
 import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
+import ModalMyCatalog from '../../utils/modalMyCatalog';
+import Modalalertmsg from '../../utils/modalalertmsg';
 import moment from 'moment';
 import convertDate from '../../utils/convertDate';
+import validateCatalog from '../../utils/validatecatalog';
 
 // let XLSX = require('xlsx')
 
@@ -68,6 +71,8 @@ const labels = {
 
 }
 
+let listMyCatalog = []
+
 class SearchResult extends Component {
   constructor(props) {
     super(props);
@@ -86,6 +91,9 @@ class SearchResult extends Component {
     this.hideModalNoResults = this.hideModalNoResults.bind(this);
     this.printResults = this.printResults.bind(this);
     this.selectedPageSize = this.selectedPageSize.bind(this);
+    this.addMyCatalog = this.addMyCatalog.bind(this);
+    this.checkedOneItemMyCatalog = this.checkedOneItemMyCatalog.bind(this);
+    this.addedOneItemMyCatalog = this.addedOneItemMyCatalog.bind(this);
 
     // console.log('this.props.items-->',this.props.searchResult.datas);
 
@@ -136,7 +144,10 @@ class SearchResult extends Component {
       serial: false,
       limitedEdition: false,
       limitedEditionNumber: false,
-      showLoading: false
+      showLoading: false,
+      isOpenAddMyCatalog: false,
+      enabledMyCatalog:false,
+      isOpenAddMyCatalogmsg: false
     };
   }
   componentWillMount() {
@@ -194,7 +205,11 @@ class SearchResult extends Component {
       // this.props.setShowGridView(true);
       // this.props.setShowListView(false);
       this.props.setParams(paramsSearchStorage)
-      this.props.getItems(params);
+      this.props.getItems(params)
+      .then((value) => {
+          this.props.getCatalogName();
+      });
+
   }
   componentDidMount() {
 
@@ -264,16 +279,7 @@ class SearchResult extends Component {
     let dvTotal = jQuery('#dvTotalsub').html();
     let dvGridview = jQuery('#dvGridview').html();
     let dvListview = jQuery('#dvListview').html();
-    // console.log('printproduct-->',dvContainerPrint);
-    // let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
-    // let printWindow = window.open('', '', options);
-    // printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
-    // printWindow.document.write('<html><head><title>Mol online 2016</title>');
-    // printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-    // printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-    // printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-    // printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-    // printWindow.document.write('</head><body >');
+
     if (showGridView) {
         let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
         let printWindow = window.open('', '', options);
@@ -316,14 +322,7 @@ class SearchResult extends Component {
       },1500);
       return true;
     }
-    // printWindow.document.write('</body></html>');
-    // printWindow.document.close();
-    // printWindow.focus();
-    // setTimeout( function(){
-    //   printWindow.document.close();
-    //   printWindow.print();
-    // },1500);
-    // return true;
+
   }
   handleSelect(eventKey) {
       this.setState({activePage: eventKey});
@@ -569,6 +568,48 @@ class SearchResult extends Component {
     if(token){
         this.context.router.push(`/productdetail/${pageNumber}`);
     }
+  }
+  checkedOneItemMyCatalog = (item) => {
+    //   console.log('item.target.value-->',item.target.value);
+    const { items } = this.props;
+    let itemAdded = items.filter(oneItem => oneItem.id === item.target.value);
+    itemAdded = itemAdded[0];
+    let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
+    let objItem = {id: itemAdded.id, reference: itemAdded.reference, description: itemName}
+
+    if(!this.state.enabledMyCatalog){
+        listMyCatalog = [];
+    }
+
+    if (item.target.checked) {
+      listMyCatalog.push(objItem);
+    } else {
+      listMyCatalog = listMyCatalog.filter(inItem => inItem.id !== item.target.value);
+    }
+
+    if (listMyCatalog.length != 0) {
+      this.setState({enabledMyCatalog: true});
+    } else {
+      this.setState({enabledMyCatalog: false});
+    }
+    // console.log('item -->',item.target.checked);
+    // console.log('item -->',item.target.value);
+    // console.log('listMyCatalog -->',listMyCatalog);
+  }
+  addedOneItemMyCatalog = (item) => {
+      let fileName = jQuery('input[type="checkbox"]');
+      fileName.removeAttr('checked');
+      listMyCatalog  = [];
+      this.setState({enabledMyCatalog: false});
+      const { items } = this.props;
+      let itemAdded = items.filter(oneItem => oneItem.id === item.target.attributes[3].value);
+      itemAdded = itemAdded[0];
+      let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
+      let objItem = {id: itemAdded.id, reference: itemAdded.reference, description: itemName}
+
+      listMyCatalog.push(objItem);
+
+      this.setState({isOpenAddMyCatalog: true});
   }
   gridViewResults(){
     this.props.setShowGridView(true);
@@ -1231,9 +1272,87 @@ class SearchResult extends Component {
       );
     }
   }
+  addMyCatalog = _=>{
+      this.setState({isOpenAddMyCatalog: true});
+  }
+  handleClose= _=>{
+    //   console.log(this);
+    const { fields: {
+              oldCatalogName,newCatalogName,validateCatalogName
+          } } = this.props;
 
+    newCatalogName.value = '';
+    oldCatalogName.value = '';
+    newCatalogName.onChange('');
+    oldCatalogName.onChange('');
+
+    this.setState({isOpenAddMyCatalog: false});
+
+  }
+  handleSubmitCatalog = (e)=>{
+      e.preventDefault();
+      let fileName = jQuery('input[type="checkbox"]');
+      fileName.removeAttr('checked');
+      this.setState({isOpenAddMyCatalog: false});
+      const { fields: {
+                oldCatalogName,newCatalogName,validateCatalogName
+            } } = this.props;
+        const  Detail  = this.props.productdetail;
+        const  listCatalogName  = this.props.listCatalogName;
+        let oldCatalogTitle = ''
+        if (oldCatalogName.value) {
+           oldCatalogTitle = listCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
+        }
+
+        const catalogdata = {
+           id:!!oldCatalogName.value ? oldCatalogName.value:null,
+           catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
+           items:listMyCatalog
+        }
+        // console.log('catalogdata-->',catalogdata);
+        this.props.addCatalog(catalogdata).then( () =>{
+        //    console.log('Added!');
+            newCatalogName.value = '';
+            oldCatalogName.value = '';
+            newCatalogName.onChange('');
+            oldCatalogName.onChange('');
+
+           this.setState({isOpenAddMyCatalogmsg: true});
+           this.setState({enabledMyCatalog: false});
+           this.props.getCatalogName();
+        })
+
+  }
+  renderAddMyCatalog = _=> {
+      const { listCatalogName,
+               submitting } = this.props;
+      return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName}
+          isOpen={this.state.isOpenAddMyCatalog}
+          isClose={this.handleClose} props={this.props}/>);
+  }
+  renderAlertmsg = _=> {
+
+    const message = 'Add to catalog success';
+    return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}/>);
+  }
+  hideModalAddMyCatalog = (e) => {
+    e.preventDefault();
+
+    this.setState({isOpenAddMyCatalog: false});
+  }
+  handleClosemsg = _=>{
+      this.setState({isOpenAddMyCatalogmsg: false});
+  }
+  confirmAddMyCatalog = (e) => {
+    e.preventDefault();
+
+    // console.log('hi');
+    this.setState({isOpenAddMyCatalog: false});
+  }
   render() {
-    const { totalPages,showGridView,showListView,
+    const { fields: {
+              oldCatalogName,newCatalogName,validateCatalogName
+            }, totalPages,showGridView,showListView,
              currentPage,allItems,pageSize,
              items,totalPublicPrice,totalUpdatedCost,
              handleSubmit,
@@ -1244,7 +1363,7 @@ class SearchResult extends Component {
 
      const { isOpenMessage } = this.state;
 
-    var numbers = document.querySelectorAll('input[type="number"]');
+     var numbers = document.querySelectorAll('input[type="number"]');
 
     for (var i in numbers) {
       if (numbers.hasOwnProperty(i)) {
@@ -1405,8 +1524,13 @@ class SearchResult extends Component {
                       <div className="panel-body padding-ft0">
                         <div className="col-sm-12 ">
                           <div className="col-md-2 col-sm-3 col-xs-12 nopadding">
-
-                            <a><div className="icon-add margin-l10"></div></a>
+                            {
+                                this.state.enabledMyCatalog ?
+                                <a><div className="icon-add margin-l10" disabled={true} enabled={false}
+                                onClick={ this.addMyCatalog }></div></a>:
+                                <a><div className="icon-add margin-l10" disabled={true}
+                                enabled={false}></div></a>
+                            }
                             <a><div className="icon-excel margin-l10" disabled={submitting}
                                   onClick={ this.exportExcel }></div></a>
                             <a><div className="icon-print margin-l10" id="printproduct" disabled={submitting}
@@ -1442,7 +1566,9 @@ class SearchResult extends Component {
                           {/* End Total Data */}
                           {/* Grid Product */}
                           <div className={`search-product  ${showGridView ? '' : 'hidden'}` }>
-                            <GridItemsView  items={items} onClickGrid={this.onClickGrid} />
+                            <GridItemsView  items={items} onClickGrid={this.onClickGrid}
+                            onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                            onAddedOneItemMyCatalog={this.addedOneItemMyCatalog} />
                           </div>
                           <div id="dvGridview" className="search-product hidden">
                             <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
@@ -1475,6 +1601,8 @@ class SearchResult extends Component {
             </div>
             {this.renderExportExcelDialog()}
             {this.renderDownloadDialog()}
+            {this.renderAddMyCatalog()}
+            {this.renderAlertmsg()}
           </form>
         );
       }
@@ -1502,7 +1630,8 @@ function mapStateToProps(state) {
     sortingBy: state.searchResult.SortingBy,
     sortDirection: state.searchResult.SortDirection,
     showGridView: state.searchResult.ShowGridView,
-    showListView: state.searchResult.ShowListView
+    showListView: state.searchResult.ShowListView,
+    listCatalogName: state.myCatalog.ListCatalogName
    }
 }
 SearchResult.propTypes = {
@@ -1516,5 +1645,6 @@ SearchResult.contextTypes = {
 };
 module.exports = reduxForm({
   form: 'SearchResult',
-  fields: [ 'currPage' ]
+  fields: [ 'currPage','oldCatalogName','newCatalogName','validateCatalogName' ],
+  validate:validateCatalog
 },mapStateToProps,itemactions)(SearchResult)

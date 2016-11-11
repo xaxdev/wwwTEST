@@ -10,7 +10,8 @@ import ProductDescriptioncerBlock from '../../components/productdetail/productDe
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
-
+import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
+import Modalalertmsg from '../../components/productdetail/modalalertmsg';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
 import ProductPrint from '../../components/productdetail/productPrint';
@@ -25,10 +26,12 @@ import ProductGemstoneAttributes from '../../components/productdetail/productGem
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributes';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributes';
 import ReactImageFallback from "react-image-fallback";
+import { Modal, ModalClose } from 'react-modal-bootstrap';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
 import '../../utils/magnific-popup.js';
+import validateCatalog from '../../utils/validatecatalogproductdetail';
 var Loading = require('react-loading');
 
 
@@ -41,7 +44,9 @@ class productdetail extends Component {
     this.handleGo = this.handleGo.bind(this);
 
     this.state = {
-      productdetailLoading: false
+      productdetailLoading: false,
+      isOpenAddMyCatalog: false,
+      isOpenAddMyCatalogmsg: false
     };
   }
 
@@ -186,12 +191,16 @@ class productdetail extends Component {
         if(Detail.dominant){
         this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
        }
+
         this.setState({
           productdetailLoading: false
         });
       });
     }
   }
+
+
+
   renderDesc(){
 
     const  Detail  = this.props.productdetail;
@@ -612,6 +621,69 @@ class productdetail extends Component {
         }
    }
 
+   addMyCatalog = _=>{
+
+     this.props.getCatalogName().then(() =>{
+       const { fields: {
+                 oldCatalogName,newCatalogName,validateCatalogName
+             } } = this.props;
+
+             oldCatalogName.value = ''
+             newCatalogName.value = ''
+         this.setState({isOpenAddMyCatalog: true});
+     })
+   }
+   handleClose= _=>{
+       this.setState({isOpenAddMyCatalog: false});
+   }
+
+   handleSubmitCatalog = (e)=>{
+       e.preventDefault();
+       this.setState({isOpenAddMyCatalog: false});
+       const { fields: {
+                 oldCatalogName,newCatalogName,validateCatalogName
+             } } = this.props;
+       const  Detail  = this.props.productdetail;
+       const  listCatalogName  = this.props.listCatalogName;
+       let oldCatalogTitle = ''
+       if (oldCatalogName.value) {
+          oldCatalogTitle = listCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
+       }
+
+       const catalogdata = {
+          id:!!oldCatalogName.value ? oldCatalogName.value:null,
+          catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
+          items:[
+             {
+                id:Detail.id,
+                reference:Detail.reference,
+                description:Detail.description
+             }
+          ]
+       }
+       this.props.addCatalog(catalogdata).then( () =>{
+          this.setState({isOpenAddMyCatalogmsg: true});
+       })
+   }
+
+   handleClosemsg = _=>{
+       this.setState({isOpenAddMyCatalogmsg: false});
+   }
+
+   renderAddMyCatalog = _=> {
+       const { listCatalogName,
+                submitting } = this.props;
+
+      return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
+          isClose={this.handleClose} props={this.props}/>);
+   }
+
+   renderAlertmsg = _=> {
+
+     const { message } = this.props;
+     return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}/>);
+   }
+
     handleGo(data){
       //e.preventDefault();
       const productId = this.props.params.id;
@@ -680,13 +752,14 @@ class productdetail extends Component {
           <br/><br/><br/><br/><br/><br/>
         </div>
         <div className="row">
-
+        {this.renderAddMyCatalog()}
+        {this.renderAlertmsg()}
           <div className="col-sm-12">
               <div className="panel panel-default">
                   <div className="panel-body padding-ft0">
 
                 <div className="col-md-12 col-sm-12 icon-detail">
-                  <a><div className="icon-add margin-l10"></div></a>
+                  <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
                   <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                   {this.zoomicon()}
                 </div>
@@ -734,6 +807,8 @@ function mapStateToProps(state) {
     productindex: state.productdetail.index,
     productindexplus: state.productdetail.indexplus,
     productrelete: state.productdetail.relete,
+    listCatalogName: state.productdetail.ListCatalogName,
+    message: state.productdetail.message,
     //setreference:state.productdetail.setreference,
     //productreletepage: state.productdetail.reletepage,
     productlist:state.productdetail.productlist
@@ -742,7 +817,8 @@ function mapStateToProps(state) {
 
 module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
   form: 'Pageform',
-  fields: ['pagego','reletepage']
+  fields: ['pagego','reletepage','oldCatalogName','newCatalogName','validateCatalogName'],
+  validate:validateCatalog
 },mapStateToProps,productdetailaction)(productdetail)
 
 //export default connect(mapStateToProps,productdetailaction)(productdetail);

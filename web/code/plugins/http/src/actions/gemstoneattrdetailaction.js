@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
-import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE} from '../constants/productdetailconstants';
+import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME,ADD_CATALOG} from '../constants/productdetailconstants';
 
 export function getProductDetail(productId,productlist){
   const token = sessionStorage.token;
@@ -48,5 +48,39 @@ export function getSetreference(setreference,productId){
         },
         method:'GET'
       })
+  }
+}
+
+export function getCatalogName(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}api/catalog/names`;
+
+  return {
+          type: GET_CATALOGNAME,
+    		  promise: fetch(url,{
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          })
+  }
+}
+
+export function addCatalog(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}api/catalog`;
+  return {
+          type: ADD_CATALOG,
+    		  promise: fetch(url,{
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+            body: JSON.stringify(params)
+          })
   }
 }
