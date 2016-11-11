@@ -337,7 +337,7 @@ module.exports = (obj) => {
           else if(key == 'hierarchy'){
             let filterSplit = [];
             // console.log('hierarchy value-->', value)
-            let vals = value.split(',');
+            let vals = value.split('|');
             vals.forEach((val)=>{
               let mapField =
                     `{

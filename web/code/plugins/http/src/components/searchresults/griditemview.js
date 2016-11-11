@@ -12,6 +12,8 @@ function showDiv() {
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
 
+let oldView = 0;
+
 class GridItemsView extends Component {
   constructor(props) {
     super(props);
@@ -83,7 +85,8 @@ class GridItemsView extends Component {
       isOpen57: false,
       isOpen58: false,
       isOpen59: false,
-      isOpen60: false
+      isOpen60: false,
+      toggleQuickView: false
     };
   }
   static propTypes = {
@@ -169,194 +172,867 @@ class GridItemsView extends Component {
 
     switch(e.currentTarget.id){
     case '0':
-      this.setState({isOpen0:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen0: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen0: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen0:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '1':
-      this.setState({isOpen1:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen1: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen1: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen1:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '2':
-      this.setState({isOpen2:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen2: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen2: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen2:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '3':
-      this.setState({isOpen3:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen3: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen3: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen3:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '4':
-      this.setState({isOpen4:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen4: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen4: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen4:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '5':
-      this.setState({isOpen5:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen5: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen5: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen5:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '6':
-      this.setState({isOpen6:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen6: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen6: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen6:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '7':
-      this.setState({isOpen7:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen7: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen7: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen7:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '8':
-      this.setState({isOpen8:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen8: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen8: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen8:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '9':
-      this.setState({isOpen9:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen9: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen9: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen9:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '10':
-      this.setState({isOpen10:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen10: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen10: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen10:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '11':
-      this.setState({isOpen11:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen11: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen11: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen11:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '12':
-      this.setState({isOpen12:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen12: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen12: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen12:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '13':
-      this.setState({isOpen13:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen13: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen13: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen13:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '14':
-      this.setState({isOpen14:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen14: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen14: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen14:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '15':
-      this.setState({isOpen15:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen15: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen15: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen15:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '16':
-      this.setState({isOpen16:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen16: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen16: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen16:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '17':
-      this.setState({isOpen17:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen17: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen17: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen17:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '18':
-      this.setState({isOpen18:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen18: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen18: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen18:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '19':
-      this.setState({isOpen19:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen19: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen19: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen19:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '20':
-      this.setState({isOpen20:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen20: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen20: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen20:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '21':
-      this.setState({isOpen21:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen21: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen21: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen21:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '22':
-      this.setState({isOpen22:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen22: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen22: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen22:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '23':
-      this.setState({isOpen23:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen23: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen23: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen23:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '24':
-      this.setState({isOpen24:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen24: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen24: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen24:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '25':
-      this.setState({isOpen25:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen25: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen25: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen25:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '26':
-      this.setState({isOpen26:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen26: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen26: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen26:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '27':
-      this.setState({isOpen27:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen27: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen27: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen27:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '28':
-      this.setState({isOpen28:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen28: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen28: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen28:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '29':
-      this.setState({isOpen29:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen29: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen29: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen29:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '30':
-      this.setState({isOpen30:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen30: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen30: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen30:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '31':
-      this.setState({isOpen31:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen31: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen31: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen31:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '32':
-      this.setState({isOpen32:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen32: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen32: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen32:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '33':
-      this.setState({isOpen33:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen33: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen33: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen33:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '34':
-      this.setState({isOpen34:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen34: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen34: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen34:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '35':
-      this.setState({isOpen35:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen35: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen35: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen35:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '36':
-      this.setState({isOpen36:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen36: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen36: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen36:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '37':
-      this.setState({isOpen37:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen37: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen37: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen37:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '38':
-      this.setState({isOpen38:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen38: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen38: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen38:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '39':
-      this.setState({isOpen39:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen39: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen39: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen39:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '40':
-      this.setState({isOpen40:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen40: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen40: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen40:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '41':
-      this.setState({isOpen41:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen41: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen41: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen41:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '42':
-      this.setState({isOpen42:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen42: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen42: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen42:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '43':
-      this.setState({isOpen43:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen43: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen43: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen43:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '44':
-      this.setState({isOpen44:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen44: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen44: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen44:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '45':
-      this.setState({isOpen45:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen45: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen45: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen45:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '46':
-      this.setState({isOpen46:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen46: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen46: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen46:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '47':
-      this.setState({isOpen47:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen47: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen47: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen47:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '48':
-      this.setState({isOpen48:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen48: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen48: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen48:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '49':
-      this.setState({isOpen49:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen49: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen49: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen49:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '50':
-      this.setState({isOpen50:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen50: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen50: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen50:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '51':
-      this.setState({isOpen51:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen51: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen51: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen51:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '52':
-      this.setState({isOpen52:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen52: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen52: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen52:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '53':
-      this.setState({isOpen53:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen53: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen53: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen53:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '54':
-      this.setState({isOpen54:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen54: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen54: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen54:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '55':
-      this.setState({isOpen55:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen55: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen55: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen55:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '56':
-      this.setState({isOpen56:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen56: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen56: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen56:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '57':
-      this.setState({isOpen57:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen57: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen57: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen57:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '58':
-      this.setState({isOpen58:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen58: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen58: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen58:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '59':
-      this.setState({isOpen59:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen59: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen59: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen59:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     case '60':
-      this.setState({isOpen60:true});
+        if (this.state.toggleQuickView) {
+            if (oldView != e.currentTarget.id) {
+                this.setState({isOpen60: true});
+                this.setState({toggleQuickView: true});
+            } else {
+                this.setState({isOpen60: false});
+                this.setState({toggleQuickView: false});
+            }
+        } else {
+            this.setState({isOpen60:true});
+            this.setState({toggleQuickView: true});
+        }
       break;
     default:
       break;
     }
+    oldView = e.currentTarget.id;
   }
   onMouseOutGrid(e){
     // console.log('onMouseOutGrid e->',e);
+    this.setState({toggleQuickView: false});
     switch(e.currentTarget.id){
     case '0':
       this.setState({isOpen0:false});
@@ -545,6 +1221,7 @@ class GridItemsView extends Component {
       break;
     }
   }
+
   renderShowDetails(){
     // console.log('renderShowDetails this.state.isOpen-->',this.state.isOpen);
       return(
@@ -554,7 +1231,7 @@ class GridItemsView extends Component {
 
   render(){
     // console.log('this.props.items-->',this.props.items);
-    const { submitting } = this.props;
+    const { submitting, onCheckedOneItemMyCatalog, onAddedOneItemMyCatalog } = this.props;
     var btnEvent = this.onClickGrid;
     var btnQuickView = this.onClickQuickView;
     var showDetails = this.onMouseOverGrid;
@@ -575,12 +1252,13 @@ class GridItemsView extends Component {
           let actualCost = GetPriceWithCurrency(item,'actualCost');
           let updatedCost = GetPriceWithCurrency(item,'updatedCost');
 
-          let itemName = (item.type != 'CER')
-                            ?
-                            (item.description != undefined) ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...': '-' :
+          let itemName = (item.type != 'CER')?
+                            (item.description != undefined) ?
+                                (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                            : '-' :
                             item.name
                             ;
-
+            let itemNameCat = (item.type != 'CER')? item.description: item.name;
            return (
               <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
@@ -646,18 +1324,13 @@ class GridItemsView extends Component {
                                  (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                   ''}>
                     <div className="pull-right">
-                      <div className="grid-add"
-                          onClick={
-                            (eventKey) => {
-                              // console.log('eventKey-->',item.id);
-                            }
-                          }>
-                        <span className="icon-add-28"></span>
+                      <div className="grid-add" >
+                        <span className="icon-add-28" name={item.id} id={index} value={item.id}
+                          onClick={onAddedOneItemMyCatalog}></span>
                       </div>
                      <div className="checkbox checkbox-warning">
                       <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                        // checked={this.state.selectedStatus}
-                        // onChange={event => this.setState({ selectedStatus: event.target.checked })}
+                        name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
                         />
                           <label className="checkbox1"></label>
                       </div>

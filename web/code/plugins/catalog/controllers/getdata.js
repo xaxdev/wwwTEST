@@ -2,6 +2,7 @@ import Joi from 'joi'
 import Boom from 'boom'
 import Elasticsearch from 'elasticsearch'
 import _ from 'lodash'
+import constants from '../constants'
 
 export default {
     auth: {
@@ -9,8 +10,10 @@ export default {
     },
     validate: {
         query: {
-            page: Joi.number().integer(),
-            size: Joi.number().integer()
+            page: Joi.number().integer().positive(),
+            size: Joi.number().integer().positive(),
+            sort: Joi.number().integer().positive(),
+            order: Joi.number().valid(1, -1)
         }
     },
     handler: (request, reply) => {
@@ -32,6 +35,9 @@ export default {
                 const qSize = request.query.size || request.pagination.size
                 const page = parseInt(qPage)
                 const size = parseInt(qSize)
+                const sort = constants.sort[request.query.sort] || 'lastModified'
+                const order = request.query.order || -1
+                const sorting = { [sort]: order }
 
                 let fCatalog = await db.collection('CatalogName').findOne({ "_id" : new ObjectID(catalogId) })
                 if (_.isNull(fCatalog)) return reply(Boom.badRequest("Invalid item."))
@@ -43,7 +49,7 @@ export default {
 
                 const countCatalogItem = await db.collection('CatalogItem').find(fCondition).count()
                 const items = await db.collection('CatalogItem').find(fCondition, { "_id": 0, "catalogId": 0, "lastModified": 0 })
-                                        .sort({ "lastModified": -1 }).limit(size).skip((page - 1) * size).toArray()
+                                        .sort(sorting).limit(size).skip((page - 1) * size).toArray()
 
                 if (!!items.length) {
                     const es = await client.search(request.helper.item.parameters(items))

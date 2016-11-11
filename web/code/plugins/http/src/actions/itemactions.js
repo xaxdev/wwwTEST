@@ -2,9 +2,125 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS,
-  SET_CURRENTPAGE,SET_PAGESIZE,SET_SORTBY,SET_SORTDIRECTION,SET_SHOWGRIDVIEW,SET_SHOWLISTVIEW} from '../constants/itemconstants';
+  SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW,
+  GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG,
+  SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE,
+  SET_RENAMECATALOG
+} from '../constants/itemconstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
+export function setRenameCatalog(value){
+  return {
+          type: SET_RENAMECATALOG,
+          catalogName: value
+  }
+}
+export function deleteCatalog(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog/${params.id}`;
+  return {
+            type: DELETE_CATALOG,
+    		promise: fetch(url,{
+                method: 'DELETE',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': token
+                }
+            }),
+            catalogId: params.id
+  }
+}
+export function setNewCatalogName(params){
+    const token = sessionStorage.token;
+    var url = `${ROOT_URL}/api/catalog/rename`;
+    return {
+            type: SET_NEWCATALOGNAME,
+      		promise: fetch(url,{
+                  method: 'PUT',
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                  },
+                  body: JSON.stringify(params)
+              }),
+            catalogName: params.catalog
+    }
+}
+export function setSelectedCatalog(value){
+  return {
+          type: SET_SLECTEDCATALOG,
+          catalog: value
+  }
+}
+export function getCatalogItems(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog/${params.id}?page=${params.page}&size=${params.size}&sort=${params.sort}&order=${params.order}`;
+  return {
+            type: GET_CATALOGITEMS,
+    		promise: fetch(url,{
+                method: 'GET',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': token
+                }
+            }),
+            catalog: params.id
+  }
+}
+export function deleteCatalogItems(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog/item`;
+  return {
+            type: DELETE_ITEMSFROMCATALOG,
+    		promise: fetch(url,{
+                method: 'DELETE',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': token
+                },
+                body: JSON.stringify(params)
+            }),
+            catalog: params.id
+  }
+}
+
+export function addCatalog(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog`;
+  return {
+          type: ADD_CATALOG,
+    		promise: fetch(url,{
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+            body: JSON.stringify(params)
+          })
+  }
+}
+export function getCatalogName(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog/names`;
+  // console.log('getItems-->',url);
+
+  return {
+          type: GET_CATALOGNAME,
+    		promise: fetch(url,{
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          })
+  }
+}
 export function setShowGridView(value){
   return {
           type: SET_SHOWGRIDVIEW,
@@ -15,6 +131,24 @@ export function setShowListView(value){
   return {
           type: SET_SHOWLISTVIEW,
           showListView: value
+  }
+}
+export function setCatalogCurrentPage(value){
+  return {
+          type: SET_CATALOGCURRENTPAGE,
+          currentPage: value
+  }
+}
+export function setCatalogSortingBy(value){
+  return {
+          type: SET_CATALOGSORTBY,
+          sortingBy: value
+  }
+}
+export function setCatalogSortDirection(value){
+  return {
+          type: SET_CATALOGSORTDIRECTION,
+          sortDirection: value
   }
 }
 export function setSortingBy(value){
@@ -36,7 +170,7 @@ export function getItems(params){
 
   return {
           type: FETCH_ALLITEMS,
-    		  promise: fetch(url,{
+    		promise: fetch(url,{
             method: 'POST',
             body: JSON.stringify(params),
             headers: {

@@ -84,7 +84,7 @@ class InventorySearch extends Component {
             }else{
               var code = '';
               valueKeys.forEach((objHi)=>{
-                code = (code == '') ? objHi.code : code + ',' + objHi.code;
+                code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
@@ -95,7 +95,7 @@ class InventorySearch extends Component {
             }else{
               var code = '';
               valueKeys.forEach((objHi)=>{
-                code = (code == '') ? objHi.code : code + ',' + objHi.code;
+                code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
@@ -106,7 +106,7 @@ class InventorySearch extends Component {
             }else{
               var code = '';
               valueKeys.forEach((objHi)=>{
-                code = (code == '') ? objHi.code : code + ',' + objHi.code;
+                code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
@@ -117,7 +117,7 @@ class InventorySearch extends Component {
             }else{
               var code = '';
               valueKeys.forEach((objHi)=>{
-                code = (code == '') ? objHi.code : code + ',' + objHi.code;
+                code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
@@ -128,7 +128,7 @@ class InventorySearch extends Component {
             }else{
               var code = '';
               valueKeys.forEach((objHi)=>{
-                code = (code == '') ? objHi.code : code + ',' + objHi.code;
+                code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
@@ -139,7 +139,7 @@ class InventorySearch extends Component {
             }else{
               var code = '';
               valueKeys.forEach((objHi)=>{
-                code = (code == '') ? objHi.code : code + ',' + objHi.code;
+                code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }

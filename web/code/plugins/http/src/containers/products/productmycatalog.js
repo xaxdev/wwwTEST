@@ -590,7 +590,7 @@ class productreletedetail extends Component {
 
         <div className="width-50 productreletedetail-width maring-t15">
                      <div className="col-md-12 col-sm-12 ft-white productdetail-search">
-                       <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
+                       <Link to={'/mycatalog'} className="btn btn-searchresult">My Catalog</Link>
                      </div>
            </div>
          );
