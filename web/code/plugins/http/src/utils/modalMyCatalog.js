@@ -12,6 +12,15 @@ class ModalMyCatalog extends Component {
         super(props);
 
   }
+  componentWillReceiveProps = _=>{
+      const { props } = this.props;
+      const { fields: {
+                oldCatalogName,newCatalogName,validateCatalogName
+            } } = props;
+        oldCatalogName.value = '';
+        newCatalogName.value = '';
+        console.log('componentWillReceiveProps modalMyCat-->',oldCatalogName.value);
+  }
 
   hideModalAddMyCatalog = (e) => {
     e.preventDefault();
@@ -24,6 +33,7 @@ class ModalMyCatalog extends Component {
   }
 
   render() {
+
     const { props } = this.props;
     const { fields: {
               oldCatalogName,newCatalogName,validateCatalogName
@@ -34,7 +44,8 @@ class ModalMyCatalog extends Component {
     if(oldCatalogName.value){
       nameDisable = true
     }
-
+    // oldCatalogName.value = '';
+    console.log('render modalMyCat-->',oldCatalogName.value);
     return(
           <div  className="addMyCatalog">
             <Modal isOpen={isOpen} >

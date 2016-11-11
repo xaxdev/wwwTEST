@@ -1282,6 +1282,8 @@ class SearchResult extends Component {
   }
   handleSubmitCatalog = (e)=>{
       e.preventDefault();
+      let fileName = jQuery('input[type="checkbox"]');
+      fileName.removeAttr('checked');
       this.setState({isOpenAddMyCatalog: false});
       const { fields: {
                 oldCatalogName,newCatalogName,validateCatalogName
@@ -1302,13 +1304,15 @@ class SearchResult extends Component {
         this.props.addCatalog(catalogdata).then( () =>{
         //    console.log('Added!');
            this.setState({isOpenAddMyCatalogmsg: true});
+           this.setState({enabledMyCatalog: false});
         })
 
   }
   renderAddMyCatalog = _=> {
       const { listCatalogName,
                submitting } = this.props;
-      return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
+      return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName}
+          isOpen={this.state.isOpenAddMyCatalog}
           isClose={this.handleClose} props={this.props}/>);
   }
   renderAlertmsg = _=> {

@@ -1,6 +1,6 @@
 import  {
         GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG, SET_NEWCATALOGNAME, DELETE_CATALOG,
-        GET_CATALOGNAME, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE
+        GET_CATALOGNAME, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG
         } from '../../constants/itemconstants';
 
 const INITIAL_STATE = { datas:null, ListCatalogName: [], listCatalogItems:[], currentPage: 1, catalogId: null,
@@ -10,6 +10,9 @@ const INITIAL_STATE = { datas:null, ListCatalogName: [], listCatalogItems:[], cu
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case SET_RENAMECATALOG :
+          // console.log('SET_SORTBY -->',action.sortingBy);
+          return {...state, catalogName: action.catalogName };
         case SET_CATALOGCURRENTPAGE :
           // console.log('SET_SORTBY -->',action.sortingBy);
           return {...state, currentPage: action.currentPage };

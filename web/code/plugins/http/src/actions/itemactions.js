@@ -4,10 +4,17 @@ import fetch from 'isomorphic-fetch';
 import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS,
   SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW,
   GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG,
-  SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE
+  SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE,
+  SET_RENAMECATALOG
 } from '../constants/itemconstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
+export function setRenameCatalog(value){
+  return {
+          type: SET_RENAMECATALOG,
+          catalogName: value
+  }
+}
 export function deleteCatalog(params){
   const token = sessionStorage.token;
   var url = `${ROOT_URL}/api/catalog/${params.id}`;

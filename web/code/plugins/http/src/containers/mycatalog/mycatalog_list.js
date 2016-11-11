@@ -56,6 +56,10 @@ class MyCatalog extends Component {
         // console.log('this.props.catalogId-->',this.props.catalogId);
         // console.log('this.props.catalogSortingBy-->',this.props.catalogSortingBy);
         // console.log('this.props.catalogSortDirection-->',this.props.catalogSortDirection);
+
+        let catalogName = '';
+        const { fields: { catalog } } = this.props;
+
         this.props.getCatalogName().then((value) => {
             if (value) {
                 // console.log('componentWillMount-->',this.props.listCatalogName);
@@ -66,6 +70,7 @@ class MyCatalog extends Component {
                     }else{
                         if(this.props.listCatalogName.length != 0){
                             catalogId = this.props.listCatalogName[0]._id;
+                            catalogName = this.props.listCatalogName[0].catalog;
                         }
                     }
 
@@ -77,6 +82,9 @@ class MyCatalog extends Component {
                             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                         };
                     if (catalogId != '') {
+                        catalog.value = catalogName;
+                        catalog.onChange(catalogName);
+                        this.props.setRenameCatalog(catalogName);
                         this.props.getCatalogItems(parasm);
                     }
                 }
@@ -118,6 +126,12 @@ class MyCatalog extends Component {
               inputCatalogName.value = nextProps.catalogName;
           }
       }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+      // console.log('nextProps.currentPage-->',nextProps.currentPage);
+    //   console.log('nextProps.catalogName-->',nextProps.fields.catalog.value);
+      return shallowCompare(this, nextProps, nextState);
     }
 
     handleSubmitDeleteAllItem = (e)=>{
@@ -296,15 +310,18 @@ class MyCatalog extends Component {
     }
 
     changeCatalogName = (e)=> {
-        e.preventDefault();
+        // e.preventDefault();
         const catalogName = e.target.value;
         const { fields: { catalog } } = this.props;
-        // console.log('catalogName-->',catalogName);
+        console.log('catalogName-->',catalogName);
+        catalog.value = catalogName;
         catalog.onChange(catalogName);
+        this.props.setRenameCatalog(catalogName);
     }
 
     showTooltip = _=> {
         // console.log('showTooltip');
+        let catalogName = this.refs.catalogName;
         this.setState({isTooltipActive: true})
     }
     hideTooltip = _=>{
@@ -596,7 +613,8 @@ class MyCatalog extends Component {
             }
             // let isOpenMsg =  this.state.isOpenAddMyCatalogmsg;
             // console.log('this.props.-->',this.props.listCatalogName);
-            // console.log('catalogId-->',catalogId);
+            console.log('catalogName-->',catalogName);
+            console.log('catalog-->',catalog.value);
 
             let items = this.props.listCatalogName != undefined ?
                             this.props.listCatalogName.length != 0 ?
@@ -638,8 +656,9 @@ class MyCatalog extends Component {
                                         <div className="cat-tooltip form-inline">
                                           <p>Edit Catalog Name</p>
                                           <div className="form-group">
-                                            <input type="text" className="form-control" placeholder={catalogName}
-                                            onChange={this.changeCatalogName} ref="catalogName"/>
+                                            <input type="text" className="form-control"
+                                                onChange={this.changeCatalogName}  placeholder={catalogName}
+                                                 ref="catalogName"/>
                                           </div>
                                             <button type="button" className="btn btn-default"
                                                 onClick={this.saveCatalogName}>
@@ -648,7 +667,7 @@ class MyCatalog extends Component {
                                         </div>
                                     </ToolTip>
                                     <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
-                                    <a><div className="icon-print" ></div></a>
+                                    {/*<a><div className="icon-print" ></div></a>*/}
                                 </div>
                               </div>
                             <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 nopadding">
@@ -701,7 +720,7 @@ class MyCatalog extends Component {
                                     <span className="icon-det-28" onClick={this.deleteAllItems}></span> :
                                     <span className="icon-det-28"></span>
                                 }
-                                <span className="margin-l5 text-del">Delete All</span>
+                                <span className="margin-l5 text-del">Delete Items</span>
                             </div>
                       </div>
                         <div className="panel panel-default">
