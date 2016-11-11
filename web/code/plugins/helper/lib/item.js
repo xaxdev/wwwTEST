@@ -45,9 +45,10 @@ const productGroups = {
 const productGroupPermission = (user, item) => (user.permission.productGroup & productGroups[item.type]) === productGroups[item.type]
 
 const applyAuthorization = (user, item) => {
-    const company = user.company
+    const companies = user.permission.onhandLocation.places
     const warehouses = user.permission.onhandWarehouse.places
-    const authorization = (item.company === user.company) && (warehouses.length === 0 || (!!item.warehouse && warehouses.indexOf(item.warehouse) !== -1)) && productGroupPermission(user, item)
+    const authorization = ((companies.length === 0 || (!!item.company && companies.indexOf(item.company) !== -1))
+        && (warehouses.length === 0 || (!!item.warehouse && warehouses.indexOf(item.warehouse) !== -1))) && productGroupPermission(user, item)
     return { ...item, authorization }
 }
 
