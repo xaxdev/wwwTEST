@@ -20,7 +20,7 @@ class ModalAlertmsg extends Component {
                 <h1 className="modal-title">ADD TO CATALOG</h1>
               </div>
               <div className="modal-body">
-                <div className="col-sm-12 text-center">
+                <div className="text-center maring-t20 font-b">
                   {message}
                 </div>
               </div>
