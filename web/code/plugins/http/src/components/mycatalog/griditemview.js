@@ -784,9 +784,9 @@ class GridItemsView extends Component {
           let lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
           // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
 
-          let price = (item.price != -1)? numberFormat(item.price) + ' ' + item.currency: '- ' + userLogin.currency;
-          let actualCost = (item.actualCost != -1)? numberFormat(item.actualCost) + ' ' + item.currency: '- ' + userLogin.currency;
-          let updatedCost = (item.updatedCost != -1)? numberFormat(item.updatedCost) + ' ' + item.currency: '- ' + userLogin.currency;
+          let price = (item.price != -1)? numberFormat(item.price) + ' ' + item.userCurrency: '- ' + userLogin.currency;
+          let actualCost = (item.actualCost != -1)? numberFormat(item.actualCost) + ' ' + item.userCurrency: '- ' + userLogin.currency;
+          let updatedCost = (item.updatedCost != -1)? numberFormat(item.updatedCost) + ' ' + item.userCurrency: '- ' + userLogin.currency;
 
           let itemName = (item.type != 'CER')?
                             (item.description != undefined) ?

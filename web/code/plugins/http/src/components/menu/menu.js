@@ -11,9 +11,9 @@ const Menu =  (props) => {
                                                                                 props.currentLocation == '/user' ||
                                                                                 props.currentLocation == '/user/new'
                                                                             )?'active':''}`}>User Management</NavItem> : '';
-  // const MyCatalog = <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog')?'active':''}`}>My Catalog</NavItem>;
-  const MyCatalog = role == 'Admin'? <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog')?
-                                                                            'active':''}`}>My Catalog</NavItem>: '';
+  const MyCatalog = <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog' ||
+                                                                props.currentLocation.indexOf('productmycatalog') != -1
+                                                            )?'active': ''}`}>My Catalog</NavItem>;
 
   return(
 <Navbar inverse>
@@ -25,7 +25,8 @@ const Menu =  (props) => {
         <NavItem href="/inventories" className={`${(props.currentLocation !== '/users' &&
                                                     props.currentLocation !== '/user' &&
                                                     props.currentLocation !== '/user/new' &&
-                                                    props.currentLocation !== '/mycatalog'
+                                                    props.currentLocation !== '/mycatalog' &&
+                                                    props.currentLocation.indexOf('productmycatalog') == -1
                                                  )?'active':''}`}>Inventory Report</NavItem>
         {/*<NavItem href="#">My Catalog</NavItem>*/}
         {/*<NavDropdown  title="Download" id="basic-nav-dropdown">
