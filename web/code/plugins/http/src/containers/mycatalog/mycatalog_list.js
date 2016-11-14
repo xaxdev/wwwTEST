@@ -156,8 +156,8 @@ class MyCatalog extends Component {
           printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
           printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
           printWindow.document.write('</head><body >');
-          printWindow.document.write(dvGridview);
           printWindow.document.write(dvTotal);
+          printWindow.document.write(dvGridview);
           printWindow.document.write('</body></html>');
           printWindow.document.close();
           printWindow.focus();
