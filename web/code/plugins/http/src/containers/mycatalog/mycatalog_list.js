@@ -7,6 +7,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import * as itemactions from '../../actions/itemactions';
 import numberFormat from '../../utils/convertNumberformat';
 import GridItemsView from '../../components/mycatalog/griditemview';
+import GridItemsViewPrint from '../../components/mycatalog/griditemviewPrint';
 import ModalConfirmDelete from '../../utils/modalConfirmDelete.js';
 import Modalalertmsg from '../../utils/modalalertmsg';
 
@@ -37,6 +38,7 @@ class MyCatalog extends Component {
         this.onCheckedAllItemMyCatalog = this.onCheckedAllItemMyCatalog.bind(this);
         this.deleteAllItems = this.deleteAllItems.bind(this);
         this.handleSubmitDeleteAllItem = this.handleSubmitDeleteAllItem.bind(this);
+        this.printResults = this.printResults.bind(this);
 
         this.state = {
           activePage: this.props.currentPage,
@@ -132,6 +134,61 @@ class MyCatalog extends Component {
       // console.log('nextProps.currentPage-->',nextProps.currentPage);
     //   console.log('nextProps.catalogName-->',nextProps.fields.catalog.value);
       return shallowCompare(this, nextProps, nextState);
+    }
+
+    printResults(e){
+      e.preventDefault();
+      // console.log('printproductBind-->');
+
+    //   const { showGridView,showListView } = this.props;
+
+      let dvTotal = jQuery('#dvTotalsub').html();
+      let dvGridview = jQuery('#dvGridview').html();
+    //   let dvListview = jQuery('#dvListview').html();
+
+    //   if (showGridView) {
+          let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
+          let printWindow = window.open('', '', options);
+          printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
+          printWindow.document.write('<html><head><title>Mol online 2016</title>');
+          printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
+          printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
+          printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
+          printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
+          printWindow.document.write('</head><body >');
+          printWindow.document.write(dvGridview);
+          printWindow.document.write(dvTotal);
+          printWindow.document.write('</body></html>');
+          printWindow.document.close();
+          printWindow.focus();
+          setTimeout( function(){
+            printWindow.document.close();
+            printWindow.print();
+          },1500);
+          return true;
+    //   }
+    //   if (showListView) {
+    //     let options = 'toolbar=1,menubar=0,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1100';
+    //     let printWindow = window.open('', '', options);
+    //     printWindow.document.write('<style>@media print{@page {size: auto A4 landscape;margin: 0;} body{margin: 0px;}}</style>');
+    //     printWindow.document.write('<html><head><title>Mol online 2016</title>');
+    //     printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
+    //     printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
+    //     printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
+    //     printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
+    //     printWindow.document.write('</head><body >');
+    //     printWindow.document.write(dvListview);
+    //     printWindow.document.write(dvTotal);
+    //     printWindow.document.write('</body></html>');
+    //     printWindow.document.close();
+    //     printWindow.focus();
+    //     setTimeout( function(){
+    //       printWindow.document.close();
+    //       printWindow.print();
+    //     },1500);
+    //     return true;
+    //   }
+
     }
 
     handleSubmitDeleteAllItem = (e)=>{
@@ -667,7 +724,8 @@ class MyCatalog extends Component {
                                         </div>
                                     </ToolTip>
                                     <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
-                                    {/*<a><div className="icon-print" ></div></a>*/}
+                                    <a><div className="icon-print" id="printproduct"
+                                        onClick={ this.printResults }></div></a>
                                 </div>
                               </div>
                             <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 nopadding">
@@ -729,6 +787,9 @@ class MyCatalog extends Component {
                                     <GridItemsView  items={items} onClickGrid={this.onClickGrid}
                                     onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                     onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
+                                </div>
+                                <div id="dvGridview" className="search-product hidden">
+                                  <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
                                 </div>
                             </div>
                         </div>
