@@ -12,12 +12,12 @@ import ProductStoneAttributes from '../../components/productdetail/productStoneA
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
 import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributes';
 import ProductGallery from '../../components/productdetail/productGallery';
-import ProductRelete from '../../components/productdetail/productReleted';
+import ProductRelete from '../../components/productdetail/productReletemycatalog';
 import ProductPrint from '../../components/productdetail/productPrint';
 import ProductObaAttributes from '../../components/productdetail/productObaAttributes';
 import ProductAccAttributes from '../../components/productdetail/productAccAttributes';
 import ProductSpaAttributes from '../../components/productdetail/productSppAttributes';
-import Setreference from '../../components/productdetail/productset';
+import Setreference from '../../components/productdetail/productsetmycatalog.js';
 import numberFormat from '../../utils/convertNumberformatwithcomma';
 
 import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
