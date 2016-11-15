@@ -14,7 +14,7 @@ function showDiv() {
 let preventDefault = e => e.preventDefault();
 let oldView = 0;
 
-class GridItemsView extends Component {
+class GridItemsViewPrint extends Component {
   constructor(props) {
     super(props);
 
@@ -554,4 +554,4 @@ class GridItemsView extends Component {
   }
 }
 
-module.exports = GridItemsView
+module.exports = GridItemsViewPrint
