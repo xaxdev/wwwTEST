@@ -724,8 +724,8 @@ class MyCatalog extends Component {
                                         </div>
                                     </ToolTip>
                                     <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
-                                    <a><div className="icon-print" id="printproduct"
-                                        onClick={ this.printResults }></div></a>
+                                    {/*<a><div className="icon-print" id="printproduct"
+                                        onClick={ this.printResults }></div></a>*/}
                                 </div>
                               </div>
                             <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 nopadding">
