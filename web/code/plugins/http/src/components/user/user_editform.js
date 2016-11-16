@@ -5,7 +5,6 @@ import { Link } from 'react-router';
 import * as masterDataActions from '../../actions/masterdataaction';
 import { bindActionCreators } from 'redux';
 import shallowCompare from 'react-addons-shallow-compare';
-import Multiselect from 'react-bootstrap-multiselect';
 import GenPassword from '../../utils/genPassword';
 import ReactDOM from 'react-dom';
 let _ = require('lodash');
@@ -914,16 +913,24 @@ class UserDetailsFrom extends Component {
                             ref="location"
                           /> All Company
                           <div className="user-edit">
+                              {
+                                  dataDropDowntLocations.map(value =>
+                                      <label className="pure-checkbox">
+                                        <input type="checkbox" name="checkbox-multiple" value="1"/> {value.value + ' [' + value.name + ']'}
+                                      </label>
+                                  )
+                              }
                             <select multiple
                               {...onhandLocationValue}
                               maxHeight={200} multiple
                               disabled={`${this.state.selectedOnHandLocation ? 'disabled' : ''}`}
                               onChange={this.changedOnHandLocation}
-                              ref="selectMultiLocation"
-
-                            >
-                              {dataDropDowntLocations.map(value => <option key={value.value} value={value.value}>{value.value + ' [' + value.name + ']'}</option>
-                              )}
+                              ref="selectMultiLocation">
+                              {
+                                  dataDropDowntLocations.map(value =>
+                                      <option key={value.value} value={value.value}>{value.value + ' [' + value.name + ']'}</option>
+                                  )
+                              }
                             </select>
                           </div>
 
