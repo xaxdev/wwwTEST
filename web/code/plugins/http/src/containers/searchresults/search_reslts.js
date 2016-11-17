@@ -275,40 +275,101 @@ class SearchResult extends Component {
     // console.log('printproductBind-->');
 
     const { showGridView,showListView } = this.props;
+    const host = HOSTNAME || 'localhost';
+    const ROOT_URL = (host != 'http://mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+    let imagesReplace = ROOT_URL+'/images/';
 
-    let dvTotal = jQuery('#dvTotalsub1').html();
+    let dvTotal1 = jQuery('#dvTotalsub1').html();
+    let dvTotal2 = jQuery('#dvTotalsub2').html();
     let dvGridview = jQuery('#dvGridview').html();
     let dvListview = jQuery('#dvListview').html();
-    let divStyle ='background-color: #debe6b;float: left;width: 100%;padding: 15px 0;margin: 0px 0 1px 0;text-center;';
+    let styleTotal1 ='background-color: #debe6b;float: left;width: 100%;padding: 15px 0;margin: 0px 0 1px 0;text-align: center;';
+    let styleTotal2 ='background-color: #dddddd;float: left;width: 100%;padding: 10px 10px;text-align: center;';
+    let styleBodyWrapper ='margin: 0;padding: 0;';
+    let styleRow ='margin-right: -15px;margin-left: -15px;';
+    let styleColsm12 ='width: 100%;';
+    let stylePanel ='border-radius: 0;margin-bottom: 0 !important;border: 0;box-shadow: none;';
+    let stylePadding ='padding: 15px 0;';
+    let styleSearchproduct  ='position: relative;';
+    let styleSearchproductGride  ='border: 3px solid transparent;text-align: center;font-size: 14px;position: relative;z-index: 2;padding: 15px 25px 0 25px;height: 418px;cursor: pointer;';
+    let colmd3colsm3nopadding  = 'width: 25%;padding: 0;float: left;';
+    let pullRight  = 'float: right!important;';
+    let gridAdd  = 'float: left;margin-top: 0;z-index: 1;position: relative;cursor: pointer;';
+    let iconAdd28  = `background: url(${ROOT_URL}/images/icon-add-28.png) no-repeat center;width: 28px;height: 28px;float: left;cursor: pointer;`;
+    let checkbox  = 'padding-left: 10px;padding-right: 10px;margin-top: 2px;float: left;z-index: 1;position: relative;cursor: pointer;margin-bottom: 10px;';
+    let checkbox1  = 'margin: 0 14px 0 10px;';
+    let quickView  = 'margin-right: 0px;max-width: 23px;position: absolute;right: 0px;';
+    let fontbfc000  = 'font-weight: 200;font-family:"open_sanssemibold";color: #000;margin: 0 0 10px;';
+    let productdetailh = 'font-weight: 200;height: 60px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
+
+    dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
+    dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
+    dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
+    dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
+    dvGridview = dvGridview.replace(/class="grid-add"/g,`style="${gridAdd}"`);
+    dvGridview = dvGridview.replace(/class="icon-add-28"/g,`style="${iconAdd28}"`);
+    dvGridview = dvGridview.replace(/class="checkbox checkbox-warning"/g,`style="${checkbox}"`);
+    dvGridview = dvGridview.replace(/class="checkbox1"/g,`style="${checkbox1}"`);
+    dvGridview = dvGridview.replace(/class="quick-view"/g,`style="${quickView}"`);
+    dvGridview = dvGridview.replace(/class="font-b fc-000"/g,`style="${fontbfc000}"`);
+    dvGridview = dvGridview.replace(/class="product-detail-h"/g,`style="${productdetailh}"`);
 
     if (showGridView) {
         let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
         let printWindow = window.open('', '', options);
+        let htmlTemplate = `<style>@media print{@page {size: portrait;}}</style>
+                            <html><head><title>Mol online 2016</title>
+                                </head>
+                                <body >
+                                    <form>
+                                        <div style="${styleBodyWrapper}">
+                                            <div style="${styleRow}">
+                                                <div style="${styleColsm12}">
+                                                    <div style="${stylePanel}">
+                                                        <div style="${stylePadding}">
+                                                            <div style="${styleTotal1}">
+                                                                ${dvTotal1}
+                                                            </div>
+                                                            <div style="${styleTotal2}">
+                                                                ${dvTotal2}
+                                                            </div>
+                                                            <div style="${styleSearchproduct}">
+                                                                ${dvGridview}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </body>
+                            </html>`;
 
-        printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
-        printWindow.document.write('<html><head><title>Mol online 2016</title>');
-        printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-        printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-        printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-        printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-        printWindow.document.write('</head><body >');
-        printWindow.document.write('<form><div class="body-wrapper"><div class="row">');
-        printWindow.document.write('<div className="col-sm-12"><div className="panel panel-default">');
-        printWindow.document.write('<div className="panel-body padding-ft0">');
-        printWindow.document.write(`<div style="${divStyle}">`);
-        printWindow.document.write(dvTotal);
-        printWindow.document.write('</div>');
-        printWindow.document.write(dvGridview);
-        printWindow.document.write('</div>');
-        printWindow.document.write('</div></div>');
-        printWindow.document.write('</div></div></form>');
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.focus();
-        setTimeout( function(){
-          printWindow.document.close();
-          printWindow.print();
-        },1500);
+        // printWindow.document.write('<style>@media print{@page {size: portrait;}}</style>');
+        // printWindow.document.write('<html><head><title>Mol online 2016</title>');
+        // printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
+        // printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
+        // printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
+        // printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
+        // printWindow.document.write('</head><body >');
+        // printWindow.document.write('<form><div class="body-wrapper"><div class="row">');
+        // printWindow.document.write('<div className="col-sm-12"><div className="panel panel-default">');
+        // printWindow.document.write('<div className="panel-body padding-ft0">');
+        // printWindow.document.write(`<div style="${divStyle}">`);
+        // printWindow.document.write(dvTotal);
+        // printWindow.document.write('</div>');
+        // printWindow.document.write(dvGridview);
+        // printWindow.document.write('</div>');
+        // printWindow.document.write('</div></div>');
+        // printWindow.document.write('</div></div></form>');
+        // printWindow.document.write('</body></html>');
+        // printWindow.document.close();
+        // printWindow.focus();
+        // setTimeout( function(){
+        //   printWindow.document.close();
+        //   printWindow.print();
+        // },1500);
+        console.log(htmlTemplate);
         return true;
     }
     if (showListView) {
@@ -564,7 +625,7 @@ class SearchResult extends Component {
             </span>
         </div>
 
-        <div id="dvTotalsub" className="bg-f7d886 text-center">
+        <div id="dvTotalsub2" className="bg-f7d886 text-center">
             <span><span className="font-b fc-000">Highest Price :</span> <span className="font-w9">{ numberFormat(maxPrice) } { userLogin.currency } </span><span className="padding-lf15">|</span></span>
             <span><span className="font-b fc-000">Lowest Price :</span> <span className="font-w9">{ numberFormat(minPrice) } { userLogin.currency } </span><span className="padding-lf15">|</span></span>
             <span><span className="font-b fc-000">Average Price :</span> <span className="font-w9">{ numberFormat(avrgPrice) } { userLogin.currency } </span></span>
@@ -1576,12 +1637,12 @@ class SearchResult extends Component {
                             </div>
                           {/* End Total Data */}
                           {/* Grid Product */}
-                          <div className={`search-product  ${showGridView ? '' : 'hidden'}` }>
+                          <div id="dvGridview" className={`search-product  ${showGridView ? '' : 'hidden'}` }>
                             <GridItemsView  items={items} onClickGrid={this.onClickGrid}
                             onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                             onAddedOneItemMyCatalog={this.addedOneItemMyCatalog} />
                           </div>
-                          <div id="dvGridview" className="search-product hidden">
+                          <div className="search-product hidden">
                             <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
                           </div>
                           <div className={`col-sm-12 search-product list-search ${showListView ? '' : 'hidden'}` }>
