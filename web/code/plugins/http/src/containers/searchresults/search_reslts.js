@@ -276,13 +276,15 @@ class SearchResult extends Component {
 
     const { showGridView,showListView } = this.props;
 
-    let dvTotal = jQuery('#dvTotalsub').html();
+    let dvTotal = jQuery('#dvTotalsub1').html();
     let dvGridview = jQuery('#dvGridview').html();
     let dvListview = jQuery('#dvListview').html();
+    let divStyle ='background-color: #debe6b;float: left;width: 100%;padding: 15px 0;margin: 0px 0 1px 0;text-center;';
 
     if (showGridView) {
         let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
         let printWindow = window.open('', '', options);
+
         printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
         printWindow.document.write('<html><head><title>Mol online 2016</title>');
         printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
@@ -290,8 +292,16 @@ class SearchResult extends Component {
         printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
         printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
         printWindow.document.write('</head><body >');
-        printWindow.document.write(dvGridview);
+        printWindow.document.write('<form><div class="body-wrapper"><div class="row">');
+        printWindow.document.write('<div className="col-sm-12"><div className="panel panel-default">');
+        printWindow.document.write('<div className="panel-body padding-ft0">');
+        printWindow.document.write(`<div style="${divStyle}">`);
         printWindow.document.write(dvTotal);
+        printWindow.document.write('</div>');
+        printWindow.document.write(dvGridview);
+        printWindow.document.write('</div>');
+        printWindow.document.write('</div></div>');
+        printWindow.document.write('</div></div></form>');
         printWindow.document.write('</body></html>');
         printWindow.document.close();
         printWindow.focus();
@@ -538,7 +548,7 @@ class SearchResult extends Component {
 
     return(
       <div>
-        <div id="dvTotalsub" className="bg-or text-center">
+        <div id="dvTotalsub1" className="bg-or text-center">
             <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(allItems.length) } Items </span><span className="padding-lf15">|</span></span>
             <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                 || userLogin.permission.price == 'All') ?
@@ -553,6 +563,7 @@ class SearchResult extends Component {
                 </span>
             </span>
         </div>
+
         <div id="dvTotalsub" className="bg-f7d886 text-center">
             <span><span className="font-b fc-000">Highest Price :</span> <span className="font-w9">{ numberFormat(maxPrice) } { userLogin.currency } </span><span className="padding-lf15">|</span></span>
             <span><span className="font-b fc-000">Lowest Price :</span> <span className="font-w9">{ numberFormat(minPrice) } { userLogin.currency } </span><span className="padding-lf15">|</span></span>
