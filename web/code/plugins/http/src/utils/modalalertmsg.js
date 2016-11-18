@@ -10,14 +10,14 @@ class ModalAlertmsg extends Component {
 
   render() {
 
-    const { isOpen, isClose,message} = this.props;
+    const { isOpen, isClose, message, title} = this.props;
 
     return(
           <div  className="addMyCatalog">
             <Modal isOpen={isOpen} >
               <div className="modal-header">
                 <ModalClose onClick={isClose}/>
-                <h1 className="modal-title">ADD TO CATALOG</h1>
+                <h1 className="modal-title">{title}</h1>
               </div>
               <div className="modal-body">
                 <div className="text-center maring-t20 font-b">

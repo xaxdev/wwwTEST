@@ -490,161 +490,208 @@ class GridItemsView extends Component {
     var that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
     return (
-      <div className="print-search-results">
-        {this.props.items.map(function(item, index){
-          // console.log('item-->',item);
-          let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
-          let itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate);
-          let lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
-          // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
+        <div>
+          {this.props.items.map(function(item, index){
+            // console.log('item-->',item);
+            let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
+            let itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate);
+            let lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
+            // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
 
-          let price = GetPriceWithCurrency(item,'price');
-          let actualCost = GetPriceWithCurrency(item,'actualCost');
-          let updatedCost = GetPriceWithCurrency(item,'updatedCost');
+            let price = GetPriceWithCurrency(item,'price');
+            let actualCost = GetPriceWithCurrency(item,'actualCost');
+            let updatedCost = GetPriceWithCurrency(item,'updatedCost');
 
-          let itemName = (item.type != 'CER')
-                            ?
-                            (item.description != undefined) ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...': '-' :
-                            item.name
-                            ;
+            let itemName = (item.type != 'CER')?
+                              (item.description != undefined) ?
+                                  (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                              : '-' :
+                              item.name
+                              ;
+              let itemNameCat = (item.type != 'CER')? item.description: item.name;
+             return (
+                <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
+                   <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
+                                   (index==1)? `searchresult-prodcut ${that.state.isOpen1? 'searchresult-border': ''}`:
+                                   (index==2)? `searchresult-prodcut ${that.state.isOpen2? 'searchresult-border': ''}`:
+                                   (index==3)? `searchresult-prodcut ${that.state.isOpen3? 'searchresult-border': ''}`:
+                                   (index==4)? `searchresult-prodcut ${that.state.isOpen4? 'searchresult-border': ''}`:
+                                   (index==5)? `searchresult-prodcut ${that.state.isOpen5? 'searchresult-border': ''}`:
+                                   (index==6)? `searchresult-prodcut ${that.state.isOpen6? 'searchresult-border': ''}`:
+                                   (index==7)? `searchresult-prodcut ${that.state.isOpen7? 'searchresult-border': ''}`:
+                                   (index==8)? `searchresult-prodcut ${that.state.isOpen8? 'searchresult-border': ''}`:
+                                   (index==9)? `searchresult-prodcut ${that.state.isOpen9? 'searchresult-border': ''}`:
+                                   (index==10)? `searchresult-prodcut ${that.state.isOpen10? 'searchresult-border': ''}`:
+                                   (index==11)? `searchresult-prodcut ${that.state.isOpen11? 'searchresult-border': ''}`:
+                                   (index==12)? `searchresult-prodcut ${that.state.isOpen12? 'searchresult-border': ''}`:
+                                   (index==13)? `searchresult-prodcut ${that.state.isOpen13? 'searchresult-border': ''}`:
+                                   (index==14)? `searchresult-prodcut ${that.state.isOpen14? 'searchresult-border': ''}`:
+                                   (index==15)? `searchresult-prodcut ${that.state.isOpen15? 'searchresult-border': ''}`:
+                                   (index==16)? `searchresult-prodcut ${that.state.isOpen16? 'searchresult-border': ''}`:
+                                   (index==17)? `searchresult-prodcut ${that.state.isOpen17? 'searchresult-border': ''}`:
+                                   (index==18)? `searchresult-prodcut ${that.state.isOpen18? 'searchresult-border': ''}`:
+                                   (index==19)? `searchresult-prodcut ${that.state.isOpen19? 'searchresult-border': ''}`:
+                                   (index==20)? `searchresult-prodcut ${that.state.isOpen20? 'searchresult-border': ''}`:
+                                   (index==21)? `searchresult-prodcut ${that.state.isOpen21? 'searchresult-border': ''}`:
+                                   (index==22)? `searchresult-prodcut ${that.state.isOpen22? 'searchresult-border': ''}`:
+                                   (index==23)? `searchresult-prodcut ${that.state.isOpen23? 'searchresult-border': ''}`:
+                                   (index==24)? `searchresult-prodcut ${that.state.isOpen24? 'searchresult-border': ''}`:
+                                   (index==25)? `searchresult-prodcut ${that.state.isOpen25? 'searchresult-border': ''}`:
+                                   (index==26)? `searchresult-prodcut ${that.state.isOpen26? 'searchresult-border': ''}`:
+                                   (index==27)? `searchresult-prodcut ${that.state.isOpen27? 'searchresult-border': ''}`:
+                                   (index==28)? `searchresult-prodcut ${that.state.isOpen28? 'searchresult-border': ''}`:
+                                   (index==29)? `searchresult-prodcut ${that.state.isOpen29? 'searchresult-border': ''}`:
+                                   (index==30)? `searchresult-prodcut ${that.state.isOpen30? 'searchresult-border': ''}`:
+                                   (index==31)? `searchresult-prodcut ${that.state.isOpen31? 'searchresult-border': ''}`:
+                                   (index==32)? `searchresult-prodcut ${that.state.isOpen32? 'searchresult-border': ''}`:
+                                   (index==33)? `searchresult-prodcut ${that.state.isOpen33? 'searchresult-border': ''}`:
+                                   (index==34)? `searchresult-prodcut ${that.state.isOpen34? 'searchresult-border': ''}`:
+                                   (index==35)? `searchresult-prodcut ${that.state.isOpen35? 'searchresult-border': ''}`:
+                                   (index==36)? `searchresult-prodcut ${that.state.isOpen36? 'searchresult-border': ''}`:
+                                   (index==37)? `searchresult-prodcut ${that.state.isOpen37? 'searchresult-border': ''}`:
+                                   (index==38)? `searchresult-prodcut ${that.state.isOpen38? 'searchresult-border': ''}`:
+                                   (index==39)? `searchresult-prodcut ${that.state.isOpen39? 'searchresult-border': ''}`:
+                                   (index==40)? `searchresult-prodcut ${that.state.isOpen40? 'searchresult-border': ''}`:
+                                   (index==41)? `searchresult-prodcut ${that.state.isOpen41? 'searchresult-border': ''}`:
+                                   (index==42)? `searchresult-prodcut ${that.state.isOpen42? 'searchresult-border': ''}`:
+                                   (index==43)? `searchresult-prodcut ${that.state.isOpen43? 'searchresult-border': ''}`:
+                                   (index==44)? `searchresult-prodcut ${that.state.isOpen44? 'searchresult-border': ''}`:
+                                   (index==45)? `searchresult-prodcut ${that.state.isOpen45? 'searchresult-border': ''}`:
+                                   (index==46)? `searchresult-prodcut ${that.state.isOpen46? 'searchresult-border': ''}`:
+                                   (index==47)? `searchresult-prodcut ${that.state.isOpen47? 'searchresult-border': ''}`:
+                                   (index==48)? `searchresult-prodcut ${that.state.isOpen48? 'searchresult-border': ''}`:
+                                   (index==49)? `searchresult-prodcut ${that.state.isOpen49? 'searchresult-border': ''}`:
+                                   (index==50)? `searchresult-prodcut ${that.state.isOpen50? 'searchresult-border': ''}`:
+                                   (index==51)? `searchresult-prodcut ${that.state.isOpen51? 'searchresult-border': ''}`:
+                                   (index==52)? `searchresult-prodcut ${that.state.isOpen52? 'searchresult-border': ''}`:
+                                   (index==53)? `searchresult-prodcut ${that.state.isOpen53? 'searchresult-border': ''}`:
+                                   (index==54)? `searchresult-prodcut ${that.state.isOpen54? 'searchresult-border': ''}`:
+                                   (index==55)? `searchresult-prodcut ${that.state.isOpen55? 'searchresult-border': ''}`:
+                                   (index==56)? `searchresult-prodcut ${that.state.isOpen56? 'searchresult-border': ''}`:
+                                   (index==57)? `searchresult-prodcut ${that.state.isOpen57? 'searchresult-border': ''}`:
+                                   (index==58)? `searchresult-prodcut ${that.state.isOpen58? 'searchresult-border': ''}`:
+                                   (index==59)? `searchresult-prodcut ${that.state.isOpen59? 'searchresult-border': ''}`:
+                                   (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
+                                    ''}>
 
-           return (
-             <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding print-search-results" onMouseOver={showDetails} onMouseOut={hideDetails}>
-                 <div className="searchresult-prodcut">
-                    <div className="pull-right margin-r20">
-                      <div className="grid-add"
-                          onClick={
-                            (eventKey) => {
-                              // console.log('eventKey-->',item.id);
-                            }
-                          }>
-                        <span className="icon-add-28"></span>
+                      <div className="thumbnaillgrid">
+                        {/*<img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/>*/}
+                        <ReactImageFallback
+                               width="160"
+                               src={imagesProduct }
+                               fallbackImage="/images/blank.gif"
+                               initialImage="/images/blank.gif"
+                               name={item.id}
+                               id={item.id}
+                               onClick={btnEvent}
+                               />
                       </div>
-                     <div className="checkbox checkbox-warning">
-                      <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                        // checked={this.state.selectedStatus}
-                        // onChange={event => this.setState({ selectedStatus: event.target.checked })}
-                        />
-                          <label className="checkbox1"></label>
+
+                      <p className="font-b fc-000">
+                        <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
+                        <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
+                      </p>
+                      <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{itemName}</p>
+                      <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{price}</span>
+                      <span className="line"></span>
+                   </div>
+                      <div>
+                       <div key={item.id}  id={index} style={{
+                              display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
+                                      (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
+                                      (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:
+                                      (index==3)?`${that.state.isOpen3 ? '' : 'none'}`:
+                                      (index==4)?`${that.state.isOpen4 ? '' : 'none'}`:
+                                      (index==5)?`${that.state.isOpen5 ? '' : 'none'}`:
+                                      (index==6)?`${that.state.isOpen6 ? '' : 'none'}`:
+                                      (index==7)?`${that.state.isOpen7 ? '' : 'none'}`:
+                                      (index==8)?`${that.state.isOpen8 ? '' : 'none'}`:
+                                      (index==9)?`${that.state.isOpen9 ? '' : 'none'}`:
+                                      (index==10)?`${that.state.isOpen10 ? '' : 'none'}`:
+                                      (index==11)?`${that.state.isOpen11 ? '' : 'none'}`:
+                                      (index==12)?`${that.state.isOpen12 ? '' : 'none'}`:
+                                      (index==13)?`${that.state.isOpen13 ? '' : 'none'}`:
+                                      (index==14)?`${that.state.isOpen14 ? '' : 'none'}`:
+                                      (index==15)?`${that.state.isOpen15 ? '' : 'none'}`:
+                                      (index==16)?`${that.state.isOpen16 ? '' : 'none'}`:
+                                      (index==17)?`${that.state.isOpen17 ? '' : 'none'}`:
+                                      (index==18)?`${that.state.isOpen18 ? '' : 'none'}`:
+                                      (index==19)?`${that.state.isOpen19 ? '' : 'none'}`:
+                                      (index==20)?`${that.state.isOpen20 ? '' : 'none'}`:
+                                      (index==21)?`${that.state.isOpen21 ? '' : 'none'}`:
+                                      (index==22)?`${that.state.isOpen22 ? '' : 'none'}`:
+                                      (index==23)?`${that.state.isOpen23 ? '' : 'none'}`:
+                                      (index==24)?`${that.state.isOpen24 ? '' : 'none'}`:
+                                      (index==25)?`${that.state.isOpen25 ? '' : 'none'}`:
+                                      (index==26)? `${that.state.isOpen26? '' : 'none'}`:
+                                      (index==27)? `${that.state.isOpen27? '' : 'none'}`:
+                                      (index==28)? `${that.state.isOpen28? '' : 'none'}`:
+                                      (index==29)? `${that.state.isOpen29? '' : 'none'}`:
+                                      (index==30)? `${that.state.isOpen30? '' : 'none'}`:
+                                      (index==31)? `${that.state.isOpen31? '' : 'none'}`:
+                                      (index==32)? `${that.state.isOpen32? '' : 'none'}`:
+                                      (index==33)? `${that.state.isOpen33? '' : 'none'}`:
+                                      (index==34)? `${that.state.isOpen34? '' : 'none'}`:
+                                      (index==35)? `${that.state.isOpen35? '' : 'none'}`:
+                                      (index==36)? `${that.state.isOpen36? '' : 'none'}`:
+                                      (index==37)? `${that.state.isOpen37? '' : 'none'}`:
+                                      (index==38)? `${that.state.isOpen38? '' : 'none'}`:
+                                      (index==39)? `${that.state.isOpen39? '' : 'none'}`:
+                                      (index==40)? `${that.state.isOpen40? '' : 'none'}`:
+                                      (index==41)? `${that.state.isOpen41? '' : 'none'}`:
+                                      (index==42)? `${that.state.isOpen42? '' : 'none'}`:
+                                      (index==43)? `${that.state.isOpen43? '' : 'none'}`:
+                                      (index==44)? `${that.state.isOpen44? '' : 'none'}`:
+                                      (index==45)? `${that.state.isOpen45? '' : 'none'}`:
+                                      (index==46)? `${that.state.isOpen46? '' : 'none'}`:
+                                      (index==47)? `${that.state.isOpen47? '' : 'none'}`:
+                                      (index==48)? `${that.state.isOpen48? '' : 'none'}`:
+                                      (index==49)? `${that.state.isOpen49? '' : 'none'}`:
+                                      (index==50)? `${that.state.isOpen50? '' : 'none'}`:
+                                      (index==51)? `${that.state.isOpen51? '' : 'none'}`:
+                                      (index==52)? `${that.state.isOpen52? '' : 'none'}`:
+                                      (index==53)? `${that.state.isOpen53? '' : 'none'}`:
+                                      (index==54)? `${that.state.isOpen54? '' : 'none'}`:
+                                      (index==55)? `${that.state.isOpen55? '' : 'none'}`:
+                                      (index==56)? `${that.state.isOpen56? '' : 'none'}`:
+                                      (index==57)? `${that.state.isOpen57? '' : 'none'}`:
+                                      (index==58)? `${that.state.isOpen58? '' : 'none'}`:
+                                      (index==59)? `${that.state.isOpen59? '' : 'none'}`:
+                                      (index==60)? `${that.state.isOpen60? '' : 'none'}`:
+                                      '',
+                              }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31
+                                  ||index==35||index==39||index==43||index==47||index==51||index==55||index==59)?'over-searchresult-left':'over-searchresult' }>
+                              <img className="searchresult-close"  src="/images/icon-close.png" responsive name={item.id} id={index} onClick={hideDetails}/>
+                              <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
+                              <span className="width-f100">{item.reference}</span>
+                              <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
+                              <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
+                              <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
+                                  '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
+                              <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
+                                  '' : 'hidden'}`}>{actualCost}</span>
+                              <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
+                                  '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
+                              <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                  '' : 'hidden'}`}>{updatedCost}</span>
+                              <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                  || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                  '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
+                              <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                  || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                  '' : 'hidden'}`}>{price}</span>
+                              <span className="width-f100 fc-ddbe6a font-b">Company : </span>
+                              <span className="width-f100">{item.companyName}</span>
+                              <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
+                              <span className="width-f100">{item.warehouseName}</span>
+                              <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
+                              <span className="width-f100">{itemDate}</span>
+                          </div>
                       </div>
-                    </div>
-
-                    <div className="thumbnaillgrid">
-                      {/*<img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/>
-                      <ReactImageFallback
-                             src={imagesProduct }
-                             fallbackImage="/images/blank.gif"
-                             initialImage="/images/blank.gif"
-                             name={item.id}
-                             id={item.id}
-                             onClick={btnEvent}
-                             />*/}
-                    </div>
-
-                    <p className="font-b fc-000">
-                      <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
-                      <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
-                    </p>
-                    <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{itemName}</p>
-                    <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{price}</span>
-                    <span className="line"></span>
-                 </div>
-                    <div name={item.id} id={item.id} onClick={btnEvent}>
-                     <div key={item.id}  id={index} style={{
-                       display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
-                               (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
-                               (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:
-                               (index==3)?`${that.state.isOpen3 ? '' : 'none'}`:
-                               (index==4)?`${that.state.isOpen4 ? '' : 'none'}`:
-                               (index==5)?`${that.state.isOpen5 ? '' : 'none'}`:
-                               (index==6)?`${that.state.isOpen6 ? '' : 'none'}`:
-                               (index==7)?`${that.state.isOpen7 ? '' : 'none'}`:
-                               (index==8)?`${that.state.isOpen8 ? '' : 'none'}`:
-                               (index==9)?`${that.state.isOpen9 ? '' : 'none'}`:
-                               (index==10)?`${that.state.isOpen10 ? '' : 'none'}`:
-                               (index==11)?`${that.state.isOpen11 ? '' : 'none'}`:
-                               (index==12)?`${that.state.isOpen12 ? '' : 'none'}`:
-                               (index==13)?`${that.state.isOpen13 ? '' : 'none'}`:
-                               (index==14)?`${that.state.isOpen14 ? '' : 'none'}`:
-                               (index==15)?`${that.state.isOpen15 ? '' : 'none'}`:
-                               (index==16)?`${that.state.isOpen16 ? '' : 'none'}`:
-                               (index==17)?`${that.state.isOpen17 ? '' : 'none'}`:
-                               (index==18)?`${that.state.isOpen18 ? '' : 'none'}`:
-                               (index==19)?`${that.state.isOpen19 ? '' : 'none'}`:
-                               (index==20)?`${that.state.isOpen20 ? '' : 'none'}`:
-                               (index==21)?`${that.state.isOpen21 ? '' : 'none'}`:
-                               (index==22)?`${that.state.isOpen22 ? '' : 'none'}`:
-                               (index==23)?`${that.state.isOpen23 ? '' : 'none'}`:
-                               (index==24)?`${that.state.isOpen24 ? '' : 'none'}`:
-                               (index==25)?`${that.state.isOpen25 ? '' : 'none'}`:
-                               (index==26)? `${that.state.isOpen26? '' : 'none'}`:
-                               (index==27)? `${that.state.isOpen27? '' : 'none'}`:
-                               (index==28)? `${that.state.isOpen28? '' : 'none'}`:
-                               (index==29)? `${that.state.isOpen29? '' : 'none'}`:
-                               (index==30)? `${that.state.isOpen30? '' : 'none'}`:
-                               (index==31)? `${that.state.isOpen31? '' : 'none'}`:
-                               (index==32)? `${that.state.isOpen32? '' : 'none'}`:
-                               (index==33)? `${that.state.isOpen33? '' : 'none'}`:
-                               (index==34)? `${that.state.isOpen34? '' : 'none'}`:
-                               (index==35)? `${that.state.isOpen35? '' : 'none'}`:
-                               (index==36)? `${that.state.isOpen36? '' : 'none'}`:
-                               (index==37)? `${that.state.isOpen37? '' : 'none'}`:
-                               (index==38)? `${that.state.isOpen38? '' : 'none'}`:
-                               (index==39)? `${that.state.isOpen39? '' : 'none'}`:
-                               (index==40)? `${that.state.isOpen40? '' : 'none'}`:
-                               (index==41)? `${that.state.isOpen41? '' : 'none'}`:
-                               (index==42)? `${that.state.isOpen42? '' : 'none'}`:
-                               (index==43)? `${that.state.isOpen43? '' : 'none'}`:
-                               (index==44)? `${that.state.isOpen44? '' : 'none'}`:
-                               (index==45)? `${that.state.isOpen45? '' : 'none'}`:
-                               (index==46)? `${that.state.isOpen46? '' : 'none'}`:
-                               (index==47)? `${that.state.isOpen47? '' : 'none'}`:
-                               (index==48)? `${that.state.isOpen48? '' : 'none'}`:
-                               (index==49)? `${that.state.isOpen49? '' : 'none'}`:
-                               (index==50)? `${that.state.isOpen50? '' : 'none'}`:
-                               (index==51)? `${that.state.isOpen51? '' : 'none'}`:
-                               (index==52)? `${that.state.isOpen52? '' : 'none'}`:
-                               (index==53)? `${that.state.isOpen53? '' : 'none'}`:
-                               (index==54)? `${that.state.isOpen54? '' : 'none'}`:
-                               (index==55)? `${that.state.isOpen55? '' : 'none'}`:
-                               (index==56)? `${that.state.isOpen56? '' : 'none'}`:
-                               (index==57)? `${that.state.isOpen57? '' : 'none'}`:
-                               (index==58)? `${that.state.isOpen58? '' : 'none'}`:
-                               (index==59)? `${that.state.isOpen59? '' : 'none'}`:
-                               (index==60)? `${that.state.isOpen60? '' : 'none'}`:
-                               '',
-                            }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31
-                                ||index==35||index==39||index==43||index==47||index==51||index==55||index==59)?'over-searchresult-left':'over-searchresult' }>
-                            <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
-                            <span className="width-f100">{item.reference}</span>
-                            <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
-                            <span className="width-f100">{itemName}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER')?
-                                '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>{actualCost}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>{updatedCost}</span>
-                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                || userLogin.permission.price == 'All')) && (item.type != 'CER')  ?
-                                '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
-                            <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                || userLogin.permission.price == 'All')) && (item.type != 'CER')  ?
-                                '' : 'hidden'}`}>{price}</span>
-                            <span className="width-f100 fc-ddbe6a font-b">Company : </span>
-                            <span className="width-f100">{item.companyName}</span>
-                            <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
-                            <span className="width-f100">{item.warehouseName}</span>
-                            <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
-                            <span className="width-f100">{itemDate}</span>
-                        </div>
-                    </div>
-            </div>
-          )
-          })}
-    </div>
+              </div>
+            )
+            })}
+        </div>
     );
   }
 }

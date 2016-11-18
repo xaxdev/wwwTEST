@@ -94,30 +94,6 @@ class MyCatalog extends Component {
         });
     }
 
-    componentDidMount = _=>{
-        // console.log('componentDidMount-->');
-        // console.log('this.props.catalogSortingBy-->',this.props.catalogSortingBy);
-        // console.log('this.props.catalogSortDirection-->',this.props.catalogSortDirection);
-        // let catalogId = '';
-        // if(this.props.listCatalogName != undefined){
-        //     if(this.props.catalogId != null){
-        //         catalogId = this.props.catalogId;
-        //     }else{
-        //         if(this.props.listCatalogName.length != 0){
-        //             catalogId = this.props.listCatalogName[0]._id;
-        //         }
-        //     }
-        //
-        //     let parasm = {
-        //             id: catalogId,
-        //             page: this.props.currentPage,
-        //             size: 16,
-        //             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
-        //             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-        //         };
-        //     this.props.getCatalogItems(parasm);
-        // }
-    }
     componentWillReceiveProps(nextProps) {
       // console.log('nextProps-->',nextProps);
 
@@ -649,8 +625,9 @@ class MyCatalog extends Component {
     renderAlertmsg = _=> {
 
       const message = 'Page is invalid.';
+      const title = 'ADD TO CATALOG';
       return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
-          props={this.props} message={message}/>);
+          props={this.props} message={message}  title={title}/>);
     }
 
     render() {

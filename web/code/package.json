@@ -49,6 +49,7 @@
     "lab": "9.x.x",
     "lodash": "^4.12.0",
     "moment": "^2.13.0",
+    "moment-timezone": "^0.5.9",
     "newrelic": "^1.29.0",
     "react": "0.14.x ",
     "react-addons-shallow-compare": "^15.1.0",
