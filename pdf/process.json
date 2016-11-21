@@ -1,6 +1,6 @@
 {
   "apps" : [{
-    "name": "printPDF",
+    "name": "pdf",
     "script": "./bootstrap.js",
     "node_args": "--max_old_space_size=2048",
     "watch": false,
