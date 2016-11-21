@@ -330,10 +330,10 @@ class SearchResult extends Component {
 
     dvListview = dvListview.replace(/\/images\//g,imagesReplace);
     dvListview = dvListview.replace(/class="table-responsive"/g,'');
-    dvListview = dvListview.replace(/class="table table-bordered"/g,'border="1" style="font-size: 10px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="100%"');
+    dvListview = dvListview.replace(/class="table table-bordered"/g,'border="1" style="font-size: 8px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="100%"');
     dvListview = dvListview.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
-    dvListview = dvListview.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 10px;"');
-    dvListview = dvListview.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 10px;" role="columnheader" scope="col"');
+    dvListview = dvListview.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;"');
+    dvListview = dvListview.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;" role="columnheader" scope="col"');
     dvListview = dvListview.replace(/<td/g,'<td style="padding:5px 5px;" ');
 
     if (showGridView) {
@@ -383,59 +383,11 @@ class SearchResult extends Component {
                 }
                 console.log(value);
             });
-        // var path = RNFS.DocumentDirectoryPath + '/test.txt';
-        // console.log('Writing html!-->',destination);
-        // files.write(`${destination}/mol.html`, htmlTemplate)
-        // console.log('done!');
 
-        // printWindow.document.write('<style>@media print{@page {size: portrait;}}</style>');
-        // printWindow.document.write('<html><head><title>Mol online 2016</title>');
-        // printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-        // printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-        // printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-        // printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-        // printWindow.document.write('</head><body >');
-        // printWindow.document.write('<form><div class="body-wrapper"><div class="row">');
-        // printWindow.document.write('<div className="col-sm-12"><div className="panel panel-default">');
-        // printWindow.document.write('<div className="panel-body padding-ft0">');
-        // printWindow.document.write(`<div style="${divStyle}">`);
-        // printWindow.document.write(dvTotal);
-        // printWindow.document.write('</div>');
-        // printWindow.document.write(dvGridview);
-        // printWindow.document.write('</div>');
-        // printWindow.document.write('</div></div>');
-        // printWindow.document.write('</div></div></form>');
-        // printWindow.document.write('</body></html>');
-        // printWindow.document.close();
-        // printWindow.focus();
-        // setTimeout( function(){
-        //   printWindow.document.close();
-        //   printWindow.print();
-        // },1500);
-
-        // return true;
     }
     if (showListView) {
-    //   let options = 'toolbar=1,menubar=0,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1100';
-    //   let printWindow = window.open('', '', options);
-    //   printWindow.document.write('<style>@media print{@page {size: auto A4 landscape;margin: 0;} body{margin: 0px;}}</style>');
-    //   printWindow.document.write('<html><head><title>Mol online 2016</title>');
-    //   printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-    //   printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-    //   printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-    //   printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-    //   printWindow.document.write('</head><body >');
-    //   printWindow.document.write(dvListview);
-    //   printWindow.document.write(dvTotal);
-    //   printWindow.document.write('</body></html>');
-    //   printWindow.document.close();
-    //   printWindow.focus();
-    //   setTimeout( function(){
-    //     printWindow.document.close();
-    //     printWindow.print();
-    //   },1500);
-    //   return true;
-    let htmlTemplate = `<html>
+
+        let htmlTemplate = `<html>
                             <head>
                                 <title>Mol online 2016</title>
                                 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
