@@ -101,6 +101,7 @@ const Confidence = require('confidence');
                let _pathDistFile = `../web/code/plugins/http/public/export_files/${userName}.pdf`;
 
                await save(html, options, _pathDistFile);
+               console.log(`user Email: ${userEmail}`);
                console.log('writing pdf');
                emailBody = '';
                emailBody = `Please download the files from below link ${obj.ROOT_URL}/export_files/${userName}.pdf`;
