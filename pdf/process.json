@@ -8,8 +8,8 @@
       "NODE_ENV": "production",
     },
     "merge_logs": true,
-    "error_file": "./logs/export-data-err.log",
-    "out_file": "./logs/export-data-out.log",
+    "error_file": "./logs/pdf-err.log",
+    "out_file": "./logs/pdf-out.log",
     "log_date_format": "YYYY-MM-DD HH:mm Z"
   }]
 }
