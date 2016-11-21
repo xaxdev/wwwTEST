@@ -5,10 +5,28 @@ import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_
   SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW,
   GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG,
   SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE,
-  SET_RENAMECATALOG
+  SET_RENAMECATALOG, WRITE_HTML
 } from '../constants/itemconstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
+export function writeHtml(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/items/writehtml`;
+  // console.log('getItems-->',url);
+
+  return {
+          type: WRITE_HTML,
+    		promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          })
+  }
+}
 export function setRenameCatalog(value){
   return {
           type: SET_RENAMECATALOG,

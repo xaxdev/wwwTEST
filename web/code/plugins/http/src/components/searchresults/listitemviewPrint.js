@@ -124,7 +124,6 @@ class ListItemsView extends Component {
       });
 
       const tableColumns = [
-        { title: '', render: this.renderCheckItem },
         { title: 'Images', render: this.renderImage },
         { title: 'Item Reference', prop: 'reference' },
         { title: 'Description', prop: 'itemName' },
@@ -135,14 +134,13 @@ class ListItemsView extends Component {
         { title: 'Jewelry Weight', prop: 'jewelsWeight' },
         { title: 'Gross Weight', prop: 'grossWeight' },
         { title: 'Public Price', prop: 'priceUSD' },
-        { title: '', render: this.renderAction, className: 'text-center' },
       ];
 
       return (
         <div>
           <DataTable
             className="col-sm-12"
-            keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight','priceUSD','' ]}
+            keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight','priceUSD' ]}
             columns={tableColumns}
             initialData={items}
             initialPageLength={this.state.initialPageLength}

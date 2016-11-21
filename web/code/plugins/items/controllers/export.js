@@ -27,7 +27,7 @@ module.exports = {
 
     const elastic = request.server.plugins.elastic.client;
     const amqpHost = request.server.plugins.amqp.host;
-    const amqpChannel = request.server.plugins.amqp.channel;
+    const amqpChannel = request.server.plugins.amqp.channelExcel;
     // console.log(amqpHost);
     // console.log(amqpChannel);
 

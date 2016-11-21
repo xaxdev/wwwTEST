@@ -48,7 +48,8 @@ class MyCatalog extends Component {
           isOpenDeleteCatalog: false,
           enabledMyCatalog: false,
           isOpenDeleteAllItem: false,
-          isOpenZeroCatalog: true
+          isOpenZeroCatalog: true,
+          isOpenPrintPdfmsg: false
         }
 
     }
@@ -94,30 +95,6 @@ class MyCatalog extends Component {
         });
     }
 
-    componentDidMount = _=>{
-        // console.log('componentDidMount-->');
-        // console.log('this.props.catalogSortingBy-->',this.props.catalogSortingBy);
-        // console.log('this.props.catalogSortDirection-->',this.props.catalogSortDirection);
-        // let catalogId = '';
-        // if(this.props.listCatalogName != undefined){
-        //     if(this.props.catalogId != null){
-        //         catalogId = this.props.catalogId;
-        //     }else{
-        //         if(this.props.listCatalogName.length != 0){
-        //             catalogId = this.props.listCatalogName[0]._id;
-        //         }
-        //     }
-        //
-        //     let parasm = {
-        //             id: catalogId,
-        //             page: this.props.currentPage,
-        //             size: 16,
-        //             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
-        //             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-        //         };
-        //     this.props.getCatalogItems(parasm);
-        // }
-    }
     componentWillReceiveProps(nextProps) {
       // console.log('nextProps-->',nextProps);
 
@@ -138,56 +115,111 @@ class MyCatalog extends Component {
 
     printResults(e){
       e.preventDefault();
-      // console.log('printproductBind-->');
 
-    //   const { showGridView,showListView } = this.props;
+      const { showGridView,showListView } = this.props;
+      const userLogin = JSON.parse(sessionStorage.logindata);
+
+      const host = HOSTNAME || 'localhost';
+      const ROOT_URL = (host != 'http://mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+      let imagesReplace = ROOT_URL+'/images/';
 
       let dvTotal = jQuery('#dvTotalsub').html();
       let dvGridview = jQuery('#dvGridview').html();
     //   let dvListview = jQuery('#dvListview').html();
 
+      let styleTotal =`background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family: '${'Open Sans'}', sans-serif; font-size:14px;`;
+    //   let styleTotal2 =`background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family:'${'Open Sans'}', sans-serif; font-size:14px;`;
+      let styleBodyWrapper ='margin: 0;padding: 0;';
+      let styleContainerMarginb4 ='margin-bottom: 0%;padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;';
+      let styleRow ='margin-right: -15px;margin-left: -15px;';
+      let styleColsm12 ='width: 100%;';
+      let stylePanel ='border-radius: 0;margin-bottom: 0 !important;border: 0;box-shadow: none;';
+
+      let stylePadding ='padding: 15px 0;';
+      let styleSearchproduct  ='position: relative;';
+      let styleSearchproductGride  ='text-align: center;font-size: 14px;position: relative;z-index: 2;padding: 15px 11px 0 30px;height: 480px;cursor: pointer;';
+      let colmd3colsm3nopadding  = 'width: 24%;padding: 0;float: left;height: 480px;';
+      let pullRight  = 'float: right!important;';
+      let gridAdd  = 'float: left;margin-top: 0;z-index: 1;position: relative;cursor: pointer;';
+      let iconAdd28  = `background: url(${ROOT_URL}/images/icon-add-28.png) no-repeat center;width: 28px;height: 28px;float: left;cursor: pointer;`;
+      let checkbox  = 'padding-left: 10px;padding-right: 10px;margin-top: 2px;float: left;z-index: 1;position: relative;cursor: pointer;margin-bottom: 10px;';
+      let checkbox1  = 'margin: 0 14px 0 10px;';
+      let quickView  = 'margin-right: 0px;max-width: 23px;position: absolute;right: 0px;';
+      let fontbfc000  = `font-weight: bold;'${'open_sanssemibold'}';color: #000;margin: 0 0 10px;`;
+      let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
+      let stylePrice = 'color: #ae8f3b; font-weight: bold;';
+
+      dvTotal = dvTotal.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
+      dvTotal = dvTotal.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
+
+      dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
+      dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
+      dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
+      dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
+      dvGridview = dvGridview.replace(/class="grid-add"/g,`style="${gridAdd}"`);
+      dvGridview = dvGridview.replace(/class="icon-add-28"/g,`style="${iconAdd28}"`);
+      dvGridview = dvGridview.replace(/class="checkbox checkbox-warning"/g,`style="${checkbox}"`);
+      dvGridview = dvGridview.replace(/class="checkbox1"/g,`style="${checkbox1}"`);
+      dvGridview = dvGridview.replace(/class="quick-view"/g,`style="${quickView}"`);
+      dvGridview = dvGridview.replace(/class="font-b fc-000"/g,`style="${fontbfc000}"`);
+      dvGridview = dvGridview.replace(/class="product-detail-h"/g,`style="${productdetailh}"`);
+      dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
+
+    //   dvListview = dvListview.replace(/\/images\//g,imagesReplace);
+    //   dvListview = dvListview.replace(/class="table-responsive"/g,'');
+    //   dvListview = dvListview.replace(/class="table table-bordered"/g,'border="1" style="font-size:14px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="90%"');
+    //   dvListview = dvListview.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
+    //   dvListview = dvListview.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 14px;"');
+    //   dvListview = dvListview.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 14px;" role="columnheader" scope="col"');
+    //   dvListview = dvListview.replace(/<td/g,'<td style="padding:5px 5px;" ');
+
     //   if (showGridView) {
           let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
-          let printWindow = window.open('', '', options);
-          printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
-          printWindow.document.write('<html><head><title>Mol online 2016</title>');
-          printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-          printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-          printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-          printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-          printWindow.document.write('</head><body >');
-          printWindow.document.write(dvTotal);
-          printWindow.document.write(dvGridview);
-          printWindow.document.write('</body></html>');
-          printWindow.document.close();
-          printWindow.focus();
-          setTimeout( function(){
-            printWindow.document.close();
-            printWindow.print();
-          },1500);
-          return true;
+          // let printWindow = window.open('', '', options);
+          let htmlTemplate = `<html>
+                                  <head>
+                                      <title>Mol online 2016</title>
+                                      <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+                                  </head>
+                                  <body style="margin:0;padding:0; font-family: 'Open Sans', sans-serif; font-size:14px;">
+                                      <form>
+                                          <div style="${styleBodyWrapper}">
+                                              <div>
+                                                  <div style="${styleTotal}">
+                                                      ${dvTotal}
+                                                  </div>
+                                                  <div style="${styleRow}">
+                                                    <div style="${styleColsm12}">
+                                                        <div style="${stylePanel}">
+                                                            <div>
+                                                                <div style="${styleSearchproduct}">
+                                                                    ${dvGridview}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </form>
+                                  </body>
+                              </html>`;
+        //   console.log(htmlTemplate);
     //   }
-    //   if (showListView) {
-    //     let options = 'toolbar=1,menubar=0,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1100';
-    //     let printWindow = window.open('', '', options);
-    //     printWindow.document.write('<style>@media print{@page {size: auto A4 landscape;margin: 0;} body{margin: 0px;}}</style>');
-    //     printWindow.document.write('<html><head><title>Mol online 2016</title>');
-    //     printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-    //     printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-    //     printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-    //     printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-    //     printWindow.document.write('</head><body >');
-    //     printWindow.document.write(dvListview);
-    //     printWindow.document.write(dvTotal);
-    //     printWindow.document.write('</body></html>');
-    //     printWindow.document.close();
-    //     printWindow.focus();
-    //     setTimeout( function(){
-    //       printWindow.document.close();
-    //       printWindow.print();
-    //     },1500);
-    //     return true;
-    //   }
+          let params = {
+                          'temp': htmlTemplate,
+                          'userName': userLogin.username,
+                          'userEmail': userLogin.email,
+                          'ROOT_URL': ROOT_URL
+                      }
+
+          this.props.writeHtml(params)
+              .then((value) => {
+                  if (value) {
+                      this.setState({isOpenPrintPdfmsg: true});
+                  }
+                  console.log(value);
+              });
 
     }
 
@@ -386,7 +418,7 @@ class MyCatalog extends Component {
         this.setState({isTooltipActive: false});
     }
 
-    onClickGrid(pageNumber) {
+    onClickGrid(pageNumber){
       // console.log('onClickGrid==>',pageNumber);
       const token = sessionStorage.token;
       if(token){
@@ -548,6 +580,10 @@ class MyCatalog extends Component {
         this.setState({isOpenAddMyCatalogmsg: false});
     }
 
+    handleClosePdfmsg = _=>{
+        this.setState({isOpenPrintPdfmsg: false});
+    }
+
     handleClosemsgZeroCatalog = _=>{
         this.setState({isOpenZeroCatalog: false});
         // const token = sessionStorage.token;
@@ -649,8 +685,17 @@ class MyCatalog extends Component {
     renderAlertmsg = _=> {
 
       const message = 'Page is invalid.';
+      const title = 'ADD TO CATALOG';
       return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
-          props={this.props} message={message}/>);
+          props={this.props} message={message}  title={title}/>);
+    }
+
+    renderAlertmsgPdf = _=> {
+
+      const message = 'Please checking your email for printing files.';
+      const title = 'MY CATALOG';
+      return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
+          props={this.props} message={message}  title={title}/>);
     }
 
     render() {
@@ -724,8 +769,8 @@ class MyCatalog extends Component {
                                         </div>
                                     </ToolTip>
                                     <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
-                                    {/*<a><div className="icon-print" id="printproduct"
-                                        onClick={ this.printResults }></div></a>*/}
+                                    <a><div className="icon-print" id="printproduct"
+                                        onClick={ this.printResults }></div></a>
                                 </div>
                               </div>
                             <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 nopadding">
@@ -785,11 +830,13 @@ class MyCatalog extends Component {
                             <div className="panel-body padding-ft0">
                                 <div className={'search-product' }>
                                     <GridItemsView  items={items} onClickGrid={this.onClickGrid}
-                                    onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
+                                        onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                        onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
                                 </div>
                                 <div id="dvGridview" className="search-product hidden">
-                                  <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
+                                  <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
+                                    onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}/>
                                 </div>
                             </div>
                         </div>
@@ -799,6 +846,7 @@ class MyCatalog extends Component {
                   {this.renderModalConfirmDeleteCatalog()}
                   {this.renderModalConfirmDeleteAllItem()}
                   {this.renderAlertmsg()}
+                  {this.renderAlertmsgPdf()}
                 </form>
             );
     }

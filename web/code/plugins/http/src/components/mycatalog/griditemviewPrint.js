@@ -462,7 +462,7 @@ class GridItemsViewPrint extends Component {
                                  (index==15)? `searchresult-prodcut ${that.state.isOpen15? 'searchresult-border': ''}`:
                                  (index==16)? `searchresult-prodcut ${that.state.isOpen16? 'searchresult-border': ''}`:
                                   ''}>
-                    <div className="pull-right">
+                    {/*<div className="pull-right">
                      <div className="checkbox checkbox-warning">
                       <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
                         name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
@@ -475,7 +475,7 @@ class GridItemsViewPrint extends Component {
                       </div>
                       <span className="quick-view"><img  src="/images/quick-view.jpg" responsive
                           name={item.id} id={index} onClick={showDetails}/></span>
-                    </div>
+                    </div>*/}
 
                     <div className="thumbnaillgrid">
                       {/*<img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/>*/}

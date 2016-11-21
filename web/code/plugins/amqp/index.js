@@ -6,11 +6,13 @@ const internals = {};
 
 exports.register = (server, options, next) => {
 
-    server.decorate('request', 'amqp', { host: options.host, channel: options.channel });
+    server.decorate('request', 'amqp', { host: options.host, channelExcel: options.channelExcel,
+                                        channelPdf: options.channelPdf });
 
     server.expose({
         host: options.host,
-        channel: options.channel
+        channelExcel: options.channelExcel,
+        channelPdf: options.channelPdf
     });
 
     next();
