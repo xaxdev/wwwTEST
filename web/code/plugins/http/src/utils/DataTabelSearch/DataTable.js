@@ -26,7 +26,7 @@ var DataTable = React.createClass({
         'div',
             { className: 'table-responsive' },
             React.createElement(Table, {
-              className: 'table table-bordered',
+              className: 'table table-bordered table-searchresult',
               dataArray: page.data,
               columns: this.props.columns,
               keys: this.props.keys,

@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
 import jQuery from 'jquery';
+import Path from 'path';
 let _ = require('lodash');
 let Loading = require('react-loading');
 import * as itemactions from '../../actions/itemactions';
@@ -21,8 +22,7 @@ import Modalalertmsg from '../../utils/modalalertmsg';
 import moment from 'moment';
 import convertDate from '../../utils/convertDate';
 import validateCatalog from '../../utils/validatecatalog';
-
-// let XLSX = require('xlsx')
+import GenTemplateHtml from '../../utils/genTemplatePdfSearchResult';
 
 const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
       'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
@@ -147,7 +147,8 @@ class SearchResult extends Component {
       showLoading: false,
       isOpenAddMyCatalog: false,
       enabledMyCatalog:false,
-      isOpenAddMyCatalogmsg: false
+      isOpenAddMyCatalogmsg: false,
+      isOpenPrintPdfmsg: false
     };
   }
   componentWillMount() {
@@ -275,53 +276,42 @@ class SearchResult extends Component {
     // console.log('printproductBind-->');
 
     const { showGridView,showListView } = this.props;
+    const userLogin = JSON.parse(sessionStorage.logindata);
 
-    let dvTotal = jQuery('#dvTotalsub').html();
+    const host = HOSTNAME || 'localhost';
+    const ROOT_URL = (host != 'http://mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+    let imagesReplace = ROOT_URL+'/images/';
+
+    let dvTotal1 = jQuery('#dvTotalsub1').html();
+    let dvTotal2 = jQuery('#dvTotalsub2').html();
     let dvGridview = jQuery('#dvGridview').html();
     let dvListview = jQuery('#dvListview').html();
 
-    if (showGridView) {
-        let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
-        let printWindow = window.open('', '', options);
-        printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
-        printWindow.document.write('<html><head><title>Mol online 2016</title>');
-        printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-        printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-        printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-        printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-        printWindow.document.write('</head><body >');
-        printWindow.document.write(dvGridview);
-        printWindow.document.write(dvTotal);
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.focus();
-        setTimeout( function(){
-          printWindow.document.close();
-          printWindow.print();
-        },1500);
-        return true;
-    }
-    if (showListView) {
-      let options = 'toolbar=1,menubar=0,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1100';
-      let printWindow = window.open('', '', options);
-      printWindow.document.write('<style>@media print{@page {size: auto A4 landscape;margin: 0;} body{margin: 0px;}}</style>');
-      printWindow.document.write('<html><head><title>Mol online 2016</title>');
-      printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-      printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-      printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-      printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-      printWindow.document.write('</head><body >');
-      printWindow.document.write(dvListview);
-      printWindow.document.write(dvTotal);
-      printWindow.document.write('</body></html>');
-      printWindow.document.close();
-      printWindow.focus();
-      setTimeout( function(){
-        printWindow.document.close();
-        printWindow.print();
-      },1500);
-      return true;
-    }
+    let dv = {
+                'dvTotal1': dvTotal1,
+                'dvTotal2': dvTotal2,
+                'dvGridview': dvGridview,
+                'dvListview': dvListview
+            };
+    let htmlTemplate = '';
+
+    htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
+
+    // console.log(htmlTemplate);
+    let params = {
+                    'temp': htmlTemplate,
+                    'userName': userLogin.username,
+                    'userEmail': userLogin.email,
+                    'ROOT_URL': ROOT_URL
+                }
+
+    this.props.writeHtml(params)
+        .then((value) => {
+            if (value) {
+                this.setState({isOpenPrintPdfmsg: true});
+            }
+            console.log(value);
+        });
 
   }
   handleSelect(eventKey) {
@@ -538,7 +528,7 @@ class SearchResult extends Component {
 
     return(
       <div>
-        <div id="dvTotalsub" className="bg-or text-center">
+        <div id="dvTotalsub1" className="bg-or text-center">
             <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(allItems.length) } Items </span><span className="padding-lf15">|</span></span>
             <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                 || userLogin.permission.price == 'All') ?
@@ -553,7 +543,8 @@ class SearchResult extends Component {
                 </span>
             </span>
         </div>
-        <div id="dvTotalsub" className="bg-f7d886 text-center">
+
+        <div id="dvTotalsub2" className="bg-f7d886 text-center">
             <span><span className="font-b fc-000">Highest Price :</span> <span className="font-w9">{ numberFormat(maxPrice) } { userLogin.currency } </span><span className="padding-lf15">|</span></span>
             <span><span className="font-b fc-000">Lowest Price :</span> <span className="font-w9">{ numberFormat(minPrice) } { userLogin.currency } </span><span className="padding-lf15">|</span></span>
             <span><span className="font-b fc-000">Average Price :</span> <span className="font-w9">{ numberFormat(avrgPrice) } { userLogin.currency } </span></span>
@@ -1333,7 +1324,16 @@ class SearchResult extends Component {
   renderAlertmsg = _=> {
 
     const message = 'Add to catalog success';
-    return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}/>);
+    const title = 'ADD TO CATALOG';
+    return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
+            props={this.props} message={message}  title={title}/>);
+  }
+  renderAlertmsgPdf = _=> {
+
+    const message = 'Please checking your email for printing files.';
+    const title = 'SEARCH RESULTS';
+    return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
+            props={this.props} message={message}  title={title}/>);
   }
   hideModalAddMyCatalog = (e) => {
     e.preventDefault();
@@ -1342,6 +1342,9 @@ class SearchResult extends Component {
   }
   handleClosemsg = _=>{
       this.setState({isOpenAddMyCatalogmsg: false});
+  }
+  handleClosePdfmsg = _=>{
+      this.setState({isOpenPrintPdfmsg: false});
   }
   confirmAddMyCatalog = (e) => {
     e.preventDefault();
@@ -1603,6 +1606,7 @@ class SearchResult extends Component {
             {this.renderDownloadDialog()}
             {this.renderAddMyCatalog()}
             {this.renderAlertmsg()}
+            {this.renderAlertmsgPdf()}
           </form>
         );
       }

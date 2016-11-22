@@ -10,6 +10,7 @@ import GridItemsView from '../../components/mycatalog/griditemview';
 import GridItemsViewPrint from '../../components/mycatalog/griditemviewPrint';
 import ModalConfirmDelete from '../../utils/modalConfirmDelete.js';
 import Modalalertmsg from '../../utils/modalalertmsg';
+import GenTemplateHtml from '../../utils/genTemplatePdfMyCatalog';
 
 import { LASTMODIFIED, REFERENCE, DESCRIPTION, DESCENDING, ASCENDING } from '../../constants/itemconstants';
 
@@ -48,16 +49,13 @@ class MyCatalog extends Component {
           isOpenDeleteCatalog: false,
           enabledMyCatalog: false,
           isOpenDeleteAllItem: false,
-          isOpenZeroCatalog: true
+          isOpenZeroCatalog: true,
+          isOpenPrintPdfmsg: false
         }
 
     }
 
     componentWillMount = _=>{
-        // console.log('componentWillMount-->');
-        // console.log('this.props.catalogId-->',this.props.catalogId);
-        // console.log('this.props.catalogSortingBy-->',this.props.catalogSortingBy);
-        // console.log('this.props.catalogSortDirection-->',this.props.catalogSortDirection);
 
         let catalogName = '';
         const { fields: { catalog } } = this.props;
@@ -94,34 +92,7 @@ class MyCatalog extends Component {
         });
     }
 
-    componentDidMount = _=>{
-        // console.log('componentDidMount-->');
-        // console.log('this.props.catalogSortingBy-->',this.props.catalogSortingBy);
-        // console.log('this.props.catalogSortDirection-->',this.props.catalogSortDirection);
-        // let catalogId = '';
-        // if(this.props.listCatalogName != undefined){
-        //     if(this.props.catalogId != null){
-        //         catalogId = this.props.catalogId;
-        //     }else{
-        //         if(this.props.listCatalogName.length != 0){
-        //             catalogId = this.props.listCatalogName[0]._id;
-        //         }
-        //     }
-        //
-        //     let parasm = {
-        //             id: catalogId,
-        //             page: this.props.currentPage,
-        //             size: 16,
-        //             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
-        //             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-        //         };
-        //     this.props.getCatalogItems(parasm);
-        // }
-    }
     componentWillReceiveProps(nextProps) {
-      // console.log('nextProps-->',nextProps);
-
-    //   console.log('componentWillReceiveProps-->');
       let inputCatalogName = this.refs.catalogName;
       if (inputCatalogName != undefined) {
           if (this.props.catalogName != nextProps.catalogName) {
@@ -131,63 +102,47 @@ class MyCatalog extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-      // console.log('nextProps.currentPage-->',nextProps.currentPage);
-    //   console.log('nextProps.catalogName-->',nextProps.fields.catalog.value);
       return shallowCompare(this, nextProps, nextState);
     }
 
     printResults(e){
       e.preventDefault();
-      // console.log('printproductBind-->');
 
     //   const { showGridView,showListView } = this.props;
+      const userLogin = JSON.parse(sessionStorage.logindata);
+
+      const host = HOSTNAME || 'localhost';
+      const ROOT_URL = (host != 'http://mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+      let imagesReplace = ROOT_URL+'/images/';
 
       let dvTotal = jQuery('#dvTotalsub').html();
       let dvGridview = jQuery('#dvGridview').html();
-    //   let dvListview = jQuery('#dvListview').html();
 
-    //   if (showGridView) {
-          let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
-          let printWindow = window.open('', '', options);
-          printWindow.document.write('<style>@media print{@page {size: landscape;}}</style>');
-          printWindow.document.write('<html><head><title>Mol online 2016</title>');
-          printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-          printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-          printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-          printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-          printWindow.document.write('</head><body >');
-          printWindow.document.write(dvTotal);
-          printWindow.document.write(dvGridview);
-          printWindow.document.write('</body></html>');
-          printWindow.document.close();
-          printWindow.focus();
-          setTimeout( function(){
-            printWindow.document.close();
-            printWindow.print();
-          },1500);
-          return true;
-    //   }
-    //   if (showListView) {
-    //     let options = 'toolbar=1,menubar=0,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1100';
-    //     let printWindow = window.open('', '', options);
-    //     printWindow.document.write('<style>@media print{@page {size: auto A4 landscape;margin: 0;} body{margin: 0px;}}</style>');
-    //     printWindow.document.write('<html><head><title>Mol online 2016</title>');
-    //     printWindow.document.write('<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>');
-    //     printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>');
-    //     printWindow.document.write('<link rel="stylesheet" href="https://cdn.rawgit.com/carlosrocha/react-data-components/master/css/table-twbs.css"></link>');
-    //     printWindow.document.write('<link rel="stylesheet" href="/css/style.css"></link>');
-    //     printWindow.document.write('</head><body >');
-    //     printWindow.document.write(dvListview);
-    //     printWindow.document.write(dvTotal);
-    //     printWindow.document.write('</body></html>');
-    //     printWindow.document.close();
-    //     printWindow.focus();
-    //     setTimeout( function(){
-    //       printWindow.document.close();
-    //       printWindow.print();
-    //     },1500);
-    //     return true;
-    //   }
+      let dv = {
+                  'dvTotal': dvTotal,
+                  'dvGridview': dvGridview
+              };
+
+      let htmlTemplate = '';
+
+      htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
+
+    //   console.log(htmlTemplate);
+
+      let params = {
+                      'temp': htmlTemplate,
+                      'userName': userLogin.username,
+                      'userEmail': userLogin.email,
+                      'ROOT_URL': ROOT_URL
+                  }
+
+      this.props.writeHtml(params)
+          .then((value) => {
+              if (value) {
+                  this.setState({isOpenPrintPdfmsg: true});
+              }
+              console.log(value);
+          });
 
     }
 
@@ -386,7 +341,7 @@ class MyCatalog extends Component {
         this.setState({isTooltipActive: false});
     }
 
-    onClickGrid(pageNumber) {
+    onClickGrid(pageNumber){
       // console.log('onClickGrid==>',pageNumber);
       const token = sessionStorage.token;
       if(token){
@@ -548,6 +503,10 @@ class MyCatalog extends Component {
         this.setState({isOpenAddMyCatalogmsg: false});
     }
 
+    handleClosePdfmsg = _=>{
+        this.setState({isOpenPrintPdfmsg: false});
+    }
+
     handleClosemsgZeroCatalog = _=>{
         this.setState({isOpenZeroCatalog: false});
         // const token = sessionStorage.token;
@@ -649,8 +608,17 @@ class MyCatalog extends Component {
     renderAlertmsg = _=> {
 
       const message = 'Page is invalid.';
+      const title = 'ADD TO CATALOG';
       return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
-          props={this.props} message={message}/>);
+          props={this.props} message={message}  title={title}/>);
+    }
+
+    renderAlertmsgPdf = _=> {
+
+      const message = 'Please checking your email for printing files.';
+      const title = 'MY CATALOG';
+      return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
+          props={this.props} message={message}  title={title}/>);
     }
 
     render() {
@@ -724,8 +692,8 @@ class MyCatalog extends Component {
                                         </div>
                                     </ToolTip>
                                     <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
-                                    {/*<a><div className="icon-print" id="printproduct"
-                                        onClick={ this.printResults }></div></a>*/}
+                                    <a><div className="icon-print" id="printproduct"
+                                        onClick={ this.printResults }></div></a>
                                 </div>
                               </div>
                             <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 nopadding">
@@ -785,11 +753,13 @@ class MyCatalog extends Component {
                             <div className="panel-body padding-ft0">
                                 <div className={'search-product' }>
                                     <GridItemsView  items={items} onClickGrid={this.onClickGrid}
-                                    onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
+                                        onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                        onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
                                 </div>
                                 <div id="dvGridview" className="search-product hidden">
-                                  <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
+                                  <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
+                                    onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}/>
                                 </div>
                             </div>
                         </div>
@@ -799,6 +769,7 @@ class MyCatalog extends Component {
                   {this.renderModalConfirmDeleteCatalog()}
                   {this.renderModalConfirmDeleteAllItem()}
                   {this.renderAlertmsg()}
+                  {this.renderAlertmsgPdf()}
                 </form>
             );
     }

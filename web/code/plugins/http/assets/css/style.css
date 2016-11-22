@@ -1167,6 +1167,12 @@ select.form-searchresult option{
 			width: 100%;
 			font-weight: normal;
 		}
+    .table-searchresult {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+    .table-searchresult>tbody>tr>td{word-break: break-word;}
 		.sort-icon:after{float:none !important;}
 
 .searchresult-prodcut .pull-right
