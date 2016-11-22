@@ -18,7 +18,7 @@ module.exports = {
           (async _ => {
               let startDate = new Date();
               let exportDate = moment(startDate,'MM-DD-YYYY');
-              exportDate = exportDate.format('YYYYMMDD_HHmm');
+              exportDate = exportDate.format('YYYYMMDD_HHmmss');
               console.log('writing html...');
               let temp = request.payload.temp;
               let userName =  `${request.payload.userName}_${exportDate}`;
