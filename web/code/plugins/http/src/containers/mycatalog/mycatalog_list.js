@@ -10,6 +10,7 @@ import GridItemsView from '../../components/mycatalog/griditemview';
 import GridItemsViewPrint from '../../components/mycatalog/griditemviewPrint';
 import ModalConfirmDelete from '../../utils/modalConfirmDelete.js';
 import Modalalertmsg from '../../utils/modalalertmsg';
+import GenTemplateHtml from '../../utils/genTemplatePdfMyCatalog';
 
 import { LASTMODIFIED, REFERENCE, DESCRIPTION, DESCENDING, ASCENDING } from '../../constants/itemconstants';
 
@@ -55,10 +56,6 @@ class MyCatalog extends Component {
     }
 
     componentWillMount = _=>{
-        // console.log('componentWillMount-->');
-        // console.log('this.props.catalogId-->',this.props.catalogId);
-        // console.log('this.props.catalogSortingBy-->',this.props.catalogSortingBy);
-        // console.log('this.props.catalogSortDirection-->',this.props.catalogSortDirection);
 
         let catalogName = '';
         const { fields: { catalog } } = this.props;
@@ -96,9 +93,6 @@ class MyCatalog extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      // console.log('nextProps-->',nextProps);
-
-    //   console.log('componentWillReceiveProps-->');
       let inputCatalogName = this.refs.catalogName;
       if (inputCatalogName != undefined) {
           if (this.props.catalogName != nextProps.catalogName) {
@@ -108,15 +102,13 @@ class MyCatalog extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-      // console.log('nextProps.currentPage-->',nextProps.currentPage);
-    //   console.log('nextProps.catalogName-->',nextProps.fields.catalog.value);
       return shallowCompare(this, nextProps, nextState);
     }
 
     printResults(e){
       e.preventDefault();
 
-      const { showGridView,showListView } = this.props;
+    //   const { showGridView,showListView } = this.props;
       const userLogin = JSON.parse(sessionStorage.logindata);
 
       const host = HOSTNAME || 'localhost';
@@ -125,101 +117,32 @@ class MyCatalog extends Component {
 
       let dvTotal = jQuery('#dvTotalsub').html();
       let dvGridview = jQuery('#dvGridview').html();
-    //   let dvListview = jQuery('#dvListview').html();
 
-      let styleTotal =`background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family: '${'Open Sans'}', sans-serif; font-size:14px;`;
-    //   let styleTotal2 =`background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family:'${'Open Sans'}', sans-serif; font-size:14px;`;
-      let styleBodyWrapper ='margin: 0;padding: 0;';
-      let styleContainerMarginb4 ='margin-bottom: 0%;padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;';
-      let styleRow ='margin-right: -15px;margin-left: -15px;';
-      let styleColsm12 ='width: 100%;';
-      let stylePanel ='border-radius: 0;margin-bottom: 0 !important;border: 0;box-shadow: none;';
+      let dv = {
+                  'dvTotal': dvTotal,
+                  'dvGridview': dvGridview
+              };
 
-      let stylePadding ='padding: 15px 0;';
-      let styleSearchproduct  ='position: relative;';
-      let styleSearchproductGride  ='text-align: center;font-size: 14px;position: relative;z-index: 2;padding: 15px 11px 0 30px;height: 480px;cursor: pointer;';
-      let colmd3colsm3nopadding  = 'width: 24%;padding: 0;float: left;height: 480px;';
-      let pullRight  = 'float: right!important;';
-      let gridAdd  = 'float: left;margin-top: 0;z-index: 1;position: relative;cursor: pointer;';
-      let iconAdd28  = `background: url(${ROOT_URL}/images/icon-add-28.png) no-repeat center;width: 28px;height: 28px;float: left;cursor: pointer;`;
-      let checkbox  = 'padding-left: 10px;padding-right: 10px;margin-top: 2px;float: left;z-index: 1;position: relative;cursor: pointer;margin-bottom: 10px;';
-      let checkbox1  = 'margin: 0 14px 0 10px;';
-      let quickView  = 'margin-right: 0px;max-width: 23px;position: absolute;right: 0px;';
-      let fontbfc000  = `font-weight: bold;'${'open_sanssemibold'}';color: #000;margin: 0 0 10px;`;
-      let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
-      let stylePrice = 'color: #ae8f3b; font-weight: bold;';
+      let htmlTemplate = '';
 
-      dvTotal = dvTotal.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
-      dvTotal = dvTotal.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
+      htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
 
-      dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
-      dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
-      dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
-      dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
-      dvGridview = dvGridview.replace(/class="grid-add"/g,`style="${gridAdd}"`);
-      dvGridview = dvGridview.replace(/class="icon-add-28"/g,`style="${iconAdd28}"`);
-      dvGridview = dvGridview.replace(/class="checkbox checkbox-warning"/g,`style="${checkbox}"`);
-      dvGridview = dvGridview.replace(/class="checkbox1"/g,`style="${checkbox1}"`);
-      dvGridview = dvGridview.replace(/class="quick-view"/g,`style="${quickView}"`);
-      dvGridview = dvGridview.replace(/class="font-b fc-000"/g,`style="${fontbfc000}"`);
-      dvGridview = dvGridview.replace(/class="product-detail-h"/g,`style="${productdetailh}"`);
-      dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
+    //   console.log(htmlTemplate);
 
-    //   dvListview = dvListview.replace(/\/images\//g,imagesReplace);
-    //   dvListview = dvListview.replace(/class="table-responsive"/g,'');
-    //   dvListview = dvListview.replace(/class="table table-bordered"/g,'border="1" style="font-size:14px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="90%"');
-    //   dvListview = dvListview.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
-    //   dvListview = dvListview.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 14px;"');
-    //   dvListview = dvListview.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 14px;" role="columnheader" scope="col"');
-    //   dvListview = dvListview.replace(/<td/g,'<td style="padding:5px 5px;" ');
-
-    //   if (showGridView) {
-          let options = 'toolbar=1,menubar=1,scrollbars=yes,scrolling=yes,resizable=yes,width=800,height=1200';
-          // let printWindow = window.open('', '', options);
-          let htmlTemplate = `<html>
-                                  <head>
-                                      <title>Mol online 2016</title>
-                                      <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-                                  </head>
-                                  <body style="margin:0;padding:0; font-family: 'Open Sans', sans-serif; font-size:14px;">
-                                      <form>
-                                          <div style="${styleBodyWrapper}">
-                                              <div>
-                                                  <div style="${styleTotal}">
-                                                      ${dvTotal}
-                                                  </div>
-                                                  <div style="${styleRow}">
-                                                    <div style="${styleColsm12}">
-                                                        <div style="${stylePanel}">
-                                                            <div>
-                                                                <div style="${styleSearchproduct}">
-                                                                    ${dvGridview}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </form>
-                                  </body>
-                              </html>`;
-        //   console.log(htmlTemplate);
-    //   }
-          let params = {
-                          'temp': htmlTemplate,
-                          'userName': userLogin.username,
-                          'userEmail': userLogin.email,
-                          'ROOT_URL': ROOT_URL
-                      }
-
-          this.props.writeHtml(params)
-              .then((value) => {
-                  if (value) {
-                      this.setState({isOpenPrintPdfmsg: true});
+      let params = {
+                      'temp': htmlTemplate,
+                      'userName': userLogin.username,
+                      'userEmail': userLogin.email,
+                      'ROOT_URL': ROOT_URL
                   }
-                  console.log(value);
-              });
+
+      this.props.writeHtml(params)
+          .then((value) => {
+              if (value) {
+                  this.setState({isOpenPrintPdfmsg: true});
+              }
+              console.log(value);
+          });
 
     }
 

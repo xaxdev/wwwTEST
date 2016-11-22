@@ -104,7 +104,7 @@ const Confidence = require('confidence');
                console.log(`user Email: ${userEmail}`);
                console.log('writing pdf');
                emailBody = '';
-               emailBody = `Please download the files from below link ${obj.ROOT_URL}/export_files/${userName}.pdf`;
+               emailBody = `Please download the files only by today from below link ${obj.ROOT_URL}/export_files/${userName}.pdf`;
                await notify('');
                channel.ack(msg)
            }

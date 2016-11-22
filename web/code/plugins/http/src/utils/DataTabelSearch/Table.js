@@ -152,8 +152,13 @@ var Table = (function (_Component) {
           columns.map(function (col, i) {
             return _react2['default'].createElement(
               'td',
-              { key: i, className: getCellClass(col, row) },
-              getCellValue(col, row)
+              null,
+              _react2['default'].createElement(
+                'span',
+                { key: i, className: getCellClass(col, row) },
+                getCellValue(col, row)
+              )
+
             );
           })
         );

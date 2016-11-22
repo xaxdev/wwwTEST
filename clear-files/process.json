@@ -1,6 +1,6 @@
 {
   "apps" : [{
-    "name": "pdf",
+    "name": "clear-files",
     "script": "./bootstrap.js",
     "node_args": "--max_old_space_size=2048",
     "watch": false,
@@ -8,8 +8,8 @@
       "NODE_ENV": "production",
     },
     "merge_logs": true,
-    "error_file": "./logs/pdf-err.log",
-    "out_file": "./logs/pdf-out.log",
+    "error_file": "./logs/clear-files-err.log",
+    "out_file": "./logs/clear-files-out.log",
     "log_date_format": "YYYY-MM-DD HH:mm Z"
   }]
 }
