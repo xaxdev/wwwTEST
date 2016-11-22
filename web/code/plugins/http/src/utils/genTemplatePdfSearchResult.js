@@ -46,11 +46,11 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
 
     dvListview = dvListview.replace(/\/images\//g,imagesReplace);
     dvListview = dvListview.replace(/class="table-responsive"/g,'');
-    dvListview = dvListview.replace(/class="table table-bordered"/g,'border="1" style="font-size: 8px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="100%"');
+    dvListview = dvListview.replace(/class="table table-bordered table-searchresult"/g,'border="1" style="font-size: 8px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="100%"');
     dvListview = dvListview.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
     dvListview = dvListview.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;"');
-    dvListview = dvListview.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;" role="columnheader" scope="col"');
-    dvListview = dvListview.replace(/<td/g,'<td style="padding:5px 5px;" ');
+    dvListview = dvListview.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px; border: 1px solid #5c5954;" role="columnheader" scope="col"');
+    dvListview = dvListview.replace(/<td/g,'<td style="padding:5px 5px;word-break: normal;font-size: 8px; font-size: 10px; border: 1px solid #5c5954;" ');
 
     let htmlTemplate = '';
 
