@@ -102,8 +102,8 @@ const Confidence = require('confidence');
                let _pathDistFile = Path.resolve(__dirname, `../web/code/plugins/http/public/export_files/${userName}.pdf`);
             //    console.log('_pathDistFile-->',_pathDistFile);
 
-               await save(html, options, _pathDistFile);
                console.log(`user Email: ${userEmail}`);
+               await save(html, options, _pathDistFile);
                console.log('writing pdf');
                emailBody = '';
                emailBody = `Please download the files only by today from below link ${obj.ROOT_URL}/export_files/${userName}.pdf`;
