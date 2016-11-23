@@ -39,6 +39,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     dvGridview = dvGridview.replace(/class="product-detail-h"/g,`style="${productdetailh}"`);
     dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridview = dvGridview.replace(/<img/g,'<img width="140" ');
+    dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
 
     let htmlTemplate = '';
 
