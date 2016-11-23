@@ -14,6 +14,7 @@ const Confidence = require('confidence');
     let emailBody = '';
 
     const save = (html, options, _pathDistFile) => new Promise((resolve, reject) => {
+        console.log('options-->',options);
 
         pdf.create(html, options).toFile(_pathDistFile, function(err, res) {
            if (err) return console.log(err);
@@ -96,9 +97,9 @@ const Confidence = require('confidence');
                let startDate = new Date();
 
                const html = fs.readFileSync(`./import_html/${userName}.html`, 'utf8');
-               const options = { format: 'A4' };
+               const options = { format: 'A4', timeout: 90000 };
 
-               let _pathDistFile = `../web/code/plugins/http/public/export_files/${userName}.pdf`;
+               let _pathDistFile = Path.resolve(__dirname, `../web/code/plugins/http/public/export_files/${userName}.pdf`);
 
                await save(html, options, _pathDistFile);
                console.log(`user Email: ${userEmail}`);

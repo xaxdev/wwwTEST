@@ -112,7 +112,7 @@ class MyCatalog extends Component {
       const userLogin = JSON.parse(sessionStorage.logindata);
 
       const host = HOSTNAME || 'localhost';
-      const ROOT_URL = (host != 'http://mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+      const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
       let imagesReplace = ROOT_URL+'/images/';
 
       let dvTotal = jQuery('#dvTotalsub').html();

@@ -22,6 +22,7 @@ module.exports = {
               console.log('writing html...');
               let temp = request.payload.temp;
               let userName =  `${request.payload.userName}_${exportDate}`;
+              console.log('userName-->',userName);
 
               const destination = Path.resolve(__dirname, '../../../../../pdf/import_html')
 
