@@ -14,7 +14,7 @@ const Confidence = require('confidence');
     let emailBody = '';
 
     const save = (html, options, _pathDistFile) => new Promise((resolve, reject) => {
-        console.log('options-->',options);
+        // console.log('options-->',options);
 
         pdf.create(html, options).toFile(_pathDistFile, function(err, res) {
            if (err) return console.log(err);
