@@ -5,6 +5,7 @@ import sendgrid from 'sendgrid'
 import sendgridConfig from './sendgrid.json'
 
 const fs = require('fs');
+const Path = require('path');
 const pdf = require('html-pdf');
 const Confidence = require('confidence');
 
@@ -94,12 +95,12 @@ const Confidence = require('confidence');
             //    console.log('userEmail-->',userEmail);
             //    console.log('ROOT_URL-->',obj.ROOT_URL);
 
-               let startDate = new Date();
-
                const html = fs.readFileSync(`./import_html/${userName}.html`, 'utf8');
-               const options = { format: 'A4', timeout: 90000 };
+            //    console.log('html-->',html);
+               const options = { format: 'A4', timeout: 150000 };
 
                let _pathDistFile = Path.resolve(__dirname, `../web/code/plugins/http/public/export_files/${userName}.pdf`);
+            //    console.log('_pathDistFile-->',_pathDistFile);
 
                await save(html, options, _pathDistFile);
                console.log(`user Email: ${userEmail}`);

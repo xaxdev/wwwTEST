@@ -116,9 +116,7 @@ class MyCatalog extends Component {
       const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
       let imagesReplace = ROOT_URL+'/images/';
 
-      let startDate = new Date();
-      let exportDate = moment(startDate,'MM-DD-YYYY');
-      exportDate = exportDate.format('YYYYMMDD_HHmmss');
+      let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
 
       let dvTotal = jQuery('#dvTotalsub').html();
       let dvGridview = jQuery('#dvGridview').html();
