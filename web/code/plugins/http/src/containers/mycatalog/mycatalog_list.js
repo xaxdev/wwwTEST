@@ -3,6 +3,7 @@ import { reduxForm, reset } from 'redux-form';
 import { Button,FormControl,Pagination, ControlLabel, DropdownButton, MenuItem } from 'react-bootstrap';
 import ToolTip from 'react-portal-tooltip';
 import shallowCompare from 'react-addons-shallow-compare';
+import moment from 'moment-timezone';
 
 import * as itemactions from '../../actions/itemactions';
 import numberFormat from '../../utils/convertNumberformat';
@@ -112,8 +113,10 @@ class MyCatalog extends Component {
       const userLogin = JSON.parse(sessionStorage.logindata);
 
       const host = HOSTNAME || 'localhost';
-      const ROOT_URL = (host != 'http://mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+      const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
       let imagesReplace = ROOT_URL+'/images/';
+
+      let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
 
       let dvTotal = jQuery('#dvTotalsub').html();
       let dvGridview = jQuery('#dvGridview').html();
@@ -131,7 +134,7 @@ class MyCatalog extends Component {
 
       let params = {
                       'temp': htmlTemplate,
-                      'userName': userLogin.username,
+                      'userName': `${userLogin.username}_${exportDate}`,
                       'userEmail': userLogin.email,
                       'ROOT_URL': ROOT_URL
                   }

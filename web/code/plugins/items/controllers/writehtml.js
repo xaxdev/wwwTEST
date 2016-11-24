@@ -16,12 +16,11 @@ module.exports = {
 
       try {
           (async _ => {
-              let startDate = new Date();
-              let exportDate = moment(startDate,'MM-DD-YYYY');
-              exportDate = exportDate.format('YYYYMMDD_HHmmss');
+
               console.log('writing html...');
               let temp = request.payload.temp;
-              let userName =  `${request.payload.userName}_${exportDate}`;
+              let userName =  request.payload.userName;
+              console.log('userName-->',userName);
 
               const destination = Path.resolve(__dirname, '../../../../../pdf/import_html')
 
