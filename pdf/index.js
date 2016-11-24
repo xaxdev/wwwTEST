@@ -16,12 +16,19 @@ const Confidence = require('confidence');
 
     const save = (html, options, _pathDistFile) => new Promise((resolve, reject) => {
         // console.log('options-->',options);
-
-        pdf.create(html, options).toFile(_pathDistFile, function(err, res) {
-           if (err) return console.log(err);
-           console.log(res); // { filename: '/app/businesscard.pdf' }
-           return resolve()
-         });
+        try {
+            pdf.create(html, options).toFile(_pathDistFile, function(err, res) {
+               if (err) {
+                   console.log(err);
+                   return reject();
+               }
+               console.log(res); // { filename: '/app/businesscard.pdf' }
+               return resolve()
+             });
+        } catch (err) {
+            console.log(err)
+            notify(err);
+        }
     });
 
     const notify = err => new Promise((resolve, reject) => {
@@ -97,7 +104,7 @@ const Confidence = require('confidence');
 
                const html = fs.readFileSync(`./import_html/${userName}.html`, 'utf8');
             //    console.log('html-->',html);
-               const options = { format: 'A4', timeout: 150000 };
+               const options = { format: 'A4', timeout: 30000 };
 
                let _pathDistFile = Path.resolve(__dirname, `../web/code/plugins/http/public/export_files/${userName}.pdf`);
             //    console.log('_pathDistFile-->',_pathDistFile);
