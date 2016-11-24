@@ -19,7 +19,7 @@ import numberFormat from '../../utils/convertNumberformat';
 import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 import ModalMyCatalog from '../../utils/modalMyCatalog';
 import Modalalertmsg from '../../utils/modalalertmsg';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import convertDate from '../../utils/convertDate';
 import validateCatalog from '../../utils/validatecatalog';
 import GenTemplateHtml from '../../utils/genTemplatePdfSearchResult';
@@ -279,8 +279,10 @@ class SearchResult extends Component {
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     const host = HOSTNAME || 'localhost';
-    const ROOT_URL = (host != 'http://mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+    const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
     let imagesReplace = ROOT_URL+'/images/';
+
+    let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
 
     let dvTotal1 = jQuery('#dvTotalsub1').html();
     let dvTotal2 = jQuery('#dvTotalsub2').html();
@@ -300,7 +302,7 @@ class SearchResult extends Component {
     // console.log(htmlTemplate);
     let params = {
                     'temp': htmlTemplate,
-                    'userName': userLogin.username,
+                    'userName': `${userLogin.username}_${exportDate}`,
                     'userEmail': userLogin.email,
                     'ROOT_URL': ROOT_URL
                 }

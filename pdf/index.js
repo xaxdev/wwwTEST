@@ -5,6 +5,7 @@ import sendgrid from 'sendgrid'
 import sendgridConfig from './sendgrid.json'
 
 const fs = require('fs');
+const Path = require('path');
 const pdf = require('html-pdf');
 const Confidence = require('confidence');
 
@@ -14,12 +15,20 @@ const Confidence = require('confidence');
     let emailBody = '';
 
     const save = (html, options, _pathDistFile) => new Promise((resolve, reject) => {
-
-        pdf.create(html, options).toFile(_pathDistFile, function(err, res) {
-           if (err) return console.log(err);
-           console.log(res); // { filename: '/app/businesscard.pdf' }
-           return resolve()
-         });
+        // console.log('options-->',options);
+        try {
+            pdf.create(html, options).toFile(_pathDistFile, function(err, res) {
+               if (err) {
+                   console.log(err);
+                   return reject();
+               }
+               console.log(res); // { filename: '/app/businesscard.pdf' }
+               return resolve()
+             });
+        } catch (err) {
+            console.log(err)
+            notify(err);
+        }
     });
 
     const notify = err => new Promise((resolve, reject) => {
@@ -93,15 +102,15 @@ const Confidence = require('confidence');
             //    console.log('userEmail-->',userEmail);
             //    console.log('ROOT_URL-->',obj.ROOT_URL);
 
-               let startDate = new Date();
-
                const html = fs.readFileSync(`./import_html/${userName}.html`, 'utf8');
-               const options = { format: 'A4' };
+            //    console.log('html-->',html);
+               const options = { format: 'A4', timeout: 30000 };
 
-               let _pathDistFile = `../web/code/plugins/http/public/export_files/${userName}.pdf`;
+               let _pathDistFile = Path.resolve(__dirname, `../web/code/plugins/http/public/export_files/${userName}.pdf`);
+            //    console.log('_pathDistFile-->',_pathDistFile);
 
-               await save(html, options, _pathDistFile);
                console.log(`user Email: ${userEmail}`);
+               await save(html, options, _pathDistFile);
                console.log('writing pdf');
                emailBody = '';
                emailBody = `Please download the files only by today from below link ${obj.ROOT_URL}/export_files/${userName}.pdf`;
