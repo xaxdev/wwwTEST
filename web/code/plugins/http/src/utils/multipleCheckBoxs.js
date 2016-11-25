@@ -15,7 +15,7 @@ class MultipleCheckBoxs extends Component {
             for(let i=0, n=checkCompany.length;i<n;i++) {
                 checkCompany[i].checked = true;
                 if(chekedValue != undefined){
-                    console.log('chekedValue-->',chekedValue.length);
+                    // console.log('chekedValue-->',chekedValue.length);
                 }
             }
         }else{
