@@ -1132,14 +1132,13 @@ class UserDetailsFrom extends Component {
                     </div>
                     <div className="form-group">
                       <label className="col-sm-2 control-label">View On-hand</label>
-                      <div className="col-sm-4 ">
-
+                      <div className="col-sm-4">
                           <input type="checkbox" value="Location" {...onhandLocation}
                             checked={this.state.selectedOnHandLocation}
                             onChange={this.selectedOnHandLocation}
                             ref="location"
                           /> All Company
-                          <div className="user-edit">
+                          <div className="user-edit user-per-height">
                               <MultipleCheckBoxs datas={dataDropDowntLocations} name={'checkbox-allCompany'}
                                 checkedAll={this.state.selectedOnHandLocation} chekedValue={this.state.chkLocation}
                                 onChange={this.changedOnHandLocationChecked}/>
@@ -1165,7 +1164,7 @@ class UserDetailsFrom extends Component {
                             onChange={this.selectedOnHandWarehouse}
                             ref="warehouse"
                           /> All Warehouse
-                          <div className="user-edit">
+                          <div className="user-edit user-per-height">
                               <MultipleCheckBoxs datas={dataDropDowntWareHouse} name={'checkbox-allWarehouse'}
                                 checkedAll={this.state.selectedOnHandWarehouse} chekedValue={this.state.chkWarehouse}
                                 onChange={this.changedOnHandWarehouseChecked}/>

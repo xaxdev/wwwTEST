@@ -711,6 +711,36 @@ select.form-searchresult option{
     color:#ddbe6a;
     cursor:pointer;
 }
+.icon-list{
+  background: url(/images/icon-list.jpg) no-repeat center;
+  padding: 8px 17px;
+  cursor:pointer;
+}
+.icon-grid{
+  background: url(/images/icon_grid.jpg) no-repeat center;
+  padding: 8px 17px;
+  cursor:pointer;
+}
+.icon-list-active{
+  background: url(/images/active_list.jpg) no-repeat center;
+  width:34px;
+  height: 30px;
+  cursor:pointer;
+  border: 1px solid #ddbe6a;
+}
+.icon-grid-active{
+  background: url(/images/active_grid.jpg) no-repeat center;
+  width:34px;
+  height: 30px;
+  cursor:pointer;
+  border: 1px solid #ddbe6a;
+}
+.icon-list-active{
+  background: url(/images/active_list.jpg) no-repeat center;
+  width:34px;
+  height: 30px;
+  cursor:pointer;
+}
 .icon-add{
 	background: url(/images/icon-add.png) no-repeat center;
 	width:40px;
@@ -1035,6 +1065,7 @@ select.form-searchresult option{
   margin-top: 10px;
 }
 .user-edit select{min-height: 200px; width: 290px;}
+.user-per-height{height:200px; overflow-y:scroll; border:1px solid #ccc; padding:5px 5px;}
 .tooltiop-span span{margin-right: 5px;}
 .image-gallery-image{text-align: center; margin:0 auto;}
 .image-gallery-image img{width: auto !important;}

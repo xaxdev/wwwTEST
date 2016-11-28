@@ -1059,7 +1059,7 @@ class UsersNewFrom extends Component {
                                 checked={this.state.selectedOnHandLocation}
                                 onChange={this.selectedOnHandLocation}
                               /> All Company
-                              <div className="user-edit">
+                              <div className="user-edit user-per-height">
                                   <MultipleCheckBoxs datas={dataDropDowntLocations} name={'checkbox-allCompany'}
                                     checkedAll={this.state.selectedOnHandLocation} chekedValue={this.state.chkLocation}
                                     onChange={this.changedOnHandLocationChecked}/>
@@ -1081,7 +1081,7 @@ class UsersNewFrom extends Component {
                                 checked={this.state.selectedOnHandWarehouse}
                                 onChange={this.selectedOnHandWarehouse}
                               /> All Warehouse
-                              <div className="user-edit">
+                              <div className="user-edit user-per-height">
                                   <MultipleCheckBoxs datas={dataDropDowntWareHouse} name={'checkbox-allWarehouse'}
                                     checkedAll={this.state.selectedOnHandWarehouse} chekedValue={this.state.chkWarehouse}
                                     onChange={this.changedOnHandWarehouseChecked}/>
