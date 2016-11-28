@@ -599,7 +599,7 @@ class productdetail extends Component {
                       </div>
                       <div className="display-right">
                         <div className="float-l bar-detail-pre">
-                               <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].id}`:''}}><span className="btn btn-primary btn-radius"><span className="glyphicon glyphicon-menu-left"></span></span></Link>
+                               <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].id}`:''}}><span className="icon-back"></span></Link>
                         </div>
                         <div className="float-l bar-detail-text">
                             <div className="float-l productdetailpage text-center nopadding">
@@ -612,7 +612,7 @@ class productdetail extends Component {
                             </div>
                         </div>
                         <div className="float-l bar-detail-pre">
-                              <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${productlist[productIndex+1].id}` : ''}}><span className="btn btn-primary btn-radius"><span className="glyphicon glyphicon-menu-right"></span></span></Link>
+                              <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${productlist[productIndex+1].id}` : ''}}><span className="icon-next"></span></Link>
                         </div>
                       </div>
 

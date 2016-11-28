@@ -1439,11 +1439,11 @@ class SearchResult extends Component {
                 <div className="col-sm-2 ft-white nopadding pd-10">
                   <div
                     disabled={submitting} onClick={ this.gridViewResults }>
-                      <div className="bd-white m-pt-mgl"><span className="icon-list"></span></div>
+                      <div className="bd-white m-pt-mgl"></div>
                   </div>
                   <div
                     disabled={submitting} onClick={ this.listViewResults } >
-                      <div className="bd-white m-pt-mgl"><span className="icon-grid"></span></div>
+                      <div className="bd-white m-pt-mgl"></div>
                   </div>
                 </div>
               </div>
@@ -1511,11 +1511,11 @@ class SearchResult extends Component {
                 <div className="col-sm-2 ft-white nopadding pd-10">
                   <div
                     disabled={submitting} onClick={ this.gridViewResults } >
-                      <div className={`bd-white m-pt-mgl ${showGridView ? 'icon-grid-active' : ''}` }></div>
+                      <div className={`icon-grid m-pt-mgl ${showGridView ? 'icon-grid-active' : ''}` }></div>
                   </div>
                   <div
                     disabled={submitting} onClick={ this.listViewResults } >
-                      <div className={`bd-white m-pt-mgl ${showListView ? 'icon-list-active' : ''}` }></div>
+                      <div className={`icon-list m-pt-mgl ${showListView ? 'icon-list-active' : ''}` }></div>
                   </div>
                 </div>
               </div>

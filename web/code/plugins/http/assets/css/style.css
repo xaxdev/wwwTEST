@@ -712,14 +712,12 @@ select.form-searchresult option{
     cursor:pointer;
 }
 .icon-list{
-  background: url(/images/icon-list.jpg) no-repeat center;
-  padding: 8px 17px;
+  background: url(/images/icon_list.jpg) no-repeat center;
+  float: left;
+  width: 34px;
+  height: 30px;
   cursor:pointer;
-}
-.icon-grid{
-  background: url(/images/icon_grid.jpg) no-repeat center;
-  padding: 8px 17px;
-  cursor:pointer;
+  margin-left: 10px;
 }
 .icon-list-active{
   background: url(/images/active_list.jpg) no-repeat center;
@@ -727,6 +725,15 @@ select.form-searchresult option{
   height: 30px;
   cursor:pointer;
   border: 1px solid #ddbe6a;
+  margin-left: 10px;
+}
+.icon-grid{
+  background: url(/images/icon_grid.jpg) no-repeat center;
+  float: left;
+  width: 34px;
+  height: 30px;
+  cursor:pointer;
+  margin-left: 15px;
 }
 .icon-grid-active{
   background: url(/images/active_grid.jpg) no-repeat center;
@@ -734,13 +741,9 @@ select.form-searchresult option{
   height: 30px;
   cursor:pointer;
   border: 1px solid #ddbe6a;
+  margin-left: 15px;
 }
-.icon-list-active{
-  background: url(/images/active_list.jpg) no-repeat center;
-  width:34px;
-  height: 30px;
-  cursor:pointer;
-}
+
 .icon-add{
 	background: url(/images/icon-add.png) no-repeat center;
 	width:40px;
@@ -786,6 +789,20 @@ select.form-searchresult option{
 .icon-search{
 	background: url(/images/icon-search-30.png) no-repeat center;
 	width:30px;
+	height: 30px;
+	float: left;
+	cursor:pointer;
+}
+.icon-next{
+	background: url(/images/icon-next.jpg) no-repeat center;
+	width:50px;
+	height: 30px;
+	float: left;
+	cursor:pointer;
+}
+.icon-back{
+	background: url(/images/icon-back.jpg) no-repeat center;
+	width:50px;
 	height: 30px;
 	float: left;
 	cursor:pointer;
