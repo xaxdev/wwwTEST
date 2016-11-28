@@ -1082,7 +1082,7 @@ select.form-searchresult option{
   margin-top: 10px;
 }
 .user-edit select{min-height: 200px; width: 290px;}
-.user-per-height{height:200px; overflow-y:scroll; border:1px solid #ccc; padding:5px 5px;}
+.user-per-height{height:200px; overflow-y:scroll; border:1px solid #ccc; padding:5px 5px;width: 290px;}
 .tooltiop-span span{margin-right: 5px;}
 .image-gallery-image{text-align: center; margin:0 auto;}
 .image-gallery-image img{width: auto !important;}
