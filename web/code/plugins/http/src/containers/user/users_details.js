@@ -114,7 +114,7 @@ class UserDetails extends Component {
     }
     delete data.permissionId;
 
-    console.log('permission-->',data);
+    // console.log('permission-->',data);
     this.props.updateUser(data)
         .then(() => {
           // user has been created, navigate the user to the index

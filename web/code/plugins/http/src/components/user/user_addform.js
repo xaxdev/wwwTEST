@@ -54,6 +54,31 @@ class UsersNewFrom extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
+  componentWillReceiveProps = (nextProps)=>{
+    //   console.log('componentWillReceiveProps-->',nextProps);
+      const { fields: {
+                          onhandLocationValue, onhandWarehouseValue
+                      }
+                  } = nextProps;
+
+      if(this.props.user != undefined ){
+          if(this.props.user.permission.onhandLocation != undefined){
+              if (this.state.selectedOnHandLocation) {
+
+              }else{
+                  this.setState({chkLocation: onhandLocationValue.value});
+              }
+          }
+
+          if(this.props.user.permission.onhandWarehouse != undefined){
+              if (this.state.selectedOnHandWarehouse) {
+
+              }else{
+                  this.setState({chkWarehouse: onhandWarehouseValue.value});
+              }
+          }
+      }
+  }
   componentDidUpdate(){
     // console.log('componentDidUpdate-->');
     // if (this.state.selectedOnHandLocation) {
@@ -268,7 +293,7 @@ class UsersNewFrom extends Component {
               }
           }else {
               if (this.state.clickAllLocarion) {
-                checkedBoxes = values;
+                checkedBoxes = valuesAllCompany;
                 onhand.onChange('Location');
                 onhandAll.onChange(false);
             }
@@ -497,12 +522,17 @@ class UsersNewFrom extends Component {
         onhandWarehouseValue.onChange([]);
         onhand.onChange('Warehouse');
         onhandAll.onChange(false);
-        if (onhandLocationValue.value != undefined) {
-            if (onhandLocationValue.value.length != 0) {
-              this.props.optionsActions.getOnHandWarehouse(onhandLocationValue.value);
-            }else{
-              this.props.optionsActions.getOnHandWarehouse([]);
-            }
+        // if (onhandLocationValue.value != undefined) {
+        //     if (onhandLocationValue.value.length != 0) {
+        //       this.props.optionsActions.getOnHandWarehouse(onhandLocationValue.value);
+        //     }else{
+        //       this.props.optionsActions.getOnHandWarehouse([]);
+        //     }
+        // }else{
+        //     this.props.optionsActions.getOnHandWarehouse([]);
+        // }
+        if (valuesCompany.length != 0) {
+            this.props.optionsActions.getOnHandWarehouse(valuesCompany);
         }else{
             this.props.optionsActions.getOnHandWarehouse([]);
         }

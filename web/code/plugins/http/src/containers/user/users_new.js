@@ -128,7 +128,7 @@ class UsersNew extends Component {
         };
     }
 
-    console.log('data-->',data);
+    // console.log('data-->',data);
     this.props.createUser(data)
         .then(() => {
           // user has been created, navigate the user to the index
