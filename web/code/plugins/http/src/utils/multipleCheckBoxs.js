@@ -8,7 +8,7 @@ class MultipleCheckBoxs extends Component {
 
     }
     componentDidUpdate = _=>{
-        const { name, checkedAll, chekedValue } = this.props;
+        const { name, checkedAll, chekedValue, onhandLocationValue, onhandWarehouseValue } = this.props;
         let checkCompany = jQuery(`input[name="${name}"]`);
         // console.log(checkCompany);
         if (checkedAll) {
@@ -27,6 +27,26 @@ class MultipleCheckBoxs extends Component {
                             checkCompany[i].checked = true;
                         }
                     });
+                }else{
+                    if(onhandLocationValue != undefined){
+                        if(onhandLocationValue.length != 0){
+                            onhandLocationValue.map((comp) => {
+                                if(comp == checkCompany[i].value){
+                                    checkCompany[i].checked = true;
+                                }
+                            });
+                        }
+                    }
+
+                    if(onhandWarehouseValue != undefined){
+                        if(onhandWarehouseValue.length != 0){
+                            onhandWarehouseValue.map((ware) => {
+                                if(ware == checkCompany[i].value){
+                                    checkCompany[i].checked = true;
+                                }
+                            });
+                        }
+                    }
                 }
             }
         }
