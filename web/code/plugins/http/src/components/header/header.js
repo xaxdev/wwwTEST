@@ -56,7 +56,7 @@ class Header extends Component {
                 <div className="logo-detail"></div>
               </div>
               <div className="navbar-right top-bar col-md-6">
-                <img src="/images/attention_notify-128.png" width="20px" onClick={this.handleWhatnewNotification}/>
+                <img src="/images/notify.jpg" className="notify" onClick={this.handleWhatnewNotification}/>
                 <Navbar inverse className="collapse in" >
                   <Navbar.Header>
                     <Navbar.Toggle />
