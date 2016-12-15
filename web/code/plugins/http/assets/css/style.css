@@ -1306,14 +1306,15 @@ select.form-searchresult option{
   background: #f9f9f9;
 }
 .accordion-title{
-  padding: 17px 30px;
+  padding: 0px;
   background: #f5f5f5;
   color:#383735;
-  text-transform: uppercase;
-  font-family: 'open_sanssemibold';
-  font-size:22px;
+  font-family: 'open_sanslight';
+  font-weight: bold;
+  font-size:25px;
   border-top:1px solid #dcdcdc;
 }
+.accordion-title h3{padding: 17px 30px; font-family: 'open_sanssemibold'; font-size:20px;}
 .accordion-title span{width: 80%;}
 .accordion-detail{
   font-size:16px;
