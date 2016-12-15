@@ -17,7 +17,7 @@ class WhatNewNotification extends Component {
                                                 {
                                                     'type':'new',
                                                     'title': 'User manual of MOL',
-                                                    'msg': `<p><a style="color:#383735;" href="${ROOT_URL}/download_files/What_s_new_content_14_Dec_16.docx" target="_blank">Download User Manual</a></p>`
+                                                    'msg': `<p>User manual of MOL Version 1 is at <a style="color:#383735; text-decoration: underline;" href="${ROOT_URL}/download_files/User_Manual_Mouawad_Website_User.pdf" target="_blank">User Manual Mouawad Website (User)</a></p>`
                                                 },
                                                 {
                                                     'type': 'new',
