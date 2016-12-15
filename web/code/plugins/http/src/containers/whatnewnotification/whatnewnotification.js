@@ -21,7 +21,7 @@ class WhatNewNotification extends Component {
                                                 },
                                                 {
                                                     'type': 'new',
-                                                    'title': '1.	Inventory Report',
+                                                    'title': 'Inventory Report',
                                                     'msg': `<p>Under the header search, all the filters applied to all product categories</p>
                                                     <img src="/images/mol-1.jpg"/>
                                                     <p style="padding:20px 0 0 0;">Or filtering any criteria in each category under the Advance Search</p>
@@ -29,13 +29,13 @@ class WhatNewNotification extends Component {
                                                 },
                                                 {
                                                     'type':'new',
-                                                    'title': '2.	6 Product Categories',
+                                                    'title': '6 Product Categories',
                                                     'msg': `<p>There are 6 product categories such Jewelry, Watch, Stone, Accessory, Object of Art and Spare Part.  Filtering in each category by selected the category and fill the criteria.</p>
                                                     <img src="/images/mol-2.jpg" />`
                                                 },
                                                 {
                                                     'type':'new',
-                                                    'title': '3.	Search any items from Excel file',
+                                                    'title': 'Search any items from Excel file',
                                                     'msg': `<p>The simple steps to search any items from your Excel file:
                                                     <div style="padding:0px 20px 10px 20px;">
                                                        <div>1.	Download Excel template</div>
@@ -47,7 +47,7 @@ class WhatNewNotification extends Component {
                                                 },
                                                 {
                                                     'type':'new',
-                                                    'title': '4.	Search Result',
+                                                    'title': 'Search Result',
                                                     'msg': `<p>There are the friendly functions under the Search Result page:</p>
                                                     <div style="padding:0px 20px 10px 20px;">
                                                        <p>•	List and Grid style </p>
@@ -60,31 +60,31 @@ class WhatNewNotification extends Component {
                                                 },
                                                 {
                                                     'type':'new',
-                                                    'title': '5.	Export data to Excel file, and send to your e-mail',
+                                                    'title': 'Export data to Excel file, and send to your e-mail',
                                                     'msg': `<p style="padding:0px 0px 15px 0px;">Click at “Excel” icon  <img src="/images/mol-5-1.jpg"/> to export data to Excel file, that the system will send the download link to your e-mail. </p>
                                                      <img src="/images/mol-5.jpg"/>`
                                                 },
                                                 {
                                                     'type':'new',
-                                                    'title': '6.	Export data to PDF file',
+                                                    'title': 'Export data to PDF file',
                                                     'msg': `<p style="padding:0px 0px 15px 0px;">Click at “Print” icon  <img src="/images/mol-6-1.jpg" />  to print to PDF file, that the system will send the download link to your e-mail.</p>
                                                      <img src="/images/mol-6.jpg" />`
                                                 },
                                                 {
                                                     'type':'new',
-                                                    'title': '7.	Change Password',
+                                                    'title': 'Change Password',
                                                     'msg': `<p>Changing your password, by clicking at your username and click Change Password menu.</p>
                                                      <div style="margin-top:15px; text-align:center;"><img src="/images/mol-7.jpg" /></div>
                                                      <div style="margin-top:15px; text-align:center;"><img src="/images/mol-7-1.jpg" /></div>`
                                                 },
                                                 {
                                                     'type':'new',
-                                                    'title': '8.	My catalog',
+                                                    'title': 'My catalog',
                                                     'msg': `<p>Manage and view your catalog My Catalog menu.</p>
                                                      <div style="margin-top:15px; text-align:center;"><img src="/images/mol-8.jpg"/></div>
-                                                    <div style="padding-top:15px;">Management tools</div>
+                                                    <div style="padding-top: 25px; text-decoration: underline;">Management tools</div>
                                                      <div style="margin-top:15px; text-align:center;"><img src="/images/mol-8-1.jpg"/></div>
-                                                    <div style="padding:15px 0;">How to add items to catalog</div>
+                                                    <div style="padding:15px 0; text-decoration: underline;">How to add items to catalog</div>
                                                     <div styl="padding:15px 20px 0 20px;">
                                                       <div>1.	User adds item to My Catalog at Search Result page and Product Detail page</div>
                                                       <div>2.	Add an item to catalog: click “Catalog” icon <img src="/images/mol-8-2.jpg" /> at the selected items, and go to step 4</div>
