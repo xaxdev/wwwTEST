@@ -15,7 +15,7 @@ class WhatNewNotification extends Component {
                                             {
                                                 'type':'new',
                                                 'title': 'User manual of MOL',
-                                                'msg': `<p>Download User Manual</p>`
+                                                'msg': '<p>Download User Manual</p>'
                                             },
                                             {
                                                 'type': 'new',
@@ -92,10 +92,8 @@ class WhatNewNotification extends Component {
                                                   <div style="margin-top:15px; text-align:center;"><img src="/images/mol-8-7.jpg" /></div>
                                                 </div>`
                                             }
-
                                         ]
                                 }
-
                             ];
             return(
                 <div className="col-sm-12">
