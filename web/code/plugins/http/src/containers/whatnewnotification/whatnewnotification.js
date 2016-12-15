@@ -5,6 +5,8 @@ import { Accordion, AccordionItem } from 'react-sanfona';
 class WhatNewNotification extends Component {
 
     render() {
+            const host = HOSTNAME || 'localhost';
+            const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
             const roundData = [1];
             const msgData = [
@@ -15,7 +17,7 @@ class WhatNewNotification extends Component {
                                                 {
                                                     'type':'new',
                                                     'title': 'User manual of MOL',
-                                                    'msg': '<p><a style="color:#383735;" href="http://192.168.1.92:3005/upload_file/What\'s_new_content_14_Dec_16.docx" target="_blank">Download User Manual</a></p>'
+                                                    'msg': `<p><a style="color:#383735;" href="${ROOT_URL}/download_files/What_s_new_content_14_Dec_16.docx" target="_blank">Download User Manual</a></p>`
                                                 },
                                                 {
                                                     'type': 'new',
