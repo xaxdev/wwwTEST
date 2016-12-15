@@ -150,6 +150,14 @@ export default ({ dispatch,getState}) => {
                     }, 'productmycatalog');
                 }
             },{
+                onEnter: requireAuth,
+                path: 'whatnewnotification',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/whatnewnotification/whatnewnotification'));
+                    }, 'whatnewnotification');
+                }
+            },{
                 path: '*',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
