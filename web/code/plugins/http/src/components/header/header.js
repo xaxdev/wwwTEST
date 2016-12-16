@@ -11,6 +11,7 @@ class Header extends Component {
 		this.handleLogoutButton = this.handleLogoutButton.bind(this);
     this.handleNameClick = this.handleNameClick.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleWhatnewNotification = this.handleWhatnewNotification.bind(this);
 
 	}
 
@@ -33,6 +34,11 @@ class Header extends Component {
     this.context.router.push('/changepassword');
   }
 
+  handleWhatnewNotification(e){
+    e.preventDefault();
+    this.context.router.push('/whatnewnotification');
+  }
+
 	handleLogoutButton() {
 		this.props.logout();
 		this.context.router.push('/');
@@ -50,6 +56,7 @@ class Header extends Component {
                 <div className="logo-detail"></div>
               </div>
               <div className="navbar-right top-bar col-md-6">
+                <img src="/images/notify.jpg" className="notify" onClick={this.handleWhatnewNotification}/>
                 <Navbar inverse className="collapse in" >
                   <Navbar.Header>
                     <Navbar.Toggle />
