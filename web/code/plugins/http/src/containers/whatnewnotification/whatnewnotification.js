@@ -17,7 +17,7 @@ class WhatNewNotification extends Component {
                                                 {
                                                     'type':'new',
                                                     'title': 'User manual of MOL',
-                                                    'msg': `<p>User manual of MOL Version 1 is at <a style="color:#383735; text-decoration: underline;" href="${ROOT_URL}/download_files/User_Manual_Mouawad_Website_User.pdf" target="_blank">User Manual Mouawad Website (User)</a></p>`
+                                                    'msg': `<p>User manual of MOL Version 1 is at <a style="color:#383735; text-decoration: underline;" href="${ROOT_URL}/download_files/User_Manual_Mouwad_Website_(User).pdf" target="_blank">User Manual Mouawad Website (User)</a></p>`
                                                 },
                                                 {
                                                     'type': 'new',
@@ -110,7 +110,8 @@ class WhatNewNotification extends Component {
                                 console.log(msgData);
                                 let loop = item-1;
                                 return (
-                                    <AccordionItem title={msgData[loop].round} slug={item} key={index} className="accordion-title">
+                                    <AccordionItem title={msgData[loop].round} slug={item} key={index}
+                                        className="accordion-title">
                                         <div className="whatnew-detail">
                                             {msgData[loop].datas.map((data) => {
 
