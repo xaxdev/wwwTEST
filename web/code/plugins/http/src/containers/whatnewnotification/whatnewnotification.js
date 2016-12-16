@@ -47,8 +47,8 @@ class WhatNewNotification extends Component {
                                                 },
                                                 {
                                                     'type':'new',
-                                                    'title': 'Search Result',
-                                                    'msg': `<p>There are the friendly functions under the Search Result page:</p>
+                                                    'title': 'Search Results',
+                                                    'msg': `<p>There are the friendly functions under the Search Results page:</p>
                                                     <div style="padding:0px 20px 10px 20px;">
                                                        <p>•	List and Grid style </p>
                                                        <p>•	Quick View and Product detail</p>
@@ -86,7 +86,7 @@ class WhatNewNotification extends Component {
                                                      <div style="margin-top:15px; text-align:center;"><img src="/images/mol-8-1.jpg"/></div>
                                                     <div style="padding:15px 0; text-decoration: underline;">How to add items to catalog</div>
                                                     <div styl="padding:15px 20px 0 20px;">
-                                                      <div>1.	User adds item to My Catalog at Search Result page and Product Detail page</div>
+                                                      <div>1.	User adds item to My Catalog at Search Results page and Product Detail page</div>
                                                       <div>2.	Add an item to catalog: click “Catalog” icon <img src="/images/mol-8-2.jpg" /> at the selected items, and go to step 4</div>
                                                       <div>3.	Add multiple items to catalog: click “Square” icon <img src="/images/mol-8-3.jpg" />   at the selected items, and click “Catalog” icon on bar <img src="/images/mol-8-4.jpg" />  , and go to step 4</div>
                                                       <div style="padding-top:15px;"><img src="/images/mol-8-6.jpg"/></div>
