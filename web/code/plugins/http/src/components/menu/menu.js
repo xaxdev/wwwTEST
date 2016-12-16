@@ -26,6 +26,7 @@ const Menu =  (props) => {
                                                     props.currentLocation !== '/user' &&
                                                     props.currentLocation !== '/user/new' &&
                                                     props.currentLocation !== '/mycatalog' &&
+                                                    props.currentLocation !== '/whatnewnotification' &&
                                                     props.currentLocation.indexOf('productmycatalog') == -1
                                                  )?'active':''}`}>Inventory Report</NavItem>
         {/*<NavItem href="#">My Catalog</NavItem>*/}

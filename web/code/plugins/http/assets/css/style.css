@@ -136,6 +136,7 @@ select:focus::-ms-value {background: none;}
 .margin-l30{margin-left:30px;}
 .margin-t-17{margin-top: -17px;}
 .nopadding{padding:0;}
+.padding-tb10{padding:10px 0px;}
 .padding-lf15{padding:0 15px;}
 .padding-lf20{padding:0 20px;}
 .padding-lf30{padding:0 30px;}
@@ -367,6 +368,11 @@ select.form-searchresult option{
 	height:50px;
 	font-size:16px;
 	margin-bottom:10px;
+}
+.notify{
+  margin-top: 10px;
+  padding-right: 10px;
+  cursor: pointer;
 }
 .top-line{color:#d9c06e; padding:0 10px;}
 .top-line-detail h2{

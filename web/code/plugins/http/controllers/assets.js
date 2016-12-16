@@ -48,5 +48,13 @@ module.exports = {
     app: {
       name: 'exportFile'
     }
+  },
+  downloadFile: {
+    handler: {
+      directory:   { path: Path.resolve(__dirname, '../public/download_files') }
+    },
+    app: {
+      name: 'downloadFile'
+    }
   }
 };
