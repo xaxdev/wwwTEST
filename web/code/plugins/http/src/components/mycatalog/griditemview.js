@@ -539,40 +539,22 @@ class GridItemsView extends Component {
                                     <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
                                     {
                                         (item.authorization) ?
-                                        <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
-                                            : ''
-                                    }
-                                    {
-                                        (item.authorization) ?
-                                        <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
-                                            '' : 'hidden'}`}>{actualCost}</span>
-                                            : ''
-                                    }
-                                    {
-                                        (item.authorization) ?
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
-                                            : ''
-                                    }
-                                    {
-                                        (item.authorization) ?
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{updatedCost}</span>
-                                            : ''
-                                    }
-                                    {
-                                        (item.authorization) ?
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
-                                            : ''
-                                    }
-                                    {
-                                        (item.authorization) ?
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{price}</span>
+                                        <div>
+                                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
+                                                '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
+                                            <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
+                                                '' : 'hidden'}`}>{actualCost}</span>
+                                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
+                                                '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
+                                            <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                                '' : 'hidden'}`}>{updatedCost}</span>
+                                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                                || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                                '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
+                                            <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                                || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                                '' : 'hidden'}`}>{price}</span>
+                                        </div>
                                             : ''
                                     }
                                     <span className="width-f100 fc-ddbe6a font-b">Company : </span>
