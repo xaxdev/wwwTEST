@@ -162,7 +162,6 @@ export default {
 
                     await file.write(file_path, htmlTemplate);
 
-                    // console.log(htmlTemplate);
                     console.log('writing done!');
                     const html = fs.readFileSync(file_path, 'utf8');
                     const options = { format: 'A4', timeout: 30000 };
