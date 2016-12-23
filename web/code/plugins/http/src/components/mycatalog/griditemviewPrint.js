@@ -426,22 +426,35 @@ class GridItemsViewPrint extends Component {
       <div>
         {this.props.items.map(function(item, index){
         //   console.log('item-->',item);
-          let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
-          let itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate);
-          let lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
-          // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
-
-          let price = (item.price != -1)? numberFormat(item.price) + ' ' + item.userCurrency: '- ' + userLogin.currency;
-          let actualCost = (item.actualCost != -1)? numberFormat(item.actualCost) + ' ' + item.userCurrency: '- ' + userLogin.currency;
-          let updatedCost = (item.updatedCost != -1)? numberFormat(item.updatedCost) + ' ' + item.userCurrency: '- ' + userLogin.currency;
-
-          let itemName = (item.type != 'CER')?
-                            (item.description != undefined) ?
-                                (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
-                            : '-' :
-                            item.name
-                            ;
-            let itemNameCat = (item.type != 'CER')? item.description: item.name;
+        let imagesProduct = (item.authorization)
+                              ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                              :'/images/login-logo@2x.png';
+        imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
+        let itemDate = (item.authorization)
+                          ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
+                          : '';
+        let lblDate = (item.authorization)
+                          ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
+                          : '';
+        let price = (item.authorization)
+                          ? (item.price != -1)? numberFormat(item.price) + ' ' + item.userCurrency: '- ' + userLogin.currency
+                          : '- ' + userLogin.currency;
+        let actualCost = (item.authorization)
+                          ? (item.actualCost != -1)? numberFormat(item.actualCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
+                          : '- ' + userLogin.currency;
+        let updatedCost = (item.authorization)
+                          ? (item.updatedCost != -1)? numberFormat(item.updatedCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
+                          : '- ' + userLogin.currency;
+        let itemName = (item.authorization)
+                          ? (item.type != 'CER')?
+                              (item.description != undefined) ?
+                                  (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                              : '-' :
+                              item.name
+                          : '';
+        let itemNameCat = (item.authorization)
+                            ? (item.type != 'CER')? item.description: item.name
+                            : '';
            return (
               <div key={item.id} name={item.id} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
@@ -462,20 +475,6 @@ class GridItemsViewPrint extends Component {
                                  (index==15)? `searchresult-prodcut ${that.state.isOpen15? 'searchresult-border': ''}`:
                                  (index==16)? `searchresult-prodcut ${that.state.isOpen16? 'searchresult-border': ''}`:
                                   ''}>
-                    {/*<div className="pull-right">
-                     <div className="checkbox checkbox-warning">
-                      <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                        name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
-                        />
-                          <label className="checkbox1"></label>
-                      </div>
-                      <div className="grid-add margin-r5">
-                        <span className="icon-det-28" name={item.id} id={index} value={item.id}
-                          onClick={onDeleteOneItemMyCatalog}></span>
-                      </div>
-                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive
-                          name={item.id} id={index} onClick={showDetails}/></span>
-                    </div>*/}
 
                     <div className="thumbnaillgrid">
                       {/*<img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/>*/}
@@ -491,10 +490,10 @@ class GridItemsViewPrint extends Component {
 
                     <p className="font-b fc-000">
                       <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
-                      <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
+                      <span name={item.id} id={item.id} onClick={btnEvent}>{(item.authorization)?item.sku:''}</span>
                     </p>
                     <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{itemName}</p>
-                    <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{price}</span>
+                    <span className={`fc-ae8f3b font-b price ${(item.authorization)?(item.type != 'CER') ? '' : 'hidden':''}`}>{price}</span>
                     <span className="line"></span>
                  </div>
                     <div>
@@ -520,30 +519,45 @@ class GridItemsViewPrint extends Component {
                                     }} className={(index==3||index==7 || index==11||index==15)?'over-searchresult-left':'over-searchresult' }>
                                     <img className="searchresult-close"  src="/images/icon-close.png" responsive
                                         name={item.id} id={index} onClick={hideDetails}/>
-                                    <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
-                                    <span className="width-f100">{item.reference}</span>
-                                    <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
-                                    <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
-                                    <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                        '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
-                                    <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
-                                        '' : 'hidden'}`}>{actualCost}</span>
-                                    <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                        '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
-                                    <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                        '' : 'hidden'}`}>{updatedCost}</span>
-                                    <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                        || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                        '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
-                                    <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                        || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                        '' : 'hidden'}`}>{price}</span>
-                                    <span className="width-f100 fc-ddbe6a font-b">Company : </span>
-                                    <span className="width-f100">{item.companyName}</span>
-                                    <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
-                                    <span className="width-f100">{item.warehouseName}</span>
-                                    <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
-                                    <span className="width-f100">{itemDate}</span>
+                                        <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
+                                        <span className="width-f100">{item.reference}</span>
+                                        <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
+                                        <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
+                                        {
+                                            (item.authorization) ?
+                                            <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
+                                                '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
+                                                : ''
+                                            (item.authorization) ?
+                                            <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
+                                                '' : 'hidden'}`}>{actualCost}</span>
+                                                : ''
+                                            (item.authorization) ?
+                                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
+                                                '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
+                                                : ''
+                                            (item.authorization) ?
+                                            <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                                '' : 'hidden'}`}>{updatedCost}</span>
+                                                : ''
+                                            (item.authorization) ?
+                                            <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                                || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                                '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
+                                                : ''
+                                            (item.authorization) ?
+                                            <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                                || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
+                                                '' : 'hidden'}`}>{price}</span>
+                                                : ''
+
+                                        }
+                                        <span className="width-f100 fc-ddbe6a font-b">Company : </span>
+                                        <span className="width-f100">{(item.authorization) ?item.companyName:''}</span>
+                                        <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
+                                        <span className="width-f100">{(item.authorization) ?item.warehouseName:''}</span>
+                                        <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
+                                        <span className="width-f100">{itemDate}</span>
                              </div>
                     </div>
             </div>

@@ -35,5 +35,10 @@ export default [
         method: 'GET',
         path: '/{id}',
         config: controllers.items
+    },
+    {
+        method: 'GET',
+        path: '/exportpdf/{id}',
+        config: controllers.exportpdf
     }
 ]
