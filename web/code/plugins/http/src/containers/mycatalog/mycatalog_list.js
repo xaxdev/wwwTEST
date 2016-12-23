@@ -130,7 +130,7 @@ class MyCatalog extends Component {
 
       htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
 
-    //   console.log(htmlTemplate);
+      console.log(htmlTemplate);
 
       let params = {
                       'temp': htmlTemplate,
