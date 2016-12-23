@@ -5,5 +5,6 @@ import remove from './remove'
 import removeitem from './removeitem'
 import rename from './rename'
 import items from './items'
+import exportpdf from './exportpdf'
 
-export { getnames, getdata, save, remove, removeitem, rename, items }
+export { getnames, getdata, save, remove, removeitem, rename, items, exportpdf }
