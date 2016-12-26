@@ -18,7 +18,7 @@ export default {
     },
     validate: {
         query: {
-            email: Joi.string(),
+            email: Joi.string().required(),
             sort: Joi.number().integer().positive(),
             order: Joi.number().valid(1, -1)
         }
