@@ -18,6 +18,7 @@ export default {
     },
     validate: {
         query: {
+            email: Joi.string().required(),
             sort: Joi.number().integer().positive(),
             order: Joi.number().valid(1, -1)
         }
@@ -96,14 +97,16 @@ export default {
                             });
 
             try {
-                console.log(request.info.hostname);
+                // console.log(request.info.hostname);
                 const host = request.info.hostname;
                 const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
                 const id = request.params.id || '';
                 const catalogId = request.mongo.ObjectID(id);
                 const page = 1;
-                const sort = constants.sort[request.query.sort] || 'lastModified';
-                const order = request.query.order || -1;
+                const email = request.query.email;
+                userEmail = email;
+                const sort = constants.sort[request.query.sort] || 'lastModified'
+                const order = request.query.order || -1
                 const sorting = { [sort]: order };
                 const cursor = await request.mongo.db.collection('CatalogName').aggregate([
                             {
@@ -134,7 +137,7 @@ export default {
 
                     const es = await client.search(request.helper.item.parameters(catalog.items));
                     const user = await request.user.getUserById(request, request.auth.credentials.id);
-                    console.log(user);
+                    // console.log(user);
                     let inventory = await request.helper.item.inventory(catalog.items, es);
                     const all = await request.helper.item.authorization(user, inventory);
 
@@ -156,7 +159,6 @@ export default {
 
                     const exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
                     const userName =  `${user.username}_${exportDate}`;
-                    userEmail = user.email;
                     const destination = Path.resolve(__dirname, '../../../../../pdf/import_html')
                     const file_path = `${destination}/${userName}.html`;
 
