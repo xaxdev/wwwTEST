@@ -71,8 +71,8 @@ export default function GenTemplateHtml(items, userLogin){
                                                                                         item.name
                                                                                     : '';
                                                                 let price = (item.authorization)
-                                                                                  ? (item.price != -1)? numberFormat(item.price) + ' ' + item.userCurrency: '- ' + userLogin.currency
-                                                                                  : '- ' + userLogin.currency;
+                                                                                  ? (item.priceInHomeCurrency != -1)? numberFormat(item.priceInHomeCurrency) + ' ' + item.currency: '- ' + item.currency
+                                                                                  : '- ';
                                                                 //   console.log(imagesProduct);
 
                                                                   return(`<div name="${item.id}" style="width: 25%;padding: 0;float: left;height: 380px;">
