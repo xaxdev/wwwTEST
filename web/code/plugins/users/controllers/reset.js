@@ -1,4 +1,6 @@
 'use strict';
+import sendgrid from 'sendgrid';
+import sendgridConfig from '../sendgrid.json';
 
 const Boom = require('boom');
 const Bcrypt = require('bcrypt');
@@ -42,19 +44,60 @@ exports.generate = {
             // Generate password-reset link
             const expiration = Date.now() + 3600000;
             const token = request.cryptography.encrypt([email, expiration].join('#'));
-            const link = `${request.connection.info.protocol}://${request.info.hostname}/resetpassword/${token}`;
+            const host = request.info.hostname;
+            const ROOT_URL = (host != 'mol.mouawad.com')? `${host}:3005`: `${host}`;
+            const link = `${request.connection.info.protocol}://${ROOT_URL}/resetpassword/${token}`;
             const content = Handlebars.compile(template)({ 'link': link });
 
             let config = request.email.configuration.reset;
 
+            const subject = config.subject;
+            const sg = sendgrid(sendgridConfig.key);
+            const requestMail = sg.emptyRequest();
+
             config.to = email;
             config.html = content;
 
-            request.email.sendgrid.send(config);
+            requestMail.method = 'POST'
+            requestMail.path = '/v3/mail/send'
+            requestMail.body = {
+                personalizations: [
+                    {
+                        to: [
+                            {
+                                email: email
+                            }
+                        ],
+                        subject
+                    }
+                ],
+                from: {
+                    email: config.from,
+                    name: 'Mouawad Admin'
+                },
+                content: [
+                    {
+                        type: 'text/html',
+                        value: content
+                    }
+                ]
+            };
 
-            return reply({
-              message: 'email has been sent.',
-            });
+            sg
+                .API(requestMail)
+                .then(response => {
+                    console.log(response.statusCode)
+                    console.log(response.body)
+                    console.log(response.headers)
+                    return reply({
+                      message: 'email has been sent.',
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    return reply(Boom.badImplementation(err));
+                });
+
           })
           .catch((err) => {
 
