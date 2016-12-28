@@ -60,7 +60,7 @@ export default function GenTemplateHtml(items, userLogin){
                                                               ${items.map(function(item, index){
                                                                 //   console.log(item.authorization);
                                                                   let imagesProduct = (item.authorization)
-                                                                                        ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                                                                        ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/login-logo@2x.png'
                                                                                         :'/images/login-logo@2x.png';
                                                                   imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
                                                                   imagesProduct = 'file:///var/www/mol/web/code/plugins/http/public' + imagesProduct;
