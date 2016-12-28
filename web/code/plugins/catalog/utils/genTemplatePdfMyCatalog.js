@@ -22,8 +22,8 @@ export default function GenTemplateHtml(items, userLogin){
     let fontbfc000  = `font-family: '${'open_sanssemibold'}';color: #000;margin: 0 0 10px;`;
     let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
-    let thumbnaillgrid = 'margin: 0 auto; position: relative; width: 230px; height: 200px; overflow: hidden;';
-    let thumbnaillgridimg = 'position: absolute; left: 50%; top: 50%; height: auto; width: auto; padding-bottom: 20px; transform: translate(-50%,-50%);';
+    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden;';
+    let thumbnaillgridimg = 'width:120px;';
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     // dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
@@ -37,7 +37,7 @@ export default function GenTemplateHtml(items, userLogin){
     dvGridview = dvGridview.replace(/class="font-b fc-000"/g,`style="${fontbfc000}"`);
     dvGridview = dvGridview.replace(/class="product-detail-h"/g,`style="${productdetailh}"`);
     dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
-    dvGridview = dvGridview.replace(/<img/g,'<img width="140" ');
+    dvGridview = dvGridview.replace(/<img/g,'<img width="120px" ');
     dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
 
     let htmlTemplate = '';
