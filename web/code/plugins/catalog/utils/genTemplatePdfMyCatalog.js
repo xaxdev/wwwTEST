@@ -22,6 +22,8 @@ export default function GenTemplateHtml(items, userLogin){
     let fontbfc000  = `font-family: '${'open_sanssemibold'}';color: #000;margin: 0 0 10px;`;
     let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
+    let thumbnaillgrid = 'margin: 0 auto; position: relative; width: 230px; height: 200px; overflow: hidden;';
+    let thumbnaillgridimg = 'position: absolute; left: 50%; top: 50%; height: auto; width: auto; padding-bottom: 20px; transform: translate(-50%,-50%);';
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     // dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
@@ -77,8 +79,8 @@ export default function GenTemplateHtml(items, userLogin){
 
                                                                   return(`<div name="${item.id}" style="width: 25%;padding: 0;float: left;height: 380px;">
                                                                             <div style="text-align: center;font-size: 10px;position: relative;z-index: 2;padding: 15px 11px 0 11px;height: 380px;cursor: pointer;">
-                                                                                <div class="thumbnaillgrid">
-                                                                                    <img width="140"  src=${imagesProduct} />
+                                                                                <div style="${thumbnaillgrid}">
+                                                                                    <img style="${thumbnaillgridimg}" src=${imagesProduct} />
                                                                                 </div>
                                                                                 <p style="${fontbfc000}" >
                       																<span>${item.reference}</span>
