@@ -43,69 +43,69 @@ export default function GenTemplateHtml(items, userLogin){
     let htmlTemplate = '';
 
     htmlTemplate = `<html>
-                            <head>
-                                <title>Mol online 2016</title>
-                                <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-                            </head>
-                            <body style="margin:0;padding:0; font-family: 'Open Sans', sans-serif; font-size:10px;">
-                                <form>
-                                    <div style="${styleBodyWrapper}">
+                        <head>
+                            <title>Mol online 2016</title>
+                            <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+                        </head>
+                        <body style="margin:0;padding:0; font-family: 'Open Sans', sans-serif; font-size:10px;">
+                            <form>
+                                <div style="${styleBodyWrapper}">
+                                    <div>
                                         <div>
-                                            <div>
-                                              <div style="${styleColsm12}">
-                                                  <div style="${stylePanel}">
-                                                      <div>
-                                                          <div style="${styleSearchproduct}">
+                                          <div style="${styleColsm12}">
+                                              <div style="${stylePanel}">
+                                                  <div>
+                                                      <div style="${styleSearchproduct}">
 
-                                                              ${items.map(function(item, index){
-                                                                //   console.log(item.authorization);
-                                                                  let imagesProduct = (item.authorization)
-                                                                                        ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/login-logo@2x.png'
-                                                                                        :'/images/login-logo@2x.png';
-                                                                  imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
-                                                                  imagesProduct = 'file:///var/www/mol/web/code/plugins/http/public' + imagesProduct;
+                                                          ${items.map(function(item, index){
+                                                            //   console.log(item.authorization);
+                                                              let imagesProduct = (item.authorization)
+                                                                                    ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/login-logo@2x.png'
+                                                                                    :'/images/login-logo@2x.png';
+                                                              imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
+                                                              imagesProduct = 'file:///var/www/mol/web/code/plugins/http/public' + imagesProduct;
 
-                                                                  let itemName = (item.authorization)
-                                                                                    ? (item.type != 'CER')?
-                                                                                        (item.description != undefined) ?
-                                                                                            (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
-                                                                                        : '-' :
-                                                                                        item.name
-                                                                                    : '';
-                                                                let price = (item.authorization)
-                                                                                  ? (item.priceInHomeCurrency != -1)? numberFormat(item.priceInHomeCurrency) + ' ' + item.currency: '- ' + item.currency
-                                                                                  : '- ';
-                                                                //   console.log(imagesProduct);
+                                                              let itemName = (item.authorization)
+                                                                                ? (item.type != 'CER')?
+                                                                                    (item.description != undefined) ?
+                                                                                        (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                                                                                    : '-' :
+                                                                                    item.name
+                                                                                : '';
+                                                            let price = (item.authorization)
+                                                                              ? (item.priceInHomeCurrency != -1)? numberFormat(item.priceInHomeCurrency) + ' ' + item.currency: '- ' + item.currency
+                                                                              : '- ';
+                                                            //   console.log(imagesProduct);
 
-                                                                  return(`<div name="${item.id}" style="width: 25%;padding: 0;float: left;height: 380px;">
-                                                                            <div style="text-align: center;font-size: 10px;position: relative;z-index: 2;padding: 15px 11px 0 11px;height: 380px;cursor: pointer;">
-                                                                                <div style="${thumbnaillgrid}">
-                                                                                    <img style="${thumbnaillgridimg}" src=${imagesProduct} />
-                                                                                </div>
-                                                                                <p style="${fontbfc000}" >
-                      																<span>${item.reference}</span>
-                      																<br>
-                      																<span>${(item.authorization)?item.sku:''}</span>
-                      															</p>
-                                                                                <p style="height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;" >
-                                                                                    ${itemName}
-                                                                                </p>
-                    															<span style="color: #ae8f3b; font-weight: bold;" >${price}</span>
-                    															<span class="line"/>
+                                                              return(`<div name="${item.id}" style="width: 25%;padding: 0;float: left;height: 380px;">
+                                                                        <div style="text-align: center;font-size: 10px;position: relative;z-index: 2;padding: 15px 11px 0 11px;height: 380px;cursor: pointer;">
+                                                                            <div style="${thumbnaillgrid}">
+                                                                                <img style="${thumbnaillgridimg}" src=${imagesProduct} />
                                                                             </div>
-                                                                          </div>
-                                                                          `);
-                                                              }).join('')}
-                                                          </div>
+                                                                            <p style="${fontbfc000}" >
+                  																<span>${item.reference}</span>
+                  																<br>
+                  																<span>${(item.authorization)?item.sku:''}</span>
+                  															</p>
+                                                                            <p style="height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;" >
+                                                                                ${itemName}
+                                                                            </p>
+                															<span style="color: #ae8f3b; font-weight: bold;" >${price}</span>
+                															<span class="line"/>
+                                                                        </div>
+                                                                      </div>
+                                                                      `);
+                                                          }).join('')}
                                                       </div>
                                                   </div>
                                               </div>
-                                            </div>
+                                          </div>
                                         </div>
                                     </div>
-                                </form>
-                            </body>
-                        </html>`;
+                                </div>
+                            </form>
+                        </body>
+                    </html>`;
 
     return htmlTemplate;
 
