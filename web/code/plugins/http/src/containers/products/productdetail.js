@@ -25,13 +25,15 @@ import checkInarrayObjectOther from '../../utils/checkInarrayObjectOther';
 import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributes';
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributes';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributes';
-import ReactImageFallback from "react-image-fallback";
+import ReactImageFallback from 'react-image-fallback';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
 import '../../utils/magnific-popup.js';
 import validateCatalog from '../../utils/validatecatalogproductdetail';
+import ModalalertMsgObj from '../../utils/modalalertmsg';
+
 var Loading = require('react-loading');
 
 
@@ -46,7 +48,8 @@ class productdetail extends Component {
     this.state = {
       productdetailLoading: false,
       isOpenAddMyCatalog: false,
-      isOpenAddMyCatalogmsg: false
+      isOpenAddMyCatalogmsg: false,
+      isOpenDownloadCerMsg: false
     };
   }
 
@@ -85,7 +88,7 @@ class productdetail extends Component {
         callbacks: {
           open: function() {
 
-            let activegallery = jQuery('.active img').attr('src').replace("thumbnail", "original");
+            let activegallery = jQuery('.active img').attr('src').replace('thumbnail', 'original');
 
             jQuery('#galleryimg').attr('src',activegallery);
             let rotatecount = 0;
@@ -346,15 +349,15 @@ class productdetail extends Component {
           <div>
             <h2>SET DETAILS</h2>
             <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-              <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice[currency] ? parseInt(setReferenceData.totalprice[currency]) : "-"} />
+              <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice[currency] ? parseInt(setReferenceData.totalprice[currency]) : '-'} />
               <ReactImageFallback
                     id="imgset"
                      src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                     fallbackImage='/images/blank.gif'
-                     initialImage='/images/blank.gif'
+                     fallbackImage="/images/blank.gif"
+                     initialImage="/images/blank.gif"
                      width={120}
                      height={120}
-                     className='img-responsive' />
+                     className="img-responsive" />
             </div>
             <Setreference productset={setReferenceData}/>
           </div>
@@ -428,7 +431,7 @@ class productdetail extends Component {
           );
         }
         if(gemstoneAttr.length > 0){
-          if(checkInarrayObject("type","Stone",gemstoneAttr)){
+          if(checkInarrayObject('type','Stone',gemstoneAttr)){
             return(
                 <div>
                   <h2>GEMSTONES ATTRIBUTES</h2>
@@ -456,7 +459,7 @@ class productdetail extends Component {
           );
         }
         if(gemstoneAttr.length > 0){
-          if(checkInarrayObject("type","Loose Diamond",gemstoneAttr)){
+          if(checkInarrayObject('type','Loose Diamond',gemstoneAttr)){
             return(
               <div>
                 <h2>DIAMONDS ATTRIBUTES</h2>
@@ -485,7 +488,7 @@ class productdetail extends Component {
         }
         if(gemstoneAttr.length > 0){
 
-          if(checkInarrayObjectOther("type",gemstoneAttr)){
+          if(checkInarrayObjectOther('type',gemstoneAttr)){
           return(
               <div>
                 <h2>RAW MATERIAL ATTRIBUTES</h2>
@@ -727,6 +730,23 @@ class productdetail extends Component {
        );
      }
    }
+
+  downloadCertificateAll = _=>{
+      this.setState({isOpenDownloadCerMsg: true});
+  }
+
+  renderAlertmsgCer = _=> {
+
+    const message = 'Please checking your email for download certificate.';
+    const title = 'DOWNLOAD CERTIFICATE';
+    return(<ModalalertMsgObj isOpen={this.state.isOpenDownloadCerMsg} isClose={this.handleCloseDownloadCerMsg}
+     props={this.props} message={message}  title={title}/>);
+  }
+  handleCloseDownloadCerMsg = _=>{
+      console.log(this.props);
+      this.setState({isOpenDownloadCerMsg: false});
+  }
+
   render(){
     const { totalpage,products,page } = this.props.productrelete;
     const reletepage = this.props.productreletepage;
@@ -762,6 +782,7 @@ class productdetail extends Component {
                   <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
                   <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                   {this.zoomicon()}
+                  <a><div className="icon-add margin-l10" onClick={ this.downloadCertificateAll }></div></a>
                 </div>
                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
@@ -790,6 +811,7 @@ class productdetail extends Component {
 
             </div>
           </div>
+        {this.renderAlertmsgCer()}
       </div>
     </div>
     );
