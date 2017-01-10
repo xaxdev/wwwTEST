@@ -2,11 +2,11 @@ import Joi from 'joi';
 import Boom from 'boom';
 import Elasticsearch from 'elasticsearch';
 import moment from 'moment-timezone';
-import sendgrid from 'sendgrid'
+import sendgrid from 'sendgrid';
 import constants from '../constants';
 import GenTemplateHtml from '../utils/genTemplatePdfMyCatalog';
 import * as file from '../utils/file';
-import sendgridConfig from '../sendgrid.json'
+import sendgridConfig from '../sendgrid.json';
 
 const fs = require('fs');
 const Path = require('path');

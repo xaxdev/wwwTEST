@@ -47,7 +47,7 @@ const Gemstoneattr =  (props) =>{
                <th>Laboratory</th>
                <th>Certificate Number</th>
                <th>Certificate Date </th>
-
+               <th></th>
              </tr>
            </thead>
            <tbody>
@@ -66,6 +66,10 @@ const Gemstoneattr =  (props) =>{
                      <td title="Certificate agency" className="text-center">{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                      <td title="Certificate Number," className="text-center">{!!data.certificate ? data.certificate.number: '-'}</td>
                      <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
+                     {!!data.certificate ?
+                         <td title="Certificate Number," className="icon-add margin-l10"
+                            onClick={props.onClick.bind(this,data.certificate.number)}></td> :
+                         <td title="Certificate Number," className=""></td>}
 
                    </tr>
                 )

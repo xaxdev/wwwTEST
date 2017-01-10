@@ -1,9 +1,14 @@
+import moment from 'moment-timezone';
+import sendgrid from 'sendgrid';
+import sendgridConfig from '../sendgrid.json'
+
 const Boom = require('boom');
 const Hoek = require('hoek');
 const Joi = require('joi');
 const fs = require('fs');
 const Path = require('path');
 const archiver = require('archiver');
+
 
 module.exports = {
     auth: {
@@ -91,24 +96,105 @@ module.exports = {
                 return resolve();
             });
 
+            const notify = (err, mailBody, toEmail) => new Promise((resolve, reject) => {
+                const time = moment().tz('Asia/Bangkok').format();
+                const subject = (!!err)? `Failed download certificate  ${time}` : `Succeeded download certificate ${time}`;
+                const sg = sendgrid(sendgridConfig.key);
+                const request = sg.emptyRequest();
+
+                request.method = 'POST'
+                request.path = '/v3/mail/send'
+                request.body = {
+                    personalizations: [
+                        {
+                            to: [
+                                {
+                                    email: toEmail
+                                }
+                            ],
+                            subject
+                        }
+                    ],
+                    from: {
+                        email: 'dev@itorama.com',
+                        name: 'Mouawad Admin'
+                    },
+                    content: [
+                        {
+                            type: 'text/plain',
+                            value: (!!err)? err.message : mailBody
+                        }
+                    ]
+                };
+
+                sg
+                    .API(request)
+                    .then(response => {
+                        console.log(response.statusCode)
+                        console.log(response.body)
+                        console.log(response.headers)
+                        return resolve()
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            });
+
+            const toEmail = request.payload.userEmail;
+
             try {
+                console.log(request.payload);
                 const host = request.info.hostname;
                 const id = request.params.productId || '';
-                // const email = request.query.email;
-                // console.log(request.payload);
-                const source = Path.resolve(__dirname, '../../http/public/images/products/original/1117866493_MME-004501.jpg')
-                const cerFolder = Path.resolve(__dirname, '../../http/public/download_files/certifacate/tor')
-                const destination = Path.resolve(__dirname, '../../http/public/download_files/certifacate/tor/1117866493_MME-004501.jpg')
+                const userName = request.payload.userName;
+                const allCer = request.payload.allCer;
+                const ROOT_URL = request.payload.ROOT_URL;
 
-                // await mkDir(cerFolder);
-                //
+                const cerFolder = Path.resolve(__dirname, '../../http/public/export_files/certifacate/');
+                const userFolder = Path.resolve(__dirname, `../../http/public/export_files/certifacate/${userName}`);
+
+                let source = '';
+                let destination = '';
+
+                await mkDir(cerFolder);
+                await mkDir(userFolder);
+
+                console.log(allCer.length);
+
+                if (allCer.length > 1) {
+                    allCer.map((img) => {
+                        (async _ => {
+                            source = '';
+                            source = Path.resolve(__dirname, `../../http/public${img}`);
+                            destination = userFolder + '\\' + img.replace('/images/products/original/','');
+                            await copyFile(source,destination);
+                        })()
+                    });
+                    await zipFolder(userFolder);
+                    const emailBody = `Please download the files only by today from below link ${ROOT_URL}/export_files/certifacate/${userName}.zip.`;
+                    await notify('', emailBody, toEmail);
+                }else{
+                    allCer.map((img) => {
+                        (async _ => {
+                            source = '';
+                            source = Path.resolve(__dirname, `../../http/public${img}`);
+                            destination = userFolder + '\\' + img.replace('/images/products/original/','');
+                            await copyFile(source,destination);
+                            const emailBody = `Please download the files only by today from below link ${ROOT_URL}/export_files/certifacate/${userName}/${img.replace('/images/products/original/','')}.`;
+                            await notify('', emailBody, toEmail);
+                        })()
+                    });
+                }
+
                 // await copyFile(source,destination);
                 // await zipFolder(cerFolder);
+                // await notify('');
                 // console.log('copy done');
 
                 return reply({ status: true });
             } catch (err) {
                 console.log(err)
+                notify(err, '', toEmail);
                 return reply(Boom.badImplementation('', err));
             }
         })()
