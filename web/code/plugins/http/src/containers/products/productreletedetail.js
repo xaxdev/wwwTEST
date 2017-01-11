@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { Button,FormControl,Pagination } from 'react-bootstrap';
 import jQuery from 'jquery';
 import { reduxForm,reset } from 'redux-form';
+import moment from 'moment-timezone';
 import * as gemstoneattrdetailaction from '../../actions/gemstoneattrdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/productDescription';
 import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptioncer';
@@ -24,6 +25,7 @@ import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
 import Modalalertmsg from '../../components/productdetail/modalalertmsg';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import validateCatalog from '../../utils/validatecatalogproductdetail';
+import ModalalertMsgObj from '../../utils/modalalertmsg';
 
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributes';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributes';
@@ -49,7 +51,8 @@ class productreletedetail extends Component {
     this.state = {
       productdetailLoading: false,
       isOpenAddMyCatalog: false,
-      isOpenAddMyCatalogmsg: false
+      isOpenAddMyCatalogmsg: false,
+      isOpenDownloadCerMsg: false
     };
   }
 
@@ -429,7 +432,7 @@ class productreletedetail extends Component {
            return(
                <div>
                  <h2>DIAMONDS ATTRIBUTES</h2>
-                 <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} />
+                 <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} onClick={this.downloadCer}  />
                </div>
              );
            }
@@ -659,6 +662,92 @@ class productreletedetail extends Component {
     return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}/>);
   }
 
+  downloadCertificateAll = _=>{
+
+      const userLogin = JSON.parse(sessionStorage.logindata);
+      const host = HOSTNAME || 'localhost';
+      const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+      const { gemstones } = this.props.productdetail;
+      const productId = this.props.params.id;
+
+      let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
+      let allCer = [];
+      if(gemstones != undefined){
+          gemstones.map((item) => {
+              if (!!item.certificate) {
+                  item.certificate.images.map((img) => {
+                      allCer.push(img.original);
+                  })
+              }
+          })
+      }
+    //   console.log(allCer);
+      let params = {
+                      'allCer': allCer,
+                      'userName': `${userLogin.username}`,
+                      'fileName': `${userLogin.username}_${exportDate}`,
+                      'userEmail': userLogin.email,
+                      'ROOT_URL': ROOT_URL,
+                      'productId': productId
+                  }
+
+      this.props.getCertificate(params)
+          .then((value) => {
+              if (value) {
+                  this.setState({isOpenDownloadCerMsg: true});
+              }
+              console.log(value);
+          });
+  }
+
+  renderAlertmsgCer = _=> {
+    const message = 'Please checking your email for download certificate.';
+    const title = 'DOWNLOAD CERTIFICATE';
+    return(<ModalalertMsgObj isOpen={this.state.isOpenDownloadCerMsg} isClose={this.handleCloseDownloadCerMsg}
+     props={this.props} message={message}  title={title}/>);
+  }
+  handleCloseDownloadCerMsg = _=>{
+      this.setState({isOpenDownloadCerMsg: false});
+  }
+
+  downloadCer = (id,e) =>{
+
+      const userLogin = JSON.parse(sessionStorage.logindata);
+      const host = HOSTNAME || 'localhost';
+      const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+      const { gemstones } = this.props.productdetail;
+      const productId = this.props.params.id;
+
+      let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
+      let allCer = [];
+      if(gemstones != undefined){
+          gemstones.map((item) => {
+              if (!!item.certificate) {
+                  if (item.certificate.number == id) {
+                      item.certificate.images.map((img) => {
+                          allCer.push(img.original);
+                      });
+                  }
+              }
+          });
+      }
+
+      let params = {
+                      'allCer': allCer,
+                      'userName': `${userLogin.username}`,
+                      'fileName': `${userLogin.username}_${exportDate}`,
+                      'userEmail': userLogin.email,
+                      'ROOT_URL': ROOT_URL,
+                      'productId': productId
+                  }
+
+      this.props.getCertificate(params)
+          .then((value) => {
+              if (value) {
+                  this.setState({isOpenDownloadCerMsg: true});
+              }
+          });
+  }
 
   render(){
     const { totalpage,products,page } = this.props.productrelete;
@@ -667,7 +756,16 @@ class productreletedetail extends Component {
     const productId = this.props.params.id;
     const productIndex = this.props.productindex;
     const productindexplus = this.props.productindexplus;
-    const { type,setReference} = this.props.productdetail;
+    const { type, setReference, gemstones } = this.props.productdetail;
+    let isCertificate = false;
+
+    if(gemstones != undefined){
+        gemstones.map((item) => {
+            if (!!item.certificate) {
+                isCertificate = true;
+            }
+        })
+    }
     let pructdetailurl = '/productdetail/';
 
     return(
@@ -693,6 +791,10 @@ class productreletedetail extends Component {
                           <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
                           <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                           {this.zoomicon()}
+                          {isCertificate ?
+                              <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a> :
+                              <a><div className=""></div></a>
+                          }
                         </div>
                         <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
@@ -721,6 +823,7 @@ class productreletedetail extends Component {
                   </div>
               </div>
           </div>
+        {this.renderAlertmsgCer()}
         </div>
 
     );

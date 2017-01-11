@@ -31,24 +31,34 @@ const Gemstoneattr =  (props) =>{
         return 0;
   });
 
+  let isCer = false
+
+  newprops.map(function(data, index){
+      if(checkInarray(allowGemstone, data.type)){
+          if (!!data.certificate) {
+              isCer = true;
+          }
+      }
+  });
   return (
+
     <div className="table-responsive">
       <Table responsive className="table table-bordered">
            <thead>
-             <tr>
-               <th>Stone Type</th>
-               <th>Clarity</th>
-               <th>Cut</th>
-               <th>Color</th>
-               <th>QTY Of Stones</th>
-               <th>Total Carat Weight</th>
-               <th>Origin</th>
-               <th>Fluorescence</th>
-               <th>Laboratory</th>
-               <th>Certificate Number</th>
-               <th>Certificate Date </th>
-
-             </tr>
+               <tr>
+                 <th>Stone Type</th>
+                 <th>Clarity</th>
+                 <th>Cut</th>
+                 <th>Color</th>
+                 <th>QTY Of Stones</th>
+                 <th>Total Carat Weight</th>
+                 <th>Origin</th>
+                 <th>Fluorescence</th>
+                 <th>Laboratory</th>
+                 <th>Certificate Number</th>
+                 <th>Certificate Date </th>
+                 {isCer?<th></th>:<th className="hidden"></th>}
+               </tr>
            </thead>
            <tbody>
            {newprops.map(function(data, index){
@@ -66,7 +76,12 @@ const Gemstoneattr =  (props) =>{
                      <td title="Certificate agency" className="text-center">{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                      <td title="Certificate Number," className="text-center">{!!data.certificate ? data.certificate.number: '-'}</td>
                      <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
-
+                     {isCer?
+                         !!data.certificate ?
+                             <td title="" className="icon-certificate btn-primary btn-certificate-radius button-certificate"
+                                onClick={props.onClick.bind(this,data.certificate.number)}></td> :
+                             <td title="" className=""></td>
+                         :<td title="" className="hidden"></td>}
                    </tr>
                 )
               }

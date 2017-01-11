@@ -61,34 +61,34 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
 
     if (showGridView) {
         htmlTemplate = `<html>
-                                <head>
-                                    <title>Mol online 2016</title>
-                                    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-                                </head>
-                                <body style="margin:0;padding:0; font-family: 'Open Sans', sans-serif; font-size: 10px;">
-                                    <form>
-                                        <div style="${styleBodyWrapper}">
-                                            <div>
-                                                <div style="${styleColsm12}">
-                                                    <div style="${stylePanel}">
-                                                        <div>
-                                                            <div style="${styleTotal1}">
-                                                                ${dvTotal1}
-                                                            </div>
-                                                            <div style="${styleTotal2}">
-                                                                ${dvTotal2}
-                                                            </div>
-                                                            <div style="${styleSearchproduct}">
-                                                                ${dvGridview}
-                                                            </div>
+                            <head>
+                                <title>Mol online 2016</title>
+                                <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+                            </head>
+                            <body style="margin:0;padding:0; font-family: 'Open Sans', sans-serif; font-size: 10px;">
+                                <form>
+                                    <div style="${styleBodyWrapper}">
+                                        <div>
+                                            <div style="${styleColsm12}">
+                                                <div style="${stylePanel}">
+                                                    <div>
+                                                        <div style="${styleTotal1}">
+                                                            ${dvTotal1}
+                                                        </div>
+                                                        <div style="${styleTotal2}">
+                                                            ${dvTotal2}
+                                                        </div>
+                                                        <div style="${styleSearchproduct}">
+                                                            ${dvGridview}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </body>
-                            </html>`;
+                                    </div>
+                                </form>
+                            </body>
+                        </html>`;
     }
 
     if (showListView) {
