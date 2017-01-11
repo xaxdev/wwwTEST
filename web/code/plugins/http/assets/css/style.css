@@ -771,6 +771,13 @@ select.form-searchresult option{
 	float: left;
 	cursor:pointer;
 }
+.icon-certificate{
+	background: url(/images/icon-certificate.png) no-repeat center;
+	width:40px;
+	height: 40px;
+	float: left;
+	cursor:pointer;
+}
 .icon-zoom{
 	background: url(/images/icon-zoom.png) no-repeat center;
 	width:40px;
@@ -813,7 +820,15 @@ select.form-searchresult option{
 	float: left;
 	cursor:pointer;
 }
-
+.button-certificate{
+  background-size: 80%;
+  height: 35px;
+  width: 45px;
+}
+.btn-certificate-radius {
+    border-radius: 15px;
+    margin: 5px 0px 5px 7px;
+}
 .searchresult-navi{float:right;}
 .searchresult-navi div {margin-top: 0px;}
 .searchresult-navi input{margin:0 5px; text-align: center; height: 33px; background: transparent;
@@ -1209,7 +1224,9 @@ select.form-searchresult option{
 		.table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
 			border-bottom-width: 0px;
 		}
-		.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+		.table-bordered>tbody>tr, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, 
+    .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th,
+    .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
 			border: 1px solid #5c5954;
       vertical-align: middle;
       padding: 5px;

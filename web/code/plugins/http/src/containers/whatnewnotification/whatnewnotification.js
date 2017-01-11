@@ -24,13 +24,13 @@ class WhatNewNotification extends Component {
                                                     'title': 'Inventory Report',
                                                     'msg': `<p>Under the header search, all the filters applied to all product categories</p>
                                                     <img src="/images/mol-1.jpg"/>
-                                                    <p style="padding:20px 0 0 0;">Or filtering any criteria in each category under the Advance Search</p>
+                                                    <p style="padding:20px 0 0 0;">You can also filter the criteria under each category by using the Advanced Search option.</p>
                                                     <img src="/images/mol-1-1.jpg" />`
                                                 },
                                                 {
                                                     'type':'new',
                                                     'title': '6 Product Categories',
-                                                    'msg': `<p>There are 6 product categories such Jewelry, Watch, Stone, Accessory, Object of Art and Spare Part.  Filtering in each category by selected the category and fill the criteria.</p>
+                                                    'msg': `<p>There are 6 product categories: Jewelry, Watches, Stones, Accessories, Objects of Art, and Spare Parts.  You can use filters in each category by selecting the category and filling the criteria.</p>
                                                     <img src="/images/mol-2.jpg" />`
                                                 },
                                                 {
@@ -90,7 +90,7 @@ class WhatNewNotification extends Component {
                                                       <div>2.	Add an item to catalog: click “Catalog” icon <img src="/images/mol-8-2.jpg" /> at the selected items, and go to step 4</div>
                                                       <div>3.	Add multiple items to catalog: click “Square” icon <img src="/images/mol-8-3.jpg" />   at the selected items, and click “Catalog” icon on bar <img src="/images/mol-8-4.jpg" />  , and go to step 4</div>
                                                       <div style="padding-top:15px;"><img src="/images/mol-8-6.jpg"/></div>
-                                                      <div style="margin-top:15px;">4.	Select the existing catalog or create the new catalog</div>
+                                                      <div style="margin-top:15px;">4.	Select the catalog exists or create the new catalog</div>
                                                       <div style="margin-top:15px; text-align:center;"><img src="/images/mol-8-7.jpg" /></div>
                                                     </div>`
                                                 }

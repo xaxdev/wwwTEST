@@ -865,8 +865,8 @@ class productdetail extends Component {
                   <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                   {this.zoomicon()}
                   {isCertificate ?
-                      <a><div className="icon-add margin-l10" onClick={ this.downloadCertificateAll }></div></a> :
-                      <a><div className=""></div></a>
+                    <a><div className="icon-certificate" onClick={ this.downloadCertificateAll }></div></a> :
+                    <a><div className="icon-certificate margin-l10"></div></a>
                   }
                 </div>
                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>

@@ -693,6 +693,7 @@ class productreletedetail extends Component {
                           <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
                           <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                           {this.zoomicon()}
+                          <a><div className="icon-certificate margin-l10"></div></a>
                         </div>
                         <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
