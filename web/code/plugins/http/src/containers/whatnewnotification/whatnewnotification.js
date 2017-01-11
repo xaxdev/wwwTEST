@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [1];
+            const roundData = [2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -93,6 +93,23 @@ class WhatNewNotification extends Component {
                                                       <div style="margin-top:15px;">4.	Select the catalog exists or create the new catalog</div>
                                                       <div style="margin-top:15px; text-align:center;"><img src="/images/mol-8-7.jpg" /></div>
                                                     </div>`
+                                                }
+                                            ]
+                                },
+                                {
+                                    'id': 2,
+                                    'round': 'January 2017',
+                                    'datas': [
+                                                {
+                                                    'type':'new',
+                                                    'title': 'Download Original Certificates',
+                                                    'msg': `<p>User can download original certificates image from Product Detail page</p>
+                                                              <div styl="padding:15px 20px 0 20px;">
+                                                                <div style="margin-top:15px">1.	Click here <img src="/images/mol-certificates-1.jpg" /> for download all files at upper image of item</div>
+                                                                <div style="margin:15px 0px; text-align:center;"><img src="/images/img-certificates-01.jpg"/></div>
+                                                                <div style="margin-top:15px">2.	Or click here <img src="/images/mol-certificates-2.jpg" /> for download per file from Diamonds Attributes</div>
+                                                                <div style="margin:15px 0px; text-align:center;"><img src="/images/img-certificates-02.jpg" /></div>
+                                                              </div>`
                                                 }
                                             ]
                                 }
