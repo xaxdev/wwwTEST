@@ -123,8 +123,8 @@ class WhatNewNotification extends Component {
                      <div className="accordion-item">
                         <Accordion activeItems={roundData.length}>
                             {roundData.map((item, index) => {
-                                console.log(item);
-                                console.log(msgData);
+                                // console.log(item);
+                                // console.log(msgData);
                                 let loop = item-1;
                                 return (
                                     <AccordionItem title={msgData[loop].round} slug={item} key={index}
@@ -144,7 +144,7 @@ class WhatNewNotification extends Component {
                                                         typeNews = 'New';
                                                         break;
                                                 }
-                                                console.log(data.msg);
+                                                // console.log(data.msg);
                                                 return (
                                                     <div className="accordion-detail">
                                                         <div className="accordion-detail-title">{data.title}</div>

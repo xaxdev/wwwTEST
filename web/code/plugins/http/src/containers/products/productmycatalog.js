@@ -746,7 +746,6 @@ class productreletedetail extends Component {
               if (value) {
                   this.setState({isOpenDownloadCerMsg: true});
               }
-              console.log(value);
           });
   }
 

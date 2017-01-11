@@ -1,7 +1,25 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
-import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME,ADD_CATALOG} from '../constants/productdetailconstants';
+import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME,
+        ADD_CATALOG, GET_CERTIFICATE} from '../constants/productdetailconstants';
+
+export function getCertificate(params){
+      const token = sessionStorage.token;
+      var url = `${ROOT_URL}api/items/certificate/${params.productId}`;
+      return {
+              type: GET_CERTIFICATE,
+        		  promise: fetch(url,{
+                    method: 'POST',
+                    headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                      'Authorization': token
+                    },
+                    body: JSON.stringify(params)
+                  })
+      }
+}
 
 export function getProductDetail(productId,productlist){
   const token = sessionStorage.token;
