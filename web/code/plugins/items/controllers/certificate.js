@@ -39,11 +39,12 @@ module.exports = {
             const mkDir = (dir) => new Promise((resolve, reject) => {
                 if (!fs.existsSync(dir)){
                     fs.mkdirSync(dir);
+                    console.log('Directory not exist.');
                     return resolve();
                 }
                 else
                 {
-                    rmDir(dir,false);
+                    // rmDir(dir,false);
                     console.log('Directory already exist.');
                     return resolve();
                 }
@@ -54,7 +55,7 @@ module.exports = {
                 removeSelf = true;
               try { var files = fs.readdirSync(dirPath); }
               catch(e) { notify(err);return; }
-              console.log(files.length);
+              console.log(dirPath);
               if (files.length > 0)
                   for (var i = 0; i < files.length; i++) {
                       var filePath = dirPath + '/' + files[i];
@@ -64,7 +65,7 @@ module.exports = {
                       rmDir(filePath);
                       console.log('deleting..');
                   }
-                  console.log('Done');
+                //   console.log('Done');
                   return resolve();
               if (removeSelf)
                 fs.rmdirSync(dirPath);
@@ -149,9 +150,10 @@ module.exports = {
                 const userName = request.payload.userName;
                 const allCer = request.payload.allCer;
                 const ROOT_URL = request.payload.ROOT_URL;
+                const createTime = moment().format('YYYYMMDD_HHmmss');
 
                 const cerFolder = Path.resolve(__dirname, '../../http/public/export_files/certifacate/');
-                const userFolder = Path.resolve(__dirname, `../../http/public/export_files/certifacate/${userName}`);
+                const userFolder = Path.resolve(__dirname, `../../http/public/export_files/certifacate/${userName}_${createTime}`);
 
                 let source = '';
                 let destination = '';
@@ -166,7 +168,7 @@ module.exports = {
                         (async _ => {
                             source = '';
                             source = Path.resolve(__dirname, `../../http/public${img}`);
-                            destination = userFolder + '\\' + img.replace('/images/products/original/','');
+                            destination = userFolder + '/' + img.replace('/images/products/original/','');
                             await copyFile(source,destination);
                         })()
                     });
@@ -178,9 +180,9 @@ module.exports = {
                         (async _ => {
                             source = '';
                             source = Path.resolve(__dirname, `../../http/public${img}`);
-                            destination = userFolder + '\\' + img.replace('/images/products/original/','');
+                            destination = userFolder + '/' + img.replace('/images/products/original/','');
                             await copyFile(source,destination);
-                            const emailBody = `Please download the files only by today from below link ${ROOT_URL}/export_files/certifacate/${userName}/${img.replace('/images/products/original/','')}.`;
+                            const emailBody = `Please download the files only by today from below link ${ROOT_URL}/export_files/certifacate/${userName}_${createTime}/${img.replace('/images/products/original/','')}.`;
                             await notify('', emailBody, toEmail);
                         })()
                     });
