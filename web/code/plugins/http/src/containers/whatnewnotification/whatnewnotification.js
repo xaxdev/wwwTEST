@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [1];
+            const roundData = [2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -24,13 +24,13 @@ class WhatNewNotification extends Component {
                                                     'title': 'Inventory Report',
                                                     'msg': `<p>Under the header search, all the filters applied to all product categories</p>
                                                     <img src="/images/mol-1.jpg"/>
-                                                    <p style="padding:20px 0 0 0;">Or filtering any criteria in each category under the Advance Search</p>
+                                                    <p style="padding:20px 0 0 0;">You can also filter the criteria under each category by using the Advanced Search option.</p>
                                                     <img src="/images/mol-1-1.jpg" />`
                                                 },
                                                 {
                                                     'type':'new',
                                                     'title': '6 Product Categories',
-                                                    'msg': `<p>There are 6 product categories such Jewelry, Watch, Stone, Accessory, Object of Art and Spare Part.  Filtering in each category by selected the category and fill the criteria.</p>
+                                                    'msg': `<p>There are 6 product categories: Jewelry, Watches, Stones, Accessories, Objects of Art, and Spare Parts.  You can use filters in each category by selecting the category and filling the criteria.</p>
                                                     <img src="/images/mol-2.jpg" />`
                                                 },
                                                 {
@@ -90,9 +90,26 @@ class WhatNewNotification extends Component {
                                                       <div>2.	Add an item to catalog: click “Catalog” icon <img src="/images/mol-8-2.jpg" /> at the selected items, and go to step 4</div>
                                                       <div>3.	Add multiple items to catalog: click “Square” icon <img src="/images/mol-8-3.jpg" />   at the selected items, and click “Catalog” icon on bar <img src="/images/mol-8-4.jpg" />  , and go to step 4</div>
                                                       <div style="padding-top:15px;"><img src="/images/mol-8-6.jpg"/></div>
-                                                      <div style="margin-top:15px;">4.	Select the existing catalog or create the new catalog</div>
+                                                      <div style="margin-top:15px;">4.	Select the catalog exists or create the new catalog</div>
                                                       <div style="margin-top:15px; text-align:center;"><img src="/images/mol-8-7.jpg" /></div>
                                                     </div>`
+                                                }
+                                            ]
+                                },
+                                {
+                                    'id': 2,
+                                    'round': 'January 2017',
+                                    'datas': [
+                                                {
+                                                    'type':'new',
+                                                    'title': 'Download Original Certificates',
+                                                    'msg': `<p>User can download original certificates image from Product Detail page</p>
+                                                              <div styl="padding:15px 20px 0 20px;">
+                                                                <div style="margin-top:15px">1.	Click here <img src="/images/mol-certificates-1.jpg" /> for download all files at upper image of item</div>
+                                                                <div style="margin:15px 0px; text-align:center;"><img src="/images/img-certificates-01.jpg"/></div>
+                                                                <div style="margin-top:15px">2.	Or click here <img src="/images/mol-certificates-2.jpg" /> for download per file from Diamonds Attributes</div>
+                                                                <div style="margin:15px 0px; text-align:center;"><img src="/images/img-certificates-02.jpg" /></div>
+                                                              </div>`
                                                 }
                                             ]
                                 }
@@ -106,8 +123,8 @@ class WhatNewNotification extends Component {
                      <div className="accordion-item">
                         <Accordion activeItems={roundData.length}>
                             {roundData.map((item, index) => {
-                                console.log(item);
-                                console.log(msgData);
+                                // console.log(item);
+                                // console.log(msgData);
                                 let loop = item-1;
                                 return (
                                     <AccordionItem title={msgData[loop].round} slug={item} key={index}
@@ -127,7 +144,7 @@ class WhatNewNotification extends Component {
                                                         typeNews = 'New';
                                                         break;
                                                 }
-                                                console.log(data.msg);
+                                                // console.log(data.msg);
                                                 return (
                                                     <div className="accordion-detail">
                                                         <div className="accordion-detail-title">{data.title}</div>

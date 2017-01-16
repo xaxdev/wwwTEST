@@ -8,3 +8,4 @@ export const FETCH_SETREFERENCE = 'FETCH_SETREFERENCE';
 export const GET_CATALOGNAME = 'GET_CATALOGNAME';
 export const ADD_CATALOG = 'ADD_CATALOG';
 export const ADD_CATALOG_SUCCESS = 'Add to catalog success';
+export const GET_CERTIFICATE = 'GET_CERTIFICATE';
