@@ -210,7 +210,7 @@
                         "match_mapping_type": "string",
                         "match_pattern": "regex",
                         "match": ".+",
-                        "unmatch": "description|hierarchy|stoneType|cutShape|cut|cutGrades|colorGrades|metalColor|metalType|site|warehouse|color|clarity|origin|collection|brand|dominant|dialColor|dialMetal|strapType",
+                        "unmatch": "hierarchy|stoneType|cutShape|cut|cutGrades|colorGrades|metalColor|metalType|site|warehouse|color|clarity|origin|collection|brand|dominant|dialColor|dialMetal|strapType|stoneTypeId|symmetry",
                         "mapping": {
                             "type": "string",
                             "analyzer": "ngram_filter_analyzer",

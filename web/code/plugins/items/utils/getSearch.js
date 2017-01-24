@@ -70,6 +70,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             || key == 'origin' || key == 'watchCategory'
             || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal'
             || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse'
+            || key == 'color'
         ){
             value = `${value}`
             value = value.replace(/,/gi, ' ');

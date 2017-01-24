@@ -15,6 +15,7 @@ const Detail = (props) =>{
     let price = numberFormat(props.price[currency]);
     let markUp = convertMarkpercent(props.markup);
     const userLogin = JSON.parse(sessionStorage.logindata);
+    let setReference = (props.setReference != undefined ) ? props.setReference : '-';
 
     return (
       <div className="line-h">
@@ -65,6 +66,10 @@ const Detail = (props) =>{
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">SKU</div>
           <div className="col-md-8 col-sm-8">{props.sku}</div>
+        </div>
+        <div className="col-md-12 col-sm-12 nopadding">
+          <div className="col-md-4 col-sm-4 nopadding font-b">Set Reference Number</div>
+          <div className="col-md-8 col-sm-8">{setReference}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Date Created</div>
