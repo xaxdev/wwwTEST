@@ -16,6 +16,7 @@ const Detail = (props) =>{
     let markUp = convertMarkpercent(props.markup);
     const userLogin = JSON.parse(sessionStorage.logindata);
     let setReference = (props.setReference != undefined ) ? props.setReference : '-';
+    let setReference = (setReference != '' ) ? setReference : '-';
 
     return (
       <div className="line-h">
