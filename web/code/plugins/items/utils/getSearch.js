@@ -76,7 +76,6 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             value = value.replace(/,/gi, ' ');
         }
 
-        // console.log('key.value-->',value);
         if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
             && key != 'price' && key != 'pageSize' && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
