@@ -71,12 +71,14 @@ INNER JOIN [ITORAMA].[dbo].[OBA] oba
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
   ON item.[Id] = img.[ITEMRECID]
   AND item.[Company] = img.[Company]
+  AND img.[TYPEID] = 'Image'
 LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
   ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
   AND item.[Company] = cert.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
   ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
   AND certimage.[Company] = 'mme'
+  AND certimage.[TYPEID] = 'Image'
 LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
   ON cert.[CERTIFICATIONNO] = certmaster.[Item]
   AND item.[Company] = certmaster.[Company]

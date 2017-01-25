@@ -16,6 +16,7 @@ const Detail = (props) =>{
     let markUp = convertMarkpercent(props.markup);
     const userLogin = JSON.parse(sessionStorage.logindata);
     let setReference = (props.setReference != undefined ) ? props.setReference : '-';
+    setReference = (setReference != '' ) ? setReference : '-';
 
     return (
       <div className="line-h">
@@ -76,7 +77,6 @@ const Detail = (props) =>{
           <div className="col-md-8 col-sm-8">{invoicedDate}</div>
         </div>
       </div>
-
     );
   }
 }

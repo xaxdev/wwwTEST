@@ -102,6 +102,27 @@ class WhatNewNotification extends Component {
                                     'datas': [
                                                 {
                                                     'type':'new',
+                                                    'title': 'Change search logic on Item Description field',
+                                                    'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">January 25, 2017</p>
+                                                    <p>Quickly search and easy to get result by key some text of keywords.</p>`
+                                                },
+                                                {
+                                                    'type':'new',
+                                                    'title': 'Gemstone Search Section',
+                                                    'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">January 25, 2017</p>
+                                                    <p>Stone Type Dropdown can allow multiple search condition.</p>`
+                                                },
+                                                {
+                                                    'type':'new',
+                                                    'title': 'Add "Set Reference Number" at Product Detail Page',
+                                                    'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">January 25, 2017</p>
+                                                            <p>Displays the number of Set Reference at Product Detail page.</p>
+                                                            <div styl="padding:15px 20px 0 20px;">
+                                                              <div style="margin:15px 0px; text-align:center;"><img src="/images/set-ref-no.jpg"/></div>
+                                                            </div>`
+                                                },
+                                                {
+                                                    'type':'new',
                                                     'title': 'Download Original Certificates',
                                                     'msg': `<p>User can download original certificates image from Product Detail page</p>
                                                               <div styl="padding:15px 20px 0 20px;">
