@@ -406,7 +406,7 @@ class productreletedetail extends Component {
         return(
             <div>
               <h2>GEMSTONES ATTRIBUTES</h2>
-              <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} />
+              <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr} onClick={this.downloadCer}/>
             </div>
           );
         }

@@ -173,7 +173,7 @@ module.exports = {
                         })()
                     });
                     await zipFolder(userFolder);
-                    const emailBody = `Please download the files only by today from below link ${ROOT_URL}/export_files/certifacate/${userName}.zip.`;
+                    const emailBody = `Please download the files only by today from below link ${ROOT_URL}/export_files/certifacate/${userName}_${createTime}.zip.`;
                     await notify('', emailBody, toEmail);
                 }else{
                     allCer.map((img) => {

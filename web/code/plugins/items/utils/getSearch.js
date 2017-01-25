@@ -70,12 +70,12 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             || key == 'origin' || key == 'watchCategory'
             || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal'
             || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse'
+            || key == 'color'
         ){
             value = `${value}`
             value = value.replace(/,/gi, ' ');
         }
 
-        // console.log('key.value-->',value);
         if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
             && key != 'price' && key != 'pageSize' && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
