@@ -40,6 +40,7 @@ const Gemstoneattr =  (props) =>{
           }
       }
   });
+
   return (
 
     <div className="table-responsive">

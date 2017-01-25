@@ -66,6 +66,17 @@ const Gemstoneattr =  (props) =>{
         // names must be equal
         return 0;
   });
+
+  let isCer = false
+
+  newprops.map(function(data, index){
+      if(checkInarray(allowGemstone, data.type)){
+          if (!!data.certificate) {
+              isCer = true;
+          }
+      }
+  });
+
   return (
     <div style={styles.tableresponsive}>
       <Table responsive style={styles.table}>
@@ -74,7 +85,6 @@ const Gemstoneattr =  (props) =>{
                <th style={styles.border}>Stone Type</th>
                <th style={styles.border}>Clarity</th>
                <th style={styles.border}>Cut</th>
-
                <th style={styles.border}>Color</th>
                <th style={styles.border}>QTY Of Stones</th>
                <th style={styles.border}>Total Carat Weight</th>
@@ -83,7 +93,7 @@ const Gemstoneattr =  (props) =>{
                <th style={styles.border}>Laboratory</th>
                <th style={styles.border}>Certificate Number</th>
                <th style={styles.border}>Certificate Date </th>
-
+               {isCer?<th style={styles.border}></th>:<th className="hidden"></th>}
              </tr>
            </thead>
            <tbody>
@@ -95,7 +105,6 @@ const Gemstoneattr =  (props) =>{
                      <td title="Stone Type" style={styles.textcenter}>{convertBlanktodash(data.stoneTypeName)}</td>
                      <td title="Clarity" style={styles.textcenter}>{convertBlanktodash(data.clarityName)}</td>
                      <td title="Cut" style={styles.textcenter}>{convertBlanktodash(data.cutName)}</td>
-
                      <td title="Color" style={styles.textcenter}>{convertBlanktodash(data.colorName)}</td>
                      <td title="QTY Of Stones" style={styles.textcenter}>{numberFormatComma(data.quantity)}</td>
                      <td title="Total Carat Weight" style={styles.textcenter}>{numberFormat(data.carat)}</td>
@@ -104,7 +113,11 @@ const Gemstoneattr =  (props) =>{
                      <td title="Certificate agency" style={styles.textcenter}>{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                      <td title="Certificate Number," style={styles.textcenter}>{!!data.certificate ? data.certificate.number: '-'}</td>
                      <td title="Certificate Date" style={styles.textcenter}>{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
-
+                     {isCer?
+                         !!data.certificate ?
+                             <td title="" className="icon-certificate btn-primary btn-certificate-radius button-certificate"></td> :
+                             <td title="" className=""></td>
+                         :<td title="" className="hidden"></td>}
                    </tr>
                 )
               }
