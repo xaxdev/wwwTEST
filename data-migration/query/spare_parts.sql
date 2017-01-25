@@ -74,18 +74,20 @@ INNER JOIN [ITORAMA].[dbo].[SparePart] spareparts
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
   ON item.[Id] = img.[ITEMRECID]
   AND item.[Company] = img.[Company]
+  AND img.[TYPEID] = 'Image'
 LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
   ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
   AND item.[Company] = cert.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
   ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
   AND certimage.[Company] = 'mme'
+  AND certimage.[TYPEID] = 'Image'
 LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
   ON cert.[CERTIFICATIONNO] = certmaster.[Item]
   AND item.[Company] = certmaster.[Company]
 LEFT JOIN [ITORAMA].[dbo].[DominantStone] dominantstone
   ON dominantstone.[Code] = item.[DominantStone]
 LEFT JOIN [ITORAMA].[dbo].[Company] company
-  ON item.[Company] = company.[Code]    
+  ON item.[Company] = company.[Code]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]

@@ -16,8 +16,10 @@ INNER JOIN [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] setimg
   ON jewelry.[SetReference] = setimg.[ITEMID]
   AND setimg.[Company] = 'mme'
+  AND setimg.[TYPEID] = 'Image'
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
   ON item.[Id] = img.[ITEMRECID]
   AND item.[Company] = img.[Company]
+  AND img.[TYPEID] = 'Image'
 WHERE jewelry.[SetReference] <> ''
 ORDER BY jewelry.[SetReference], item.[Id]
