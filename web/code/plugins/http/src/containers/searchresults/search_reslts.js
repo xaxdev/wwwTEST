@@ -1497,6 +1497,7 @@ class SearchResult extends Component {
                       <option key={'price'} value={'price'}>{'Public Price'}</option>
                       <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                       <option key={'description'} value={'description'}>{'Description'}</option>
+                      <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>
                     </select>
                   </div>
                 </div>
