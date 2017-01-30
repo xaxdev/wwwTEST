@@ -10,7 +10,7 @@ class App extends Component {
 
     const {loginstatus,logindata} = this.props;
     let currentLocation = this.props.location.pathname;
-    
+
     return (
       <div>
         {loginstatus ? <Header {...logindata}/> : ''}
@@ -21,7 +21,10 @@ class App extends Component {
 
         <footer className="footer navbar-grau">
           <div className="container">
-            <p className="text-muted">Copyright © 2016 Mouawad. All Rights Reserved.  Design And Develop by ITORAMA</p>
+            <div className="text-muted">
+              <div className="text-left float-l">Copyright © 2016 Mouawad. All Rights Reserved.  Design And Develop by ITORAMA</div>
+              <div className="text-right float-r">Version 2.0</div>
+            </div>
           </div>
         </footer>
       </div>
