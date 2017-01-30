@@ -102,6 +102,15 @@ class WhatNewNotification extends Component {
                                     'datas': [
                                                 {
                                                     'type':'new',
+                                                    'title': 'Sort By Set Reference Number',
+                                                    'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">January 30, 2017</p>
+                                                    <p>Search Result will be sorting by Set Reference Number. You can continue viewing the same items of set.</p>
+                                                      <div styl="padding:15px 20px 0 20px;">
+                                                        <div style="margin:15px 0px; text-align:center;"><img src="/images/img-sort-by.jpg"/></div>
+                                                      </div>`
+                                                },
+                                                {
+                                                    'type':'new',
                                                     'title': 'Change search logic on Item Description field',
                                                     'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">January 25, 2017</p>
                                                     <p>Quickly search and easy to get result by key some text of keywords.</p>`
