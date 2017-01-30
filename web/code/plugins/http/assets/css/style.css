@@ -698,7 +698,6 @@ select.form-searchresult option{
 }
 .container .text-muted {
     margin: 13px 0;
-    text-align: center;
 }
 .text-muted {
     color: #fff;
@@ -1224,7 +1223,7 @@ select.form-searchresult option{
 		.table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
 			border-bottom-width: 0px;
 		}
-		.table-bordered>tbody>tr, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, 
+		.table-bordered>tbody>tr, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th,
     .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th,
     .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
 			border: 1px solid #5c5954;
