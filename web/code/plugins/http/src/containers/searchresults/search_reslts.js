@@ -1617,8 +1617,6 @@ class SearchResult extends Component {
   }
 }
 function mapStateToProps(state) {
-  // console.log('state-->',state);
-
   return {
     searchResult: state.searchResult,
     items: state.searchResult.datas,
