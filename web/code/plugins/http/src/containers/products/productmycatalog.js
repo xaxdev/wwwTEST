@@ -676,7 +676,7 @@ class productreletedetail extends Component {
           gemstones.map((item) => {
               if (!!item.certificate) {
                   item.certificate.images.map((img) => {
-                      allCer.push(img.original);
+                      allCer.push(img.original.replace('/images/products/original',''));
                   })
               }
           })
@@ -725,7 +725,7 @@ class productreletedetail extends Component {
               if (!!item.certificate) {
                   if (item.certificate.number == id) {
                       item.certificate.images.map((img) => {
-                          allCer.push(img.original);
+                          allCer.push(img.original.replace('/images/products/original',''));
                       });
                   }
               }
