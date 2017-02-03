@@ -67,7 +67,15 @@ module.exports = {
 
         // add certificate images to item gallery
         if (!!productResult.gemstones) {
-            const certificateImages = productResult.gemstones.reduce((certificateImages, gemstone) => (gemstone.certificate && gemstone.certificate.images)? certificateImages.concat(gemstone.certificate.images) : certificateImages, [])
+            let certificateImages = productResult.gemstones.reduce((certificateImages, gemstone) => (gemstone.certificate && gemstone.certificate.images)? certificateImages.concat(gemstone.certificate.images) : certificateImages, [])
+
+            //change path original image of certificate by korakod
+            certificateImages = certificateImages.map((images) => {
+                                    let { original, thumbnail } = images;
+                                    original = original.replace('/images/products/original','/original');
+                                    thumbnail = thumbnail.replace('/images/products/thumbnail','/original');
+                                    return {...images, original, thumbnail};
+                                });
             productResult.gallery.push(...certificateImages)
         }
 
