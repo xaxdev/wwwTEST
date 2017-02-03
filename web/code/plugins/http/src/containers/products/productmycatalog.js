@@ -676,7 +676,7 @@ class productreletedetail extends Component {
           gemstones.map((item) => {
               if (!!item.certificate) {
                   item.certificate.images.map((img) => {
-                      allCer.push(img.original);
+                      allCer.push(img.original.replace('/images/products/original',''));
                   })
               }
           })

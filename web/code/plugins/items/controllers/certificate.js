@@ -167,7 +167,8 @@ module.exports = {
                     allCer.map((img) => {
                         (async _ => {
                             source = '';
-                            source = Path.resolve(__dirname, `../../http/public${img}`);
+                            source = Path.resolve(__dirname, `../../../../../../../../../../media/mol/MME'${img}`);
+                            console.log(source);
                             destination = userFolder + '/' + img.replace('/images/products/original/','');
                             await copyFile(source,destination);
                         })()
@@ -179,7 +180,7 @@ module.exports = {
                     allCer.map((img) => {
                         (async _ => {
                             source = '';
-                            source = Path.resolve(__dirname, `../../http/public${img}`);
+                            source = Path.resolve(__dirname, `../../../../../../../../../../media/mol/MME'${img}`);
                             destination = userFolder + '/' + img.replace('/images/products/original/','');
                             await copyFile(source,destination);
                             const emailBody = `Please download the files only by today from below link ${ROOT_URL}/export_files/certifacate/${userName}_${createTime}/${img.replace('/images/products/original/','')}.`;
