@@ -144,7 +144,7 @@ module.exports = {
             const toEmail = request.payload.userEmail;
 
             try {
-                console.log(request.payload);
+                // console.log(request.payload);
                 const host = request.info.hostname;
                 const id = request.params.productId || '';
                 const userName = request.payload.userName;
@@ -161,13 +161,13 @@ module.exports = {
                 await mkDir(cerFolder);
                 await mkDir(userFolder);
 
-                console.log(allCer.length);
+                // console.log(allCer.length);
 
                 if (allCer.length > 1) {
                     allCer.map((img) => {
                         (async _ => {
                             source = '';
-                            source = Path.resolve(__dirname, `../../../../../../../../../../media/mol/MME'${img}`);
+                            source = Path.resolve(__dirname, `../../../../../../../../../../media/mol/MME${img}`);
                             console.log(source);
                             destination = userFolder + '/' + img.replace('/images/products/original/','');
                             await copyFile(source,destination);
@@ -180,10 +180,11 @@ module.exports = {
                     allCer.map((img) => {
                         (async _ => {
                             source = '';
-                            source = Path.resolve(__dirname, `../../../../../../../../../../media/mol/MME'${img}`);
+                            source = Path.resolve(__dirname, `../../../../../../../../../../media/mol/MME${img}`);
+                            console.log(source);
                             destination = userFolder + '/' + img.replace('/images/products/original/','');
                             await copyFile(source,destination);
-                            const emailBody = `Please download the files only by today from below link ${ROOT_URL}/export_files/certifacate/${userName}_${createTime}/${img.replace('/images/products/original/','')}.`;
+                            const emailBody = `Please download the files only by today from below link ${ROOT_URL}/export_files/certifacate/${userName}_${createTime}${img.replace('/images/products/original/','')}.`;
                             await notify('', emailBody, toEmail);
                         })()
                     });

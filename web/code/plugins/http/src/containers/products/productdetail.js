@@ -712,7 +712,6 @@ class productdetail extends Component {
    }
    zoomicon() {
      const { gallery } = this.props.productdetail;
-     console.log(gallery);
      var styles ={
        displaynone:{
          display:'none'
