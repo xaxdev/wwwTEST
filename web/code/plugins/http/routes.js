@@ -42,6 +42,11 @@ module.exports = [
   },
   {
     method: 'GET',
+    path: '/original/{path*}',
+    config: controller.assets.original
+  },
+  {
+    method: 'GET',
     path: '/{path*}',
     handler: {
       file: Path.join(__dirname, 'index.htm')
