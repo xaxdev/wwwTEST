@@ -88,7 +88,7 @@ class productdetail extends Component {
         },
         callbacks: {
           open: function() {
-
+            
             let activegallery = jQuery('.active img').attr('src').replace('thumbnail', 'original');
 
             jQuery('#galleryimg').attr('src',activegallery);
@@ -511,18 +511,18 @@ class productdetail extends Component {
       //   );
       // }
       if(gallery !== undefined){
-      if(gallery.length > 0) {
-        return(
-          <div>
-            <ProductGallery imagegallery={gallery}/>
-          </div>
-        );
-      } else {
-        return(
-            <div><img src="/images/blank.gif" width="100%"/></div>
-          );
-      }
-    }
+          if(gallery.length > 0) {
+            return(
+              <div>
+                <ProductGallery imagegallery={gallery}/>
+              </div>
+            );
+          } else {
+            return(
+                <div><img src="/images/blank.gif" width="100%"/></div>
+              );
+          }
+        }
      }
      renderReleteproduct(){
        const { totalpage,products,page } = this.props.productrelete;
@@ -712,6 +712,7 @@ class productdetail extends Component {
    }
    zoomicon() {
      const { gallery } = this.props.productdetail;
+     console.log(gallery);
      var styles ={
        displaynone:{
          display:'none'

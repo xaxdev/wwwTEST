@@ -56,5 +56,13 @@ module.exports = {
     app: {
       name: 'downloadFile'
     }
+  },
+  original: {
+    handler: {
+      directory:   { path: Path.resolve(__dirname, '../../../../../../media/mol/MME') }
+    },
+    app: {
+      name: 'original'
+    }
   }
 };
