@@ -59,7 +59,7 @@ module.exports = {
   },
   original: {
     handler: {
-      directory:   { path: Path.resolve(__dirname, '../../../../../../media/mol/MME') }
+      directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MME') }
     },
     app: {
       name: 'original'
