@@ -88,7 +88,7 @@ class productdetail extends Component {
         },
         callbacks: {
           open: function() {
-            
+
             let activegallery = jQuery('.active img').attr('src').replace('thumbnail', 'original');
 
             jQuery('#galleryimg').attr('src',activegallery);
@@ -712,7 +712,6 @@ class productdetail extends Component {
    }
    zoomicon() {
      const { gallery } = this.props.productdetail;
-     console.log(gallery);
      var styles ={
        displaynone:{
          display:'none'
@@ -747,7 +746,7 @@ class productdetail extends Component {
           gemstones.map((item) => {
               if (!!item.certificate) {
                   item.certificate.images.map((img) => {
-                      allCer.push(img.original);
+                      allCer.push(img.original.replace('/images/products/original',''));
                   })
               }
           })
@@ -796,7 +795,7 @@ class productdetail extends Component {
               if (!!item.certificate) {
                   if (item.certificate.number == id) {
                       item.certificate.images.map((img) => {
-                          allCer.push(img.original);
+                          allCer.push(img.original.replace('/images/products/original',''));
                       });
                   }
               }
