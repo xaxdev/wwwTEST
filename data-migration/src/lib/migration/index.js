@@ -1,9 +1,9 @@
 import * as item from './item';
 import * as master from './master';
 import * as es from './es';
-import * as hierarchy from './hierarchy'
-import * as set from './set'
-
+import * as hierarchy from './hierarchy';
+import * as set from './set';
+import * as lot from './lot'
 import * as constant from './constant';
 
 const migrate = async index => {
@@ -82,4 +82,13 @@ const itemSets= async index => {
     }
 }
 
-export { alias, migrate, productHierarchy, itemSets };
+const stoneLotNumber = async index => {
+    try {
+        const exchangeRates = await item.getExchangeRates()
+        await lot.getStoneLotNumbers(index, exchangeRates)
+    } catch (err) {
+        throw err
+    }
+}
+
+export { alias, migrate, productHierarchy, itemSets, stoneLotNumber };

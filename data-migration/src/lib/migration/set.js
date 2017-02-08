@@ -63,7 +63,6 @@ const getitemSets = async (index, exchangeRates) => {
 
             current.items.push(item)
         }
-
         await es.upload(itemSets, {...config.elasticsearch, index, type: 'setitems' })
     } catch (err) {
         throw err

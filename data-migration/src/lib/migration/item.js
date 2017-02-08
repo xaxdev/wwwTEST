@@ -45,7 +45,7 @@ const getJewelry = async (index, exchangeRates) => {
 const getStones = async (index, exchangeRates) => {
     try {
         console.log('Stones!!!');
-        const total = await core.parallelize(await settings(index, exchangeRates, constant.STONES_QUERY, mapper.mapItem));
+        const total = await core.parallelize(await settings(index, exchangeRates, constant.STONES_QUERY, mapper.mapStoneItem));
         console.log(`${total} items were processed in total.`);
     } catch (err) {
         throw err;

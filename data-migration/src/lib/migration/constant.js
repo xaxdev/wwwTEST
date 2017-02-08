@@ -58,3 +58,6 @@ export const SET_QUERY = './query/set.sql';
 
 // CertificateWarehouse
 export const CERTIFICATE_QUERY = './query/certificate.sql';
+
+// Stone Lot Number
+export const STONESLOT_QUERY = './query/lot.sql';

@@ -5,6 +5,7 @@ const sanitize = value => value.replace('(', '\\(').replace(')', '\\)').replace(
 const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_cutName', 'gemstone_color', 'gemstone_colorName', 'gemstone_clarity', 'gemstone_clarityName', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence', 'gemstone_stoneTypeId', 'gemstone_stoneTypeName', 'gemstone_type', 'gemstone_unit'];
 
 const mapProperties = (item, record, exchangeRates) => {
+    // console.log(record);
     // add gemstone, if not existed
     if (!!record.gemstone_id && item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
         const gemstone = {};
@@ -66,6 +67,27 @@ const mapProperties = (item, record, exchangeRates) => {
         if (item.certificates.findIndex(current => current.number === certificate.number ) === -1) {
             item.certificates.push(certificate);
         }
+    }
+
+    if (record.type === 'STO' && !!record.lotNumber) {
+        const stoneLotNumber = {
+            stoneType: record.subType,
+            stoneTypeName: record.subTypeName,
+            cut: record.cut,
+            cutName: record.cutName,
+            color: record.color,
+            colorName: record.colorName,
+            clarity: record.clarity,
+            clarityName: record.clarityName,
+            lotNumber: record.lotNumber,
+            lotQty: record.quantity,
+            carat: record.carat,
+            markup: record.markup,
+            certificateNo: record.CertificateNo,
+            laboratory: record.CertificateAgency,
+            certifiedDate: record.CertifiedDate
+        };
+        item.lotNumber.push(stoneLotNumber);
     }
 
     // add image, if not existed
@@ -239,4 +261,28 @@ const mapCertificate = recordset => {
     return items
 }
 
-export { mapItem, mapMaster, mapCertificate };
+const mapStoneItem = (recordset, exchangeRates) => {
+    const items = [];
+    let id = 0;
+
+    for (let record of recordset) {
+        // console.log(record.id);
+        if (id != record.id) {
+            id = Number(record.id);
+            const item = {...record};
+            item.gemstones = [];
+            item.gallery = [];
+            item.certificates = [];
+            item.lotNumber = [];
+            calculatePrices(item, exchangeRates);
+            items.push(item);
+        }
+        // console.log(items);
+        const latest = items[items.length - 1];
+        mapProperties(latest, record, exchangeRates);
+    }
+
+    return items;
+};
+
+export { mapItem, mapMaster, mapCertificate, mapStoneItem };
