@@ -831,7 +831,7 @@ select.form-searchresult option{
 .searchresult-navi{float:right;}
 .searchresult-navi div {margin-top: 0px;}
 .searchresult-navi input{margin:0 5px; text-align: center; height: 33px; background: transparent;
-    border: 1px solid #5b5959;}
+    border: 1px solid #5b5959; width: 50px;}
 .searchresult-navi span{padding:0 3px;}
 .searchresult-navi div, .searchresult-navi ul{float:left; margin-bottom:10px;}
 .relete ul{width:100%;}
