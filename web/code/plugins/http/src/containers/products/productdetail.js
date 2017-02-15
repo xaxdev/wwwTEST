@@ -63,6 +63,14 @@ class productdetail extends Component {
     this.props.getProductDetail(productId,productlist).then(()=>{
     // console.log(this.props);
       const  Detail  = this.props.productdetail;
+      const { lotNumbers } = this.props.productdetail;
+      const { stonePageSize } = this.props;
+      const params = {
+          datas: lotNumbers,
+          page: 1,
+          size: !!stonePageSize ? stonePageSize : 20
+      };
+      this.props.getLotNaumberPerPage(params);
     //   console.log(Detail);
       if(Detail.type != 'STO' || Detail.type != 'CER'){
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
@@ -71,11 +79,9 @@ class productdetail extends Component {
         this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
         }
       }
-
       this.setState({
         productdetailLoading: false
       });
-
     });
   }
   componentDidMount() {
@@ -174,11 +180,7 @@ class productdetail extends Component {
               printWindow.print();
             },500);
             return true;
-
       });
-
-
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -190,20 +192,25 @@ class productdetail extends Component {
       const productlist = this.props.productlist;
       this.props.getProductDetail(productId,productlist).then(()=>{
         const  Detail  = this.props.productdetail;
+        const { lotNumbers } = this.props.productdetail;
+        const { stonePageSize } = this.props;
+        const params = {
+            datas: lotNumbers,
+            page: 1,
+            size: !!stonePageSize ? stonePageSize : 20
+        };
+        this.props.getLotNaumberPerPage(params);
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
         const currency = logindata.currency;
         if(Detail.dominant){
         this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
        }
-
         this.setState({
           productdetailLoading: false
         });
       });
     }
   }
-
-
 
   renderDesc(){
 
@@ -336,8 +343,6 @@ class productdetail extends Component {
                 }else{
                     return(
                         <div>
-                          <h2>{Attrtitle}</h2>
-
                         </div>
                       );
                 }

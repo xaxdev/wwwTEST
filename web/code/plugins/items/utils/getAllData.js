@@ -95,7 +95,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, ke
                 }
         }
         item.lotNumbers = newLot;
-        console.log('lot-->',item.lotNumbers.length);
+        // console.log('lot-->',item.lotNumbers.length);
     }
   });
 
@@ -141,7 +141,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, ke
       // console.log('item.priceUSD-->',item.priceUSD);
 
       sumCostData.push(GetPriceCurrency(item,'updatedCost',userCurrency));
-      console.log('lot-last-->',item.lotNumbers.length);
+    //   console.log('lot-last-->',item.lotNumbers.length);
     });
 
     sumCostData.forEach(function(cost) {
