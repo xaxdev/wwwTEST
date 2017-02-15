@@ -22,6 +22,23 @@ const settings = async (index, exchangeRates, path, mapper) => ({
     exchangeRates
 });
 
+const settingsLot = async (index, exchangeRates, path, mapper) => ({
+    ...config,
+    elasticsearch: {
+        index: index,
+        type: 'lotnumbers',
+        ...config.elasticsearch
+    },
+    mapper,
+    parallelization: {
+        table: constant.ITEM_TABLE,
+        field: constant.ITEM_ID,
+        template: await file.read(path),
+        ...config.parallelization
+    },
+    exchangeRates
+});
+
 const getExchangeRates = async _ => {
     try {
         console.log('Exchange Rate!!!');
@@ -114,4 +131,15 @@ const test = async (index, exchangeRates) => {
     }
 };
 
-export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, getAccessory, getSpareParts };
+const getLotNumbers = async (index, exchangeRates) => {
+    try {
+        console.log('LotNumber!!!');
+        const total = await core.parallelize(await settingsLot(index, exchangeRates, constant.STONESLOT_QUERY, mapper.mapStoneLotNumber));
+        console.log(`${total} items were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
+export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, getAccessory,
+        getSpareParts, getLotNumbers };

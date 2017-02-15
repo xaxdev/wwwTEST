@@ -1,5 +1,4 @@
-SELECT item.[Id] AS 'id'
-  , item.[Reference] AS 'reference'
+SELECT item.[Reference] AS 'reference'
     , item.[Name] AS 'name'
     , item.[DESCRIPTION] AS 'description'
     , UPPER(item.[Company]) AS 'company'
@@ -88,4 +87,5 @@ LEFT JOIN [ITORAMA].[dbo].[DominantStone] dominantstone
   ON dominantstone.[Code] = item.[DominantStone]
 LEFT JOIN [ITORAMA].[dbo].[Company] company
   ON item.[Company] = company.[Code]
-ORDER BY item.[Id]
+WHERE item.[Id] BETWEEN @from AND @to
+ORDER BY item.[Reference]

@@ -7,7 +7,7 @@
     },
     "elasticsearch": {
         "host": "192.168.1.94:9200 ",
-        "requestTimeout": 60000
+        "requestTimeout": 80000
     },
     "parallelization": {
         "size": 2000

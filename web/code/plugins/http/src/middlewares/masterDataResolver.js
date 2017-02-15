@@ -9,7 +9,7 @@ export default function masterDataMiddleware() {
     const FAILURE = type + '_FAILURE';
     next({ ...rest, type: REQUEST });
 
-    console.log('masterDataMiddleware datas-->',datas);
+    // console.log('masterDataMiddleware datas-->',action.type);
     switch(action.type){
     case 'FETCH_OPTIONS':
       next({ ...rest, datas, type: SUCCESS });
@@ -20,6 +20,9 @@ export default function masterDataMiddleware() {
     case 'SELECTED_WAREHOUSES':
       next({ ...rest, datas, type: SUCCESS });
       return true;
+    case 'GET_LOTNUMBERPAGE':
+        next({ ...rest, datas, type: SUCCESS });
+        return true;
     default:
       return { ...rest};
     }

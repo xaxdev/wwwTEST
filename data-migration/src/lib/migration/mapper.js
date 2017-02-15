@@ -87,7 +87,7 @@ const mapProperties = (item, record, exchangeRates) => {
             laboratory: record.CertificateAgency,
             certifiedDate: record.CertifiedDate
         };
-        item.lotNumber.push(stoneLotNumber);
+        item.lotNumbers.push(stoneLotNumber);
     }
 
     // add image, if not existed
@@ -133,6 +133,48 @@ const mapProperties = (item, record, exchangeRates) => {
             }
         }
     }
+
+    gemstoneProperties.forEach(property => {
+        if (item[property] !== undefined) {
+            delete item[property];
+        }
+    });
+
+    if (item.imageName !== undefined) {
+      delete item.imageName;
+    }
+
+    if (item.imageType !== undefined) {
+      delete item.imageType
+    }
+
+    if (item.CertificateNo !== undefined) {
+        delete item.CertificateNo;
+    }
+
+    if (item.CertificateAgency !== undefined) {
+        delete item.CertificateAgency;
+    }
+
+    if (item.CertificateWarehouse !== undefined) {
+        delete item.CertificateWarehouse;
+    }
+
+    if (item.CertifiedDate !== undefined) {
+        delete item.CertifiedDate;
+    }
+
+    if (item.CertificateImageName !== undefined) {
+        delete item.CertificateImageName;
+    }
+
+    if (item.CertificateImageType !== undefined) {
+        delete item.CertificateImageType;
+    }
+};
+
+const mapPropertiesLotNumber = (item, record, exchangeRates) => {
+    // console.log(record);
 
     gemstoneProperties.forEach(property => {
         if (item[property] !== undefined) {
@@ -273,7 +315,7 @@ const mapStoneItem = (recordset, exchangeRates) => {
             item.gemstones = [];
             item.gallery = [];
             item.certificates = [];
-            item.lotNumber = [];
+            item.lotNumbers = [];
             calculatePrices(item, exchangeRates);
             items.push(item);
         }
@@ -285,4 +327,23 @@ const mapStoneItem = (recordset, exchangeRates) => {
     return items;
 };
 
-export { mapItem, mapMaster, mapCertificate, mapStoneItem };
+const mapStoneLotNumber = (recordset, exchangeRates) => {
+    const lotNumbers = [];
+    let id = 0;
+
+    for (let record of recordset) {
+        // console.log(record.id);
+
+        const item = {...record};
+        calculatePrices(item, exchangeRates);
+        lotNumbers.push(item);
+
+        // console.log(items);
+        const latest = lotNumbers[lotNumbers.length - 1];
+        mapPropertiesLotNumber(latest, record, exchangeRates);
+    }
+
+    return lotNumbers;
+};
+
+export { mapItem, mapMaster, mapCertificate, mapStoneItem, mapStoneLotNumber };

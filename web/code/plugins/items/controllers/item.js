@@ -110,6 +110,4 @@ module.exports = {
         return reply(Boom.badImplementation(error));
     });
   }
-
-
 };
