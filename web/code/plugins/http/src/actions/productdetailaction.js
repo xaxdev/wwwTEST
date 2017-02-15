@@ -2,8 +2,35 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME,
-        ADD_CATALOG,GET_CERTIFICATE} from '../constants/productdetailconstants';
+        ADD_CATALOG,GET_CERTIFICATE,GET_LOTNUMBER,GET_LOTNUMBERPAGE} from '../constants/productdetailconstants';
 // const fakeApiurl = 'http://localhost:4500/jewelry/';
+
+export function getLotNaumberPerPage(params){
+    // console.log(params);
+  return {
+          type: GET_LOTNUMBERPAGE,
+          datas: params.datas,
+          page: params.page,
+          size: params.size
+  }
+}
+
+export function getLotNaumber(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}api/items/lotnumber`;
+  return {
+          type: GET_LOTNUMBER,
+    		  promise: fetch(url,{
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': token
+                },
+                body: JSON.stringify(params)
+              })
+  }
+}
 
 export function getCertificate(params){
   const token = sessionStorage.token;

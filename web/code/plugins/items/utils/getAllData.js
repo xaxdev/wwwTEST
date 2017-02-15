@@ -2,7 +2,7 @@ const _ = require('lodash');
 const GetPriceCurrency = require('./getPriceCurrency');
 // import numberFormat from '../../http/src/utils/convertNumberformatwithcomma2digit';
 
-module.exports = (response, sortDirections, sortBy, size, page, userCurrency, listFileName, cb) => {
+module.exports = (response, sortDirections, sortBy, size, page, userCurrency, keys, obj, cb) => {
   // console.log(response.hits.total)
   let allData = [];
   let sumPriceData = [];
@@ -46,10 +46,62 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, li
         maxPrice = 0;
       }
     }
+    // filter data from array lotnaumer
+    if (item.type == 'STO') {
+        let newLot = item.lotNumbers;
+        if (item.lotNumbers.length > 0) {
+                if (keys.length != 3 ){
+                    keys.forEach((key) => {
+                        // console.log('key-->',key);
+                        if(key == 'lotNumbers'){
+                            const valusObj = obj[key];
+                            const lotFields = Object.keys(valusObj);
+                            lotFields.forEach((field)=>{
+                                const fieldValus = valusObj[field];
+                                let arrayFieldValus = fieldValus.split('-');
+                                if (field == 'totalCaratWeightFrom') {
+                                    newLot = newLot.filter((item) => {
+                                                            return item.carat >= fieldValus
+                                                        });
+                                }
+                                if (field == 'totalCaratWeightTo') {
+                                    newLot = newLot.filter((item) => {
+                                                            return item.carat <= fieldValus
+                                                        });
+                                }
+                                if (field == 'lotQuantityFrom') {
+                                    newLot = newLot.filter((item) => {
+                                                            return item.lotQty >= fieldValus
+                                                        });
+                                }
+                                if (field == 'lotQuantityTo') {
+                                    newLot = newLot.filter((item) => {
+                                                            return item.lotQty <= fieldValus
+                                                        });
+                                }
+                                if (field == 'markupFrom') {
+                                    newLot = newLot.filter((item) => {
+                                                            return item.markup >= fieldValus
+                                                        });
+                                }
+                                if (field == 'markupTo') {
+                                    newLot = newLot.filter((item) => {
+                                                            return item.markup <= fieldValus
+                                                        });
+                                }
+                            })
+                        }
+                    })
+                }
+        }
+        item.lotNumbers = newLot;
+        console.log('lot-->',item.lotNumbers.length);
+    }
   });
 
   let minPrice = maxPrice;
   data.forEach(function(item){
+
     if(item.price != undefined){
       if(item.price[userCurrency] != undefined){
         minPrice = Math.min(minPrice, item.price[userCurrency]);
@@ -89,6 +141,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, li
       // console.log('item.priceUSD-->',item.priceUSD);
 
       sumCostData.push(GetPriceCurrency(item,'updatedCost',userCurrency));
+      console.log('lot-last-->',item.lotNumbers.length);
     });
 
     sumCostData.forEach(function(cost) {

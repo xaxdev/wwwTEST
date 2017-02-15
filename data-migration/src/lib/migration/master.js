@@ -354,9 +354,19 @@ const getHierarchy = async index => {
     }
 };
 
+const getLotNumbers = async index => {
+    try {
+        console.log('LotNumbers!!!');
+        const total = await core.get(await settings(index, 'lotnumbers', constant.STONESLOT_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
 export { getCompany, getLocation, getWarehouse, getCountry, getCut, getCutShap, getColor, getClarity, getSymmetry,
         getFluorescence, getCollection, getBrand, getMetalType, getMetalColor, getCertificateAgency, getDialIndex,
         getDialColor, getDialMetal, getBuckleType, getStrapType, getStrapColor, getOrigin, getCurrency, getRole,
         getProductGroup, getJewelryCategory, getWatchCategory, getAccessoryType, getSparePartType
-        , getDominantStones, getGemstoneStoneType, getStoneType, getHierarchy
+        , getDominantStones, getGemstoneStoneType, getStoneType, getHierarchy, getLotNumbers
       };

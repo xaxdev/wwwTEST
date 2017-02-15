@@ -1,6 +1,7 @@
 import React,{ Component,PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { reduxForm, reset } from 'redux-form';
 import { Button,FormControl,Pagination } from 'react-bootstrap';
 import * as productdetailaction from '../../actions/productdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/productDescriptionprint';
@@ -104,7 +105,9 @@ class productprint extends Component {
    }
 
    renderAttr(){
-     const  Detail  = this.props.productdetail;
+       const  Detail  = this.props.productdetail;
+       const { lotNumbers, pageSize, activePage } = this.props;
+
      let  Attrtitle  = '';
      if(!Detail){
        return(
@@ -123,12 +126,22 @@ class productprint extends Component {
                    );
            case 'STO':
                   Attrtitle='STONE ATTRIBUTES';
-                  return(
-                      <div>
-                        <h2>{Attrtitle}</h2>
-                            <ProductStoneAttributes {...Detail} />
-                      </div>
-                    );
+                  if (lotNumbers.length > 0) {
+                      return(
+                          <div>
+                            <h2>{Attrtitle}</h2>
+                                <ProductStoneAttributes Detail={Detail} pageSize={pageSize}
+                                    lotNumbers={lotNumbers} activePage={activePage}/>
+                          </div>
+                        );
+                  }else{
+                      return(
+                          <div>
+                            <h2>{Attrtitle}</h2>
+
+                          </div>
+                        );
+                  }
            case 'WAT':
                   Attrtitle='WATCH ATTRIBUTES';
                   return(
@@ -303,7 +316,9 @@ class productprint extends Component {
     let monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
-    const { type} = this.props.productdetail;
+    const { type } = this.props.productdetail;
+    const { lotNumbers } = this.props;
+
     let currentDate = new Date();
     let dd = currentDate.getDate();
 
@@ -322,24 +337,18 @@ class productprint extends Component {
           <div style={styles.colmd2}>Printed Date :  </div>
           <div style={styles.colmd5}>{currentDate}</div>
         </div>
-
         <div style={styles.mgbt}>
           <div style={styles.colmd5}>PRODUCT DETAIL</div>
         </div>
-
         <div style={styles.colmd12}>
           <div style={styles.colmd5}>{this.renderImagegallery()}</div>
           <div style={styles.colmd5}>
             <div style={styles.colmd12}>
               {this.renderDesc()}
             </div>
-
-
             <div style={styles.colmd12}>
                 {this.renderAttr()}
             </div>
-
-
           </div>
         </div>
         <div style={styles.colmd12}>
@@ -349,18 +358,19 @@ class productprint extends Component {
         <div style={styles.colmd12}>
             {this.renderFooterRawmatirialAttr()}
         </div>
-
       </div>
     );
   }
 }
 
-
 function mapStateToProps(state) {
-
   return {
-    productdetail: state.productdetail.detail,
+    productdetail: state.productdetail.detail
    }
 }
 
-module.exports = connect(mapStateToProps,null)(productprint)
+// module.exports = connect(mapStateToProps,null)(productprint)
+module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
+  form: 'Printform',
+  fields: ['pagego','reletepage','oldCatalogName','newCatalogName','validateCatalogName','stonepage'],
+},mapStateToProps,null)(productprint)

@@ -39,5 +39,10 @@ module.exports = [
         method: 'POST',
         path: '/certificate/{productId}',
         config: controllers.certificate
+    },
+    {
+        method: 'POST',
+        path: '/lotnumber',
+        config: controllers.lotnumber
     }
 ];

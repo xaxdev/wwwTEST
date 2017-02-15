@@ -177,6 +177,7 @@ class SearchResult extends Component {
       // const { filters } =  this.props;
       const filters =  JSON.parse(sessionStorage.filters);
       let gemstoneFilter = {};
+      let lotNumberFilter = {};
       // console.log('filters-->',filters);
       filters.forEach(function(filter){
         let keys = Object.keys(filter);
@@ -191,6 +192,8 @@ class SearchResult extends Component {
             gemstoneFilter[gemstoneFields[0]] = value;
           }else if(gemstoneFields[0] == 'cerDateFrom'){
             gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'lotNumbers'){
+            lotNumberFilter[gemstoneFields[1]] = value;
           }
           else{
             params[key] = value;
@@ -201,13 +204,19 @@ class SearchResult extends Component {
       if(Object.keys(gemstoneFilter).length != 0){
         params['gemstones'] = gemstoneFilter;
       }
-      // console.log('params-->',params);
+      if(Object.keys(lotNumberFilter).length != 0){
+        params['lotNumbers'] = lotNumberFilter;
+      }
+    //   console.log('params-->',params);
       const paramsSearchStorage =  JSON.parse(sessionStorage.paramsSearch);
+    //   console.log('paramsSearchStorage-->',paramsSearchStorage);
       // this.props.setShowGridView(true);
       // this.props.setShowListView(false);
       this.props.setParams(paramsSearchStorage)
       this.props.getItems(params)
       .then((value) => {
+        //   console.log('params-->',params);
+        //   this.props.setParams(params)
           this.props.getCatalogName();
       });
 

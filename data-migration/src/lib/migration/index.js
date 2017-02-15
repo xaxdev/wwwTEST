@@ -1,16 +1,18 @@
 import * as item from './item';
 import * as master from './master';
 import * as es from './es';
-import * as hierarchy from './hierarchy'
-import * as set from './set'
-
+import * as hierarchy from './hierarchy';
+import * as set from './set';
+import * as lot from './lot';
 import * as constant from './constant';
 
 const migrate = async index => {
     try {
         const exchangeRates = await item.getExchangeRates();
+
         await item.getCertificates(index)
         await item.getJewelry(index, exchangeRates);
+        await item.getLotNumbers(index, exchangeRates);
         await item.getStones(index, exchangeRates);
         await item.getWatches(index, exchangeRates);
         await item.getOBA(index, exchangeRates);
@@ -52,6 +54,7 @@ const migrate = async index => {
         await master.getGemstoneStoneType(index);
         await master.getStoneType(index);
         await master.getHierarchy(index);
+
     } catch (err) {
         throw err;
     }

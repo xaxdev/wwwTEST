@@ -27,7 +27,7 @@ module.exports = {
 
     internals.query = GetSearch(request, 0, 100000);
 
-    // console.log(JSON.stringify(internals.query, null, 2));
+    console.log(JSON.stringify(internals.query, null, 2));
 
     elastic
       .search({
@@ -38,7 +38,7 @@ module.exports = {
         const totalRecord = response.hits.total;
 
         elastic.close();
-        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency, null));
+        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency, keys, obj));
 
       })
       .catch(function (error) {

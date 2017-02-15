@@ -3,7 +3,8 @@ import elasticsearch from 'elasticsearch';
 const es =  {
     upload: async (documents, config) => {
         const client = new elasticsearch.Client({
-            host: config.host
+            host: config.host,
+            requestTimeout: config.requestTimeout
         });
 
         try {
