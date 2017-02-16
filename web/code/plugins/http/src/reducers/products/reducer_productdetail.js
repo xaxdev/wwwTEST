@@ -11,16 +11,16 @@ export default function(state = INITIAL_STATE,action){
 
     switch (action.type) {
         case GET_LOTNUMBERPAGE:
-          return {...state, lotNumbers: filterLotNumbers(action.datas).slice( (action.page - 1) * action.size, action.page * action.size )
-                    ,stonActivePage: action.page,totalpage:Math.ceil(filterLotNumbers(action.datas).length/action.size)}
+          return {...state, lotNumbers: !!action.datas ? filterLotNumbers(action.datas).slice( (action.page - 1) * action.size, action.page * action.size ) : []
+                    ,stonActivePage: action.page,totalpage: !!action.datas ? Math.ceil(filterLotNumbers(action.datas).length/action.size) : 0}
         case GET_LOTNUMBER:
-          return {...state,detail: action.data,totalpage:Math.ceil(filterLotNumbers(action.data.lotNumbers).length/action.size)}
+          return {...state,detail: action.data,totalpage: !!action.data.lotNumbers ? Math.ceil(filterLotNumbers(action.data.lotNumbers).length/action.size): 0}
       case FETCH_PRODUCTDETAIL:
         return {...state,detail:action.data,index:action.productlist?findproductindex(action.productlist,action.productid):0
           ,indexplus:action.productlist?findproductindexplus(action.productlist,action.productid):0
           ,pagego:action.productlist?findproductindexplus(action.productlist,action.productid):0
-          ,productlist:action.productlist,lotNumbers:filterLotNumbers(action.data.lotNumbers)
-          ,totalpage:Math.ceil(filterLotNumbers(action.data.lotNumbers).length/20)}
+          ,productlist:action.productlist,lotNumbers:!!action.data.lotNumbers ? filterLotNumbers(action.data.lotNumbers) : []
+          ,totalpage:Math.ceil(!!action.data.lotNumbers ? filterLotNumbers(action.data.lotNumbers).length/20 : action.data.length/20)}
       case FETCH_PRODUCTRELETED:
         return {...state,relete:action.data,reletepage:action.page}
       case ADD_CATALOG:
@@ -63,6 +63,9 @@ const filterLotNumbers = (lotNumbers)=>{
     let lotNumber = paramsSearchStorage.lotNumber;
     let markupFrom = (!!paramsSearchStorage.markupFrom) ? parseFloat(paramsSearchStorage.markupFrom) : 0;
     let markupTo = (!!paramsSearchStorage.markupTo) ? parseFloat(paramsSearchStorage.markupTo) : 0;
+    let cut = paramsSearchStorage.cut;
+    let color = paramsSearchStorage.color;
+    let clarity = paramsSearchStorage.clarity;
 
     if (caratFrom > 0) {
         newLot = newLot.filter((item) => {
@@ -98,6 +101,63 @@ const filterLotNumbers = (lotNumbers)=>{
         newLot = newLot.filter((item) => {
                                 return item.markup <= markupTo
                             });
+    }
+    if (!!cut) {
+        let customLot = [];
+        let custom = [];
+        if (cut.indexOf(',') != -1) {
+            let values =  cut.split(',');
+            values.forEach((val)=>{
+                customLot = newLot.filter((item) => {
+                                        return item.cut == val
+                                    });
+                if (customLot.length > 0) {
+                    newLot = custom.concat(customLot);
+                }
+            });
+        }else {
+            newLot = newLot.filter((item) => {
+                return item.cut == cut
+            });
+        }
+    }
+    if (!!color) {
+        let customLot = [];
+        let custom = [];
+        if (color.indexOf(',') != -1) {
+            let values =  color.split(',');
+            values.forEach((val)=>{
+                customLot = newLot.filter((item) => {
+                                        return item.color == val
+                                    });
+                if (customLot.length > 0) {
+                    newLot = custom.concat(customLot);
+                }
+            });
+        }else {
+            newLot = newLot.filter((item) => {
+                                    return item.color == color
+                                });
+        }
+    }
+    if (!!clarity) {
+        let customLot = [];
+        let custom = [];
+        if (clarity.indexOf(',') != -1) {
+            let values =  clarity.split(',');
+            values.forEach((val)=>{
+                customLot = newLot.filter((item) => {
+                                        return item.clarity == val
+                                    });
+                if (customLot.length > 0) {
+                    newLot = custom.concat(customLot);
+                }
+            });
+        }else {
+            newLot = newLot.filter((item) => {
+                                    return item.clarity == clarity
+                                });
+        }
     }
     // console.log(newLot);
     return newLot;

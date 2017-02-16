@@ -42,11 +42,11 @@ module.exports = (key, obj, userCurrency, cb) => {
       var objLength = objRangeLot.length +1;
       objRangeLot = {...objRangeLot,'lotNumbers.carat':{'from':valCaratWeightFrom,'to':valCaratWeightTo},'length':objLength};
     }
-    if(key == 'quantityFrom' || key == 'quantityTo'){
-      if(key == 'quantityFrom'){
+    if(key == 'lotQuantityFrom' || key == 'lotQuantityTo'){
+      if(key == 'lotQuantityFrom'){
         valQuantityFrom = fieldValus;
       }
-      if(key == 'quantityTo'){
+      if(key == 'lotQuantityTo'){
         valQuantityTo = fieldValus;
       }
       var objLength = objRangeLot.length +1;

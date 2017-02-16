@@ -320,7 +320,7 @@ const Confidence = require('confidence');
                             // console.log('listFileName-->',listFileName.length);
                             listFileName.forEach(function (name) {
                                 // console.log('name-->',name);
-                                emailBody = emailBody + `${number}. ${name} (${obj.ROOT_URL}/export_files/${name})\n`;
+                                emailBody = emailBody + `${number}. ${name} (http:${obj.ROOT_URL}/export_files/${name})\n`;
                                 number++;
                             });
                             emailBody = `Please download the files only by today from below link .\n` + emailBody;

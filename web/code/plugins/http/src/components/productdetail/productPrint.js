@@ -137,8 +137,6 @@ class productprint extends Component {
                   }else{
                       return(
                           <div>
-                            <h2>{Attrtitle}</h2>
-
                           </div>
                         );
                   }
@@ -197,7 +195,7 @@ class productprint extends Component {
 
       } else {
         if(gemstoneAttr.length > 0){
-          if(checkInarrayObject("type","Stone",gemstoneAttr)){
+          if(checkInarrayObject('type','Stone',gemstoneAttr)){
             return(
                 <div>
                   <h2>GEMSTONES ATTRIBUTES</h2>
@@ -223,7 +221,7 @@ class productprint extends Component {
            );
          }
          if(gemstoneAttr.length > 0){
-           if(checkInarrayObject("type","Loose Diamond",gemstoneAttr)){
+           if(checkInarrayObject('type','Loose Diamond',gemstoneAttr)){
              return(
                  <div>
                    <h2>DIAMONDS ATTRIBUTES</h2>
@@ -251,7 +249,7 @@ class productprint extends Component {
            );
          }
          if(gemstoneAttr.length > 0){
-           if(checkInarrayObjectOther("type",gemstoneAttr)){
+           if(checkInarrayObjectOther('type',gemstoneAttr)){
              return(
                  <div>
                    <h2>RAW MATERIAL ATTRIBUTES</h2>
@@ -313,8 +311,8 @@ class productprint extends Component {
         marginBottom:'20px'
       }
     };
-    let monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
+    let monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
     ];
     const { type } = this.props.productdetail;
     const { lotNumbers } = this.props;

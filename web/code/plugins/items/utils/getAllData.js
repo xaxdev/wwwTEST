@@ -17,35 +17,8 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, ke
   // }else{
   //   data = _.sortBy(data,sortBy,sortDirections);
   // }
-
-  exportData = data;
-  // console.log('data-->',data);
-  let maxPrice = 0;
-
+  // console.log(keys);
   data.forEach(function(item){
-    allData.push({'id': item.id,'reference':item.reference});
-    if(item.price != undefined){
-      if(item.price[userCurrency] != undefined){
-        // console.log('item.reference-->',item.reference);
-        // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
-        if(item.price[userCurrency] != 0){
-          maxPrice = Math.max(maxPrice, item.price[userCurrency]);
-        }else{
-          maxPrice = Math.max(maxPrice, 0);
-        }
-      }else{
-        item.price[userCurrency] = 0;
-        maxPrice = Math.max(maxPrice, 0);
-      }
-
-      // console.log('maxPrice-->',maxPrice);
-    }else{
-      if(maxPrice > 0){
-        maxPrice = maxPrice;
-      }else{
-        maxPrice = 0;
-      }
-    }
     // filter data from array lotnaumer
     if (item.type == 'STO') {
         let newLot = item.lotNumbers;
@@ -89,41 +62,125 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, ke
                                                             return item.markup <= fieldValus
                                                         });
                                 }
+                                if (field == 'cut') {
+                                    let customLot = [];
+                                    let custom = [];
+                                    // console.log('newLot-->',newLot);
+                                    if (fieldValus.indexOf(',') != -1) {
+                                        let values =  fieldValus.split(',');
+                                        values.forEach((val)=>{
+                                            customLot = newLot.filter((item) => {
+                                                                    return item.cut == val
+                                                                });
+                                            if (customLot.length > 0) {
+                                                newLot = custom.concat(customLot);
+                                            }
+                                        });
+                                    }else{
+                                        newLot = newLot.filter((item) => {
+                                                                return item.cut == fieldValus
+                                                            });
+                                    }
+                                }
+                                if (field == 'color') {
+                                    let customLot = [];
+                                    let custom = [];
+                                    if (fieldValus.indexOf(',') != -1) {
+                                        let values =  fieldValus.split(',');
+                                        values.forEach((val)=>{
+                                            customLot = newLot.filter((item) => {
+                                                                    return item.color == val
+                                                                });
+                                            if (customLot.length > 0) {
+                                                newLot = custom.concat(customLot);
+                                            }
+                                        });
+                                    }else{
+                                        newLot = newLot.filter((item) => {
+                                                                return item.color == fieldValus
+                                                            });
+                                    }
+                                }
+                                if (field == 'clarity') {
+                                    let customLot = [];
+                                    let custom = [];
+                                    if (fieldValus.indexOf(',') != -1) {
+                                        let values =  fieldValus.split(',');
+                                        values.forEach((val)=>{
+                                            customLot = newLot.filter((item) => {
+                                                                    return item.clarity == val
+                                                                });
+                                            if (customLot.length > 0) {
+                                                newLot = custom.concat(customLot);
+                                            }
+                                        });
+                                    }else{
+                                        newLot = newLot.filter((item) => {
+                                                                return item.clarity == fieldValus
+                                                            });
+                                    }
+                                    // console.log(newLot);
+                                }
                             })
                         }
                     })
                 }
         }
         item.lotNumbers = newLot;
-        console.log('lot-->',item.lotNumbers.length);
+        if (newLot.length == 0 ) {
+            data = data.filter((lot) => {
+                return lot.reference != item.reference
+            })
+        }
+    }
+  });
+
+  let maxPrice = 0;
+
+  data.forEach(function(item){
+    allData.push({'id': item.id,'reference':item.reference});
+
+    if(item.price != undefined){
+      if(item.price[userCurrency] != undefined){
+        // console.log('item.reference-->',item.reference);
+        // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
+        if(item.price[userCurrency] != 0){
+          maxPrice = Math.max(maxPrice, item.price[userCurrency]);
+        }else{
+          maxPrice = Math.max(maxPrice, 0);
+        }
+      }else{
+        item.price[userCurrency] = 0;
+        maxPrice = Math.max(maxPrice, 0);
+      }
+
+      // console.log('maxPrice-->',maxPrice);
+    }else{
+      if(maxPrice > 0){
+        maxPrice = maxPrice;
+      }else{
+        maxPrice = 0;
+      }
     }
   });
 
   let minPrice = maxPrice;
   data.forEach(function(item){
-
-    if(item.price != undefined){
-      if(item.price[userCurrency] != undefined){
-        minPrice = Math.min(minPrice, item.price[userCurrency]);
+      if(item.price != undefined){
+        if(item.price[userCurrency] != undefined){
+          minPrice = Math.min(minPrice, item.price[userCurrency]);
+        }else{
+          minPrice = Math.min(minPrice, 0);
+        }
       }else{
-        minPrice = Math.min(minPrice, 0);
+        minPrice = 0;
       }
-    }else{
-      minPrice = 0;
-    }
   });
+  exportData = data;
 
-  // let pageData = data.max(size) ;
-  // console.log('page-->',page);
-  // console.log('size-->',size);
-  // console.log('data-->',data.length);
   let pageData = data.slice( (page - 1) * size, page * size );
   let sumPrice = 0;
   let sumCost = 0;
-
-  // console.log('pageData-->',pageData.length);
-  // console.log('maxPrice-->',maxPrice);
-  // console.log('minPrice-->',minPrice);
 
   if(pageData.length != 0){
     data.forEach(function(item){
@@ -141,7 +198,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, ke
       // console.log('item.priceUSD-->',item.priceUSD);
 
       sumCostData.push(GetPriceCurrency(item,'updatedCost',userCurrency));
-      console.log('lot-last-->',item.lotNumbers.length);
+    //   console.log('lot-last-->',item.lotNumbers.length);
     });
 
     sumCostData.forEach(function(cost) {
