@@ -17,7 +17,7 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, ke
   // }else{
   //   data = _.sortBy(data,sortBy,sortDirections);
   // }
-
+  // console.log(keys);
   data.forEach(function(item){
     // filter data from array lotnaumer
     if (item.type == 'STO') {
@@ -61,6 +61,65 @@ module.exports = (response, sortDirections, sortBy, size, page, userCurrency, ke
                                     newLot = newLot.filter((item) => {
                                                             return item.markup <= fieldValus
                                                         });
+                                }
+                                if (field == 'cut') {
+                                    let customLot = [];
+                                    let custom = [];
+                                    // console.log('newLot-->',newLot);
+                                    if (fieldValus.indexOf(',') != -1) {
+                                        let values =  fieldValus.split(',');
+                                        values.forEach((val)=>{
+                                            customLot = newLot.filter((item) => {
+                                                                    return item.cut == val
+                                                                });
+                                            if (customLot.length > 0) {
+                                                newLot = custom.concat(customLot);
+                                            }
+                                        });
+                                    }else{
+                                        newLot = newLot.filter((item) => {
+                                                                return item.cut == fieldValus
+                                                            });
+                                    }
+                                }
+                                if (field == 'color') {
+                                    let customLot = [];
+                                    let custom = [];
+                                    if (fieldValus.indexOf(',') != -1) {
+                                        let values =  fieldValus.split(',');
+                                        values.forEach((val)=>{
+                                            customLot = newLot.filter((item) => {
+                                                                    return item.color == val
+                                                                });
+                                            if (customLot.length > 0) {
+                                                newLot = custom.concat(customLot);
+                                            }
+                                        });
+                                    }else{
+                                        newLot = newLot.filter((item) => {
+                                                                return item.color == fieldValus
+                                                            });
+                                    }
+                                }
+                                if (field == 'clarity') {
+                                    let customLot = [];
+                                    let custom = [];
+                                    if (fieldValus.indexOf(',') != -1) {
+                                        let values =  fieldValus.split(',');
+                                        values.forEach((val)=>{
+                                            customLot = newLot.filter((item) => {
+                                                                    return item.clarity == val
+                                                                });
+                                            if (customLot.length > 0) {
+                                                newLot = custom.concat(customLot);
+                                            }
+                                        });
+                                    }else{
+                                        newLot = newLot.filter((item) => {
+                                                                return item.clarity == fieldValus
+                                                            });
+                                    }
+                                    // console.log(newLot);
                                 }
                             })
                         }

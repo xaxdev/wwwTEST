@@ -63,6 +63,9 @@ const filterLotNumbers = (lotNumbers)=>{
     let lotNumber = paramsSearchStorage.lotNumber;
     let markupFrom = (!!paramsSearchStorage.markupFrom) ? parseFloat(paramsSearchStorage.markupFrom) : 0;
     let markupTo = (!!paramsSearchStorage.markupTo) ? parseFloat(paramsSearchStorage.markupTo) : 0;
+    let cut = paramsSearchStorage.cut;
+    let color = paramsSearchStorage.color;
+    let clarity = paramsSearchStorage.clarity;
 
     if (caratFrom > 0) {
         newLot = newLot.filter((item) => {
@@ -98,6 +101,63 @@ const filterLotNumbers = (lotNumbers)=>{
         newLot = newLot.filter((item) => {
                                 return item.markup <= markupTo
                             });
+    }
+    if (!!cut) {
+        let customLot = [];
+        let custom = [];
+        if (cut.indexOf(',') != -1) {
+            let values =  cut.split(',');
+            values.forEach((val)=>{
+                customLot = newLot.filter((item) => {
+                                        return item.cut == val
+                                    });
+                if (customLot.length > 0) {
+                    newLot = custom.concat(customLot);
+                }
+            });
+        }else {
+            newLot = newLot.filter((item) => {
+                return item.cut == cut
+            });
+        }
+    }
+    if (!!color) {
+        let customLot = [];
+        let custom = [];
+        if (color.indexOf(',') != -1) {
+            let values =  color.split(',');
+            values.forEach((val)=>{
+                customLot = newLot.filter((item) => {
+                                        return item.color == val
+                                    });
+                if (customLot.length > 0) {
+                    newLot = custom.concat(customLot);
+                }
+            });
+        }else {
+            newLot = newLot.filter((item) => {
+                                    return item.color == color
+                                });
+        }
+    }
+    if (!!clarity) {
+        let customLot = [];
+        let custom = [];
+        if (clarity.indexOf(',') != -1) {
+            let values =  clarity.split(',');
+            values.forEach((val)=>{
+                customLot = newLot.filter((item) => {
+                                        return item.clarity == val
+                                    });
+                if (customLot.length > 0) {
+                    newLot = custom.concat(customLot);
+                }
+            });
+        }else {
+            newLot = newLot.filter((item) => {
+                                    return item.clarity == clarity
+                                });
+        }
     }
     // console.log(newLot);
     return newLot;
