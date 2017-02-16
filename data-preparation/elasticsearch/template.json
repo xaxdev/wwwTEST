@@ -205,12 +205,20 @@
                     }
                 },
                 {
+                    "lotNumbers": {
+                        "match": "lotNumbers",
+                        "mapping": {
+                            "type": "nested"
+                         }
+                    }
+                },
+                {
                     "partial_matching": {
                         "index": "analyzed",
                         "match_mapping_type": "string",
                         "match_pattern": "regex",
                         "match": ".+",
-                        "unmatch": "hierarchy|stoneType|cutShape|cut|cutGrades|colorGrades|metalColor|metalType|site|warehouse|color|clarity|origin|collection|brand|dominant|dialColor|dialMetal|strapType|stoneTypeId|symmetry",
+                        "unmatch": "hierarchy|stoneType|cutShape|cut|cutGrades|colorGrades|metalColor|metalType|site|warehouse|color|clarity|origin|collection|brand|dominant|dialColor|dialMetal|strapType|stoneTypeId|symmetry|subType",
                         "mapping": {
                             "type": "string",
                             "analyzer": "ngram_filter_analyzer",

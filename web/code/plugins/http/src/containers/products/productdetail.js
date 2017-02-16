@@ -1,9 +1,9 @@
-import React,{ Component,PropTypes } from 'react';
+import React,{ Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Button,FormControl,Pagination } from 'react-bootstrap';
+import { Button, FormControl, Pagination } from 'react-bootstrap';
 import jQuery from 'jquery';
-import { reduxForm,reset } from 'redux-form';
+import { reduxForm, reset } from 'redux-form';
 import moment from 'moment-timezone';
 import * as productdetailaction from '../../actions/productdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/productDescription';
@@ -37,14 +37,13 @@ import ModalalertMsgObj from '../../utils/modalalertmsg';
 
 var Loading = require('react-loading');
 
-
 class productdetail extends Component {
-
-
   constructor(props) {
     super(props);
     this.handleKeyPressNavigation = this.handleKeyPressNavigation.bind(this);
     this.handleGo = this.handleGo.bind(this);
+    this.handleClickPageination = this.handleClickPageination.bind(this);
+    this.handleKeyPage = this.handleKeyPage.bind(this);
 
     this.state = {
       productdetailLoading: false,
@@ -58,12 +57,21 @@ class productdetail extends Component {
     const productId = this.props.params.id;
     const productlist = JSON.parse(sessionStorage.navigation);
     this.setState({
-      productdetailLoading: true
+        productdetailLoading: true
     });
 
     this.props.getProductDetail(productId,productlist).then(()=>{
-
+    // console.log(this.props);
       const  Detail  = this.props.productdetail;
+      const { lotNumbers } = this.props.productdetail;
+      const { stonePageSize } = this.props;
+      const params = {
+          datas: lotNumbers,
+          page: 1,
+          size: !!stonePageSize ? stonePageSize : 20
+      };
+      this.props.getLotNaumberPerPage(params);
+    //   console.log(Detail);
       if(Detail.type != 'STO' || Detail.type != 'CER'){
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
         const currency = logindata.currency;
@@ -71,11 +79,9 @@ class productdetail extends Component {
         this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
         }
       }
-
       this.setState({
         productdetailLoading: false
       });
-
     });
   }
   componentDidMount() {
@@ -174,11 +180,7 @@ class productdetail extends Component {
               printWindow.print();
             },500);
             return true;
-
       });
-
-
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -190,20 +192,25 @@ class productdetail extends Component {
       const productlist = this.props.productlist;
       this.props.getProductDetail(productId,productlist).then(()=>{
         const  Detail  = this.props.productdetail;
+        const { lotNumbers } = this.props.productdetail;
+        const { stonePageSize } = this.props;
+        const params = {
+            datas: lotNumbers,
+            page: 1,
+            size: !!stonePageSize ? stonePageSize : 20
+        };
+        this.props.getLotNaumberPerPage(params);
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
         const currency = logindata.currency;
         if(Detail.dominant){
         this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
        }
-
         this.setState({
           productdetailLoading: false
         });
       });
     }
   }
-
-
 
   renderDesc(){
 
@@ -224,6 +231,7 @@ class productdetail extends Component {
                   </div>
                 );
           case 'STO':
+
               Detailtitle='STONE DETAILS';
               return(
                   <div>
@@ -273,15 +281,43 @@ class productdetail extends Component {
                 );
         }
    }
+   handleClickPageination = (page) =>{
+       const { lotNumbers } = this.props.productdetail;
+       const { stonePageSize } = this.props;
+       const params = {
+           datas: lotNumbers,
+           page: page,
+           size: stonePageSize
+       };
+       this.props.getLotNaumberPerPage(params);
+   }
+   handleKeyPage = (page) =>{
+       const { fields: { stonepage },stonePageSize,totalpage } = this.props;
+
+       if (!!stonepage.value) {
+           if (Number(stonepage.value) <= totalpage && Number(stonepage.value) > 0) {
+               const { lotNumbers } = this.props.productdetail;
+               const params = {
+                   datas: lotNumbers,
+                   page: Number(stonepage.value),
+                   size: stonePageSize
+               };
+               this.props.getLotNaumberPerPage(params);
+           }
+       }
+   }
    renderAttr(){
      const  Detail  = this.props.productdetail;
+     const { fields:{ stonepage },
+                lotNumbers, stonActivePage, submitting, totalpage,
+                stonePageSize,filterSearch } = this.props;
+
      let  Attrtitle  = '';
      if(!Detail){
        return(
          <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
        );
      }
-
      switch (Detail.type) {
            case 'JLY':
                  Attrtitle='JEWELRY ATTRIBUTES';
@@ -293,12 +329,24 @@ class productdetail extends Component {
                    );
            case 'STO':
                   Attrtitle='STONE ATTRIBUTES';
-                  return(
-                      <div>
-                        <h2>{Attrtitle}</h2>
-                            <ProductStoneAttributes {...Detail} />
-                      </div>
-                    );
+                //   const totalpage = Math.ceil(Detail.lotNumber.length/this.state.stonePageSize);
+                if (lotNumbers.length > 0) {
+                    return(
+                        <div>
+                          <h2>{Attrtitle}</h2>
+                              <ProductStoneAttributes Detail={Detail} pageSize={stonePageSize}
+                                  totalpage={totalpage}
+                                  lotNumbers={lotNumbers} onClickPage={this.handleClickPageination}
+                                  activePage={stonActivePage} onKeyPage={this.handleKeyPage} stonepage={stonepage}/>
+                        </div>
+                      );
+                }else{
+                    return(
+                        <div>
+                        </div>
+                      );
+                }
+
            case 'WAT':
                   Attrtitle='WATCH ATTRIBUTES';
                   return(
@@ -827,9 +875,12 @@ class productdetail extends Component {
     const productIndex = this.props.productindex;
     const productindexplus = this.props.productindexplus;
     const { type, setReference, gemstones } = this.props.productdetail;
+    const { lotNumbers, stonePageSize, stonActivePage } = this.props;
+
     let isCertificate = false;
 
     if(gemstones != undefined){
+
         gemstones.map((item) => {
             if (!!item.certificate) {
                 isCertificate = true;
@@ -889,7 +940,8 @@ class productdetail extends Component {
                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterAttr()}</div>
                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterRawmatirialAttr()}</div>
                 <div id="dvContainer" className="hidden">
-                   <ProductPrint productdetail={this.props.productdetail}/>
+                    <ProductPrint productdetail={this.props.productdetail}
+                        lotNumbers={lotNumbers} pageSize={stonePageSize} activePage={stonActivePage}/>
                 </div>
               </div>
 
@@ -917,13 +969,18 @@ function mapStateToProps(state) {
     message: state.productdetail.message,
     //setreference:state.productdetail.setreference,
     //productreletepage: state.productdetail.reletepage,
-    productlist:state.productdetail.productlist
+    productlist: state.productdetail.productlist,
+    lotNumbers: state.productdetail.lotNumbers,
+    stonActivePage: state.productdetail.stonActivePage,
+    totalpage: state.productdetail.totalpage,
+    stonePageSize: state.productdetail.stonePageSize,
+    filterSearch: state.searchResult.paramsSearch
    }
 }
 
 module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
   form: 'Pageform',
-  fields: ['pagego','reletepage','oldCatalogName','newCatalogName','validateCatalogName'],
+  fields: ['pagego','reletepage','oldCatalogName','newCatalogName','validateCatalogName','stonepage'],
   validate:validateCatalog
 },mapStateToProps,productdetailaction)(productdetail)
 

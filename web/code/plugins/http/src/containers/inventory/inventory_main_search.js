@@ -16,6 +16,8 @@ class InventorySearch extends Component {
   }
   handleSubmit(data) {
 
+    //   console.log(data);
+
     var { filters, paramsSearch, activeTabCategory, isAdvance } = this.props;
     var that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
@@ -144,6 +146,62 @@ class InventorySearch extends Component {
               propname['hierarchy'] = code.trim();
             }
             break;
+          case 'color':
+              if(valueKeys != ''){
+                propname['lotNumbers.'+keycat]= valueKeys;
+              }else{
+                propname[keycat]= valueKeys;
+              }
+              break;
+          case 'cut':
+              if(valueKeys != ''){
+                propname['lotNumbers.'+keycat]= valueKeys;
+              }else{
+                propname[keycat]= valueKeys;
+              }
+              break;
+          case 'clarity':
+              if(valueKeys != ''){
+                propname['lotNumbers.'+keycat]= valueKeys;
+              }else{
+                propname[keycat]= valueKeys;
+              }
+              break;
+          case 'lotNumber':
+              if(valueKeys != ''){
+                propname['lotNumbers.'+keycat]= valueKeys;
+              }else{
+                propname[keycat]= valueKeys;
+              }
+              break;
+          case 'lotQuantityFrom':
+              if(valueKeys != ''){
+                propname['lotNumbers.'+keycat]= valueKeys;
+              }else{
+                propname[keycat]= valueKeys;
+              }
+              break;
+          case 'lotQuantityTo':
+              if(valueKeys != ''){
+                propname['lotNumbers.'+keycat]= valueKeys;
+              }else{
+                propname[keycat]= valueKeys;
+              }
+              break;
+          case 'totalCaratWeightFrom':
+              if(valueKeys != ''){
+                propname['lotNumbers.'+keycat]= valueKeys;
+              }else{
+                propname[keycat]= valueKeys;
+              }
+              break;
+          case 'totalCaratWeightTo':
+              if(valueKeys != ''){
+                propname['lotNumbers.'+keycat]= valueKeys;
+              }else{
+                propname[keycat]= valueKeys;
+              }
+              break;
           default:
 
             if(keycat.indexOf('gemstone_') != -1){

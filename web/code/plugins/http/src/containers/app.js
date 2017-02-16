@@ -23,7 +23,7 @@ class App extends Component {
           <div className="container">
             <div className="text-muted">
               <div className="text-left float-l">Copyright © 2016 Mouawad. All Rights Reserved.  Design And Develop by ITORAMA</div>
-              <div className="text-right float-r">Version 2.0</div>
+              <div className="text-right float-r">Version 1.5</div>
             </div>
           </div>
         </footer>

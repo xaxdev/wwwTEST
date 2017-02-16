@@ -5,6 +5,7 @@ const sanitize = value => value.replace('(', '\\(').replace(')', '\\)').replace(
 const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_cutName', 'gemstone_color', 'gemstone_colorName', 'gemstone_clarity', 'gemstone_clarityName', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence', 'gemstone_stoneTypeId', 'gemstone_stoneTypeName', 'gemstone_type', 'gemstone_unit'];
 
 const mapProperties = (item, record, exchangeRates) => {
+    // console.log(record);
     // add gemstone, if not existed
     if (!!record.gemstone_id && item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
         const gemstone = {};
@@ -68,6 +69,27 @@ const mapProperties = (item, record, exchangeRates) => {
         }
     }
 
+    if (record.type === 'STO' && !!record.lotNumber) {
+        const stoneLotNumber = {
+            stoneType: record.subType,
+            stoneTypeName: record.subTypeName,
+            cut: record.cut,
+            cutName: record.cutName,
+            color: record.color,
+            colorName: record.colorName,
+            clarity: record.clarity,
+            clarityName: record.clarityName,
+            lotNumber: record.lotNumber,
+            lotQty: record.quantity,
+            carat: record.carat,
+            markup: record.markup,
+            certificateNo: record.CertificateNo,
+            laboratory: record.CertificateAgency,
+            certifiedDate: record.CertifiedDate
+        };
+        item.lotNumbers.push(stoneLotNumber);
+    }
+
     // add image, if not existed
     if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
         const image = {
@@ -111,6 +133,48 @@ const mapProperties = (item, record, exchangeRates) => {
             }
         }
     }
+
+    gemstoneProperties.forEach(property => {
+        if (item[property] !== undefined) {
+            delete item[property];
+        }
+    });
+
+    if (item.imageName !== undefined) {
+      delete item.imageName;
+    }
+
+    if (item.imageType !== undefined) {
+      delete item.imageType
+    }
+
+    if (item.CertificateNo !== undefined) {
+        delete item.CertificateNo;
+    }
+
+    if (item.CertificateAgency !== undefined) {
+        delete item.CertificateAgency;
+    }
+
+    if (item.CertificateWarehouse !== undefined) {
+        delete item.CertificateWarehouse;
+    }
+
+    if (item.CertifiedDate !== undefined) {
+        delete item.CertifiedDate;
+    }
+
+    if (item.CertificateImageName !== undefined) {
+        delete item.CertificateImageName;
+    }
+
+    if (item.CertificateImageType !== undefined) {
+        delete item.CertificateImageType;
+    }
+};
+
+const mapPropertiesLotNumber = (item, record, exchangeRates) => {
+    // console.log(record);
 
     gemstoneProperties.forEach(property => {
         if (item[property] !== undefined) {
@@ -239,4 +303,47 @@ const mapCertificate = recordset => {
     return items
 }
 
-export { mapItem, mapMaster, mapCertificate };
+const mapStoneItem = (recordset, exchangeRates) => {
+    const items = [];
+    let id = 0;
+
+    for (let record of recordset) {
+        // console.log(record.id);
+        if (id != record.id) {
+            id = Number(record.id);
+            const item = {...record};
+            item.gemstones = [];
+            item.gallery = [];
+            item.certificates = [];
+            item.lotNumbers = [];
+            calculatePrices(item, exchangeRates);
+            items.push(item);
+        }
+        // console.log(items);
+        const latest = items[items.length - 1];
+        mapProperties(latest, record, exchangeRates);
+    }
+
+    return items;
+};
+
+const mapStoneLotNumber = (recordset, exchangeRates) => {
+    const lotNumbers = [];
+    let id = 0;
+
+    for (let record of recordset) {
+        // console.log(record.id);
+
+        const item = {...record};
+        calculatePrices(item, exchangeRates);
+        lotNumbers.push(item);
+
+        // console.log(items);
+        const latest = lotNumbers[lotNumbers.length - 1];
+        mapPropertiesLotNumber(latest, record, exchangeRates);
+    }
+
+    return lotNumbers;
+};
+
+export { mapItem, mapMaster, mapCertificate, mapStoneItem, mapStoneLotNumber };
