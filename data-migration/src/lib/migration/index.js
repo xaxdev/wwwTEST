@@ -18,6 +18,7 @@ const migrate = async index => {
         await item.getOBA(index, exchangeRates);
         await item.getAccessory(index, exchangeRates);
         await item.getSpareParts(index, exchangeRates);
+        await item.getMovementActivities(index);
 
         await master.getCompany(index);
         await master.getLocation(index);

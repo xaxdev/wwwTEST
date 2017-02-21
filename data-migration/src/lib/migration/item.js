@@ -39,6 +39,22 @@ const settingsLot = async (index, exchangeRates, path, mapper) => ({
     exchangeRates
 });
 
+const settingsMovement = async (index, path, mapper) => ({
+    ...config,
+    elasticsearch: {
+        index: index,
+        type: 'movements',
+        ...config.elasticsearch
+    },
+    mapper,
+    parallelization: {
+        table: constant.MOVEMENT_TABLE,
+        field: constant.MOVEMENT_ID,
+        template: await file.read(path),
+        ...config.parallelization
+    }
+});
+
 const getExchangeRates = async _ => {
     try {
         console.log('Exchange Rate!!!');
@@ -141,5 +157,15 @@ const getLotNumbers = async (index, exchangeRates) => {
     }
 };
 
+const getMovementActivities = async (index) => {
+    try {
+        console.log('MovementActivities!!!');
+        const total = await core.parallelize(await settingsMovement(index, constant.MOVEMENT_QUERY, mapper.mapMovement));
+        console.log(`${total} items were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
 export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, getAccessory,
-        getSpareParts, getLotNumbers };
+        getSpareParts, getLotNumbers, getMovementActivities };

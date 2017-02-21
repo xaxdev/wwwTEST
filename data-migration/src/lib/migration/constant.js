@@ -1,6 +1,8 @@
 export const MAIN_DATABASE = 'ITORAMA';
 export const ITEM_TABLE = '[ITORAMA].[dbo].[Items]';
 export const ITEM_ID = '[Id]';
+export const MOVEMENT_TABLE = '[ITORAMA].[dbo].[MovementActivities]';
+export const MOVEMENT_ID = '[Id]';
 
 // Exchange Rates
 export const EXCHANGE_RATE_QUERY = './query/exchange_rate.sql';
@@ -61,3 +63,6 @@ export const CERTIFICATE_QUERY = './query/certificate.sql';
 
 // Stone Lot Number
 export const STONESLOT_QUERY = './query/lot.sql';
+
+// Movement Activities
+export const MOVEMENT_QUERY = './query/activity.sql';
