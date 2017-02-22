@@ -40,5 +40,15 @@ export default [
         method: 'GET',
         path: '/exportpdf/{id}',
         config: controllers.exportpdf
-    }
+    },
+    {
+        method: 'GET',
+        path: '/webnames',
+        config: controllers.getnameswithshared
+    },
+    {
+        method: 'POST',
+        path: '/shared',
+        config: controllers.saveshared
+    },
 ]
