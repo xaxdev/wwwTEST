@@ -38,7 +38,7 @@ export default {
 
                 if (findShared !== null) {
                     const sharedUser = typeof(findShared.users) !== "undefined" ? findShared.users : []
-                    findShared.users = _.unionBy(_.union(sharedUser, users), "id")
+                    findShared.users = _.uniqBy(_.union(sharedUser, users), "id")
                 }
                 else {
                     findShared.users = users
