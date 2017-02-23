@@ -900,25 +900,25 @@ const tooltipHierarchy = (
   <Tooltip id="tooltip"><strong>Product Hierarchy!</strong></Tooltip>
 );
 const tooltipWatchCategory = (
-  <Tooltip id="tooltip"><strong>Watch Category!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Type of the Watch (eg. Ladies Watch, Gents Watch etc.)</strong></Tooltip>
 );
 const tooltipCollection = (
-  <Tooltip id="tooltip"><strong>Collection!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Collection (eg. Grand Ellipse Royale, Grand Ellipse Reveil, Grand Ellipse Lady etc.) of the Watch</strong></Tooltip>
 );
 const tooltipBrand = (
-  <Tooltip id="tooltip"><strong>Brand!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Seacrh By Brand (eg. Mouawad, Chopard, Cartier etc.) </strong></Tooltip>
 );
 const tooltipMustHave = (
-  <Tooltip id="tooltip"><strong>Must Have!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Must Have (yes/no)</strong></Tooltip>
 );
 const tooltipMetalType = (
-  <Tooltip id="tooltip"><strong>Metal Type!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Metal Type of the Watch</strong></Tooltip>
 );
 const tooltipMetalColour = (
-  <Tooltip id="tooltip"><strong>Metal Colour!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Metal Color of the Watch</strong></Tooltip>
 );
 const tooltipLimitedEdition = (
-  <Tooltip id="tooltip"><strong>Limited Edition!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search Limited Edition Watches</strong></Tooltip>
 );
 const tooltipLimitedEditionNumber = (
   <Tooltip id="tooltip"><strong>Limited Edition Number!</strong></Tooltip>
@@ -927,7 +927,7 @@ const tooltipSerialNumber = (
   <Tooltip id="tooltip"><strong>Serial Number!</strong></Tooltip>
 );
 const tooltipMovement = (
-  <Tooltip id="tooltip"><strong>Movement!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Movement of the Watch (eg. Quartz, Automatic, Manual etc.) </strong></Tooltip>
 );
 const tooltipTotalCost = (
   <Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>
@@ -948,25 +948,25 @@ const tooltipProductionDate = (
   <Tooltip id="tooltip"><strong>Production Date</strong></Tooltip>
 );
 const tooltipDialIndex = (
-  <Tooltip id="tooltip"><strong>Dial Index</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Dial Index of the Watch (eg. Diamond on Index, Ruby on Index etc.)</strong></Tooltip>
 );
 const tooltipDialColor = (
-  <Tooltip id="tooltip"><strong>Dial Color</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Dial Color of the Watch (eg. Black, Blue, Brown etc.)</strong></Tooltip>
 );
 const tooltipDialMetal = (
-  <Tooltip id="tooltip"><strong>Dial Metal</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Dial Metal of the Watch (eg. Gold, Rose Gold, Steel etc.)</strong></Tooltip>
 );
 const tooltipBuckleType = (
-  <Tooltip id="tooltip"><strong>Buckle Type</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Buckle Type of the Watch</strong></Tooltip>
 );
 const tooltipStrapType = (
-  <Tooltip id="tooltip"><strong>Strap Type</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Strap Type of the Watch (Steel, Leather, Rubber etc.)</strong></Tooltip>
 );
 const tooltipStrapColor = (
-  <Tooltip id="tooltip"><strong>Strap Color</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Strap Color of the Watch (eg. Blue, Black, Brown etc.)</strong></Tooltip>
 );
 const tooltipComplication = (
-  <Tooltip id="tooltip"><strong>Complication</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Complication of the Watch</strong></Tooltip>
 );
 
 module.exports = InventoryWatch;

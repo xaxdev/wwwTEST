@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select';
 import Calendar from 'react-input-calendar';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
@@ -246,7 +247,11 @@ class InventorySparePart extends Component {
             </div>
             <div className="col-lg-6  form-horizontal">
               <div className="form-group">
-                <label className="col-sm-4 control-label">Spare Part Type</label>
+                <label className="col-sm-4 control-label tooltiop-span">Spare Part Type
+                  <OverlayTrigger placement="top" overlay={tooltipSparePartType}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.SparePartTypeValue}
                     placeholder="Select your Spare Part Type"
@@ -255,7 +260,11 @@ class InventorySparePart extends Component {
                  </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Buckle Type</label>
+                <label className="col-sm-4 control-label tooltiop-span">Buckle Type
+                  <OverlayTrigger placement="top" overlay={tooltipBuckleType}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.BuckleTypeValue}
                     placeholder="Select your Buckle Type"
@@ -264,7 +273,11 @@ class InventorySparePart extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Type</label>
+                <label className="col-sm-4 control-label tooltiop-span">Metal Type
+                  <OverlayTrigger placement="top" overlay={tooltipMetalType}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.MetalTypeValue}
                     placeholder="Select your Metal Type"
@@ -303,7 +316,11 @@ class InventorySparePart extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Colour</label>
+                <label className="col-sm-4 control-label tooltiop-span">Metal Colour
+                  <OverlayTrigger placement="top" overlay={tooltipMetalColour}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.MetalColourValue}
                     placeholder="Select your Metal Colour"
@@ -318,5 +335,18 @@ class InventorySparePart extends Component {
     );
   }
 }
+
+const tooltipSparePartType = (
+  <Tooltip id="tooltip"><strong>Search By Type of Spare Part (eg. Sparepart, Strap etc.)</strong></Tooltip>
+);
+const tooltipBuckleType = (
+  <Tooltip id="tooltip"><strong>Search By Type of Buckle</strong></Tooltip>
+);
+const tooltipMetalType = (
+  <Tooltip id="tooltip"><strong>Search By Metal Type of the Product</strong></Tooltip>
+);
+const tooltipMetalColour = (
+  <Tooltip id="tooltip"><strong>Search By Metal Color of the Product</strong></Tooltip>
+);
 
 module.exports = InventorySparePart;
