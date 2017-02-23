@@ -7,7 +7,7 @@ SELECT goc.[Id]
       ,ISNULL(goc.[First_Name], '') AS 'firstName'
       ,ISNULL(goc.[Middle_Name], '') AS 'middleName'
       ,ISNULL(goc.[Last_Name], '') AS 'lastName'
-      ,ISNULL(goc.[Item_Referance], '') AS 'referance'
+      ,ISNULL(goc.[Item_Referance], '') AS 'reference'
       ,ISNULL(goc.[Sku], '') AS 'sku'
       ,goc.[Qty]
       ,ISNULL(goc.[Comments], '') AS 'comments'
