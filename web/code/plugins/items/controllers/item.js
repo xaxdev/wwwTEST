@@ -19,7 +19,6 @@ module.exports = {
                     keepAlive: false
                 });
     const id = request.params.id;
-
     internals.query = JSON.parse(
     `{
       "query":
@@ -66,6 +65,7 @@ module.exports = {
     const getMovements = getProductDetail.then((response) => {
         const [productResult] = response.hits.hits.map((element) => element._source);
         const query =  GetMovement(productResult.reference,productResult.sku);
+        // console.log(JSON.stringify(query, null, 2));
 
         return elastic.search({
                 index: 'mol',
@@ -77,6 +77,7 @@ module.exports = {
     const getGOCs = getProductDetail.then((response) => {
         const [productResult] = response.hits.hits.map((element) => element._source);
         const query =  GetGOC(productResult.reference,productResult.sku);
+        // console.log(JSON.stringify(query, null, 2));
 
         return elastic.search({
                 index: 'mol',
@@ -133,7 +134,7 @@ module.exports = {
             movement: movement,
             goc: goc
         };
-        
+
         productResult.activities = activities;
 
         elastic.close();
