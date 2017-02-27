@@ -1,6 +1,9 @@
 const Boom = require('boom');
 import Elasticsearch from 'elasticsearch'
 const Promise = require('bluebird');
+const GetMovement = require('../utils/getMovement');
+const GetGOC = require('../utils/getGOC');
+
 const internals = {
   filters: []
 };
@@ -58,10 +61,31 @@ module.exports = {
               type: 'setitems',
               body: query
             });
-
     });
 
-    Promise.all([getProductDetail, getSetreference]).spread((productDetail, setReference) => {
+    const getMovements = getProductDetail.then((response) => {
+        const [productResult] = response.hits.hits.map((element) => element._source);
+        const query =  GetMovement(productResult.reference,productResult.sku);
+
+        return elastic.search({
+                index: 'mol',
+                type: 'movements',
+                body: query
+              });
+    });
+
+    const getGOCs = getProductDetail.then((response) => {
+        const [productResult] = response.hits.hits.map((element) => element._source);
+        const query =  GetGOC(productResult.reference,productResult.sku);
+
+        return elastic.search({
+                index: 'mol',
+                type: 'movements',
+                body: query
+              });
+    });
+
+    Promise.all([getProductDetail, getSetreference, getMovements, getGOCs]).spread((productDetail, setReference, movements, gocs) => {
 
         const [productResult] = productDetail.hits.hits.map((element) => element._source);
 
@@ -102,6 +126,16 @@ module.exports = {
 
             productResult.setReferenceData = responseSetData;
         }
+
+        const movement = movements.hits.hits.map((element) => element._source);
+        const goc = gocs.hits.hits.map((element) => element._source);
+        const activities = {
+            movement: movement,
+            goc: goc
+        };
+        
+        productResult.activities = activities;
+
         elastic.close();
         return reply(JSON.stringify(productResult, null, 4));
     })
