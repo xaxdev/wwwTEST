@@ -128,7 +128,11 @@ module.exports = {
             productResult.setReferenceData = responseSetData;
         }
 
-        const movement = movements.hits.hits.map((element) => element._source);
+        let movement = movements.hits.hits.map((element) => element._source);
+        // console.log(movement);
+        movement = movement.filter((item) => {
+            return item.physicalInvent != 1;
+        })
         const goc = gocs.hits.hits.map((element) => element._source);
         const activities = {
             movement: movement,
