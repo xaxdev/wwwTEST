@@ -29,13 +29,13 @@ module.exports = {
         const getMovements =  elastic
                 .search({
                     index: 'mol',
-                    type: 'movements',
+                    type: 'activities',
                     body: internals.queryMovement
                 });
         const getGOCs =  elastic
                 .search({
                     index: 'mol',
-                    type: 'movements',
+                    type: 'activities',
                     body: internals.queryGOC
                 });
         Promise.all([getMovements, getGOCs]).spread((movements, gocs) => {

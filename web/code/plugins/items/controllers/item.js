@@ -69,7 +69,7 @@ module.exports = {
 
         return elastic.search({
                 index: 'mol',
-                type: 'movements',
+                type: 'activities',
                 body: query
               });
     });
@@ -81,7 +81,7 @@ module.exports = {
 
         return elastic.search({
                 index: 'mol',
-                type: 'movements',
+                type: 'activities',
                 body: query
               });
     });

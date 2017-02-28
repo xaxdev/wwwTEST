@@ -90,125 +90,7 @@ class UsersNewFrom extends Component {
           }
       }
   }
-  componentDidUpdate(){
-    // console.log('componentDidUpdate-->');
-    // if (this.state.selectedOnHandLocation) {
-    //   if (this.state.clickAllLocarion) {
-    //     // console.log('clickAllLocarion-->true');
-    //     let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
-    //
-    //     let values = [].filter.call(select.options, function(o) {
-    //         return o.selected || !o.selected;
-    //     }).map(function(o) {
-    //         return o.value;
-    //     });
-    //
-    //     _.each(select.options,function (o) {
-    //       o.selected = true;
-    //     });
-    //
-    //     let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
-    //
-    //     let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
-    //         return o.selected || !o.selected;
-    //     }).map(function(o) {
-    //         return o.value;
-    //     });
-    //
-    //     _.each(selectWarehouse.options,function (o) {
-    //       o.selected = true;
-    //     });
-    //   } else {
-    //     // console.log('clickAllLocarion-->false');
-    //     let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
-    //
-    //     let values = [].filter.call(select.options, function(o) {
-    //         return o.selected || !o.selected;
-    //     }).map(function(o) {
-    //         return o.value;
-    //     });
-    //
-    //     _.each(select.options,function (o) {
-    //       o.selected = false;
-    //     });
-    //
-    //     let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
-    //
-    //     let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
-    //         return o.selected || !o.selected;
-    //     }).map(function(o) {
-    //         return o.value;
-    //     });
-    //
-    //     _.each(selectWarehouse.options,function (o) {
-    //       o.selected = false;
-    //     });
-    //   }
-    // }else{
-    //   // Click not checked all location
-    //   let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
-    //
-    //   let valuesAll = [].filter.call(select.options, function(o) {
-    //       return o.selected || !o.selected;
-    //   }).map(function(o) {
-    //       return o.value;
-    //   });
-    //
-    //   let values = [].filter.call(select.options, function(o) {
-    //       return o.selected;
-    //   }).map(function(o) {
-    //       return o.value;
-    //   });
-    //
-    //   if (!this.state.changedOnHandLocation) {
-    //     _.each(select.options,function (o) {
-    //       o.selected = false;
-    //     });
-    //   }
-    //
-    //   if(this.state.selectedOnHandWarehouse){
-    //     // console.log('this.state.clickAllWarehouse-->',this.state.clickAllWarehouse);
-    //     if (this.state.clickAllWarehouse) {
-    //         let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
-    //         _.each(selectWarehouse.options,function (o) {
-    //           o.selected = true;
-    //         });
-    //     }
-    //   }else{
-    //
-    //     if (!this.state.clickAllWarehouse) {
-    //       // console.log('this.state.clickAllWarehouse--> !false');
-    //       let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
-    //       let valuesWarehouseAll = [].filter.call(selectWarehouse.options, function(o) {
-    //           return o.selected || !o.selected;
-    //       }).map(function(o) {
-    //           return o.value;
-    //       });
-    //       let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
-    //           return o.selected
-    //       }).map(function(o) {
-    //           return o.value;
-    //       });
-    //       // console.log('valuesWarehouseAll-->',valuesWarehouseAll.length);
-    //       // console.log('valuesWarehouse-->',valuesWarehouse.length);
-    //       if (valuesWarehouseAll.length == valuesWarehouse.length) {
-    //         _.each(selectWarehouse.options,function (o) {
-    //           o.selected = false;
-    //         });
-    //       }else{
-    //         // console.log('valuesWarehouseAll.length != valuesWarehouse.length-->');
-    //         if(!this.state.changedOnHandLocation){
-    //           _.each(selectWarehouse.options,function (o) {
-    //             o.selected = false;
-    //           });
-    //         }
-    //       }
-    //     }else{
-    //       // console.log('this.state.clickAllWarehouse-->true');
-    //     }
-    //   }
-    // }
-  }
+
   changedOnHandWarehouseChecked = e => {
     //   console.log('changedOnHandWarehouseChecked-->');
       let el = e.target;
@@ -765,7 +647,7 @@ class UsersNewFrom extends Component {
               firstName,lastName,username,email,password,role,currency,status,company,location,warehouse
               ,productGroup,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT
               ,productGroupACC,productGroupOBA,productGroupSPA,onhandValue,webOnly,onhandLocation,onhandAll
-              ,permissionId,onhandWarehouse,onhandWarehouseValue,onhandLocationValue,productGroupErr
+              ,permissionId,onhandWarehouse,onhandWarehouseValue,onhandLocationValue,productGroupErr,movement
           },handleSubmit,invalid,submitting } = this.props;
     // const datas = [{value:'One',selected:true},{value:'Two'},{value:'Three'},{value:'Four',label:'Four Label'}];
 
@@ -1029,6 +911,12 @@ class UsersNewFrom extends Component {
                           </div>
                         </div>
                         <div className="form-group">
+                          <label className="col-sm-2 control-label">Movement Activitiy</label>
+                          <div className="col-sm-7">
+                            <input type="checkbox" {...movement}/>
+                          </div>
+                        </div>
+                        <div className="form-group">
                           <label className="col-sm-2 control-label">View On-hand</label>
                           <div className="col-sm-4">
                               <input type="checkbox" value="Location" {...onhandLocation}
@@ -1118,6 +1006,7 @@ module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
   fields: ['firstName','lastName','username','email','password','role','currency','status','company',
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
           ,'productGroupACC','productGroupOBA','productGroupSPA','onhandValue','webOnly','permissionId'
-          ,'onhandLocation','onhandAll','onhandWarehouse','onhandWarehouseValue','onhandLocationValue','productGroupErr'],
+          ,'onhandLocation','onhandAll','onhandWarehouse','onhandWarehouseValue','onhandLocationValue','productGroupErr'
+          ,'movement'],
   validate:validateUserAdd
 },mapStateToProps, mapDispatchToProps)(UsersNewFrom);

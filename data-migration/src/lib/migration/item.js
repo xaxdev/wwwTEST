@@ -43,7 +43,7 @@ const settingsMovement = async (index, path, mapper, table, field) => ({
     ...config,
     elasticsearch: {
         index: index,
-        type: 'movements',
+        type: 'activities',
         ...config.elasticsearch
     },
     mapper,
