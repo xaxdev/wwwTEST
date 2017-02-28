@@ -756,6 +756,13 @@ select.form-searchresult option{
 	float: left;
 	cursor:pointer;
 }
+.icon-movement{
+	background: url(/images/icon-movement.png) no-repeat center;
+	width:40px;
+	height: 40px;
+	float: left;
+	cursor:pointer;
+}
 .icon-excel{
 	background: url(/images/icon-excel.png) no-repeat center;
 	width:40px;

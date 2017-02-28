@@ -1006,7 +1006,7 @@ class productdetail extends Component {
                     <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a> :
                     <a><div className=""></div></a>
                   }
-                  <a><div className="icon-add margin-l10" onClick={ this.showmovement }></div></a>
+                  <a><div className="icon-movement margin-l10" onClick={ this.showmovement }></div></a>
                 </div>
                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
@@ -1039,39 +1039,43 @@ class productdetail extends Component {
         {this.renderAlertmsgCer()}
       </div>
        <div className={`row ${!this.state.showmovement ? 'hide' : ''}`}>
-         <div className="col-md-4 col-sm-12">
-           { !!gallery && gallery.length !== 0 &&
+         <div className="col-sm-12">
+           <div className="panel panel-default">
+             <div className="panel-body padding-ft0">
+               <div className="col-md-4 col-sm-12">
+                 { !!gallery && gallery.length !== 0 &&
 
-             <ReactImageFallback
-                  src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
-                    fallbackImage="/images/blank.gif"
-                    initialImage="/images/blank.gif"
-                    width={120}
-                    height={120}
-                    className="img-responsive" />
-             }
-         </div>
-         <div className="col-md-8 col-sm-12">
-           {this.renderDescmovement()}
-         </div>
+                   <ReactImageFallback
+                        src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
+                          fallbackImage="/images/blank.gif"
+                          initialImage="/images/blank.gif"
+                          width={200}
+                          height={200}
+                          className="img-responsive image-gallery-image" />
+                   }
+               </div>
+               <div className="col-md-8 col-sm-12">
+                 {this.renderDescmovement()}
+               </div>
 
-         <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">
-           <h2>GOC</h2>
-           { !!activities && !!activities.goc &&
-           <Goclist list={activities.goc}/>
-           }
-         </div>
+               <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">
+                 <h2>GOC</h2>
+                 { !!activities && !!activities.goc &&
+                 <Goclist list={activities.goc}/>
+                 }
+               </div>
 
-         <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">
-           <h2>INTERCOMPANY TRANSFERS</h2>
-           { !!activities && !!activities.movement &&
-             <Movementlist list={activities.movement}/>
-           }
+               <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">
+                 <h2>INTERCOMPANY TRANSFERS</h2>
+                 { !!activities && !!activities.movement &&
+                   <Movementlist list={activities.movement}/>
+                 }
 
-         </div>
+               </div>
 
-
-
+             </div>
+          </div>
+        </div>
        </div>
 
     </div>
