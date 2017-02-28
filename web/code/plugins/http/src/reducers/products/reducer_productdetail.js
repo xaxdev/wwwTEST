@@ -1,20 +1,22 @@
 import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,FETCH_SETREFERENCE,ADD_CATALOG,ADD_CATALOG_SUCCESS,
-        GET_LOTNUMBER,GET_LOTNUMBERPAGE} from '../../constants/productdetailconstants';
+        GET_LOTNUMBER,GET_LOTNUMBERPAGE,GET_MOVEMENT} from '../../constants/productdetailconstants';
 import { GET_CATALOGNAME} from '../../constants/itemconstants';
 const INITIAL_STATE = {detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1,
                         setreference:'',ListCatalogName: [], lotNumbers: [],stonActivePage:1,totalpage:null
-                        ,stonePageSize:20};
+                        ,stonePageSize:20, activities:[]};
 
 
 export default function(state = INITIAL_STATE,action){
     // console.log(action.type);
 
     switch (action.type) {
-        case GET_LOTNUMBERPAGE:
-          return {...state, lotNumbers: !!action.datas ? filterLotNumbers(action.datas).slice( (action.page - 1) * action.size, action.page * action.size ) : []
+      case GET_MOVEMENT:
+        return {...state, activities: !!action.datas ? action.datas : []}
+      case GET_LOTNUMBERPAGE:
+        return {...state, lotNumbers: !!action.datas ? filterLotNumbers(action.datas).slice( (action.page - 1) * action.size, action.page * action.size ) : []
                     ,stonActivePage: action.page,totalpage: !!action.datas ? Math.ceil(filterLotNumbers(action.datas).length/action.size) : 0}
-        case GET_LOTNUMBER:
-          return {...state,detail: action.data,totalpage: !!action.data.lotNumbers ? Math.ceil(filterLotNumbers(action.data.lotNumbers).length/action.size): 0}
+      case GET_LOTNUMBER:
+        return {...state,detail: action.data,totalpage: !!action.data.lotNumbers ? Math.ceil(filterLotNumbers(action.data.lotNumbers).length/action.size): 0}
       case FETCH_PRODUCTDETAIL:
         return {...state,detail:action.data,index:action.productlist?findproductindex(action.productlist,action.productid):0
           ,indexplus:action.productlist?findproductindexplus(action.productlist,action.productid):0

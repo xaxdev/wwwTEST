@@ -1,6 +1,9 @@
 const Boom = require('boom');
 import Elasticsearch from 'elasticsearch'
 const Promise = require('bluebird');
+const GetMovement = require('../utils/getMovement');
+const GetGOC = require('../utils/getGOC');
+
 const internals = {
   filters: []
 };
@@ -16,7 +19,6 @@ module.exports = {
                     keepAlive: false
                 });
     const id = request.params.id;
-
     internals.query = JSON.parse(
     `{
       "query":
@@ -58,10 +60,33 @@ module.exports = {
               type: 'setitems',
               body: query
             });
-
     });
 
-    Promise.all([getProductDetail, getSetreference]).spread((productDetail, setReference) => {
+    const getMovements = getProductDetail.then((response) => {
+        const [productResult] = response.hits.hits.map((element) => element._source);
+        const query =  GetMovement(productResult.reference,productResult.sku);
+        // console.log(JSON.stringify(query, null, 2));
+
+        return elastic.search({
+                index: 'mol',
+                type: 'activities',
+                body: query
+              });
+    });
+
+    const getGOCs = getProductDetail.then((response) => {
+        const [productResult] = response.hits.hits.map((element) => element._source);
+        const query =  GetGOC(productResult.reference,productResult.sku);
+        // console.log(JSON.stringify(query, null, 2));
+
+        return elastic.search({
+                index: 'mol',
+                type: 'activities',
+                body: query
+              });
+    });
+
+    Promise.all([getProductDetail, getSetreference, getMovements, getGOCs]).spread((productDetail, setReference, movements, gocs) => {
 
         const [productResult] = productDetail.hits.hits.map((element) => element._source);
 
@@ -102,6 +127,20 @@ module.exports = {
 
             productResult.setReferenceData = responseSetData;
         }
+
+        let movement = movements.hits.hits.map((element) => element._source);
+        // console.log(movement);
+        movement = movement.filter((item) => {
+            return item.physicalInvent != 1;
+        })
+        const goc = gocs.hits.hits.map((element) => element._source);
+        const activities = {
+            movement: movement,
+            goc: goc
+        };
+
+        productResult.activities = activities;
+
         elastic.close();
         return reply(JSON.stringify(productResult, null, 4));
     })

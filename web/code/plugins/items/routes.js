@@ -44,5 +44,10 @@ module.exports = [
         method: 'POST',
         path: '/lotnumber',
         config: controllers.lotnumber
+    },
+    {
+        method: 'POST',
+        path: '/movement',
+        config: controllers.movement
     }
 ];

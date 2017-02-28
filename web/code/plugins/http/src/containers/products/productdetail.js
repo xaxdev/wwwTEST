@@ -7,6 +7,7 @@ import { reduxForm, reset } from 'redux-form';
 import moment from 'moment-timezone';
 import * as productdetailaction from '../../actions/productdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/productDescription';
+import ProductDescriptionmovementBlock from '../../components/productdetail/productDescmovement'
 import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptioncer';
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
@@ -34,6 +35,8 @@ import '../../../public/css/magnific-popup.css';
 import '../../utils/magnific-popup.js';
 import validateCatalog from '../../utils/validatecatalogproductdetail';
 import ModalalertMsgObj from '../../utils/modalalertmsg';
+import Movementlist from '../../components/productdetail/productmovement.js';
+import Goclist from '../../components/productdetail/productgoc.js'
 
 var Loading = require('react-loading');
 
@@ -49,7 +52,8 @@ class productdetail extends Component {
       productdetailLoading: false,
       isOpenAddMyCatalog: false,
       isOpenAddMyCatalogmsg: false,
-      isOpenDownloadCerMsg: false
+      isOpenDownloadCerMsg: false,
+      showmovement: false
     };
   }
 
@@ -281,6 +285,77 @@ class productdetail extends Component {
                 );
         }
    }
+
+   renderDescmovement(){
+
+     const  Detail  = this.props.productdetail;
+     let  Detailtitle  = '';
+     if(!Detail){
+       return(
+         <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
+       );
+     }
+     switch (Detail.type) {
+           case 'JLY':
+               Detailtitle='JEWELRY DETAILS';
+               return(
+                   <div>
+                     <h2>{Detailtitle}</h2>
+                     <ProductDescriptionmovementBlock {...Detail} />
+                   </div>
+                 );
+           case 'STO':
+
+               Detailtitle='STONE DETAILS';
+               return(
+                   <div>
+                     <h2>{Detailtitle}</h2>
+                     <ProductDescriptionmovementBlock {...Detail} />
+                   </div>
+                 );
+           case 'WAT':
+               Detailtitle='WATCH DETAILS';
+               return(
+                   <div>
+                     <h2>{Detailtitle}</h2>
+                     <ProductDescriptionmovementBlock {...Detail} />
+                   </div>
+                 );
+           case 'OBA':
+               Detailtitle='OBJECT OF ART DETAILS';
+               return(
+                   <div>
+                     <h2>{Detailtitle}</h2>
+                     <ProductDescriptionmovementBlock {...Detail} />
+                   </div>
+                 );
+           case 'ACC':
+               Detailtitle='ACCESSORY DETAILS';
+               return(
+                   <div>
+                     <h2>{Detailtitle}</h2>
+                     <ProductDescriptionmovementBlock {...Detail} />
+                   </div>
+                 );
+           case 'SPA':
+               Detailtitle='SPARE PARTS DETAILS';
+               return(
+                   <div>
+                     <h2>{Detailtitle}</h2>
+                     <ProductDescriptionmovementBlock {...Detail} />
+                   </div>
+                 );
+           case 'CER':
+               Detailtitle='CERTIFICATE DETAILS';
+               return(
+                   <div>
+                     <h2>{Detailtitle}</h2>
+                     <ProductDescriptionmovementBlock {...Detail} />
+                   </div>
+                 );
+         }
+    }
+
    handleClickPageination = (page) =>{
        const { lotNumbers } = this.props.productdetail;
        const { stonePageSize } = this.props;
@@ -644,7 +719,8 @@ class productdetail extends Component {
 
             <div className="bar-title-detail maring-t15">
                       <div className="ft-white productdetail-search display-right">
-                        <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
+                        <Link to={'/searchresult'} className={`${'btn btn-searchresult'} ${this.state.showmovement ? 'hide' : ''}`}>Search Result</Link>
+                        <a className={`${'btn btn-searchresult'} ${!this.state.showmovement ? 'hide' : ''}`} onClick={this.hidemovement}>Product Detail</a>
                       </div>
                       <div className="margin-t5 text-center m-none display-right padding-lf15">
                         <span className="bar-line">|</span>
@@ -685,6 +761,19 @@ class productdetail extends Component {
          this.setState({isOpenAddMyCatalog: true});
      })
    }
+
+   showmovement = () => {
+     this.setState({
+         showmovement: true
+     });
+   }
+
+   hidemovement = () => {
+     this.setState({
+         showmovement: false
+     });
+   }
+
    handleClose= _=>{
        this.setState({isOpenAddMyCatalog: false});
    }
@@ -874,9 +963,8 @@ class productdetail extends Component {
     const productId = this.props.params.id;
     const productIndex = this.props.productindex;
     const productindexplus = this.props.productindexplus;
-    const { type, setReference, gemstones } = this.props.productdetail;
+    const { type, setReference, gemstones,gallery,activities } = this.props.productdetail;
     const { lotNumbers, stonePageSize, stonActivePage } = this.props;
-
     let isCertificate = false;
 
     if(gemstones != undefined){
@@ -893,7 +981,7 @@ class productdetail extends Component {
       <div id="page-wrapper">
 
         <div className="col-sm-12 bg-hearder m-prodcutdetail">
-          <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding"><h1>PRODUCT DETAIL</h1></div>
+          <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding"><h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'PRODUCT DETAIL'}`}</h1></div>
           {this.renderNavigation()}
         </div>
         <div className={`${this.state.productdetailLoading == true ? 'centerloading' : 'hidden'}` }>
@@ -903,7 +991,7 @@ class productdetail extends Component {
           </center>
           <br/><br/><br/><br/><br/><br/>
         </div>
-        <div className="row">
+        <div className={`row ${this.state.showmovement ? 'hide' : ''}`}>
         {this.renderAddMyCatalog()}
         {this.renderAlertmsg()}
           <div className="col-sm-12">
@@ -918,6 +1006,7 @@ class productdetail extends Component {
                     <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a> :
                     <a><div className=""></div></a>
                   }
+                  <a><div className="icon-movement margin-l10" onClick={ this.showmovement }></div></a>
                 </div>
                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
@@ -949,6 +1038,46 @@ class productdetail extends Component {
           </div>
         {this.renderAlertmsgCer()}
       </div>
+       <div className={`row ${!this.state.showmovement ? 'hide' : ''}`}>
+         <div className="col-sm-12">
+           <div className="panel panel-default">
+             <div className="panel-body padding-ft0">
+               <div className="col-md-4 col-sm-12">
+                 { !!gallery && gallery.length !== 0 &&
+
+                   <ReactImageFallback
+                        src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
+                          fallbackImage="/images/blank.gif"
+                          initialImage="/images/blank.gif"
+                          width={200}
+                          height={200}
+                          className="img-responsive image-gallery-image" />
+                   }
+               </div>
+               <div className="col-md-8 col-sm-12">
+                 {this.renderDescmovement()}
+               </div>
+
+               <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">
+                 <h2>GOC</h2>
+                 { !!activities && !!activities.goc &&
+                 <Goclist list={activities.goc}/>
+                 }
+               </div>
+
+               <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">
+                 <h2>INTERCOMPANY TRANSFERS</h2>
+                 { !!activities && !!activities.movement &&
+                   <Movementlist list={activities.movement}/>
+                 }
+
+               </div>
+
+             </div>
+          </div>
+        </div>
+       </div>
+
     </div>
     );
   }

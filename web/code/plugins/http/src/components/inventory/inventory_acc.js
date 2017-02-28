@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select';
 import Calendar from 'react-input-calendar';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
@@ -284,7 +285,11 @@ class InventoryAccessory extends Component {
             </div>
             <div className="col-lg-6  form-horizontal">
               <div className="form-group">
-                <label className="col-sm-4 control-label">Accessory Type</label>
+                <label className="col-sm-4 control-label tooltiop-span">Accessory Type
+                  <OverlayTrigger placement="top" overlay={tooltipAccessoryType}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.AccessoryTypeValue}
                     placeholder="Select your Accessory Type"
@@ -293,7 +298,11 @@ class InventoryAccessory extends Component {
                  </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Collection</label>
+                <label className="col-sm-4 control-label tooltiop-span">Collection
+                  <OverlayTrigger placement="top" overlay={tooltipCollection}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.CollectionValue}
                     placeholder="Select your Collection"
@@ -302,7 +311,11 @@ class InventoryAccessory extends Component {
                   </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Brand</label>
+                <label className="col-sm-4 control-label tooltiop-span">Brand
+                  <OverlayTrigger placement="top" overlay={tooltipBrand}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.BrandValue}
                     placeholder="Select your Brand"
@@ -311,7 +324,11 @@ class InventoryAccessory extends Component {
                   </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Must Have</label>
+                <label className="col-sm-4 control-label tooltiop-span">Must Have
+                  <OverlayTrigger placement="top" overlay={tooltipMustHave}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.MustHaveValue}
                     placeholder="Select your MustHave"
@@ -350,7 +367,11 @@ class InventoryAccessory extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Type</label>
+                <label className="col-sm-4 control-label tooltiop-span">Metal Type
+                  <OverlayTrigger placement="top" overlay={tooltipMetalType}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.MetalTypeValue}
                     placeholder="Select your Metal Type"
@@ -359,7 +380,11 @@ class InventoryAccessory extends Component {
                   </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Metal Colour</label>
+                <label className="col-sm-4 control-label tooltiop-span">Metal Colour
+                  <OverlayTrigger placement="top" overlay={tooltipMetalColour}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <Select multi simpleValue value={props.MetalColourValue}
                     placeholder="Select your Metal Colour"
@@ -374,5 +399,23 @@ class InventoryAccessory extends Component {
     );
   }
 }
+const tooltipAccessoryType = (
+  <Tooltip id="tooltip"><strong>Search By Type of Accessory (eg. Cufflinks, Bracelet, Key Chain etc.)</strong></Tooltip>
+);
+const tooltipCollection = (
+  <Tooltip id="tooltip"><strong>Search By Collection (eg. GE Roller Ballpen) of the Watch</strong></Tooltip>
+);
+const tooltipBrand = (
+  <Tooltip id="tooltip"><strong>Seacrh By Brand (eg. Mouawad, Chopard, Cartier etc.)</strong></Tooltip>
+);
+const tooltipMustHave = (
+  <Tooltip id="tooltip"><strong>Search By Must Have (yes/no)</strong></Tooltip>
+);
+const tooltipMetalType = (
+  <Tooltip id="tooltip"><strong>Search By Metal Type of the Product</strong></Tooltip>
+);
+const tooltipMetalColour = (
+  <Tooltip id="tooltip"><strong>Search By Metal Color of the Product</strong></Tooltip>
+);
 
 module.exports = InventoryAccessory;
