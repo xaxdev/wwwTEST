@@ -1210,7 +1210,7 @@ class SearchResult extends Component {
               <h1 className="modal-title">Export</h1>
             </div>
             <div className="modal-body">
-              <h3>Please checking your email for download files.</h3>
+              <h3>Please check your email for download files.</h3>
               <a href={listFileName[0]} target="_blank" >{listFileName[0]}</a>
               <link></link>
               <br/>
@@ -1247,7 +1247,7 @@ class SearchResult extends Component {
               <h1 className="modal-title">Export</h1>
             </div>
             <div className="modal-body">
-              <h3>Please checking your email for download files.</h3>
+              <h3>Please check your email for download files.</h3>
               <br/>
               <div className="col-sm-12">
                 <div className="col-sm-3">
@@ -1341,7 +1341,7 @@ class SearchResult extends Component {
   }
   renderAlertmsgPdf = _=> {
 
-    const message = 'Please checking your email for printing files.';
+    const message = 'Please check your email for printing files.';
     const title = 'SEARCH RESULTS';
     return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
             props={this.props} message={message}  title={title}/>);

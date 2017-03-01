@@ -56,7 +56,7 @@ class ModalMyCatalog extends Component {
                 <br/>
                 <div className="col-sm-12 maring-b10 maring-t10">
                   <div className="col-sm-6">
-                      <label className="col-sm-12 control-label">Catalog exits</label>
+                      <label className="col-sm-12 control-label">Catalog exists</label>
                   </div>
                   <div className="col-sm-6">
                       <select className="form-control" {...oldCatalogName}>
