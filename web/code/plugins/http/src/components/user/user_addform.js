@@ -911,7 +911,7 @@ class UsersNewFrom extends Component {
                           </div>
                         </div>
                         <div className="form-group">
-                          <label className="col-sm-2 control-label">Movement Activitiy</label>
+                          <label className="col-sm-2 control-label">Movement Activity</label>
                           <div className="col-sm-7">
                             <input type="checkbox" {...movement}/>
                           </div>
