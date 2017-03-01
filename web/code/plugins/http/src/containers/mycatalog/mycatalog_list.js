@@ -618,7 +618,7 @@ class MyCatalog extends Component {
 
     renderAlertmsgPdf = _=> {
 
-      const message = 'Please checking your email for printing files.';
+      const message = 'Please check your email for printing files.';
       const title = 'MY CATALOG';
       return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
           props={this.props} message={message}  title={title}/>);
