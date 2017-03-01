@@ -6,8 +6,6 @@ module.exports = {
     auth: {
         strategy: 'authentication'
     },
-    validate: {
-    },
     handler: (request, reply) => {
 
         (async () => {
@@ -15,41 +13,14 @@ module.exports = {
             try {
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
-                const owner = await request.user.getUserById(request, request.auth.credentials.id)
 
-                // const ownList = await db.collection('CatalogName').find({ "userId": request.auth.credentials.id }).sort({ "catalog": 1 }).toArray()
-                // const markOwnList = ownList.map((item) => { return { ...item, shared: false } })
-                //
-                // const sharedList = await db.collection('CatalogName').aggregate([
-                //     {
-                //         $lookup: {
-                //             from: 'CatalogShared',
-                //             localField: '_id',
-                //             foreignField: 'catalogId',
-                //             as: 'CatalogShared'
-                //         }
-                //     },
-                //     {
-                //         $unwind: "$CatalogShared"
-                //     },
-                //     {
-                //         $match: {
-                //             "CatalogShared.users.id": request.auth.credentials.id
-                //         }
-                //     }, {
-                //         $project: {
-                //             _id: 1,
-                //             catalog: 1,
-                //             userId: 1,
-                //             updatedDate: 1
-                //         }
-                //     }])
-                //     .toArray()
-                // const markSharedList = sharedList.map((item) => { return { ...item, shared: true } })
-                //
-                // return reply(_.union(markOwnList, markSharedList))
+                const ownList = await db.collection('SearchCriteria').find({ "owner": request.auth.credentials.id }).sort({ "name": 1 }).toArray()
+                const markOwnList = ownList.map((item) => { return { ...item, shared: false } })
 
-                return reply.success()
+                const sharedList = await db.collection('SearchCriteria').find({ "users.id": { $in: [request.auth.credentials.id] } }).sort({ "name": 1 }).toArray()
+                const markSharedList = sharedList.map((item) => { return { ...item, shared: true } })
+
+                return reply(_.union(markOwnList, markSharedList))
             } catch (e) {
 
                 return reply(Boom.badImplementation('', e))

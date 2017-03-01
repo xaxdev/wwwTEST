@@ -49,5 +49,30 @@ module.exports = [
         method: 'POST',
         path: '/movement',
         config: controllers.movement
+    },
+    {
+        method: 'POST',
+        path: '/search/save',
+        config: controllers.searchsave
+    },
+    {
+        method: 'GET',
+        path: '/search/list',
+        config: controllers.searchlist
+    },
+    {
+        method: 'DELETE',
+        path: '/search/remove',
+        config: controllers.searchdelete
+    },
+    {
+        method: 'POST',
+        path: '/search/share',
+        config: controllers.searchshare
+    },
+    {
+        method: 'GET',
+        path: '/search/view/{id}',
+        config: controllers.searchview
     }
 ];

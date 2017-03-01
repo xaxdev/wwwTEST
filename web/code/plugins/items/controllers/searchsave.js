@@ -22,7 +22,7 @@ module.exports = {
                 const ObjectID = request.mongo.ObjectID
                 const searchId = request.payload.id
                 const searchName = request.payload.name
-                const owner = await request.user.getUserById(request, request.auth.credentials.id)
+                const criteria = request.payload.criteria
 
                 const searchCollection = await db.collection('SearchCriteria').findOneAndUpdate(
                 {
@@ -30,7 +30,8 @@ module.exports = {
                 },
                 {
                     $set: {
-                        "name": request.payload.catalog,
+                        "name": searchName,
+                        "criteria": criteria,
                         "owner": request.auth.credentials.id
                     }
                 },

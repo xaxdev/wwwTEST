@@ -2,13 +2,18 @@ import Boom from 'boom'
 import Joi from 'joi'
 import _  from 'lodash'
 
+const shareduser = Joi.object().keys({
+    id: Joi.number().min(0).required()
+});
+
 module.exports = {
     auth: {
         strategy: 'authentication'
     },
     validate: {
         payload: {
-            data: Joi.object().required()    
+            id: Joi.string().required(),
+            users: Joi.array().items(shareduser)
         }
     },
     handler: (request, reply) => {
@@ -20,6 +25,7 @@ module.exports = {
                 const ObjectID = request.mongo.ObjectID
                 const searchId = request.payload.id
                 const searchName = request.payload.name
+                const users = request.payload.users
                 const owner = await request.user.getUserById(request, request.auth.credentials.id)
 
                 const sharedMe = await users.find(user => { return user.id === owner.id })
@@ -41,16 +47,15 @@ module.exports = {
 
                 const updatedShared = await db.collection('SearchCriteria').updateOne(
                     {
-                        "_id": new ObjectID(searchId),
-                        "owner": owner.id
+                        "_id": new ObjectID(searchId)
                     },
                     {
-                        "_id": new ObjectID(searchId),
-                        "owner": owner.id,
-                        "users": findShared.users
+                        $set: {
+                            "users": findShared.users                            
+                        }
                     },
                     {
-                        upsert: true
+                        upsert: false
                     }
                 )
 
