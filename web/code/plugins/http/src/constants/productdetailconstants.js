@@ -11,3 +11,4 @@ export const ADD_CATALOG_SUCCESS = 'Add to catalog success';
 export const GET_CERTIFICATE = 'GET_CERTIFICATE';
 export const GET_LOTNUMBER = 'GET_LOTNUMBER';
 export const GET_LOTNUMBERPAGE = 'GET_LOTNUMBERPAGE';
+export const GET_MOVEMENT = 'GET_MOVEMENT';

@@ -16,14 +16,14 @@ module.exports = {
 
     const elastic = request.server.plugins.elastic.client;
 
-    var obj = request.payload;
-    var page = request.payload.page;
-    var sortBy = request.payload.sortBy;
-    var sortDirections = request.payload.sortDirections;
-    var userCurrency = request.payload.userCurrency;
-    var keys = Object.keys(obj);
+    let obj = request.payload;
+    let page = request.payload.page;
+    let sortBy = request.payload.sortBy;
+    let sortDirections = request.payload.sortDirections;
+    let userCurrency = request.payload.userCurrency;
+    let keys = Object.keys(obj);
 
-    var size = request.payload.pageSize;
+    let size = request.payload.pageSize;
 
     internals.query = GetSearch(request, 0, 100000);
 

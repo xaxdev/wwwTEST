@@ -73,6 +73,9 @@ module.exports = {
     webOnly: {
       type: 'boolean'
     },
+    movement: {
+      type: 'boolean'
+    },
     toJSON: function () {
       var obj = this.toObject();
       delete obj.password;

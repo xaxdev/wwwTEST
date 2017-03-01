@@ -14,7 +14,7 @@ let _ = require('lodash');
 export const fields = ['id','firstName','lastName','username','email','password','role','currency','status','company',
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
           ,'productGroupACC','productGroupOBA','productGroupSPA','onhandLocationValue','webOnly','permissionId','onhandLocation'
-          ,'onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr'];
+          ,'onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr','movement'];
 export let countFirst = 0;
 
 class UserDetailsFrom extends Component {
@@ -52,9 +52,7 @@ class UserDetailsFrom extends Component {
   componentWillMount(){
     this.props.optionsActions.get();
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return shallowCompare(this, nextProps, nextState);
-  // }
+
   componentDidMount(){
     // console.log('componentDidMount type-->',this.props.user.permission.onhandLocation.type);
     this.setState(
@@ -88,141 +86,7 @@ class UserDetailsFrom extends Component {
           }
       }
   }
-  componentDidUpdate(){
-    // console.log('componentDidUpdate-->');
 
-    const { fields: {
-                        onhandLocationValue, onhandWarehouseValue
-                    }
-                } = this.props;
-
-    if(this.props.user.permission.onhandLocation != undefined)
-    //   console.log('componentDidUpdate type-->',this.props.user.permission.onhandLocation.type);
-    if (this.state.selectedOnHandLocation) {
-      if (this.state.clickAllLocarion) {
-        // console.log('clickAllLocarion-->true');
-        // let checkCompany = jQuery('input[name="checkbox-allCompany"]');
-        // // console.log('checkCompany-->',checkCompany);
-        // let values = [].filter.call(checkCompany, function(o) {
-        //     return o.checked || !o.checked;
-        // }).map(function(o) {
-        //     return o.value;
-        // });
-        // console.log('values-->',values);
-        // this.setState({chkLocation: values});
-
-        // this.setState({chkLocation: values});
-        // _.each(checkCompany,function (o) {
-        //   o.checked = true;
-        // });
-
-        // let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
-        //
-        // let values = [].filter.call(select.options, function(o) {
-        //     return o.selected || !o.selected;
-        // }).map(function(o) {
-        //     return o.value;
-        // });
-        //
-        // _.each(select.options,function (o) {
-        //   o.selected = true;
-        // });
-
-        // let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
-        //
-        // let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
-        //     return o.selected || !o.selected;
-        // }).map(function(o) {
-        //     return o.value;
-        // });
-        //
-        // _.each(selectWarehouse.options,function (o) {
-        //   o.selected = true;
-        // });
-      } else {
-        // console.log('clickAllLocarion-->false');
-        // let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
-        //
-        // let values = [].filter.call(select.options, function(o) {
-        //     return o.selected || !o.selected;
-        // }).map(function(o) {
-        //     return o.value;
-        // });
-        //
-        // _.each(select.options,function (o) {
-        //   o.selected = false;
-        // });
-
-        // let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
-        //
-        // let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
-        //     return o.selected || !o.selected;
-        // }).map(function(o) {
-        //     return o.value;
-        // });
-        //
-        // _.each(selectWarehouse.options,function (o) {
-        //   o.selected = false;
-        // });
-      }
-    }else{
-        // this.setState({chkLocation: onhandLocationValue.value});
-        // this.setState({chkWarehouse: onhandWarehouseValue.value});
-
-      // Click not checked all location
-    //   let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
-
-    //   let valuesAll = [].filter.call(select.options, function(o) {
-    //       return o.selected || !o.selected;
-    //   }).map(function(o) {
-    //       return o.value;
-    //   });
-
-    //   let values = [].filter.call(select.options, function(o) {
-    //       return o.selected;
-    //   }).map(function(o) {
-    //       return o.value;
-    //   });
-
-    //   if (!this.state.changedOnHandLocation) {
-    //     if(!this.state.firstloading && !this.state.clickAllWarehouse){
-    //       if(values.length ==0){
-    //         _.each(select.options,function (o) {
-    //           o.selected = false;
-    //         });
-    //       }
-    //     }
-    //   }
-
-    //   if(this.state.selectedOnHandWarehouse){
-    //     // console.log('this.state.clickAllWarehouse-->',this.state.clickAllWarehouse);
-    //     if (this.state.clickAllWarehouse) {
-    //         let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
-    //         _.each(selectWarehouse.options,function (o) {
-    //           o.selected = true;
-    //         });
-    //     }
-    //   }else{
-      //
-    //     if (!this.state.clickAllWarehouse) {
-    //       // console.log('this.state.clickAllWarehouse--> !false');
-    //       let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
-    //       let valuesWarehouseAll = [].filter.call(selectWarehouse.options, function(o) {
-    //           return o.selected || !o.selected;
-    //       }).map(function(o) {
-    //           return o.value;
-    //       });
-    //       let valuesWarehouse = [].filter.call(selectWarehouse.options, function(o) {
-    //           return o.selected
-    //       }).map(function(o) {
-    //           return o.value;
-    //       });
-    //     }else{
-    //       // console.log('this.state.clickAllWarehouse-->true');
-    //     }
-    //   }
-    }
-  }
   changedOnHandWarehouseChecked = e => {
     //   console.log('changedOnHandWarehouseChecked-->');
       let el = e.target;
@@ -791,7 +655,7 @@ class UserDetailsFrom extends Component {
               id,firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,productGroup
               ,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT,onhandLocation,onhandAll
               ,productGroupACC,productGroupOBA,productGroupSPA,onhandLocationValue,webOnly,permissionId,onhandWarehouse
-              ,onhandWarehouseValue,productGroupErr
+              ,onhandWarehouseValue,productGroupErr,movement
           },handleSubmit,submitting } = this.props;
     let dataDropDowntLocations = [];
     let dataDropDowntWareHouse = [];
@@ -1104,6 +968,12 @@ class UserDetailsFrom extends Component {
                       <label className="col-sm-2 control-label">Web Only</label>
                       <div className="col-sm-7">
                         <input type="checkbox" {...webOnly}/>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="col-sm-2 control-label">Movement Activity</label>
+                      <div className="col-sm-7">
+                        <input type="checkbox" {...movement}/>
                       </div>
                     </div>
                     <div className="form-group">

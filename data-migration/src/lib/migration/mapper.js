@@ -346,4 +346,15 @@ const mapStoneLotNumber = (recordset, exchangeRates) => {
     return lotNumbers;
 };
 
-export { mapItem, mapMaster, mapCertificate, mapStoneItem, mapStoneLotNumber };
+const mapMovement = (recordset) => {
+    const movements = [];
+
+    for (let record of recordset) {
+        const movement = {...record};
+        movements.push(movement);
+    }
+
+    return movements;
+};
+
+export { mapItem, mapMaster, mapCertificate, mapStoneItem, mapStoneLotNumber, mapMovement };

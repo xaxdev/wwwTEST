@@ -522,22 +522,22 @@ class InventoryJewelry extends Component {
 }
 
 const tooltipHierarchy = (
-  <Tooltip id="tooltip"><strong>Product Hierarchy!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Product Hierarchy</strong></Tooltip>
 );
 const tooltipJewelryCategory = (
-  <Tooltip id="tooltip"><strong>Jewelry Category!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Type of the Product (eg. Ring, Pendent, Necklace etc.)</strong></Tooltip>
 );
 const tooltipCollection = (
-  <Tooltip id="tooltip"><strong>Collection!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Collection (eg. Masterpiece, High Jewelry, Diamond Classics etc.) of the Product</strong></Tooltip>
 );
 const tooltipBrand = (
-  <Tooltip id="tooltip"><strong>Brand!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Seacrh By Brand (eg. Mouawad, Chopard, Cartier etc.) of the Product</strong></Tooltip>
 );
 const tooltipMustHave = (
-  <Tooltip id="tooltip"><strong>Must Have!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Must Have (yes/no)</strong></Tooltip>
 );
 const tooltipRingSize = (
-  <Tooltip id="tooltip"><strong>Ring Size!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search Product by Ring Size</strong></Tooltip>
 );
 const tooltipTotalCost = (
   <Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>
@@ -552,15 +552,15 @@ const tooltipMarkup = (
   <Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>
 );
 const tooltipGrossWeight = (
-  <Tooltip id="tooltip"><strong>Gross Weight (Grams)!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Total Weight of the Product</strong></Tooltip>
 );
 const tooltipSetReferenceNumber = (
-  <Tooltip id="tooltip"><strong>Set Reference Number</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search Sets By Set Reference Number</strong></Tooltip>
 );
 const tooltipMetalType = (
-  <Tooltip id="tooltip"><strong>Metal Type!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Metal Type of the Product</strong></Tooltip>
 );
 const tooltipMetalColour = (
-  <Tooltip id="tooltip"><strong>Metal Colour!</strong></Tooltip>
+  <Tooltip id="tooltip"><strong>Search By Metal Color of the Product</strong></Tooltip>
 );
 module.exports = InventoryJewelry;
