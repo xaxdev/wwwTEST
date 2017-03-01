@@ -788,7 +788,7 @@ class productreletedetail extends Component {
   }
 
   renderAlertmsgCer = _=> {
-    const message = 'Please checking your email for download certificate.';
+    const message = 'Please check your email for download certificate.';
     const title = 'DOWNLOAD CERTIFICATE';
     return(<ModalalertMsgObj isOpen={this.state.isOpenDownloadCerMsg} isClose={this.handleCloseDownloadCerMsg}
      props={this.props} message={message}  title={title}/>);
