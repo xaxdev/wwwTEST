@@ -957,6 +957,7 @@ class productdetail extends Component {
   }
 
   render(){
+    const userLogin = JSON.parse(sessionStorage.logindata);
     const { totalpage,products,page } = this.props.productrelete;
     const reletepage = this.props.productreletepage;
     const productlist = this.props.productlist;
@@ -1006,7 +1007,7 @@ class productdetail extends Component {
                     <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a> :
                     <a><div className=""></div></a>
                   }
-                  <a><div className="icon-movement margin-l10" onClick={ this.showmovement }></div></a>
+                  <a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>
                 </div>
                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
