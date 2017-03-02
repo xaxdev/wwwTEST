@@ -964,9 +964,14 @@ class productdetail extends Component {
     const productId = this.props.params.id;
     const productIndex = this.props.productindex;
     const productindexplus = this.props.productindexplus;
-    const { type, setReference, gemstones,gallery,activities } = this.props.productdetail;
+    const { type, setReference, gemstones,activities } = this.props.productdetail;
+    let { gallery } = this.props.productdetail;
     const { lotNumbers, stonePageSize, stonActivePage } = this.props;
     let isCertificate = false;
+
+    if (!gallery) {
+        gallery = [];
+    }
 
     if(gemstones != undefined){
 
@@ -1044,16 +1049,13 @@ class productdetail extends Component {
            <div className="panel panel-default">
              <div className="panel-body padding-ft0">
                <div className="col-md-4 col-sm-12">
-                 { !!gallery && gallery.length !== 0 &&
-
-                   <ReactImageFallback
-                        src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
-                          fallbackImage="/images/blank.gif"
-                          initialImage="/images/blank.gif"
-                          width={200}
-                          height={200}
-                          className="img-responsive image-gallery-image" />
-                   }
+                 <ReactImageFallback
+                      src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
+                        fallbackImage="/images/blank.gif"
+                        initialImage="/images/blank.gif"
+                        width={200}
+                        height={200}
+                        className="img-responsive image-gallery-image" />
                </div>
                <div className="col-md-8 col-sm-12">
                  {this.renderDescmovement()}
