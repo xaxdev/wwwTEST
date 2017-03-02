@@ -916,6 +916,7 @@ class productreletedetail extends Component {
               <div className="panel panel-default">
                 <div className="panel-body padding-ft0">
                   <div className="col-md-4 col-sm-12">
+                    <div className="mg-tb thumbnaillgrid">
                     { !!gallery && gallery.length !== 0 &&
 
                       <ReactImageFallback
@@ -926,6 +927,7 @@ class productreletedetail extends Component {
                              height={200}
                              className="img-responsive image-gallery-image" />
                       }
+                    </div>
                   </div>
                   <div className="col-md-8 col-sm-12">
                     {this.renderDescmovement()}
