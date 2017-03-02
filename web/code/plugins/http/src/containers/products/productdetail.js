@@ -1049,13 +1049,15 @@ class productdetail extends Component {
            <div className="panel panel-default">
              <div className="panel-body padding-ft0">
                <div className="col-md-4 col-sm-12">
-                 <ReactImageFallback
+                 <div className="mg-tb thumbnaillgrid">
+                   <ReactImageFallback
                       src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
                         fallbackImage="/images/blank.gif"
                         initialImage="/images/blank.gif"
                         width={200}
                         height={200}
                         className="img-responsive image-gallery-image" />
+                  </div>
                </div>
                <div className="col-md-8 col-sm-12">
                  {this.renderDescmovement()}

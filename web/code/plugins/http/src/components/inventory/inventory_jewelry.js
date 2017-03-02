@@ -454,7 +454,11 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Gross Weight (Grams)</label>
+                <label className="col-sm-4 control-label">Gross Weight (Grams)
+                  <OverlayTrigger placement="top" overlay={tooltipGrossWeight}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                   <div className="col-sm-4 nopadding">
@@ -508,7 +512,11 @@ class InventoryJewelry extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-sm-4 control-label">Set Reference Number</label>
+                <label className="col-sm-4 control-label">Set Reference Number
+                  <OverlayTrigger placement="top" overlay={tooltipSetReferenceNumber}>
+                    <img src="/images/alphanumeric.png" />
+                  </OverlayTrigger>
+                </label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...setReference}/>
                 </div>
