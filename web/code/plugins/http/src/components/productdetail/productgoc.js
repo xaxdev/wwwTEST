@@ -12,8 +12,8 @@ const Goc =  ({list}) =>{
            <thead>
                <tr>
                  <th>Transfer Date</th>
-                 <th>Transferred from</th>
-                 <th>Transferred to</th>
+                 <th>Transferred From</th>
+                 <th>Transferred To</th>
 
                </tr>
            </thead>
