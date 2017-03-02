@@ -74,5 +74,10 @@ module.exports = [
         method: 'GET',
         path: '/search/view/{id}',
         config: controllers.searchview
+    },
+    {
+        method: 'GET',
+        path: '/search/edit/{id}',
+        config: controllers.searchedit
     }
 ];

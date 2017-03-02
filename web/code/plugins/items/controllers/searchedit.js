@@ -7,7 +7,7 @@ module.exports = {
         strategy: 'authentication'
     },
     validate: {
-        payload: {
+        params: {
             id: Joi.string()
         }
     },
@@ -18,9 +18,16 @@ module.exports = {
             try {
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
-                const owner = await request.user.getUserById(request, request.auth.credentials.id)
+                const searchId = request.params.id
 
-                return reply.success()
+                const findSearch = await db.collection('SearchCriteria').findOne(
+                    {
+                        "_id": new ObjectID(searchId),
+                        "owner": request.auth.credentials.id
+                    })
+                const isShared = findSearch !== null && findSearch.owner !== request.auth.credentials.id ? true : false
+
+                return reply(findSearch !== null && findSearch.criteria !== null ? { "searchId": findSearch._id, "shared": isShared, ...findSearch.criteria } : {})
             } catch (e) {
 
                 return reply(Boom.badImplementation('', e))

@@ -20,13 +20,13 @@ module.exports = {
                 const ObjectID = request.mongo.ObjectID
                 const searchId = request.params.id
 
-                const findShared = await db.collection('SearchCriteria').findOne(
+                const findSearch = await db.collection('SearchCriteria').findOne(
                     {
-                        "_id": new ObjectID(searchId),
-                        "owner": request.auth.credentials.id
+                        "_id": new ObjectID(searchId)
                     })
+                const isShared = findSearch !== null && findSearch.owner !== request.auth.credentials.id ? true : false
 
-                return reply(findShared !== null && findShared.criteria !== null ? findShared.criteria : {})
+                return reply(findSearch !== null && findSearch.criteria !== null ? { "searchId": findSearch._id, "shared": isShared, ...findSearch.criteria } : {})
             } catch (e) {
 
                 return reply(Boom.badImplementation('', e))
