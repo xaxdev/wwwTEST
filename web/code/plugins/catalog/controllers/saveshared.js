@@ -28,11 +28,13 @@ export default {
                 const UsersDB = request.collections.user;
 
                 const users = await getUserId(usersShare, UsersDB);
-                console.log(users);
                 const owner = await request.user.getUserById(request, request.auth.credentials.id)
 
-                const sharedMe = await users.find(user => { return user.id === owner.id })
+                const diffFound = _.differenceBy(usersShare, users, 'email')
+                console.log(diffFound);
+                if (diffFound.length != 0) return reply(Boom.badRequest(diffFound))
 
+                const sharedMe = await users.find(user => { return user.id === owner.id })
                 if (!!sharedMe) return reply(Boom.badRequest("Share yourself is denied."))
 
                 const findShared = await db.collection('CatalogShared').findOne(
@@ -65,7 +67,6 @@ export default {
                 )
 
                 return reply.success()
-
             } catch (e) {
 
                 return reply(Boom.badImplementation('', e))
@@ -74,7 +75,7 @@ export default {
     }
 }
 
-const findByEmail = (email, UsersDB,ids) => new Promise((resolve, reject) => {
+const findByEmail = (email, UsersDB, ids) => new Promise((resolve, reject) => {
     ids.push(email)
     return resolve(ids);
 });
@@ -86,12 +87,15 @@ const getUserId = (usersShare, UsersDB) => new Promise(async (resolve, reject) =
         return idss;
     });
     UsersDB.find()
-            .where({email: ids})
-            .exec(function (err, response) {
-                let id = response.map((detail) => {
-                    let obj = {'id': detail.id,'email': detail.email};
-                    return obj;
-                })
-                return resolve(id);
-            });
+    .where({
+        email: ids,
+        status: true
+    })
+    .exec(function (err, response) {
+        let id = response.map((detail) => {
+            let obj = { 'id': detail.id, 'email': detail.email };
+            return obj;
+        })
+        return resolve(id);
+    });
 });
