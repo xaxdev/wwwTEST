@@ -666,8 +666,7 @@ class productreletedetail extends Component {
 
         <div className="width-50 productreletedetail-width maring-t15">
                      <div className="col-md-12 col-sm-12 ft-white productdetail-search">
-                       <Link to={'/searchresult'} className={`${'btn btn-searchresult'} ${this.state.showmovement ? 'hide' : ''}`}>Search Result</Link>
-                       <a className={`${'btn btn-searchresult'} ${!this.state.showmovement ? 'hide' : ''}`} onClick={this.hidemovement}>Product Detail</a>
+                       <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
                      </div>
            </div>
          );
@@ -860,6 +859,10 @@ class productreletedetail extends Component {
         <div className="col-sm-12 bg-hearder bg-hearder-rel">
           <div className="col-md-5 col-sm-5 ft-white m-nopadding"><h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'PRODUCT DETAIL'}`}</h1></div>
           {this.renderNavigation()}
+        </div>
+        <div className="bg-back-movement">
+            <a className={`margin-l20 ${!this.state.showmovement ? 'hide' : ''}`}
+                onClick={this.hidemovement}><img src="/images/icon-back-movement.jpg" /></a>
         </div>
         <div className={`${this.state.productdetailLoading == true ? 'centerloading' : 'hidden'}` }>
           <center>
