@@ -28,7 +28,7 @@ export default {
                 const UsersDB = request.collections.user;
 
                 const users = await getUserId(usersShare, UsersDB);
-
+                console.log(users);
                 const owner = await request.user.getUserById(request, request.auth.credentials.id)
 
                 const sharedMe = await users.find(user => { return user.id === owner.id })
@@ -89,7 +89,7 @@ const getUserId = (usersShare, UsersDB) => new Promise(async (resolve, reject) =
             .where({email: ids})
             .exec(function (err, response) {
                 let id = response.map((detail) => {
-                    let obj = {'id': detail.id};
+                    let obj = {'id': detail.id,'email': detail.email};
                     return obj;
                 })
                 return resolve(id);
