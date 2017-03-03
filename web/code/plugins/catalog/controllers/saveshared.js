@@ -31,8 +31,8 @@ export default {
                 const owner = await request.user.getUserById(request, request.auth.credentials.id)
 
                 const diffFound = _.differenceBy(usersShare, users, 'email')
-                console.log(diffFound);
-                if (diffFound.length != 0) return reply(Boom.badRequest(diffFound))
+
+                if (diffFound.length != 0) return reply(Boom.badRequest(`Email not found in database ${diffFound.map((e)=>{return e.email})}`))
 
                 const sharedMe = await users.find(user => { return user.id === owner.id })
                 if (!!sharedMe) return reply(Boom.badRequest("Share yourself is denied."))
