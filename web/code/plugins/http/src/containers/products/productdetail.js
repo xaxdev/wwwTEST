@@ -988,9 +988,9 @@ class productdetail extends Component {
           <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding"><h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'PRODUCT DETAIL'}`}</h1></div>
           {this.renderNavigation()}
         </div>
-        <div>
-            <a className={`${!this.state.showmovement ? 'hide' : ''}`}
-                onClick={this.hidemovement}><img src="/images/icon-back.jpg" /></a>
+        <div className="bg-back-movement">
+            <a className={`margin-l20 ${!this.state.showmovement ? 'hide' : ''}`}
+                onClick={this.hidemovement}><img src="/images/icon-back-movement.jpg" /></a>
         </div>
         <div className={`${this.state.productdetailLoading == true ? 'centerloading' : 'hidden'}` }>
           <center>
