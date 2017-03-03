@@ -716,11 +716,9 @@ class productdetail extends Component {
       }
       if(productlist.length != 0){
       return(
-
             <div className="bar-title-detail maring-t15">
                       <div className="ft-white productdetail-search display-right">
-                        <Link to={'/searchresult'} className={`${'btn btn-searchresult'} ${this.state.showmovement ? 'hide' : ''}`}>Search Result</Link>
-                        <a className={`${'btn btn-searchresult'} ${!this.state.showmovement ? 'hide' : ''}`} onClick={this.hidemovement}>Product Detail</a>
+                        <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
                       </div>
                       <div className="margin-t5 text-center m-none display-right padding-lf15">
                         <span className="bar-line">|</span>
@@ -989,6 +987,10 @@ class productdetail extends Component {
         <div className="col-sm-12 bg-hearder m-prodcutdetail">
           <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding"><h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'PRODUCT DETAIL'}`}</h1></div>
           {this.renderNavigation()}
+        </div>
+        <div>
+            <a className={`${!this.state.showmovement ? 'hide' : ''}`}
+                onClick={this.hidemovement}><img src="/images/icon-back.jpg" /></a>
         </div>
         <div className={`${this.state.productdetailLoading == true ? 'centerloading' : 'hidden'}` }>
           <center>
