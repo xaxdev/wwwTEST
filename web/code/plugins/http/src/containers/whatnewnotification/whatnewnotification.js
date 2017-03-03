@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [2,1];
+            const roundData = [3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -85,7 +85,7 @@ class WhatNewNotification extends Component {
                                                     <div style="padding-top: 25px; text-decoration: underline;">Management tools</div>
                                                      <div style="margin-top:15px; text-align:center;"><img src="/images/mol-8-1.jpg"/></div>
                                                     <div style="padding:15px 0; text-decoration: underline;">How to add items to catalog</div>
-                                                    <div styl="padding:15px 20px 0 20px;">
+                                                    <div style="padding:15px 20px 0 20px;">
                                                       <div>1.	User adds item to My Catalog at Search Results page and Product Detail page</div>
                                                       <div>2.	Add an item to catalog: click “Catalog” icon <img src="/images/mol-8-2.jpg" /> at the selected items, and go to step 4</div>
                                                       <div>3.	Add multiple items to catalog: click “Square” icon <img src="/images/mol-8-3.jpg" />   at the selected items, and click “Catalog” icon on bar <img src="/images/mol-8-4.jpg" />  , and go to step 4</div>
@@ -105,7 +105,7 @@ class WhatNewNotification extends Component {
                                                     'title': 'Sort By Set Reference Number',
                                                     'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">January 30, 2017</p>
                                                     <p>Search Result will be sorting by Set Reference Number. You can continue viewing the same items of set.</p>
-                                                      <div styl="padding:15px 20px 0 20px;">
+                                                      <div style="padding:15px 20px 0 20px;">
                                                         <div style="margin:15px 0px; text-align:center;"><img src="/images/img-sort-by.jpg"/></div>
                                                       </div>`
                                                 },
@@ -126,7 +126,7 @@ class WhatNewNotification extends Component {
                                                     'title': 'Add "Set Reference Number" at Product Detail Page',
                                                     'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">January 25, 2017</p>
                                                             <p>Displays the number of Set Reference at Product Detail page.</p>
-                                                            <div styl="padding:15px 20px 0 20px;">
+                                                            <div style="padding:15px 20px 0 20px;">
                                                               <div style="margin:15px 0px; text-align:center;"><img src="/images/set-ref-no.jpg"/></div>
                                                             </div>`
                                                 },
@@ -134,13 +134,40 @@ class WhatNewNotification extends Component {
                                                     'type':'new',
                                                     'title': 'Download Original Certificates',
                                                     'msg': `<p>User can download original certificates image from Product Detail page</p>
-                                                              <div styl="padding:15px 20px 0 20px;">
+                                                              <div style="padding:15px 20px 0 20px;">
                                                                 <div style="margin-top:15px">1.	Click here <img src="/images/mol-certificates-1.jpg" /> for download all files at upper image of item</div>
                                                                 <div style="margin:15px 0px; text-align:center;"><img src="/images/img-certificates-01.jpg"/></div>
                                                                 <div style="margin-top:15px">2.	Or click here <img src="/images/mol-certificates-2.jpg" /> for download per file from Diamonds Attributes</div>
                                                                 <div style="margin:15px 0px; text-align:center;"><img src="/images/img-certificates-02.jpg" /></div>
                                                               </div>`
                                                 }
+                                            ]
+                                },
+                                {
+                                    'id': 3,
+                                    'round': 'March 2017',
+                                    'datas': [
+                                                {
+                                                    'type':'new',
+                                                    'title': 'Movement Activity',
+                                                    'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 3, 2017</p>
+                                                    <p>It presented the inventory movement history of both Sales Consignment and Intercompany/Warehouse Transfer</p>
+                                                    <div style="margin-left: 20px;">
+                                                    <p>• Goods of Consignment (GOC) displays the product sold to the external customers</p>
+                                                    <p>• Intercompany Transfer displays the all records of intercompany & warehouse in each product</p>
+                                                    <p><span style="color:red;">*</span> We, IT team, will grant the right to some users who will be able to view the Movement Activity</p>
+                                                    </div>
+                                                    <h3 style="padding:17px 0px 0px 0px">How to use Movement Activity</h3>
+                                                    <div style="margin-left: 20px;">
+                                                    <p>1.	Search any items as required.</p>
+                                                    <p>2.	Click the item at Search Results page and go to Product Detail page.</p>
+                                                    <p>3.	Click at <img src="/images/icon-movement-watch.jpg"/>  Movement Activity icon to see Movement Activity page.</p>
+                                                    <p>4.	Click at <img src="/images/icon-back-watchnew.jpg"/>  Back icon to see Product Detail page.</p>
+                                                    </div>
+                                                    <div style="padding:15px 20px 0 20px;">
+                                                        <div style="margin:15px 0px; text-align:center;"><img src="/images/mol-product-detail.gif"/></div>
+                                                    </div>`
+                                                },
                                             ]
                                 }
                             ];
