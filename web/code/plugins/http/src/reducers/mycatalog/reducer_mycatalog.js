@@ -1,15 +1,23 @@
 import  {
         GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG, SET_NEWCATALOGNAME, DELETE_CATALOG,
-        GET_CATALOGNAME, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG
+        GET_CATALOGNAME, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG,
+        SET_SHARECATALOG, SET_CLOSEALERTMSG
         } from '../../constants/itemconstants';
 
 const INITIAL_STATE = { datas:null, ListCatalogName: [], listCatalogItems:[], currentPage: 1, catalogId: null,
                         catalogName: null, catalogSortingBy: null, catalogSortDirection: null, totalPrice: null,
-                        totalUpdatedCost: null
+                        totalUpdatedCost: null,shareCatalogStatus: false, msg: '',shareCatalogStatusCode: 100
                         };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case SET_CLOSEALERTMSG :
+            return {...state,  shareCatalogStatusCode: action.closeAlertMsg, shareCatalogStatus: false, msg: ''}
+        case SET_SHARECATALOG :
+        //   console.log('action SET_SHARECATALOG -->',action);
+          return {...state,  shareCatalogStatus: (action.data.statusCode >= 400) ? false : true,
+              shareCatalogStatusCode : action.data.statusCode,
+              msg: action.data.message};
         case SET_RENAMECATALOG :
           // console.log('SET_SORTBY -->',action.sortingBy);
           return {...state, catalogName: action.catalogName };

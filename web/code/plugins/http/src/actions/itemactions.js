@@ -5,9 +5,43 @@ import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_
   SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW,
   GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG,
   SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE,
-  SET_RENAMECATALOG, WRITE_HTML
+  SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG
 } from '../constants/itemconstants';
+
+import { SET_SHAREEMAILTO } from '../constants/userConstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
+
+export function setCloseAlertMsg(value){
+    return {
+            type: SET_CLOSEALERTMSG,
+            closeAlertMsg:value
+    }
+}
+
+export function shareCatalog(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog/shared`;
+  // console.log('getItems-->',url);
+
+  return {
+          type: SET_SHARECATALOG,
+    		promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          })
+  }
+}
+export function setDataSendEmailTo(value){
+    return {
+            type: SET_SHAREEMAILTO,
+            shareEmailTo:value
+    }
+}
 
 export function writeHtml(params){
   const token = sessionStorage.token;

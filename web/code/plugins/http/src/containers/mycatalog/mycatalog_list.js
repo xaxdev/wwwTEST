@@ -12,6 +12,8 @@ import GridItemsViewPrint from '../../components/mycatalog/griditemviewPrint';
 import ModalConfirmDelete from '../../utils/modalConfirmDelete.js';
 import Modalalertmsg from '../../utils/modalalertmsg';
 import GenTemplateHtml from '../../utils/genTemplatePdfMyCatalog';
+import ModalShareMyCatalog from '../../utils/modalShareMyCatalog';
+import validateEmail from '../../utils/validateemail';
 
 import { LASTMODIFIED, REFERENCE, DESCRIPTION, DESCENDING, ASCENDING } from '../../constants/itemconstants';
 
@@ -41,6 +43,7 @@ class MyCatalog extends Component {
         this.deleteAllItems = this.deleteAllItems.bind(this);
         this.handleSubmitDeleteAllItem = this.handleSubmitDeleteAllItem.bind(this);
         this.printResults = this.printResults.bind(this);
+        this.shareMyCatalog = this.shareMyCatalog.bind(this);
 
         this.state = {
           activePage: this.props.currentPage,
@@ -51,7 +54,8 @@ class MyCatalog extends Component {
           enabledMyCatalog: false,
           isOpenDeleteAllItem: false,
           isOpenZeroCatalog: true,
-          isOpenPrintPdfmsg: false
+          isOpenPrintPdfmsg: false,
+          isOpenShareMyCatalog: false
         }
 
     }
@@ -609,11 +613,25 @@ class MyCatalog extends Component {
     }
 
     renderAlertmsg = _=> {
-
       const message = 'Page is invalid.';
       const title = 'ADD TO CATALOG';
+
       return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
           props={this.props} message={message}  title={title}/>);
+    }
+
+    handleClosemsgShareCatalog = _=> {
+        this.props.setCloseAlertMsg(100);
+    }
+
+    renderAlertmsgShareCatalog = _=> {
+        const { shareCatalogStatus, shareCatalogStatusCode, shareCatalogmsgError} = this.props;
+
+        const title = 'SHARE CATALOG';
+        let isOpen = shareCatalogStatusCode >= 200 ? true : false;
+
+        return(<Modalalertmsg isOpen={isOpen} isClose={this.handleClosemsgShareCatalog}
+            props={this.props} message={shareCatalogmsgError}  title={title}/>);
     }
 
     renderAlertmsgPdf = _=> {
@@ -622,6 +640,47 @@ class MyCatalog extends Component {
       const title = 'MY CATALOG';
       return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
           props={this.props} message={message}  title={title}/>);
+    }
+
+    shareMyCatalog = _=>{
+        this.setState({isOpenShareMyCatalog: true});
+    }
+
+    handleSubmitShareCatalog = (e)=>{
+        e.preventDefault();
+        const { catalogId } = this.props;
+        const { fields: {
+                  shareCatalogTo
+              } } = this.props;
+        let emails = [];
+        let paramEmails = [];
+        let params = {};
+        if (!!shareCatalogTo.value) {
+            emails = shareCatalogTo.value.replace(/\s/g, '').split(/,|;/);
+            paramEmails = emails.map((email) => {
+                return {'email':email};
+            });
+        }
+        params.id = catalogId;
+        params.users = paramEmails;
+        // console.log('params-->',params);
+        this.props.shareCatalog(params)
+            .then((response)=>{
+                this.setState({isOpenShareMyCatalog: false});
+                this.props.setDataSendEmailTo('');
+            })
+    }
+
+    handleCloseShareMyCatalog = _=> {
+        this.props.setDataSendEmailTo('');
+        this.setState({isOpenShareMyCatalog: false});
+    }
+
+    renderShareMyCatalog = _=> {
+        const { submitting } = this.props;
+        return(<ModalShareMyCatalog onSubmit={this.handleSubmitShareCatalog}
+            isOpen={this.state.isOpenShareMyCatalog}
+            isClose={this.handleCloseShareMyCatalog} props={this.props}/>);
     }
 
     render() {
@@ -697,6 +756,8 @@ class MyCatalog extends Component {
                                     <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
                                     <a><div className="icon-print" id="printproduct"
                                         onClick={ this.printResults }></div></a>
+                                    <a><div className="icon-print"
+                                        onClick={ this.shareMyCatalog }></div></a>
                                 </div>
                               </div>
                             <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 nopadding">
@@ -773,6 +834,8 @@ class MyCatalog extends Component {
                   {this.renderModalConfirmDeleteAllItem()}
                   {this.renderAlertmsg()}
                   {this.renderAlertmsgPdf()}
+                  {this.renderShareMyCatalog()}
+                  {this.renderAlertmsgShareCatalog()}
                 </form>
             );
     }
@@ -788,7 +851,10 @@ function mapStateToProps(state) {
         catalogSortingBy: state.myCatalog.catalogSortingBy,
         catalogSortDirection: state.myCatalog.catalogSortDirection,
         totalPrice: state.myCatalog.totalPrice,
-        totalUpdatedCost: state.myCatalog.totalUpdatedCost
+        totalUpdatedCost: state.myCatalog.totalUpdatedCost,
+        shareCatalogStatus: state.myCatalog.shareCatalogStatus,
+        shareCatalogmsgError: state.myCatalog.msg,
+        shareCatalogStatusCode: state.myCatalog.shareCatalogStatusCode
     }
 }
 MyCatalog.contextTypes = {
@@ -796,5 +862,6 @@ MyCatalog.contextTypes = {
 };
 module.exports = reduxForm({
   form: 'MyCatalog',
-  fields: ['currPage', 'catalog'],
+  fields: ['currPage', 'catalog', 'shareCatalogTo', 'validateEmailTo'],
+  validate: validateEmail
 },mapStateToProps,itemactions)(MyCatalog)
