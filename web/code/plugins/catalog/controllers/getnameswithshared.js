@@ -10,11 +10,11 @@ export default {
         (async () => {
 
             try {
-                const db = request.mongo.db
-                const ownList = await db.collection('CatalogName').find({ "userId": request.auth.credentials.id }).sort({ "catalog": 1 }).toArray()
-                const markOwnList = ownList.map((item) => { return { ...item, shared: false } })
+                const db = request.mongo.db;
+                const ownList = await db.collection('CatalogName').find({ 'userId': request.auth.credentials.id }).sort({ 'catalog': 1 }).toArray();
+                const markOwnList = ownList.map((item) => { return { ...item, shared: false } });
 
-                const sharedList = await db.collection('CatalogName').aggregate([
+                const sharedLists = await db.collection('CatalogName').aggregate([
                     {
                         $lookup: {
                             from: 'CatalogShared',
@@ -24,11 +24,11 @@ export default {
                         }
                     },
                     {
-                        $unwind: "$CatalogShared"
+                        $unwind: '$CatalogShared'
                     },
                     {
                         $match: {
-                            "CatalogShared.users.id": request.auth.credentials.id
+                            'CatalogShared.users.id': request.auth.credentials.id
                         }
                     }, {
                         $project: {
@@ -38,10 +38,13 @@ export default {
                             updatedDate: 1
                         }
                     }])
-                    .toArray()
-                const markSharedList = sharedList.map((item) => { return { ...item, shared: true } })
+                    .toArray();
+                const markSharedList = sharedLists.map((sharedList) => {
+                    return { ...sharedList, shared: true, catalog: 'Shared ' + sharedList.catalog}
+                });
 
-                return reply(_.union(markOwnList, markSharedList))
+                return reply(_.union(markOwnList, markSharedList));
+                // return reply({error:'',message:'Share catalog success.',statusCode:200});
             } catch (e) {
 
                 return reply(Boom.badImplementation('', e))

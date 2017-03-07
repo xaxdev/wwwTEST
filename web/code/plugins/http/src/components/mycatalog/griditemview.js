@@ -413,7 +413,7 @@ class GridItemsView extends Component {
 
   render(){
     // console.log('this.props.items-->',this.props.items);
-    const { submitting, onCheckedOneItemMyCatalog, onDeleteOneItemMyCatalog } = this.props;
+    const { submitting, onCheckedOneItemMyCatalog, onDeleteOneItemMyCatalog, isCatalogShared } = this.props;
     let btnEvent = this.onClickGrid;
     let btnQuickView = this.onClickQuickView;
     let showDetails = this.onMouseOverGrid;
@@ -476,18 +476,18 @@ class GridItemsView extends Component {
                                  (index==16)? `searchresult-prodcut ${that.state.isOpen16? 'searchresult-border': ''}`:
                                   ''}>
                     <div className="pull-right">
-                     <div className="checkbox checkbox-warning">
-                      <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                        name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
-                        />
-                          <label className="checkbox1"></label>
-                      </div>
-                      <div className="grid-add margin-r5">
-                        <span className="icon-det-28" name={item.id} id={index} value={item.id}
-                          onClick={onDeleteOneItemMyCatalog}></span>
-                      </div>
-                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive
-                          name={item.id} id={index} onClick={showDetails}/></span>
+                         <div className={`${isCatalogShared ? 'hidden' : 'checkbox checkbox-warning'}`}>
+                              <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
+                                name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
+                                />
+                              <label className="checkbox1"></label>
+                          </div>
+                          <div className={`${isCatalogShared ? 'hidden' : 'grid-add margin-r5'}`}>
+                                <span className="icon-det-28" name={item.id} id={index} value={item.id}
+                                  onClick={onDeleteOneItemMyCatalog}></span>
+                          </div>
+                          <span className="quick-view"><img  src="/images/quick-view.jpg" responsive
+                              name={item.id} id={index} onClick={showDetails}/></span>
                     </div>
 
                     <div className="thumbnaillgrid">

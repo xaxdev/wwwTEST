@@ -67,15 +67,18 @@ class MyCatalog extends Component {
 
         this.props.getCatalogName().then((value) => {
             if (value) {
-                // console.log('componentWillMount-->',this.props.listCatalogName);
+                // console.log('componentWillMount this.props-->',this.props);
                 let catalogId = '';
+                let isCatalogShared = false;
                 if(this.props.listCatalogName != undefined){
                     if(this.props.catalogId != null){
                         catalogId = this.props.catalogId;
                     }else{
                         if(this.props.listCatalogName.length != 0){
+                            // console.log('componentWillMount this.props.listCatalogName[0].shared-->',this.props.listCatalogName[0].shared);
                             catalogId = this.props.listCatalogName[0]._id;
                             catalogName = this.props.listCatalogName[0].catalog;
+                            isCatalogShared = this.props.listCatalogName[0].shared;
                         }
                     }
 
@@ -91,6 +94,7 @@ class MyCatalog extends Component {
                         catalog.onChange(catalogName);
                         this.props.setRenameCatalog(catalogName);
                         this.props.getCatalogItems(parasm);
+                        this.props.setIsCatalogShare(isCatalogShared);
                     }
                 }
             }
@@ -395,11 +399,13 @@ class MyCatalog extends Component {
 
     selectedCatalog = (e) =>{
         e.preventDefault();
-        const { fields: { catalog } } = this.props;
+        const { fields: { catalog }, listCatalogName } = this.props;
         const catalogId = e.target.value;
         this.setState({activePage: 1});
         this.props.setCatalogCurrentPage(1);
-        // console.log('catalogId-->',catalogId);
+        // console.log('listCatalogName-->',listCatalogName);
+        let [selectedCatalog] = listCatalogName.filter((catalog) => {return catalog._id == catalogId});
+        // console.log('selectedCatalog-->',selectedCatalog.shared);
         let parasm = {
                     id: catalogId,
                     page: 1,
@@ -408,6 +414,7 @@ class MyCatalog extends Component {
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
         this.props.getCatalogItems(parasm);
+        this.props.setIsCatalogShare(selectedCatalog.shared);
     }
 
     deleteOneItemMyCatalog = (item) => {
@@ -684,7 +691,7 @@ class MyCatalog extends Component {
     }
 
     render() {
-            const {  fields:{ catalog }, catalogId, catalogName } = this.props;
+            const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared } = this.props;
             let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2;
             let catalogSortDirection = (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1;
             let style = {
@@ -701,7 +708,7 @@ class MyCatalog extends Component {
             // let isOpenMsg =  this.state.isOpenAddMyCatalogmsg;
             // console.log('this.props.-->',this.props.listCatalogName);
             // console.log('catalogName-->',catalogName);
-            // console.log('catalog-->',catalog.value);
+            console.log('isCatalogShared-->',isCatalogShared);
 
             let items = this.props.listCatalogName != undefined ?
                             this.props.listCatalogName.length != 0 ?
@@ -736,10 +743,10 @@ class MyCatalog extends Component {
 
                                 <div className="col-lg-5 col-md-5 col-sm-6 col-xs-12 nopadding"  >
 
-                                    <a><div className="icon-edit" id="edit" onMouseEnter={this.showTooltip}
-                                        onMouseLeave={this.hideTooltip}></div></a>
+                                    <a><div className={`${isCatalogShared ? 'hidden' : 'icon-edit'}`} id="edit" onMouseEnter={this.showTooltip}
+                                        onMouseLeave={this.hideTooltip} ></div></a>
                                     <ToolTip active={this.state.isTooltipActive} position="bottom"
-                                        arrow="center" parent="#edit" >
+                                        arrow="center" parent="#edit">
                                         <div className="cat-tooltip form-inline">
                                           <p>Edit Catalog Name</p>
                                           <div className="form-group">
@@ -753,10 +760,10 @@ class MyCatalog extends Component {
                                             </button>
                                         </div>
                                     </ToolTip>
-                                    <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
+                                    <a><div className={`${isCatalogShared ? 'hidden' : 'icon-del'}`} onClick={this.deleteCatalog}></div></a>
                                     <a><div className="icon-print" id="printproduct"
                                         onClick={ this.printResults }></div></a>
-                                    <a><div className="icon-print"
+                                    <a><div className={`${isCatalogShared ? 'hidden' : 'icon-print'}`}
                                         onClick={ this.shareMyCatalog }></div></a>
                                 </div>
                               </div>
@@ -798,7 +805,7 @@ class MyCatalog extends Component {
                   {/* Util&Pagination */}
                   <div className="row">
                     <div className="col-sm-12 col-xs-12">
-                      <div className="col-sm-12 col-xs-12 pagenavi maring-t20 cat-line">
+                      <div className={`${isCatalogShared ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
                             <div className="checkbox checkbox-warning">
                                 <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
                                     onChange={this.onCheckedAllItemMyCatalog} ref="selectAllItems"/>
@@ -818,12 +825,14 @@ class MyCatalog extends Component {
                                 <div className={'search-product' }>
                                     <GridItemsView  items={items} onClickGrid={this.onClickGrid}
                                         onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                        onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
+                                        onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
+                                        isCatalogShared={isCatalogShared}/>
                                 </div>
                                 <div id="dvGridview" className="search-product hidden">
                                   <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
                                     onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}/>
+                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
+                                    isCatalogShared={isCatalogShared}/>
                                 </div>
                             </div>
                         </div>
@@ -854,7 +863,8 @@ function mapStateToProps(state) {
         totalUpdatedCost: state.myCatalog.totalUpdatedCost,
         shareCatalogStatus: state.myCatalog.shareCatalogStatus,
         shareCatalogmsgError: state.myCatalog.msg,
-        shareCatalogStatusCode: state.myCatalog.shareCatalogStatusCode
+        shareCatalogStatusCode: state.myCatalog.shareCatalogStatusCode,
+        isCatalogShared: state.myCatalog.isCatalogShared,
     }
 }
 MyCatalog.contextTypes = {
