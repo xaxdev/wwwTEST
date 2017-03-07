@@ -69,10 +69,10 @@ class ModalShareMyCatalog extends Component {
               <div className="modal-body">
                 <br/>
                 <div className="col-md-12 maring-b10">
-                    <div className="col-sm-6">
+                    <div className="col-sm-3">
                         <label className="col-sm-12 control-label">E-mail</label>
                     </div>
-                    <div className="col-sm-6">
+                    <div className="col-sm-8">
                         <Select multi simpleValue value={ShareEmailToValue}
                           placeholder="Please input E-mail."
                           options={dataEmail}

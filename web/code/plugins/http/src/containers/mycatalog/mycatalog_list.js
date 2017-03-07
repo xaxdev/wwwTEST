@@ -763,7 +763,7 @@ class MyCatalog extends Component {
                                     <a><div className={`${isCatalogShared ? 'hidden' : 'icon-del'}`} onClick={this.deleteCatalog}></div></a>
                                     <a><div className="icon-print" id="printproduct"
                                         onClick={ this.printResults }></div></a>
-                                    <a><div className={`${isCatalogShared ? 'hidden' : 'icon-print'}`}
+                                      <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`}
                                         onClick={ this.shareMyCatalog }></div></a>
                                 </div>
                               </div>
