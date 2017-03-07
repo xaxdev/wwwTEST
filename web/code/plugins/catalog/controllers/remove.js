@@ -14,6 +14,8 @@ export default {
 
                 await db.collection('CatalogName').deleteOne({ "_id" : new ObjectID(request.params.id) })
                 await db.collection('CatalogItem').deleteMany({ "catalogId" : new ObjectID(request.params.id) })
+                await db.collection('CatalogShared').deleteOne({ "catalogId" : new ObjectID(request.params.id), "owner": request.auth.credentials.id })
+                
                 reply({
                     "status": true
                 })
