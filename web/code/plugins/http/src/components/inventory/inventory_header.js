@@ -5,8 +5,8 @@ import InitDataCompany from '../../utils/initDataCompany';
 import InitModifyData from '../../utils/initModifyData';
 import * as xls from '../../utils/xls';
 import jQuery from 'jquery';
-var _ = require('lodash');
-var X = XLSX;
+let _ = require('lodash');
+let X = XLSX;
 
 class InventoryHeader extends Component {
   constructor(props) {
@@ -20,9 +20,9 @@ class InventoryHeader extends Component {
 
   handleWarehouseSelectChange (WarehouseSelectValue) {
     // console.log('WarehouseValue-->',WarehouseValue);
-    var {fields:{ warehouse}, searchResult} = this.props.props;
+    let {fields:{ warehouse}, searchResult} = this.props.props;
 
-    var paramsHeader = (searchResult.paramsSearch != null)?
+    let paramsHeader = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
 
@@ -35,9 +35,9 @@ class InventoryHeader extends Component {
     this.props.props.inventoryActions.setDataWarehouse(WarehouseSelectValue);
 	}
   handleLocationSelectChange(LocationSelectValue){
-    var {fields:{ location },searchResult} = this.props.props;
+    let {fields:{ location },searchResult} = this.props.props;
 
-    var paramsLocation = (searchResult.paramsSearch != null)?
+    let paramsLocation = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch.location:
                           null;
 
@@ -52,9 +52,9 @@ class InventoryHeader extends Component {
   }
   handleDominantStoneSelectChange(DominantStoneSelectValue){
     const { props } = this.props;
-    var { fields: { dominantStone }, searchResult } = props;
+    let { fields: { dominantStone }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -70,7 +70,7 @@ class InventoryHeader extends Component {
             });
       jQuery('#file').change(function() {
 
-          var filename =jQuery('#file')[0].files[0];
+          let filename =jQuery('#file')[0].files[0];
           //alert(filename.name);
           jQuery('#fileName').text(filename.name);
       });
@@ -78,26 +78,26 @@ class InventoryHeader extends Component {
   }
   readFile(e){
     e.preventDefault();
-    var { fields:{reference }} = this.props.props;
-    var X = XLSX;
+    let { fields:{reference }} = this.props.props;
+    let X = XLSX;
 
-    var that = this;
-    var rABS = false;
-    var use_worker = false;
+    let that = this;
+    let rABS = false;
+    let use_worker = false;
 
-    var files = e.target.files;
+    let files = e.target.files;
     // console.log('files-->',files);
-    var f = files[0];
+    let f = files[0];
     {
-  		var reader = new FileReader();
-  		var name = f.name;
+  		let reader = new FileReader();
+  		let name = f.name;
   		reader.onload = function(e) {
   			// if(typeof console !== 'undefined') console.log('onload', new Date(), rABS, use_worker);
-  			var data = e.target.result;
+  			let data = e.target.result;
 
-  				var arr = xls.fixdata(data);
-  				var wb = X.read(btoa(arr), {type: 'base64'});
-  				var items = xls.process_wb(wb);
+  				let arr = xls.fixdata(data);
+  				let wb = X.read(btoa(arr), {type: 'base64'});
+  				let items = xls.process_wb(wb);
           reference.onChange(items);
           // console.log(JSON.stringify(items, 2, 2));
   			}
@@ -108,7 +108,7 @@ class InventoryHeader extends Component {
   render() {
     // console.log('props-->',this.props.props);
     const { props } = this.props;
-    var { fields:
+    let { fields:
             {
               reference,description,venderReference,vendorName,certificatedNumber,sku,location,warehouse,attachment,
               totalCostFrom, totalCostTo,totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo,
@@ -123,10 +123,10 @@ class InventoryHeader extends Component {
 
     InitModifyData(this.props.props);
 
-    var dataDropDowntLocations = [];
-    var dataDropDowntWareHouse = [];
-    var dataDropDowntDominantStone = [];
-    var that = this;
+    let dataDropDowntLocations = [];
+    let dataDropDowntWareHouse = [];
+    let dataDropDowntDominantStone = [];
+    let that = this;
 
     // if(userLogin.permission.onhandLocation != undefined){
     //   if(userLogin.permission.onhandLocation.type == 'Location'
@@ -165,8 +165,8 @@ class InventoryHeader extends Component {
       }
 
       if (this.props.props.options.warehouses) {
-        var newDate = [];
-        var data = [];
+        let newDate = [];
+        let data = [];
         // if(dataDropDowntLocations.length != 0){
         //   dataDropDowntLocations.forEach(function(location){
         //     newDate.push(_.filter(that.props.props.options.warehouses,
@@ -209,7 +209,7 @@ class InventoryHeader extends Component {
           }
         // }
 
-        var subdata = [];
+        let subdata = [];
         newDate.forEach(newdata =>{
             newdata.forEach(subdata =>{
               data.push(subdata);

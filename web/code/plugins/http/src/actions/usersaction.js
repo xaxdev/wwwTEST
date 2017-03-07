@@ -2,8 +2,14 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {ROOT_URL,FETCH_USERS,CREATE_USER,FETCH_USER,UPDATE_USER,
-  DELETE_USER,DISABLE_USER} from '../constants/userConstants';
+  DELETE_USER,DISABLE_USER,SET_SHAREEMAILTO} from '../constants/userConstants';
 
+export function setDataSendEmailTo(value){
+    return {
+            type: SET_SHAREEMAILTO,
+            shareEmailTo:value
+    }
+}
 
 export function fetchUsers(){
   const token = sessionStorage.token;

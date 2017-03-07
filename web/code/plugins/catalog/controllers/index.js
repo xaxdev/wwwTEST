@@ -6,5 +6,7 @@ import removeitem from './removeitem'
 import rename from './rename'
 import items from './items'
 import exportpdf from './exportpdf'
+import saveshared from './saveshared'
+import getnameswithshared from './getnameswithshared'
 
-export { getnames, getdata, save, remove, removeitem, rename, items, exportpdf }
+export { getnames, getdata, save, remove, removeitem, rename, items, exportpdf, saveshared, getnameswithshared }
