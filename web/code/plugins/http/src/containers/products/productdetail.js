@@ -1066,7 +1066,7 @@ class productdetail extends Component {
                </div>
 
                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">
-                 <h2>GOC</h2>
+                 <h2>Customer Viewings</h2>
                  { !!activities && !!activities.goc &&
                  <Goclist list={activities.goc}/>
                  }
