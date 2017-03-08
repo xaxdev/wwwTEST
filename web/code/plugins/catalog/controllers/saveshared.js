@@ -34,7 +34,7 @@ export default {
                 if (diffFound.length != 0) return reply(Boom.badRequest(`Email not found in database ${diffFound.map((e)=>{return e.email})}`));
 
                 const sharedMe = await users.find(user => { return user.id === owner.id });
-                if (!!sharedMe) return reply(Boom.badRequest('Share yourself is denied.'));
+                if (!!sharedMe) return reply(Boom.badRequest('Unable to share catalog to yourself.'));
 
                 const findShared = await db.collection('CatalogShared').findOne(
                     {

@@ -78,8 +78,9 @@ const Gemstoneattr =  (props) =>{
                      <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
                      {isCer?
                          !!data.certificate ?
-                             <td title="" className="icon-certificate btn-primary btn-certificate-radius button-certificate"
-                                onClick={props.onClick.bind(this,data.certificate.number)}></td> :
+                             <td title="">
+                                 <a href={`/original/${data.certificate.images[0].original.split('/').slice(-1).pop()}`} download><img src="/images/mol-certificates-2.jpg"/></a>
+                             </td> :
                              <td title="" className=""></td>
                          :<td title="" className="hidden"></td>}
                    </tr>

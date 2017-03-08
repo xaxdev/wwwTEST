@@ -64,7 +64,6 @@ class MyCatalog extends Component {
 
         let catalogName = '';
         const { fields: { catalog } } = this.props;
-
         this.props.getCatalogName().then((value) => {
             if (value) {
                 // console.log('componentWillMount this.props-->',this.props);
@@ -73,6 +72,7 @@ class MyCatalog extends Component {
                 if(this.props.listCatalogName != undefined){
                     if(this.props.catalogId != null){
                         catalogId = this.props.catalogId;
+                        isCatalogShared = this.props.isCatalogShared;
                     }else{
                         if(this.props.listCatalogName.length != 0){
                             // console.log('componentWillMount this.props.listCatalogName[0].shared-->',this.props.listCatalogName[0].shared);
@@ -708,7 +708,7 @@ class MyCatalog extends Component {
             // let isOpenMsg =  this.state.isOpenAddMyCatalogmsg;
             // console.log('this.props.-->',this.props.listCatalogName);
             // console.log('catalogName-->',catalogName);
-            console.log('isCatalogShared-->',isCatalogShared);
+            // console.log('isCatalogShared-->',isCatalogShared);
 
             let items = this.props.listCatalogName != undefined ?
                             this.props.listCatalogName.length != 0 ?
