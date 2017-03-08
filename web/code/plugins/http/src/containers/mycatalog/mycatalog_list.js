@@ -66,7 +66,7 @@ class MyCatalog extends Component {
         const { fields: { catalog } } = this.props;
         this.props.getCatalogName().then((value) => {
             if (value) {
-                // console.log('componentWillMount this.props-->',this.props);
+                // console.log('componentWillMount this.props-->',this.props.catalogId);
                 let catalogId = '';
                 let isCatalogShared = false;
                 if(this.props.listCatalogName != undefined){
@@ -79,6 +79,8 @@ class MyCatalog extends Component {
                             catalogId = this.props.listCatalogName[0]._id;
                             catalogName = this.props.listCatalogName[0].catalog;
                             isCatalogShared = this.props.listCatalogName[0].shared;
+                        }else{
+                            isCatalogShared = true;
                         }
                     }
 
@@ -94,6 +96,8 @@ class MyCatalog extends Component {
                         catalog.onChange(catalogName);
                         this.props.setRenameCatalog(catalogName);
                         this.props.getCatalogItems(parasm);
+                        this.props.setIsCatalogShare(isCatalogShared);
+                    }else{
                         this.props.setIsCatalogShare(isCatalogShared);
                     }
                 }
@@ -488,7 +492,9 @@ class MyCatalog extends Component {
                     this.props.getCatalogName().then((valueGetCatalog) => {
                         if (valueGetCatalog) {
                             // console.log('componentWillMount-->',this.props.listCatalogName);
+                            let isCatalogShared = false;
                             if(this.props.listCatalogName.length != 0){
+                                isCatalogShared = this.props.listCatalogName[0].shared;
                                 let parasm = {
                                     id: this.props.listCatalogName[0]._id,
                                     page: this.props.currentPage,
@@ -497,6 +503,10 @@ class MyCatalog extends Component {
                                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                                 };
                                 this.props.getCatalogItems(parasm);
+                                this.props.setIsCatalogShare(isCatalogShared);
+                            }else{
+                                isCatalogShared = true;
+                                this.props.setIsCatalogShare(isCatalogShared);
                             }
                         }
                     });
@@ -715,7 +725,6 @@ class MyCatalog extends Component {
                                 this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [] :
                             [] :
                         [];
-
             return(
                 <form role="form">
                   {/* Header Search */}
@@ -743,7 +752,7 @@ class MyCatalog extends Component {
 
                                 <div className="col-lg-5 col-md-5 col-sm-6 col-xs-12 nopadding"  >
 
-                                    <a><div className={`${isCatalogShared ? 'hidden' : 'icon-edit'}`} id="edit" onMouseEnter={this.showTooltip}
+                                    <a><div className={`${isCatalogShared ? 'disabled' : 'icon-edit'}`} id="edit" onMouseEnter={this.showTooltip}
                                         onMouseLeave={this.hideTooltip} ></div></a>
                                     <ToolTip active={this.state.isTooltipActive} position="bottom"
                                         arrow="center" parent="#edit">
@@ -761,7 +770,7 @@ class MyCatalog extends Component {
                                         </div>
                                     </ToolTip>
                                     <a><div className={`${isCatalogShared ? 'hidden' : 'icon-del'}`} onClick={this.deleteCatalog}></div></a>
-                                    <a><div className="icon-print" id="printproduct"
+                                    <a><div className={`${items.length == 0 ? 'hidden' : 'icon-print'}`} id="printproduct"
                                         onClick={ this.printResults }></div></a>
                                       <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`}
                                         onClick={ this.shareMyCatalog }></div></a>
@@ -805,8 +814,8 @@ class MyCatalog extends Component {
                   {/* Util&Pagination */}
                   <div className="row">
                     <div className="col-sm-12 col-xs-12">
-                      <div className={`${isCatalogShared ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
-                            <div className="checkbox checkbox-warning">
+                      <div className={`${isCatalogShared || items.length == 0  ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
+                            <div className="checkbox checkbox-warning ">
                                 <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
                                     onChange={this.onCheckedAllItemMyCatalog} ref="selectAllItems"/>
                                 <label className="checkbox1 select"></label>
