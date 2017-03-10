@@ -58,7 +58,7 @@ class ModalMyCatalog extends Component {
     }
     // oldCatalogName.value = '';
     // console.log('render modalMyCat oldCatalogName-->',oldCatalogName.value);
-    // console.log('render modalMyCat newCatalogName-->',newCatalogName.value);
+    // console.log('render modalMyCat listCatalogName-->',listCatalogName);
     return(
           <div  className="addMyCatalog">
             <Modal isOpen={isOpen} >
@@ -78,7 +78,7 @@ class ModalMyCatalog extends Component {
                         <option key={''} value={''}>{'Please selected'}</option>
                           {listCatalogName.map(catName =>
                               {
-                                  return(<option key={catName._id} value={catName._id}>{catName.catalog}</option>);
+                                  return(!catName.shared ? <option key={catName._id} value={catName._id}>{catName.catalog}</option>: <option className="hidden" key={catName._id} value={catName._id}>{catName.catalog}</option>);
                               })
                           }
                       </select>

@@ -418,7 +418,7 @@ class GridItemsView extends Component {
     let btnQuickView = this.onClickQuickView;
     let showDetails = this.onMouseOverGrid;
     let hideDetails = this.onMouseOutGrid;
-    // console.log('this.state.isOpen-->',this.state.isOpen);
+    // console.log('this.props.items-->',this.props.items);
     let that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
     // console.log('that.state.toggleQuickView-->',that.state.toggleQuickView);

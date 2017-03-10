@@ -31,10 +31,10 @@ export default {
                 const owner = await request.user.getUserById(request, request.auth.credentials.id);
                 const diffFound = _.differenceBy(usersShare, users, 'email');
 
-                if (diffFound.length != 0) return reply(Boom.badRequest(`Email not found in database ${diffFound.map((e)=>{return e.email})}`));
+                if (diffFound.length != 0) return reply(Boom.badRequest(`Cannot found the email in system ${diffFound.map((e)=>{return e.email})}`));
 
                 const sharedMe = await users.find(user => { return user.id === owner.id });
-                if (!!sharedMe) return reply(Boom.badRequest('Share yourself is denied.'));
+                if (!!sharedMe) return reply(Boom.badRequest('Unable to share catalog to yourself.'));
 
                 const findShared = await db.collection('CatalogShared').findOne(
                     {

@@ -40,7 +40,7 @@ export default {
                     }])
                     .toArray();
                 const markSharedList = sharedLists.map((sharedList) => {
-                    return { ...sharedList, shared: true, catalog: 'Shared ' + sharedList.catalog}
+                    return { ...sharedList, shared: true, catalog: 'Shared: ' + sharedList.catalog}
                 });
 
                 return reply(_.union(markOwnList, markSharedList));

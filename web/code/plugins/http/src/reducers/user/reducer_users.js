@@ -5,7 +5,9 @@ const INITIAL_STATE = { datas:[], user: null, options:[], errors: null, statusco
 export default function(state = INITIAL_STATE, action){
 
  switch(action.type){
-     case 'SET_SHAREEMAILTO':
+     case 'FETCH_SHAREUSERS':
+       return { ...state, datas: action.data.data};
+  case 'SET_SHAREEMAILTO':
       // console.log('SET_POLISH -->',action);
      return {...state, ShareEmailToValue: action.shareEmailTo };
   case 'DISABLE_USER':
