@@ -36,7 +36,9 @@ const Gemstoneattr =  (props) =>{
   newprops.map(function(data, index){
       if(checkInarray(allowGemstone, data.type)){
           if (!!data.certificate) {
-              isCer = true;
+              if (!!data.certificate.images) {
+                  isCer = true;
+              }
           }
       }
   });
@@ -78,9 +80,12 @@ const Gemstoneattr =  (props) =>{
                      <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
                      {isCer?
                          !!data.certificate ?
-                             <td title="">
-                                 <a href={`/original/${data.certificate.images[0].original.split('/').slice(-1).pop()}`} download><img src="/images/mol-certificates-2.jpg"/></a>
-                             </td> :
+                            !!data.certificate.images ?
+                                 <td title="">
+                                     <a href={`/original/${data.certificate.images[0].original.split('/').slice(-1).pop()}`} download><img src="/images/mol-certificates-2.jpg"/></a>
+                                 </td> :
+                                 <td title="" className=""></td>
+                                 :
                              <td title="" className=""></td>
                          :<td title="" className="hidden"></td>}
                    </tr>

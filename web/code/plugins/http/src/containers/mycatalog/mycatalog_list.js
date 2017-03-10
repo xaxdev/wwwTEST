@@ -685,11 +685,18 @@ class MyCatalog extends Component {
             .then((response)=>{
                 this.setState({isOpenShareMyCatalog: false});
                 this.props.setDataSendEmailTo('');
+                shareCatalogTo.onChange('');
+                shareCatalogTo.value = '';
             })
     }
 
     handleCloseShareMyCatalog = _=> {
+        const { fields: {
+                  shareCatalogTo
+              } } = this.props;
         this.props.setDataSendEmailTo('');
+        shareCatalogTo.onChange('');
+        shareCatalogTo.value = '';
         this.setState({isOpenShareMyCatalog: false});
     }
 

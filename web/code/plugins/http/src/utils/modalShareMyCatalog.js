@@ -18,6 +18,7 @@ class ModalShareMyCatalog extends Component {
 
   }
   componentDidMount = _=>{
+    //  console.log(this.props);
     this.props.fetchUsers();
   }
 
@@ -52,11 +53,13 @@ class ModalShareMyCatalog extends Component {
     const { isOpen, isClose, handleSubmitShareCatalog, onSubmit } = this.props;
     // console.log(ShareEmailToValue);
     let dataEmail = [];
-    if (this.props.users.length != 0) {
-        dataEmail.push(this.props.users.map((user) => {
-            return ({value: user.email,label:user.email + ' [' + user.username + ']'});
-        }));
-        dataEmail = dataEmail[0];
+    if (!!this.props.users ) {
+        if (this.props.users.length != 0) {
+            dataEmail.push(this.props.users.map((user) => {
+                return ({value: user.email,label:user.email + ' [' + user.username + ']'});
+            }));
+            dataEmail = dataEmail[0];
+        }
     }
 
     return(
@@ -73,10 +76,11 @@ class ModalShareMyCatalog extends Component {
                         <label className="col-sm-12 control-label">E-mail</label>
                     </div>
                     <div className="col-sm-8">
-                        <Select multi simpleValue value={ShareEmailToValue}
+                    <input type="text" className="form-control" {...shareCatalogTo}/>
+                        {/*<Select multi simpleValue value={ShareEmailToValue}
                           placeholder="Please input E-mail."
                           options={dataEmail}
-                          onChange={this.handleEmailSelectChange}/>
+                          onChange={this.handleEmailSelectChange}/>*/}
                     </div>
                 </div>
               </div>
