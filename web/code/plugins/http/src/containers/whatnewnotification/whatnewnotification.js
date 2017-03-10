@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [3,2,1];
+            const roundData = [4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -153,7 +153,7 @@ class WhatNewNotification extends Component {
                                                     'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 3, 2017</p>
                                                     <p>It presented the inventory movement history of both Sales Consignment and Intercompany/Warehouse Transfer</p>
                                                     <div style="margin-left: 20px;">
-                                                    <p>• Goods of Consignment (GOC) displays the product sold to the external customers</p>
+                                                    <p>• Customer Viewings displays the product sold to the external customers</p>
                                                     <p>• Intercompany Transfer displays the all records of intercompany & warehouse in each product</p>
                                                     <p><span style="color:red;">*</span> We, IT team, will grant the right to some users who will be able to view the Movement Activity</p>
                                                     </div>
@@ -166,6 +166,29 @@ class WhatNewNotification extends Component {
                                                     </div>
                                                     <div style="padding:15px 20px 0 20px;">
                                                         <div style="margin:15px 0px; text-align:center;"><img src="/images/mol-product-detail.gif"/></div>
+                                                    </div>`
+                                                },
+                                            ]
+                                },
+                                {
+                                    'id': 4,
+                                    'round': 'March 2017',
+                                    'datas': [
+                                                {
+                                                    'type':'new',
+                                                    'title': 'Share Catalog',
+                                                    'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 10, 2017</p>
+                                                    <p>User to be able to share to another users in MOL by email. The recipient can view shared catalog as name format is Share: XXXXXXX (Ex. Share: Masterpiece)</p>
+                                                    <h3 style="padding:17px 0px 0px 0px">How to share catalog</h3>
+                                                    <div style="margin-left: 20px;">
+                                                    <p>1. 	Go to My Catalog page</p>
+                                                    <p>2.	Select the Catalog drop-down menu
+						    <p>3.	Click <img style="width:20px;height:20px" src="/images/icon-next-watchnew.jpg"/>  “share” icon</p>
+                                                    <p>4.	Enter MOL account email to share by individual user or multiple user. <br><span style="margin-left:18px"> Format : recipient1, recipient2 (a@ito.com, b@ito.com, c@mouawad.com)</span></p>
+                                                    <p>5.	Click “submit” button to share catalog</p>
+                                                    </div>
+                                                    <div style="padding:15px 20px 0 20px;">
+                                                        <div style="margin:15px 0px; text-align:center;"><img src="/images/My-catalog.gif"/></div>
                                                     </div>`
                                                 },
                                             ]

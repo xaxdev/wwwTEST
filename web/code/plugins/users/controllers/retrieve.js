@@ -70,4 +70,31 @@ exports.one = {
       })
       .done();
   }
-}
+};
+
+exports.shareuser = {
+  auth: {
+    strategy: 'authentication'
+  },
+  handler: (request, reply) => {
+
+    const Users = request.collections.user;
+
+    Users
+      .find()
+      .populate('permission')
+      .then((data) => {
+
+          const users = data.map((user) => {
+              return {email:user.email,username:user.username};
+          })
+
+        return reply({ data: users });
+      })
+      .catch((err) => {
+
+        return reply(Boom.badImplementation(err));
+      })
+      .done();
+  }
+};
