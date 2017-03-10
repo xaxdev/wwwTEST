@@ -49,5 +49,15 @@ module.exports = [
     method: 'POST',
     path: '/{id}',
     config: controllers.update
+  },
+  {
+    method: 'GET',
+    path: '/search/{name}',
+    config: controllers.search
+  },
+  {
+    method: 'GET',
+    path: '/shareuser',
+    config: controllers.retrieve.shareuser
   }
 ];

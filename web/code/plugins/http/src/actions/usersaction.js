@@ -2,8 +2,29 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {ROOT_URL,FETCH_USERS,CREATE_USER,FETCH_USER,UPDATE_USER,
-  DELETE_USER,DISABLE_USER} from '../constants/userConstants';
+  DELETE_USER,DISABLE_USER,SET_SHAREEMAILTO,FETCH_SHAREUSERS} from '../constants/userConstants';
 
+export function fetchShareUsers(){
+    const token = sessionStorage.token;
+    return {
+    		type: FETCH_SHAREUSERS,
+    		promise: fetch(`${ROOT_URL}users/shareuser`,{
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          })
+    	}
+}
+
+export function setDataSendEmailTo(value){
+    return {
+            type: SET_SHAREEMAILTO,
+            shareEmailTo:value
+    }
+}
 
 export function fetchUsers(){
   const token = sessionStorage.token;

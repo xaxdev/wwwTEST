@@ -807,6 +807,13 @@ select.form-searchresult option{
 	float: left;
 	cursor:pointer;
 }
+.icon-share{
+	background: url(/images/icon-share.png) no-repeat center;
+	width:45px;
+	height: 40px;
+	float: left;
+	cursor:pointer;
+}
 .icon-search{
 	background: url(/images/icon-search-30.png) no-repeat center;
 	width:30px;
@@ -814,6 +821,7 @@ select.form-searchresult option{
 	float: left;
 	cursor:pointer;
 }
+
 .icon-next{
 	background: url(/images/icon-next.jpg) no-repeat center;
 	width:50px;

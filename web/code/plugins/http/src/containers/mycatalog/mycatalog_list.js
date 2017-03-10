@@ -12,6 +12,8 @@ import GridItemsViewPrint from '../../components/mycatalog/griditemviewPrint';
 import ModalConfirmDelete from '../../utils/modalConfirmDelete.js';
 import Modalalertmsg from '../../utils/modalalertmsg';
 import GenTemplateHtml from '../../utils/genTemplatePdfMyCatalog';
+import ModalShareMyCatalog from '../../utils/modalShareMyCatalog';
+import validateEmail from '../../utils/validateemail';
 
 import { LASTMODIFIED, REFERENCE, DESCRIPTION, DESCENDING, ASCENDING } from '../../constants/itemconstants';
 
@@ -41,6 +43,7 @@ class MyCatalog extends Component {
         this.deleteAllItems = this.deleteAllItems.bind(this);
         this.handleSubmitDeleteAllItem = this.handleSubmitDeleteAllItem.bind(this);
         this.printResults = this.printResults.bind(this);
+        this.shareMyCatalog = this.shareMyCatalog.bind(this);
 
         this.state = {
           activePage: this.props.currentPage,
@@ -51,7 +54,8 @@ class MyCatalog extends Component {
           enabledMyCatalog: false,
           isOpenDeleteAllItem: false,
           isOpenZeroCatalog: true,
-          isOpenPrintPdfmsg: false
+          isOpenPrintPdfmsg: false,
+          isOpenShareMyCatalog: false
         }
 
     }
@@ -60,18 +64,23 @@ class MyCatalog extends Component {
 
         let catalogName = '';
         const { fields: { catalog } } = this.props;
-
         this.props.getCatalogName().then((value) => {
             if (value) {
-                // console.log('componentWillMount-->',this.props.listCatalogName);
+                // console.log('componentWillMount this.props-->',this.props.catalogId);
                 let catalogId = '';
+                let isCatalogShared = false;
                 if(this.props.listCatalogName != undefined){
                     if(this.props.catalogId != null){
                         catalogId = this.props.catalogId;
+                        isCatalogShared = this.props.isCatalogShared;
                     }else{
                         if(this.props.listCatalogName.length != 0){
+                            // console.log('componentWillMount this.props.listCatalogName[0].shared-->',this.props.listCatalogName[0].shared);
                             catalogId = this.props.listCatalogName[0]._id;
                             catalogName = this.props.listCatalogName[0].catalog;
+                            isCatalogShared = this.props.listCatalogName[0].shared;
+                        }else{
+                            isCatalogShared = true;
                         }
                     }
 
@@ -87,6 +96,9 @@ class MyCatalog extends Component {
                         catalog.onChange(catalogName);
                         this.props.setRenameCatalog(catalogName);
                         this.props.getCatalogItems(parasm);
+                        this.props.setIsCatalogShare(isCatalogShared);
+                    }else{
+                        this.props.setIsCatalogShare(isCatalogShared);
                     }
                 }
             }
@@ -391,11 +403,13 @@ class MyCatalog extends Component {
 
     selectedCatalog = (e) =>{
         e.preventDefault();
-        const { fields: { catalog } } = this.props;
+        const { fields: { catalog }, listCatalogName } = this.props;
         const catalogId = e.target.value;
         this.setState({activePage: 1});
         this.props.setCatalogCurrentPage(1);
-        // console.log('catalogId-->',catalogId);
+        // console.log('listCatalogName-->',listCatalogName);
+        let [selectedCatalog] = listCatalogName.filter((catalog) => {return catalog._id == catalogId});
+        // console.log('selectedCatalog-->',selectedCatalog.shared);
         let parasm = {
                     id: catalogId,
                     page: 1,
@@ -404,6 +418,7 @@ class MyCatalog extends Component {
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
         this.props.getCatalogItems(parasm);
+        this.props.setIsCatalogShare(selectedCatalog.shared);
     }
 
     deleteOneItemMyCatalog = (item) => {
@@ -477,7 +492,9 @@ class MyCatalog extends Component {
                     this.props.getCatalogName().then((valueGetCatalog) => {
                         if (valueGetCatalog) {
                             // console.log('componentWillMount-->',this.props.listCatalogName);
+                            let isCatalogShared = false;
                             if(this.props.listCatalogName.length != 0){
+                                isCatalogShared = this.props.listCatalogName[0].shared;
                                 let parasm = {
                                     id: this.props.listCatalogName[0]._id,
                                     page: this.props.currentPage,
@@ -486,6 +503,10 @@ class MyCatalog extends Component {
                                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                                 };
                                 this.props.getCatalogItems(parasm);
+                                this.props.setIsCatalogShare(isCatalogShared);
+                            }else{
+                                isCatalogShared = true;
+                                this.props.setIsCatalogShare(isCatalogShared);
                             }
                         }
                     });
@@ -609,11 +630,25 @@ class MyCatalog extends Component {
     }
 
     renderAlertmsg = _=> {
-
       const message = 'Page is invalid.';
       const title = 'ADD TO CATALOG';
+
       return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
           props={this.props} message={message}  title={title}/>);
+    }
+
+    handleClosemsgShareCatalog = _=> {
+        this.props.setCloseAlertMsg(100);
+    }
+
+    renderAlertmsgShareCatalog = _=> {
+        const { shareCatalogStatus, shareCatalogStatusCode, shareCatalogmsgError} = this.props;
+
+        const title = 'SHARE CATALOG';
+        let isOpen = shareCatalogStatusCode >= 200 ? true : false;
+
+        return(<Modalalertmsg isOpen={isOpen} isClose={this.handleClosemsgShareCatalog}
+            props={this.props} message={shareCatalogmsgError}  title={title}/>);
     }
 
     renderAlertmsgPdf = _=> {
@@ -624,8 +659,56 @@ class MyCatalog extends Component {
           props={this.props} message={message}  title={title}/>);
     }
 
+    shareMyCatalog = _=>{
+        this.setState({isOpenShareMyCatalog: true});
+    }
+
+    handleSubmitShareCatalog = (e)=>{
+        e.preventDefault();
+        const { catalogId } = this.props;
+        const { fields: {
+                  shareCatalogTo
+              } } = this.props;
+        let emails = [];
+        let paramEmails = [];
+        let params = {};
+        if (!!shareCatalogTo.value) {
+            emails = shareCatalogTo.value.replace(/\s/g, '').split(/,|;/);
+            paramEmails = emails.map((email) => {
+                return {'email':email};
+            });
+        }
+        params.id = catalogId;
+        params.users = paramEmails;
+        // console.log('params-->',params);
+        this.props.shareCatalog(params)
+            .then((response)=>{
+                this.setState({isOpenShareMyCatalog: false});
+                this.props.setDataSendEmailTo('');
+                shareCatalogTo.onChange('');
+                shareCatalogTo.value = '';
+            })
+    }
+
+    handleCloseShareMyCatalog = _=> {
+        const { fields: {
+                  shareCatalogTo
+              } } = this.props;
+        this.props.setDataSendEmailTo('');
+        shareCatalogTo.onChange('');
+        shareCatalogTo.value = '';
+        this.setState({isOpenShareMyCatalog: false});
+    }
+
+    renderShareMyCatalog = _=> {
+        const { submitting } = this.props;
+        return(<ModalShareMyCatalog onSubmit={this.handleSubmitShareCatalog}
+            isOpen={this.state.isOpenShareMyCatalog}
+            isClose={this.handleCloseShareMyCatalog} props={this.props}/>);
+    }
+
     render() {
-            const {  fields:{ catalog }, catalogId, catalogName } = this.props;
+            const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared } = this.props;
             let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2;
             let catalogSortDirection = (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1;
             let style = {
@@ -642,14 +725,13 @@ class MyCatalog extends Component {
             // let isOpenMsg =  this.state.isOpenAddMyCatalogmsg;
             // console.log('this.props.-->',this.props.listCatalogName);
             // console.log('catalogName-->',catalogName);
-            // console.log('catalog-->',catalog.value);
+            // console.log('isCatalogShared-->',isCatalogShared);
 
             let items = this.props.listCatalogName != undefined ?
                             this.props.listCatalogName.length != 0 ?
                                 this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [] :
                             [] :
                         [];
-
             return(
                 <form role="form">
                   {/* Header Search */}
@@ -677,10 +759,10 @@ class MyCatalog extends Component {
 
                                 <div className="col-lg-5 col-md-5 col-sm-6 col-xs-12 nopadding"  >
 
-                                    <a><div className="icon-edit" id="edit" onMouseEnter={this.showTooltip}
-                                        onMouseLeave={this.hideTooltip}></div></a>
+                                    <a><div className={`${isCatalogShared ? 'disabled' : 'icon-edit'}`} id="edit" onMouseEnter={this.showTooltip}
+                                        onMouseLeave={this.hideTooltip} ></div></a>
                                     <ToolTip active={this.state.isTooltipActive} position="bottom"
-                                        arrow="center" parent="#edit" >
+                                        arrow="center" parent="#edit">
                                         <div className="cat-tooltip form-inline">
                                           <p>Edit Catalog Name</p>
                                           <div className="form-group">
@@ -694,9 +776,11 @@ class MyCatalog extends Component {
                                             </button>
                                         </div>
                                     </ToolTip>
-                                    <a><div className="icon-del" onClick={this.deleteCatalog}></div></a>
-                                    <a><div className="icon-print" id="printproduct"
+                                    <a><div className={`${isCatalogShared ? 'hidden' : 'icon-del'}`} onClick={this.deleteCatalog}></div></a>
+                                    <a><div className={`${items.length == 0 ? 'hidden' : 'icon-print'}`} id="printproduct"
                                         onClick={ this.printResults }></div></a>
+                                      <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`}
+                                        onClick={ this.shareMyCatalog }></div></a>
                                 </div>
                               </div>
                             <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 nopadding">
@@ -737,8 +821,8 @@ class MyCatalog extends Component {
                   {/* Util&Pagination */}
                   <div className="row">
                     <div className="col-sm-12 col-xs-12">
-                      <div className="col-sm-12 col-xs-12 pagenavi maring-t20 cat-line">
-                            <div className="checkbox checkbox-warning">
+                      <div className={`${isCatalogShared || items.length == 0  ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
+                            <div className="checkbox checkbox-warning ">
                                 <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
                                     onChange={this.onCheckedAllItemMyCatalog} ref="selectAllItems"/>
                                 <label className="checkbox1 select"></label>
@@ -757,12 +841,14 @@ class MyCatalog extends Component {
                                 <div className={'search-product' }>
                                     <GridItemsView  items={items} onClickGrid={this.onClickGrid}
                                         onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                        onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog} />
+                                        onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
+                                        isCatalogShared={isCatalogShared}/>
                                 </div>
                                 <div id="dvGridview" className="search-product hidden">
                                   <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
                                     onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}/>
+                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
+                                    isCatalogShared={isCatalogShared}/>
                                 </div>
                             </div>
                         </div>
@@ -773,6 +859,8 @@ class MyCatalog extends Component {
                   {this.renderModalConfirmDeleteAllItem()}
                   {this.renderAlertmsg()}
                   {this.renderAlertmsgPdf()}
+                  {this.renderShareMyCatalog()}
+                  {this.renderAlertmsgShareCatalog()}
                 </form>
             );
     }
@@ -788,7 +876,11 @@ function mapStateToProps(state) {
         catalogSortingBy: state.myCatalog.catalogSortingBy,
         catalogSortDirection: state.myCatalog.catalogSortDirection,
         totalPrice: state.myCatalog.totalPrice,
-        totalUpdatedCost: state.myCatalog.totalUpdatedCost
+        totalUpdatedCost: state.myCatalog.totalUpdatedCost,
+        shareCatalogStatus: state.myCatalog.shareCatalogStatus,
+        shareCatalogmsgError: state.myCatalog.msg,
+        shareCatalogStatusCode: state.myCatalog.shareCatalogStatusCode,
+        isCatalogShared: state.myCatalog.isCatalogShared,
     }
 }
 MyCatalog.contextTypes = {
@@ -796,5 +888,6 @@ MyCatalog.contextTypes = {
 };
 module.exports = reduxForm({
   form: 'MyCatalog',
-  fields: ['currPage', 'catalog'],
+  fields: ['currPage', 'catalog', 'shareCatalogTo', 'validateEmailTo'],
+  validate: validateEmail
 },mapStateToProps,itemactions)(MyCatalog)

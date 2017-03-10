@@ -1,10 +1,15 @@
 const INITIAL_STATE = { datas:[], user: null, options:[], errors: null, statuscode: null, selectedCompany:null
   , selectedWarehouses:null, statusCode:null, message:null,locationOnHand:[],warehouseOnHand:[]
-  ,onhandLocationSelected:null};
+  ,onhandLocationSelected:null,ShareEmailToValue:[]};
 
 export default function(state = INITIAL_STATE, action){
 
  switch(action.type){
+     case 'FETCH_SHAREUSERS':
+       return { ...state, datas: action.data.data};
+  case 'SET_SHAREEMAILTO':
+      // console.log('SET_POLISH -->',action);
+     return {...state, ShareEmailToValue: action.shareEmailTo };
   case 'DISABLE_USER':
     return { ...state, datas: state.datas.map(t =>
         findstatusupdate(t,action.data.data, action)
