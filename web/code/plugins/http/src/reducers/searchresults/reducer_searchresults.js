@@ -7,7 +7,7 @@ import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CU
           SET_WATCHCATEORY, SET_LIMITEDEDITION, SET_MOVEMENT, SET_DIALINDEX, SET_DIALCOLOR, SET_DIALMETAL, SET_BUCKLETYPE, SET_STRAPTYPE,
           SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE,
           SET_HIERARCHY,SET_GEMS_CERTIFICATE_DATE_FROM,SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM,
-          SET_STONE_CERTIFICATE_DATE_TO,SET_PRODUCTION_DATE_FROM,SET_PRODUCTION_DATE_TO
+          SET_STONE_CERTIFICATE_DATE_TO,SET_PRODUCTION_DATE_FROM,SET_PRODUCTION_DATE_TO,SET_SUBMITACTION
         } from '../../constants/inventoryConstants';
 
 const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, currentPage:1, totalpage:null, totalpublicprice:null,
@@ -22,12 +22,15 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                         HierarchyValue:null, SearchAction:'New', exportItems:[], maxPrice:null, minPrice:null, avrgPrice:null,
                         GemCertificateDateFrom:null, GemCertificateDateTo:null, StoneCertificateDateFrom:null,
                         StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16,
-                        SortingBy:'itemCreatedDate', SortDirection:'desc', ShowGridView: true, ShowListView: false
+                        SortingBy:'itemCreatedDate', SortDirection:'desc', ShowGridView: true, ShowListView: false,
+                        SubmitAction: null
                       };
 
   export default function(state = INITIAL_STATE, action){
     // console.log('action-->',action);
     switch(action.type){
+        case SET_SUBMITACTION:
+            return {...state, SubmitAction: action.submitActionValue };
       case RESET_FORM:
         // console.log('RESET_FORM state-->');
         return { ...state,WarehouseValue:[], LocationValue:[], StoneTypeValue:[], CutValue:[], CutGradeValue:[],

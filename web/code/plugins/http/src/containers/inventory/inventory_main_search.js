@@ -14,11 +14,11 @@ class InventorySearch extends Component {
 
     router: PropTypes.object
   }
+
   handleSubmit(data) {
 
-    //   console.log(data);
-
-    var { filters, paramsSearch, activeTabCategory, isAdvance } = this.props;
+    var { filters, paramsSearch, activeTabCategory, isAdvance, submitAction } = this.props;
+    console.log('submitAction-->',submitAction);
     var that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
     // check modify search or new search
@@ -267,7 +267,16 @@ class InventorySearch extends Component {
     // console.log('filters-->',filters);
     this.props.setCurrentPage(1);
     sessionStorage.setItem('filters', JSON.stringify(filters));
-    this.context.router.push('/searchresult');
+    switch (submitAction) {
+        case 'save':
+            console.log('save-->',filters);
+            break;
+        case 'search':
+            this.context.router.push('/searchresult');
+            break;
+        default:
+
+    }
   }
 
   render(){
@@ -283,7 +292,8 @@ function mapStateToProps(state) {
     activeTabCategory: state.searchResult.activeTabCategory,
     isAdvance: state.searchResult.IsAdvance,
     filters: state.searchResult.filters,
-    paramsSearch: state.searchResult.paramsSearch
+    paramsSearch: state.searchResult.paramsSearch,
+    submitAction: state.searchResult.SubmitAction
   };
 }
 

@@ -46,6 +46,8 @@ class InventoryFilter extends Component {
     this.hideModal = this.hideModal.bind(this);
     this.resetCategory = this.resetCategory.bind(this);
     this.resetFormInventory = this.resetFormInventory.bind(this);
+    this.handleSaveSearch = this.handleSaveSearch.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
 
     this.state = {
       hideAdvanceSearch: true,
@@ -345,6 +347,20 @@ class InventoryFilter extends Component {
     this.refs.gemstone.resetDate();
   }
 
+  handleSaveSearch = _=> {
+    (async _ => {
+        await this.props.inventoryActions.setSubmitAction('save');
+        this.props.handleSubmit();
+    })()
+  }
+
+  handleSearch = _=> {
+    (async _ => {
+        await this.props.inventoryActions.setSubmitAction('search');
+        this.props.handleSubmit();
+    })()
+  }
+
   render() {
     var { handleSubmit, resetForm, submitting, reset, activeTabCategory } = this.props;
 
@@ -426,7 +442,7 @@ class InventoryFilter extends Component {
     // console.log('this.state.showLoading-->',this.state.showLoading);
       return (
 
-        <form role="form" onSubmit={handleSubmit}>
+        <form role="form">
         <div className="alert"></div>
         <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
           <center>
@@ -440,7 +456,11 @@ class InventoryFilter extends Component {
             <div className="col-sm-6 m-width-60 ft-white m-nopadding"><h1>Inventory Report</h1></div>
             <div className="col-sm-6 m-width-40 m-nopadding">
             <div className="text-right maring-t15">
-              <button type="submit" className="btn btn-primary btn-radius">Search</button>
+                <button type="button" className="btn btn-primary btn-radius"
+                    disabled={submitting} onClick={this.handleSaveSearch}>Save Search
+                </button>
+              <button type="button" className="btn btn-primary btn-radius"
+                    disabled={submitting} onClick={this.handleSearch}>Search</button>
               <button type="button" className="btn btn-primary btn-radius"
                 disabled={submitting} onClick={this.resetFormInventory}>
                 <i/> Reset
