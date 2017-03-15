@@ -10,8 +10,8 @@ import TreeData from '../../utils/treeview/spare.json';
 class InventorySparePart extends Component {
   constructor(props) {
     super(props);
-    var dateToday = new Date();
-    var fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
+    let dateToday = new Date();
+    let fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
 
     this.treeOnClick = this.treeOnClick.bind(this);
     this.treeOnUnClick = this.treeOnUnClick.bind(this);
@@ -70,9 +70,9 @@ class InventorySparePart extends Component {
     // console.log('vals-->',vals);
     this.setState({treeViewData:vals});
     this.props.props.inventoryActions.setHierarchy(vals);
-    var treeSelected = [];
-    var selectedData = vals.filter(val => {
-      var checkAllNodes = function(node){
+    let treeSelected = [];
+    let selectedData = vals.filter(val => {
+      let checkAllNodes = function(node){
         if (node.children) {
           if(node.checked === true){treeSelected.push(node);}
           node.children.forEach(checkAllNodes);
@@ -89,9 +89,9 @@ class InventorySparePart extends Component {
     });
     // console.log('treeSelected-->',treeSelected);
     const { props } = this.props;
-    var { fields: { sparePartProductHierarchy }, searchResult } = props;
+    let { fields: { sparePartProductHierarchy }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -101,9 +101,9 @@ class InventorySparePart extends Component {
   }
   handleSparePartTypeSelectChange(sparePartTypeSelectValue){
     const { props } = this.props;
-    var { fields: { sparePartType }, searchResult } = props;
+    let { fields: { sparePartType }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -114,9 +114,9 @@ class InventorySparePart extends Component {
   }
   handleBuckleTypeSelectChange(buckleTypeSelectValue){
     const { props } = this.props;
-    var { fields: { buckleType }, searchResult } = props;
+    let { fields: { buckleType }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -127,9 +127,9 @@ class InventorySparePart extends Component {
   }
   handleMetalTypeSelectChange(metalTypeSelectValue){
     const { props } = this.props;
-    var { fields: { metalType }, searchResult } = props;
+    let { fields: { metalType }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -140,9 +140,9 @@ class InventorySparePart extends Component {
   }
   handleMetalColourSelectChange(metalColourSelectValue){
     const { props } = this.props;
-    var { fields: { metalColour }, searchResult } = props;
+    let { fields: { metalColour }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -153,9 +153,9 @@ class InventorySparePart extends Component {
   }
   handleDominantStoneSelectChange(dominantStoneSelectValue){
     const { props } = this.props;
-    var { fields: { dominantStone }, searchResult } = props;
+    let { fields: { dominantStone }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -169,7 +169,7 @@ class InventorySparePart extends Component {
 
     const yesNo = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
 
-    var { fields:
+    let { fields:
           {
             totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo,publicPriceFrom, publicPriceTo,
             markupFrom, markupTo, grossWeightFrom, grossWeightTo
@@ -177,15 +177,15 @@ class InventorySparePart extends Component {
             searchResult
           } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
 
-    var dataDropDownSparePartType = [];
-    var dataDropDowntBuckleType = [];
-    var dataDropDowntDominantStone = [];
-    var dataDropDowntMetalType = [];
-    var dataDropDowntMetalColour = [];
+    let dataDropDownSparePartType = [];
+    let dataDropDowntBuckleType = [];
+    let dataDropDowntDominantStone = [];
+    let dataDropDowntMetalType = [];
+    let dataDropDowntMetalColour = [];
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 

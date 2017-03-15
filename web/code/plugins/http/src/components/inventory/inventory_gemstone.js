@@ -10,8 +10,8 @@ class InventoryGemStone extends Component {
   constructor(props) {
     super(props);
 
-    var dateToday = new Date();
-    var fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
+    let dateToday = new Date();
+    let fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
 
     this.handlestoneTypeSelectChange = this.handlestoneTypeSelectChange.bind(this);
     this.handleCutSelectChange = this.handleCutSelectChange.bind(this);
@@ -33,7 +33,7 @@ class InventoryGemStone extends Component {
       endDate: null
     };
   }
-  
+
   shouldComponentUpdate(nextProps, nextState) {
     // console.log('startDate-->',nextProps);
     return shallowCompare(this, nextProps, nextState);
@@ -46,9 +46,9 @@ class InventoryGemStone extends Component {
   }
   handlestoneTypeSelectChange(stoneTypeSelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_stoneType }, searchResult } = props;
+    let { fields: { gemstone_stoneType }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -59,9 +59,9 @@ class InventoryGemStone extends Component {
   }
   handleCutSelectChange(CutSelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_cut }, searchResult } = props;
+    let { fields: { gemstone_cut }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -72,9 +72,9 @@ class InventoryGemStone extends Component {
   }
   handleCutGradeSelectChange(CutGradeSelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_cutGrade }, searchResult } = props;
+    let { fields: { gemstone_cutGrade }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -85,9 +85,9 @@ class InventoryGemStone extends Component {
   }
   handleColorSelectChange(ColorSelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_color }, searchResult } = props;
+    let { fields: { gemstone_color }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -98,9 +98,9 @@ class InventoryGemStone extends Component {
   }
   handleClaritiesSelectChange(ClaritySelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_clarity }, searchResult } = props;
+    let { fields: { gemstone_clarity }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -112,11 +112,11 @@ class InventoryGemStone extends Component {
   handleChangeDate ({ startDate, endDate }) {
     const { props } = this.props;
 
-    var startDateM = (typeof startDate !== 'undefined')? moment(startDate,'MM-DD-YYYY') : moment(this.state.startDate,'MM-DD-YYYY');
-    var endDateM = (typeof endDate !== 'undefined')? moment(endDate,'MM-DD-YYYY') : moment(this.state.endDate,'MM-DD-YYYY');
+    let startDateM = (typeof startDate !== 'undefined')? moment(startDate,'MM-DD-YYYY') : moment(this.state.startDate,'MM-DD-YYYY');
+    let endDateM = (typeof endDate !== 'undefined')? moment(endDate,'MM-DD-YYYY') : moment(this.state.endDate,'MM-DD-YYYY');
 
     if (startDateM.isAfter(endDateM)) {
-      var temp = startDate || this.state.startDate;
+      let temp = startDate || this.state.startDate;
       startDate = endDate|| this.state.endDate;
       endDate = temp
     }else{
@@ -133,9 +133,9 @@ class InventoryGemStone extends Component {
   }
   handleChangeStart(startDate){
     const { props } = this.props;
-    var { fields: { gemstone_cerDateFrom }, searchResult } = props;
+    let { fields: { gemstone_cerDateFrom }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -148,9 +148,9 @@ class InventoryGemStone extends Component {
   }
   handleChangeEnd(endDate){
     const { props } = this.props;
-    var { fields: { gemstone_cerDateTo }, searchResult } = props;
+    let { fields: { gemstone_cerDateTo }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -162,9 +162,9 @@ class InventoryGemStone extends Component {
   }
   handlePolishSelectChange(PolishSelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_polish }, searchResult } = props;
+    let { fields: { gemstone_polish }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -175,9 +175,9 @@ class InventoryGemStone extends Component {
   }
   handleSymmetrySelectChange(SymmetrySelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_symmetry }, searchResult } = props;
+    let { fields: { gemstone_symmetry }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -188,9 +188,9 @@ class InventoryGemStone extends Component {
   }
   handleTreatmentSelectChange(TreatmentSelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_treatment }, searchResult } = props;
+    let { fields: { gemstone_treatment }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -201,9 +201,9 @@ class InventoryGemStone extends Component {
   }
   handleFluorescenceSelectChange(FluorescenceSelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_fluorescence }, searchResult } = props;
+    let { fields: { gemstone_fluorescence }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -214,9 +214,9 @@ class InventoryGemStone extends Component {
   }
   handleOriginSelectChange(OriginSelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_origin }, searchResult } = props;
+    let { fields: { gemstone_origin }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -227,9 +227,9 @@ class InventoryGemStone extends Component {
   }
   handleCertificateAgencySelectChange(CertificateAgencySelectValue){
     const { props } = this.props;
-    var { fields: { gemstone_certificateAgency }, searchResult } = props;
+    let { fields: { gemstone_certificateAgency }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -242,7 +242,7 @@ class InventoryGemStone extends Component {
     const { props } = this.props;
     // console.log('props-->',props);
 
-    var { fields:
+    let { fields:
           {
             gemstone_stoneCostFrom, gemstone_stoneCostTo, gemstone_totalCaratWeightFrom, gemstone_totalCaratWeightTo,
             gemstone_quantityFrom, gemstone_quantityTo,gemstone_certificatedNumber
@@ -250,22 +250,22 @@ class InventoryGemStone extends Component {
             searchResult
           } = props;
 
-    var paramsSearch= (searchResult.paramsSearch != null)?
+    let paramsSearch= (searchResult.paramsSearch != null)?
                         searchResult.paramsSearch:
                         null;
 
-    var dataDropDowntstoneType = [];
-    var dataDropDowntGemstoneStoneType = [];
-    var dataDropDowntCut = [];
-    var dataDropDowntCutGrade = [];
-    var dataDropDowntColor = [];
-    var dataDropDowntClarity = [];
-    var dataDropDowntPolish = [];
-    var dataDropDowntSymmetry = [];
-    var dataDropDowntTreatment = [];
-    var dataDropDowntFluorescence = [];
-    var dataDropDowntOrigin = [];
-    var dataDropDowntCertificateAgency = [];
+    let dataDropDowntstoneType = [];
+    let dataDropDowntGemstoneStoneType = [];
+    let dataDropDowntCut = [];
+    let dataDropDowntCutGrade = [];
+    let dataDropDowntColor = [];
+    let dataDropDowntClarity = [];
+    let dataDropDowntPolish = [];
+    let dataDropDowntSymmetry = [];
+    let dataDropDowntTreatment = [];
+    let dataDropDowntFluorescence = [];
+    let dataDropDowntOrigin = [];
+    let dataDropDowntCertificateAgency = [];
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 

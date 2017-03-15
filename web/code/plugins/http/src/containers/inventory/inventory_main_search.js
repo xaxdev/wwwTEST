@@ -17,16 +17,19 @@ class InventorySearch extends Component {
 
   handleSubmit(data) {
 
-    var { filters, paramsSearch, activeTabCategory, isAdvance, submitAction } = this.props;
+    let { filters, paramsSearch, activeTabCategory, isAdvance, submitAction } = this.props;
     console.log('submitAction-->',submitAction);
-    var that = this;
+    let that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
+    let saveSearchName = data.searchName;
     // check modify search or new search
     // if have filters is mean modify search
 
     // set default location & warehouse
-    var keyscat = Object.keys(data);
-    var i=0;
+
+    delete data.searchName;
+    let keyscat = Object.keys(data);
+    let i=0;
     // find criterias
     keyscat.forEach((keycat) => {
       const valueKeys = data[keycat];
@@ -71,20 +74,20 @@ class InventorySearch extends Component {
       sessionStorage.setItem('paramsSearch', JSON.stringify(data));
     }
 
-    var keyscat = Object.keys(data);
+    // let keyscat = Object.keys(data);
 
     keyscat.forEach((keycat) => {
 
       const valueKeys = (paramsSearch != null) ? paramsSearch[keycat] : data[keycat];
 
       if(valueKeys != '' && valueKeys != undefined){
-        var propname = {};
+        let propname = {};
         switch(keycat){
           case 'stoneProductHierarchy':
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
@@ -95,7 +98,7 @@ class InventorySearch extends Component {
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
@@ -106,7 +109,7 @@ class InventorySearch extends Component {
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
@@ -117,7 +120,7 @@ class InventorySearch extends Component {
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
@@ -128,7 +131,7 @@ class InventorySearch extends Component {
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
@@ -139,7 +142,7 @@ class InventorySearch extends Component {
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
@@ -238,7 +241,7 @@ class InventorySearch extends Component {
           break;
       }
     }else{
-      var productArray = [];
+      let productArray = [];
       const productGroup = ProductGroup(userLogin);
       if(productGroup.productGroupJLY){
         productArray.push('JLY');
@@ -281,7 +284,7 @@ class InventorySearch extends Component {
 
   render(){
       return (
-          <InventoryFilter onSubmit={this.handleSubmit}/>
+        <InventoryFilter onSubmit={this.handleSubmit}/>
       );
   }
 }

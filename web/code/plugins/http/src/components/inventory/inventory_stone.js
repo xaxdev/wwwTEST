@@ -10,8 +10,8 @@ import TreeData from '../../utils/treeview/stone.json';
 class InventoryStone extends Component {
   constructor(props) {
     super(props);
-    var dateToday = new Date();
-    var fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
+    let dateToday = new Date();
+    let fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
 
     this.treeOnClick = this.treeOnClick.bind(this);
     this.treeOnUnClick = this.treeOnUnClick.bind(this);
@@ -79,9 +79,9 @@ class InventoryStone extends Component {
     // console.log('vals-->',vals);
     this.setState({treeViewData:vals});
     this.props.props.inventoryActions.setHierarchy(vals);
-    var treeSelected = [];
-    var selectedData = vals.filter(val => {
-      var checkAllNodes = function(node){
+    let treeSelected = [];
+    let selectedData = vals.filter(val => {
+      let checkAllNodes = function(node){
         if (node.children) {
           if(node.checked === true){treeSelected.push(node);}
           node.children.forEach(checkAllNodes);
@@ -99,9 +99,9 @@ class InventoryStone extends Component {
     // console.log('treeSelected-->',treeSelected);
     const { props } = this.props;
 
-    var { fields: { stoneProductHierarchy }, searchResult} = props;
+    let { fields: { stoneProductHierarchy }, searchResult} = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -112,9 +112,9 @@ class InventoryStone extends Component {
   handlestoneTypeSelectChange(stoneTypeSelectValue){
     // console.log('stoneTypeValue-->',stoneTypeSelectValue);
     const { props } = this.props;
-    var { fields: { stoneType }, searchResult } = props;
+    let { fields: { stoneType }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -125,9 +125,9 @@ class InventoryStone extends Component {
   }
   handleCutSelectChange(CutSelectValue){
     const { props } = this.props;
-    var { fields: { cut, CutValue }, searchResult } = props;
+    let { fields: { cut, CutValue }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -138,9 +138,9 @@ class InventoryStone extends Component {
   }
   handleCutGradeSelectChange(CutGradeSelectValue){
     const { props } = this.props;
-    var { fields: { cutGrade, CutGradeValue }, searchResult } = props;
+    let { fields: { cutGrade, CutGradeValue }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -151,9 +151,9 @@ class InventoryStone extends Component {
   }
   handleColorSelectChange(ColorSelectValue){
     const { props } = this.props;
-    var { fields: { color, ColorValue }, searchResult } = props;
+    let { fields: { color, ColorValue }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -164,9 +164,9 @@ class InventoryStone extends Component {
   }
   handleColorGradeSelectChange(ColorGradeSelectValue){
     const { props } = this.props;
-    var { fields: { colorGrade, ColorGradeValue }, searchResult } = props;
+    let { fields: { colorGrade, ColorGradeValue }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -177,9 +177,9 @@ class InventoryStone extends Component {
   }
   handleClaritiesSelectChange(ClaritySelectValue){
     const { props } = this.props;
-    var { fields: { clarity, ClarityValue }, searchResult } = props;
+    let { fields: { clarity, ClarityValue }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -190,9 +190,9 @@ class InventoryStone extends Component {
   }
   handleCertificateLabsSelectChange(CertificateLabSelectValue){
     const { props } = this.props;
-    var { fields: { certificateAgency, CertificateAgencyValue }, searchResult } = props;
+    let { fields: { certificateAgency, CertificateAgencyValue }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -204,11 +204,11 @@ class InventoryStone extends Component {
   handleChangeDate ({ startDate, endDate }) {
     const { props } = this.props;
 
-    var startDateM = (typeof startDate !== 'undefined')? moment(startDate,'MM-DD-YYYY') : moment(this.state.startDate,'MM-DD-YYYY');
-    var endDateM = (typeof endDate !== 'undefined')? moment(endDate,'MM-DD-YYYY') : moment(this.state.endDate,'MM-DD-YYYY');
+    let startDateM = (typeof startDate !== 'undefined')? moment(startDate,'MM-DD-YYYY') : moment(this.state.startDate,'MM-DD-YYYY');
+    let endDateM = (typeof endDate !== 'undefined')? moment(endDate,'MM-DD-YYYY') : moment(this.state.endDate,'MM-DD-YYYY');
 
     if (startDateM.isAfter(endDateM)) {
-      var temp = startDate || this.state.startDate;
+      let temp = startDate || this.state.startDate;
       startDate = endDate|| this.state.endDate;
       endDate = temp
     }else{
@@ -226,9 +226,9 @@ class InventoryStone extends Component {
   }
   handleChangeStart(startDate){
     const { props } = this.props;
-    var { fields: { cerDateFrom }, searchResult } = props;
+    let { fields: { cerDateFrom }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -241,9 +241,9 @@ class InventoryStone extends Component {
   }
   handleChangeEnd(endDate){
     const { props } = this.props;
-    var { fields: { cerDateTo }, searchResult } = props;
+    let { fields: { cerDateTo }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -255,9 +255,9 @@ class InventoryStone extends Component {
   }
   handlePolishSelectChange(PolishSelectValue){
     const { props } = this.props;
-    var { fields: { polish }, searchResult } = props;
+    let { fields: { polish }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -268,9 +268,9 @@ class InventoryStone extends Component {
   }
   handleSymmetrySelectChange(SymmetrySelectValue){
     const { props } = this.props;
-    var { fields: { symmetry }, searchResult } = props;
+    let { fields: { symmetry }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -281,9 +281,9 @@ class InventoryStone extends Component {
   }
   handleTreatmentSelectChange(TreatmentSelectValue){
     const { props } = this.props;
-    var { fields: { treatment }, searchResult } = props;
+    let { fields: { treatment }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -294,9 +294,9 @@ class InventoryStone extends Component {
   }
   handleFluorescenceSelectChange(FluorescenceSelectValue){
     const { props } = this.props;
-    var { fields: { fluorescence }, searchResult } = props;
+    let { fields: { fluorescence }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -307,9 +307,9 @@ class InventoryStone extends Component {
   }
   handleOriginSelectChange(OriginSelectValue){
     const { props } = this.props;
-    var { fields: { origin }, searchResult } = props;
+    let { fields: { origin }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -320,7 +320,7 @@ class InventoryStone extends Component {
   }
   render() {
     const { props } = this.props;
-    var { fields:
+    let { fields:
           {
             lotNumber, lotQuantityFrom, lotQuantityTo, totalCaratWeightFrom, totalCaratWeightTo, totalCostFrom, totalCostTo,
             totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo, markupFrom, markupTo, certificatedNumber,
@@ -329,22 +329,22 @@ class InventoryStone extends Component {
             searchResult
           } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                         searchResult.paramsSearch:
                         null;
 
-    var dataDropDowntstoneType = [];
-    var dataDropDowntCut = [];
-    var dataDropDowntCutGrade = [];
-    var dataDropDowntColor = [];
-    var dataDropDowntColorGrade = [];
-    var dataDropDowntClarity = [];
-    var dataDropDowntCertificateLab = [];
-    var dataDropDowntPolish = [];
-    var dataDropDowntSymmetry = [];
-    var dataDropDowntTreatment = [];
-    var dataDropDowntFluorescence = [];
-    var dataDropDowntOrigin = [];
+    let dataDropDowntstoneType = [];
+    let dataDropDowntCut = [];
+    let dataDropDowntCutGrade = [];
+    let dataDropDowntColor = [];
+    let dataDropDowntColorGrade = [];
+    let dataDropDowntClarity = [];
+    let dataDropDowntCertificateLab = [];
+    let dataDropDowntPolish = [];
+    let dataDropDowntSymmetry = [];
+    let dataDropDowntTreatment = [];
+    let dataDropDowntFluorescence = [];
+    let dataDropDowntOrigin = [];
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 

@@ -20,18 +20,20 @@ import InventoryWatch from './inventory_watch';
 import InventoryAcc from './inventory_acc';
 import InventoryOBA from './inventory_oba';
 import InventorySparePart from './inventory_sparepart';
+import ModalSaveSearch from './modalSaveSearch';
+import ValidateSaveSearch from './validatesavesearch';
 import jQuery from 'jquery';
 let Loading = require('react-loading');
 
 import '../../../public/css/react-multi-select.css';
 import '../../../public/css/input-calendar.css';
 
-var productGroupSTO=false;
-var productGroupJLY=false;
-var productGroupWAT=false;
-var productGroupACC=false;
-var productGroupOBA=false;
-var productGroupSPA=false;
+let productGroupSTO=false;
+let productGroupJLY=false;
+let productGroupWAT=false;
+let productGroupACC=false;
+let productGroupOBA=false;
+let productGroupSPA=false;
 
 class InventoryFilter extends Component {
   constructor(props) {
@@ -48,6 +50,8 @@ class InventoryFilter extends Component {
     this.resetFormInventory = this.resetFormInventory.bind(this);
     this.handleSaveSearch = this.handleSaveSearch.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.renderDialogSaveSearch = this.renderDialogSaveSearch.bind(this);
+    this.renderSaveSearch = this.renderSaveSearch.bind(this);
 
     this.state = {
       hideAdvanceSearch: true,
@@ -60,7 +64,8 @@ class InventoryFilter extends Component {
       isOpen: true,
       activeTab: 1,
       beforeActiveTab: 1,
-      showLoading: true
+      showLoading: true,
+      showDialogSaveSearch: false
     };
   }
   static contextTypes = {
@@ -94,9 +99,9 @@ class InventoryFilter extends Component {
     this.refs.oba.treeOnUnClick();
     this.refs.sparepart.treeOnUnClick();
 
-    var numbers = document.querySelectorAll('input[type="number"]');
+    let numbers = document.querySelectorAll('input[type="number"]');
 
-    for (var i in numbers) {
+    for (let i in numbers) {
       if (numbers.hasOwnProperty(i)) {
         numbers[i].onkeydown = function(e) {
             if(!((e.keyCode > 95 && e.keyCode < 106)
@@ -115,7 +120,7 @@ class InventoryFilter extends Component {
     }
 
     $(window).scroll(function() {
-        var w = $('#page-wrapper').width();
+        let w = $('#page-wrapper').width();
 				if ($(window).scrollTop() > 100) {
 					$('#scroller').addClass('stuck');
 				} else {
@@ -124,7 +129,7 @@ class InventoryFilter extends Component {
 
 			});
     $( window ).resize(function() {
-        var w = $('#page-wrapper').width();
+        let w = $('#page-wrapper').width();
       $('#scroller').removeClass('stuck').css({'width':w});
     });
 
@@ -172,7 +177,7 @@ class InventoryFilter extends Component {
   advanceSearchClick(e){
     e.preventDefault();
 
-    var btnadvance = document.querySelector('.btn-advance') // Using a class instead, see note below.
+    let btnadvance = document.querySelector('.btn-advance') // Using a class instead, see note below.
     btnadvance.classList.toggle('btn-activebtn');
     // console.log('btnadvance --->',btnadvance);
     // console.log('click Advance');
@@ -183,15 +188,15 @@ class InventoryFilter extends Component {
       this.setState({ hideAdvanceSearch: true });
       this.props.inventoryActions.setAdvance(true);
     }
-    var { activeTabCategory } = this.props;
+    let { activeTabCategory } = this.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
     // console.log('userLogin-->',userLogin);
 
-    var permission = userLogin.permission;
-    var bitwise = Number(permission.productGroup).toString(2);
-    var checkbits = bitwise.split('')
-    var numberDiit = checkbits.length;
-    var setActiveTab = activeTabCategory;
+    let permission = userLogin.permission;
+    let bitwise = Number(permission.productGroup).toString(2);
+    let checkbits = bitwise.split('')
+    let numberDiit = checkbits.length;
+    let setActiveTab = activeTabCategory;
     // console.log('numberDiit-->',numberDiit);
 
     checkbits.map(function(value,key){
@@ -288,7 +293,7 @@ class InventoryFilter extends Component {
   }
   confirmModal(e){
     e.preventDefault();
-    var { activeTab } = this.state;
+    let { activeTab } = this.state;
     // console.log('activeTab-->',activeTab);
     this.setState({
       isOpen: false,
@@ -305,7 +310,7 @@ class InventoryFilter extends Component {
   }
   hideModal = (e) => {
     e.preventDefault();
-    var { beforeActiveTab } = this.state;
+    let { beforeActiveTab } = this.state;
     // console.log('beforeActiveTab-->',beforeActiveTab);
     this.setState({
       isOpen: false,
@@ -328,7 +333,7 @@ class InventoryFilter extends Component {
     let fileName = jQuery('#fileName');
 
     fileName.html('');
-    var { fields:{reference }} = this.props;
+    let { fields:{reference }} = this.props;
     reference.value = '';
     reference.onChange('');
 
@@ -348,32 +353,54 @@ class InventoryFilter extends Component {
   }
 
   handleSaveSearch = _=> {
+    const { fields: { searchName } } = this.props;
+    // searchName.onChange('');
+    // searchName.value = '';
     (async _ => {
+        // console.log(this.props.fields);
         await this.props.inventoryActions.setSubmitAction('save');
+        this.setState({showDialogSaveSearch: false});
         this.props.handleSubmit();
     })()
   }
 
   handleSearch = _=> {
+      const { fields: { searchName } } = this.props;
+      searchName.onChange('search');
+      searchName.value = 'search';
     (async _ => {
         await this.props.inventoryActions.setSubmitAction('search');
         this.props.handleSubmit();
     })()
   }
 
+  renderSaveSearch = _=> {
+      const { submitting } = this.props;
+      return(<ModalSaveSearch onSubmit={this.handleSaveSearch}
+          isOpen={this.state.showDialogSaveSearch}
+          isClose={this.handleCloseDialogSaveSearch} props={this.props}/>);
+  }
+
+  renderDialogSaveSearch = _=> {
+      this.setState({showDialogSaveSearch: true});
+  }
+  handleCloseDialogSaveSearch = _=> {
+      this.setState({showDialogSaveSearch: false});
+  }
+
   render() {
-    var { handleSubmit, resetForm, submitting, reset, activeTabCategory } = this.props;
+    let { handleSubmit, resetForm, submitting, reset, activeTabCategory } = this.props;
 
     const { alert } = this.state;
 
     const userLogin = JSON.parse(sessionStorage.logindata);
     // console.log('this.props-->',this.props);
 
-    var permission = userLogin.permission;
-    var bitwise = Number(permission.productGroup).toString(2);
-    var checkbits = bitwise.split('')
-    var numberDiit = checkbits.length;
-    var setActiveTab = activeTabCategory;
+    let permission = userLogin.permission;
+    let bitwise = Number(permission.productGroup).toString(2);
+    let checkbits = bitwise.split('')
+    let numberDiit = checkbits.length;
+    let setActiveTab = activeTabCategory;
 
     checkbits.map(function(value,key){
       switch (numberDiit) {
@@ -457,8 +484,11 @@ class InventoryFilter extends Component {
             <div className="col-sm-6 m-width-40 m-nopadding">
             <div className="text-right maring-t15">
                 <button type="button" className="btn btn-primary btn-radius"
-                    disabled={submitting} onClick={this.handleSaveSearch}>Save Search
+                    disabled={submitting} onClick={this.renderDialogSaveSearch}>Save Search
                 </button>
+                {/*<button type="button" className="btn btn-primary btn-radius"
+                    disabled={submitting} onClick={this.handleSaveSearch}>Save Search
+                </button>*/}
               <button type="button" className="btn btn-primary btn-radius"
                     disabled={submitting} onClick={this.handleSearch}>Search</button>
               <button type="button" className="btn btn-primary btn-radius"
@@ -575,6 +605,7 @@ class InventoryFilter extends Component {
           </div>
 
           {alert?this.renderAlertMessage():''}
+          {this.renderSaveSearch()}
         </form>
       );
     }
@@ -675,6 +706,8 @@ module.exports = reduxForm({
             'buckleType','strapType','strapColor','complication',
             'accessoryProductHierarchy','accessoryType',
             'obaProductHierarchy','obaDimension',
-            'sparePartProductHierarchy','sparePartType'
-          ],
+            'sparePartProductHierarchy','sparePartType','searchName','validateSearchName'
+          ]
+          ,
+    validate: ValidateSaveSearch
 },mapStateToProps,mapDispatchToProps)(InventoryFilter);
