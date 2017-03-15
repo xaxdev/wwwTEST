@@ -8,8 +8,8 @@ export default function(initialState = {}) {
 
 	const middlewares = [promiseResolver,masterDataResolver]
 
-	// if(ENVIRONMENT !== 'production')
-    // 	middlewares.push(createLogger())
+	if(ENVIRONMENT !== 'production')
+    	middlewares.push(createLogger())
 
 	return createStore(reducer, initialState, applyMiddleware(...middlewares));
 }

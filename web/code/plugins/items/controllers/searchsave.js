@@ -10,7 +10,7 @@ module.exports = {
         payload: {
             id: Joi.string(),
             name: Joi.string().required(),
-            criteria: Joi.object().required()
+            criteria: Joi.string().required()
         }
     },
     handler: (request, reply) => {
@@ -30,9 +30,9 @@ module.exports = {
                 },
                 {
                     $set: {
-                        "name": searchName,
-                        "criteria": criteria,
-                        "owner": request.auth.credentials.id
+                        'name': searchName,
+                        'criteria': criteria,
+                        'owner': request.auth.credentials.id
                     }
                 },
                 {
@@ -40,7 +40,7 @@ module.exports = {
                     returnOriginal: false
                 })
 
-                return reply.success()
+                return reply({error:'',message:'Save search criteria success.',statusCode:200});
             } catch (e) {
 
                 return reply(Boom.badImplementation('', e))

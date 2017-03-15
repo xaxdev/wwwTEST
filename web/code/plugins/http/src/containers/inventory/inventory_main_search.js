@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import InventoryFilter  from '../../components/inventory/inventory_filter';
 import * as itemactions from '../../actions/itemactions';
 import ProductGroup from '../../utils/userproductgroup';
+import Modalalertmsg from '../../utils/modalalertmsg';
 
 class InventorySearch extends Component {
   constructor(props) {
@@ -25,9 +26,9 @@ class InventorySearch extends Component {
     // check modify search or new search
     // if have filters is mean modify search
 
-    // set default location & warehouse
-
     delete data.searchName;
+
+    // set default location & warehouse
     let keyscat = Object.keys(data);
     let i=0;
     // find criterias
@@ -273,6 +274,9 @@ class InventorySearch extends Component {
     switch (submitAction) {
         case 'save':
             console.log('save-->',filters);
+            let paramsSaveSearch = {name:saveSearchName, criteria:JSON.stringify(filters)}
+            console.log('paramsSaveSearch-->',paramsSaveSearch);
+            this.props.saveSearchCriteria(paramsSaveSearch);
             break;
         case 'search':
             this.context.router.push('/searchresult');
@@ -282,9 +286,29 @@ class InventorySearch extends Component {
     }
   }
 
+  handleClosemsgSaveSearch = _=> {
+      this.props.setCloseAlertMsg(100);
+  }
+
+  renderAlertmsgSaveSearch = _=> {
+      const { saveSearchStatus, saveSearchStatusCode, saveSearchMsgError} = this.props;
+
+      const title = 'SAVE SEARCHS';
+      let isOpen = saveSearchStatusCode >= 200 ? true : false;
+      console.log('saveSearchStatusCode-->',saveSearchStatusCode);
+      console.log('saveSearchMsgError-->',saveSearchMsgError);
+      console.log('isOpen-->',isOpen);
+
+      return(<Modalalertmsg isOpen={isOpen} isClose={this.handleClosemsgSaveSearch}
+          props={this.props} message={saveSearchMsgError}  title={title}/>);
+  }
+
   render(){
       return (
-        <InventoryFilter onSubmit={this.handleSubmit}/>
+          <div>
+            <InventoryFilter onSubmit={this.handleSubmit}/>
+            {this.renderAlertmsgSaveSearch()}
+          </div>
       );
   }
 }
@@ -296,7 +320,10 @@ function mapStateToProps(state) {
     isAdvance: state.searchResult.IsAdvance,
     filters: state.searchResult.filters,
     paramsSearch: state.searchResult.paramsSearch,
-    submitAction: state.searchResult.SubmitAction
+    submitAction: state.searchResult.SubmitAction,
+    saveSearchStatus: state.searchResult.saveSearchStatus,
+    saveSearchMsgError: state.searchResult.msg,
+    saveSearchStatusCode: state.searchResult.saveSearchStatusCode,
   };
 }
 
