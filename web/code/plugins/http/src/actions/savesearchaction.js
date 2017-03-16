@@ -1,7 +1,8 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
-import { ROOT_URL, POST_SAVESEARCH, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH } from '../constants/itemconstants';
+import { ROOT_URL, POST_SAVESEARCH, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH,
+        SET_CLOSEALERTMSG } from '../constants/itemconstants';
 
 export function shareSaveSearch(params){
   const token = sessionStorage.token;
@@ -54,4 +55,11 @@ export function saveSearchCriteria(params){
             },
           })
   }
+}
+
+export function setCloseAlertMsg(value){
+    return {
+            type: SET_CLOSEALERTMSG,
+            closeAlertMsg:value
+    }
 }
