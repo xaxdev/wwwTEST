@@ -19,7 +19,7 @@ class InventorySearch extends Component {
   handleSubmit(data) {
 
     let { filters, paramsSearch, activeTabCategory, isAdvance, submitAction } = this.props;
-    console.log('submitAction-->',submitAction);
+    // console.log('submitAction-->',submitAction);
     let that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
     let saveSearchName = data.searchName;
@@ -74,9 +74,7 @@ class InventorySearch extends Component {
       this.props.setParams(data);
       sessionStorage.setItem('paramsSearch', JSON.stringify(data));
     }
-
     // let keyscat = Object.keys(data);
-
     keyscat.forEach((keycat) => {
 
       const valueKeys = (paramsSearch != null) ? paramsSearch[keycat] : data[keycat];
@@ -273,16 +271,13 @@ class InventorySearch extends Component {
     sessionStorage.setItem('filters', JSON.stringify(filters));
     switch (submitAction) {
         case 'save':
-            console.log('save-->',filters);
             let paramsSaveSearch = {name:saveSearchName, criteria:JSON.stringify(filters)}
-            console.log('paramsSaveSearch-->',paramsSaveSearch);
             this.props.saveSearchCriteria(paramsSaveSearch);
             break;
         case 'search':
             this.context.router.push('/searchresult');
             break;
         default:
-
     }
   }
 
@@ -293,11 +288,8 @@ class InventorySearch extends Component {
   renderAlertmsgSaveSearch = _=> {
       const { saveSearchStatus, saveSearchStatusCode, saveSearchMsgError} = this.props;
 
-      const title = 'SAVE SEARCHS';
+      const title = 'SAVE SEARCHES';
       let isOpen = saveSearchStatusCode >= 200 ? true : false;
-      console.log('saveSearchStatusCode-->',saveSearchStatusCode);
-      console.log('saveSearchMsgError-->',saveSearchMsgError);
-      console.log('isOpen-->',isOpen);
 
       return(<Modalalertmsg isOpen={isOpen} isClose={this.handleClosemsgSaveSearch}
           props={this.props} message={saveSearchMsgError}  title={title}/>);

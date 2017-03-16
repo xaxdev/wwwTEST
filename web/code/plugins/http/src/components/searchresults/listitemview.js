@@ -67,7 +67,7 @@ class ListItemsView extends Component {
       </div>;
 
   render(){
-    var items = null;
+    let items = null;
     const userLogin = JSON.parse(sessionStorage.logindata);
     const currency = userLogin.currency;
     // console.log('list view pageSize-->',this.props.pageSize);
