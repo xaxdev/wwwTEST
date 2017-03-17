@@ -266,7 +266,7 @@ class InventorySearch extends Component {
     }
 
     filters.push({'userCurrency':userLogin.currency});
-    // console.log('filters-->',filters);
+    console.log('filters-->',filters);
     this.props.setCurrentPage(1);
     sessionStorage.setItem('filters', JSON.stringify(filters));
     switch (submitAction) {
@@ -275,7 +275,7 @@ class InventorySearch extends Component {
             this.props.saveSearchCriteria(paramsSaveSearch);
             break;
         case 'search':
-            this.context.router.push('/searchresult');
+            // this.context.router.push('/searchresult');
             break;
         default:
     }

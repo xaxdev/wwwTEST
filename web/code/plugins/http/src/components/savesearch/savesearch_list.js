@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { DataTable } from '../../utils/dataTableSaveSearch/index';
 import ShareModal from './share_model';
+import * as setcriteria from './setstate';
 let Loading = require('react-loading');
 
 class SaveSearchList extends Component {
     constructor(props) {
       super(props);
 
-      this.shareSaveSearch = this.shareSaveSearch.bind(this);
+    //   this.searchSaveCriteria = this.searchSaveCriteria.bind(this);
 
       this.state = {
         isOpen: false,
@@ -19,22 +20,55 @@ class SaveSearchList extends Component {
         pageLength: 5,
         totalPages:0
       };
-
     }
+    static contextTypes = {
 
-    shareSaveSearch = (row)=>{
-        // console.log('shareSaveSearch-->',this);
-        // console.log('shareSaveSearch-->',row);
+      router: PropTypes.object
+    }
+    searchSaveCriteria = (id) =>{
+        const that = this;
+        const { props } = this.props;
+        let { filters, paramsSearch, activeTabCategory, isAdvance, submitAction } = props;
+        // console.log('props-->',props);
+        let params = {id:id}
+        this.props.getSaveCriteria(params)
+                    .then((value) => {
+                        // console.log('get criteria save search.');
+                        // console.log(this.props.criteriaSaveSearch);
+                        (async () => {
+                            if (this.props.criteriaSaveSearch != null) {
+                                sessionStorage.setItem('filters', this.props.criteriaSaveSearch.criteria);
+                                const criterias = JSON.parse(this.props.criteriaSaveSearch.criteria);
+                                let data = null;
+                                data = await setcriteria.setstate(props,criterias);
+                                console.log('data-->',data);
+
+                                // console.log('data-->',data);
+                                // console.log('filters-->',filters);
+                                if(filters.length != 0){
+                                  props.saveSearchAction.setParams(paramsSearch)
+                                  sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
+                                //   filters.splice(0, filters.length);
+                                }else{
+                                //   // if not have filters is mean new search
+                                //   // set params by new criterias
+                                  props.saveSearchAction.setParams(data);
+                                  sessionStorage.setItem('paramsSearch', JSON.stringify(data));
+                                }
+                                that.context.router.push('/searchresult');
+                            }
+                        })()
+                    });
     }
 
     renderAction = (val,row) =>{
-        console.log('this-->',this);
+        // console.log('this-->',this);
         // console.log('val-->',val);
         // console.log('row-->',row);
         return(
           <div>
             <a><div className={`${row.shared ? 'hidden' : 'icon-edit'}`} onClick={this.deleteCatalog}></div></a>
-            <a><div className="icon-search" onClick={this.deleteCatalog}></div></a>
+            <a><div className="icon-search" onClick={this.searchSaveCriteria.bind(this,row._id)}></div></a>
             <ShareModal key={ row._id } saveSearch={ row }
                 shareSaveSearch={this.props.shareSaveSearch}/>
             <a><div className={`${row.shared ? 'hidden' : 'icon-del'}`} onClick={this.deleteCatalog}></div></a>
@@ -58,7 +92,6 @@ class SaveSearchList extends Component {
           { title: 'Status', prop: 'status' },
           { title: 'Action', render: this.renderAction }
         ];
-        console.log(lists);
         if(lists.length != 0){
             return (
               <div>

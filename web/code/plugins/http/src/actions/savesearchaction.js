@@ -2,7 +2,31 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import { ROOT_URL, POST_SAVESEARCH, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH,
-        SET_CLOSEALERTMSG } from '../constants/itemconstants';
+        SET_CLOSEALERTMSG, GET_SAVECRITERIA, SET_PARAMS } from '../constants/itemconstants';
+
+export function setParams(params){
+  const token = sessionStorage.token;
+  return {
+          type: SET_PARAMS,
+          params: params
+  }
+}
+export function getSaveCriteria(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/items/search/view/${params.id}`;
+  // console.log('getListsSaveSearch-->',url);
+  return {
+            type: GET_SAVECRITERIA,
+            promise: fetch(url,{
+                        method: 'GET',
+                        headers: {
+                          'Accept': 'application/json',
+                          'Content-Type': 'application/json',
+                          'Authorization': token
+                        },
+                    })
+  }
+}
 
 export function shareSaveSearch(params){
   const token = sessionStorage.token;
