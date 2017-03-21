@@ -178,7 +178,7 @@ class SearchResult extends Component {
       const filters =  JSON.parse(sessionStorage.filters);
       let gemstoneFilter = {};
       let lotNumberFilter = {};
-      // console.log('filters-->',filters);
+      console.log('filters-->',filters);
       filters.forEach(function(filter){
         let keys = Object.keys(filter);
         keys.forEach((key) => {
@@ -196,7 +196,24 @@ class SearchResult extends Component {
             lotNumberFilter[gemstoneFields[1]] = value;
           }
           else{
-            params[key] = value;
+              console.log('gemstoneFields[0]-->',gemstoneFields[0]);
+              switch (gemstoneFields[0]) {
+                  case 'sparePartProductHierarchy':
+                      break;
+                  case 'obaProductHierarchy':
+                      break;
+                  case 'accessoryProductHierarchy':
+                      break;
+                  case 'stoneProductHierarchy':
+                      break;
+                  case 'watchProductHierarchy':
+                      break;
+                  case 'jewelryProductHierarchy':
+                      break;
+                  default:
+                      params[key] = value;
+                      break;
+              }
           }
         });
       });
@@ -915,6 +932,7 @@ class SearchResult extends Component {
     this.props.setPageSize(16);
     this.props.setShowGridView(true);
     this.props.setShowListView(false);
+    console.log('modifySearch');
 
     this.props.modifySearch(this.props.paramsSearch);
     if(token){
@@ -957,6 +975,7 @@ class SearchResult extends Component {
     e.preventDefault();
 
     this.setState({isOpenNoResults: false});
+    // console.log('this.props.paramsSearch-->',this.props.paramsSearch);
 
     this.props.modifySearch(this.props.paramsSearch);
 

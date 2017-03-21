@@ -41,19 +41,17 @@ class SaveSearchList extends Component {
                                 const criterias = JSON.parse(this.props.criteriaSaveSearch.criteria);
                                 let data = null;
                                 data = await setcriteria.setstate(props,criterias);
-                                console.log('data-->',data);
-
-                                // console.log('data-->',data);
+                                // await console.log('data-->',data);
                                 // console.log('filters-->',filters);
                                 if(filters.length != 0){
-                                  props.saveSearchAction.setParams(paramsSearch)
-                                  sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
+                                 await props.saveSearchAction.setParams(paramsSearch)
+                                 await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
                                 //   filters.splice(0, filters.length);
                                 }else{
                                 //   // if not have filters is mean new search
                                 //   // set params by new criterias
-                                  props.saveSearchAction.setParams(data);
-                                  sessionStorage.setItem('paramsSearch', JSON.stringify(data));
+                                  await props.saveSearchAction.setParams(data);
+                                  await sessionStorage.setItem('paramsSearch', JSON.stringify(data));
                                 }
                                 that.context.router.push('/searchresult');
                             }

@@ -13,8 +13,18 @@ var Tree = React.createClass({
     // console.log('handleChange evt-->',(evt.target != undefined)?evt.target.checked:evt.checked);
     // console.log('evt.target.getAttribute-->',evt.target.getAttribute('data-key'));
     // var checked = evt.target.checked;
-		var checked = (evt.target != undefined) ? evt.target.checked : evt.checked;
-    var key = (evt.target != undefined) ? evt.target.getAttribute('data-key') : evt.key;
+	var checked = (evt.target != undefined)
+					? evt.target.checked
+					: (evt.checked != undefined)
+						? evt.checked
+						: evt[0].checked;
+    var key = (evt != undefined)
+				? (evt.target != undefined)
+					? evt.target.getAttribute('data-key')
+					: (evt.key != undefined)
+						? evt.key
+						: evt[0].code
+				: '';
     var traverseNodes = function (node) {
       if (node.code === key) {
         node.checked = checked;

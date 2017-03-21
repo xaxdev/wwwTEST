@@ -1,16 +1,29 @@
 const setstate = async (props,criterias) => {
     const { fields: { gemstone_quantityFrom } } = props;
-    console.log(gemstone_quantityFrom);
     let data = {};
     await criterias.map((criteria) => {
         const keyscat = Object.keys(criteria);
         const valueKeys = criteria[keyscat[0]];
-        // console.log('keyscat[0]-->',keyscat[0]);
+        // console.log('criteria-->',criteria);
         // console.log('valueKeys-->',valueKeys);
         switch (keyscat[0]) {
-            case 'gemstones.quantityFrom':
-                gemstone_quantityFrom.onChange(valueKeys);
-                gemstone_quantityFrom.value = valueKeys;
+            case 'sparePartProductHierarchy':
+                props.inventoryActions.setSaveSearchHierarchy(valueKeys);
+                break;
+            case 'obaProductHierarchy':
+                props.inventoryActions.setSaveSearchHierarchy(valueKeys);
+                break;
+            case 'accessoryProductHierarchy':
+                props.inventoryActions.setSaveSearchHierarchy(valueKeys);
+                break;
+            case 'stoneProductHierarchy':
+                props.inventoryActions.setSaveSearchHierarchy(valueKeys);
+                break;
+            case 'watchProductHierarchy':
+                props.inventoryActions.setSaveSearchHierarchy(valueKeys);
+                break;
+            case 'jewelryProductHierarchy':
+                props.inventoryActions.setSaveSearchHierarchy(valueKeys);
                 break;
             case 'gemstones.certificateAgency':
                 props.inventoryActions.setDataCertificateAgency(valueKeys);
@@ -51,9 +64,9 @@ const setstate = async (props,criterias) => {
             case 'jewelryCategory':
                 props.inventoryActions.setDataJewelryCategory(valueKeys);
                 break;
-            case 'hierarchy':
-                props.inventoryActions.setHierarchy(valueKeys);
-                break;
+            // case 'hierarchy':
+            //     props.inventoryActions.setHierarchy(valueKeys);
+            //     break;
             case 'type':
                 const types = valueKeys.split(' ');
                 if (types.length > 1) {
@@ -96,7 +109,16 @@ const setstate = async (props,criterias) => {
             default:
                 break;
         }
-        data[keyscat[0]] = valueKeys;
+        // console.log('keyscat[0]-->',keyscat[0]);
+        let casegem = keyscat[0].indexOf('gemstones.') != -1;
+        switch (casegem) {
+            case true :
+                data[keyscat[0].replace('gemstones.','gemstone_')] = valueKeys;
+                break;
+            default:
+                data[keyscat[0]] = valueKeys;
+                break;
+        }
     })
     return data;
 }

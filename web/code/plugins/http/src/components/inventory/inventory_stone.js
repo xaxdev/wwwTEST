@@ -37,6 +37,18 @@ class InventoryStone extends Component {
       treeViewData:null
     };
   }
+  componentDidMount = _ =>{
+      (async () => {
+        //   console.log('componentDidMount');
+          const { props } = this.props;
+          let { fields: { jewelryProductHierarchy }, searchResult } = props;
+        //   console.log('searchResult-->',props.SaveSearchHierarchy);
+          if(props.SaveSearchHierarchy != null){
+                await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
+                this.refs.treeview.handleChange(props.SaveSearchHierarchy);
+          }
+      })()
+  }
   componentWillReceiveProps(nextProps) {
     const { props } = this.props;
     // console.log('nextProps-->',nextProps.props.SearchAction);

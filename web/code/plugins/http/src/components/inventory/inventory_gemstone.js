@@ -267,6 +267,8 @@ class InventoryGemStone extends Component {
     let dataDropDowntOrigin = [];
     let dataDropDowntCertificateAgency = [];
 
+    // console.log('gemstone_quantityFrom-->',gemstone_quantityFrom);
+
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     InitModifyData(props);

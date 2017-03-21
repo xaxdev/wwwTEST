@@ -26,24 +26,34 @@ class InventoryJewelry extends Component {
     };
 
   }
+  componentDidMount = _ =>{
+      (async () => {
+        //   console.log('componentDidMount');
+          const { props } = this.props;
+          let { fields: { jewelryProductHierarchy }, searchResult } = props;
+        //   console.log('searchResult-->',props.SaveSearchHierarchy);
+          if(props.SaveSearchHierarchy != null){
+                await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
+                this.refs.treeview.handleChange(props.SaveSearchHierarchy);
+          }
+      })()
+  }
   componentWillReceiveProps(nextProps) {
     const { props } = this.props;
     // console.log('nextProps-->',nextProps.props.SearchAction);
-    // console.log('props.SearchAction-->',props.SearchAction);
     if(nextProps.props.SearchAction != props.SearchAction){
-      if(props.HierarchyValue != null){
-        if(nextProps.props.SearchAction == 'New'){
-          if(props.HierarchyValue.length != 0){
-            props.HierarchyValue[0].checked = false;
-            props.HierarchyValue[0].key = props.HierarchyValue[0].code;
-            this.refs.treeview.handleChange(props.HierarchyValue[0]);
+          if(props.HierarchyValue != null){
+            if(nextProps.props.SearchAction == 'New'){
+              if(props.HierarchyValue.length != 0){
+                props.HierarchyValue[0].checked = false;
+                props.HierarchyValue[0].key = props.HierarchyValue[0].code;
+                this.refs.treeview.handleChange(props.HierarchyValue[0]);
+              }
+              props.inventoryActions.setHierarchy(null);
+            }
           }
-          props.inventoryActions.setHierarchy(null);
-        }
       }
-    }
   }
-
   treeOnUnClick(vals){
     // console.log('unclick vals-->',this.state.treeViewData);
 

@@ -16,15 +16,22 @@ class InventorySearch extends Component {
     router: PropTypes.object
   }
 
-  handleSubmit(data) {
+  handleSubmit = async data => {
 
     let { filters, paramsSearch, activeTabCategory, isAdvance, submitAction } = this.props;
     // console.log('submitAction-->',submitAction);
     let that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
     let saveSearchName = data.searchName;
+    let jlyHierarchy = false;
+    let watHierarchy = false;
+    let stoHierarchy = false;
+    let accHierarchy = false;
+    let obaHierarchy = false;
+    let sppHierarchy = false;
     // check modify search or new search
     // if have filters is mean modify search
+    console.log('data-->',data);
 
     delete data.searchName;
 
@@ -65,14 +72,14 @@ class InventorySearch extends Component {
     });
 
     if(filters.length != 0){
-      this.props.setParams(paramsSearch)
-      sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
-      filters.splice(0, filters.length);
+      await his.props.setParams(paramsSearch)
+      await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
+      await filters.splice(0, filters.length);
     }else{
       // if not have filters is mean new search
       // set params by new criterias
-      this.props.setParams(data);
-      sessionStorage.setItem('paramsSearch', JSON.stringify(data));
+      await this.props.setParams(data);
+      await sessionStorage.setItem('paramsSearch', JSON.stringify(data));
     }
     // let keyscat = Object.keys(data);
     keyscat.forEach((keycat) => {
@@ -92,6 +99,7 @@ class InventorySearch extends Component {
               });
               propname['hierarchy'] = code.trim();
             }
+            stoHierarchy = true;
             break;
           case 'jewelryProductHierarchy':
             if(valueKeys.length == 1){
@@ -103,6 +111,7 @@ class InventorySearch extends Component {
               });
               propname['hierarchy'] = code.trim();
             }
+            jlyHierarchy = true;
             break;
           case 'watchProductHierarchy':
             if(valueKeys.length == 1){
@@ -114,6 +123,7 @@ class InventorySearch extends Component {
               });
               propname['hierarchy'] = code.trim();
             }
+            watHierarchy = true;
             break;
           case 'accessoryProductHierarchy':
             if(valueKeys.length == 1){
@@ -125,6 +135,7 @@ class InventorySearch extends Component {
               });
               propname['hierarchy'] = code.trim();
             }
+            accHierarchy = true;
             break;
           case 'obaProductHierarchy':
             if(valueKeys.length == 1){
@@ -136,6 +147,7 @@ class InventorySearch extends Component {
               });
               propname['hierarchy'] = code.trim();
             }
+            obaHierarchy = true;
             break;
           case 'sparePartProductHierarchy':
             if(valueKeys.length == 1){
@@ -147,6 +159,7 @@ class InventorySearch extends Component {
               });
               propname['hierarchy'] = code.trim();
             }
+            sppHierarchy = true;
             break;
           case 'color':
               if(valueKeys != ''){
@@ -271,11 +284,29 @@ class InventorySearch extends Component {
     sessionStorage.setItem('filters', JSON.stringify(filters));
     switch (submitAction) {
         case 'save':
+            if(jlyHierarchy){
+                filters.push({'jewelryProductHierarchy':data.jewelryProductHierarchy})
+            }
+            if(watHierarchy){
+                filters.push({'watchProductHierarchy':data.watchProductHierarchy})
+            }
+            if(stoHierarchy){
+                filters.push({'stoneProductHierarchy':data.stoneProductHierarchy})
+            }
+            if(accHierarchy){
+                filters.push({'accessoryProductHierarchy':data.accessoryProductHierarchy})
+            }
+            if(obaHierarchy){
+                filters.push({'obaProductHierarchy':data.obaProductHierarchy})
+            }
+            if(sppHierarchy){
+                filters.push({'sparePartProductHierarchy':data.sparePartProductHierarchy})
+            }
             let paramsSaveSearch = {name:saveSearchName, criteria:JSON.stringify(filters)}
             this.props.saveSearchCriteria(paramsSaveSearch);
             break;
         case 'search':
-            // this.context.router.push('/searchresult');
+            this.context.router.push('/searchresult');
             break;
         default:
     }
