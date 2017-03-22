@@ -19,7 +19,9 @@ class InventorySearch extends Component {
   handleSubmit = async data => {
 
     let { filters, paramsSearch, activeTabCategory, isAdvance, submitAction, IdEditSaveSearch } = this.props;
-    const isNotOwnerSharedSearch = this.props.searchResult.criteriaSaveSearch.shared;
+    const isNotOwnerSharedSearch = props.searchResult.criteriaSaveSearch != null
+                                    ? this.props.searchResult.criteriaSaveSearch.shared
+                                    : false;
     // console.log('shared-->',this.props.searchResult.criteriaSaveSearch.shared);
     let that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);

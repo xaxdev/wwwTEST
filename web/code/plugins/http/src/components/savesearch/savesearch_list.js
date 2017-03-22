@@ -160,6 +160,8 @@ class SaveSearchList extends Component {
                         let status = !col.shared ? 'Owner' : 'Shared'
                         return {...col, id:id, status:status}
                     });
+        }else{
+            lists.length = 0;
         }
         const tableColumns = [
           { title: 'Id', prop: 'id' },
