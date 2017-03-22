@@ -1,7 +1,7 @@
 import { FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE,
           SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, WRITE_HTML,
           POST_SAVESEARCH, SET_ISSAVESEARCH, SET_CLOSEALERTMSG, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH,
-          GET_SAVECRITERIA
+          GET_SAVECRITERIA, DELETE_SAVESEARCH, SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH
         } from '../../constants/itemconstants';
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY,
           SET_CERTIFICATELAB, SET_POLISH, SET_SYMMETRY, SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN, SET_JEWELRYCATEGORY, SET_COLLECTION,
@@ -26,12 +26,22 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                         StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16,
                         SortingBy:'itemCreatedDate', SortDirection:'desc', ShowGridView: true, ShowListView: false,
                         SubmitAction: null, saveSearchStatus: false, msg: '',saveSearchStatusCode: 100,
-                        isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null
+                        isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null,
+                        idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null
                       };
 
   export default function(state = INITIAL_STATE, action){
     // console.log('action-->',action);
     switch(action.type){
+        case SET_IDEDITSAVESEARCH :
+            // console.log('action SET_IDEDITSAVESEARCH -->',action);
+            return {...state,  idEditSaveSearch: action.params.id, nameEditSaveSearch: action.params.name};
+        case SET_IDDELETESAVESEARCH :
+            return {...state,  idDeleteSaveSearch: action.id};
+        case DELETE_SAVESEARCH :
+            return {...state,  saveSearchStatus: (action.data.statusCode >= 400) ? false : true,
+                saveSearchStatusCode : action.data.statusCode,
+                msg: action.data.message};
         case GET_SAVECRITERIA :
             // console.log('action GET_SAVECRITERIA -->',action);
             return {...state,  criteriaSaveSearch: action.data };
@@ -62,7 +72,9 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 LimitedEditionValue:[], WatchCategoryValue:[], filters:[], AccessoryTypeValue:[], paramsSearch:null,
                 SparePartTypeValue:[], SearchAction:'New', GemCertificateDateFrom:null, GemCertificateDateTo:null,
                 StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null,
-                ListCatalogName: []
+                ListCatalogName: [],SubmitAction: null, saveSearchStatus: false, msg: '',saveSearchStatusCode: 100,
+                isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null,
+                idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null
               };
     //   case WRITE_HTML :
     //     // console.log('SET_POLISH -->',action);

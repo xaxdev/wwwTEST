@@ -22,7 +22,11 @@ module.exports = {
 
                 const searchCollection = await db.collection('SearchCriteria').deleteOne({ _id: new ObjectID(searchId) })
 
-                return reply.success()
+                return reply({
+                    error: '',
+                    message: 'Deleted search criteria success.',
+                    statusCode: 200
+                });
             } catch (e) {
 
                 return reply(Boom.badImplementation('', e))

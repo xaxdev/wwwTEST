@@ -58,7 +58,7 @@ class ShareModal extends Component {
           }
           params.id = this.props.saveSearch._id;
           params.users = paramEmails;
-          console.log('params-->',params);
+        //   console.log('params-->',params);
           this.props.shareSaveSearch(params)
               .then((response)=>{
                   this.setState({isOpenShareMyCatalog: false});

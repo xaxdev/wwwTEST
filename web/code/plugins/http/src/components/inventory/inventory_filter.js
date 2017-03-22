@@ -375,6 +375,7 @@ class InventoryFilter extends Component {
   }
 
   renderSaveSearch = _=> {
+    //   console.log(this);
       const { submitting } = this.props;
       return(<ModalSaveSearch onSubmit={this.handleSaveSearch}
           isOpen={this.state.showDialogSaveSearch}

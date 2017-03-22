@@ -12,11 +12,26 @@ class ModalSaveSearch extends Component {
     constructor(props) {
         super(props);
 
-  }
+    }
+    componentDidMount(){
+        const { props } = this.props;
+        const isNotOwnerSharedSearch = props.searchResult.criteriaSaveSearch.shared;
+        const { fields: { searchName, validateSearchName } } = props;
+        console.log('componentDidMount-->',props.searchResult.idEditSaveSearch);
+        console.log('componentDidMount-->',props.searchResult.nameEditSaveSearch);
+        if (props.searchResult.idEditSaveSearch != null) {
+            if (isNotOwnerSharedSearch) {
+                searchName.onChange('');
+            } else {
+                searchName.onChange(props.searchResult.nameEditSaveSearch);
+            }
+        }
+    }
 
   render() {
-
+    //   console.log(this.props);
     const { props } = this.props;
+    const isNotOwnerSharedSearch = props.searchResult.criteriaSaveSearch.shared;
     const { fields: { searchName, validateSearchName } } = props;
     const { isOpen, isClose, onSubmit } = this.props;
     // console.log(validateSearchName);
@@ -36,7 +51,10 @@ class ModalSaveSearch extends Component {
                         <label className="col-sm-12 control-label">Search Name:</label>
                     </div>
                     <div className="col-sm-8">
-                        <input type="text" className="form-control" {...searchName}/>
+                        <input disabled={`${props.searchResult.idEditSaveSearch != null
+                                            ? isNotOwnerSharedSearch ? '' : 'disabled'
+                                            : ''}`}
+                            type="text" className="form-control" {...searchName}/>
                     </div>
                 </div>
               </div>

@@ -25,7 +25,8 @@ module.exports = {
                         '_id': new ObjectID(searchId)
                     })
                 const isShared = findSearch !== null && findSearch.owner !== request.auth.credentials.id ? true : false
-                return reply(findSearch !== null && findSearch.criteria !== null ? { 'searchId': findSearch._id, 'shared': isShared, 'criteria':findSearch.criteria } : {})
+                return reply(findSearch !== null && findSearch.criteria !== null ? { 'searchId': findSearch._id, 'shared': isShared,
+                                'criteria':findSearch.criteria, 'name':findSearch.name } : {})
             } catch (e) {
 
                 return reply(Boom.badImplementation('', e))

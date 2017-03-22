@@ -2,7 +2,41 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import { ROOT_URL, POST_SAVESEARCH, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH,
-        SET_CLOSEALERTMSG, GET_SAVECRITERIA, SET_PARAMS } from '../constants/itemconstants';
+        SET_CLOSEALERTMSG, GET_SAVECRITERIA, SET_PARAMS, DELETE_SAVESEARCH,
+        SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH
+    } from '../constants/itemconstants';
+
+export function setIdEditSaveSearch(params){
+  const token = sessionStorage.token;
+  return {
+          type: SET_IDEDITSAVESEARCH,
+          params: params
+  }
+}
+export function setIdDeleteSaveSearch(id){
+  const token = sessionStorage.token;
+  return {
+          type: SET_IDDELETESAVESEARCH,
+          id: id
+  }
+}
+export function deleteSaveSearch(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/items/search/remove`;
+  // console.log('getListsSaveSearch-->',url);
+  return {
+            type: DELETE_SAVESEARCH,
+            promise: fetch(url,{
+                        method: 'DELETE',
+                        body: JSON.stringify(params),
+                        headers: {
+                          'Accept': 'application/json',
+                          'Content-Type': 'application/json',
+                          'Authorization': token
+                        },
+                    })
+  }
+}
 
 export function setParams(params){
   const token = sessionStorage.token;

@@ -18,8 +18,9 @@ class InventorySearch extends Component {
 
   handleSubmit = async data => {
 
-    let { filters, paramsSearch, activeTabCategory, isAdvance, submitAction } = this.props;
-    // console.log('submitAction-->',submitAction);
+    let { filters, paramsSearch, activeTabCategory, isAdvance, submitAction, IdEditSaveSearch } = this.props;
+    const isNotOwnerSharedSearch = this.props.searchResult.criteriaSaveSearch.shared;
+    // console.log('shared-->',this.props.searchResult.criteriaSaveSearch.shared);
     let that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
     let saveSearchName = data.searchName;
@@ -32,6 +33,7 @@ class InventorySearch extends Component {
     // check modify search or new search
     // if have filters is mean modify search
     console.log('data-->',data);
+    console.log('data.searchName-->',data.searchName);
 
     delete data.searchName;
 
@@ -302,7 +304,25 @@ class InventorySearch extends Component {
             if(sppHierarchy){
                 filters.push({'sparePartProductHierarchy':data.sparePartProductHierarchy})
             }
-            let paramsSaveSearch = {name:saveSearchName, criteria:JSON.stringify(filters)}
+            let paramsSaveSearch = {};
+            if (IdEditSaveSearch != null) {
+                if (isNotOwnerSharedSearch) {
+                    paramsSaveSearch = {...paramsSaveSearch,
+                        name:saveSearchName,
+                        criteria:JSON.stringify(filters)};
+                } else {
+                    paramsSaveSearch = {...paramsSaveSearch,
+                        id: IdEditSaveSearch,
+                        name:saveSearchName,
+                        criteria:JSON.stringify(filters)};
+                }
+            } else {
+                paramsSaveSearch = {...paramsSaveSearch,
+                    name:saveSearchName,
+                    criteria:JSON.stringify(filters)};
+            }
+            // paramsSaveSearch = {...paramsSaveSearch, name:saveSearchName, criteria:JSON.stringify(filters)}
+            console.log('paramsSaveSearch-->',paramsSaveSearch);
             this.props.saveSearchCriteria(paramsSaveSearch);
             break;
         case 'search':
@@ -347,6 +367,7 @@ function mapStateToProps(state) {
     saveSearchStatus: state.searchResult.saveSearchStatus,
     saveSearchMsgError: state.searchResult.msg,
     saveSearchStatusCode: state.searchResult.saveSearchStatusCode,
+    IdEditSaveSearch: state.searchResult.idEditSaveSearch,
   };
 }
 

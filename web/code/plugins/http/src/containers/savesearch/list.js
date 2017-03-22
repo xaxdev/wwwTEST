@@ -55,6 +55,9 @@ class SaveSearch extends Component {
                                 criteriaSaveSearch = {this.props.criteriaSaveSearch}
                                 shareSaveSearch = {this.props.saveSearchAction.shareSaveSearch}
                                 getSaveCriteria = {this.props.saveSearchAction.getSaveCriteria}
+                                deleteSaveSearch = {this.props.saveSearchAction.deleteSaveSearch}
+                                setIdDeleteSaveSearch = {this.props.saveSearchAction.setIdDeleteSaveSearch}
+                                getListsSaveSearch = {this.props.saveSearchAction.getListsSaveSearch}
                                 props = {this.props}/>
                          </div>
                        </div>
@@ -78,6 +81,9 @@ function mapStateToProps(state) {
       activeTabCategory: state.searchResult.activeTabCategory,
       isAdvance: state.searchResult.IsAdvance,
       submitAction: state.searchResult.SubmitAction,
+      IdDeleteSaveSearch: state.searchResult.idDeleteSaveSearch,
+      IdEditSaveSearch: state.searchResult.idEditSaveSearch,
+      NameEditSaveSearch: state.searchResult.nameEditSaveSearch,
   };
 }
 
