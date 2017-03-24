@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Modal, ModalClose } from 'react-modal-bootstrap';
 import { DataTable } from '../../utils/dataTableSaveSearch/index';
 import ShareModal from './share_model';
 import * as setcriteria from './setstate';
@@ -22,6 +23,7 @@ class SaveSearchList extends Component {
         pageLength: 5,
         totalPages:0,
         isOpenDeleteSaveSearch: false,
+        isOpenAlertMessage: true
       };
     }
     static contextTypes = {
@@ -151,6 +153,10 @@ class SaveSearchList extends Component {
         );
     }
 
+    isCloseAlertMessage = _=>{
+        this.setState({isOpenAlertMessage: false});
+    }
+
     render (){
         let lists = [];
         const { saveSearches } = this.props;
@@ -161,7 +167,7 @@ class SaveSearchList extends Component {
                         return {...col, id:id, status:status}
                     });
         }
-        
+
         const tableColumns = [
           { title: 'Id', prop: 'id' },
           { title: 'Search Name', prop: 'name' },
@@ -186,12 +192,23 @@ class SaveSearchList extends Component {
             );
         }else{
             return (
-                    <div >
-                      <center>
-                        <br/><br/><br/><br/><br/><br/>
-                          <Loading type="spin" color="#202020" width="10%"/>
-                      </center>
-                      <br/><br/><br/><br/><br/><br/>
+                    <div  className="alertMessage">
+                      <Modal isOpen={this.state.isOpenAlertMessage} >
+                        <div className="modal-header">
+                          <ModalClose onClick={this.isCloseAlertMessage}/>
+                          <h1 className="modal-title">SAVED SEARCHES</h1>
+                        </div>
+                        <div className="modal-body">
+                          <div className="text-center maring-t20 font-b">
+                            Not found data saved searches.
+                          </div>
+                        </div>
+                        <div className="modal-footer maring-t20">
+                            <button type="button" className="btn btn-default btn-radius" onClick={this.isCloseAlertMessage}>
+                                Ok
+                            </button>
+                        </div>
+                      </Modal>
                     </div>
                 );
         }
