@@ -5,6 +5,8 @@ import * as itemactions from '../../actions/itemactions';
 import ProductGroup from '../../utils/userproductgroup';
 import Modalalertmsg from '../../utils/modalalertmsg';
 
+const Loading = require('react-loading');
+
 class InventorySearch extends Component {
   constructor(props) {
 

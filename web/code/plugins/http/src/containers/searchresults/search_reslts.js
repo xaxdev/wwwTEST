@@ -925,19 +925,21 @@ class SearchResult extends Component {
   modifySearch(e){
     e.preventDefault();
 
-    const token = sessionStorage.token;
+    (async() => {
+        const token = sessionStorage.token;
 
-    this.props.setSortingBy('itemCreatedDate');
-    this.props.setSortDirection('desc');
-    this.props.setPageSize(16);
-    this.props.setShowGridView(true);
-    this.props.setShowListView(false);
-    console.log('modifySearch');
-
-    this.props.modifySearch(this.props.paramsSearch);
-    if(token){
-      this.context.router.push('/inventories');
-    }
+        this.props.setSortingBy('itemCreatedDate');
+        this.props.setSortDirection('desc');
+        this.props.setPageSize(16);
+        this.props.setShowGridView(true);
+        this.props.setShowListView(false);
+        console.log('modifySearch');
+        this.setState({showLoading: false});
+        await this.props.modifySearch(this.props.paramsSearch);
+        if(token){
+          this.context.router.push('/inventories');
+        }
+    })()
   }
   openModal(){
     this.setState({ isOpen: true });
@@ -975,6 +977,7 @@ class SearchResult extends Component {
     e.preventDefault();
 
     this.setState({isOpenNoResults: false});
+    this.setState({showLoading: true});
     // console.log('this.props.paramsSearch-->',this.props.paramsSearch);
 
     this.props.modifySearch(this.props.paramsSearch);
@@ -1477,7 +1480,13 @@ class SearchResult extends Component {
               </div>
               </div>
             </div>
-
+            <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
+              <center>
+                <br/><br/><br/><br/><br/><br/>
+                  <Loading type="spin" color="#202020" width="10%"/>
+              </center>
+              <br/><br/><br/><br/><br/><br/>
+            </div>
             <div >
               <Modal isOpen={this.state.isOpenNoResults} onRequestHide={this.hideModalNoResults}>
                 <div className="modal-header">

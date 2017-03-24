@@ -214,7 +214,7 @@ class SaveSearchList extends Component {
                         </div>
                         <div className="modal-body">
                           <div className="text-center maring-t20 font-b">
-                            Not found data saved searches.
+                            No Results.
                           </div>
                         </div>
                         <div className="modal-footer maring-t20">

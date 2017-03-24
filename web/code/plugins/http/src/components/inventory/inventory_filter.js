@@ -90,8 +90,9 @@ class InventoryFilter extends Component {
     });
   }
   componentDidMount(){
-    // console.log('componentDidMount-->');
+    console.log('componentDidMount-->');
     // console.log('componentDidMount-->',this.refs.jewelry);
+    this.setState({ showLoading: true });
     this.refs.jewelry.treeOnUnClick();
     this.refs.watch.treeOnUnClick();
     this.refs.stone.treeOnUnClick();
