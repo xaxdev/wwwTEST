@@ -8,7 +8,7 @@
     "build:dev": "webpack --progress --color --define HOSTNAME='\"localhost\"' --define ENVIRONMENT='development'",
     "build:test": "NODE_ENV=test webpack --progress --color --define HOSTNAME='\"192.168.1.92\"' --define ENVIRONMENT='test'",
     "build:staging": "NODE_ENV=staging webpack --progress --color --define HOSTNAME='\"52.220.154.139\"' --define ENVIRONMENT='staging'",
-    "build:watch": "webpack --progress --color --watch --define HOSTNAME='\"localhost\"' --define ENVIRONMENT='development'" ,
+    "build:watch": "webpack --progress --color --watch --define HOSTNAME='\"localhost\"' --define ENVIRONMENT='development'",
     "start": "node bootstrap.js"
   },
   "author": "",
@@ -52,7 +52,9 @@
     "moment-timezone": "^0.5.9",
     "newrelic": "^1.29.0",
     "react": "0.14.x ",
+    "react-addons-css-transition-group": "^15.4.2",
     "react-addons-shallow-compare": "^15.1.0",
+    "react-aria-menubutton": "^4.3.0",
     "react-bootstrap": "^0.29.3",
     "react-bootstrap-multiselect": "^2.0.0",
     "react-checkbox-list": "0.0.2",

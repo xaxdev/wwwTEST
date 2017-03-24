@@ -7,9 +7,16 @@ import * as itemactions from '../../actions/itemactions';
 import * as masterDataActions from '../../actions/masterdataaction';
 import { Tabs, Tab } from 'react-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
+import { Wrapper,
+  Button,
+  Menu,
+  MenuItem,
+  openMenu,
+  closeMenu } from 'react-aria-menubutton';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 import UserModal from '../user/user_modal';
 import AlertMessage from '../../utils/alertMessage';
-import {Modal, ModalClose, Button} from 'react-modal-bootstrap';
+import { Modal, ModalClose } from 'react-modal-bootstrap';
 import ResetFormMain from '../../utils/resertFormMain';
 import ResetCategory from '../../utils/resetCategory';
 import InventoryHeader from './inventory_header';
@@ -34,6 +41,8 @@ let productGroupWAT=false;
 let productGroupACC=false;
 let productGroupOBA=false;
 let productGroupSPA=false;
+
+const fancyStuff = ['bowling', 'science', 'scooting'];
 
 class InventoryFilter extends Component {
   constructor(props) {
@@ -65,7 +74,8 @@ class InventoryFilter extends Component {
       activeTab: 1,
       beforeActiveTab: 1,
       showLoading: true,
-      showDialogSaveSearch: false
+      showDialogSaveSearch: false,
+      selected: ''
     };
   }
   static contextTypes = {
@@ -390,6 +400,10 @@ class InventoryFilter extends Component {
       this.setState({showDialogSaveSearch: false});
   }
 
+  handleSelection = (data) =>{
+      console.log(data);
+  }
+
   render() {
     let { handleSubmit, resetForm, submitting, reset, activeTabCategory } = this.props;
 
@@ -469,6 +483,41 @@ class InventoryFilter extends Component {
           break;
       }
     });
+    const fancyMenuItems = fancyStuff.map((activity, i) => (
+      <MenuItem
+        value={{
+          activity,
+          somethingArbitrary: 'arbitrary',
+        }}
+        text={activity}
+        key={i}
+        className="FancyMB-menuItem"
+      >
+        <img src={`images/${activity}.svg`} className="FancyMB-svg" />
+        <span className="FancyMB-text">
+          I enjoy
+          <span className="FancyMB-keyword">
+            {activity}
+          </span>
+        </span>
+      </MenuItem>
+    ));
+    const menuInnards = menuState => {
+      const menu = (!menuState.isOpen) ? false : (
+        <div className="FancyMB-menu" key="menu">
+          {fancyMenuItems}
+        </div>
+      );
+      return (
+        <CSSTransitionGroup
+          transitionName="is"
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+        >
+          {menu}
+        </CSSTransitionGroup>
+      );
+    };
     // console.log('this.state.showLoading-->',this.state.showLoading);
       return (
 
@@ -486,6 +535,7 @@ class InventoryFilter extends Component {
             <div className="col-sm-6 m-width-60 ft-white m-nopadding"><h1>Inventory Report</h1></div>
             <div className="col-sm-6 m-width-40 m-nopadding">
             <div className="text-right maring-t15">
+
                 <button type="button" className="btn btn-primary btn-radius"
                     disabled={submitting} onClick={this.renderDialogSaveSearch}>Save Search
                 </button>
@@ -503,6 +553,24 @@ class InventoryFilter extends Component {
             </div>
             <InventoryHeader props={this.props}/>
             {/*Advance search*/}
+            <Wrapper
+                onSelection={this.handleSelection.bind(this)}
+                className="FancyMB" id="foo" >
+                <Button className="FancyMB-trigger">
+                  <span className="FancyMB-triggerInnards">
+                    <img src="images/profile-female.svg" className="FancyMB-triggerIcon"/>
+                    <span className="FancyMB-triggerText">
+                      What do you enjoy?<br />
+                      <span className="FancyMB-triggerSmallText">
+                        (select an enjoyable activity)
+                      </span>
+                    </span>
+                  </span>
+                </Button>
+                <Menu>
+                  {menuInnards}
+                </Menu>
+              </Wrapper>
             <div className="row">
               <div className="bg-while">
                 <button disabled={submitting}  onClick={this.advanceSearchClick} className="btn btn-primary btn-advance">
@@ -715,3 +783,9 @@ module.exports = reduxForm({
           ,
     validate: ValidateSaveSearch
 },mapStateToProps,mapDispatchToProps)(InventoryFilter);
+
+// Pre-load the initially hidden SVGs
+fancyStuff.forEach(t => {
+  const x = new Image();
+  x.src = `images/${t}.svg`;
+});
