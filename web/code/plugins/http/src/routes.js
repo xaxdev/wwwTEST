@@ -158,7 +158,7 @@ export default ({ dispatch,getState}) => {
                     }, 'whatnewnotification');
                 }
             }, {
-                onEnter: requireAccess,
+                onEnter: requireAuth,
                 path: 'savesearch',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
