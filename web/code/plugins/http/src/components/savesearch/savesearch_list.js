@@ -152,7 +152,7 @@ class SaveSearchList extends Component {
     }
 
     render (){
-        let lists = null;
+        let lists = [];
         const { saveSearches } = this.props;
         if (saveSearches.length != 0){
             lists = saveSearches.map(function (col, idx) {
@@ -160,9 +160,8 @@ class SaveSearchList extends Component {
                         let status = !col.shared ? 'Owner' : 'Shared'
                         return {...col, id:id, status:status}
                     });
-        }else{
-            lists.length = 0;
         }
+        
         const tableColumns = [
           { title: 'Id', prop: 'id' },
           { title: 'Search Name', prop: 'name' },
