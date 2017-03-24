@@ -23,7 +23,8 @@ class SaveSearchList extends Component {
         pageLength: 5,
         totalPages:0,
         isOpenDeleteSaveSearch: false,
-        isOpenAlertMessage: true
+        isOpenAlertMessage: true,
+        showLoading: false
       };
     }
     static contextTypes = {
@@ -36,6 +37,9 @@ class SaveSearchList extends Component {
         let { filters, paramsSearch } = props;
         // console.log('props-->',props);
         let params = {id:id}
+
+        this.setState({showLoading: true});
+
         this.props.getSaveCriteria(params)
                     .then((value) => {
                         // console.log('get criteria save search.');
@@ -71,6 +75,9 @@ class SaveSearchList extends Component {
         let { filters, paramsSearch } = props;
         // console.log('props-->',props);
         let params = {id:id}
+
+        this.setState({showLoading: true});
+
         this.props.getSaveCriteria(params)
                     .then((value) => {
                         // console.log('get criteria save search.');
@@ -177,8 +184,15 @@ class SaveSearchList extends Component {
         if(lists.length != 0){
             return (
               <div>
+                  <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
+                    <center>
+                      <br/><br/><br/><br/><br/><br/>
+                        <Loading type="spin" color="#202020" width="10%"/>
+                    </center>
+                    <br/><br/><br/><br/><br/><br/>
+                  </div>
                 <DataTable
-                  className="col-sm-12"
+                  className={`${!this.state.showLoading ? 'col-sm-12' : 'hidden'}` }
                   keys={[ 'id','name', 'status' ]}
                   columns={tableColumns}
                   initialData={lists}
