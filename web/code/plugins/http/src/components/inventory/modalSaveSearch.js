@@ -19,8 +19,8 @@ class ModalSaveSearch extends Component {
                                         ? props.searchResult.criteriaSaveSearch.shared
                                         : false ;
         const { fields: { searchName, validateSearchName } } = props;
-        console.log('componentDidMount-->',props.searchResult.idEditSaveSearch);
-        console.log('componentDidMount-->',props.searchResult.nameEditSaveSearch);
+        // console.log('componentDidMount-->',props.searchResult.idEditSaveSearch);
+        // console.log('componentDidMount-->',props.searchResult.nameEditSaveSearch);
         if (props.searchResult.idEditSaveSearch != null) {
             if (isNotOwnerSharedSearch) {
                 searchName.onChange('');

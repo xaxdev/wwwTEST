@@ -196,7 +196,7 @@ class SearchResult extends Component {
             lotNumberFilter[gemstoneFields[1]] = value;
           }
           else{
-              console.log('gemstoneFields[0]-->',gemstoneFields[0]);
+            //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
               switch (gemstoneFields[0]) {
                   case 'sparePartProductHierarchy':
                       break;
@@ -933,7 +933,6 @@ class SearchResult extends Component {
         this.props.setPageSize(16);
         this.props.setShowGridView(true);
         this.props.setShowListView(false);
-        console.log('modifySearch');
         this.setState({showLoading: false});
         await this.props.modifySearch(this.props.paramsSearch);
         if(token){
@@ -1421,11 +1420,20 @@ class SearchResult extends Component {
 
     // console.log('this.state.activePage-->',this.state.activePage);
 
-     // console.log('pageSize-->',pageSize);
+    //  console.log('items-->',items);
+    //  console.log('allItems-->',allItems);
     if(items == null){
       return (
-        <center ><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center>
-      );
+              <form role="form">
+                  <div >
+                    <center>
+                        <h3>Please wait....</h3>
+                        <br/><br/><br/><br/><br/><br/>
+                        <Loading type="spin" color="#202020" width="10%"/>
+                    </center>
+                  </div>
+              </form>
+          );
     }else{
       if(allItems.length == 0){
         return(
@@ -1479,13 +1487,6 @@ class SearchResult extends Component {
                 </div>
               </div>
               </div>
-            </div>
-            <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
-              <center>
-                <br/><br/><br/><br/><br/><br/>
-                  <Loading type="spin" color="#202020" width="10%"/>
-              </center>
-              <br/><br/><br/><br/><br/><br/>
             </div>
             <div >
               <Modal isOpen={this.state.isOpenNoResults} onRequestHide={this.hideModalNoResults}>
