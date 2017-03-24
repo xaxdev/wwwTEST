@@ -16,14 +16,15 @@ class InventorySearch extends Component {
     router: PropTypes.object
   }
 
-  handleSubmit = async data => {
-
+  handleSubmit = (data) => {
+    const that = this;
+    const { props } = this.props;
     let { filters, paramsSearch, activeTabCategory, isAdvance, submitAction, IdEditSaveSearch } = this.props;
-    const isNotOwnerSharedSearch = props.searchResult.criteriaSaveSearch != null
+    const isNotOwnerSharedSearch = this.props.searchResult.criteriaSaveSearch != null
                                     ? this.props.searchResult.criteriaSaveSearch.shared
                                     : false;
     // console.log('shared-->',this.props.searchResult.criteriaSaveSearch.shared);
-    let that = this;
+
     const userLogin = JSON.parse(sessionStorage.logindata);
     let saveSearchName = data.searchName;
     let jlyHierarchy = false;
@@ -34,8 +35,8 @@ class InventorySearch extends Component {
     let sppHierarchy = false;
     // check modify search or new search
     // if have filters is mean modify search
-    console.log('data-->',data);
-    console.log('data.searchName-->',data.searchName);
+    // console.log('data-->',data);
+    // console.log('data.searchName-->',data.searchName);
 
     delete data.searchName;
 
@@ -75,16 +76,18 @@ class InventorySearch extends Component {
       }
     });
 
-    if(filters.length != 0){
-      await his.props.setParams(paramsSearch)
-      await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
-      await filters.splice(0, filters.length);
-    }else{
-      // if not have filters is mean new search
-      // set params by new criterias
-      await this.props.setParams(data);
-      await sessionStorage.setItem('paramsSearch', JSON.stringify(data));
-    }
+    (async () => {
+        if(filters.length != 0){
+            await his.props.setParams(paramsSearch)
+            await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
+            await filters.splice(0, filters.length);
+        }else{
+            // if not have filters is mean new search
+            // set params by new criterias
+            await this.props.setParams(data);
+            await sessionStorage.setItem('paramsSearch', JSON.stringify(data));
+        }
+    })()
     // let keyscat = Object.keys(data);
     keyscat.forEach((keycat) => {
 
