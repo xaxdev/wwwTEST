@@ -3,10 +3,10 @@ import Joi from 'joi'
 import _  from 'lodash'
 
 const shareduser = Joi.object().keys({
-    email: Joi.string().required().trim()
+    email: Joi.string().required()
 });
 
-export default {
+module.exports = {
     auth: {
         strategy: 'authentication'
     },
@@ -21,9 +21,9 @@ export default {
         (async () => {
 
             try {
-                const db = request.mongo.db;
-                const ObjectID = request.mongo.ObjectID;
-                const catalogId = request.payload.id;
+                const db = request.mongo.db
+                const ObjectID = request.mongo.ObjectID
+                const searchId = request.payload.id
                 const usersShare = request.payload.users;
                 const UsersDB = request.collections.user;
 
@@ -32,43 +32,42 @@ export default {
                 const diffFound = _.differenceBy(usersShare, users, 'email');
                 if (diffFound.length != 0) return reply(Boom.badRequest(`Cannot found the email in system ${diffFound.map((e)=>{return e.email})}`));
 
-                const sharedMe = await users.find(user => { return user.id === owner.id });
-                if (!!sharedMe) return reply(Boom.badRequest('Unable to share catalog to yourself.'));
 
-                const findShared = await db.collection('CatalogShared').findOne(
+                const sharedMe = await users.find(user => { return user.id === owner.id })
+                if (!!sharedMe) return reply(Boom.badRequest("Share yourself is denied."))
+
+                const findShared = await db.collection('SearchCriteria').findOne(
                     {
-                        'catalogId': new ObjectID(catalogId),
-                        'owner': owner.id
-                    });
+                        "_id": new ObjectID(searchId),
+                        "owner": owner.id
+                    })
 
-                let consolidateShareUser = null;
                 if (findShared !== null) {
-                    const sharedUser = typeof(findShared.users) !== 'undefined' ? findShared.users : [];
-                    consolidateShareUser = _.uniqBy(_.union(sharedUser, users), 'id');
+                    const sharedUser = typeof(findShared.users) !== "undefined" ? findShared.users : []
+                    findShared.users = _.uniqBy(_.union(sharedUser, users), "id")
                 }
                 else {
-                    consolidateShareUser = users;
+                    findShared.users = users
                 }
 
-                const updatedShared = await db.collection('CatalogShared').updateOne(
+                const updatedShared = await db.collection('SearchCriteria').updateOne(
                     {
-                        'catalogId': new ObjectID(catalogId),
-                        'owner': owner.id
+                        "_id": new ObjectID(searchId)
                     },
                     {
-                        'catalogId': new ObjectID(catalogId),
-                        'owner': owner.id,
-                        'users': consolidateShareUser.map((user) => { return { 'id': user.id } })
+                        $set: {
+                            "users": findShared.users
+                        }
                     },
                     {
-                        upsert: true
+                        upsert: false
                     }
-                );
+                )
 
-                return reply({error:'',message:'Share catalog success.',statusCode:200});
+                return reply({error:'',message:'Shared save search success.',statusCode:200});
             } catch (e) {
 
-                return reply(Boom.badImplementation('', e));
+                return reply(Boom.badImplementation('', e))
             }
         })();
     }

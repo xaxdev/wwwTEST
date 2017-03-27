@@ -178,7 +178,7 @@ class SearchResult extends Component {
       const filters =  JSON.parse(sessionStorage.filters);
       let gemstoneFilter = {};
       let lotNumberFilter = {};
-      // console.log('filters-->',filters);
+      console.log('filters-->',filters);
       filters.forEach(function(filter){
         let keys = Object.keys(filter);
         keys.forEach((key) => {
@@ -196,7 +196,24 @@ class SearchResult extends Component {
             lotNumberFilter[gemstoneFields[1]] = value;
           }
           else{
-            params[key] = value;
+            //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
+              switch (gemstoneFields[0]) {
+                  case 'sparePartProductHierarchy':
+                      break;
+                  case 'obaProductHierarchy':
+                      break;
+                  case 'accessoryProductHierarchy':
+                      break;
+                  case 'stoneProductHierarchy':
+                      break;
+                  case 'watchProductHierarchy':
+                      break;
+                  case 'jewelryProductHierarchy':
+                      break;
+                  default:
+                      params[key] = value;
+                      break;
+              }
           }
         });
       });
@@ -908,18 +925,20 @@ class SearchResult extends Component {
   modifySearch(e){
     e.preventDefault();
 
-    const token = sessionStorage.token;
+    (async() => {
+        const token = sessionStorage.token;
 
-    this.props.setSortingBy('itemCreatedDate');
-    this.props.setSortDirection('desc');
-    this.props.setPageSize(16);
-    this.props.setShowGridView(true);
-    this.props.setShowListView(false);
-
-    this.props.modifySearch(this.props.paramsSearch);
-    if(token){
-      this.context.router.push('/inventories');
-    }
+        this.props.setSortingBy('itemCreatedDate');
+        this.props.setSortDirection('desc');
+        this.props.setPageSize(16);
+        this.props.setShowGridView(true);
+        this.props.setShowListView(false);
+        this.setState({showLoading: false});
+        await this.props.modifySearch(this.props.paramsSearch);
+        if(token){
+          this.context.router.push('/inventories');
+        }
+    })()
   }
   openModal(){
     this.setState({ isOpen: true });
@@ -957,6 +976,8 @@ class SearchResult extends Component {
     e.preventDefault();
 
     this.setState({isOpenNoResults: false});
+    this.setState({showLoading: true});
+    // console.log('this.props.paramsSearch-->',this.props.paramsSearch);
 
     this.props.modifySearch(this.props.paramsSearch);
 
@@ -1399,11 +1420,20 @@ class SearchResult extends Component {
 
     // console.log('this.state.activePage-->',this.state.activePage);
 
-     // console.log('pageSize-->',pageSize);
+    //  console.log('items-->',items);
+    //  console.log('allItems-->',allItems);
     if(items == null){
       return (
-        <center ><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center>
-      );
+              <form role="form">
+                  <div >
+                    <center>
+                        <h3>Please wait....</h3>
+                        <br/><br/><br/><br/><br/><br/>
+                        <Loading type="spin" color="#202020" width="10%"/>
+                    </center>
+                  </div>
+              </form>
+          );
     }else{
       if(allItems.length == 0){
         return(
@@ -1458,7 +1488,6 @@ class SearchResult extends Component {
               </div>
               </div>
             </div>
-
             <div >
               <Modal isOpen={this.state.isOpenNoResults} onRequestHide={this.hideModalNoResults}>
                 <div className="modal-header">

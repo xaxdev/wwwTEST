@@ -157,6 +157,14 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/whatnewnotification/whatnewnotification'));
                     }, 'whatnewnotification');
                 }
+            }, {
+                onEnter: requireAuth,
+                path: 'savesearch',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/savesearch/list'));
+                    }, 'savesearch');
+                }
             },{
                 path: '*',
                 getComponent: (location, cb) => {

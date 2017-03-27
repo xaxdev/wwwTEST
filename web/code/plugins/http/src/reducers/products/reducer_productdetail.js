@@ -3,7 +3,8 @@ import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,FETCH_SETREFERENCE,ADD_CATALOG
 import { GET_CATALOGNAME} from '../../constants/itemconstants';
 const INITIAL_STATE = {detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1,
                         setreference:'',ListCatalogName: [], lotNumbers: [],stonActivePage:1,totalpage:null
-                        ,stonePageSize:20, activities:[]};
+                        ,stonePageSize:20, activities:[]
+                      };
 
 
 export default function(state = INITIAL_STATE,action){

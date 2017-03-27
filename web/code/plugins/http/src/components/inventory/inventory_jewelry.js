@@ -26,24 +26,34 @@ class InventoryJewelry extends Component {
     };
 
   }
+  componentDidMount = _ =>{
+      (async () => {
+        //   console.log('componentDidMount');
+          const { props } = this.props;
+          let { fields: { jewelryProductHierarchy }, searchResult } = props;
+        //   console.log('searchResult-->',props.SaveSearchHierarchy);
+          if(props.SaveSearchHierarchy != null){
+                await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
+                this.refs.treeview.handleChange(props.SaveSearchHierarchy);
+          }
+      })()
+  }
   componentWillReceiveProps(nextProps) {
     const { props } = this.props;
     // console.log('nextProps-->',nextProps.props.SearchAction);
-    // console.log('props.SearchAction-->',props.SearchAction);
     if(nextProps.props.SearchAction != props.SearchAction){
-      if(props.HierarchyValue != null){
-        if(nextProps.props.SearchAction == 'New'){
-          if(props.HierarchyValue.length != 0){
-            props.HierarchyValue[0].checked = false;
-            props.HierarchyValue[0].key = props.HierarchyValue[0].code;
-            this.refs.treeview.handleChange(props.HierarchyValue[0]);
+          if(props.HierarchyValue != null){
+            if(nextProps.props.SearchAction == 'New'){
+              if(props.HierarchyValue.length != 0){
+                props.HierarchyValue[0].checked = false;
+                props.HierarchyValue[0].key = props.HierarchyValue[0].code;
+                this.refs.treeview.handleChange(props.HierarchyValue[0]);
+              }
+              props.inventoryActions.setHierarchy(null);
+            }
           }
-          props.inventoryActions.setHierarchy(null);
-        }
       }
-    }
   }
-
   treeOnUnClick(vals){
     // console.log('unclick vals-->',this.state.treeViewData);
 
@@ -79,9 +89,9 @@ class InventoryJewelry extends Component {
     this.setState({treeViewData:vals});
     this.props.props.inventoryActions.setHierarchy(vals);
     // console.log('vals-->',vals);
-    var treeSelected = [];
-    var selectedData = vals.filter(val => {
-      var checkAllNodes = function(node){
+    let treeSelected = [];
+    let selectedData = vals.filter(val => {
+      let checkAllNodes = function(node){
         if (node.children) {
           if(node.checked === true){treeSelected.push(node);}
           node.children.forEach(checkAllNodes);
@@ -99,9 +109,9 @@ class InventoryJewelry extends Component {
     // console.log('treeSelected-->',treeSelected);
     const { props } = this.props;
 
-    var { fields: { jewelryProductHierarchy }, searchResult } = props;
+    let { fields: { jewelryProductHierarchy }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -111,9 +121,9 @@ class InventoryJewelry extends Component {
   }
   handleJewelryCategorySelectChange(JewelryCategorySelectValue){
     const { props } = this.props;
-    var { fields: { jewelryCategory }, searchResult } = props;
+    let { fields: { jewelryCategory }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -124,9 +134,9 @@ class InventoryJewelry extends Component {
   }
   handleCollectionSelectChange(CollectionSelectValue){
     const { props } = this.props;
-    var { fields: { collection }, searchResult } = props;
+    let { fields: { collection }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -137,9 +147,9 @@ class InventoryJewelry extends Component {
   }
   handleBrandSelectChange(BrandSelectValue){
     const { props } = this.props;
-    var { fields: { brand }, searchResult } = props;
+    let { fields: { brand }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -150,9 +160,9 @@ class InventoryJewelry extends Component {
   }
   handleMustHaveSelectChange(MustHaveSelectValue){
     const { props } = this.props;
-    var { fields: { mustHave }, searchResult } = props;
+    let { fields: { mustHave }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -163,9 +173,9 @@ class InventoryJewelry extends Component {
   }
   handleRingSizeSelectChange(RingSizeSelectValue){
     const { props } = this.props;
-    var { fields: { ringSize }, searchResult } = props;
+    let { fields: { ringSize }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -176,9 +186,9 @@ class InventoryJewelry extends Component {
   }
   handleDominantStoneSelectChange(DominantStoneSelectValue){
     const { props } = this.props;
-    var { fields: { dominantStone }, searchResult } = props;
+    let { fields: { dominantStone }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -189,9 +199,9 @@ class InventoryJewelry extends Component {
   }
   handleMetalTypeSelectChange(MetalTypeSelectValue){
     const { props } = this.props;
-    var { fields: { metalType }, searchResult } = props;
+    let { fields: { metalType }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -202,9 +212,9 @@ class InventoryJewelry extends Component {
   }
   handleMetalColourSelectChange(MetalColourSelectValue){
     const { props } = this.props;
-    var { fields: { metalColour }, searchResult } = props;
+    let { fields: { metalColour }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
     if(paramsSearch != null)
@@ -217,7 +227,7 @@ class InventoryJewelry extends Component {
     const { props } = this.props;
 
     const musthaves = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
-    var {  fields:
+    let {  fields:
           {
             collection, totalCostFrom, totalCostTo,totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo,
             markupFrom, markupTo, grossWeightFrom, grossWeightTo, setReference, brand, mustHave, ringSize, dominantStone,
@@ -225,13 +235,13 @@ class InventoryJewelry extends Component {
           }
         } = props;
 
-    var dataDropDowntJewelryCategory = [];
-    var dataDropDowntCollection = [];
-    var dataDropDowntBrand = [];
-    var dataDropDowntRingSize = [];
-    var dataDropDowntDominantStone = [];
-    var dataDropDowntMetalType = [];
-    var dataDropDowntMetalColour = [];
+    let dataDropDowntJewelryCategory = [];
+    let dataDropDowntCollection = [];
+    let dataDropDowntBrand = [];
+    let dataDropDowntRingSize = [];
+    let dataDropDowntDominantStone = [];
+    let dataDropDowntMetalType = [];
+    let dataDropDowntMetalColour = [];
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 
