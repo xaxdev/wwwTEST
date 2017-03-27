@@ -112,7 +112,7 @@ class ShareModal extends Component {
               </div>
               <div className="modal-body">
                 <br/>
-                <div className="col-md-12 maring-b10">
+                <div className="col-md-12 maring-b10 margin-t7">
                     <div className="col-sm-3">
                         <label className="col-sm-12 control-label">E-mail</label>
                     </div>
@@ -126,8 +126,9 @@ class ShareModal extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                  <button type="button" className="btn btn-default btn-radius" disabled={!validateEmailTo.error} onClick={this.confirmDisableModal}>
-                      Submit
+                  <button type="button" className="btn btn-default btn-radius"
+                        disabled={!validateEmailTo.error}
+                        onClick={this.confirmDisableModal}>Submit
                   </button>
                   <button type="button" className="btn btn-default btn-radius" onClick={this.hideModal}>
                       Close

@@ -542,8 +542,8 @@ class InventoryFilter extends Component {
                 <button type="button" className="btn btn-primary btn-radius"
                     disabled={submitting} onClick={this.renderDialogSaveSearch}>
                     {`${this.props.searchResult.idEditSaveSearch != null
-                                        ? isNotOwnerSharedSearch ? 'Save Search' : 'Edit Save Search'
-                                        : 'Save Search'}`}
+                                        ? isNotOwnerSharedSearch ? 'Save As' : 'Save'
+                                        : 'Save As'}`}
                 </button>
                 {/*<button type="button" className="btn btn-primary btn-radius"
                     disabled={submitting} onClick={this.handleSaveSearch}>Save Search
