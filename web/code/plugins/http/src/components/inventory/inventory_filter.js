@@ -410,8 +410,11 @@ class InventoryFilter extends Component {
     const { alert } = this.state;
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+    const isNotOwnerSharedSearch = this.props.searchResult.criteriaSaveSearch != null
+                                    ? this.props.searchResult.criteriaSaveSearch.shared
+                                    : false ;
     // console.log('this.props-->',this.props);
-    // console.log('activeTabCategory-->',activeTabCategory);
+    // console.log('isNotOwnerSharedSearch-->',isNotOwnerSharedSearch);
 
     let permission = userLogin.permission;
     let bitwise = Number(permission.productGroup).toString(2);
@@ -537,7 +540,10 @@ class InventoryFilter extends Component {
             <div className="text-right maring-t15">
 
                 <button type="button" className="btn btn-primary btn-radius"
-                    disabled={submitting} onClick={this.renderDialogSaveSearch}>Save Search
+                    disabled={submitting} onClick={this.renderDialogSaveSearch}>
+                    {`${this.props.searchResult.idEditSaveSearch != null
+                                        ? isNotOwnerSharedSearch ? 'Save Search' : 'Edit Save Search'
+                                        : 'Save Search'}`}
                 </button>
                 {/*<button type="button" className="btn btn-primary btn-radius"
                     disabled={submitting} onClick={this.handleSaveSearch}>Save Search
@@ -553,7 +559,7 @@ class InventoryFilter extends Component {
             </div>
             <InventoryHeader props={this.props}/>
             {/*Advance search*/}
-            <Wrapper
+            {/*<Wrapper
                 onSelection={this.handleSelection.bind(this)}
                 className="FancyMB" id="foo" >
                 <Button className="FancyMB-trigger">
@@ -570,7 +576,7 @@ class InventoryFilter extends Component {
                 <Menu>
                   {menuInnards}
                 </Menu>
-              </Wrapper>
+              </Wrapper>*/}
             <div className="row">
               <div className="bg-while">
                 <button disabled={submitting}  onClick={this.advanceSearchClick} className="btn btn-primary btn-advance">

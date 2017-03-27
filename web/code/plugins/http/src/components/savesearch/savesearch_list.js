@@ -140,8 +140,8 @@ class SaveSearchList extends Component {
         return(
           <div>
                 <a>
-                    <div className={`${row.shared ? 'hidden' : 'icon-edit'}`}
-                        onClick={this.editeSaveCriteria.bind(this,row._id)}>
+                    <div className={`${row.shared ? 'icon-edit fa' : 'icon-edit'}`}
+                        onClick={row.shared ? '' : this.editeSaveCriteria.bind(this,row._id)}>
                     </div>
                 </a>
                 <a>
@@ -152,8 +152,8 @@ class SaveSearchList extends Component {
                 <ShareModal key={ row._id } saveSearch={ row }
                     shareSaveSearch={this.props.shareSaveSearch}/>
                 <a>
-                    <div className={`${row.shared ? 'hidden' : 'icon-del'}`}
-                        onClick={this.confirmDeleteSaveSearch.bind(this,row._id)}>
+                    <div className={`${row.shared ? 'icon-del fa' : 'icon-del'}`}
+                        onClick={row.shared ? '' : this.confirmDeleteSaveSearch.bind(this,row._id)}>
                     </div>
                 </a>
           </div>

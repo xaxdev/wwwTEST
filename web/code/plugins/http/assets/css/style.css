@@ -800,6 +800,9 @@ select.form-searchresult option{
 	float: left;
 	cursor:pointer;
 }
+.fa{
+    opacity:0.5;
+}
 .icon-del{
 	background: url(/images/icon-del.png) no-repeat center;
 	width:40px;

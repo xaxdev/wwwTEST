@@ -86,7 +86,8 @@ class ShareModal extends Component {
         {/*<button className="btn btn-primary pull-xs-right btn-radius" onClick={this.openModal}>
                   { this.props.saveSearch.shared ? 'Disable User ':'Active User ' }
                 </button>*/}
-        <a><div className={`${this.props.saveSearch.shared ? 'hidden' : 'icon-share'}`} onClick={this.openModal}></div></a>
+        <a><div className={`${this.props.saveSearch.shared ? 'icon-share fa' : 'icon-share'}`}
+                onClick={this.props.saveSearch.shared ? '' : this.openModal}></div></a>
         {/*<Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
             <div className="modal-header">
                 <ModalClose onClick={this.hideModal}/>
