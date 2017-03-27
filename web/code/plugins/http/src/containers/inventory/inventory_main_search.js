@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import InventoryFilter  from '../../components/inventory/inventory_filter';
 import * as itemactions from '../../actions/itemactions';
 import ProductGroup from '../../utils/userproductgroup';
+import Modalalertmsg from '../../utils/modalalertmsg';
+
+const Loading = require('react-loading');
 
 class InventorySearch extends Component {
   constructor(props) {
@@ -14,19 +17,34 @@ class InventorySearch extends Component {
 
     router: PropTypes.object
   }
-  handleSubmit(data) {
 
-    //   console.log(data);
+  handleSubmit = (data) => {
+    const that = this;
+    const { props } = this.props;
+    let { filters, paramsSearch, activeTabCategory, isAdvance, submitAction, IdEditSaveSearch } = this.props;
+    const isNotOwnerSharedSearch = this.props.searchResult.criteriaSaveSearch != null
+                                    ? this.props.searchResult.criteriaSaveSearch.shared
+                                    : false;
+    // console.log('shared-->',this.props.searchResult.criteriaSaveSearch.shared);
 
-    var { filters, paramsSearch, activeTabCategory, isAdvance } = this.props;
-    var that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
+    let saveSearchName = data.searchName;
+    let jlyHierarchy = false;
+    let watHierarchy = false;
+    let stoHierarchy = false;
+    let accHierarchy = false;
+    let obaHierarchy = false;
+    let sppHierarchy = false;
     // check modify search or new search
     // if have filters is mean modify search
+    // console.log('data-->',data);
+    // console.log('data.searchName-->',data.searchName);
+
+    delete data.searchName;
 
     // set default location & warehouse
-    var keyscat = Object.keys(data);
-    var i=0;
+    let keyscat = Object.keys(data);
+    let i=0;
     // find criterias
     keyscat.forEach((keycat) => {
       const valueKeys = data[keycat];
@@ -60,91 +78,97 @@ class InventorySearch extends Component {
       }
     });
 
-    if(filters.length != 0){
-      this.props.setParams(paramsSearch)
-      sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
-      filters.splice(0, filters.length);
-    }else{
-      // if not have filters is mean new search
-      // set params by new criterias
-      this.props.setParams(data);
-      sessionStorage.setItem('paramsSearch', JSON.stringify(data));
-    }
-
-    var keyscat = Object.keys(data);
-
+    (async () => {
+        if(filters.length != 0){
+            await his.props.setParams(paramsSearch)
+            await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
+            await filters.splice(0, filters.length);
+        }else{
+            // if not have filters is mean new search
+            // set params by new criterias
+            await this.props.setParams(data);
+            await sessionStorage.setItem('paramsSearch', JSON.stringify(data));
+        }
+    })()
+    // let keyscat = Object.keys(data);
     keyscat.forEach((keycat) => {
 
       const valueKeys = (paramsSearch != null) ? paramsSearch[keycat] : data[keycat];
 
       if(valueKeys != '' && valueKeys != undefined){
-        var propname = {};
+        let propname = {};
         switch(keycat){
           case 'stoneProductHierarchy':
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
+            stoHierarchy = true;
             break;
           case 'jewelryProductHierarchy':
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
+            jlyHierarchy = true;
             break;
           case 'watchProductHierarchy':
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
+            watHierarchy = true;
             break;
           case 'accessoryProductHierarchy':
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
+            accHierarchy = true;
             break;
           case 'obaProductHierarchy':
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
+            obaHierarchy = true;
             break;
           case 'sparePartProductHierarchy':
             if(valueKeys.length == 1){
               propname['hierarchy'] = valueKeys[0].code;
             }else{
-              var code = '';
+              let code = '';
               valueKeys.forEach((objHi)=>{
                 code = (code == '') ? objHi.code : code + '|' + objHi.code;
               });
               propname['hierarchy'] = code.trim();
             }
+            sppHierarchy = true;
             break;
           case 'color':
               if(valueKeys != ''){
@@ -238,7 +262,7 @@ class InventorySearch extends Component {
           break;
       }
     }else{
-      var productArray = [];
+      let productArray = [];
       const productGroup = ProductGroup(userLogin);
       if(productGroup.productGroupJLY){
         productArray.push('JLY');
@@ -264,15 +288,77 @@ class InventorySearch extends Component {
     }
 
     filters.push({'userCurrency':userLogin.currency});
-    // console.log('filters-->',filters);
+    console.log('filters-->',filters);
     this.props.setCurrentPage(1);
     sessionStorage.setItem('filters', JSON.stringify(filters));
-    this.context.router.push('/searchresult');
+    switch (submitAction) {
+        case 'save':
+            if(jlyHierarchy){
+                filters.push({'jewelryProductHierarchy':data.jewelryProductHierarchy})
+            }
+            if(watHierarchy){
+                filters.push({'watchProductHierarchy':data.watchProductHierarchy})
+            }
+            if(stoHierarchy){
+                filters.push({'stoneProductHierarchy':data.stoneProductHierarchy})
+            }
+            if(accHierarchy){
+                filters.push({'accessoryProductHierarchy':data.accessoryProductHierarchy})
+            }
+            if(obaHierarchy){
+                filters.push({'obaProductHierarchy':data.obaProductHierarchy})
+            }
+            if(sppHierarchy){
+                filters.push({'sparePartProductHierarchy':data.sparePartProductHierarchy})
+            }
+            let paramsSaveSearch = {};
+            if (IdEditSaveSearch != null) {
+                if (isNotOwnerSharedSearch) {
+                    paramsSaveSearch = {...paramsSaveSearch,
+                        name:saveSearchName,
+                        criteria:JSON.stringify(filters)};
+                } else {
+                    paramsSaveSearch = {...paramsSaveSearch,
+                        id: IdEditSaveSearch,
+                        name:saveSearchName,
+                        criteria:JSON.stringify(filters)};
+                }
+            } else {
+                paramsSaveSearch = {...paramsSaveSearch,
+                    name:saveSearchName,
+                    criteria:JSON.stringify(filters)};
+            }
+            // paramsSaveSearch = {...paramsSaveSearch, name:saveSearchName, criteria:JSON.stringify(filters)}
+            console.log('paramsSaveSearch-->',paramsSaveSearch);
+            this.props.saveSearchCriteria(paramsSaveSearch);
+            break;
+        case 'search':
+            this.context.router.push('/searchresult');
+            break;
+        default:
+    }
+  }
+
+  handleClosemsgSaveSearch = _=> {
+      this.props.setCloseAlertMsg(100);
+  }
+
+  renderAlertmsgSaveSearch = _=> {
+      const { saveSearchStatus, saveSearchStatusCode, saveSearchMsgError} = this.props;
+
+      const title = 'SAVE SEARCHES';
+      let isOpen = saveSearchStatusCode >= 200 ? true : false;
+
+      return(<Modalalertmsg isOpen={isOpen} isClose={this.handleClosemsgSaveSearch}
+          props={this.props} message={saveSearchMsgError}  title={title}/>);
   }
 
   render(){
       return (
-          <InventoryFilter onSubmit={this.handleSubmit}/>
+          <div>
+            <InventoryFilter onSubmit={this.handleSubmit}/>
+            {this.renderAlertmsgSaveSearch()}
+          </div>
       );
   }
 }
@@ -283,7 +369,12 @@ function mapStateToProps(state) {
     activeTabCategory: state.searchResult.activeTabCategory,
     isAdvance: state.searchResult.IsAdvance,
     filters: state.searchResult.filters,
-    paramsSearch: state.searchResult.paramsSearch
+    paramsSearch: state.searchResult.paramsSearch,
+    submitAction: state.searchResult.SubmitAction,
+    saveSearchStatus: state.searchResult.saveSearchStatus,
+    saveSearchMsgError: state.searchResult.msg,
+    saveSearchStatusCode: state.searchResult.saveSearchStatusCode,
+    IdEditSaveSearch: state.searchResult.idEditSaveSearch,
   };
 }
 

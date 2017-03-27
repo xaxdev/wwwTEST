@@ -100,10 +100,10 @@ class InventoryHeader extends Component {
   				let items = xls.process_wb(wb);
           reference.onChange(items);
           // console.log(JSON.stringify(items, 2, 2));
-  			}
-		};
-		if(rABS) reader.readAsBinaryString(f);
-		else reader.readAsArrayBuffer(f);
+  		}
+        if(rABS) reader.readAsBinaryString(f);
+        else reader.readAsArrayBuffer(f);
+	};
   }
   render() {
     // console.log('props-->',this.props.props);

@@ -667,13 +667,13 @@ class MyCatalog extends Component {
         e.preventDefault();
         const { catalogId } = this.props;
         const { fields: {
-                  shareCatalogTo
+                  shareTo
               } } = this.props;
         let emails = [];
         let paramEmails = [];
         let params = {};
-        if (!!shareCatalogTo.value) {
-            emails = shareCatalogTo.value.replace(/\s/g, '').split(/,|;/);
+        if (!!shareTo.value) {
+            emails = shareTo.value.replace(/\s/g, '').split(/,|;/);
             paramEmails = emails.map((email) => {
                 return {'email':email};
             });
@@ -685,18 +685,18 @@ class MyCatalog extends Component {
             .then((response)=>{
                 this.setState({isOpenShareMyCatalog: false});
                 this.props.setDataSendEmailTo('');
-                shareCatalogTo.onChange('');
-                shareCatalogTo.value = '';
+                shareTo.onChange('');
+                shareTo.value = '';
             })
     }
 
     handleCloseShareMyCatalog = _=> {
         const { fields: {
-                  shareCatalogTo
+                  shareTo
               } } = this.props;
         this.props.setDataSendEmailTo('');
-        shareCatalogTo.onChange('');
-        shareCatalogTo.value = '';
+        shareTo.onChange('');
+        shareTo.value = '';
         this.setState({isOpenShareMyCatalog: false});
     }
 
@@ -888,6 +888,6 @@ MyCatalog.contextTypes = {
 };
 module.exports = reduxForm({
   form: 'MyCatalog',
-  fields: ['currPage', 'catalog', 'shareCatalogTo', 'validateEmailTo'],
+  fields: ['currPage', 'catalog', 'shareTo', 'validateEmailTo'],
   validate: validateEmail
 },mapStateToProps,itemactions)(MyCatalog)

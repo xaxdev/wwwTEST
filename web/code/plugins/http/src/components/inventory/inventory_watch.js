@@ -10,8 +10,8 @@ import TreeData from '../../utils/treeview/watch.json';
 class InventoryWatch extends Component {
   constructor(props) {
     super(props);
-    var dateToday = new Date();
-    var fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
+    let dateToday = new Date();
+    let fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
 
     this.treeOnClick = this.treeOnClick.bind(this);
     this.treeOnUnClick = this.treeOnUnClick.bind(this);
@@ -39,6 +39,18 @@ class InventoryWatch extends Component {
       endDate: null,
       treeViewData:null
     }
+  }
+  componentDidMount = _ =>{
+      (async () => {
+        //   console.log('componentDidMount');
+          const { props } = this.props;
+          let { fields: { jewelryProductHierarchy }, searchResult } = props;
+        //   console.log('searchResult-->',props.SaveSearchHierarchy);
+          if(props.SaveSearchHierarchy != null){
+                await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
+                this.refs.treeview.handleChange(props.SaveSearchHierarchy);
+          }
+      })()
   }
   componentWillReceiveProps(nextProps) {
     const { props } = this.props;
@@ -84,9 +96,9 @@ class InventoryWatch extends Component {
     this.setState({treeViewData:vals});
     this.props.props.inventoryActions.setHierarchy(vals);
     // console.log('vals-->',vals);
-    var treeSelected = [];
-    var selectedData = vals.filter(val => {
-      var checkAllNodes = function(node){
+    let treeSelected = [];
+    let selectedData = vals.filter(val => {
+      let checkAllNodes = function(node){
         if (node.children) {
           if(node.checked === true){treeSelected.push(node);}
           node.children.forEach(checkAllNodes);
@@ -103,9 +115,9 @@ class InventoryWatch extends Component {
     });
     // console.log('treeSelected-->',treeSelected);
     const { props } = this.props;
-    var { fields: { watchProductHierarchy }, searchResult } = props;
+    let { fields: { watchProductHierarchy }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -115,9 +127,9 @@ class InventoryWatch extends Component {
   }
   handleWatchCategorySelectChange(watchCategorySelectValue){
     const { props } = this.props;
-    var { fields: { watchCategory }, searchResult } = props;
+    let { fields: { watchCategory }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -128,9 +140,9 @@ class InventoryWatch extends Component {
   }
   handleCollectionSelectChange(collectionSelectValue){
     const { props } = this.props;
-    var { fields: { collection }, searchResult } = props;
+    let { fields: { collection }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -141,9 +153,9 @@ class InventoryWatch extends Component {
   }
   handleBrandSelectChange(brandSelectValue){
     const { props } = this.props;
-    var { fields: { brand }, searchResult } = props;
+    let { fields: { brand }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -154,9 +166,9 @@ class InventoryWatch extends Component {
   }
   handleMustHaveSelectChange(mustHaveSelectValue){
     const { props } = this.props;
-    var { fields: { mustHave }, searchResult } = props;
+    let { fields: { mustHave }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -167,9 +179,9 @@ class InventoryWatch extends Component {
   }
   handleMetalTypeSelectChange(metalTypeSelectValue){
     const { props } = this.props;
-    var { fields: { metalType }, searchResult } = props;
+    let { fields: { metalType }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -180,9 +192,9 @@ class InventoryWatch extends Component {
   }
   handleMetalColourSelectChange(metalColourSelectValue){
     const { props } = this.props;
-    var { fields: { metalColour }, searchResult } = props;
+    let { fields: { metalColour }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -193,9 +205,9 @@ class InventoryWatch extends Component {
   }
   handleDominantStoneSelectChange(dominantStoneSelectValue){
     const { props } = this.props;
-    var { fields: { dominantStone }, searchResult } = props;
+    let { fields: { dominantStone }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -206,9 +218,9 @@ class InventoryWatch extends Component {
   }
   handleLimitedEditionSelectChange(limitedEditionSelectValue){
     const { props } = this.props;
-    var { fields: { limitedEdition }, searchResult } = props;
+    let { fields: { limitedEdition }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -219,9 +231,9 @@ class InventoryWatch extends Component {
   }
   handleMovementSelectChange(movementSelectValue){
     const { props } = this.props;
-    var { fields: { movement }, searchResult } = props;
+    let { fields: { movement }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -233,11 +245,11 @@ class InventoryWatch extends Component {
   handleChangeDate ({ startDate, endDate }) {
     const { props } = this.props;
 
-    var startDateM = (typeof startDate !== 'undefined')? moment(startDate,'MM-DD-YYYY') : moment(this.state.startDate,'MM-DD-YYYY');
-    var endDateM = (typeof endDate !== 'undefined')? moment(endDate,'MM-DD-YYYY') : moment(this.state.endDate,'MM-DD-YYYY');
+    let startDateM = (typeof startDate !== 'undefined')? moment(startDate,'MM-DD-YYYY') : moment(this.state.startDate,'MM-DD-YYYY');
+    let endDateM = (typeof endDate !== 'undefined')? moment(endDate,'MM-DD-YYYY') : moment(this.state.endDate,'MM-DD-YYYY');
 
     if (startDateM.isAfter(endDateM)) {
-      var temp = startDate || this.state.startDate;
+      let temp = startDate || this.state.startDate;
       startDate = endDate|| this.state.endDate;
       endDate = temp
     }else{
@@ -256,9 +268,9 @@ class InventoryWatch extends Component {
   handleChangeStart(startDate){
     // console.log('handleChangeStart-->',startDate);
     const { props } = this.props;
-    var { fields: { proDateFrom }, searchResult } = props;
+    let { fields: { proDateFrom }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -271,9 +283,9 @@ class InventoryWatch extends Component {
   }
   handleChangeEnd(endDate){
     const { props } = this.props;
-    var { fields: { proDateTo }, searchResult } = props;
+    let { fields: { proDateTo }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -285,9 +297,9 @@ class InventoryWatch extends Component {
   }
   handleDialIndexSelectChange(dialIndexSelectValue){
     const { props } = this.props;
-    var { fields: { dialIndex }, searchResult } = props;
+    let { fields: { dialIndex }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -298,9 +310,9 @@ class InventoryWatch extends Component {
   }
   handleDialColorSelectChange(dialColorSelectValue){
     const { props } = this.props;
-    var { fields: { dialColor }, searchResult } = props;
+    let { fields: { dialColor }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -311,9 +323,9 @@ class InventoryWatch extends Component {
   }
   handleDialMetalSelectChange(dialMetalSelectValue){
     const { props } = this.props;
-    var { fields: { dialMetal }, searchResult } = props;
+    let { fields: { dialMetal }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -324,9 +336,9 @@ class InventoryWatch extends Component {
   }
   handleBuckleTypeSelectChange(buckleTypeSelectValue){
     const { props } = this.props;
-    var { fields: { buckleType }, searchResult } = props;
+    let { fields: { buckleType }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -337,9 +349,9 @@ class InventoryWatch extends Component {
   }
   handleStrapTypeSelectChange(strapTypeSelectValue){
     const { props } = this.props;
-    var { fields: { strapType }, searchResult } = props;
+    let { fields: { strapType }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -350,9 +362,9 @@ class InventoryWatch extends Component {
   }
   handleStrapColorSelectChange(strapColorSelectValue){
     const { props } = this.props;
-    var { fields: { strapColor }, searchResult } = props;
+    let { fields: { strapColor }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -363,9 +375,9 @@ class InventoryWatch extends Component {
   }
   handleComplicationSelectChange(complicationSelectValue){
     const { props } = this.props;
-    var { fields: { complication }, searchResult } = props;
+    let { fields: { complication }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -379,7 +391,7 @@ class InventoryWatch extends Component {
 
     const yesNo = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
 
-    var { fields:
+    let { fields:
           {
             limitedEditionNumber, serialNumber, totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo,
             publicPriceFrom, publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo, caseDimensionFrom,
@@ -388,24 +400,24 @@ class InventoryWatch extends Component {
             searchResult
           } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
 
-    var dataDropDowntWatchCategory = [];
-    var dataDropDowntCollection = [];
-    var dataDropDowntBrand = [];
-    var dataDropDowntMetalType = [];
-    var dataDropDowntMetalColour = [];
-    var dataDropDowntDominantStone = [];
-    var dataDropDowntMovement = [];
-    var dataDropDowntDialIndex = [];
-    var dataDropDowntDialColor = [];
-    var dataDropDowntDialMetal = [];
-    var dataDropDowntBuckleType = [];
-    var dataDropDowntStrapType = [];
-    var dataDropDowntStrapColor = [];
-    var dataDropDowntComplication = [];
+    let dataDropDowntWatchCategory = [];
+    let dataDropDowntCollection = [];
+    let dataDropDowntBrand = [];
+    let dataDropDowntMetalType = [];
+    let dataDropDowntMetalColour = [];
+    let dataDropDowntDominantStone = [];
+    let dataDropDowntMovement = [];
+    let dataDropDowntDialIndex = [];
+    let dataDropDowntDialColor = [];
+    let dataDropDowntDialMetal = [];
+    let dataDropDowntBuckleType = [];
+    let dataDropDowntStrapType = [];
+    let dataDropDowntStrapColor = [];
+    let dataDropDowntComplication = [];
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 

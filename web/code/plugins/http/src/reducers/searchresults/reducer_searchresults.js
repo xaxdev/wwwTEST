@@ -1,5 +1,7 @@
 import { FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE,
-          SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, WRITE_HTML
+          SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, WRITE_HTML,
+          POST_SAVESEARCH, SET_ISSAVESEARCH, SET_CLOSEALERTMSG, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH,
+          GET_SAVECRITERIA, DELETE_SAVESEARCH, SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH
         } from '../../constants/itemconstants';
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY,
           SET_CERTIFICATELAB, SET_POLISH, SET_SYMMETRY, SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN, SET_JEWELRYCATEGORY, SET_COLLECTION,
@@ -7,7 +9,7 @@ import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CU
           SET_WATCHCATEORY, SET_LIMITEDEDITION, SET_MOVEMENT, SET_DIALINDEX, SET_DIALCOLOR, SET_DIALMETAL, SET_BUCKLETYPE, SET_STRAPTYPE,
           SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE,
           SET_HIERARCHY,SET_GEMS_CERTIFICATE_DATE_FROM,SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM,
-          SET_STONE_CERTIFICATE_DATE_TO,SET_PRODUCTION_DATE_FROM,SET_PRODUCTION_DATE_TO
+          SET_STONE_CERTIFICATE_DATE_TO,SET_PRODUCTION_DATE_FROM,SET_PRODUCTION_DATE_TO,SET_SUBMITACTION, SET_SAVESEARCHHIERARCHY
         } from '../../constants/inventoryConstants';
 
 const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, currentPage:1, totalpage:null, totalpublicprice:null,
@@ -22,12 +24,43 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                         HierarchyValue:null, SearchAction:'New', exportItems:[], maxPrice:null, minPrice:null, avrgPrice:null,
                         GemCertificateDateFrom:null, GemCertificateDateTo:null, StoneCertificateDateFrom:null,
                         StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16,
-                        SortingBy:'itemCreatedDate', SortDirection:'desc', ShowGridView: true, ShowListView: false
+                        SortingBy:'itemCreatedDate', SortDirection:'desc', ShowGridView: true, ShowListView: false,
+                        SubmitAction: null, saveSearchStatus: false, msg: '',saveSearchStatusCode: 100,
+                        isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null,
+                        idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null
                       };
 
   export default function(state = INITIAL_STATE, action){
     // console.log('action-->',action);
     switch(action.type){
+        case SET_IDEDITSAVESEARCH :
+            // console.log('action SET_IDEDITSAVESEARCH -->',action);
+            return {...state,  idEditSaveSearch: action.params.id, nameEditSaveSearch: action.params.name};
+        case SET_IDDELETESAVESEARCH :
+            return {...state,  idDeleteSaveSearch: action.id};
+        case DELETE_SAVESEARCH :
+            return {...state,  saveSearchStatus: (action.data.statusCode >= 400) ? false : true,
+                saveSearchStatusCode : action.data.statusCode,
+                msg: action.data.message};
+        case GET_SAVECRITERIA :
+            // console.log('action GET_SAVECRITERIA -->',action);
+            return {...state,  criteriaSaveSearch: action.data };
+        case SET_SHAREDSAVESEARCH :
+            return {...state,  saveSearchStatus: (action.data.statusCode >= 400) ? false : true,
+                saveSearchStatusCode : action.data.statusCode,
+                msg: action.data.message};
+        case GET_LISTSAVESEARCH :
+            // console.log('action GET_LISTSAVESEARCH -->',action);
+            return {...state,  listSaveSearch: action.data}
+        case SET_CLOSEALERTMSG :
+            return {...state,  saveSearchStatusCode: action.closeAlertMsg, saveSearchStatus: false, msg: ''}
+        case POST_SAVESEARCH :
+        //   console.log('action POST_SAVESEARCH -->',action);
+          return {...state,  saveSearchStatus: (action.data.statusCode >= 400) ? false : true,
+              saveSearchStatusCode : action.data.statusCode,
+              msg: action.data.message};
+        case SET_SUBMITACTION:
+            return {...state, SubmitAction: action.submitActionValue };
       case RESET_FORM:
         // console.log('RESET_FORM state-->');
         return { ...state,WarehouseValue:[], LocationValue:[], StoneTypeValue:[], CutValue:[], CutGradeValue:[],
@@ -39,7 +72,9 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 LimitedEditionValue:[], WatchCategoryValue:[], filters:[], AccessoryTypeValue:[], paramsSearch:null,
                 SparePartTypeValue:[], SearchAction:'New', GemCertificateDateFrom:null, GemCertificateDateTo:null,
                 StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null,
-                ListCatalogName: []
+                ListCatalogName: [],SubmitAction: null, saveSearchStatus: false, msg: '',saveSearchStatusCode: 100,
+                isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null,
+                idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null
               };
     //   case WRITE_HTML :
     //     // console.log('SET_POLISH -->',action);
@@ -85,8 +120,11 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
         // console.log('SET_POLISH -->',action);
         return {...state, AccessoryTypeValue: action.accessoryType };
       case SET_HIERARCHY :
-        // console.log('SET_POLISH -->',action);
+        // console.log('SET_HIERARCHY -->',action);
         return {...state, HierarchyValue: action.hierarchy };
+      case SET_SAVESEARCHHIERARCHY:
+        // console.log('SET_SAVESEARCHHIERARCHY -->',action);
+        return {...state, saveSearchHierarchy: action.savesearchhierarchy, SearchAction:'New' };
       case SET_SPAREPARTTYPE :
         // console.log('SET_POLISH -->',action);
         return {...state, SparePartTypeValue: action.sparePartType };

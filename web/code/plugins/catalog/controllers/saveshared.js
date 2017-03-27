@@ -3,7 +3,7 @@ import Joi from 'joi'
 import _  from 'lodash'
 
 const shareduser = Joi.object().keys({
-    email: Joi.string().required()
+    email: Joi.string().required().trim()
 });
 
 export default {
@@ -30,7 +30,6 @@ export default {
                 const users = await getUserId(usersShare, UsersDB);
                 const owner = await request.user.getUserById(request, request.auth.credentials.id);
                 const diffFound = _.differenceBy(usersShare, users, 'email');
-
                 if (diffFound.length != 0) return reply(Boom.badRequest(`Cannot found the email in system ${diffFound.map((e)=>{return e.email})}`));
 
                 const sharedMe = await users.find(user => { return user.id === owner.id });
@@ -45,11 +44,9 @@ export default {
                 let consolidateShareUser = null;
                 if (findShared !== null) {
                     const sharedUser = typeof(findShared.users) !== 'undefined' ? findShared.users : [];
-                    // findShared.users = _.uniqBy(_.union(sharedUser, users), 'id')
                     consolidateShareUser = _.uniqBy(_.union(sharedUser, users), 'id');
                 }
                 else {
-                    // findShared.users = users
                     consolidateShareUser = users;
                 }
 
@@ -61,7 +58,6 @@ export default {
                     {
                         'catalogId': new ObjectID(catalogId),
                         'owner': owner.id,
-                        // 'users': findShared.users
                         'users': consolidateShareUser.map((user) => { return { 'id': user.id } })
                     },
                     {

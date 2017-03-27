@@ -36,11 +36,11 @@ class ModalShareMyCatalog extends Component {
     //   console.log('EmailSelectValue-->',EmailSelectValue);
       const { props } = this.props;
       const { fields: {
-                shareCatalogTo, validateEmailTo
+                shareTo, validateEmailTo
             } } = props;
 
-      shareCatalogTo.onChange(EmailSelectValue);
-    //   console.log('shareCatalogTo-->',shareCatalogTo.value);
+      shareTo.onChange(EmailSelectValue);
+    //   console.log('shareTo-->',shareTo.value);
       this.props.setDataSendEmailTo(EmailSelectValue);
   }
 
@@ -48,7 +48,7 @@ class ModalShareMyCatalog extends Component {
 
     const { props, ShareEmailToValue } = this.props;
     const { fields: {
-              shareCatalogTo, validateEmailTo
+              shareTo, validateEmailTo
           } } = props;
     const { isOpen, isClose, handleSubmitShareCatalog, onSubmit } = this.props;
     // console.log(ShareEmailToValue);
@@ -77,7 +77,7 @@ class ModalShareMyCatalog extends Component {
                         <label className="col-sm-12 control-label">E-mail</label>
                     </div>
                     <div className="col-sm-8">
-                    {/*<input type="text" className="form-control" {...shareCatalogTo}/>*/}
+                    {/*<input type="text" className="form-control" {...shareTo}/>*/}
                         <Select multi simpleValue value={ShareEmailToValue}
                           placeholder="Please input E-mail."
                           options={dataEmail}

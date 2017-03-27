@@ -10,8 +10,8 @@ import TreeData from '../../utils/treeview/oba.json';
 class InventoryOBA extends Component {
   constructor(props) {
     super(props);
-    var dateToday = new Date();
-    var fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
+    let dateToday = new Date();
+    let fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
 
     this.treeOnClick = this.treeOnClick.bind(this);
     this.treeOnUnClick = this.treeOnUnClick.bind(this);
@@ -27,6 +27,18 @@ class InventoryOBA extends Component {
       endDate: null,
       treeViewData:null
     }
+  }
+  componentDidMount = _ =>{
+      (async () => {
+        //   console.log('componentDidMount');
+          const { props } = this.props;
+          let { fields: { jewelryProductHierarchy }, searchResult } = props;
+        //   console.log('searchResult-->',props.SaveSearchHierarchy);
+          if(props.SaveSearchHierarchy != null){
+                await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
+                this.refs.treeview.handleChange(props.SaveSearchHierarchy);
+          }
+      })()
   }
   componentWillReceiveProps(nextProps) {
     const { props } = this.props;
@@ -70,9 +82,9 @@ class InventoryOBA extends Component {
     // console.log('vals-->',vals);
     this.setState({treeViewData:vals});
     this.props.props.inventoryActions.setHierarchy(vals);
-    var treeSelected = [];
-    var selectedData = vals.filter(val => {
-      var checkAllNodes = function(node){
+    let treeSelected = [];
+    let selectedData = vals.filter(val => {
+      let checkAllNodes = function(node){
         if (node.children) {
           if(node.checked === true){treeSelected.push(node);}
           node.children.forEach(checkAllNodes);
@@ -90,9 +102,9 @@ class InventoryOBA extends Component {
     // console.log('treeSelected-->',treeSelected);
     const { props } = this.props;
 
-    var { fields: { obaProductHierarchy }, searchResult } = props;
+    let { fields: { obaProductHierarchy }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -103,9 +115,9 @@ class InventoryOBA extends Component {
 
   handleCollectionSelectChange(collectionSelectValue){
     const { props } = this.props;
-    var { fields: { collection }, searchResult } = props;
+    let { fields: { collection }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -116,9 +128,9 @@ class InventoryOBA extends Component {
   }
   handleBrandSelectChange(brandSelectValue){
     const { props } = this.props;
-    var { fields: { brand }, searchResult } = props;
+    let { fields: { brand }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -129,9 +141,9 @@ class InventoryOBA extends Component {
   }
   handleMustHaveSelectChange(mustHaveSelectValue){
     const { props } = this.props;
-    var { fields: { mustHave }, searchResult } = props;
+    let { fields: { mustHave }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -142,9 +154,9 @@ class InventoryOBA extends Component {
   }
   handleMetalTypeSelectChange(metalTypeSelectValue){
     const { props } = this.props;
-    var { fields: { metalType }, searchResult } = props;
+    let { fields: { metalType }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -155,9 +167,9 @@ class InventoryOBA extends Component {
   }
   handleMetalColourSelectChange(metalColourSelectValue){
     const { props } = this.props;
-    var { fields: { metalColour }, searchResult } = props;
+    let { fields: { metalColour }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -168,9 +180,9 @@ class InventoryOBA extends Component {
   }
   handleDominantStoneSelectChange(dominantStoneSelectValue){
     const { props } = this.props;
-    var { fields: { dominantStone }, searchResult } = props;
+    let { fields: { dominantStone }, searchResult } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch :
                           null;
     if(paramsSearch != null)
@@ -184,7 +196,7 @@ class InventoryOBA extends Component {
 
     const yesNo = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
 
-    var { fields:
+    let { fields:
           {
             totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo,publicPriceFrom, publicPriceTo,
             markupFrom, markupTo, grossWeightFrom, grossWeightTo, obaDimension
@@ -192,15 +204,15 @@ class InventoryOBA extends Component {
             searchResult
           } = props;
 
-    var paramsSearch = (searchResult.paramsSearch != null)?
+    let paramsSearch = (searchResult.paramsSearch != null)?
                           searchResult.paramsSearch:
                           null;
 
-    var dataDropDowntCollection = [];
-    var dataDropDowntBrand = [];
-    var dataDropDowntMetalType = [];
-    var dataDropDowntMetalColour = [];
-    var dataDropDowntDominantStone = [];
+    let dataDropDowntCollection = [];
+    let dataDropDowntBrand = [];
+    let dataDropDowntMetalType = [];
+    let dataDropDowntMetalColour = [];
+    let dataDropDowntDominantStone = [];
 
     const userLogin = JSON.parse(sessionStorage.logindata);
 
