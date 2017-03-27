@@ -47,11 +47,19 @@ module.exports = {
                     }
                 )
 
-                return reply({
-                    error: '',
-                    message: 'Save search criteria success.',
-                    statusCode: 200
-                });
+                if (!searchId) {
+                    return reply({
+                        error: '',
+                        message: 'Save success.',
+                        statusCode: 200
+                    });
+                }else{
+                    return reply({
+                        error: '',
+                        message: 'Update search success.',
+                        statusCode: 200
+                    });
+                }
             } catch (e) {
 
                 return reply(Boom.badImplementation('', e))

@@ -63,8 +63,12 @@ class ModalSaveSearch extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                  <button type="button" className="btn btn-default btn-radius" disabled={validateSearchName.error}
-                        onClick={onSubmit}>Submit
+                  <button type="button" className="btn btn-default btn-radius"
+                        disabled={validateSearchName.error}
+                        onClick={onSubmit}>
+                        {`${props.searchResult.idEditSaveSearch != null
+                                            ? isNotOwnerSharedSearch ? 'Save' : 'Update'
+                                            : 'Save'}`}
                   </button>
                   {/*<button type="button" className="btn btn-default btn-radius"
                         onClick={onSubmit}>Submit

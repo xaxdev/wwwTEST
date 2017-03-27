@@ -126,8 +126,9 @@ class ShareModal extends Component {
                 </div>
               </div>
               <div className="modal-footer">
-                  <button type="button" className="btn btn-default btn-radius" disabled={!validateEmailTo.error} onClick={this.confirmDisableModal}>
-                      Submit
+                  <button type="button" className="btn btn-default btn-radius"
+                        disabled={!validateEmailTo.error}
+                        onClick={this.confirmDisableModal}>Submit
                   </button>
                   <button type="button" className="btn btn-default btn-radius" onClick={this.hideModal}>
                       Close
