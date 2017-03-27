@@ -50,11 +50,11 @@ class ModalSaveSearch extends Component {
               <div className="modal-body">
                 <b>Please enter search name:</b>
                 <br/>
-                <div className="col-md-12 maring-b10">
-                    <div className="col-sm-3">
+                <div className="col-md-12 maring-b10 margin-t7">
+                    <div className="col-sm-5">
                         <label className="col-sm-12 control-label">Search Name:</label>
                     </div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-7">
                         <input disabled={`${props.searchResult.idEditSaveSearch != null
                                             ? isNotOwnerSharedSearch ? '' : 'disabled'
                                             : ''}`}

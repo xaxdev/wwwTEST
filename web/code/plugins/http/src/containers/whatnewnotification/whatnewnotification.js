@@ -147,6 +147,45 @@ class WhatNewNotification extends Component {
                                     'id': 3,
                                     'round': 'March 2017',
                                     'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Save Share Search',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 27, 2017</p>
+                                                  <p>User can save condition of search and share to another MOL account.</p>
+                                                  <h3 style="padding:17px 0px 0px 0px">How to save condition of search</h3>
+                                                  <div style="margin-left: 20px;">
+                                                      <p>1.	At Inventory Report enter or select search condition</p>
+                                                      <p>2.	Click “Save As" button.</p>
+                                                      <p>3.	At the Save Search screen. Enter search name.</p>
+                                                      <p>4.	Click at "Save Searches" menu to view list of saved search.</p>
+                                                  </div>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/mol_save_search2.gif"/></div>
+                                                  </div>
+                                                  <h3 style="padding:17px 0px 0px 0px">How to share saved search</h3>
+                                                  <div style="margin-left: 20px;">
+                                                      <p>1.	Go to  "Save Searches" page.</p>
+                                                      <p>2.	Click <img src="/images/icon-savesearch-01.png"/> “Share” icon*</p>
+                                                      <p>3.	At the Share Search screen. Enter individual or multiple user MOL account to share.</p>
+                                                      <p>4.	Click “Share” button to share saved search.</p>
+                                                  </div>
+                                                  <div style="color:red">*Only owner can share “saved search”</div>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/mol_share_search.gif"/></div>
+                                                  </div>
+                                                  <h3 style="padding:17px 0px 0px 0px">Other Action</h3>
+                                                  <div style="margin-left: 20px;">
+                                                      <p>1.	Click at <img src="/images/icon-savesearch-02.png"/> “Edit” icon to edit condition of search and click “Save” button to update*</p>
+                                                      <p>2.	Click at <img src="/images/icon-savesearch-03.png"/> “Delete” icon to delete saved searches*</p>
+                                                      <p>3.	Click at <img src="/images/icon-savesearch-01.png"/> “Search” icon to view search result. And then user can modify search</p>
+                                                      <p style="margin-left:20px;">a.	For owner actor, after modifying search user can click “Save” for update.</p>
+                                                      <p style="margin-left:20px;">b.	For Shared actor, after modifying search user can click “Save As” for new save condition of search.</p>
+                                                  </div>
+                                                  <div style="color:red">*Only owner saved search can edit and delete “saved search”</div>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/mol_search_icon2.gif"/></div>
+                                                  </div>`
+                                              },
                                                 {
                                                     'type':'new',
                                                     'title': 'Share Catalog',
@@ -155,7 +194,7 @@ class WhatNewNotification extends Component {
                                                     <h3 style="padding:17px 0px 0px 0px">How to share catalog</h3>
                                                     <div style="margin-left: 20px;">
                                                         <p>1. 	Go to My Catalog page</p>
-                                                        <p>2.	Select the Catalog drop-down menu
+                                                        <p>2.	Select the Catalog drop-down menu</p>
                                                         <p>3.	Click <img style="width:20px;height:20px" src="/images/icon-next-watchnew.jpg"/>  “share” icon</p>
                                                         <p>4.	Enter MOL account email to share by individual user or multiple user. <br><span style="margin-left:18px"> Format : recipient1, recipient2 (a@ito.com, b@ito.com, c@mouawad.com)</span></p>
                                                         <p>5.	Click “submit” button to share catalog</p>

@@ -1337,6 +1337,50 @@ select.form-searchresult option{
   background-color: #383735;
   border-color: #383735;
 }
+/*Save Search*/
+.savesearch .icon-edit{
+  background: #d7b261 url(/images/icon-edit.png) no-repeat center;
+  width: 30px;
+  height: 30px;
+  float: left;
+  cursor: pointer;
+  background-size: 95%;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+.savesearch .icon-search {
+    background: #d7b261 url(/images/icon-search-30.png) no-repeat center;
+    width: 30px;
+    height: 30px;
+    float: left;
+    cursor: pointer;
+    background-size: 80%;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+.savesearch .icon-share {
+    background: #d7b261 url(/images/icon-share.png) no-repeat center;
+    width: 30px;
+    height: 30px;
+    float: left;
+    cursor: pointer;
+    background-size: 80%;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+.savesearch .icon-del {
+    background: #d7b261 url(/images/icon-del.png) no-repeat center;
+    width: 30px;
+    height: 30px;
+    float: left;
+    cursor: pointer;
+    background-size: 89%;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+.savesearch .table-bordered>tbody>tr>td:first-child, .savesearch .table-bordered>tbody>tr>td:nth-child(3){
+  text-align: center;
+}
 /*What New*/
 .whatnew-bg{
   background: #d6b161;

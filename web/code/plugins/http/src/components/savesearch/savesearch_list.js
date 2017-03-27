@@ -138,7 +138,7 @@ class SaveSearchList extends Component {
         // console.log('val-->',val);
         // console.log('row-->',row);
         return(
-          <div>
+          <div className="savesearch">
                 <a>
                     <div className={`${row.shared ? 'icon-edit fa' : 'icon-edit'}`}
                         onClick={row.shared ? '' : this.editeSaveCriteria.bind(this,row._id)}>

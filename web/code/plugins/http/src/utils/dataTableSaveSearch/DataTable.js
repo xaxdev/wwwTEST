@@ -43,7 +43,7 @@ var DataTable = React.createClass({
       ),
       React.createElement(
         'div',
-            { className: 'table-responsive' },
+            { className: 'table-responsive savesearch' },
             React.createElement(Table, {
               className: 'table table-bordered',
               dataArray: page.data,

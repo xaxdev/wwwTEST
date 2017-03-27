@@ -112,7 +112,7 @@ class ShareModal extends Component {
               </div>
               <div className="modal-body">
                 <br/>
-                <div className="col-md-12 maring-b10">
+                <div className="col-md-12 maring-b10 margin-t7">
                     <div className="col-sm-3">
                         <label className="col-sm-12 control-label">E-mail</label>
                     </div>
