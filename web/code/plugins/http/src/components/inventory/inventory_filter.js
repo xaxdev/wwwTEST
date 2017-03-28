@@ -7,12 +7,7 @@ import * as itemactions from '../../actions/itemactions';
 import * as masterDataActions from '../../actions/masterdataaction';
 import { Tabs, Tab } from 'react-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
-import { Wrapper,
-  Button,
-  Menu,
-  MenuItem,
-  openMenu,
-  closeMenu } from 'react-aria-menubutton';
+import { Wrapper,Button,Menu,MenuItem,openMenu,closeMenu } from 'react-aria-menubutton';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import UserModal from '../user/user_modal';
 import AlertMessage from '../../utils/alertMessage';
@@ -42,7 +37,7 @@ let productGroupACC=false;
 let productGroupOBA=false;
 let productGroupSPA=false;
 
-const fancyStuff = ['bowling', 'science', 'scooting'];
+const fancyStuff = ['Save', 'Save As', 'Reset'];
 
 class InventoryFilter extends Component {
   constructor(props) {
@@ -401,7 +396,18 @@ class InventoryFilter extends Component {
   }
 
   handleSelection = (data) =>{
-      console.log(data);
+    //   console.log(data);
+      switch (data.activity.toLowerCase()) {
+          case 'reset':
+                this.resetFormInventory();
+                // console.log('reset');
+              break;
+          default:
+                // console.log('save as Or Save');
+                this.renderDialogSaveSearch();
+                break;
+
+      }
   }
 
   render() {
@@ -486,24 +492,40 @@ class InventoryFilter extends Component {
           break;
       }
     });
-    const fancyMenuItems = fancyStuff.map((activity, i) => (
-      <MenuItem
-        value={{
-          activity,
-          somethingArbitrary: 'arbitrary',
-        }}
-        text={activity}
-        key={i}
-        className="FancyMB-menuItem"
-      >
-        <img src={`images/${activity}.svg`} className="FancyMB-svg" />
-        <span className="FancyMB-text">
-          I enjoy
-          <span className="FancyMB-keyword">
-            {activity}
-          </span>
-        </span>
-      </MenuItem>
+    // console.log('this.props.searchResult.idEditSaveSearch-->',this.props.searchResult.idEditSaveSearch);
+    // console.log('isNotOwnerSharedSearch-->',isNotOwnerSharedSearch);
+    let btnMenu = [];
+    if (this.props.searchResult.idEditSaveSearch != null) {
+        if (isNotOwnerSharedSearch) {
+            btnMenu = fancyStuff.filter(function(elem){
+                           return elem != 'Save';
+                        });
+        } else {
+            btnMenu = fancyStuff.filter(function(elem){
+                           return elem != 'Save As';
+                        });
+        }
+    }else{
+        btnMenu = fancyStuff.filter(function(elem){
+                       return elem != 'Save';
+                    });
+    }
+
+    const fancyMenuItems = btnMenu.map((activity, i) => (
+
+        <MenuItem
+            value={{
+              activity,
+              somethingArbitrary: 'arbitrary',
+            }}
+            text={activity}
+            key={i}
+            className="FancyMB-menuItem"
+        >
+            <span className="FancyMB-keyword">
+              {activity}
+            </span>
+        </MenuItem>
     ));
     const menuInnards = menuState => {
       const menu = (!menuState.isOpen) ? false : (
@@ -525,164 +547,156 @@ class InventoryFilter extends Component {
       return (
 
         <form role="form">
-        <div className="alert"></div>
-        <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
-          <center>
-            <br/><br/><br/><br/><br/><br/>
-              <Loading type="spin" color="#202020" width="10%"/>
-          </center>
-          <br/><br/><br/><br/><br/><br/>
-        </div>
-        <div id="page-wrapper" className={`${this.state.showLoading ? 'hidden' : ''}` }>
-          <div id="scroller" className="col-sm-12 bg-hearder bg-header-inventories">
-            <div className="col-sm-6 m-width-60 ft-white m-nopadding"><h1>Inventory Report</h1></div>
-            <div className="col-sm-6 m-width-40 m-nopadding">
-            <div className="text-right maring-t15">
-
-                <button type="button" className="btn btn-primary btn-radius"
-                    disabled={submitting} onClick={this.renderDialogSaveSearch}>
-                    {`${this.props.searchResult.idEditSaveSearch != null
-                                        ? isNotOwnerSharedSearch ? 'Save As' : 'Save'
-                                        : 'Save As'}`}
-                </button>
-                {/*<button type="button" className="btn btn-primary btn-radius"
-                    disabled={submitting} onClick={this.handleSaveSearch}>Save Search
-                </button>*/}
-              <button type="button" className="btn btn-primary btn-radius"
-                    disabled={submitting} onClick={this.handleSearch}>Search</button>
-              <button type="button" className="btn btn-primary btn-radius"
-                disabled={submitting} onClick={this.resetFormInventory}>
-                <i/> Reset
-              </button>
+            <div className="alert"></div>
+            <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
+              <center>
+                <br/><br/><br/><br/><br/><br/>
+                  <Loading type="spin" color="#202020" width="10%"/>
+              </center>
+              <br/><br/><br/><br/><br/><br/>
             </div>
-            </div>
-            </div>
-            <InventoryHeader props={this.props}/>
-            {/*Advance search*/}
-            {/*<Wrapper
-                onSelection={this.handleSelection.bind(this)}
-                className="FancyMB" id="foo" >
-                <Button className="FancyMB-trigger">
-                  <span className="FancyMB-triggerInnards">
-                    <img src="images/profile-female.svg" className="FancyMB-triggerIcon"/>
-                    <span className="FancyMB-triggerText">
-                      What do you enjoy?<br />
-                      <span className="FancyMB-triggerSmallText">
-                        (select an enjoyable activity)
-                      </span>
-                    </span>
-                  </span>
-                </Button>
-                <Menu>
-                  {menuInnards}
-                </Menu>
-              </Wrapper>*/}
-            <div className="row">
-              <div className="bg-while">
-                <button disabled={submitting}  onClick={this.advanceSearchClick} className="btn btn-primary btn-advance">
-                  Advance Search
-                </button>
-              </div>
-            </div>
-            <div className={`row ${this.props.IsAdvance ? '' : 'hidden'}` }>
-              <div className="col-sm-12">
-                <div className="panel">
-                  <div className="panel-body">
-                    <div className="row margin-t-17 ">
-                      <Tabs defaultActiveKey={this.props.activeTabCategory}
-                        animation={false} id="uncontrolled-tab-example"
-                        activeKey={this.props.activeTabCategory}
-                        onSelect={this.tabsSelected}>
-
-                        <Tab eventKey={1} title="Jewelry" disabled={!productGroupJLY}>
-                          <InventoryJewelry props={this.props} ref="jewelry"/>
-                          <div className="panel-body">
-                            <div className="row gemstone-bar">
-                              <h2
-                                disabled={submitting}
-                                onClick={this.gemStoneSearchClick}>
-                                Gemstone Search
-                              </h2>
-                            </div>
-                            <div>
-                              <InventoryGemStone props={this.props}/>
-                            </div>
-                          </div>
-                        </Tab>
-                        <Tab eventKey={2} title="Watch" disabled={!productGroupWAT}>
-                          <InventoryWatch props={this.props} ref="watch"/>
-                          <div className="panel-body">
-                            <div className="row gemstone-bar">
-                              <h2
-                                disabled={submitting}
-                                onClick={this.gemStoneSearchClick}>
-                                Gemstone Search
-                              </h2>
-                            </div>
-                            <div>
-                              <InventoryGemStone props={this.props}/>
-                            </div>
-                          </div>
-                        </Tab>
-                        <Tab eventKey={3} title="Stone" disabled={!productGroupSTO}>
-                          <InventoryStone props={this.props} ref="stone"/>
-                        </Tab>
-                        <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC}>
-                          <InventoryAcc props={this.props} ref="accessory"/>
-                          <div className="panel-body">
-                            <div className="row gemstone-bar">
-                              <h2
-                                disabled={submitting}
-                                onClick={this.gemStoneSearchClick}>
-                                Gemstone Search
-                              </h2>
-                            </div>
-                            <div>
-                              <InventoryGemStone props={this.props}/>
-                            </div>
-                          </div>
-                        </Tab>
-                        <Tab eventKey={5} title="OBJECT OF ART" disabled={!productGroupOBA}>
-                          <InventoryOBA props={this.props}  ref="oba"/>
-                          <div className="panel-body">
-                            <div className="row gemstone-bar">
-                              <h2
-                                disabled={submitting}
-                                onClick={this.gemStoneSearchClick}>
-                                Gemstone Search
-                              </h2>
-                            </div>
-                            <div>
-                              <InventoryGemStone props={this.props}/>
-                            </div>
-                          </div>
-                        </Tab>
-                        <Tab eventKey={6} title="SPARE PART" disabled={!productGroupSPA}>
-                          <InventorySparePart props={this.props}  ref="sparepart"/>
-                          <div className="panel-body">
-                            <div className="row gemstone-bar">
-                              <h2
-                                disabled={submitting}
-                                onClick={this.gemStoneSearchClick}>
-                                Gemstone Search
-                              </h2>
-                            </div>
-                            <div>
-                              <InventoryGemStone props={this.props} ref="gemstone"/>
-                            </div>
-                          </div>
-                        </Tab>
-                      </Tabs>
+            <div id="page-wrapper" className={`${this.state.showLoading ? 'hidden' : ''}` }>
+                <div id="scroller" className="col-sm-12 bg-hearder bg-header-inventories">
+                    <div className="col-sm-6 m-width-60 ft-white m-nopadding">
+                        <h1>Inventory Report</h1>
+                    </div>
+                    <div className="col-sm-6 m-width-40 m-nopadding">
+                        <div className="text-right maring-t15">
+                            {/*<button type="button" className="btn btn-primary btn-radius"
+                                disabled={submitting} onClick={this.renderDialogSaveSearch}>
+                                {`${this.props.searchResult.idEditSaveSearch != null
+                                                    ? isNotOwnerSharedSearch ? 'Save As' : 'Save'
+                                                    : 'Save As'}`}
+                            </button>*/}
+                            <button type="button" className="btn btn-primary btn-radius"
+                                disabled={submitting} onClick={this.handleSearch}>Search</button>
+                            <Wrapper
+                                onSelection={this.handleSelection.bind(this)}
+                                className="FancyMB" id="foo" >
+                                <Button className="FancyMB-trigger">
+                                  <span className="FancyMB-triggerInnards">
+                                    <span className="FancyMB-triggerText">
+                                      ...
+                                    </span>
+                                  </span>
+                                </Button>
+                                <Menu>
+                                  {menuInnards}
+                                </Menu>
+                            </Wrapper>
+                          {/*<button type="button" className="btn btn-primary btn-radius"
+                            disabled={submitting} onClick={this.resetFormInventory}>
+                            <i/> Reset
+                          </button>*/}
+                        </div>
+                    </div>
+                </div>
+                <InventoryHeader props={this.props}/>
+                {/*Advance search*/}
+                <div className="row">
+                  <div className="bg-while">
+                    <button disabled={submitting}  onClick={this.advanceSearchClick} className="btn btn-primary btn-advance">
+                      Advance Search
+                    </button>
+                  </div>
+                </div>
+                <div className={`row ${this.props.IsAdvance ? '' : 'hidden'}` }>
+                  <div className="col-sm-12">
+                    <div className="panel">
+                      <div className="panel-body">
+                        <div className="row margin-t-17 ">
+                          <Tabs defaultActiveKey={this.props.activeTabCategory}
+                            animation={false} id="uncontrolled-tab-example"
+                            activeKey={this.props.activeTabCategory}
+                            onSelect={this.tabsSelected}>
+                            <Tab eventKey={1} title="Jewelry" disabled={!productGroupJLY}>
+                              <InventoryJewelry props={this.props} ref="jewelry"/>
+                              <div className="panel-body">
+                                <div className="row gemstone-bar">
+                                  <h2
+                                    disabled={submitting}
+                                    onClick={this.gemStoneSearchClick}>
+                                    Gemstone Search
+                                  </h2>
+                                </div>
+                                <div>
+                                  <InventoryGemStone props={this.props}/>
+                                </div>
+                              </div>
+                            </Tab>
+                            <Tab eventKey={2} title="Watch" disabled={!productGroupWAT}>
+                              <InventoryWatch props={this.props} ref="watch"/>
+                              <div className="panel-body">
+                                <div className="row gemstone-bar">
+                                  <h2
+                                    disabled={submitting}
+                                    onClick={this.gemStoneSearchClick}>
+                                    Gemstone Search
+                                  </h2>
+                                </div>
+                                <div>
+                                  <InventoryGemStone props={this.props}/>
+                                </div>
+                              </div>
+                            </Tab>
+                            <Tab eventKey={3} title="Stone" disabled={!productGroupSTO}>
+                              <InventoryStone props={this.props} ref="stone"/>
+                            </Tab>
+                            <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC}>
+                              <InventoryAcc props={this.props} ref="accessory"/>
+                              <div className="panel-body">
+                                <div className="row gemstone-bar">
+                                  <h2
+                                    disabled={submitting}
+                                    onClick={this.gemStoneSearchClick}>
+                                    Gemstone Search
+                                  </h2>
+                                </div>
+                                <div>
+                                  <InventoryGemStone props={this.props}/>
+                                </div>
+                              </div>
+                            </Tab>
+                            <Tab eventKey={5} title="OBJECT OF ART" disabled={!productGroupOBA}>
+                              <InventoryOBA props={this.props}  ref="oba"/>
+                              <div className="panel-body">
+                                <div className="row gemstone-bar">
+                                  <h2
+                                    disabled={submitting}
+                                    onClick={this.gemStoneSearchClick}>
+                                    Gemstone Search
+                                  </h2>
+                                </div>
+                                <div>
+                                  <InventoryGemStone props={this.props}/>
+                                </div>
+                              </div>
+                            </Tab>
+                            <Tab eventKey={6} title="SPARE PART" disabled={!productGroupSPA}>
+                              <InventorySparePart props={this.props}  ref="sparepart"/>
+                              <div className="panel-body">
+                                <div className="row gemstone-bar">
+                                  <h2
+                                    disabled={submitting}
+                                    onClick={this.gemStoneSearchClick}>
+                                    Gemstone Search
+                                  </h2>
+                                </div>
+                                <div>
+                                  <InventoryGemStone props={this.props} ref="gemstone"/>
+                                </div>
+                              </div>
+                            </Tab>
+                          </Tabs>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+                {/* End Advance search*/}
             </div>
-            {/* End Advance search*/}
-          </div>
-
-          {alert?this.renderAlertMessage():''}
-          {this.renderSaveSearch()}
+            {alert?this.renderAlertMessage():''}
+            {this.renderSaveSearch()}
         </form>
       );
     }
