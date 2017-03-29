@@ -80,7 +80,7 @@ class InventorySearch extends Component {
 
     (async () => {
         if(filters.length != 0){
-            await his.props.setParams(paramsSearch)
+            await this.props.setParams(paramsSearch)
             await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
             await filters.splice(0, filters.length);
         }else{
