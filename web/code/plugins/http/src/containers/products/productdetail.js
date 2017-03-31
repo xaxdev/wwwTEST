@@ -968,6 +968,7 @@ class productdetail extends Component {
     let isCertificate = false;
     let countImages = 0;
     let imageCerDownload = '';
+    let imageName = '';
 
     if (!gallery) {
         gallery = [];
@@ -982,7 +983,8 @@ class productdetail extends Component {
                     countImages++;
                 }
                 if (countImages == 1) {
-                    imageCerDownload = `/original/${item.certificate.images[0].original.split('/').slice(-1).pop()}`
+                    imageCerDownload = `/original/${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
+                    imageName = `${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
                 }
             }
         })
@@ -1023,7 +1025,7 @@ class productdetail extends Component {
                   {isCertificate
                     ? countImages != 1
                       ? <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a>
-                      : <a href={imageCerDownload} download><div className="icon-certificate margin-l10"/></a>
+                      : <a href={imageCerDownload} download={imageName} ><div className="icon-certificate margin-l10"/></a>
                     :
                     <a><div className=""></div></a>
                   }
