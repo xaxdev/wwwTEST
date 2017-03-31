@@ -80,7 +80,7 @@ class InventorySearch extends Component {
 
     (async () => {
         if(filters.length != 0){
-            await his.props.setParams(paramsSearch)
+            await this.props.setParams(paramsSearch)
             await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
             await filters.splice(0, filters.length);
         }else{
@@ -288,7 +288,7 @@ class InventorySearch extends Component {
     }
 
     filters.push({'userCurrency':userLogin.currency});
-    console.log('filters-->',filters);
+    // console.log('filters-->',filters);
     this.props.setCurrentPage(1);
     sessionStorage.setItem('filters', JSON.stringify(filters));
     switch (submitAction) {
@@ -329,7 +329,7 @@ class InventorySearch extends Component {
                     criteria:JSON.stringify(filters)};
             }
             // paramsSaveSearch = {...paramsSaveSearch, name:saveSearchName, criteria:JSON.stringify(filters)}
-            console.log('paramsSaveSearch-->',paramsSaveSearch);
+            // console.log('paramsSaveSearch-->',paramsSaveSearch);
             this.props.saveSearchCriteria(paramsSaveSearch);
             break;
         case 'search':
