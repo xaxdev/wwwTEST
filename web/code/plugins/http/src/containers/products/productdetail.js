@@ -966,20 +966,30 @@ class productdetail extends Component {
     let { gallery } = this.props.productdetail;
     const { lotNumbers, stonePageSize, stonActivePage } = this.props;
     let isCertificate = false;
+    let countImages = 0;
+    let imageCerDownload = '';
 
     if (!gallery) {
         gallery = [];
     }
 
     if(gemstones != undefined){
-
+        countImages = 0;
         gemstones.map((item) => {
             if (!!item.certificate) {
-                isCertificate = true;
+                if (item.certificate.images != undefined) {
+                    isCertificate = true;
+                    countImages++;
+                }
+                if (countImages == 1) {
+                    imageCerDownload = `/original/${item.certificate.images[0].original.split('/').slice(-1).pop()}`
+                }
             }
         })
+        // console.log(countImages);
+        // console.log(isCertificate);
+        // console.log(imageCerDownload);
     }
-    // console.log(isCertificate);
     let pructdetailurl = '/productdetail/';
     return(
       <div id="page-wrapper">
@@ -1010,8 +1020,11 @@ class productdetail extends Component {
                   <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
                   <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                   {this.zoomicon()}
-                  {isCertificate ?
-                    <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a> :
+                  {isCertificate
+                    ? countImages != 1
+                      ? <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a>
+                      : <a href={imageCerDownload} download><div className="icon-certificate margin-l10"/></a>
+                    :
                     <a><div className=""></div></a>
                   }
                   <a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>
