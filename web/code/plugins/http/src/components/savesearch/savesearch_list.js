@@ -81,7 +81,7 @@ class SaveSearchList extends Component {
         this.props.getSaveCriteria(params)
                     .then((value) => {
                         // console.log('get criteria save search.');
-                        console.log(this.props.criteriaSaveSearch);
+                        // console.log(this.props.criteriaSaveSearch);
                         (async () => {
                             if (this.props.criteriaSaveSearch != null) {
                                 sessionStorage.setItem('filters', this.props.criteriaSaveSearch.criteria);

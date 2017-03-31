@@ -8,19 +8,23 @@ var TreeNode = React.createClass({
   },
 
   handleClick: function () {
-		// console.log('handleClick tree-->');
+		// console.log('handleClick tree-->',this.state.collapsed);
     this.setState({
       collapsed: !this.state.collapsed
     });
   },
 
   render: function() {
+	//   console.log(this.state);
     var containerClass = this.state.collapsed ? 'collapsed' : '';
     var node = this.props.node;
     var childNodes;
+	let isChecked = false;
 
     if (node.children) {
+		// console.log('node-->',node.checked);
       childNodes = node.children.map(function (child, index) {
+		  isChecked = !!child.checked ? child.checked ? isChecked || true : isChecked || false : isChecked || false;
         return (
           <ul key={[node.code, index].join('/')}>
             <TreeNode
@@ -32,6 +36,35 @@ var TreeNode = React.createClass({
         );
       }, this);
     }
+	// console.log('isChecked-->',isChecked);
+	if (!!node.checked) {
+		// console.log('node-->',node.checked);
+		containerClass = '';
+	}
+	// if (isChecked) {
+	// 	switch (node.label) {
+	// 		case 'Spare':
+	// 			containerClass = '';
+	// 			break;
+	// 		case 'OBA':
+	// 			containerClass = '';
+	// 			break;
+	// 		case 'Accessories':
+	// 			containerClass = '';
+	// 			break;
+	// 		case 'Stone':
+	// 			containerClass = '';
+	// 			break;
+	// 		case 'Watch':
+	// 			containerClass = '';
+	// 			break;
+	// 		case 'Jewelry':
+	// 			containerClass = '';
+	// 			break;
+	// 		default:
+	//
+	// 	}
+	// }
 
     return (
       <li className={containerClass}>

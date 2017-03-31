@@ -178,7 +178,7 @@ class SearchResult extends Component {
       const filters =  JSON.parse(sessionStorage.filters);
       let gemstoneFilter = {};
       let lotNumberFilter = {};
-      console.log('filters-->',filters);
+    //   console.log('filters-->',filters);
       filters.forEach(function(filter){
         let keys = Object.keys(filter);
         keys.forEach((key) => {
@@ -338,7 +338,7 @@ class SearchResult extends Component {
             if (value) {
                 this.setState({isOpenPrintPdfmsg: true});
             }
-            console.log(value);
+            // console.log(value);
         });
 
   }
