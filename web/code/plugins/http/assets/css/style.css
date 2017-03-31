@@ -459,7 +459,7 @@ select.form-searchresult option{
     border-color: #ddbe6a !important;
 }
 .btn-radius{
-	border-radius: 20px;
+	border-radius: 5px;
 	margin-left: 10px;
 	padding: 5px 30px;
 	color:#000;
@@ -1888,7 +1888,8 @@ select.form-searchresult option{
 
 .FancyMB {
   position: relative;
-  display: inline-block;
+  float: right;
+  height: 32px;
 }
 
 .FancyMB-trigger {
@@ -1898,42 +1899,37 @@ select.form-searchresult option{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background: #fff;
+  background: #ddbe6a;
   color: #000;
-  border: 1px solid #868686;
-  border-radius: 6px;
-  padding: 0.88889rem 1.77778rem 0.94444rem 1.77778rem;
+  border-radius: 5px;
+  padding: 3px 5px;
   transition: background-color 300ms ease-out;
+  font-size: 40px;
+  height: 32px;
 }
 
 .FancyMB-trigger:hover,
 .FancyMB-trigger:focus {
-  background: #C9F1FF;
+  color: #fff;
 }
 
 .FancyMB-trigger::after {
   content: "";
   display: inline-block;
-  margin-left: 20px;
-  position: relative;
-  top: 3px;
-  border-color: currentColor transparent transparent;
-  border-width: 5px 5px;
-  border-style: solid;
 }
 
 .FancyMB-menu {
-  background: #fff;
-  border: 1px solid #ccc;
+  background: #5b5959;
+  border: 1px solid #464646;
   list-style-type: none;
   padding-left: 0;
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 0;
   z-index: 99;
   margin: 2px 0 0 0;
   width: 100%;
-  max-width: 200px;
+  max-width: 100px;
 }
 
 .FancyMB-menu::before {
@@ -1942,11 +1938,11 @@ select.form-searchresult option{
   display: block;
   height: 0;
   width: 0;
-  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #FFF rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #5b5959 rgba(0, 0, 0, 0);
   border-bottom-style: solid;
   position: absolute;
   top: -12px;
-  left: 10px;
+  right: 10px;
   z-index: 89;
 }
 
@@ -1956,23 +1952,26 @@ select.form-searchresult option{
   display: block;
   height: 0;
   width: 0;
-  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #ccc rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #5b5959 rgba(0, 0, 0, 0);
   border-bottom-style: solid;
   position: absolute;
   top: -14px;
-  left: 9px;
+  right: 9px;
   z-index: 88;
 }
 
 .FancyMB-menuItem {
   cursor: pointer;
-  color: #555;
-  padding: 0.5rem;
+  color: #fff;
+  padding:5px 5px;
 }
-
+.FancyMB-menuItem:first-child{
+  border-bottom: 1px solid #000;
+}
 .FancyMB-menuItem:hover,
 .FancyMB-menuItem:focus {
-  background: #EEE;
+  background: #5b5959;
+  color: #ddbe6a;
 }
 
 .FancyMB-menuItem.is-selected {
@@ -1981,8 +1980,7 @@ select.form-searchresult option{
 }
 
 .FancyMB-menu {
-  width: 250px;
-  max-width: 250px;
+  width: 100px;
 }
 
 .FancyMB-menuItem::after {
@@ -2005,12 +2003,10 @@ select.form-searchresult option{
 
 .FancyMB-keyword {
   display: block;
-  font-size: 1.5em;
+  font-size: 13px;
   font-weight: bold;
-  text-transform: uppercase;
-  padding: 0 0.5em;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 5px 5px;
+  text-align: center;
 }
 
 .FancyMB-triggerIcon {
@@ -2021,8 +2017,8 @@ select.form-searchresult option{
 
 .FancyMB-triggerText {
   display: inline-block;
-  line-height: 1;
-  vertical-align: middle;
+  line-height: 0;
+  vertical-align: top;
 }
 
 .FancyMB-triggerSmallText {

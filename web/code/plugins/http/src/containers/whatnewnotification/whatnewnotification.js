@@ -149,6 +149,24 @@ class WhatNewNotification extends Component {
                                     'datas': [
                                               {
                                                   'type':'new',
+                                                  'title': 'Improvement Download Certificate file directly via browser',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 31, 2017</p>
+                                                  <p>At Stone Attributes section, user can download certificate file directly via browser</p>`
+                                              },
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Improvement Save Search button',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 31, 2017</p>
+                                                  <p>Move “Reset” button and “Save As” button to under “...” button</p>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/mol_save_search.gif"/></div>
+                                                  </div>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/mol_search_icon.gif"/></div>
+                                                  </div>`
+                                              },
+                                              {
+                                                  'type':'new',
                                                   'title': 'Save Share Search',
                                                   'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 27, 2017</p>
                                                   <p>User can save condition of search and share to another MOL account.</p>

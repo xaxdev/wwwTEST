@@ -573,7 +573,7 @@ class InventoryFilter extends Component {
                             <Wrapper
                                 onSelection={this.handleSelection.bind(this)}
                                 className="FancyMB" id="foo" >
-                                <Button className="FancyMB-trigger">
+                                <Button className="FancyMB-trigger btn-radius">
                                   <span className="FancyMB-triggerInnards">
                                     <span className="FancyMB-triggerText">
                                       ...
