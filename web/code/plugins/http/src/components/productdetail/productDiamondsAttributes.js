@@ -5,7 +5,7 @@ import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
 const pructdetailurl = '/productreletedetail/';
-const allowGemstone = ["Loose Diamond","Diamond"];
+const allowGemstone = ['Loose Diamond','Diamond'];
 import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 const Gemstoneattr =  (props) =>{

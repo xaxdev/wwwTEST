@@ -41,30 +41,6 @@ var TreeNode = React.createClass({
 		console.log('node-->',node.checked);
 		containerClass = '';
 	}
-	// if (isChecked) {
-	// 	switch (node.label) {
-	// 		case 'Spare':
-	// 			containerClass = '';
-	// 			break;
-	// 		case 'OBA':
-	// 			containerClass = '';
-	// 			break;
-	// 		case 'Accessories':
-	// 			containerClass = '';
-	// 			break;
-	// 		case 'Stone':
-	// 			containerClass = '';
-	// 			break;
-	// 		case 'Watch':
-	// 			containerClass = '';
-	// 			break;
-	// 		case 'Jewelry':
-	// 			containerClass = '';
-	// 			break;
-	// 		default:
-	//
-	// 	}
-	// }
 
     return (
       <li className={containerClass}>

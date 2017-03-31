@@ -29,7 +29,7 @@ import ModalalertMsgObj from '../../utils/modalalertmsg';
 
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributes';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributes';
-import ReactImageFallback from "react-image-fallback";
+import ReactImageFallback from 'react-image-fallback';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
@@ -93,7 +93,7 @@ class productreletedetail extends Component {
         },
         callbacks: {
           open: function() {
-            let activegallery = jQuery('.active img').attr('src').replace("thumbnail", "original");
+            let activegallery = jQuery('.active img').attr('src').replace('thumbnail', 'original');
             jQuery('#galleryimg').attr('src',activegallery);
             let rotatecount = 0;
             jQuery('#btnup').click(function(){
@@ -401,11 +401,11 @@ class productreletedetail extends Component {
               <ReactImageFallback
                     id="imgset"
                      src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                     fallbackImage='/images/blank.gif'
-                     initialImage='/images/blank.gif'
+                     fallbackImage="/images/blank.gif"
+                     initialImage="/images/blank.gif"
                      width={120}
                      height={120}
-                     className='img-responsive' />
+                     className="img-responsive" />
             </div>
             <Setreference productset={setReferenceData}/>
           </div>
@@ -475,7 +475,7 @@ class productreletedetail extends Component {
           );
         }
         if(gemstoneAttr.length > 0){
-          if(checkInarrayObject("type","Stone",gemstoneAttr)){
+          if(checkInarrayObject('type','Stone',gemstoneAttr)){
         return(
             <div>
               <h2>GEMSTONES ATTRIBUTES</h2>
@@ -501,7 +501,7 @@ class productreletedetail extends Component {
            );
          }
          if(gemstoneAttr.length > 0){
-           if(checkInarrayObject("type","Loose Diamond",gemstoneAttr)){
+           if(checkInarrayObject('type','Loose Diamond',gemstoneAttr)){
            return(
                <div>
                  <h2>DIAMONDS ATTRIBUTES</h2>
@@ -529,7 +529,7 @@ class productreletedetail extends Component {
            );
          }
          if(gemstoneAttr.length > 0){
-           if(checkInarrayObjectOther("type",gemstoneAttr)){
+           if(checkInarrayObjectOther('type',gemstoneAttr)){
            return(
                <div>
                  <h2>RAW MATERIAL ATTRIBUTES</h2>
@@ -844,11 +844,17 @@ class productreletedetail extends Component {
     const productindexplus = this.props.productindexplus;
     const { type, setReference, gemstones,gallery,activities } = this.props.productdetail;
     let isCertificate = false;
+    let countImages = 0;
+    let imageCerDownload = '';
 
     if(gemstones != undefined){
         gemstones.map((item) => {
-            if (!!item.certificate) {
+            if (item.certificate.images != undefined) {
                 isCertificate = true;
+                countImages++;
+            }
+            if (countImages == 1) {
+                imageCerDownload = `/original/${item.certificate.images[0].original.split('/').slice(-1).pop()}`
             }
         })
     }
@@ -881,9 +887,12 @@ class productreletedetail extends Component {
                           <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
                           <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                           {this.zoomicon()}
-                          {isCertificate ?
-                              <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a> :
-                              <a><div className=""></div></a>
+                          {isCertificate
+                            ? countImages != 1
+                              ? <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a>
+                              : <a href={imageCerDownload} download><div className="icon-certificate margin-l10"/></a>
+                            :
+                            <a><div className=""></div></a>
                           }
                           <a><div className="icon-movement margin-l10" onClick={ this.showmovement }></div></a>
                         </div>
