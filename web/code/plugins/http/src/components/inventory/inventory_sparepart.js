@@ -258,6 +258,14 @@ class InventorySparePart extends Component {
               </div>
             </div>
             <div className="col-lg-6  form-horizontal">
+                <div className="form-group">
+                  <label className="col-sm-4 control-label tooltiop-span">
+                  </label>
+                  <div className="col-sm-7">
+                      <input type="checkbox" value="ViewAsSet"
+                      />View as Set
+                  </div>
+                </div>
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Spare Part Type
                   <OverlayTrigger placement="top" overlay={tooltipSparePartType}>

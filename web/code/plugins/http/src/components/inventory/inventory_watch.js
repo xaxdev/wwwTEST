@@ -532,18 +532,26 @@ class InventoryWatch extends Component {
         <div className="panel-body">
           <div className="row margin-ft">
             <div className="col-lg-12 form-horizontal">
-            <div className="form-group">
-              <label className="col-lg-2 col-md-4 col-sm-4 control-label tooltiop-span">Product Hierarchy
-                <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
-                  <img src="/images/alphanumeric.png" />
-                </OverlayTrigger>
-              </label>
-              <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
-                <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
-              </div>
-            </div>
+                <div className="form-group">
+                  <label className="col-lg-2 col-md-4 col-sm-4 control-label tooltiop-span">Product Hierarchy
+                    <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
+                      <img src="/images/alphanumeric.png" />
+                    </OverlayTrigger>
+                  </label>
+                  <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
+                    <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                  </div>
+                </div>
             </div>
             <div className="col-lg-6 form-horizontal">
+                <div className="form-group">
+                    <label className="col-sm-4 control-label tooltiop-span">
+                    </label>
+                    <div className="col-sm-7">
+                        <input type="checkbox" value="ViewAsSet"
+                        />View as Set
+                    </div>
+                </div>
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Watch Category
                   <OverlayTrigger placement="top" overlay={tooltipWatchCategory}>
