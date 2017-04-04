@@ -288,7 +288,7 @@ class InventorySearch extends Component {
     }
 
     filters.push({'userCurrency':userLogin.currency});
-    // console.log('filters-->',filters);
+    console.log('filters-->',filters);
     this.props.setCurrentPage(1);
     sessionStorage.setItem('filters', JSON.stringify(filters));
     switch (submitAction) {

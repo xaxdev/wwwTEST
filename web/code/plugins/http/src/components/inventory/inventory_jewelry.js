@@ -4,6 +4,8 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/jewelry.json';
+import * as xls from '../../utils/xlsSetReference';
+let X = XLSX;
 
 
 class InventoryJewelry extends Component {
@@ -20,6 +22,7 @@ class InventoryJewelry extends Component {
     this.handleDominantStoneSelectChange = this.handleDominantStoneSelectChange.bind(this);
     this.handleMetalTypeSelectChange = this.handleMetalTypeSelectChange.bind(this);
     this.handleMetalColourSelectChange = this.handleMetalColourSelectChange.bind(this);
+    this.readFile = this.readFile.bind(this);
 
     this.state = {
       treeViewData:null
@@ -27,6 +30,17 @@ class InventoryJewelry extends Component {
 
   }
   componentDidMount = _ =>{
+      jQuery('#fileSetReference').hide();
+      jQuery('#btn-browsefileSetReference').click(function(){
+          jQuery('#fileSetReference').click();
+            });
+      jQuery('#fileSetReference').change(function() {
+
+          let filename =jQuery('#fileSetReference')[0].files[0];
+          //alert(filename.name);
+          jQuery('#fileNameSetReference').text(filename.name);
+      });
+
       (async () => {
         //   console.log('componentDidMount');
           const { props } = this.props;
@@ -223,6 +237,49 @@ class InventoryJewelry extends Component {
     metalColour.onChange(MetalColourSelectValue);
     props.inventoryActions.setDataMetalColour(MetalColourSelectValue);
   }
+  selectedViewAsSet = e =>{
+      const { props } = this.props;
+      let { fields: { viewAsSet }, searchResult } = props;
+
+      let paramsSearch = (searchResult.paramsSearch != null)?
+                            searchResult.paramsSearch:
+                            null;
+      if(paramsSearch != null)
+        paramsSearch.viewAsSet = e.target.checked;
+
+      viewAsSet.onChange(e.target.checked);
+      props.inventoryActions.setViewAsSet(e.target.checked);
+    //   console.log(e.target.checked);
+  }
+  readFile(e){
+    e.preventDefault();
+    let { fields:{setReference }} = this.props.props;
+    let X = XLSX;
+
+    let that = this;
+    let rABS = false;
+    let use_worker = false;
+
+    let files = e.target.files;
+    console.log('files-->',files);
+    let f = files[0];
+    {
+  		let reader = new FileReader();
+  		let name = f.name;
+  		reader.onload = function(e) {
+  			// if(typeof console !== 'undefined') console.log('onload', new Date(), rABS, use_worker);
+  			let data = e.target.result;
+
+  				let arr = xls.fixdata(data);
+  				let wb = X.read(btoa(arr), {type: 'base64'});
+  				let items = xls.process_wb(wb);
+          setReference.onChange(items);
+          // console.log(JSON.stringify(items, 2, 2));
+  		}
+        if(rABS) reader.readAsBinaryString(f);
+        else reader.readAsArrayBuffer(f);
+	};
+  }
   render() {
     const { props } = this.props;
 
@@ -231,7 +288,7 @@ class InventoryJewelry extends Component {
           {
             collection, totalCostFrom, totalCostTo,totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo,
             markupFrom, markupTo, grossWeightFrom, grossWeightTo, setReference, brand, mustHave, ringSize, dominantStone,
-            metalType, metalColour
+            metalType, metalColour,viewAsSet
           }
         } = props;
 
@@ -244,6 +301,9 @@ class InventoryJewelry extends Component {
     let dataDropDowntMetalColour = [];
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+
+    const host = HOSTNAME || 'localhost';
+    const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
 
     InitModifyData(props);
 
@@ -327,7 +387,8 @@ class InventoryJewelry extends Component {
                     <label className="col-sm-4 control-label tooltiop-span">
                     </label>
                     <div className="col-sm-7">
-                        <input type="checkbox" value="ViewAsSet"
+                        <input type="checkbox" value="ViewAsSet" {...viewAsSet}
+                            onChange={this.selectedViewAsSet}
                         />View as Set
                     </div>
                 </div>
@@ -536,6 +597,16 @@ class InventoryJewelry extends Component {
                 </label>
                 <div className="col-sm-7">
                   <input type="text" className="form-control" {...setReference}/>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label">Attachment</label>
+                <div className="col-sm-7">
+
+                  <input id="fileSetReference" type="file" field={setReference} onChange={this.readFile}/>
+                  <span id="fileNameSetReference"></span>
+                  <input type="button" id="btn-browsefileSetReference" value=" "/>
+                  <div className="font-nor control-label">The system able to import only excel file. Click here to download a format file <a href={ROOT_URL+'/upload_file/Mol_upload_setreference.xlsx'} >Mol upload setreferences.xlsx</a></div>
                 </div>
               </div>
             </div>

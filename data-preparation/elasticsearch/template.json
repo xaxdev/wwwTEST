@@ -104,6 +104,20 @@
                     }
                 },
                 {
+                    "setReference": {
+                        "match": "setReference",
+                        "match_mapping_type": "string",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "ngram_filter_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
                     "dates": {
                         "match": ".*Date|date",
                         "match_pattern": "regex",
