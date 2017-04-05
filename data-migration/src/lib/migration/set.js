@@ -17,7 +17,6 @@ const getitemSets = async (index, exchangeRates) => {
             if (record.setReference !== reference) {
                 description = []
                 reference = record.setReference
-                // console.log(description.join());
                 const itemSet = {
                     reference: record.setReference,
                     description: '',
@@ -45,7 +44,6 @@ const getitemSets = async (index, exchangeRates) => {
             const current = itemSets[itemSets.length - 1]
             const item = {
                 id: record.id,
-                description: description.join(),
                 reference: record.reference,
                 image: {
                     original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
@@ -90,8 +88,10 @@ const getitemSets = async (index, exchangeRates) => {
             item.actualCost[record.currency] = record.actualCost;
             item.updatedCost[record.currency] = record.updatedCost;
             current.totalPrice[record.currency] = (current.totalPrice[record.currency] || 0) + item.price[record.currency];
-            current.totalActualCost[record.currency] = (current.totalActualCost[record.currency] || 0) + item.actualCost[record.currency]
-            current.totalUpdatedCost[record.currency] = (current.totalUpdatedCost[record.currency] || 0) + item.updatedCost[record.currency]
+            current.totalActualCost[record.currency] = (current.totalActualCost[record.currency] || 0) + item.actualCost[record.currency];
+            current.totalUpdatedCost[record.currency] = (current.totalUpdatedCost[record.currency] || 0) + item.updatedCost[record.currency];
+
+            current.description = description.join();
 
             current.items.push(item)
         }
