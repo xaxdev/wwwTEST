@@ -362,7 +362,7 @@ class InventoryJewelry extends Component {
     let hierarchyData = [];
 
     hierarchyData.push(TreeData);
-    // console.log('TreeData-->',TreeData);
+    // console.log('ViewAsSet-->',props.ViewAsSet);
     // console.log('hierarchyData-->',mapObj);
 
     return(
@@ -388,6 +388,7 @@ class InventoryJewelry extends Component {
                     </label>
                     <div className="col-sm-7">
                         <input type="checkbox" value="ViewAsSet" {...viewAsSet}
+                            checked={props.ViewAsSet}
                             onChange={this.selectedViewAsSet}
                         />View as Set
                     </div>

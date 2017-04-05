@@ -25,9 +25,9 @@ module.exports = {
 
     let size = request.payload.pageSize;
 
-    // internals.query = GetSearch(request, 0, 100000);
+    internals.query = GetSearch(request, 0, 100000);
 
-    console.log(JSON.stringify(internals.query, null, 2));
+    // console.log(JSON.stringify(internals.query, null, 2));
 
     elastic
       .search({
@@ -38,12 +38,13 @@ module.exports = {
         const totalRecord = response.hits.total;
 
         elastic.close();
-        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency, keys, obj));
+        return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
 
       })
       .catch(function (error) {
         elastic.close();
         return reply(Boom.badImplementation(err));
       });
+
   }
 };

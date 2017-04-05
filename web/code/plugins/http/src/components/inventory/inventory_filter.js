@@ -765,7 +765,8 @@ function mapStateToProps(state) {
     StoneCertificateDateTo: state.searchResult.StoneCertificateDateTo,
     ProductionDateFrom: state.searchResult.ProductionDateFrom,
     ProductionDateTo: state.searchResult.ProductionDateTo,
-    SaveSearchHierarchy: state.searchResult.saveSearchHierarchy
+    SaveSearchHierarchy: state.searchResult.saveSearchHierarchy,
+    ViewAsSet: state.searchResult.viewAsSet
   };
 }
 function mapDispatchToProps(dispatch) {
