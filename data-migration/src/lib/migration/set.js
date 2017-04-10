@@ -25,8 +25,8 @@ const getitemSets = async (index, exchangeRates) => {
                     totalUpdatedCost: {},
                     totalPrice: {},
                     markup: record.markup,
-                    company: record.companyName,
-                    warehouse: record.warehouseName,
+                    companyName: record.companyName,
+                    warehouseName: record.warehouseName,
                     createdDate: record.createdDate
                 }
 

@@ -227,13 +227,12 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         });
         // console.log('sumCost-->',sumCost);
       }
-      console.log('before get setReferences');
-    //   console.log('setReferences -->',setReferences);
-
-      let SetReferencesData =  await getSetReferencesData(setReferences, request);
-
-      console.log('after get setReferences');
-      console.log('SetReferencesData-->',SetReferencesData);
+    //   console.log('before get setReferences');
+      //
+    //   let SetReferencesData =  await getSetReferencesData(setReferences, request);
+      //
+    //   console.log('after get setReferences');
+    //   console.log('SetReferencesData-->',SetReferencesData);
 
       const sendData = {
               'data':pageData,
