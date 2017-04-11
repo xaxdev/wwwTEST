@@ -66,7 +66,7 @@ module.exports = {
         const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
             return !pos || item != ary[pos - 1];
         })
-        console.log('setReferenceUniq-->', setReferenceUniq.length);
+        // console.log('setReferenceUniq-->', setReferenceUniq.length);
         // console.log('setReferenceResult-->',setReferenceResult);
       const query = JSON.parse(
         `{
@@ -102,8 +102,8 @@ module.exports = {
 
             const setReferenceData = setReferences.hits.hits.map((element) => element._source);
 
-            console.log('setReferenceData-->', setReferenceData.length);
-            console.log('totalRecord-->',totalRecord);
+            // console.log('setReferenceData-->', setReferenceData.length);
+            // console.log('totalRecord-->',totalRecord);
             let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
             elastic.close();

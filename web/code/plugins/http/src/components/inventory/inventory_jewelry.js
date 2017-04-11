@@ -261,7 +261,7 @@ class InventoryJewelry extends Component {
     let use_worker = false;
 
     let files = e.target.files;
-    console.log('files-->',files);
+    // console.log('files-->',files);
     let f = files[0];
     {
   		let reader = new FileReader();

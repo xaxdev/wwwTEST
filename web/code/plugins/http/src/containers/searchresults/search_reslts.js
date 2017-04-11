@@ -583,9 +583,14 @@ class SearchResult extends Component {
   }
   onClickGrid(pageNumber) {
     // console.log('onClickGrid==>',pageNumber);
+    const { ViewAsSet } = this.props;
     const token = sessionStorage.token;
     if(token){
-        this.context.router.push(`/productdetail/${pageNumber}`);
+        if (ViewAsSet) {
+            this.context.router.push(`/setdetail/${pageNumber}`);
+        }else{
+            this.context.router.push(`/productdetail/${pageNumber}`);
+        }
     }
   }
   checkedOneItemMyCatalog = (item) => {

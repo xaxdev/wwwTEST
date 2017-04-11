@@ -7,6 +7,7 @@ import { reduxForm,reset } from 'redux-form';
 import moment from 'moment-timezone';
 import * as gemstoneattrdetailaction from '../../actions/gemstoneattrdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/productDescription';
+import ProductDescriptionSet from '../../components/productdetail/setDescription';
 import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptioncer';
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
@@ -174,7 +175,8 @@ class productreletedetail extends Component {
 
 
   renderDesc(){
-
+      const { ViewAsSet } = this.props;
+      console.log('ViewAsSet-->',ViewAsSet);
     const  Detail  = this.props.productdetail;
     let  Detailtitle  = '';
     if(!Detail){
@@ -189,7 +191,7 @@ class productreletedetail extends Component {
               return(
                   <div>
                     <h2>{Detailtitle}</h2>
-                    <ProductDescriptionBlock {...Detail} />
+                    {ViewAsSet?<ProductDescriptionSet {...Detail} />:<ProductDescriptionBlock {...Detail} />}
                   </div>
                 );
           case 'STO':
@@ -246,7 +248,7 @@ class productreletedetail extends Component {
         <div>
 
           <h2>{Detailtitle}</h2>
-          <ProductDescriptionBlock Detail={Detail} />
+          {ViewAsSet?<ProductDescriptionSet {...Detail} />:<ProductDescriptionBlock {...Detail} />}
         </div>
       );
    }
@@ -662,6 +664,7 @@ class productreletedetail extends Component {
    }
 
    renderNavigation(){
+       console.log('renderNavigation-->',this.props);
      return(
 
         <div className="width-50 productreletedetail-width maring-t15">
@@ -984,7 +987,8 @@ function mapStateToProps(state) {
     productdetail: state.productdetail.detail,
     productrelete: state.productdetail.relete,
     listCatalogName: state.productdetail.ListCatalogName,
-    message: state.productdetail.message
+    message: state.productdetail.message,
+    ViewAsSet: state.searchResult.viewAsSet
     //setreference:state.productdetail.setreference
     //productreletepage: state.productdetail.reletepage
    }
