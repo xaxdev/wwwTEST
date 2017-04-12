@@ -71,14 +71,16 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             || key == 'origin' || key == 'watchCategory'
             || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal'
             || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse'
-            || key == 'color'
+            || key == 'color' || key == 'setReference'
         ){
             value = `${value}`
             value = value.replace(/,/gi, ' ');
         }
 
         if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
-            && key != 'price' && key != 'pageSize' && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' ){
+            && key != 'price' && key != 'pageSize' && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail'
+            && key != 'viewAsSet'
+        ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
              || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'fluorescence'
              || key == 'jewelryCategory' || key == 'collection' || key == 'brand'|| key == 'mustHave' || key == 'ringSize'

@@ -628,6 +628,7 @@ class productdetail extends Component {
 
     renderImagegallery(){
       const { gallery } = this.props.productdetail;
+      console.log(gallery);
       // if(!gallery){
       //   return(
       //     <div><img src="/images/blank.gif" width="100%"/></div>

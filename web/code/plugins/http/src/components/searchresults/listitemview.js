@@ -42,7 +42,7 @@ class ListItemsView extends Component {
         > <img src="/images/icon-add.png" width="30"/></button>
         <br/>
       </div>
-      <button type="button" name={row.id} id={row.id} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
+      <button type="button" name={row.reference} id={row.reference} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
       </div>
     );
   }
@@ -68,77 +68,119 @@ class ListItemsView extends Component {
 
   render(){
     let items = null;
+    const { ViewAsSet } = this.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
     const currency = userLogin.currency;
     // console.log('list view pageSize-->',this.props.pageSize);
     if (this.props.items.length != 0){
+        let isCompany = true;
       items = this.props.items.map(function (col, idx) {
-        // console.log('col-->',col);
-        let imagesOriginal = (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif';
-        let imagesThumbnail = (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif';
-        let size = '';
+          let imagesOriginal = '';
+          let imagesThumbnail = '';
+          let size = '';
+          let jewelsWeight = 0;
+          let itemName = '';
+          isCompany = col.companyName != undefined ? true : false;
+          if (ViewAsSet) {
+              imagesOriginal = (col.image) != undefined ? col.image.original : '/images/blank.gif';
+              imagesThumbnail = (col.image) != undefined ? col.image.thumbnail : '/images/blank.gif';
 
-        switch (col.type) {
-          case 'JLY':
-            size = (col.size != undefined) ? col.size : '';
-            break;
-          case 'WAT':
-            size = (col.caseDimension != undefined) ? col.caseDimension : '';
-            break;
-          case 'OBA':
-            size = (col.dimension != undefined) ? col.dimension : '';
-            break;
-          default:
-            break;
-        }
+              if(col.totalPrice != undefined){
+                  col.priceUSD = (col.totalPrice['USD'] != undefined)
+                                ? numberFormat(col.totalPrice['USD'])
+                                : '- ';
+              }else{
+                  col.priceUSD = '- ';
+              }
 
-        if(col.price != undefined){
-          col.priceUSD = (col.price[currency] != undefined) ?
-                 numberFormat(col.price[currency]) :
-                 '- ';
-        }else{
-          col.priceUSD = '- ';
-        }
+              col.jewelsWeight = numberFormat2digit(jewelsWeight);
 
-        let jewelsWeight = 0;
+              itemName = (col.description != undefined) ? col.description: '-';
+              col.grossWeight = 0;
 
-        if (col.gemstones != undefined) {
-          col.gemstones.forEach(function(gemstone) {
-            if(gemstone.carat != undefined){
-              jewelsWeight = jewelsWeight + gemstone.carat;
-            }
-          });
-        } else {
-          jewelsWeight = '';
-        }
+          }else{
+              // console.log('col-->',col);
+              imagesOriginal = (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif';
+              imagesThumbnail = (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif';
 
-        col.jewelsWeight = numberFormat2digit(jewelsWeight);
-        // col.jewelsWeight = jewelsWeight;
+              switch (col.type) {
+                case 'JLY':
+                  size = (col.size != undefined) ? col.size : '';
+                  break;
+                case 'WAT':
+                  size = (col.caseDimension != undefined) ? col.caseDimension : '';
+                  break;
+                case 'OBA':
+                  size = (col.dimension != undefined) ? col.dimension : '';
+                  break;
+                default:
+                  break;
+              }
 
-        let itemName = (col.type != 'CER')
-                          ?
-                          (col.description != undefined) ? col.description: '-' :
-                          col.name
-                          ;
+              if(col.price != undefined){
+                col.priceUSD = (col.price[currency] != undefined) ?
+                       numberFormat(col.price[currency]) :
+                       '- ';
+              }else{
+                col.priceUSD = '- ';
+              }
 
-        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
-                itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
+              if (col.gemstones != undefined) {
+                col.gemstones.forEach(function(gemstone) {
+                  if(gemstone.carat != undefined){
+                    jewelsWeight = jewelsWeight + gemstone.carat;
+                  }
+                });
+              } else {
+                jewelsWeight = '';
+              }
+
+              col.jewelsWeight = numberFormat2digit(jewelsWeight);
+              // col.jewelsWeight = jewelsWeight;
+
+              itemName = (col.type != 'CER')
+                                ?
+                                (col.description != undefined) ? col.description: '-' :
+                                col.name
+                                ;
+
+          }
+          return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
+              itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
       });
 
-      const tableColumns = [
-        // { title: '', render: this.renderCheckItem },
-        { title: 'Images', render: this.renderImage },
-        { title: 'Item Reference', prop: 'reference' },
-        { title: 'Description', prop: 'itemName' },
-        { title: 'SKU', prop: 'sku' },
-        { title: 'Company', prop: 'companyName' },
-        { title: 'Warehouse', prop: 'warehouseName' },
-        { title: 'Size', prop: 'size' },
-        { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-        { title: 'Gross Weight', prop: 'grossWeight' },
-        { title: 'Public Price', prop: 'priceUSD' },
-        { title: '', render: this.renderAction, className: 'text-center' },
-      ];
+      let tableColumns = [];
+      if (isCompany) {
+          tableColumns = [
+            // { title: '', render: this.renderCheckItem },
+            { title: 'Images', render: this.renderImage },
+            { title: 'Item Reference', prop: 'reference' },
+            { title: 'Description', prop: 'itemName' },
+            { title: 'SKU', prop: 'sku' },
+            { title: 'Company', prop: 'companyName' },
+            { title: 'Warehouse', prop: 'warehouseName' },
+            { title: 'Size', prop: 'size' },
+            { title: 'Jewelry Weight', prop: 'jewelsWeight' },
+            { title: 'Gross Weight', prop: 'grossWeight' },
+            { title: 'Public Price', prop: 'priceUSD' },
+            { title: '', render: this.renderAction, className: 'text-center' },
+          ];
+      }else{
+          tableColumns = [
+            // { title: '', render: this.renderCheckItem },
+            { title: 'Images', render: this.renderImage },
+            { title: 'Item Reference', prop: 'reference' },
+            { title: 'Description', prop: 'itemName' },
+            { title: 'SKU', prop: 'sku' },
+            { title: 'Company', prop: 'company' },
+            { title: 'Warehouse', prop: 'warehouse' },
+            { title: 'Size', prop: 'size' },
+            { title: 'Jewelry Weight', prop: 'jewelsWeight' },
+            { title: 'Gross Weight', prop: 'grossWeight' },
+            { title: 'Public Price', prop: 'priceUSD' },
+            { title: '', render: this.renderAction, className: 'text-center' },
+          ];
+      }
 
       return (
         <div>

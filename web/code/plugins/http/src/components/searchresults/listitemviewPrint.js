@@ -67,60 +67,83 @@ class ListItemsView extends Component {
 
   render(){
     var items = null;
+    const { ViewAsSet } = this.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
     const currency = userLogin.currency;
 
     if (this.props.items.length != 0){
       items = this.props.items.map(function (col, idx) {
-        // console.log('col-->',col);
-        let imagesOriginal = (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif';
-        let imagesThumbnail = (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif';
-        let size = '';
+          let imagesOriginal = '';
+          let imagesThumbnail = '';
+          let size = '';
+          let jewelsWeight = 0;
+          let itemName = '';
+          if (ViewAsSet) {
+              imagesOriginal = (col.image) != undefined ? col.image.original : '/images/blank.gif';
+              imagesThumbnail = (col.image) != undefined ? col.image.thumbnail : '/images/blank.gif';
 
-        switch (col.type) {
-          case 'JLY':
-            size = (col.size != undefined) ? col.size : '';
-            break;
-          case 'WAT':
-            size = (col.caseDimension != undefined) ? col.caseDimension : '';
-            break;
-          case 'OBA':
-            size = (col.dimension != undefined) ? col.dimension : '';
-            break;
-          default:
-            break;
-        }
+              if(col.totalPrice != undefined){
+                  col.priceUSD = (col.totalPrice['USD'] != undefined)
+                                ? numberFormat(col.totalPrice['USD'])
+                                : '- ';
+              }else{
+                  col.priceUSD = '- ';
+              }
 
-        if(col.price != undefined){
-          col.priceUSD = (col.price[currency] != undefined) ?
-                 numberFormat(col.price[currency]) :
-                 '- ';
-        }else{
-          col.priceUSD = '- ';
-        }
+              col.jewelsWeight = numberFormat2digit(jewelsWeight);
 
-        let jewelsWeight = 0;
+              itemName = (col.description != undefined) ? col.description: '-';
+              col.grossWeight = 0;
 
-        if (col.gemstones != undefined) {
-          col.gemstones.forEach(function(gemstone) {
-            if(gemstone.carat != undefined){
-              jewelsWeight = jewelsWeight + gemstone.carat;
-            }
-          });
-        } else {
-          jewelsWeight = '';
-        }
+          }else{
+              // console.log('col-->',col);
+              imagesOriginal = (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif';
+              imagesThumbnail = (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif';
 
-        col.jewelsWeight = numberFormat2digit(jewelsWeight);
+              switch (col.type) {
+                case 'JLY':
+                  size = (col.size != undefined) ? col.size : '';
+                  break;
+                case 'WAT':
+                  size = (col.caseDimension != undefined) ? col.caseDimension : '';
+                  break;
+                case 'OBA':
+                  size = (col.dimension != undefined) ? col.dimension : '';
+                  break;
+                default:
+                  break;
+              }
 
-        let itemName = (col.type != 'CER')
-                          ?
-                          (col.description != undefined) ? col.description: '-' :
-                          col.name
-                          ;
+              if(col.price != undefined){
+                col.priceUSD = (col.price[currency] != undefined) ?
+                       numberFormat(col.price[currency]) :
+                       '- ';
+              }else{
+                col.priceUSD = '- ';
+              }
 
-        return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
-                itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
+              if (col.gemstones != undefined) {
+                col.gemstones.forEach(function(gemstone) {
+                  if(gemstone.carat != undefined){
+                    jewelsWeight = jewelsWeight + gemstone.carat;
+                  }
+                });
+              } else {
+                jewelsWeight = '';
+              }
+
+              col.jewelsWeight = numberFormat2digit(jewelsWeight);
+              // col.jewelsWeight = jewelsWeight;
+
+              itemName = (col.type != 'CER')
+                                ?
+                                (col.description != undefined) ? col.description: '-' :
+                                col.name
+                                ;
+
+          }
+          return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
+              itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
       });
 
       const tableColumns = [

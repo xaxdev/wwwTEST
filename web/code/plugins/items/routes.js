@@ -36,6 +36,11 @@ module.exports = [
         config: controllers.setreference
     },
     {
+        method: 'GET',
+        path: '/setdetails/{setReference}',
+        config: controllers.setdetails
+    },
+    {
         method: 'POST',
         path: '/certificate/{productId}',
         config: controllers.certificate
