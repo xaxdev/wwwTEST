@@ -176,7 +176,7 @@ class productreletedetail extends Component {
 
   renderDesc(){
       const { ViewAsSet } = this.props;
-      console.log('ViewAsSet-->',ViewAsSet);
+    //   console.log('ViewAsSet-->',ViewAsSet);
     const  Detail  = this.props.productdetail;
     let  Detailtitle  = '';
     if(!Detail){
@@ -184,14 +184,14 @@ class productreletedetail extends Component {
         <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
       );
     }
-
+    // console.log('type-->',Detail.type);
     switch (Detail.type) {
           case 'JLY':
               Detailtitle='JEWELRY DETAILS';
               return(
                   <div>
                     <h2>{Detailtitle}</h2>
-                    {ViewAsSet?<ProductDescriptionSet {...Detail} />:<ProductDescriptionBlock {...Detail} />}
+                    <ProductDescriptionBlock {...Detail} />
                   </div>
                 );
           case 'STO':
@@ -246,7 +246,6 @@ class productreletedetail extends Component {
 
     return(
         <div>
-
           <h2>{Detailtitle}</h2>
           {ViewAsSet?<ProductDescriptionSet {...Detail} />:<ProductDescriptionBlock {...Detail} />}
         </div>
@@ -664,7 +663,7 @@ class productreletedetail extends Component {
    }
 
    renderNavigation(){
-       console.log('renderNavigation-->',this.props);
+    //    console.log('renderNavigation-->',this.props);
      return(
 
         <div className="width-50 productreletedetail-width maring-t15">

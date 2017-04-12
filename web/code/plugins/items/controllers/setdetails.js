@@ -12,7 +12,7 @@ module.exports = {
 
       (async _ => {
           const elastic = request.server.plugins.elastic.client;
-          const setReference = request.params.setReference;
+          const setReference = request.params.setReference.replace('-','/');
 
           internals.query = JSON.parse(
             `{
@@ -46,7 +46,7 @@ module.exports = {
                     if (!productResult.image) {
                         productResult.gallery = [];
                     }else{
-                        productResult.gallery = [productResult.image];
+                        productResult.gallery = [...productResult.image];
                     }
                     if (!!productResult.items) {
                         let images = {};

@@ -176,24 +176,47 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
 
           // console.log('maxPrice-->',maxPrice);
         }else{
-          if(maxPrice > 0){
-            maxPrice = maxPrice;
-          }else{
-            maxPrice = 0;
-          }
+            if (isViewAsSet) {
+                if(item.totalPrice['USD'] != undefined){
+                  // console.log('item.reference-->',item.reference);
+                  // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
+                  if(item.totalPrice['USD'] != 0){
+                    maxPrice = Math.max(maxPrice, item.totalPrice['USD']);
+                  }else{
+                    maxPrice = Math.max(maxPrice, 0);
+                  }
+                }else{
+                  item.totalPrice['USD'] = 0;
+                  maxPrice = Math.max(maxPrice, 0);
+                }
+            }else {
+                if(maxPrice > 0){
+                  maxPrice = maxPrice;
+                }else{
+                  maxPrice = 0;
+                }
+            }
         }
       });
 
       let minPrice = maxPrice;
       data.forEach(function(item){
           if(item.price != undefined){
-            if(item.price[userCurrency] != undefined){
-              minPrice = Math.min(minPrice, item.price[userCurrency]);
-            }else{
-              minPrice = Math.min(minPrice, 0);
-            }
+                if(item.price[userCurrency] != undefined){
+                  minPrice = Math.min(minPrice, item.price[userCurrency]);
+                }else{
+                  minPrice = Math.min(minPrice, 0);
+                }
           }else{
-            minPrice = 0;
+              if (isViewAsSet) {
+                  if(item.totalPrice['USD'] != undefined){
+                    minPrice = Math.min(minPrice, item.totalPrice['USD']);
+                  }else{
+                    minPrice = Math.min(minPrice, 0);
+                  }
+              }else{
+                  minPrice = 0;
+              }
           }
       });
       exportData = data;
@@ -205,8 +228,11 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       if(pageData.length != 0){
         data.forEach(function(item){
           // console.log('item.priceUSD-->',item.priceUSD);
-
-          sumPriceData.push(GetPriceCurrency(item,'price',userCurrency));
+          if (isViewAsSet) {
+              sumPriceData.push(item.totalPrice['USD']);
+          }else {
+              sumPriceData.push(GetPriceCurrency(item,'price',userCurrency));
+          }
         });
 
         sumPriceData.forEach(function(price) {
@@ -216,8 +242,11 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
 
         data.forEach(function(item){
           // console.log('item.priceUSD-->',item.priceUSD);
-
-          sumCostData.push(GetPriceCurrency(item,'updatedCost',userCurrency));
+          if (isViewAsSet) {
+              sumCostData.push(item.totalUpdatedCost['USD']);
+          }else {
+              sumCostData.push(GetPriceCurrency(item,'updatedCost',userCurrency));
+          }
         //   console.log('lot-last-->',item.lotNumbers.length);
         });
 

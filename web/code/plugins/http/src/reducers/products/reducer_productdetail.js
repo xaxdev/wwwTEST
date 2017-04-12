@@ -49,7 +49,7 @@ export default function(state = INITIAL_STATE,action){
 }
 
 const findSetIndex = (productList, referenceId) => {
-
+    // console.log('findSetIndex-->',referenceId);
     for(let i = 0; i < productList.length; i++)
     {
        if(productList[i].reference == referenceId){

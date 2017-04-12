@@ -16,7 +16,7 @@ import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
 import Modalalertmsg from '../../components/productdetail/modalalertmsg';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
-import ProductPrint from '../../components/productdetail/productPrint';
+import SetPrint from '../../components/productdetail/setPrint';
 import ProductObaAttributes from '../../components/productdetail/productObaAttributes';
 import ProductAccAttributes from '../../components/productdetail/productAccAttributes';
 import ProductSpaAttributes from '../../components/productdetail/productSppAttributes';
@@ -58,8 +58,8 @@ class productdetail extends Component {
   }
 
   componentWillMount(){
-      console.log('componentWillMount-->');
-      const setReferenceId = this.props.params.id;
+    //   console.log('componentWillMount-->');
+      let setReferenceId = this.props.params.id;
       const setReferencelist = JSON.parse(sessionStorage.navigation);
 
       this.setState({
@@ -171,11 +171,9 @@ class productdetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-      console.log('componentWillReceiveProps-->');
-      console.log('nextProps.params.id-->',nextProps.params.id);
-      console.log('this.props.params.id-->',this.props.params.id);
+    //   console.log('componentWillReceiveProps-->');
     if (nextProps.params.id !== this.props.params.id) {
-        const setReferenceId = this.props.params.id;
+        const setReferenceId = nextProps.params.id;
         const setReferencelist = JSON.parse(sessionStorage.navigation);
 
         this.setState({
@@ -381,7 +379,7 @@ class productdetail extends Component {
     renderSetreference(){
 
       const { setReferenceData } = this.props.productdetail;
-      console.log('setReferenceData-->',setReferenceData);
+    //   console.log('setReferenceData-->',setReferenceData);
       if(!!!setReferenceData){
         return(
           <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
@@ -625,7 +623,7 @@ class productdetail extends Component {
       const productindexplus = this.props.productindexplus;
       let pructdetailurl = '/setdetail/';
       const { fields: { pagego },handleSubmit} = this.props;
-      console.log('pagego-->',pagego.value);
+    //   console.log('pagego-->',pagego.value);
       if(!productlist){
         return(
           <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
@@ -642,7 +640,7 @@ class productdetail extends Component {
                       </div>
                       <div className="display-right">
                         <div className="float-l bar-detail-pre">
-                               <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].reference}`:''}}><span className="icon-back"></span></Link>
+                               <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].reference.replace('/','-')}`:''}}><span className="icon-back"></span></Link>
                         </div>
                         <div className="float-l bar-detail-text">
                             <div className="float-l productdetailpage text-center nopadding">
@@ -655,7 +653,7 @@ class productdetail extends Component {
                             </div>
                         </div>
                         <div className="float-l bar-detail-pre">
-                              <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${productlist[productIndex+1].reference}` : ''}}><span className="icon-next"></span></Link>
+                              <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${productlist[productIndex+1].reference.replace('/','-')}` : ''}}><span className="icon-next"></span></Link>
                         </div>
                       </div>
 
@@ -755,7 +753,7 @@ class productdetail extends Component {
 
    handleKeyPressNavigation(data){
      const { pagego} = data;
-     console.log('pagego-->',pagego);
+    //  console.log('pagego-->',pagego);
      const productid = this.props.productlist[parseInt(pagego)-1].reference;
        this.context.router.push(`/setdetail/${productid}`);
     //  if(event.key == 'Enter'){
@@ -892,25 +890,6 @@ class productdetail extends Component {
         gallery = [];
     }
 
-    // if(gemstones != undefined){
-    //     countImages = 0;
-    //     gemstones.map((item) => {
-    //         if (!!item.certificate) {
-    //             if (item.certificate.images != undefined) {
-    //                 isCertificate = true;
-    //                 countImages++;
-    //             }
-    //             if (countImages == 1) {
-    //                 imageCerDownload = `/original/${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
-    //                 imageName = `${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
-    //             }
-    //         }
-    //     })
-    //     // console.log(countImages);
-    //     // console.log(isCertificate);
-    //     // console.log(imageCerDownload);
-    // }
-
     return(
       <div id="page-wrapper">
 
@@ -947,7 +926,7 @@ class productdetail extends Component {
                     :
                     <a><div className=""></div></a>
                   }
-                  <a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>
+                  {/*<a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>*/}
                 </div>
                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
@@ -970,7 +949,7 @@ class productdetail extends Component {
                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterAttr()*/}</div>
                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterRawmatirialAttr()*/}</div>
                 <div id="dvContainer" className="hidden">
-                    <ProductPrint productdetail={this.props.productdetail}
+                    <SetPrint productdetail={this.props.productdetail}
                         lotNumbers={lotNumbers} pageSize={stonePageSize} activePage={stonActivePage}/>
                 </div>
               </div>

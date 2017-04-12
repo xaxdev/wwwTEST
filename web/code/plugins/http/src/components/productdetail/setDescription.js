@@ -8,13 +8,13 @@ const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata
 
 const Detail = (props) =>{
   if(logindata){
-      console.log('setdetailaction');
+    //   console.log('setdetailaction');
     const currency = logindata.currency;
-    let invoicedDate = convertDate(props.createdDate);
-    let actualCost = numberFormat(props.totalActualCost['USD']);
-    let updatedCost = numberFormat(props.totalUpdatedCost['USD']);
-    let price = numberFormat(props.totalPrice['USD']);
-    let markUp = convertMarkpercent(props.markup);
+    let invoicedDate = props.createdDate != undefined ? convertDate(props.createdDate): '-';
+    let actualCost = props.totalActualCost != undefined ? numberFormat(props.totalActualCost['USD']): '-';
+    let updatedCost = props.totalUpdatedCost != undefined ? numberFormat(props.totalUpdatedCost['USD']): '-';
+    let price = props.totalPrice != undefined ? numberFormat(props.totalPrice['USD']): '-';
+    let markUp = props.markup != undefined ? convertMarkpercent(props.markup): '-';
     const userLogin = JSON.parse(sessionStorage.logindata);
     let setReference = (props.setReference != undefined ) ? props.setReference : '-';
     setReference = (setReference != '' ) ? setReference : '-';
@@ -23,11 +23,11 @@ const Detail = (props) =>{
       <div className="line-h">
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Item Reference</div>
-          <div className="col-md-8 col-sm-8">{props.reference}</div>
+          <div className="col-md-8 col-sm-8">{props.reference != undefined ? props.reference: '-'}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Description</div>
-          <div className="col-md-8 col-sm-8 text-wrap">{props.description}</div>
+          <div className="col-md-8 col-sm-8 text-wrap">{props.description != undefined ? props.description: '-'}</div>
         </div>
         <div className={`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'All') ?
             '' : 'hidden'}`}>
@@ -55,11 +55,11 @@ const Detail = (props) =>{
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Company</div>
-          <div className="col-md-8 col-sm-8">{props.companyName}</div>
+          <div className="col-md-8 col-sm-8">{props.companyName != undefined ? props.companyName: '-'}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Warehouse</div>
-          <div className="col-md-8 col-sm-8">{props.warehouseName}</div>
+          <div className="col-md-8 col-sm-8">{props.warehouseName != undefined ? props.warehouseName: '-'}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
           <div className="col-md-4 col-sm-4 nopadding font-b">Date Created</div>

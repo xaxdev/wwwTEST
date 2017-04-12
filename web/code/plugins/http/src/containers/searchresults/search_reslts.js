@@ -587,7 +587,7 @@ class SearchResult extends Component {
     const token = sessionStorage.token;
     if(token){
         if (ViewAsSet) {
-            this.context.router.push(`/setdetail/${pageNumber}`);
+            this.context.router.push(`/setdetail/${pageNumber.replace('/','-')}`);
         }else{
             this.context.router.push(`/productdetail/${pageNumber}`);
         }

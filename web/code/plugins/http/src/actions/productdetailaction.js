@@ -18,7 +18,7 @@ export function getSetDetails(setReferenceId, setReferencelist){
           },
           method: 'GET'
         }),
-        productid:setReferenceId,
+        productid:setReferenceId.replace('-','/'),
         productlist:setReferencelist
   }
 }
