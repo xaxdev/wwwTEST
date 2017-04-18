@@ -597,7 +597,8 @@ class InventoryJewelry extends Component {
                   </OverlayTrigger>
                 </label>
                 <div className="col-sm-7">
-                  <input type="text" className="form-control" {...setReference}/>
+                  <input type="text" className="form-control"
+                    placeholder="Enter Multiple Set Ref separated with comma" {...setReference}/>
                 </div>
               </div>
               <div className="form-group">

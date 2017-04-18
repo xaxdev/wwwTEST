@@ -235,7 +235,8 @@ class InventoryHeader extends Component {
                       <div className="form-group">
                         <label className="col-sm-4 control-label">Item Reference</label>
                          <div className="col-sm-7">
-                            <input type="text" className="form-control" {...reference}/>
+                            <input type="text" className="form-control"
+                                placeholder="Enter Multiple Item Ref separated with comma" {...reference}/>
                          </div>
                       </div>
                       <div className="form-group">
