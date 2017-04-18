@@ -379,20 +379,17 @@ class InventoryJewelry extends Component {
                   <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
                     <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                     {/*<Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>*/}
-                  </div>
-                </div>
-            </div>
-            <div className="col-lg-6 form-horizontal">
-                <div className="form-group">
-                    <label className="col-sm-4 control-label tooltiop-span">
-                    </label>
                     <div className="col-sm-7">
                         <input type="checkbox" value="ViewAsSet" {...viewAsSet}
                             checked={props.ViewAsSet}
                             onChange={this.selectedViewAsSet}
-                        />View as Set
+                        /><span className="control-label text-vertical-top">View as Set</span>
                     </div>
+                  </div>
                 </div>
+            </div>
+            <div className="col-lg-6 form-horizontal">
+
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Jewelry Category
                   <OverlayTrigger placement="top" overlay={tooltipJewelryCategory}>

@@ -24,6 +24,7 @@ body{
 .text-wrap{word-wrap: break-word;}
 .text-overflowhidden{overflow: hidden; max-height: 70px; height: auto;}
 .text-vertical{vertical-align: bottom;}
+.text-vertical-top{vertical-align: text-top;}
 .text-del{padding-top: 6px; position: absolute;}
 h1{
   color: #fff !important;
@@ -67,7 +68,7 @@ input[type=checkbox], input[type=radio]{margin: 9px 5px 0 0px;}
 .btn.focus, .btn:focus, .btn:hover, .btn-radius:focus, .checkbox input:focus, .checkbox input:hover{outline: none;}
 .btn.focus, .btn:focus, .btn-radius:focus{color: #333;}
 .btn-searchresult {
-    border-radius: 15px;
+    border-radius: 5px;
     margin-left: 0px;
     padding: 4px 10px;
     color: #fff !important;
@@ -76,7 +77,7 @@ input[type=checkbox], input[type=radio]{margin: 9px 5px 0 0px;}
     font-family: 'open_sanslight';
 }
 .btn-searchresult:hover{
-	  border-radius: 15px;
+	  border-radius: 5px;
     margin-left: 0px;
     padding: 4px 10px;
     color: #ddbe6a !important;
@@ -85,7 +86,7 @@ input[type=checkbox], input[type=radio]{margin: 9px 5px 0 0px;}
 }
 .btn-inventories{
 	width:165px;
-	border-radius: 15px !important;
+	border-radius: 5px !important;
   padding: 10px 30px !important;
 }
 .styled-select select:focus{background: none; outline: none;}
@@ -494,8 +495,8 @@ select.form-searchresult option{
 .btn-advance{
 	font-size:15px;
 	color:#000;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
 	border:2px solid #ceaf5b;
@@ -510,8 +511,8 @@ select.form-searchresult option{
 .btn-activebtn{
 	font-size:15px;
 	color:#fbdc88;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
 	border-color:#000 !important;
@@ -632,7 +633,7 @@ select.form-searchresult option{
     border-top: 1px solid transparent;
 }
 .modal-footer .btn-radius {
-    border-radius: 20px;
+    border-radius: 5px;
     margin-left: 10px;
     padding: 5px 30px;
     color: #000;
@@ -866,7 +867,7 @@ select.form-searchresult option{
   width: 45px;
 }
 .btn-certificate-radius {
-    border-radius: 15px;
+    border-radius: 5px;
     margin: 5px 0px 5px 7px;
 }
 .searchresult-navi{float:right;}
@@ -879,7 +880,7 @@ select.form-searchresult option{
 .searchresult-navi	button	{
 		background-color: #ddbe6a;
     border-color: #ddbe6a;
-    border-radius:16px;
+    border-radius:5px;
     padding: 5px 20px;
     border:none;
     margin-left: 15px;
@@ -1329,7 +1330,7 @@ select.form-searchresult option{
 .cat-go	button {
     background-color: #383735;
     border-color: #383735;
-    border-radius: 16px;
+    border-radius: 5px;
     padding: 5px 20px;
     border: none;
     margin-left: 15px;
