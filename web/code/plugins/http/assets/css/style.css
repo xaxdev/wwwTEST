@@ -210,7 +210,6 @@ select:focus::-ms-value {background: none;}
 
 	.form-control {
 	  position: relative;
-	  font-size: 16px;
 	  height: auto;
 	  padding: 10px;
 		@include box-sizing(border-box);
@@ -232,6 +231,11 @@ select:focus::-ms-value {background: none;}
 	  border-top-right-radius: 0;
 	}
 }
+
+input[type="text"]::-webkit-input-placeholder {
+    font-size:12px;
+}
+
 .form-searchresult {
     display: block;
     width: 100%;
