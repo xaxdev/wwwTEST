@@ -1354,11 +1354,11 @@ class GridItemsView extends Component {
                                  (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                   ''}>
                     <div className="pull-right">
-                      <div className="grid-add" >
+                      <div className={`grid-add ${!ViewAsSet ? '' : 'hidden'}`}>
                         <span className="icon-add-28" name={item.id} id={index} value={item.id}
                           onClick={onAddedOneItemMyCatalog}></span>
                       </div>
-                     <div className="checkbox checkbox-warning">
+                     <div className={`checkbox checkbox-warning ${!ViewAsSet ? '' : 'hidden'}`}>
                       <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
                         name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
                         />

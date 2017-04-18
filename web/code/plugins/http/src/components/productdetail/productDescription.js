@@ -9,9 +9,9 @@ const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata
 const Detail = (props) =>{
   if(logindata){
     const currency = logindata.currency;
-    console.log('productdetailaction');
-    console.log('currency-->',currency);
-    console.log('props.actualCost-->',props.actualCost);
+    // console.log('productdetailaction');
+    // console.log('currency-->',currency);
+    // console.log('props.actualCost-->',props.actualCost);
     let invoicedDate = convertDate(props.itemCreatedDate);
     let actualCost = numberFormat(props.actualCost[currency]);
     let updatedCost = numberFormat(props.updatedCost[currency]);

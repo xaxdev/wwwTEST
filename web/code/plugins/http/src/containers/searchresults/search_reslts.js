@@ -1574,11 +1574,14 @@ class SearchResult extends Component {
                         <div className="col-sm-12 ">
                           <div className="col-md-2 col-sm-3 col-xs-12 nopadding">
                             {
-                                this.state.enabledMyCatalog ?
-                                <a><div className="icon-add margin-l10" disabled={true} enabled={false}
-                                onClick={ this.addMyCatalog }></div></a>:
-                                <a><div className="icon-add margin-l10" disabled={true}
-                                enabled={false}></div></a>
+                                this.state.enabledMyCatalog
+                                    ? !ViewAsSet
+                                        ? <a><div className="icon-add margin-l10" disabled={true} enabled={false}
+                                            onClick={ this.addMyCatalog }></div></a>
+                                        : <a><div className="icon-add margin-l10" disabled={true} enabled={false} >
+                                            </div></a>
+                                    : <a><div className="icon-add margin-l10" disabled={true} enabled={false}>
+                                </div></a>
                             }
                             <a><div className="icon-excel margin-l10" disabled={submitting}
                                   onClick={ this.exportExcel }></div></a>

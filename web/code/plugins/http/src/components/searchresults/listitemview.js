@@ -100,8 +100,12 @@ class ListItemsView extends Component {
 
           }else{
               // console.log('col-->',col);
-              imagesOriginal = (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif';
-              imagesThumbnail = (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif';
+              imagesOriginal = (col.gallery) != undefined
+                                ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif'
+                                 : '/images/blank.gif';
+              imagesThumbnail = (col.gallery) != undefined
+                                ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
+                                : '/images/blank.gif';
 
               switch (col.type) {
                 case 'JLY':

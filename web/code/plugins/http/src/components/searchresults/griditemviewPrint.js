@@ -519,9 +519,15 @@ class GridItemsView extends Component {
                                   item.name
                                   ;
             }else{
-                imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
-                itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate);
-                lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
+                imagesProduct = (item.gallery) != undefined
+                                    ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                    : '/images/blank.gif';
+                itemDate = (item.type) != undefined
+                            ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
+                            : '-';
+                lblDate = (item.type) != undefined
+                            ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
+                            : '-';
                 // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
 
                 price = GetPriceWithCurrency(item,'price');
