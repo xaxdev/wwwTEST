@@ -379,7 +379,7 @@ class productdetail extends Component {
     renderSetreference(){
 
       const { setReferenceData } = this.props.productdetail;
-    //   console.log('setReferenceData-->',setReferenceData);
+
       if(!!!setReferenceData){
         return(
           <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
@@ -392,7 +392,7 @@ class productdetail extends Component {
         return(
           <div>
             <h2>SET DETAILS</h2>
-            <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
+            {/*<div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
               <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
               <ReactImageFallback
                     id="imgset"
@@ -402,7 +402,7 @@ class productdetail extends Component {
                      width={120}
                      height={120}
                      className="img-responsive" />
-            </div>
+            </div>*/}
             <Setreference productset={setReferenceData}/>
           </div>
           );

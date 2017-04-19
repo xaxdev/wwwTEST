@@ -6,7 +6,6 @@ const pructdetailurl = '/productreletedetail/';
 const productSet =  (props) =>{
     return (
          <div>
-
          {props.productset.products.map(function(data, index){
             return (
               <div key={data.id} className="col-md-3 col-sm-3 bd-img nopadding">
