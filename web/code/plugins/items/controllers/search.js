@@ -67,9 +67,12 @@ module.exports = {
             return !pos || item != ary[pos - 1];
         })
         // console.log('setReferenceUniq-->', setReferenceUniq.length);
-        // console.log('setReferenceResult-->',setReferenceResult);
+        // console.log('setReferenceResult-->',setReferenceResult.length);
       const query = JSON.parse(
         `{
+            "timeout": "5s",
+            "from": 0,
+          "size": 10000,
           "query":{
                "constant_score": {
                  "filter": {
@@ -87,6 +90,8 @@ module.exports = {
             }
           }`);
 
+        //   console.log(JSON.stringify(query, null, 2));
+
           return elastic.search({
               index: 'mol',
               type: 'setitems',
@@ -103,7 +108,7 @@ module.exports = {
             const setReferenceData = setReferences.hits.hits.map((element) => element._source);
 
             // console.log('setReferenceData-->', setReferenceData.length);
-            // console.log('totalRecord-->',totalRecord);
+            // console.log('totalRecord-->',setReferences.hits.total);
             let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
             elastic.close();
