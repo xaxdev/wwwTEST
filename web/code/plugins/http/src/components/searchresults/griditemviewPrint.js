@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
+import ReactImageFallback from 'react-image-fallback';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import convertDate from '../../utils/convertDate';
-import ReactImageFallback from 'react-image-fallback';
+import numberFormat from '../../utils/convertNumberformat';
 
 // Used to cancel events.
 var preventDefault = e => e.preventDefault();
@@ -482,7 +483,7 @@ class GridItemsView extends Component {
   }
   render(){
     // console.log('this.props.items-->',this.props.items);
-    const { submitting } = this.props;
+    const { submitting, ViewAsSet } = this.props;
     var btnEvent = this.onClickGrid;
     var showDetails = this.onMouseOverGrid;
     var hideDetails = this.onMouseOutGrid;
@@ -493,22 +494,51 @@ class GridItemsView extends Component {
         <div>
           {this.props.items.map(function(item, index){
             // console.log('item-->',item);
-            let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
-            let itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate);
-            let lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
-            // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
+            let imagesProduct = '';
+            let itemDate = '';
+            let lblDate = '';
+            let price = '';
+            let actualCost = '';
+            let updatedCost = '';
+            let itemName = '';
+            let itemNameCat = '';
 
-            let price = GetPriceWithCurrency(item,'price');
-            let actualCost = GetPriceWithCurrency(item,'actualCost');
-            let updatedCost = GetPriceWithCurrency(item,'updatedCost');
+            if (ViewAsSet) {
+                imagesProduct = (item.image) != undefined ? item.image.original : '/images/blank.gif';
+                itemDate = convertDate(item.createdDate);
+                lblDate = 'Created Date:';
+                // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
+                price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
+                actualCost = numberFormat(item.totalActualCost['USD']) + ' ' + 'USD';
+                updatedCost = numberFormat(item.totalUpdatedCost['USD']) + ' ' + 'USD';
 
-            let itemName = (item.type != 'CER')?
-                              (item.description != undefined) ?
-                                  (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
-                              : '-' :
-                              item.name
-                              ;
-              let itemNameCat = (item.type != 'CER')? item.description: item.name;
+                itemName = (item.type != 'CER')?
+                                  (item.description != undefined) ?
+                                      (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                                  : '-' :
+                                  item.name
+                                  ;
+            }else{
+                imagesProduct = (item.gallery) != undefined
+                                    ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                    : '/images/blank.gif';
+                itemDate = (item.type) != undefined
+                            ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
+                            : '-';
+                lblDate = (item.type) != undefined
+                            ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
+                            : '-';
+                // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
+
+                price = GetPriceWithCurrency(item,'price');
+                actualCost = GetPriceWithCurrency(item,'actualCost');
+                updatedCost = GetPriceWithCurrency(item,'updatedCost');
+
+                itemName = (item.description != undefined)
+                            ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                            : '-'
+                itemNameCat = (item.type != 'CER')? item.description: item.name;
+            }
              return (
                 <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
                    <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
@@ -667,23 +697,23 @@ class GridItemsView extends Component {
                               <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
                               <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
                               <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                  '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
+                                  '' : 'hidden'}`}>{ViewAsSet? 'Total Actual Cost': 'Actual Cost'} ({userLogin.currency}): </span>
                               <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
                                   '' : 'hidden'}`}>{actualCost}</span>
                               <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                  '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
+                                  '' : 'hidden'}`}>{ViewAsSet? 'Total Update Cost': 'Update Cost'} ({userLogin.currency}): </span>
                               <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                   '' : 'hidden'}`}>{updatedCost}</span>
                               <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                   || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                  '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
+                                  '' : 'hidden'}`}>{ViewAsSet? 'Total Public Price': 'Public Price'} ({userLogin.currency}): </span>
                               <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                   || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                   '' : 'hidden'}`}>{price}</span>
                               <span className="width-f100 fc-ddbe6a font-b">Company : </span>
-                              <span className="width-f100">{item.companyName}</span>
+                              <span className="width-f100">{item.companyName != undefined ? item.companyName : item.company}</span>
                               <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
-                              <span className="width-f100">{item.warehouseName}</span>
+                              <span className="width-f100">{item.warehouseName != undefined ? item.warehouseName : item.warehouse}</span>
                               <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
                               <span className="width-f100">{itemDate}</span>
                           </div>

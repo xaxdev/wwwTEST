@@ -583,9 +583,14 @@ class SearchResult extends Component {
   }
   onClickGrid(pageNumber) {
     // console.log('onClickGrid==>',pageNumber);
+    const { ViewAsSet } = this.props;
     const token = sessionStorage.token;
     if(token){
-        this.context.router.push(`/productdetail/${pageNumber}`);
+        if (ViewAsSet) {
+            this.context.router.push(`/setdetail/${pageNumber.replace('/','-')}`);
+        }else{
+            this.context.router.push(`/productdetail/${pageNumber}`);
+        }
     }
   }
   checkedOneItemMyCatalog = (item) => {
@@ -1387,7 +1392,7 @@ class SearchResult extends Component {
   render() {
     const { fields: {
               oldCatalogName,newCatalogName,validateCatalogName
-            }, totalPages,showGridView,showListView,
+          }, totalPages,showGridView,showListView, ViewAsSet,
              currentPage,allItems,pageSize,
              items,totalPublicPrice,totalUpdatedCost,
              handleSubmit,
@@ -1569,11 +1574,14 @@ class SearchResult extends Component {
                         <div className="col-sm-12 ">
                           <div className="col-md-2 col-sm-3 col-xs-12 nopadding">
                             {
-                                this.state.enabledMyCatalog ?
-                                <a><div className="icon-add margin-l10" disabled={true} enabled={false}
-                                onClick={ this.addMyCatalog }></div></a>:
-                                <a><div className="icon-add margin-l10" disabled={true}
-                                enabled={false}></div></a>
+                                this.state.enabledMyCatalog
+                                    ? !ViewAsSet
+                                        ? <a><div className="icon-add margin-l10" disabled={true} enabled={false}
+                                            onClick={ this.addMyCatalog }></div></a>
+                                        : <a><div className="icon-add margin-l10" disabled={true} enabled={false} >
+                                            </div></a>
+                                    : <a><div className="icon-add margin-l10" disabled={true} enabled={false}>
+                                </div></a>
                             }
                             <a><div className="icon-excel margin-l10" disabled={submitting}
                                   onClick={ this.exportExcel }></div></a>
@@ -1611,17 +1619,21 @@ class SearchResult extends Component {
                           {/* Grid Product */}
                           <div className={`search-product  ${showGridView ? '' : 'hidden'}` }>
                             <GridItemsView  items={items} onClickGrid={this.onClickGrid}
-                            onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                            onAddedOneItemMyCatalog={this.addedOneItemMyCatalog} />
+                                onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                onAddedOneItemMyCatalog={this.addedOneItemMyCatalog}
+                                ViewAsSet={ViewAsSet} />
                           </div>
                           <div id="dvGridview" className="search-product hidden">
-                            <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid} />
+                            <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
+                                ViewAsSet={ViewAsSet}/>
                           </div>
                           <div className={`col-sm-12 search-product list-search ${showListView ? '' : 'hidden'}` }>
-                            <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}/>
+                            <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
+                                ViewAsSet={ViewAsSet} />
                           </div>
                           <div id="dvListview" className="col-sm-12 search-product hidden">
-                            <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}/>
+                            <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
+                                ViewAsSet={ViewAsSet} />
                           </div>
                           <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                             <center>
@@ -1674,7 +1686,8 @@ function mapStateToProps(state) {
     sortDirection: state.searchResult.SortDirection,
     showGridView: state.searchResult.ShowGridView,
     showListView: state.searchResult.ShowListView,
-    listCatalogName: state.myCatalog.ListCatalogName
+    listCatalogName: state.myCatalog.ListCatalogName,
+    ViewAsSet: state.searchResult.viewAsSet
    }
 }
 SearchResult.propTypes = {

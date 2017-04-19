@@ -1,5 +1,5 @@
 import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,FETCH_SETREFERENCE,ADD_CATALOG,ADD_CATALOG_SUCCESS,
-        GET_LOTNUMBER,GET_LOTNUMBERPAGE,GET_MOVEMENT} from '../../constants/productdetailconstants';
+        GET_LOTNUMBER,GET_LOTNUMBERPAGE,GET_MOVEMENT,FETCH_SETDETAILS} from '../../constants/productdetailconstants';
 import { GET_CATALOGNAME} from '../../constants/itemconstants';
 const INITIAL_STATE = {detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1,
                         setreference:'',ListCatalogName: [], lotNumbers: [],stonActivePage:1,totalpage:null
@@ -11,6 +11,17 @@ export default function(state = INITIAL_STATE,action){
     // console.log(action.type);
 
     switch (action.type) {
+        case FETCH_SETDETAILS:
+            // console.log('FETCH_SETDETAILS-->',action.data);
+            // return {...state,detail:action.data,index:action.productlist?findproductindex(action.productlist,action.productid):0
+            //   ,indexplus:action.productlist?findproductindexplus(action.productlist,action.productid):0
+            //   ,pagego:action.productlist?findproductindexplus(action.productlist,action.productid):0
+            //   ,productlist:action.productlist,lotNumbers:!!action.data.lotNumbers ? filterLotNumbers(action.data.lotNumbers) : []
+            //   ,totalpage:Math.ceil(!!action.data.lotNumbers ? filterLotNumbers(action.data.lotNumbers).length/20 : action.data.length/20)}
+            return {...state,detail:action.data, index:action.productlist?findSetIndex(action.productlist,action.productid):0
+              ,indexplus:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
+              ,pagego:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
+              ,productlist:action.productlist, totalpage: Math.ceil(action.data.length/20)}
       case GET_MOVEMENT:
         return {...state, activities: !!action.datas ? action.datas : []}
       case GET_LOTNUMBERPAGE:
@@ -37,6 +48,23 @@ export default function(state = INITIAL_STATE,action){
     }
 }
 
+const findSetIndex = (productList, referenceId) => {
+    // console.log('findSetIndex-->',referenceId);
+    for(let i = 0; i < productList.length; i++)
+    {
+       if(productList[i].reference == referenceId){
+         return i
+       }
+    }
+}
+const findSetIndexPlus = (productList, referenceId) => {
+    for(let i = 0; i < productList.length; i++)
+    {
+       if(productList[i].reference == referenceId){
+         return i+1
+       }
+    }
+}
 const findproductindex = (productlist, productid) => {
 
     for(let i = 0; i < productlist.length; i++)

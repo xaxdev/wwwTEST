@@ -6,7 +6,7 @@ import jQuery from 'jquery';
 import { reduxForm, reset } from 'redux-form';
 import moment from 'moment-timezone';
 import * as productdetailaction from '../../actions/productdetailaction';
-import ProductDescriptionBlock from '../../components/productdetail/productDescription';
+import ProductDescriptionBlock from '../../components/productdetail/setDescription';
 import ProductDescriptionmovementBlock from '../../components/productdetail/productDescmovement'
 import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptioncer';
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
@@ -16,7 +16,7 @@ import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
 import Modalalertmsg from '../../components/productdetail/modalalertmsg';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
-import ProductPrint from '../../components/productdetail/productPrint';
+import SetPrint from '../../components/productdetail/setPrint';
 import ProductObaAttributes from '../../components/productdetail/productObaAttributes';
 import ProductAccAttributes from '../../components/productdetail/productAccAttributes';
 import ProductSpaAttributes from '../../components/productdetail/productSppAttributes';
@@ -58,35 +58,19 @@ class productdetail extends Component {
   }
 
   componentWillMount(){
-    const productId = this.props.params.id;
-    const productlist = JSON.parse(sessionStorage.navigation);
-    this.setState({
-        productdetailLoading: true
-    });
+    //   console.log('componentWillMount-->');
+      let setReferenceId = this.props.params.id;
+      const setReferencelist = JSON.parse(sessionStorage.navigation);
 
-    this.props.getProductDetail(productId,productlist).then(()=>{
-    // console.log(this.props);
-      const  Detail  = this.props.productdetail;
-      const { lotNumbers } = this.props.productdetail;
-      const { stonePageSize } = this.props;
-      const params = {
-          datas: lotNumbers,
-          page: 1,
-          size: !!stonePageSize ? stonePageSize : 20
-      };
-      this.props.getLotNaumberPerPage(params);
-    //   console.log(Detail);
-      if(Detail.type != 'STO' || Detail.type != 'CER'){
-        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-        const currency = logindata.currency;
-        if(Detail.dominant){
-        this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
-        }
-      }
       this.setState({
-        productdetailLoading: false
+          productdetailLoading: true
       });
-    });
+
+      this.props.getSetDetails(setReferenceId,setReferencelist).then(()=>{
+          this.setState({
+              productdetailLoading: false
+          });
+      });
   }
   componentDidMount() {
 
@@ -124,7 +108,6 @@ class productdetail extends Component {
           }
         }
       });
-
 
       jQuery('#popupset').magnificPopup({
         key: 'my-popup',
@@ -188,102 +171,38 @@ class productdetail extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    //   console.log('componentWillReceiveProps-->');
     if (nextProps.params.id !== this.props.params.id) {
-      this.setState({
-        productdetailLoading: true
-      });
-      const productId = nextProps.params.id;
-      const productlist = this.props.productlist;
-      this.props.getProductDetail(productId,productlist).then(()=>{
-        const  Detail  = this.props.productdetail;
-        const { lotNumbers } = this.props.productdetail;
-        const { stonePageSize } = this.props;
-        const params = {
-            datas: lotNumbers,
-            page: 1,
-            size: !!stonePageSize ? stonePageSize : 20
-        };
-        this.props.getLotNaumberPerPage(params);
-        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-        const currency = logindata.currency;
-        if(Detail.dominant){
-        this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
-       }
+        const setReferenceId = nextProps.params.id;
+        const setReferencelist = JSON.parse(sessionStorage.navigation);
+
         this.setState({
-          productdetailLoading: false
+            productdetailLoading: true
         });
-      });
+
+        this.props.getSetDetails(setReferenceId,setReferencelist).then(()=>{
+            this.setState({
+                productdetailLoading: false
+            });
+        });
     }
   }
 
   renderDesc(){
 
     const  Detail  = this.props.productdetail;
-    let  Detailtitle  = '';
+    let  Detailtitle  = 'JEWELRY DETAILS';
     if(!Detail){
       return(
         <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
       );
     }
-    switch (Detail.type) {
-          case 'JLY':
-              Detailtitle='JEWELRY DETAILS';
-              return(
-                  <div>
-                    <h2>{Detailtitle}</h2>
-                    <ProductDescriptionBlock {...Detail} />
-                  </div>
-                );
-          case 'STO':
-
-              Detailtitle='STONE DETAILS';
-              return(
-                  <div>
-                    <h2>{Detailtitle}</h2>
-                    <ProductDescriptionBlock {...Detail} />
-                  </div>
-                );
-          case 'WAT':
-              Detailtitle='WATCH DETAILS';
-              return(
-                  <div>
-                    <h2>{Detailtitle}</h2>
-                    <ProductDescriptionBlock {...Detail} />
-                  </div>
-                );
-          case 'OBA':
-              Detailtitle='OBJECT OF ART DETAILS';
-              return(
-                  <div>
-                    <h2>{Detailtitle}</h2>
-                    <ProductDescriptionBlock {...Detail} />
-                  </div>
-                );
-          case 'ACC':
-              Detailtitle='ACCESSORY DETAILS';
-              return(
-                  <div>
-                    <h2>{Detailtitle}</h2>
-                    <ProductDescriptionBlock {...Detail} />
-                  </div>
-                );
-          case 'SPA':
-              Detailtitle='SPARE PARTS DETAILS';
-              return(
-                  <div>
-                    <h2>{Detailtitle}</h2>
-                    <ProductDescriptionBlock {...Detail} />
-                  </div>
-                );
-          case 'CER':
-              Detailtitle='CERTIFICATE DETAILS';
-              return(
-                  <div>
-                    <h2>{Detailtitle}</h2>
-                    <ProductDescriptioncerBlock {...Detail} />
-                  </div>
-                );
-        }
+    return(
+        <div>
+          <h2>{Detailtitle}</h2>
+          <ProductDescriptionBlock {...Detail} />
+        </div>
+      );
    }
 
    renderDescmovement(){
@@ -460,6 +379,7 @@ class productdetail extends Component {
     renderSetreference(){
 
       const { setReferenceData } = this.props.productdetail;
+    //   console.log('setReferenceData-->',setReferenceData);
       if(!!!setReferenceData){
         return(
           <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
@@ -473,7 +393,7 @@ class productdetail extends Component {
           <div>
             <h2>SET DETAILS</h2>
             <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-              <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice[currency] ? parseInt(setReferenceData.totalprice[currency]) : '-'} />
+              <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
               <ReactImageFallback
                     id="imgset"
                      src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
@@ -544,7 +464,6 @@ class productdetail extends Component {
       const Detail  = this.props.productdetail;
       const gemstoneAttr = Detail.gemstones;
       const subType = Detail.subType;
-
 
       if(Detail.type == 'STO' || Detail.type == 'CER'){
 
@@ -628,12 +547,7 @@ class productdetail extends Component {
 
     renderImagegallery(){
       const { gallery } = this.props.productdetail;
-    //   console.log(gallery);
-      // if(!gallery){
-      //   return(
-      //     <div><img src="/images/blank.gif" width="100%"/></div>
-      //   );
-      // }
+
       if(gallery !== undefined){
           if(gallery.length > 0) {
             return(
@@ -707,9 +621,9 @@ class productdetail extends Component {
       const productId = this.props.params.id;
       const productIndex = this.props.productindex;
       const productindexplus = this.props.productindexplus;
-      const { type} = this.props.productdetail;
-      let pructdetailurl = '/productdetail/';
+      let pructdetailurl = '/setdetail/';
       const { fields: { pagego },handleSubmit} = this.props;
+    //   console.log('pagego-->',pagego.value);
       if(!productlist){
         return(
           <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
@@ -726,7 +640,7 @@ class productdetail extends Component {
                       </div>
                       <div className="display-right">
                         <div className="float-l bar-detail-pre">
-                               <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].id}`:''}}><span className="icon-back"></span></Link>
+                               <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].reference.replace('/','-')}`:''}}><span className="icon-back"></span></Link>
                         </div>
                         <div className="float-l bar-detail-text">
                             <div className="float-l productdetailpage text-center nopadding">
@@ -739,7 +653,7 @@ class productdetail extends Component {
                             </div>
                         </div>
                         <div className="float-l bar-detail-pre">
-                              <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${productlist[productIndex+1].id}` : ''}}><span className="icon-next"></span></Link>
+                              <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${productlist[productIndex+1].reference.replace('/','-')}` : ''}}><span className="icon-next"></span></Link>
                         </div>
                       </div>
 
@@ -839,8 +753,9 @@ class productdetail extends Component {
 
    handleKeyPressNavigation(data){
      const { pagego} = data;
-     const productid = this.props.productlist[parseInt(pagego)-1].id;
-       this.context.router.push(`/productdetail/${productid}`);
+    //  console.log('pagego-->',pagego);
+     const productid = this.props.productlist[parseInt(pagego)-1].reference;
+       this.context.router.push(`/setdetail/${productid}`);
     //  if(event.key == 'Enter'){
     //    const productid = this.props.productlist[event.target.value-1].id;
     //    this.context.router.push(`/productdetail/${productid}`);
@@ -963,9 +878,9 @@ class productdetail extends Component {
     const productId = this.props.params.id;
     const productIndex = this.props.productindex;
     const productindexplus = this.props.productindexplus;
-    const { type, setReference, gemstones,activities } = this.props.productdetail;
-    let { gallery } = this.props.productdetail;
-    const { lotNumbers, stonePageSize, stonActivePage } = this.props;
+    let type = 'JLY';
+    let { gallery, setReference } = this.props.productdetail;
+    const { lotNumbers, stonePageSize, stonActivePage,viewAsSet } = this.props;
     let isCertificate = false;
     let countImages = 0;
     let imageCerDownload = '';
@@ -975,25 +890,6 @@ class productdetail extends Component {
         gallery = [];
     }
 
-    if(gemstones != undefined){
-        countImages = 0;
-        gemstones.map((item) => {
-            if (!!item.certificate) {
-                if (item.certificate.images != undefined) {
-                    isCertificate = true;
-                    countImages++;
-                }
-                if (countImages == 1) {
-                    imageCerDownload = `/original/${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
-                    imageName = `${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
-                }
-            }
-        })
-        // console.log(countImages);
-        // console.log(isCertificate);
-        // console.log(imageCerDownload);
-    }
-    let pructdetailurl = '/productdetail/';
     return(
       <div id="page-wrapper">
 
@@ -1013,55 +909,55 @@ class productdetail extends Component {
           <br/><br/><br/><br/><br/><br/>
         </div>
         <div className={`row ${this.state.showmovement ? 'hide' : ''}`}>
-        {this.renderAddMyCatalog()}
-        {this.renderAlertmsg()}
-          <div className="col-sm-12">
-              <div className="panel panel-default">
-                  <div className="panel-body padding-ft0">
+            {!viewAsSet ? this.renderAddMyCatalog():''}
+            {this.renderAlertmsg()}
+              <div className="col-sm-12">
+                  <div className="panel panel-default">
+                      <div className="panel-body padding-ft0">
 
-                <div className="col-md-12 col-sm-12 icon-detail">
-                  <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
-                  <a><div className="icon-print margin-l10" id="printproduct"></div></a>
-                  {this.zoomicon()}
-                  {isCertificate
-                    ? countImages != 1
-                      ? <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a>
-                      : <a href={imageCerDownload} download={imageName} ><div className="icon-certificate margin-l10"/></a>
-                    :
-                    <a><div className=""></div></a>
-                  }
-                  <a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>
-                </div>
-                <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
+                    <div className="col-md-12 col-sm-12 icon-detail">
+                      <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
+                      <a><div className="icon-print margin-l10" id="printproduct"></div></a>
+                      {this.zoomicon()}
+                      {isCertificate
+                        ? countImages != 1
+                          ? <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a>
+                          : <a href={imageCerDownload} download={imageName} ><div className="icon-certificate margin-l10"/></a>
+                        :
+                        <a><div className=""></div></a>
+                      }
+                      {/*<a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>*/}
+                    </div>
+                    <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
-                <div className="col-md-6 col-sm-12">
-                  <div className="col-md-12 col-sm-12">
-                    {this.renderDesc()}
+                    <div className="col-md-6 col-sm-12">
+                      <div className="col-md-12 col-sm-12">
+                        {this.renderDesc()}
+                      </div>
+                    <div className="col-md-12 col-sm-12 top-line-detail">
+                        {this.renderSetreference()}
+                    </div>
+                    <div className="col-md-12 col-sm-12 top-line-detail">
+                       {/*this.renderReleteproduct()*/}
+                    </div>
+                    </div>
+                    <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
+                      <div className={`${type != 'CER' ? 'line-border' : ''}`}></div>
+                    </div>
+                    <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{/*this.renderAttr()*/}</div>
+                    <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterDiamondsAttr()*/}</div>
+                    <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterAttr()*/}</div>
+                    <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterRawmatirialAttr()*/}</div>
+                    <div id="dvContainer" className="hidden">
+                        <SetPrint productdetail={this.props.productdetail}
+                            lotNumbers={lotNumbers} pageSize={stonePageSize} activePage={stonActivePage}/>
+                    </div>
                   </div>
-                <div className={`${type != 'JLY' || !setReference ? 'hidden' : 'col-md-12 col-sm-12 top-line-detail'}`}>
-                    {this.renderSetreference()}
-                </div>
-                <div className="col-md-12 col-sm-12 top-line-detail">
-                   {this.renderReleteproduct()}
-                </div>
-                </div>
-                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
-                  <div className={`${type != 'CER' ? 'line-border' : ''}`}></div>
-                </div>
-                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{this.renderAttr()}</div>
-                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterDiamondsAttr()}</div>
-                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterAttr()}</div>
-                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterRawmatirialAttr()}</div>
-                <div id="dvContainer" className="hidden">
-                    <ProductPrint productdetail={this.props.productdetail}
-                        lotNumbers={lotNumbers} pageSize={stonePageSize} activePage={stonActivePage}/>
+
                 </div>
               </div>
-
-            </div>
-          </div>
-        {this.renderAlertmsgCer()}
-      </div>
+            {this.renderAlertmsgCer()}
+        </div>
        <div className={`row ${!this.state.showmovement ? 'hide' : ''}`}>
          <div className="col-sm-12">
            <div className="panel panel-default">
@@ -1078,22 +974,7 @@ class productdetail extends Component {
                   </div>
                </div>
                <div className="col-md-8 col-sm-12">
-                 {this.renderDescmovement()}
-               </div>
-
-               <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">
-                 <h2>CUSTOMER VIEWINGS</h2>
-                 { !!activities && !!activities.goc &&
-                 <Goclist list={activities.goc}/>
-                 }
-               </div>
-
-               <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">
-                 <h2>INTERCOMPANY TRANSFERS</h2>
-                 { !!activities && !!activities.movement &&
-                   <Movementlist list={activities.movement}/>
-                 }
-
+                 {/*this.renderDescmovement()*/}
                </div>
 
              </div>
@@ -1126,7 +1007,8 @@ function mapStateToProps(state) {
     stonActivePage: state.productdetail.stonActivePage,
     totalpage: state.productdetail.totalpage,
     stonePageSize: state.productdetail.stonePageSize,
-    filterSearch: state.searchResult.paramsSearch
+    filterSearch: state.searchResult.paramsSearch,
+    viewAsSet: state.searchResult.viewAsSet
    }
 }
 

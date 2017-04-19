@@ -55,8 +55,6 @@ module.exports = {
            }
         }
 
-
-
         const responseData = {
           totalprice:productResult[0].totalPrice,
           setimage:productResult[0].image.original,

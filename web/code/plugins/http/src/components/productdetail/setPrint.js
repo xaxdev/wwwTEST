@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { reduxForm, reset } from 'redux-form';
 import { Button,FormControl,Pagination } from 'react-bootstrap';
+import ReactImageFallback from 'react-image-fallback';
 import * as productdetailaction from '../../actions/productdetailaction';
-import ProductDescriptionBlock from '../../components/productdetail/productDescriptionprint';
+import ProductDescriptionBlock from '../../components/productdetail/setDescription';
 import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptionprintcer';
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributesprint';
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributesprint';
@@ -16,6 +17,7 @@ import ProductGemstoneAttributes from '../../components/productdetail/productGem
 import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelryprint';
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributesprint';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributesprint';
+import Setreference from '../../components/productdetail/productset';
 import '../../../public/css/productdetail.css';
 
 import checkInarrayObject from '../../utils/checkInarrayObject';
@@ -101,6 +103,15 @@ class productprint extends Component {
                         <ProductDescriptioncerBlock {...Detail} />
                       </div>
                     );
+            default:
+                Detailtitle='JEWELRY DETAILS';
+                return(
+                    <div>
+                      <h2>{Detailtitle}</h2>
+                      <ProductDescriptionBlock {...Detail} />
+                    </div>
+                  );
+
             }
    }
 
@@ -280,7 +291,44 @@ class productprint extends Component {
           </div>
         );
 
-     }
+ }
+
+ renderSetreference(){
+
+   const { setReferenceData } = this.props.productdetail;
+ //   console.log('setReferenceData-->',setReferenceData);
+
+    if (setReferenceData != undefined) {
+        if(setReferenceData.products.length > 0){
+          const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+          const currency = logindata.currency;
+          return(
+            <div>
+              <h2>SET DETAILS</h2>
+              <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
+                <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
+                <ReactImageFallback
+                      id="imgset"
+                       src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                       fallbackImage="/images/blank.gif"
+                       initialImage="/images/blank.gif"
+                       width={120}
+                       height={120}
+                       className="img-responsive" />
+              </div>
+              <Setreference productset={setReferenceData}/>
+            </div>
+            );
+        } else {
+          return(
+              <div>
+
+              </div>
+            );
+        }
+    }
+ }
+
 
   render(){
     var styles ={
@@ -343,16 +391,16 @@ class productprint extends Component {
               {this.renderDesc()}
             </div>
             <div style={styles.colmd12}>
-                {this.renderAttr()}
+                {this.renderSetreference()}
             </div>
           </div>
         </div>
         <div style={styles.colmd12}>
-            {this.renderFooterDiamondsAttr()}
+            {/*this.renderFooterDiamondsAttr()*/}
         </div>
-        <div style={styles.colmd12}>{this.renderFooterAttr()}</div>
+        <div style={styles.colmd12}>{/*this.renderFooterAttr()*/}</div>
         <div style={styles.colmd12}>
-            {this.renderFooterRawmatirialAttr()}
+            {/*this.renderFooterRawmatirialAttr()*/}
         </div>
       </div>
     );

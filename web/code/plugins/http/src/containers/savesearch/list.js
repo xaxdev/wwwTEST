@@ -116,15 +116,13 @@ module.exports = reduxForm({
             'gemstone_stoneCostTo','gemstone_totalCaratWeightFrom','gemstone_totalCaratWeightTo','gemstone_quantityFrom',
             'gemstone_quantityTo','gemstone_certificatedNumber','gemstone_cerDateFrom','gemstone_cerDateTo','gemstone_polish',
             'gemstone_symmetry','gemstone_treatment','gemstone_fluorescence','gemstone_origin','gemstone_certificateAgency',
-            'watchProductHierarchy','watchCategory','collection','brand','mustHave','metalType',
-            'metalColour','dominantStone','limitedEdition','limitedEditionNumber','serialNumber',
-            'movement','totalCostFrom','totalCostTo','totalUpdatedCostFrom','totalUpdatedCostTo',
+            'watchProductHierarchy','watchCategory','collection','brand','mustHave','metalType','dialColor',
+            'metalColour','dominantStone','limitedEdition','limitedEditionNumber','serialNumber','dialIndex',
+            'movement','totalCostFrom','totalCostTo','totalUpdatedCostFrom','totalUpdatedCostTo','complication',
             'publicPriceFrom','publicPriceTo','markupFrom','markupFrom','markupTo','grossWeightFrom',
-            'grossWeightTo','proDateFrom','proDateTo','caseDimensionFrom','caseDimensionTo',
-            'preciousMetalWeightFrom','preciousMetalWeightTo','dialIndex','dialColor','dialMetal',
-            'buckleType','strapType','strapColor','complication',
-            'accessoryProductHierarchy','accessoryType',
-            'obaProductHierarchy','obaDimension',
-            'sparePartProductHierarchy','sparePartType','searchName','validateSearchName'
+            'grossWeightTo','proDateFrom','proDateTo','caseDimensionFrom','caseDimensionTo','dialMetal',
+            'preciousMetalWeightFrom','preciousMetalWeightTo','buckleType','strapType','strapColor',
+            'accessoryProductHierarchy','accessoryType','obaProductHierarchy','obaDimension','searchName',
+            'sparePartProductHierarchy','sparePartType','validateSearchName','viewAsSet'
           ]
 },mapStateToProps,mapDispatchToProps)(SaveSearch);

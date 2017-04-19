@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
+import ReactImageFallback from 'react-image-fallback';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import convertDate from '../../utils/convertDate';
-import ReactImageFallback from 'react-image-fallback';
+import numberFormat from '../../utils/convertNumberformat';
 
 function showDiv() {
    document.getElementById('searchresult-border').style.display = 'block';
@@ -1231,34 +1232,63 @@ class GridItemsView extends Component {
 
   render(){
     // console.log('this.props.items-->',this.props.items);
-    const { submitting, onCheckedOneItemMyCatalog, onAddedOneItemMyCatalog } = this.props;
+    const { submitting, onCheckedOneItemMyCatalog, onAddedOneItemMyCatalog, ViewAsSet } = this.props;
     var btnEvent = this.onClickGrid;
     var btnQuickView = this.onClickQuickView;
     var showDetails = this.onMouseOverGrid;
     var hideDetails = this.onMouseOutGrid;
-    // console.log('this.state.isOpen-->',this.state.isOpen);
+    // console.log('ViewAsSet-->',ViewAsSet);
     var that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
     return (
       <div>
         {this.props.items.map(function(item, index){
           // console.log('item-->',item);
-          let imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
-          let itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate);
-          let lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
-          // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
+            let imagesProduct = '';
+            let itemDate = '';
+            let lblDate = '';
+            let price = '';
+            let actualCost = '';
+            let updatedCost = '';
+            let itemName = '';
+            let itemNameCat = '';
 
-          let price = GetPriceWithCurrency(item,'price');
-          let actualCost = GetPriceWithCurrency(item,'actualCost');
-          let updatedCost = GetPriceWithCurrency(item,'updatedCost');
+            if (ViewAsSet) {
+                imagesProduct = (item.image) != undefined ? item.image.original : '/images/blank.gif';
+                itemDate = convertDate(item.createdDate);
+                lblDate = 'Created Date:';
+                // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
+                price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
+                actualCost = numberFormat(item.totalActualCost['USD']) + ' ' + 'USD';
+                updatedCost = numberFormat(item.totalUpdatedCost['USD']) + ' ' + 'USD';
 
-          let itemName = (item.type != 'CER')?
-                            (item.description != undefined) ?
-                                (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
-                            : '-' :
-                            item.name
-                            ;
-            let itemNameCat = (item.type != 'CER')? item.description: item.name;
+                itemName = (item.type != 'CER')?
+                                  (item.description != undefined) ?
+                                      (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                                  : '-' :
+                                  item.name
+                                  ;
+            }else{
+                imagesProduct = (item.gallery) != undefined
+                                    ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                    : '/images/blank.gif';
+                itemDate = (item.type) != undefined
+                            ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
+                            : '-';
+                lblDate = (item.type) != undefined
+                            ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
+                            : '-';
+                // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
+
+                price = GetPriceWithCurrency(item,'price');
+                actualCost = GetPriceWithCurrency(item,'actualCost');
+                updatedCost = GetPriceWithCurrency(item,'updatedCost');
+
+                itemName = (item.description != undefined)
+                            ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                            : '-'
+                itemNameCat = (item.type != 'CER')? item.description: item.name;
+            }
            return (
               <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
@@ -1324,17 +1354,17 @@ class GridItemsView extends Component {
                                  (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                   ''}>
                     <div className="pull-right">
-                      <div className="grid-add" >
+                      <div className={`grid-add ${!ViewAsSet ? '' : 'hidden'}`}>
                         <span className="icon-add-28" name={item.id} id={index} value={item.id}
                           onClick={onAddedOneItemMyCatalog}></span>
                       </div>
-                     <div className="checkbox checkbox-warning">
+                     <div className={`checkbox checkbox-warning ${!ViewAsSet ? '' : 'hidden'}`}>
                       <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
                         name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
                         />
                           <label className="checkbox1"></label>
                       </div>
-                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive name={item.id} id={index} onClick={showDetails}/></span>
+                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive name={ViewAsSet ? item.reference : item.id} id={index} onClick={showDetails}/></span>
                     </div>
 
                     <div className="thumbnaillgrid">
@@ -1344,21 +1374,28 @@ class GridItemsView extends Component {
                              fallbackImage="/images/blank.gif"
                              initialImage="/images/blank.gif"
                              name={item.id}
-                             id={item.id}
+                             id={ViewAsSet ? item.reference : item.id}
                              onClick={btnEvent}
                              />
                     </div>
 
                     <p className="font-b fc-000">
-                      <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
-                      <span name={item.id} id={item.id} onClick={btnEvent}>{item.sku}</span>
+                      <span name={ViewAsSet ? item.reference : item.id}
+                            id={ViewAsSet ? item.reference : item.id}
+                            onClick={btnEvent}>{item.reference}</span><br/>
+                      <span name={ViewAsSet ? item.reference : item.id}
+                            id={ViewAsSet ? item.reference : item.id}
+                            onClick={btnEvent}>{item.sku}</span>
                     </p>
-                    <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{itemName}</p>
+                    <p className="product-detail-h"
+                        name={ViewAsSet ? item.reference : item.id}
+                        id={ViewAsSet ? item.reference : item.id}
+                        onClick={btnEvent}>{itemName}</p>
                     <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{price}</span>
                     <span className="line"></span>
                  </div>
                     <div>
-                     <div key={item.id}  id={index} style={{
+                     <div key={ViewAsSet ? item.reference : item.id}  id={index} style={{
                             display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
                                     (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
                                     (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:
@@ -1423,29 +1460,29 @@ class GridItemsView extends Component {
                                     '',
                             }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31
                                 ||index==35||index==39||index==43||index==47||index==51||index==55||index==59)?'over-searchresult-left':'over-searchresult' }>
-                            <img className="searchresult-close"  src="/images/icon-close.png" responsive name={item.id} id={index} onClick={hideDetails}/>
+                            <img className="searchresult-close"  src="/images/icon-close.png" responsive name={ViewAsSet ? item.reference : item.id} id={index} onClick={hideDetails}/>
                             <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                             <span className="width-f100">{item.reference}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
                             <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
+                                '' : 'hidden'}`}>{ViewAsSet? 'Total Actual Cost': 'Actual Cost'} ({userLogin.currency}): </span>
                             <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
                                 '' : 'hidden'}`}>{actualCost}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
+                                '' : 'hidden'}`}>{ViewAsSet? 'Total Update Cost': 'Update Cost'} ({userLogin.currency}): </span>
                             <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{updatedCost}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
+                                '' : 'hidden'}`}>{ViewAsSet? 'Total Public Price': 'Public Price'} ({userLogin.currency}): </span>
                             <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{price}</span>
                             <span className="width-f100 fc-ddbe6a font-b">Company : </span>
-                            <span className="width-f100">{item.companyName}</span>
+                            <span className="width-f100">{item.companyName != undefined ? item.companyName : item.company}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
-                            <span className="width-f100">{item.warehouseName}</span>
+                            <span className="width-f100">{item.warehouseName != undefined ? item.warehouseName : item.warehouse}</span>
                             <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
                             <span className="width-f100">{itemDate}</span>
                         </div>

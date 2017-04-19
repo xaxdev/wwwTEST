@@ -1,6 +1,6 @@
 import React,{PropTypes} from 'react';
 import { Link } from 'react-router';
-import ReactImageFallback from "react-image-fallback";
+import ReactImageFallback from 'react-image-fallback';
 const pructdetailurl = '/productreletedetail/';
 
 const productSet =  (props) =>{
@@ -13,11 +13,11 @@ const productSet =  (props) =>{
                 <Link to={{pathname: `${pructdetailurl}${data.id}`}}>
                 <ReactImageFallback
                        src={data.image? data.image.original :'/images/blank.gif' }
-                       fallbackImage='/images/blank.gif'
-                       initialImage='/images/blank.gif'
+                       fallbackImage="/images/blank.gif"
+                       initialImage="/images/blank.gif"
                        width={120}
                        height={120}
-                       className='img-responsive' /></Link>
+                       className="img-responsive" /></Link>
               </div>
            )
            })}

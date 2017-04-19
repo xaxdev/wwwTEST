@@ -4,7 +4,7 @@ export default function ResetFormMain(that){
                     lotQuantityTo,totalCaratWeightFrom,totalCaratWeightTo,totalCostFrom,totalCostTo,totalUpdatedCostFrom,
                     totalUpdatedCostTo,publicPriceFrom,publicPriceTo,markupFrom,markupTo,
                     jewelryProductHierarchy,jewelryCategory,collection,grossWeightFrom,grossWeightTo,setReference,
-                    brand,mustHave,ringSize,dominantStone,metalType,metalColour,
+                    brand,mustHave,ringSize,dominantStone,metalType,metalColour,viewAsSet,
                     cerDateFrom,cerDateTo,polish,symmetry,treatment,fluorescence,origin,
                     certificateAgency,stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,
                     watchProductHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,proDateFrom,
@@ -21,7 +21,8 @@ export default function ResetFormMain(that){
 
   // resetForm();
   that.props.inventoryActions.resetForm();
-  // console.log('fields->',header.location.value)
+  // console.log('that.props->',that.props);
+  // console.log('viewAsSet->',viewAsSet);
   reference.value = '';
   description.value = '';
   venderReference.value = '';
@@ -68,6 +69,7 @@ export default function ResetFormMain(that){
   brand.value = '';
   mustHave.value = '';
   ringSize.value = '';
+  viewAsSet.value = false;
   totalCostFrom.value = '';
   totalCostTo.value = '';
   totalUpdatedCostFrom.value = '';

@@ -154,11 +154,11 @@ module.exports = {
         })
         .catch(function(err) {
             elastic.close();
-            return reply(Boom.badImplementation(error));
+            return reply(Boom.badImplementation(err));
         });
     } catch (err) {
         elastic.close();
-        return reply(Boom.badImplementation(error));
+        return reply(Boom.badImplementation(err));
     }
   }
 };

@@ -4,6 +4,8 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/jewelry.json';
+import * as xls from '../../utils/xlsSetReference';
+let X = XLSX;
 
 
 class InventoryJewelry extends Component {
@@ -20,6 +22,7 @@ class InventoryJewelry extends Component {
     this.handleDominantStoneSelectChange = this.handleDominantStoneSelectChange.bind(this);
     this.handleMetalTypeSelectChange = this.handleMetalTypeSelectChange.bind(this);
     this.handleMetalColourSelectChange = this.handleMetalColourSelectChange.bind(this);
+    this.readFile = this.readFile.bind(this);
 
     this.state = {
       treeViewData:null
@@ -27,6 +30,17 @@ class InventoryJewelry extends Component {
 
   }
   componentDidMount = _ =>{
+      jQuery('#fileSetReference').hide();
+      jQuery('#btn-browsefileSetReference').click(function(){
+          jQuery('#fileSetReference').click();
+            });
+      jQuery('#fileSetReference').change(function() {
+
+          let filename =jQuery('#fileSetReference')[0].files[0];
+          //alert(filename.name);
+          jQuery('#fileNameSetReference').text(filename.name);
+      });
+
       (async () => {
         //   console.log('componentDidMount');
           const { props } = this.props;
@@ -223,6 +237,49 @@ class InventoryJewelry extends Component {
     metalColour.onChange(MetalColourSelectValue);
     props.inventoryActions.setDataMetalColour(MetalColourSelectValue);
   }
+  selectedViewAsSet = e =>{
+      const { props } = this.props;
+      let { fields: { viewAsSet }, searchResult } = props;
+
+      let paramsSearch = (searchResult.paramsSearch != null)?
+                            searchResult.paramsSearch:
+                            null;
+      if(paramsSearch != null)
+        paramsSearch.viewAsSet = e.target.checked;
+
+      viewAsSet.onChange(e.target.checked);
+      props.inventoryActions.setViewAsSet(e.target.checked);
+    //   console.log(e.target.checked);
+  }
+  readFile(e){
+    e.preventDefault();
+    let { fields:{setReference }} = this.props.props;
+    let X = XLSX;
+
+    let that = this;
+    let rABS = false;
+    let use_worker = false;
+
+    let files = e.target.files;
+    // console.log('files-->',files);
+    let f = files[0];
+    {
+  		let reader = new FileReader();
+  		let name = f.name;
+  		reader.onload = function(e) {
+  			// if(typeof console !== 'undefined') console.log('onload', new Date(), rABS, use_worker);
+  			let data = e.target.result;
+
+  				let arr = xls.fixdata(data);
+  				let wb = X.read(btoa(arr), {type: 'base64'});
+  				let items = xls.process_wb(wb);
+          setReference.onChange(items);
+          // console.log(JSON.stringify(items, 2, 2));
+  		}
+        if(rABS) reader.readAsBinaryString(f);
+        else reader.readAsArrayBuffer(f);
+	};
+  }
   render() {
     const { props } = this.props;
 
@@ -231,7 +288,7 @@ class InventoryJewelry extends Component {
           {
             collection, totalCostFrom, totalCostTo,totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo,
             markupFrom, markupTo, grossWeightFrom, grossWeightTo, setReference, brand, mustHave, ringSize, dominantStone,
-            metalType, metalColour
+            metalType, metalColour,viewAsSet
           }
         } = props;
 
@@ -244,6 +301,9 @@ class InventoryJewelry extends Component {
     let dataDropDowntMetalColour = [];
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+
+    const host = HOSTNAME || 'localhost';
+    const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
 
     InitModifyData(props);
 
@@ -302,7 +362,7 @@ class InventoryJewelry extends Component {
     let hierarchyData = [];
 
     hierarchyData.push(TreeData);
-    // console.log('TreeData-->',TreeData);
+    // console.log('ViewAsSet-->',props.ViewAsSet);
     // console.log('hierarchyData-->',mapObj);
 
     return(
@@ -310,19 +370,26 @@ class InventoryJewelry extends Component {
         <div className="panel-body">
           <div className="row margin-ft">
             <div className="col-lg-12 form-horizontal">
-            <div className="form-group">
-              <label className="col-lg-2 col-md-4 col-sm-4 control-label tooltiop-span">Product Hierarchy
-                <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
-                  <img src="/images/alphanumeric.png" />
-                </OverlayTrigger>
-              </label>
-              <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
-                <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
-                {/*<Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>*/}
-              </div>
-            </div>
+                <div className="form-group">
+                  <label className="col-lg-2 col-md-4 col-sm-4 control-label tooltiop-span">Product Hierarchy
+                    <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
+                      <img src="/images/alphanumeric.png" />
+                    </OverlayTrigger>
+                  </label>
+                  <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
+                    <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                    {/*<Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>*/}
+                    <div className="col-sm-7">
+                        <input type="checkbox" value="ViewAsSet" {...viewAsSet}
+                            checked={props.ViewAsSet}
+                            onChange={this.selectedViewAsSet}
+                        /><span className="control-label text-vertical-top">View as Set</span>
+                    </div>
+                  </div>
+                </div>
             </div>
             <div className="col-lg-6 form-horizontal">
+
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Jewelry Category
                   <OverlayTrigger placement="top" overlay={tooltipJewelryCategory}>
@@ -401,7 +468,6 @@ class InventoryJewelry extends Component {
                 </div>
               </div>*/}
             </div>
-
             <div className="col-lg-6 form-horizontal">
               {/*<div className={`form-group ${(userLogin.permission.price == 'All') ?
                   '' : 'hidden'}`}>
@@ -528,7 +594,18 @@ class InventoryJewelry extends Component {
                   </OverlayTrigger>
                 </label>
                 <div className="col-sm-7">
-                  <input type="text" className="form-control" {...setReference}/>
+                  <input type="text" className="form-control"
+                    placeholder="Enter Multiple Set Ref separated with comma" {...setReference}/>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="col-sm-4 control-label">Attachment</label>
+                <div className="col-sm-7">
+
+                  <input id="fileSetReference" type="file" field={setReference} onChange={this.readFile}/>
+                  <span id="fileNameSetReference"></span>
+                  <input type="button" id="btn-browsefileSetReference" value=" "/>
+                  <div className="font-nor control-label">The system able to import only excel file. Click here to download a format file <a href={ROOT_URL+'/upload_file/Mol_upload_setreference.xlsx'} >Mol upload setreferences.xlsx</a></div>
                 </div>
               </div>
             </div>
