@@ -504,7 +504,11 @@ class GridItemsView extends Component {
             let itemNameCat = '';
 
             if (ViewAsSet) {
-                imagesProduct = (item.image) != undefined ? item.image[0].original : '/images/blank.gif';
+                imagesProduct = (item.image) != undefined
+                                ? item.image.length != 0
+                                    ?item.image[0].original
+                                    : '/images/blank.gif'
+                                : '/images/blank.gif';
                 itemDate = convertDate(item.createdDate);
                 lblDate = 'Created Date:';
                 // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();

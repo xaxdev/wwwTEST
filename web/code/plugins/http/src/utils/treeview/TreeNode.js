@@ -38,7 +38,7 @@ var TreeNode = React.createClass({
     }
 	// console.log('isChecked-->',isChecked);
 	if (node.checked != undefined) {
-		console.log('node-->',node.checked);
+		// console.log('node-->',node.checked);
 		containerClass = '';
 	}
 
