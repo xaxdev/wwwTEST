@@ -880,7 +880,7 @@ class productdetail extends Component {
     const productindexplus = this.props.productindexplus;
     let type = 'JLY';
     let { gallery, setReference } = this.props.productdetail;
-    const { lotNumbers, stonePageSize, stonActivePage } = this.props;
+    const { lotNumbers, stonePageSize, stonActivePage,viewAsSet } = this.props;
     let isCertificate = false;
     let countImages = 0;
     let imageCerDownload = '';
@@ -909,55 +909,55 @@ class productdetail extends Component {
           <br/><br/><br/><br/><br/><br/>
         </div>
         <div className={`row ${this.state.showmovement ? 'hide' : ''}`}>
-        {this.renderAddMyCatalog()}
-        {this.renderAlertmsg()}
-          <div className="col-sm-12">
-              <div className="panel panel-default">
-                  <div className="panel-body padding-ft0">
+            {!viewAsSet ? this.renderAddMyCatalog():''}
+            {this.renderAlertmsg()}
+              <div className="col-sm-12">
+                  <div className="panel panel-default">
+                      <div className="panel-body padding-ft0">
 
-                <div className="col-md-12 col-sm-12 icon-detail">
-                  <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
-                  <a><div className="icon-print margin-l10" id="printproduct"></div></a>
-                  {this.zoomicon()}
-                  {isCertificate
-                    ? countImages != 1
-                      ? <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a>
-                      : <a href={imageCerDownload} download={imageName} ><div className="icon-certificate margin-l10"/></a>
-                    :
-                    <a><div className=""></div></a>
-                  }
-                  {/*<a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>*/}
-                </div>
-                <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
+                    <div className="col-md-12 col-sm-12 icon-detail">
+                      <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
+                      <a><div className="icon-print margin-l10" id="printproduct"></div></a>
+                      {this.zoomicon()}
+                      {isCertificate
+                        ? countImages != 1
+                          ? <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a>
+                          : <a href={imageCerDownload} download={imageName} ><div className="icon-certificate margin-l10"/></a>
+                        :
+                        <a><div className=""></div></a>
+                      }
+                      {/*<a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>*/}
+                    </div>
+                    <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
 
-                <div className="col-md-6 col-sm-12">
-                  <div className="col-md-12 col-sm-12">
-                    {this.renderDesc()}
+                    <div className="col-md-6 col-sm-12">
+                      <div className="col-md-12 col-sm-12">
+                        {this.renderDesc()}
+                      </div>
+                    <div className="col-md-12 col-sm-12 top-line-detail">
+                        {this.renderSetreference()}
+                    </div>
+                    <div className="col-md-12 col-sm-12 top-line-detail">
+                       {/*this.renderReleteproduct()*/}
+                    </div>
+                    </div>
+                    <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
+                      <div className={`${type != 'CER' ? 'line-border' : ''}`}></div>
+                    </div>
+                    <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{/*this.renderAttr()*/}</div>
+                    <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterDiamondsAttr()*/}</div>
+                    <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterAttr()*/}</div>
+                    <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterRawmatirialAttr()*/}</div>
+                    <div id="dvContainer" className="hidden">
+                        <SetPrint productdetail={this.props.productdetail}
+                            lotNumbers={lotNumbers} pageSize={stonePageSize} activePage={stonActivePage}/>
+                    </div>
                   </div>
-                <div className="col-md-12 col-sm-12 top-line-detail">
-                    {this.renderSetreference()}
-                </div>
-                <div className="col-md-12 col-sm-12 top-line-detail">
-                   {/*this.renderReleteproduct()*/}
-                </div>
-                </div>
-                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
-                  <div className={`${type != 'CER' ? 'line-border' : ''}`}></div>
-                </div>
-                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{/*this.renderAttr()*/}</div>
-                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterDiamondsAttr()*/}</div>
-                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterAttr()*/}</div>
-                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterRawmatirialAttr()*/}</div>
-                <div id="dvContainer" className="hidden">
-                    <SetPrint productdetail={this.props.productdetail}
-                        lotNumbers={lotNumbers} pageSize={stonePageSize} activePage={stonActivePage}/>
+
                 </div>
               </div>
-
-            </div>
-          </div>
-        {this.renderAlertmsgCer()}
-      </div>
+            {this.renderAlertmsgCer()}
+        </div>
        <div className={`row ${!this.state.showmovement ? 'hide' : ''}`}>
          <div className="col-sm-12">
            <div className="panel panel-default">

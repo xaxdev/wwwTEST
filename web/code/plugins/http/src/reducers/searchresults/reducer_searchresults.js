@@ -78,7 +78,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null,
                 ListCatalogName: [],SubmitAction: null, saveSearchStatus: false, msg: '',saveSearchStatusCode: 100,
                 isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null,
-                idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null
+                idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null,viewAsSet: false
               };
     //   case WRITE_HTML :
     //     // console.log('SET_POLISH -->',action);
@@ -251,7 +251,8 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[], SparePartTypeValue:[], SearchAction:'New',
                 exporttems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null,
                 GemCertificateDateTo:null, StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null,
-                ProductionDateTo:null, PageSize:16, ShowGridView: true, showListView: false, ListCatalogName: []
+                ProductionDateTo:null, PageSize:16, ShowGridView: true, showListView: false, ListCatalogName: [],
+                viewAsSet: false
               }
       case SET_PARAMS:
         // console.log('action.params-->',action.params);

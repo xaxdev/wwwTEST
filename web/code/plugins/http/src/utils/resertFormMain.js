@@ -21,7 +21,8 @@ export default function ResetFormMain(that){
 
   // resetForm();
   that.props.inventoryActions.resetForm();
-  // console.log('fields->',header.location.value)
+  // console.log('that.props->',that.props);
+  // console.log('viewAsSet->',viewAsSet);
   reference.value = '';
   description.value = '';
   venderReference.value = '';

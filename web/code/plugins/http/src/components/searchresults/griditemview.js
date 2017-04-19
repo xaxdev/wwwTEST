@@ -1354,11 +1354,11 @@ class GridItemsView extends Component {
                                  (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                   ''}>
                     <div className="pull-right">
-                      <div className="grid-add" >
+                      <div className={`grid-add ${!ViewAsSet ? '' : 'hidden'}`}>
                         <span className="icon-add-28" name={item.id} id={index} value={item.id}
                           onClick={onAddedOneItemMyCatalog}></span>
                       </div>
-                     <div className="checkbox checkbox-warning">
+                     <div className={`checkbox checkbox-warning ${!ViewAsSet ? '' : 'hidden'}`}>
                       <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
                         name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
                         />
@@ -1466,16 +1466,16 @@ class GridItemsView extends Component {
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
                             <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
+                                '' : 'hidden'}`}>{ViewAsSet? 'Total Actual Cost': 'Actual Cost'} ({userLogin.currency}): </span>
                             <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
                                 '' : 'hidden'}`}>{actualCost}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
+                                '' : 'hidden'}`}>{ViewAsSet? 'Total Update Cost': 'Update Cost'} ({userLogin.currency}): </span>
                             <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{updatedCost}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
+                                '' : 'hidden'}`}>{ViewAsSet? 'Total Public Price': 'Public Price'} ({userLogin.currency}): </span>
                             <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{price}</span>

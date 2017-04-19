@@ -519,9 +519,15 @@ class GridItemsView extends Component {
                                   item.name
                                   ;
             }else{
-                imagesProduct = (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif';
-                itemDate = (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate);
-                lblDate = (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:';
+                imagesProduct = (item.gallery) != undefined
+                                    ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                    : '/images/blank.gif';
+                itemDate = (item.type) != undefined
+                            ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
+                            : '-';
+                lblDate = (item.type) != undefined
+                            ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
+                            : '-';
                 // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
 
                 price = GetPriceWithCurrency(item,'price');
@@ -691,16 +697,16 @@ class GridItemsView extends Component {
                               <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
                               <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
                               <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                  '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
+                                  '' : 'hidden'}`}>{ViewAsSet? 'Total Actual Cost': 'Actual Cost'} ({userLogin.currency}): </span>
                               <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
                                   '' : 'hidden'}`}>{actualCost}</span>
                               <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                  '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
+                                  '' : 'hidden'}`}>{ViewAsSet? 'Total Update Cost': 'Update Cost'} ({userLogin.currency}): </span>
                               <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                   '' : 'hidden'}`}>{updatedCost}</span>
                               <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                   || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                  '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
+                                  '' : 'hidden'}`}>{ViewAsSet? 'Total Public Price': 'Public Price'} ({userLogin.currency}): </span>
                               <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                   || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                   '' : 'hidden'}`}>{price}</span>
