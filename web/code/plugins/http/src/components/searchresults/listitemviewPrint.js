@@ -79,8 +79,16 @@ class ListItemsView extends Component {
           let jewelsWeight = 0;
           let itemName = '';
           if (ViewAsSet) {
-              imagesOriginal = (col.image) != undefined ? col.image.original : '/images/blank.gif';
-              imagesThumbnail = (col.image) != undefined ? col.image.thumbnail : '/images/blank.gif';
+              imagesOriginal = (col.image) != undefined
+                                ? col.image.length != 0
+                                    ? col.image[0].original
+                                    : '/images/blank.gif'
+                                : '/images/blank.gif';
+              imagesThumbnail = (col.image) != undefined
+                                ?  col.image.length != 0
+                                    ? col.image[0].thumbnail
+                                    : '/images/blank.gif'
+                                : '/images/blank.gif';
 
               if(col.totalPrice != undefined){
                   col.priceUSD = (col.totalPrice['USD'] != undefined)
