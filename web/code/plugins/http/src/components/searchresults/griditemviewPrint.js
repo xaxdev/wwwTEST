@@ -697,16 +697,16 @@ class GridItemsView extends Component {
                               <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
                               <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
                               <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                  '' : 'hidden'}`}>Actual Cost ({userLogin.currency}): </span>
+                                  '' : 'hidden'}`}>{ViewAsSet? 'Total Actual Cost': 'Actual Cost'} ({userLogin.currency}): </span>
                               <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
                                   '' : 'hidden'}`}>{actualCost}</span>
                               <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                  '' : 'hidden'}`}>Update Cost ({userLogin.currency}): </span>
+                                  '' : 'hidden'}`}>{ViewAsSet? 'Total Update Cost': 'Update Cost'} ({userLogin.currency}): </span>
                               <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                   '' : 'hidden'}`}>{updatedCost}</span>
                               <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                   || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                  '' : 'hidden'}`}>Public Price ({userLogin.currency}): </span>
+                                  '' : 'hidden'}`}>{ViewAsSet? 'Total Public Price': 'Public Price'} ({userLogin.currency}): </span>
                               <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                   || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                   '' : 'hidden'}`}>{price}</span>
