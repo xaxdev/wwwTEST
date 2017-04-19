@@ -45,6 +45,8 @@ const getitemSets = async (index, exchangeRates) => {
                 //     });
                 // }
 
+                itemSets.push(itemSet)
+
                 // in each set reference
                 if (!!record.setImageName && !!record.setImageType) {
                     // console.log(record.setImageName);
@@ -120,7 +122,6 @@ const getitemSets = async (index, exchangeRates) => {
 
                 current.items.push(item);
 
-                itemSets.push(itemSet)
             }else{
                 // in each set reference
                 if (!!record.setImageName && !!record.setImageType) {
