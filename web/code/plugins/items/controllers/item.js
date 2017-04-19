@@ -129,10 +129,13 @@ module.exports = {
                 }
                 const responseSetData = {
                   totalprice:setReferenceData.totalPrice,
-                  setimage: (!!setReferenceData.image)? setReferenceData.image.original:null,
+                  setimage: (!!setReferenceData.image)
+                            ? setReferenceData.image.length != 0
+                                ?setReferenceData.image[0].original
+                                : null
+                            : null,
                   products:productdata
                 }
-
                 productResult.setReferenceData = responseSetData;
             }
 
