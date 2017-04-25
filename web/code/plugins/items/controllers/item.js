@@ -35,64 +35,81 @@ module.exports = {
             });
 
     const getSetreference = getProductDetail.then((response) => {
-      const [productResult] = response.hits.hits.map((element) => element._source);
-      if (!productResult) {
-          return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
-      }
-      const query = JSON.parse(
-        `{
-          "query":{
-               "constant_score": {
-                 "filter": {
-                   "bool": {
-                     "must": [
-                       {
-                         "match": {
-                           "reference": "${productResult.setReference}"
+        try {
+            const [productResult] = response.hits.hits.map((element) => element._source);
+            if (!productResult) {
+                return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
+            }
+            const query = JSON.parse(
+              `{
+                "query":{
+                     "constant_score": {
+                       "filter": {
+                         "bool": {
+                           "must": [
+                             {
+                               "match": {
+                                 "reference": "${productResult.setReference}"
+                               }
+                             }
+                           ]
                          }
                        }
-                     ]
-                   }
-                 }
-               }
-            }
-          }`);
+                     }
+                  }
+                }`);
 
-      return elastic.search({
-              index: 'mol',
-              type: 'setitems',
-              body: query
-            });
+            return elastic.search({
+                    index: 'mol',
+                    type: 'setitems',
+                    body: query
+                  });
+        } catch (err) {
+            console.log(err);
+            return reply(Boom.badImplementation(err));
+        }
+
     });
 
     const getMovements = getProductDetail.then((response) => {
-        const [productResult] = response.hits.hits.map((element) => element._source);
-        if (!productResult) {
-            return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
-        }
-        const query =  GetMovement(productResult.reference,productResult.sku);
-        // console.log(JSON.stringify(query, null, 2));
+        try {
+            const [productResult] = response.hits.hits.map((element) => element._source);
+            if (!productResult) {
+                return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
+            }
+            const query =  GetMovement(productResult.reference,productResult.sku);
+            // console.log(JSON.stringify(query, null, 2));
 
-        return elastic.search({
-                index: 'mol',
-                type: 'activities',
-                body: query
-              });
+            return elastic.search({
+                    index: 'mol',
+                    type: 'activities',
+                    body: query
+                  });
+        } catch (err) {
+            console.log(err);
+            return reply(Boom.badImplementation(err));
+        }
     });
 
     const getGOCs = getProductDetail.then((response) => {
-        const [productResult] = response.hits.hits.map((element) => element._source);
-        if (!productResult) {
-            return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
-        }
-        const query =  GetGOC(productResult.reference,productResult.sku);
-        // console.log(JSON.stringify(query, null, 2));
+        try {
+            const [productResult] = response.hits.hits.map((element) => element._source);
+            if (!productResult) {
+                return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
+            }
+            const query =  GetGOC(productResult.reference,productResult.sku);
+            // console.log(JSON.stringify(query, null, 2));
 
-        return elastic.search({
-                index: 'mol',
-                type: 'activities',
-                body: query
-              });
+            return elastic.search({
+                    index: 'mol',
+                    type: 'activities',
+                    body: query
+                  });
+        } catch (err) {
+            console.log(err);
+            return reply(Boom.badImplementation(err));
+        }
+
     });
 
     try {
@@ -138,7 +155,6 @@ module.exports = {
                 }
                 productResult.setReferenceData = responseSetData;
             }
-
             let movement = movements.hits.hits.map((element) => element._source);
             // console.log(movement);
             movement = movement.filter((item) => {
@@ -157,6 +173,7 @@ module.exports = {
         })
         .catch(function(err) {
             elastic.close();
+            console.log(err);
             return reply(Boom.badImplementation(err));
         });
     } catch (err) {
