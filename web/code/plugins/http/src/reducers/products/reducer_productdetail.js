@@ -30,6 +30,7 @@ export default function(state = INITIAL_STATE,action){
       case GET_LOTNUMBER:
         return {...state,detail: action.data,totalpage: !!action.data.lotNumbers ? Math.ceil(filterLotNumbers(action.data.lotNumbers).length/action.size): 0}
       case FETCH_PRODUCTDETAIL:
+        // console.log(action);
         return {...state,detail:action.data,index:action.productlist?findproductindex(action.productlist,action.productid):0
           ,indexplus:action.productlist?findproductindexplus(action.productlist,action.productid):0
           ,pagego:action.productlist?findproductindexplus(action.productlist,action.productid):0
