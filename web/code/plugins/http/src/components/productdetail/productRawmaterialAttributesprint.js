@@ -3,6 +3,7 @@ import { Table } from 'react-bootstrap';
 import { Link } from 'react-router';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
 import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
+import numberFormat3 from '../../utils/convertNumberformatwithcomma3digit';
 import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
 const allowGemstone = ["Loose Diamond","Stone","Diamond"];
@@ -80,7 +81,7 @@ const Gemstoneattr =  (props) =>{
                  return (
                    <tr key={index}>
                      <td title="Stone Type" style={styles.textcenter}>{convertBlanktodash(data.stoneTypeName)}</td>
-                     <td title="Total Carat Weight" style={styles.textcenter}>{numberFormat(data.carat)}</td>
+                     <td title="Total Carat Weight" style={styles.textcenter}>{numberFormat3(data.carat)}</td>
                    </tr>
                 )
               }

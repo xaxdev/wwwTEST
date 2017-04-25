@@ -382,8 +382,8 @@ class InventoryJewelry extends Component {
                     <div className="col-sm-7">
                         <input type="checkbox" value="ViewAsSet" {...viewAsSet}
                             checked={props.ViewAsSet}
-                            onChange={this.selectedViewAsSet}
-                        /><span className="control-label text-vertical-top">View as Set</span>
+                            onChange={this.selectedViewAsSet} />
+                            <span className="control-label text-vertical-top">View as Set</span>
                     </div>
                   </div>
                 </div>

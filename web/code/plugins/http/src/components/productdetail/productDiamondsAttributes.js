@@ -7,6 +7,7 @@ import checkInarray from '../../utils/checkInarray';
 const pructdetailurl = '/productreletedetail/';
 const allowGemstone = ['Loose Diamond','Diamond'];
 import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
+import numberFormat3 from '../../utils/convertNumberformatwithcomma3digit';
 import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 const Gemstoneattr =  (props) =>{
 
@@ -73,7 +74,7 @@ const Gemstoneattr =  (props) =>{
                      <td title="Cut" className="text-center">{convertBlanktodash(data.cutName)}</td>
                      <td title="Color" className="text-center">{convertBlanktodash(data.colorName)}</td>
                      <td title="QTY Of Stones" className="text-center">{numberFormatComma(data.quantity)}</td>
-                     <td title="Total Carat Weight" className="text-center">{numberFormat(data.carat)}</td>
+                     <td title="Total Carat Weight" className="text-center">{numberFormat3(data.carat)}</td>
                      <td title="Fluorescence" className="text-center">{convertBlanktodash(data.origin)}</td>
                      <td title="Fluorescence" className="text-center">{convertBlanktodash(data.fluorescence)}</td>
                      <td title="Certificate agency" className="text-center">{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
