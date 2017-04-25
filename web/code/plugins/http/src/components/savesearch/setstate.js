@@ -7,6 +7,9 @@ const setstate = async (props,criterias) => {
         // console.log('criteria-->',criteria);
         // console.log('valueKeys-->',valueKeys);
         switch (keyscat[0]) {
+            case 'viewAsSet':
+                props.inventoryActions.setViewAsSet(valueKeys);
+                break;
             case 'sparePartProductHierarchy':
                 props.inventoryActions.setSaveSearchHierarchy(valueKeys);
                 break;
