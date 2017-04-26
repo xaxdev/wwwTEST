@@ -42,7 +42,7 @@ export default {
                 let fCatalog = await db.collection('CatalogName').findOne({ "_id" : new ObjectID(catalogId) })
                 if (_.isNull(fCatalog)) return reply(Boom.badRequest("Invalid item."))
 
-                let fCondition = { "catalogId" : new ObjectID(catalogId) }
+                let fCondition = { "catalogId": new ObjectID(catalogId), "id": { $ne: null }}
                 if (!_.isNull(itemRef)) {
                     fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }}, fCondition)
                 }
