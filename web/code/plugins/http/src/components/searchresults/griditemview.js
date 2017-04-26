@@ -1254,7 +1254,7 @@ class GridItemsView extends Component {
             let itemNameCat = '';
 
             if (ViewAsSet) {
-                imagesProduct = (item.image) != undefined 
+                imagesProduct = (item.image) != undefined
                                 ? item.image.length != 0
                                     ?item.image[0].original
                                     : '/images/blank.gif'
@@ -1358,17 +1358,21 @@ class GridItemsView extends Component {
                                  (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                   ''}>
                     <div className="pull-right">
-                      <div className={`grid-add ${!ViewAsSet ? '' : 'hidden'}`}>
-                        <span className="icon-add-28" name={item.id} id={index} value={item.id}
+                      <div className="grid-add">
+                        <span className="icon-add-28"
+                            name={ViewAsSet ? item.reference : item.id} id={index}
+                            value={ViewAsSet ? item.reference : item.id}
                           onClick={onAddedOneItemMyCatalog}></span>
                       </div>
-                     <div className={`checkbox checkbox-warning ${!ViewAsSet ? '' : 'hidden'}`}>
+                     <div className="checkbox checkbox-warning">
                       <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                        name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
+                        name={ViewAsSet ? item.reference : item.id} id={index}
+                        value={ViewAsSet ? item.reference : item.id} onChange={onCheckedOneItemMyCatalog}
                         />
                           <label className="checkbox1"></label>
                       </div>
-                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive name={ViewAsSet ? item.reference : item.id} id={index} onClick={showDetails}/></span>
+                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive
+                        name={ViewAsSet ? item.reference : item.id} id={index} onClick={showDetails}/></span>
                     </div>
 
                     <div className="thumbnaillgrid">
