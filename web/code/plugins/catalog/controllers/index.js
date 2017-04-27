@@ -8,5 +8,10 @@ import items from './items'
 import exportpdf from './exportpdf'
 import saveshared from './saveshared'
 import getnameswithshared from './getnameswithshared'
+import savesetitem from './savesetitem'
+import getnamessetitem from './getnamessetitem'
+import getnameswithsharedsetitem from './getnameswithsharedsetitem'
+import getdatasetitem from './getdatasetitem'
 
-export { getnames, getdata, save, remove, removeitem, rename, items, exportpdf, saveshared, getnameswithshared }
+export { getnames, getdata, save, remove, removeitem, rename, items, exportpdf, saveshared, getnameswithshared
+        ,savesetitem, getnamessetitem, getnameswithsharedsetitem, getdatasetitem }

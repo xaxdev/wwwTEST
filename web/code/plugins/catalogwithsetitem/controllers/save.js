@@ -19,6 +19,7 @@ export default {
                 const ObjectID = request.mongo.ObjectID
                 const catalogPayload = request.payload
                 const catalogPayloadId = request.payload.id
+                console.log('save catalogPayload-->',catalogPayload);
 
                 const helper = request.helper
                 const items = request.payload.items

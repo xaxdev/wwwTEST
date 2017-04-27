@@ -1358,6 +1358,8 @@ class SearchResult extends Component {
   }
   handleSubmitCatalog = (e)=>{
       e.preventDefault();
+      const { ViewAsSet } = this.props;
+
       let fileName = jQuery('input[type="checkbox"]');
       fileName.removeAttr('checked');
       this.setState({isOpenAddMyCatalog: false});
@@ -1371,23 +1373,38 @@ class SearchResult extends Component {
            oldCatalogTitle = listCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
         }
 
-        const catalogdata = {
-           id:!!oldCatalogName.value ? oldCatalogName.value:null,
-           catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
-           items:listMyCatalog
+        const catalogdata = {...catalogdata,
+            id:!!oldCatalogName.value ? oldCatalogName.value:null,
+            catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
+            items:listMyCatalog
         }
-        // console.log('catalogdata-->',catalogdata);
-        this.props.addCatalog(catalogdata).then( () =>{
-        //    console.log('Added!');
-            newCatalogName.value = '';
-            oldCatalogName.value = '';
-            newCatalogName.onChange('');
-            oldCatalogName.onChange('');
 
-           this.setState({isOpenAddMyCatalogmsg: true});
-           this.setState({enabledMyCatalog: false});
-           this.props.getCatalogName();
-        })
+        console.log('catalogdata-->',catalogdata);
+        if (ViewAsSet) {
+            this.props.addCatalogSetItem(catalogdata).then( () =>{
+                //    console.log('Added!');
+                newCatalogName.value = '';
+                oldCatalogName.value = '';
+                newCatalogName.onChange('');
+                oldCatalogName.onChange('');
+
+                this.setState({isOpenAddMyCatalogmsg: true});
+                this.setState({enabledMyCatalog: false});
+                this.props.getCatalogName();
+            })
+        } else {
+            this.props.addCatalog(catalogdata).then( () =>{
+                //    console.log('Added!');
+                newCatalogName.value = '';
+                oldCatalogName.value = '';
+                newCatalogName.onChange('');
+                oldCatalogName.onChange('');
+
+                this.setState({isOpenAddMyCatalogmsg: true});
+                this.setState({enabledMyCatalog: false});
+                this.props.getCatalogName();
+            })
+        }
 
   }
   renderAddMyCatalog = _=> {

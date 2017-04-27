@@ -315,11 +315,11 @@
 			}
         },
 		{
-			"plugin": "./plugins/catalog2",
+			"plugin": "./plugins/catalogwithsetitem",
 			"options": {
 				"select": "api",
 				"routes": {
-					"prefix": "/api/catalog2"
+					"prefix": "/api/catalogwithsetitem"
 				}
 			}
         },
