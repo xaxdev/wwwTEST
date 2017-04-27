@@ -1294,7 +1294,9 @@ class GridItemsView extends Component {
                 itemNameCat = (item.type != 'CER')? item.description: item.name;
             }
            return (
-              <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
+              <div key={ViewAsSet ? item.reference : item.id}
+                    name={ViewAsSet ? item.reference : item.id}
+                    id={index} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
                                  (index==1)? `searchresult-prodcut ${that.state.isOpen1? 'searchresult-border': ''}`:
                                  (index==2)? `searchresult-prodcut ${that.state.isOpen2? 'searchresult-border': ''}`:
@@ -1381,7 +1383,7 @@ class GridItemsView extends Component {
                              src={imagesProduct }
                              fallbackImage="/images/blank.gif"
                              initialImage="/images/blank.gif"
-                             name={item.id}
+                             name={ViewAsSet ? item.reference : item.id}
                              id={ViewAsSet ? item.reference : item.id}
                              onClick={btnEvent}
                              />
