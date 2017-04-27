@@ -42,7 +42,7 @@ export default {
                 let fCatalog = await db.collection('CatalogName').findOne({ "_id" : new ObjectID(catalogId) })
                 if (_.isNull(fCatalog)) return reply(Boom.badRequest("Invalid item."))
 
-                let fCondition = { "catalogId" : new ObjectID(catalogId) }
+                let fCondition = { "catalogId": new ObjectID(catalogId) }
                 if (!_.isNull(itemRef)) {
                     fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }}, fCondition)
                 }
@@ -52,10 +52,24 @@ export default {
                 .sort(sorting).limit(size).skip((page - 1) * size).toArray()
 
                 if (!!items.length) {
-                    const es = await client.search(request.helper.item.parameters(items))
-                    const inventory = await request.helper.item.inventory(items, es)
+                    let response = []
+                    const useItems = items.filter((item) => { return item.id !== null })
+                    const useSetItems = items.filter((item) => { return item.id === null })
                     const user = await userHelper.getUserById(request, request.auth.credentials.id)
-                    const response = await request.helper.item.authorization(user, inventory)
+
+                    if (useItems.length) {
+                        const es = await client.search(request.helper.item.parameters(useItems))
+                        const inventory = await request.helper.item.inventory(useItems, es)
+                        const responseItem = await request.helper.item.authorization(user, inventory)
+                        response.push(responseItem)
+                    }
+
+                    if (useSetItems.length) {
+                        const esSetItems = await client.search(request.helper.setitem.parameters(useSetItems))
+                        const inventorySetItems = await request.helper.setitem.inventory(useSetItems, esSetItems)
+                        const responseSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
+                        response.push(responseSetItem)
+                    }
 
                     return reply({
                         "_id": new ObjectID(fCatalog._id),

@@ -17,7 +17,7 @@ const parameters = setitems => {
         }
     }
 
-    parameters.body.query.constant_score.query.bool.should.push(setitems.map(setitem => ({ "match": { "id": String(setitem.reference) } })))
+    parameters.body.query.constant_score.query.bool.should.push(setitems.map(setitem => ({ "match": { "reference": String(setitem.reference) } })))
 
     return parameters
 }
@@ -26,7 +26,7 @@ const source = x => x._source
 
 const inventory = stock => item => {
     if (!!stock.hits && !!stock.hits.hits) {
-        const onHand = stock.hits.hits.map(source).find(i => Number(i.id) === Number(item.id))
+        const onHand = stock.hits.hits.map(source).find(i => i.reference === item.reference)
         return { ...item, ...onHand, availability: !!onHand }
     } else {
         return { ...item, availability: false }
@@ -139,7 +139,8 @@ export default {
     parameters,
     inventory: (data, stock) => data.map(inventory(stock)),
     authorization: (user, data) => {
-        return compose(authorize(user), permission(user))(data)
+        // return compose(authorize(user), permission(user))(data)
+        return data;
     },
     productGroupPermission
 }
