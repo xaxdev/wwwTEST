@@ -53,6 +53,7 @@ export default {
                             }
                         ])
                 const [catalog] = await cursor.toArray()
+                catalog.items = catalog.items !== undefined && catalog.items.length > 0 ? catalog.items.filter((item) => { return item.id !== null }) : []
 
                 if (!!catalog) {
                     if (catalog.items.length === 0) {
@@ -67,7 +68,7 @@ export default {
                     const price = all.reduce((previous, current) => previous + current.price, 0)
                     const updatedCost = all.reduce((previous, current) => previous + current.updatedCost, 0)
 
-                    const data = await request.mongo.db.collection('CatalogItem').find({ catalogId }, { "_id": 0, "catalogId": 0, "lastModified": 0 })
+                    const data = await request.mongo.db.collection('CatalogItem').find({ catalogId, "id": { $ne: null } }, { "_id": 0, "catalogId": 0, "lastModified": 0 })
                                             .sort(sorting).limit(size).skip((page - 1) * size).toArray()
                     inventory = await request.helper.item.inventory(data, es)
                     const items = await request.helper.item.authorization(user, inventory)

@@ -71,4 +71,9 @@ export default [
         path: '/datasetitem/{id}/{reference?}',
         config: controllers.getdatasetitem
     },
+    {
+        method: 'GET',
+        path: '/setitem/{id}',
+        config: controllers.itemssetitem
+    }
 ]

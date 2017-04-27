@@ -12,6 +12,7 @@ import savesetitem from './savesetitem'
 import getnamessetitem from './getnamessetitem'
 import getnameswithsharedsetitem from './getnameswithsharedsetitem'
 import getdatasetitem from './getdatasetitem'
+import itemssetitem from './itemssetitem'
 
 export { getnames, getdata, save, remove, removeitem, rename, items, exportpdf, saveshared, getnameswithshared
-        ,savesetitem, getnamessetitem, getnameswithsharedsetitem, getdatasetitem }
+        ,savesetitem, getnamessetitem, getnameswithsharedsetitem, getdatasetitem, itemssetitem }
