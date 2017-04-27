@@ -64,7 +64,8 @@ class MyCatalog extends Component {
 
         let catalogName = '';
         const { fields: { catalog } } = this.props;
-        this.props.getCatalogName().then((value) => {
+        this.props.getCatalogNameSetItem().then((value) => {
+        // this.props.getCatalogName().then((value) => {
             if (value) {
                 // console.log('componentWillMount this.props-->',this.props.catalogId);
                 let catalogId = '';
@@ -330,7 +331,8 @@ class MyCatalog extends Component {
         if (catalogId != null) {
             this.props.setNewCatalogName(params).then((value) => {
                 if(value){
-                    this.props.getCatalogName();
+                    // this.props.getCatalogName();
+                    this.props.getCatalogNameSetItem();
                 }
             });
         }
@@ -359,8 +361,14 @@ class MyCatalog extends Component {
     onClickGrid(pageNumber){
       // console.log('onClickGrid==>',pageNumber);
       const token = sessionStorage.token;
+      const getIdReference = pageNumber.split('=');
+      console.log('getIdReference-->',getIdReference);
       if(token){
-          this.context.router.push(`/productmycatalog/${pageNumber}`);
+          if (getIdReference[0] == 'id') {
+              this.context.router.push(`/productmycatalog/${getIdReference[1]}`);
+          } else {
+              this.context.router.push(`/setdetailmycatalog/${getIdReference[1]}`);
+          }
       }
     }
 
@@ -489,7 +497,8 @@ class MyCatalog extends Component {
         if (catalogId != null) {
             this.props.deleteCatalog(params).then((valueDelete) => {
                 if (valueDelete) {
-                    this.props.getCatalogName().then((valueGetCatalog) => {
+                    this.props.getCatalogNameSetItem().then((valueGetCatalog) => {
+                    // this.props.getCatalogName().then((valueGetCatalog) => {
                         if (valueGetCatalog) {
                             // console.log('componentWillMount-->',this.props.listCatalogName);
                             let isCatalogShared = false;
@@ -708,7 +717,7 @@ class MyCatalog extends Component {
     }
 
     render() {
-            const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared } = this.props;
+            const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared, ViewAsSet } = this.props;
             let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2;
             let catalogSortDirection = (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1;
             let style = {
@@ -842,13 +851,15 @@ class MyCatalog extends Component {
                                     <GridItemsView  items={items} onClickGrid={this.onClickGrid}
                                         onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                         onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
-                                        isCatalogShared={isCatalogShared}/>
+                                        isCatalogShared={isCatalogShared}
+                                        ViewAsSet={ViewAsSet}/>
                                 </div>
                                 <div id="dvGridview" className="search-product hidden">
                                   <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
                                     onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                     onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
-                                    isCatalogShared={isCatalogShared}/>
+                                    isCatalogShared={isCatalogShared}
+                                    ViewAsSet={ViewAsSet}/>
                                 </div>
                             </div>
                         </div>
@@ -881,6 +892,7 @@ function mapStateToProps(state) {
         shareCatalogmsgError: state.myCatalog.msg,
         shareCatalogStatusCode: state.myCatalog.shareCatalogStatusCode,
         isCatalogShared: state.myCatalog.isCatalogShared,
+        ViewAsSet: state.searchResult.viewAsSet
     }
 }
 MyCatalog.contextTypes = {

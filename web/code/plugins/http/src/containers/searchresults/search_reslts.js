@@ -234,7 +234,8 @@ class SearchResult extends Component {
       .then((value) => {
         //   console.log('params-->',params);
         //   this.props.setParams(params)
-          this.props.getCatalogName();
+        //   this.props.getCatalogName();
+          this.props.getCatalogNameSetItem();
       });
 
   }
@@ -1390,7 +1391,8 @@ class SearchResult extends Component {
 
                 this.setState({isOpenAddMyCatalogmsg: true});
                 this.setState({enabledMyCatalog: false});
-                this.props.getCatalogName();
+                // this.props.getCatalogName();
+                this.props.getCatalogNameSetItem();
             })
         } else {
             this.props.addCatalog(catalogdata).then( () =>{
@@ -1402,7 +1404,8 @@ class SearchResult extends Component {
 
                 this.setState({isOpenAddMyCatalogmsg: true});
                 this.setState({enabledMyCatalog: false});
-                this.props.getCatalogName();
+                // this.props.getCatalogName();
+                this.props.getCatalogNameSetItem();
             })
         }
 

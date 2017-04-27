@@ -55,7 +55,7 @@ export default {
                 const catalogColId = catalogCollection.lastErrorObject.updatedExisting ? catalogCollection.value._id : catalogCollection.lastErrorObject.upserted
 
                 setitems.forEach(async (setitem) => {
-
+                    // console.log('setitem-->',setitem);
                     await db.collection('CatalogItem').findOneAndUpdate(
                         {
                             "catalogId": new ObjectID(catalogColId),
