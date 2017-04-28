@@ -653,8 +653,16 @@ class MyCatalog extends Component {
       return(
         <div>
           <div id="dvTotalsub" className="bg-f7d886 text-center">
-                <span><span className="font-b fc-000">All Pages :</span> <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span><span className="padding-lf15">|</span></span>
-                <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(listCatalogItems.total_items) } Items </span><span className="padding-lf15">|</span></span>
+                <span>
+                    <span className="font-b fc-000">All Pages :</span>
+                    <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
+                    <span className="padding-lf15">|</span>
+                </span>
+                <span>
+                    <span className="font-b fc-000">Total Items :</span>
+                    <span className="font-w9">{ numberFormat(listCatalogItems.total_items) } Items </span>
+                    <span className="padding-lf15">|</span>
+                </span>
                 <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                         || userLogin.permission.price == 'All') ?
                         '' : 'hidden'}`}>
@@ -670,8 +678,16 @@ class MyCatalog extends Component {
                 </span>
           </div>
           <div id="dvTotalsub" className="bg-f7d886 text-center">
-                <span><span className="font-b fc-000">All Pages :</span> <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span><span className="padding-lf15">|</span></span>
-                <span><span className="font-b fc-000">Total SetItems :</span> <span className="font-w9">{ numberFormat(listCatalogItems.total_items) } Items </span><span className="padding-lf15">|</span></span>
+                <span>
+                    <span className="font-b fc-000">All Pages :</span>
+                    <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
+                    <span className="padding-lf15">|</span>
+                </span>
+                <span>
+                    <span className="font-b fc-000">Total SetItems :</span>
+                    <span className="font-w9">{ numberFormat(listCatalogItems.total_setitems) } SetItems </span>
+                    <span className="padding-lf15">|</span>
+                </span>
                 <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                         || userLogin.permission.price == 'All') ?
                         '' : 'hidden'}`}>
