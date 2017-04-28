@@ -248,7 +248,7 @@ class productreletedetail extends Component {
         <div>
 
           <h2>{Detailtitle}</h2>
-          <ProductDescriptionBlock Detail={Detail} />
+          <ProductDescriptionBlock {...Detail} />
         </div>
       );
    }

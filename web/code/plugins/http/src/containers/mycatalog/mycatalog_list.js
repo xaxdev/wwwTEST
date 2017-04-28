@@ -366,7 +366,7 @@ class MyCatalog extends Component {
       // console.log('onClickGrid==>',pageNumber);
       const token = sessionStorage.token;
       const getIdReference = pageNumber.split('=');
-      console.log('getIdReference-->',getIdReference);
+    //   console.log('getIdReference-->',getIdReference);
       if(token){
           if (getIdReference[0] == 'id') {
               this.context.router.push(`/productmycatalog/${getIdReference[1]}`);
@@ -617,9 +617,12 @@ class MyCatalog extends Component {
               resetForm,
               submitting } = this.props;
 
-        // console.log('totalPublicPrice-->',totalPublicPrice);
+        // console.log('listCatalogItems-->',listCatalogItems);
+        const { setItemPrice,setItemUpdatedCost } = listCatalogItems;
         let _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
         let _totalPublicPrice =  (totalPrice!=null) ? numberFormat(totalPrice) : 0;
+        let _totalPublicPriceSet = (setItemPrice!=null) ? numberFormat(setItemPrice) : 0;
+        let _totalUpdatedCostSet = (setItemUpdatedCost!=null) ? numberFormat(setItemUpdatedCost) : 0;
 
         const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -633,12 +636,29 @@ class MyCatalog extends Component {
                         '' : 'hidden'}`}>
                     <span className="font-b fc-000">Total Public Price :</span>
                     <span className="font-w9">{ _totalPublicPrice } { userLogin.currency }</span>
-                    <span className="padding-lf15"> | </span>
                 </span>
                 <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
                     '' : 'hidden'}`}>
+                    <span className="padding-lf15"> | </span>
                     <span className="font-b fc-000">Total Updated Cost :</span>
                     <span className="font-w9">{ _totalUpdatedCost } { userLogin.currency }
+                    </span>
+                </span>
+          </div>
+          <div id="dvTotalsub" className="bg-f7d886 text-center">
+                <span><span className="font-b fc-000">All Pages :</span> <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span><span className="padding-lf15">|</span></span>
+                <span><span className="font-b fc-000">Total SetItems :</span> <span className="font-w9">{ numberFormat(listCatalogItems.total_items) } Items </span><span className="padding-lf15">|</span></span>
+                <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                        || userLogin.permission.price == 'All') ?
+                        '' : 'hidden'}`}>
+                    <span className="font-b fc-000">Total Public Price(Set) :</span>
+                    <span className="font-w9">{ _totalPublicPriceSet } { userLogin.currency }</span>
+                </span>
+                <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                    '' : 'hidden'}`}>
+                    <span className="padding-lf15"> | </span>
+                    <span className="font-b fc-000">Total Updated Cost(Set) :</span>
+                    <span className="font-w9">{ _totalUpdatedCostSet } { userLogin.currency }
                     </span>
                 </span>
           </div>

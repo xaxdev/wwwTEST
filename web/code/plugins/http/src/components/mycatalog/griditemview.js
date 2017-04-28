@@ -425,7 +425,7 @@ class GridItemsView extends Component {
     return (
       <div>
         {this.props.items.map(function(item, index){
-          console.log('item-->',item);
+        //   console.log('item-->',item);
           let imagesProduct = '';
           let itemDate = '';
           let lblDate = '';
@@ -475,7 +475,7 @@ class GridItemsView extends Component {
               imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
 
               itemDate = (item.authorization)
-                ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
+                ? (item.type != 'CER') ? convertDate(item.createdDate) : convertDate(item.createdDate)
                 : '';
               lblDate = (item.authorization)
                 ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'

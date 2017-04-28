@@ -60,7 +60,7 @@ class productdetail extends Component {
   componentWillMount(){
     //   console.log('componentWillMount-->');
       let setReferenceId = this.props.params.id;
-      const setReferencelist = JSON.parse(sessionStorage.navigation);
+      const setReferencelist = !!sessionStorage.navigation ? JSON.parse(sessionStorage.navigation):[];
 
       this.setState({
           productdetailLoading: true
@@ -174,7 +174,7 @@ class productdetail extends Component {
     //   console.log('componentWillReceiveProps-->');
     if (nextProps.params.id !== this.props.params.id) {
         const setReferenceId = nextProps.params.id;
-        const setReferencelist = JSON.parse(sessionStorage.navigation);
+        const setReferencelist = !!sessionStorage.navigation ? JSON.parse(sessionStorage.navigation):[];
 
         this.setState({
             productdetailLoading: true
@@ -386,33 +386,42 @@ class productdetail extends Component {
         );
       }
 
-      if(setReferenceData.products.length > 0){
-        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-        const currency = logindata.currency;
-        return(
-          <div>
-            <h2>SET DETAILS</h2>
-            {/*<div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-              <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
-              <ReactImageFallback
-                    id="imgset"
-                     src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                     fallbackImage="/images/blank.gif"
-                     initialImage="/images/blank.gif"
-                     width={120}
-                     height={120}
-                     className="img-responsive" />
-            </div>*/}
-            <Setreference productset={setReferenceData}/>
-          </div>
-          );
-      } else {
-        return(
-            <div>
+      if (!!setReferenceData.products) {
+          if(setReferenceData.products.length > 0){
+              const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+              const currency = logindata.currency;
+              return(
+                  <div>
+                  <h2>SET DETAILS</h2>
+                  {/*<div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
+                  <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
+                  <ReactImageFallback
+                  id="imgset"
+                  src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                  fallbackImage="/images/blank.gif"
+                  initialImage="/images/blank.gif"
+                  width={120}
+                  height={120}
+                  className="img-responsive" />
+                  </div>*/}
+                  <Setreference productset={setReferenceData}/>
+                  </div>
+              );
+          } else {
+              return(
+                  <div>
 
-            </div>
+                  </div>
+              );
+          }
+      }else{
+          return(
+              <div>
+
+              </div>
           );
       }
+
     }
 
     clickSet(){
@@ -624,21 +633,15 @@ class productdetail extends Component {
       let pructdetailurl = '/setdetail/';
       const { fields: { pagego },handleSubmit} = this.props;
     //   console.log('pagego-->',pagego.value);
-      if(!productlist){
-        return(
-          <div><center><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><Loading type="spin" color="#202020" width="10%"/></center></div>
-        );
-      }
-      if(productlist.length != 0){
-          return(
 
-             <div className="bar-title-detail maring-t15">
-                          <div className="ft-white productdetail-search display-right">
-                            <Link to={'/mycatalog'} className="btn btn-searchresult">My Catalog</Link>
-                          </div>
-                </div>
-              );
-        }
+      return(
+
+         <div className="bar-title-detail maring-t15">
+                      <div className="ft-white productdetail-search display-right">
+                        <Link to={'/mycatalog'} className="btn btn-searchresult">My Catalog</Link>
+                      </div>
+            </div>
+          );
    }
 
    addMyCatalog = _=>{
