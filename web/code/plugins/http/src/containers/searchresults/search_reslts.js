@@ -558,7 +558,7 @@ class SearchResult extends Component {
     return(
       <div>
         <div id="dvTotalsub1" className="bg-or text-center">
-            <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(allItems.length) } Items </span><span className="padding-lf15">|</span></span>
+            <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(allItems.length) } {ViewAsSet ? 'Sets' : 'Items'} </span><span className="padding-lf15">|</span></span>
             <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                 || userLogin.permission.price == 'All') ?
                 '' : 'hidden'}`}>
