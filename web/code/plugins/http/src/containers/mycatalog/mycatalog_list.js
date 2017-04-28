@@ -383,7 +383,7 @@ class MyCatalog extends Component {
           if (getIdReference[0] == 'id') {
               this.context.router.push(`/productmycatalog/${getIdReference[1]}`);
           } else {
-              this.context.router.push(`/setdetailmycatalog/${getIdReference[1]}`);
+              this.context.router.push(`/setdetailmycatalog/${getIdReference[1].replace('/','-')}`);
           }
       }
     }
