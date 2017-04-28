@@ -672,7 +672,8 @@ class productdetail extends Component {
 
    addMyCatalog = _=>{
 
-     this.props.getCatalogName().then(() =>{
+    //  this.props.getCatalogName().then(() =>{
+     this.props.getCatalogNameSetItem().then(() =>{
        const { fields: {
                  oldCatalogName,newCatalogName,validateCatalogName
              } } = this.props;
@@ -704,9 +705,10 @@ class productdetail extends Component {
        this.setState({isOpenAddMyCatalog: false});
        const { fields: {
                  oldCatalogName,newCatalogName,validateCatalogName
-             } } = this.props;
+             }, viewAsSet } = this.props;
        const  Detail  = this.props.productdetail;
        const  listCatalogName  = this.props.listCatalogName;
+    //    console.log(oldCatalogName.value);
        let oldCatalogTitle = ''
        if (oldCatalogName.value) {
           oldCatalogTitle = listCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
@@ -717,15 +719,21 @@ class productdetail extends Component {
           catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
           items:[
              {
-                id:Detail.id,
+                id: !!Detail.id ? Detail.id : null,
                 reference:Detail.reference,
                 description:Detail.description
              }
           ]
        }
-       this.props.addCatalog(catalogdata).then( () =>{
-          this.setState({isOpenAddMyCatalogmsg: true});
-       })
+       if (viewAsSet) {
+           this.props.addCatalogSetItem(catalogdata).then( () =>{
+               this.setState({isOpenAddMyCatalogmsg: true});
+           });
+       }else{
+           this.props.addCatalog(catalogdata).then( () =>{
+               this.setState({isOpenAddMyCatalogmsg: true});
+           });
+       }
    }
 
    handleClosemsg = _=>{
@@ -917,7 +925,7 @@ class productdetail extends Component {
           <br/><br/><br/><br/><br/><br/>
         </div>
         <div className={`row ${this.state.showmovement ? 'hide' : ''}`}>
-            {!viewAsSet ? this.renderAddMyCatalog():''}
+            {this.renderAddMyCatalog()}
             {this.renderAlertmsg()}
               <div className="col-sm-12">
                   <div className="panel panel-default">
