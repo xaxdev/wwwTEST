@@ -96,7 +96,8 @@ class MyCatalog extends Component {
                         catalog.value = catalogName;
                         catalog.onChange(catalogName);
                         this.props.setRenameCatalog(catalogName);
-                        this.props.getCatalogItems(parasm);
+                        // this.props.getCatalogItems(parasm);
+                        this.props.getCatalogItemsWithSetItem(parasm);
                         this.props.setIsCatalogShare(isCatalogShared);
                     }else{
                         this.props.setIsCatalogShare(isCatalogShared);
@@ -187,7 +188,8 @@ class MyCatalog extends Component {
                                 sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                             };
-                this.props.getCatalogItems(params);
+                // this.props.getCatalogItems(params);
+                this.props.getCatalogItemsWithSetItem(parasm);
 
             });
         }
@@ -298,7 +300,8 @@ class MyCatalog extends Component {
             };
         this.props.setCatalogSortDirection(sortingDirection);
         if (catalogId != null) {
-            this.props.getCatalogItems(parasm);
+            // this.props.getCatalogItems(parasm);
+            this.props.getCatalogItemsWithSetItem(parasm);
         }
     }
 
@@ -318,7 +321,8 @@ class MyCatalog extends Component {
             };
         this.props.setCatalogSortingBy(sortingBy);
         if (catalogId != null) {
-            this.props.getCatalogItems(parasm);
+            // this.props.getCatalogItems(parasm);
+            this.props.getCatalogItemsWithSetItem(parasm);
         }
     }
 
@@ -402,7 +406,8 @@ class MyCatalog extends Component {
                 };
             this.props.setCatalogCurrentPage(getPage);
             if (catalogId != null) {
-                this.props.getCatalogItems(parasm).then((value) => {
+                // this.props.getCatalogItems(parasm).then((value) => {
+                this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
                     console.log(value);
                 });
             }
@@ -425,7 +430,8 @@ class MyCatalog extends Component {
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
-        this.props.getCatalogItems(parasm);
+        // this.props.getCatalogItems(parasm);
+        this.props.getCatalogItemsWithSetItem(parasm)
         this.props.setIsCatalogShare(selectedCatalog.shared);
     }
 
@@ -481,7 +487,8 @@ class MyCatalog extends Component {
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
-                this.props.getCatalogItems(parasm);
+                // this.props.getCatalogItems(parasm);
+                this.props.getCatalogItemsWithSetItem(parasm)
 
             });
         }
@@ -511,7 +518,8 @@ class MyCatalog extends Component {
                                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                                 };
-                                this.props.getCatalogItems(parasm);
+                                // this.props.getCatalogItems(parasm);
+                                this.props.getCatalogItemsWithSetItem(parasm)
                                 this.props.setIsCatalogShare(isCatalogShared);
                             }else{
                                 isCatalogShared = true;

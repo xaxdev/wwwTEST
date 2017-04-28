@@ -425,7 +425,7 @@ class GridItemsView extends Component {
     return (
       <div>
         {this.props.items.map(function(item, index){
-        //   console.log('item-->',item);
+          console.log('item-->',item);
           let imagesProduct = (item.authorization)
                                 ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
                                 :'/images/login-logo@2x.png';

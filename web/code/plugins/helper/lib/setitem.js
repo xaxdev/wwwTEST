@@ -139,8 +139,8 @@ export default {
     parameters,
     inventory: (data, stock) => data.map(inventory(stock)),
     authorization: (user, data) => {
-        // return compose(authorize(user), permission(user))(data)
-        return data;
+        return compose(authorize(user), permission(user))(data)
+        // return data;
     },
     productGroupPermission
 }
