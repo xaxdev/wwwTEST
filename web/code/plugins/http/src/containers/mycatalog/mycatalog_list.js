@@ -692,13 +692,13 @@ class MyCatalog extends Component {
                         || userLogin.permission.price == 'All') ?
                         '' : 'hidden'}`}>
                     <span className="font-b fc-000">Total Public Price(Set) :</span>
-                    <span className="font-w9">{ _totalPublicPriceSet } { userLogin.currency }</span>
+                    <span className="font-w9">{ _totalPublicPriceSet } USD</span>
                 </span>
                 <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
                     '' : 'hidden'}`}>
                     <span className="padding-lf15"> | </span>
                     <span className="font-b fc-000">Total Updated Cost(Set) :</span>
-                    <span className="font-w9">{ _totalUpdatedCostSet } { userLogin.currency }
+                    <span className="font-w9">{ _totalUpdatedCostSet } USD
                     </span>
                 </span>
           </div>
