@@ -1,6 +1,6 @@
 const parameters = setitems => {
     const parameters = {
-        "index": "mol_20170428_1049",
+        "index": "mol",
         "type": "setitems",
         "size": setitems.length,
         "filter_path": "**._source",

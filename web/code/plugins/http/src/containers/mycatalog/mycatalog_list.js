@@ -174,7 +174,13 @@ class MyCatalog extends Component {
         let items = [];
 
         listMyCatalog.map((item) => {
-            items.push({id: item.id});
+            let itemDelete = {};
+            if (item.id != null) {
+                itemDelete = {...itemDelete, id: item.id}
+            } else {
+                itemDelete = {...itemDelete, id: null, reference: item.reference}
+            }
+            items.push(itemDelete);
         })
         let paramsItem ={id: catalogId, items: items};
         // console.log('params-->',params);
@@ -189,7 +195,7 @@ class MyCatalog extends Component {
                                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                             };
                 // this.props.getCatalogItems(params);
-                this.props.getCatalogItemsWithSetItem(parasm);
+                this.props.getCatalogItemsWithSetItem(params);
 
             });
         }
@@ -250,7 +256,13 @@ class MyCatalog extends Component {
         let fileName = jQuery('input[type="checkbox"]');
         const { items } = this.props.listCatalogItems;
         const { catalogId } = this.props;
-        let itemAdded = items.filter(oneItem => oneItem.id === e.target.value);
+        const itemTargetId = e.target.value.split('=');
+        let itemAdded = [];
+        if (itemTargetId[0] == 'id') {
+            itemAdded = items.filter(oneItem => oneItem.id === itemTargetId[1]);
+        } else {
+            itemAdded = items.filter(oneItem => oneItem.reference === itemTargetId[1]);
+        }
         itemAdded = itemAdded[0];
         let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
         let objItem = {
@@ -442,7 +454,13 @@ class MyCatalog extends Component {
         this.setState({enabledMyCatalog: false});
         const { items } = this.props.listCatalogItems;
         const catalogId = this.props.listCatalogItems._id
-        let itemAdded = items.filter(oneItem => oneItem.id === item.target.attributes[3].value);
+        const itemTargetId = item.target.attributes[3].value.split('=');
+        let itemAdded = [];
+        if (itemTargetId[0] == 'id') {
+            itemAdded = items.filter(oneItem => oneItem.id === itemTargetId[1]);
+        } else {
+            itemAdded = items.filter(oneItem => oneItem.reference === itemTargetId[1]);
+        }
         itemAdded = itemAdded[0];
         let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
         let objItem = {
@@ -473,7 +491,13 @@ class MyCatalog extends Component {
         let items = [];
 
         listMyCatalog.map((item) => {
-            items.push({id: item.id});
+            let itemDelete = {};
+            if (item.id != null) {
+                itemDelete = {...itemDelete, id: item.id}
+            } else {
+                itemDelete = {...itemDelete, id: null, reference: item.reference}
+            }
+            items.push(itemDelete);
         })
         let params ={id: catalogId, items: items};
         // console.log('params-->',params);

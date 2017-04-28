@@ -1380,7 +1380,7 @@ class SearchResult extends Component {
             items:listMyCatalog
         }
 
-        console.log('catalogdata-->',catalogdata);
+        // console.log('catalogdata-->',catalogdata);
         if (ViewAsSet) {
             this.props.addCatalogSetItem(catalogdata).then( () =>{
                 //    console.log('Added!');
