@@ -685,7 +685,7 @@ class MyCatalog extends Component {
                 </span>
                 <span>
                     <span className="font-b fc-000">Total SetItems :</span>
-                    <span className="font-w9">{ numberFormat(listCatalogItems.total_setitems) } SetItems </span>
+                    <span className="font-w9">{ numberFormat(listCatalogItems.total_setitems) } Sets </span>
                     <span className="padding-lf15">|</span>
                 </span>
                 <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
