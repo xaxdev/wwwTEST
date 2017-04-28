@@ -18,6 +18,7 @@ SELECT jewelry.[SetReference] AS 'setReference'
       ,ISNULL(setimg.[FILETYPE], '') AS 'setImageType'
       ,ISNULL(img.[FILENAME], '') AS 'imageName'
       ,ISNULL(img.[FILETYPE], '') AS 'imageType'
+      , 'JLY' AS 'type'
 	  ,item.[CreatedDate] AS 'createdDate'
 FROM [ITORAMA].[dbo].[Jewelry] jewelry
 INNER JOIN [ITORAMA].[dbo].[Items] item

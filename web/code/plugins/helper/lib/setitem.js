@@ -1,6 +1,6 @@
 const parameters = setitems => {
     const parameters = {
-        "index": "mol",
+        "index": "mol_20170428_1049",
         "type": "setitems",
         "size": setitems.length,
         "filter_path": "**._source",
@@ -55,20 +55,21 @@ const applyAuthorization = (user, item) => {
 const getPriceIn = currency => price => price[currency]
 
 const applyPermission = (user, item) => {
+    // console.log('item-->',JSON.stringify(item,null,4));
     // if no availability is set, assume it's from single-item api
     // and it exists in inventory
     item.availability = item.availability || true
     if (item.availability && item.authorization) {
         const currency = user.currency
-        const actualCost = getPriceIn(currency)(item.actualCost) || -1
-        const actualCostInUSD = getPriceIn('USD')(item.actualCost) || -1
-        const actualCostInHomeCurrency = getPriceIn(item.currency)(item.actualCost) || -1
-        const updatedCost = getPriceIn(currency)(item.updatedCost) || -1
-        const updatedCostInUSD = getPriceIn('USD')(item.updatedCost) || -1
-        const updatedCostInHomeCurrency = getPriceIn(item.currency)(item.updatedCost) || -1
-        const price = getPriceIn(currency)(item.price) || -1
-        const priceInUSD = getPriceIn('USD')(item.price) || -1
-        const priceInHomeCurrency = getPriceIn(item.currency)(item.price) || -1
+        const actualCost = getPriceIn(currency)(item.totalActualCost) || -1
+        const actualCostInUSD = getPriceIn('USD')(item.totalActualCost) || -1
+        const actualCostInHomeCurrency = getPriceIn(item.currency)(item.totalActualCost) || -1
+        const updatedCost = getPriceIn(currency)(item.totalUpdatedCost) || -1
+        const updatedCostInUSD = getPriceIn('USD')(item.totalUpdatedCost) || -1
+        const updatedCostInHomeCurrency = getPriceIn(item.currency)(item.totalUpdatedCost) || -1
+        const price = getPriceIn(currency)(item.totalPrice) || -1
+        const priceInUSD = getPriceIn('USD')(item.totalPrice) || -1
+        const priceInHomeCurrency = getPriceIn(item.currency)(item.totalPrice) || -1
         const userCurrency = user.currency
         const result = {
             ...item,
@@ -83,7 +84,6 @@ const applyPermission = (user, item) => {
             priceInHomeCurrency,
             userCurrency
         }
-        result.gemstones.forEach(gemstone => delete gemstone.cost)
 
         switch (user.permission.price.toUpperCase()) {
             case "PUBLIC":

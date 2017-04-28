@@ -84,13 +84,10 @@ export default {
                         response.push(...items)
                     }
 
-                    if (useSetItems.length) {
+                    if (!!useSetItems.length) {
                         const esSetItems = await client.search(request.helper.setitem.parameters(useSetItems))
                         let inventorySetItems = await request.helper.setitem.inventory(useSetItems, esSetItems)
                         const allSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
-
-                        console.log(allSetItem);
-
                         setItemPrice = allSetItem.reduce((previous, current) => previous + current.totalPrice.USD, 0)
                         setItemUpdatedCost = allSetItem.reduce((previous, current) => previous + current.totalUpdatedCost.USD, 0)
 
