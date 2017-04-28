@@ -64,11 +64,15 @@ export default {
                     let updatedCost = 0
                     let setItemPrice = 0
                     let setItemUpdatedCost = 0
+                    let total_items = 0;
+                    let total_pages = 0;
+                    let total_setitems = 0;
+                    let total_setitems_pages = 0;
                     const useItems = catalog.items.filter((item) => { return item.id !== null })
                     const useSetItems = catalog.items.filter((item) => { return item.id === null })
                     const user = await request.user.getUserById(request, request.auth.credentials.id)
 
-                    if (useItems.length) {
+                    if (!!useItems.length && useItems.length > 0) {
                         const es = await client.search(request.helper.item.parameters(useItems))
                         let inventory = await request.helper.item.inventory(useItems, es)
                         const all = await request.helper.item.authorization(user, inventory)
@@ -80,11 +84,13 @@ export default {
                                                 .sort(sorting).limit(size).skip((page - 1) * size).toArray()
                         inventory = await request.helper.item.inventory(data, es)
                         const items = await request.helper.item.authorization(user, inventory)
+                        total_items = items.length
+                        total_pages = Math.ceil(total_items/size)
 
                         response.push(...items)
                     }
 
-                    if (!!useSetItems.length) {
+                    if (!!useSetItems.length && useSetItems.length > 0) {
                         const esSetItems = await client.search(request.helper.setitem.parameters(useSetItems))
                         let inventorySetItems = await request.helper.setitem.inventory(useSetItems, esSetItems)
                         const allSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
@@ -95,14 +101,13 @@ export default {
                                                 .sort(sorting).limit(size).skip((page - 1) * size).toArray()
                         inventorySetItems = await request.helper.setitem.inventory(dataSetItem, esSetItems)
                         const itemsSetitem = await request.helper.setitem.authorization(user, inventorySetItems)
+                        total_setitems = itemsSetitem.length
+                        total_setitems_pages = Math.ceil(total_setitems/size)
 
                         response.push(...itemsSetitem)
                     }
 
-                    const total_items = response.length
-                    const total_pages = Math.ceil(total_items/size)
-
-                    return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page, total_items, total_pages, "items": response })
+                    return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page, total_items, total_pages, total_setitems, total_setitems_pages, "items": response })
                 }
 
                 return reply(Boom.badRequest('Invalid catalog id'))

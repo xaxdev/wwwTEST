@@ -57,18 +57,18 @@ export default {
                     const useSetItems = items.filter((item) => { return item.id === null })
                     const user = await userHelper.getUserById(request, request.auth.credentials.id)
 
-                    if (useItems.length) {
+                    if (!!useItems.length && useItems.length > 0) {
                         const es = await client.search(request.helper.item.parameters(useItems))
                         const inventory = await request.helper.item.inventory(useItems, es)
                         const responseItem = await request.helper.item.authorization(user, inventory)
-                        response.push(responseItem)
+                        response.push(...responseItem)
                     }
 
-                    if (useSetItems.length) {
+                    if (!!useSetItems.length && useSetItems.length > 0) {
                         const esSetItems = await client.search(request.helper.setitem.parameters(useSetItems))
                         const inventorySetItems = await request.helper.setitem.inventory(useSetItems, esSetItems)
                         const responseSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
-                        response.push(responseSetItem)
+                        response.push(...responseSetItem)
                     }
 
                     return reply({
