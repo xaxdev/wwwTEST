@@ -20,7 +20,7 @@ import SetPrint from '../../components/productdetail/setPrint';
 import ProductObaAttributes from '../../components/productdetail/productObaAttributes';
 import ProductAccAttributes from '../../components/productdetail/productAccAttributes';
 import ProductSpaAttributes from '../../components/productdetail/productSppAttributes';
-import Setreference from '../../components/productdetail/productset';
+import Setreference from '../../components/productdetail/productsetsetitem';
 import numberFormat from '../../utils/convertNumberformatwithcomma';
 import checkInarrayObject from '../../utils/checkInarrayObject';
 import checkInarrayObjectOther from '../../utils/checkInarrayObjectOther';

@@ -383,7 +383,7 @@ class MyCatalog extends Component {
           if (getIdReference[0] == 'id') {
               this.context.router.push(`/productmycatalog/${getIdReference[1]}`);
           } else {
-              this.context.router.push(`/setdetailmycatalog/${getIdReference[1]}`);
+              this.context.router.push(`/setdetailmycatalog/${getIdReference[1].replace('/','-')}`);
           }
       }
     }
@@ -652,7 +652,7 @@ class MyCatalog extends Component {
 
       return(
         <div>
-          <div id="dvTotalsub" className="bg-f7d886 text-center">
+          <div id="dvTotalsub" className="bg-f7d886 text-center border-b-white">
                 <span>
                     <span className="font-b fc-000">All Pages :</span>
                     <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
@@ -685,20 +685,20 @@ class MyCatalog extends Component {
                 </span>
                 <span>
                     <span className="font-b fc-000">Total SetItems :</span>
-                    <span className="font-w9">{ numberFormat(listCatalogItems.total_setitems) } SetItems </span>
+                    <span className="font-w9">{ numberFormat(listCatalogItems.total_setitems) } Sets </span>
                     <span className="padding-lf15">|</span>
                 </span>
                 <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                         || userLogin.permission.price == 'All') ?
                         '' : 'hidden'}`}>
                     <span className="font-b fc-000">Total Public Price(Set) :</span>
-                    <span className="font-w9">{ _totalPublicPriceSet } { userLogin.currency }</span>
+                    <span className="font-w9">{ _totalPublicPriceSet } USD</span>
                 </span>
                 <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
                     '' : 'hidden'}`}>
                     <span className="padding-lf15"> | </span>
                     <span className="font-b fc-000">Total Updated Cost(Set) :</span>
-                    <span className="font-w9">{ _totalUpdatedCostSet } { userLogin.currency }
+                    <span className="font-w9">{ _totalUpdatedCostSet } USD
                     </span>
                 </span>
           </div>
