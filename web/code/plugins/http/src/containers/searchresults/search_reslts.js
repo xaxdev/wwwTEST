@@ -234,7 +234,8 @@ class SearchResult extends Component {
       .then((value) => {
         //   console.log('params-->',params);
         //   this.props.setParams(params)
-          this.props.getCatalogName();
+        //   this.props.getCatalogName();
+          this.props.getCatalogNameSetItem();
       });
 
   }
@@ -595,20 +596,42 @@ class SearchResult extends Component {
   }
   checkedOneItemMyCatalog = (item) => {
     //   console.log('item.target.value-->',item.target.value);
-    const { items } = this.props;
-    let itemAdded = items.filter(oneItem => oneItem.id === item.target.value);
-    itemAdded = itemAdded[0];
-    let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
-    let objItem = {id: itemAdded.id, reference: itemAdded.reference, description: itemName}
+      const { items, ViewAsSet } = this.props;
+      let itemAdded = [];
+
+      if (ViewAsSet) {
+          itemAdded = items.filter(oneItem => oneItem.reference === item.target.value);
+      }else{
+          itemAdded = items.filter(oneItem => oneItem.id === item.target.value);
+      }
+
+      itemAdded = itemAdded[0];
+      let itemName = (itemAdded.type != undefined)
+                      ? (itemAdded.type != 'CER')
+                          ? itemAdded.description
+                          : itemAdded.name
+                      :itemAdded.description;
+
+    let objItem = {};
+
+    if (ViewAsSet) {
+        objItem = {...objItem, reference: itemAdded.reference, description: itemName};
+    }else{
+        objItem = {...objItem, id: itemAdded.id, reference: itemAdded.reference, description: itemName};
+    }
 
     if(!this.state.enabledMyCatalog){
         listMyCatalog = [];
     }
 
     if (item.target.checked) {
-      listMyCatalog.push(objItem);
+        listMyCatalog.push(objItem);
     } else {
-      listMyCatalog = listMyCatalog.filter(inItem => inItem.id !== item.target.value);
+        if (ViewAsSet) {
+            listMyCatalog = listMyCatalog.filter(inItem => inItem.reference !== item.target.value);
+        }else{
+            listMyCatalog = listMyCatalog.filter(inItem => inItem.id !== item.target.value);
+        }
     }
 
     if (listMyCatalog.length != 0) {
@@ -625,11 +648,28 @@ class SearchResult extends Component {
       fileName.removeAttr('checked');
       listMyCatalog  = [];
       this.setState({enabledMyCatalog: false});
-      const { items } = this.props;
-      let itemAdded = items.filter(oneItem => oneItem.id === item.target.attributes[3].value);
+      const { items, ViewAsSet } = this.props;
+      let itemAdded = [];
+      if (ViewAsSet) {
+          itemAdded = items.filter(oneItem => oneItem.reference === item.target.attributes[3].value);
+      }else{
+          itemAdded = items.filter(oneItem => oneItem.id === item.target.attributes[3].value);
+      }
+
       itemAdded = itemAdded[0];
-      let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
-      let objItem = {id: itemAdded.id, reference: itemAdded.reference, description: itemName}
+
+      let itemName = (itemAdded.type != undefined)
+                        ? (itemAdded.type != 'CER')
+                            ? itemAdded.description
+                            : itemAdded.name
+                        :itemAdded.description;
+      let objItem = {};
+
+      if (ViewAsSet) {
+          objItem = {...objItem, reference: itemAdded.reference, description: itemName};
+      }else{
+          objItem = {...objItem, id: itemAdded.id, reference: itemAdded.reference, description: itemName};
+      }
 
       listMyCatalog.push(objItem);
 
@@ -1319,6 +1359,8 @@ class SearchResult extends Component {
   }
   handleSubmitCatalog = (e)=>{
       e.preventDefault();
+      const { ViewAsSet } = this.props;
+
       let fileName = jQuery('input[type="checkbox"]');
       fileName.removeAttr('checked');
       this.setState({isOpenAddMyCatalog: false});
@@ -1332,23 +1374,40 @@ class SearchResult extends Component {
            oldCatalogTitle = listCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
         }
 
-        const catalogdata = {
-           id:!!oldCatalogName.value ? oldCatalogName.value:null,
-           catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
-           items:listMyCatalog
+        const catalogdata = {...catalogdata,
+            id:!!oldCatalogName.value ? oldCatalogName.value:null,
+            catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
+            items:listMyCatalog
         }
-        // console.log('catalogdata-->',catalogdata);
-        this.props.addCatalog(catalogdata).then( () =>{
-        //    console.log('Added!');
-            newCatalogName.value = '';
-            oldCatalogName.value = '';
-            newCatalogName.onChange('');
-            oldCatalogName.onChange('');
 
-           this.setState({isOpenAddMyCatalogmsg: true});
-           this.setState({enabledMyCatalog: false});
-           this.props.getCatalogName();
-        })
+        // console.log('catalogdata-->',catalogdata);
+        if (ViewAsSet) {
+            this.props.addCatalogSetItem(catalogdata).then( () =>{
+                //    console.log('Added!');
+                newCatalogName.value = '';
+                oldCatalogName.value = '';
+                newCatalogName.onChange('');
+                oldCatalogName.onChange('');
+
+                this.setState({isOpenAddMyCatalogmsg: true});
+                this.setState({enabledMyCatalog: false});
+                // this.props.getCatalogName();
+                this.props.getCatalogNameSetItem();
+            })
+        } else {
+            this.props.addCatalog(catalogdata).then( () =>{
+                //    console.log('Added!');
+                newCatalogName.value = '';
+                oldCatalogName.value = '';
+                newCatalogName.onChange('');
+                oldCatalogName.onChange('');
+
+                this.setState({isOpenAddMyCatalogmsg: true});
+                this.setState({enabledMyCatalog: false});
+                // this.props.getCatalogName();
+                this.props.getCatalogNameSetItem();
+            })
+        }
 
   }
   renderAddMyCatalog = _=> {
@@ -1575,13 +1634,10 @@ class SearchResult extends Component {
                           <div className="col-md-2 col-sm-3 col-xs-12 nopadding">
                             {
                                 this.state.enabledMyCatalog
-                                    ? !ViewAsSet
-                                        ? <a><div className="icon-add margin-l10" disabled={true} enabled={false}
-                                            onClick={ this.addMyCatalog }></div></a>
-                                        : <a><div className="icon-add margin-l10" disabled={true} enabled={false} >
-                                            </div></a>
-                                    : <a><div className="icon-add margin-l10" disabled={true} enabled={false}>
-                                </div></a>
+                                ? <a><div className="icon-add margin-l10" disabled={true} enabled={false}
+                                    onClick={ this.addMyCatalog }></div></a>
+                                : <a><div className="icon-add margin-l10" disabled={true} enabled={false} >
+                                    </div></a>
                             }
                             <a><div className="icon-excel margin-l10" disabled={submitting}
                                   onClick={ this.exportExcel }></div></a>

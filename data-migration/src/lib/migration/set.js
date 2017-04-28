@@ -31,8 +31,11 @@ const getitemSets = async (index, exchangeRates) => {
                     totalUpdatedCost: {},
                     totalPrice: {},
                     markup: record.markup,
+                    company: record.company,
                     companyName: record.companyName,
+                    warehouse: record.warehouse,
                     warehouseName: record.warehouseName,
+                    type: record.type,
                     createdDate: record.createdDate,
                     image:[]
                 }
@@ -79,10 +82,13 @@ const getitemSets = async (index, exchangeRates) => {
                     actualCost: {},
                     updatedCost: {},
                     markup: record.markup,
-                    company: record.companyName,
-                    warehouse: record.warehouseName,
+                    company: record.company,
+                    companyName: record.companyName,
+                    warehouse: record.warehouse,
+                    warehouseName: record.warehouseName,
                     venderReference: record.venderReference,
                     sku: record.sku,
+                    type: record.type,
                     createdDate: record.createdDate
                 }
 
@@ -156,10 +162,13 @@ const getitemSets = async (index, exchangeRates) => {
                         actualCost: {},
                         updatedCost: {},
                         markup: record.markup,
-                        company: record.companyName,
-                        warehouse: record.warehouseName,
+                        company: record.company,
+                        companyName: record.companyName,
+                        warehouse: record.warehouse,
+                        warehouseName: record.warehouseName,
                         venderReference: record.venderReference,
                         sku: record.sku,
+                        type: record.type,
                         createdDate: record.createdDate
                     }
 

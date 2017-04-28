@@ -64,7 +64,8 @@ class MyCatalog extends Component {
 
         let catalogName = '';
         const { fields: { catalog } } = this.props;
-        this.props.getCatalogName().then((value) => {
+        this.props.getCatalogNameSetItem().then((value) => {
+        // this.props.getCatalogName().then((value) => {
             if (value) {
                 // console.log('componentWillMount this.props-->',this.props.catalogId);
                 let catalogId = '';
@@ -95,7 +96,8 @@ class MyCatalog extends Component {
                         catalog.value = catalogName;
                         catalog.onChange(catalogName);
                         this.props.setRenameCatalog(catalogName);
-                        this.props.getCatalogItems(parasm);
+                        // this.props.getCatalogItems(parasm);
+                        this.props.getCatalogItemsWithSetItem(parasm);
                         this.props.setIsCatalogShare(isCatalogShared);
                     }else{
                         this.props.setIsCatalogShare(isCatalogShared);
@@ -172,7 +174,13 @@ class MyCatalog extends Component {
         let items = [];
 
         listMyCatalog.map((item) => {
-            items.push({id: item.id});
+            let itemDelete = {};
+            if (item.id != null) {
+                itemDelete = {...itemDelete, id: item.id}
+            } else {
+                itemDelete = {...itemDelete, id: null, reference: item.reference}
+            }
+            items.push(itemDelete);
         })
         let paramsItem ={id: catalogId, items: items};
         // console.log('params-->',params);
@@ -186,7 +194,8 @@ class MyCatalog extends Component {
                                 sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                             };
-                this.props.getCatalogItems(params);
+                // this.props.getCatalogItems(params);
+                this.props.getCatalogItemsWithSetItem(params);
 
             });
         }
@@ -247,7 +256,13 @@ class MyCatalog extends Component {
         let fileName = jQuery('input[type="checkbox"]');
         const { items } = this.props.listCatalogItems;
         const { catalogId } = this.props;
-        let itemAdded = items.filter(oneItem => oneItem.id === e.target.value);
+        const itemTargetId = e.target.value.split('=');
+        let itemAdded = [];
+        if (itemTargetId[0] == 'id') {
+            itemAdded = items.filter(oneItem => oneItem.id === itemTargetId[1]);
+        } else {
+            itemAdded = items.filter(oneItem => oneItem.reference === itemTargetId[1]);
+        }
         itemAdded = itemAdded[0];
         let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
         let objItem = {
@@ -297,7 +312,8 @@ class MyCatalog extends Component {
             };
         this.props.setCatalogSortDirection(sortingDirection);
         if (catalogId != null) {
-            this.props.getCatalogItems(parasm);
+            // this.props.getCatalogItems(parasm);
+            this.props.getCatalogItemsWithSetItem(parasm);
         }
     }
 
@@ -317,7 +333,8 @@ class MyCatalog extends Component {
             };
         this.props.setCatalogSortingBy(sortingBy);
         if (catalogId != null) {
-            this.props.getCatalogItems(parasm);
+            // this.props.getCatalogItems(parasm);
+            this.props.getCatalogItemsWithSetItem(parasm);
         }
     }
 
@@ -330,7 +347,8 @@ class MyCatalog extends Component {
         if (catalogId != null) {
             this.props.setNewCatalogName(params).then((value) => {
                 if(value){
-                    this.props.getCatalogName();
+                    // this.props.getCatalogName();
+                    this.props.getCatalogNameSetItem();
                 }
             });
         }
@@ -359,8 +377,14 @@ class MyCatalog extends Component {
     onClickGrid(pageNumber){
       // console.log('onClickGrid==>',pageNumber);
       const token = sessionStorage.token;
+      const getIdReference = pageNumber.split('=');
+    //   console.log('getIdReference-->',getIdReference);
       if(token){
-          this.context.router.push(`/productmycatalog/${pageNumber}`);
+          if (getIdReference[0] == 'id') {
+              this.context.router.push(`/productmycatalog/${getIdReference[1]}`);
+          } else {
+              this.context.router.push(`/setdetailmycatalog/${getIdReference[1]}`);
+          }
       }
     }
 
@@ -394,7 +418,8 @@ class MyCatalog extends Component {
                 };
             this.props.setCatalogCurrentPage(getPage);
             if (catalogId != null) {
-                this.props.getCatalogItems(parasm).then((value) => {
+                // this.props.getCatalogItems(parasm).then((value) => {
+                this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
                     console.log(value);
                 });
             }
@@ -417,7 +442,8 @@ class MyCatalog extends Component {
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
-        this.props.getCatalogItems(parasm);
+        // this.props.getCatalogItems(parasm);
+        this.props.getCatalogItemsWithSetItem(parasm)
         this.props.setIsCatalogShare(selectedCatalog.shared);
     }
 
@@ -428,7 +454,13 @@ class MyCatalog extends Component {
         this.setState({enabledMyCatalog: false});
         const { items } = this.props.listCatalogItems;
         const catalogId = this.props.listCatalogItems._id
-        let itemAdded = items.filter(oneItem => oneItem.id === item.target.attributes[3].value);
+        const itemTargetId = item.target.attributes[3].value.split('=');
+        let itemAdded = [];
+        if (itemTargetId[0] == 'id') {
+            itemAdded = items.filter(oneItem => oneItem.id === itemTargetId[1]);
+        } else {
+            itemAdded = items.filter(oneItem => oneItem.reference === itemTargetId[1]);
+        }
         itemAdded = itemAdded[0];
         let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
         let objItem = {
@@ -459,7 +491,13 @@ class MyCatalog extends Component {
         let items = [];
 
         listMyCatalog.map((item) => {
-            items.push({id: item.id});
+            let itemDelete = {};
+            if (item.id != null) {
+                itemDelete = {...itemDelete, id: item.id}
+            } else {
+                itemDelete = {...itemDelete, id: null, reference: item.reference}
+            }
+            items.push(itemDelete);
         })
         let params ={id: catalogId, items: items};
         // console.log('params-->',params);
@@ -473,7 +511,8 @@ class MyCatalog extends Component {
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
-                this.props.getCatalogItems(parasm);
+                // this.props.getCatalogItems(parasm);
+                this.props.getCatalogItemsWithSetItem(parasm)
 
             });
         }
@@ -489,7 +528,8 @@ class MyCatalog extends Component {
         if (catalogId != null) {
             this.props.deleteCatalog(params).then((valueDelete) => {
                 if (valueDelete) {
-                    this.props.getCatalogName().then((valueGetCatalog) => {
+                    this.props.getCatalogNameSetItem().then((valueGetCatalog) => {
+                    // this.props.getCatalogName().then((valueGetCatalog) => {
                         if (valueGetCatalog) {
                             // console.log('componentWillMount-->',this.props.listCatalogName);
                             let isCatalogShared = false;
@@ -502,7 +542,8 @@ class MyCatalog extends Component {
                                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                                 };
-                                this.props.getCatalogItems(parasm);
+                                // this.props.getCatalogItems(parasm);
+                                this.props.getCatalogItemsWithSetItem(parasm)
                                 this.props.setIsCatalogShare(isCatalogShared);
                             }else{
                                 isCatalogShared = true;
@@ -600,28 +641,64 @@ class MyCatalog extends Component {
               resetForm,
               submitting } = this.props;
 
-        // console.log('totalPublicPrice-->',totalPublicPrice);
+        // console.log('listCatalogItems-->',listCatalogItems);
+        const { setItemPrice,setItemUpdatedCost } = listCatalogItems;
         let _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
         let _totalPublicPrice =  (totalPrice!=null) ? numberFormat(totalPrice) : 0;
+        let _totalPublicPriceSet = (setItemPrice!=null) ? numberFormat(setItemPrice) : 0;
+        let _totalUpdatedCostSet = (setItemUpdatedCost!=null) ? numberFormat(setItemUpdatedCost) : 0;
 
         const userLogin = JSON.parse(sessionStorage.logindata);
 
       return(
         <div>
           <div id="dvTotalsub" className="bg-f7d886 text-center">
-                <span><span className="font-b fc-000">All Pages :</span> <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span><span className="padding-lf15">|</span></span>
-                <span><span className="font-b fc-000">Total Items :</span> <span className="font-w9">{ numberFormat(listCatalogItems.total_items) } Items </span><span className="padding-lf15">|</span></span>
+                <span>
+                    <span className="font-b fc-000">All Pages :</span>
+                    <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
+                    <span className="padding-lf15">|</span>
+                </span>
+                <span>
+                    <span className="font-b fc-000">Total Items :</span>
+                    <span className="font-w9">{ numberFormat(listCatalogItems.total_items) } Items </span>
+                    <span className="padding-lf15">|</span>
+                </span>
                 <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                         || userLogin.permission.price == 'All') ?
                         '' : 'hidden'}`}>
                     <span className="font-b fc-000">Total Public Price :</span>
                     <span className="font-w9">{ _totalPublicPrice } { userLogin.currency }</span>
-                    <span className="padding-lf15"> | </span>
                 </span>
                 <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
                     '' : 'hidden'}`}>
+                    <span className="padding-lf15"> | </span>
                     <span className="font-b fc-000">Total Updated Cost :</span>
                     <span className="font-w9">{ _totalUpdatedCost } { userLogin.currency }
+                    </span>
+                </span>
+          </div>
+          <div id="dvTotalsub" className="bg-f7d886 text-center">
+                <span>
+                    <span className="font-b fc-000">All Pages :</span>
+                    <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
+                    <span className="padding-lf15">|</span>
+                </span>
+                <span>
+                    <span className="font-b fc-000">Total SetItems :</span>
+                    <span className="font-w9">{ numberFormat(listCatalogItems.total_setitems) } SetItems </span>
+                    <span className="padding-lf15">|</span>
+                </span>
+                <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                        || userLogin.permission.price == 'All') ?
+                        '' : 'hidden'}`}>
+                    <span className="font-b fc-000">Total Public Price(Set) :</span>
+                    <span className="font-w9">{ _totalPublicPriceSet } { userLogin.currency }</span>
+                </span>
+                <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                    '' : 'hidden'}`}>
+                    <span className="padding-lf15"> | </span>
+                    <span className="font-b fc-000">Total Updated Cost(Set) :</span>
+                    <span className="font-w9">{ _totalUpdatedCostSet } { userLogin.currency }
                     </span>
                 </span>
           </div>
@@ -708,7 +785,7 @@ class MyCatalog extends Component {
     }
 
     render() {
-            const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared } = this.props;
+            const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared, ViewAsSet } = this.props;
             let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2;
             let catalogSortDirection = (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1;
             let style = {
@@ -842,13 +919,15 @@ class MyCatalog extends Component {
                                     <GridItemsView  items={items} onClickGrid={this.onClickGrid}
                                         onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                         onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
-                                        isCatalogShared={isCatalogShared}/>
+                                        isCatalogShared={isCatalogShared}
+                                        ViewAsSet={ViewAsSet}/>
                                 </div>
                                 <div id="dvGridview" className="search-product hidden">
                                   <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
                                     onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                     onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
-                                    isCatalogShared={isCatalogShared}/>
+                                    isCatalogShared={isCatalogShared}
+                                    ViewAsSet={ViewAsSet}/>
                                 </div>
                             </div>
                         </div>
@@ -881,6 +960,7 @@ function mapStateToProps(state) {
         shareCatalogmsgError: state.myCatalog.msg,
         shareCatalogStatusCode: state.myCatalog.shareCatalogStatusCode,
         isCatalogShared: state.myCatalog.isCatalogShared,
+        ViewAsSet: state.searchResult.viewAsSet
     }
 }
 MyCatalog.contextTypes = {

@@ -1,5 +1,5 @@
 import Boom from 'boom'
-import Elasticsearch from 'elasticsearch'
+// import Elasticsearch from 'elasticsearch'
 import _  from 'lodash'
 
 export default {
@@ -10,25 +10,26 @@ export default {
 
         (async () => {
 
-            const client = new Elasticsearch.Client({
-                            host: request.elasticsearch.host,
-                            keepAlive: false
-                        })
+            // const client = new Elasticsearch.Client({
+            //                 host: request.elasticsearch.host,
+            //                 keepAlive: false
+            //             })
             try {
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
                 const catalogPayload = request.payload
                 const catalogPayloadId = request.payload.id
+                // console.log('savesetitem catalogPayload-->',catalogPayload);
 
                 const helper = request.helper
-                const items = request.payload.items
-                const es = await client.search(request.helper.item.parameters(items))
-                const inventory = await request.helper.item.inventory(items, es)
+                const setitems = request.payload.items
+                // const es = await client.search(request.helper.item.parameters(items))
+                // const inventory = await request.helper.item.inventory(items, es)
                 const user = await request.user.getUserById(request, request.auth.credentials.id)
-                const response = await request.helper.item.authorization(user, inventory)
-                const refuseItem = response.filter((item) => { return !item.availability || !item.authorization })
+                // const response = await request.helper.item.authorization(user, inventory)
+                // const refuseItem = response.filter((item) => { return !item.availability || !item.authorization })
 
-                if(refuseItem.length > 0) return reply.invalidItems(refuseItem)
+                // if(refuseItem.length > 0) return reply.invalidItems(refuseItem)
 
                 if (!!!catalogPayloadId) {
                     const existingCatalog = await db.collection('CatalogName').find({ "catalog": request.payload.catalog, "userId": request.auth.credentials.id }).toArray()
@@ -53,17 +54,17 @@ export default {
                     })
                 const catalogColId = catalogCollection.lastErrorObject.updatedExisting ? catalogCollection.value._id : catalogCollection.lastErrorObject.upserted
 
-                response.forEach(async (item) => {
-
+                setitems.forEach(async (setitem) => {
+                    // console.log('setitem-->',setitem);
                     await db.collection('CatalogItem').findOneAndUpdate(
                         {
                             "catalogId": new ObjectID(catalogColId),
-                            "id": item.id.toString()
+                            "id": null,
+                            "reference": setitem.reference
                         },
                         {
                             $set: {
-                                "reference": item.reference,
-                                "description": item.description,
+                                "description": setitem.description,
                                 "lastModified": new Date()
                             }
                         },
@@ -77,9 +78,10 @@ export default {
 
             } catch (e) {
                 reply(Boom.badImplementation('', e))
-            } finally {
-                client && client.close()
             }
+            // finally {
+            //     client && client.close()
+            // }
         })();
     }
 }

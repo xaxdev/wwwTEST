@@ -11,11 +11,11 @@ const Detail = (props) =>{
     const currency = logindata.currency;
     // console.log('productdetailaction');
     // console.log('currency-->',currency);
-    // console.log('props.actualCost-->',props.actualCost);
-    let invoicedDate = convertDate(props.itemCreatedDate);
-    let actualCost = numberFormat(props.actualCost[currency]);
-    let updatedCost = numberFormat(props.updatedCost[currency]);
-    let price = numberFormat(props.price[currency]);
+    // console.log('props-->',props);
+    let invoicedDate = !!props.id ? convertDate(props.itemCreatedDate) : convertDate(props.createdDate);
+    let actualCost = !!props.id ? numberFormat(props.actualCost[currency]): numberFormat(props.totalActualCost['USD']);
+    let updatedCost = !!props.id ? numberFormat(props.updatedCost[currency]) : numberFormat(props.totalUpdatedCost['USD']);
+    let price = !!props.id ? numberFormat(props.price[currency]) : numberFormat(props.totalPrice['USD']);
     let markUp = convertMarkpercent(props.markup);
     const userLogin = JSON.parse(sessionStorage.logindata);
     let setReference = (props.setReference != undefined ) ? props.setReference : '-';

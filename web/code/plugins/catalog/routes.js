@@ -47,8 +47,33 @@ export default [
         config: controllers.getnameswithshared
     },
     {
+        method: 'GET',
+        path: '/webnamessetitem',
+        config: controllers.getnameswithsharedsetitem
+    },
+    {
         method: 'POST',
         path: '/shared',
         config: controllers.saveshared
     },
+    {
+        method: 'POST',
+        path: '/setitem',
+        config: controllers.savesetitem
+    },
+    {
+        method: 'GET',
+        path: '/namessetitem',
+        config: controllers.getnamessetitem
+    },
+    {
+        method: 'GET',
+        path: '/datasetitem/{id}/{reference?}',
+        config: controllers.getdatasetitem
+    },
+    {
+        method: 'GET',
+        path: '/setitem/{id}',
+        config: controllers.itemssetitem
+    }
 ]

@@ -53,7 +53,7 @@ export default [
     },
     {
         method: 'POST',
-        path: '/setitems',
+        path: '/setitem',
         config: controllers.savesetitem
     }
 ]

@@ -119,6 +119,14 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/products/setdetail'));
                     }, 'setdetail');
                 }
+            },{
+                onEnter: requireAuth,
+                path: 'setdetailmycatalog/:id',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/products/setdetailmycatalog'));
+                    }, 'setdetailmycatalog');
+                }
             }, {
                 onEnter: requireAuth,
                 path: '/productreletedetail/:id',

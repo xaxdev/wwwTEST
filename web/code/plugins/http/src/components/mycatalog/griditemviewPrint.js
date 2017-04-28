@@ -426,35 +426,80 @@ class GridItemsViewPrint extends Component {
       <div>
         {this.props.items.map(function(item, index){
         //   console.log('item-->',item);
-        let imagesProduct = (item.authorization)
-                              ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
-                              :'/images/login-logo@2x.png';
-        imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
-        let itemDate = (item.authorization)
-                          ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
-                          : '';
-        let lblDate = (item.authorization)
-                          ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
-                          : '';
-        let price = (item.authorization)
-                          ? (item.price != -1)? numberFormat(item.price) + ' ' + item.userCurrency: '- ' + userLogin.currency
-                          : '- ' + userLogin.currency;
-        let actualCost = (item.authorization)
-                          ? (item.actualCost != -1)? numberFormat(item.actualCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
-                          : '- ' + userLogin.currency;
-        let updatedCost = (item.authorization)
-                          ? (item.updatedCost != -1)? numberFormat(item.updatedCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
-                          : '- ' + userLogin.currency;
-        let itemName = (item.authorization)
-                          ? (item.type != 'CER')?
-                              (item.description != undefined) ?
-                                  (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
-                              : '-' :
-                              item.name
-                          : '';
-        let itemNameCat = (item.authorization)
-                            ? (item.type != 'CER')? item.description: item.name
-                            : '';
+            let imagesProduct = '';
+            let itemDate = '';
+            let lblDate = '';
+            let price = '';
+            let actualCost = '';
+            let updatedCost = '';
+            let itemName = '';
+            let itemNameCat = '';
+
+            if (item.id != null) {
+                imagesProduct = (item.authorization)
+                  ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                  :'/images/login-logo@2x.png';
+                  imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
+                itemDate = (item.authorization)
+                  ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
+                  : '';
+                lblDate = (item.authorization)
+                  ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
+                  : '';
+                price = (item.authorization)
+                  ? (item.price != -1)? numberFormat(item.price) + ' ' + item.userCurrency: '- ' + userLogin.currency
+                  : '- ' + userLogin.currency;
+                actualCost = (item.authorization)
+                  ? (item.actualCost != -1)? numberFormat(item.actualCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
+                  : '- ' + userLogin.currency;
+                updatedCost = (item.authorization)
+                  ? (item.updatedCost != -1)? numberFormat(item.updatedCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
+                  : '- ' + userLogin.currency;
+                itemName = (item.authorization)
+                  ? (item.type != 'CER')?
+                      (item.description != undefined) ?
+                      (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                      : '-' :
+                      item.name
+                  : '';
+                itemNameCat = (item.authorization)
+                  ? (item.type != 'CER')? item.description: item.name
+                  : '';
+            }else{
+                imagesProduct = (item.image) != undefined
+                                ? item.image.length != 0
+                                    ?item.image[0].original
+                                    : '/images/login-logo@2x.png'
+                                : '/images/login-logo@2x.png';
+
+                imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
+
+                itemDate = (item.authorization)
+                  ? (item.type != 'CER') ? convertDate(item.createdDate) : convertDate(item.createdDate)
+                  : '';
+                lblDate = (item.authorization)
+                  ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
+                  : '';
+                price = (item.authorization)
+                  ? (item.price != -1)? numberFormat(item.price) + ' ' + item.userCurrency: '- ' + userLogin.currency
+                  : '- ' + userLogin.currency;
+                actualCost = (item.authorization)
+                  ? (item.actualCost != -1)? numberFormat(item.actualCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
+                  : '- ' + userLogin.currency;
+                updatedCost = (item.authorization)
+                  ? (item.updatedCost != -1)? numberFormat(item.updatedCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
+                  : '- ' + userLogin.currency;
+                itemName = (item.authorization)
+                  ? (item.type != 'CER')?
+                      (item.description != undefined) ?
+                      (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                      : '-' :
+                      item.name
+                  : '';
+                itemNameCat = (item.authorization)
+                  ? (item.type != 'CER')? item.description: item.name
+                  : '';
+            }
            return (
               <div key={item.id} name={item.id} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
