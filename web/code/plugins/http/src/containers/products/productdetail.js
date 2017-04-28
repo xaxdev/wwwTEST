@@ -466,33 +466,42 @@ class productdetail extends Component {
         );
       }
 
-      if(setReferenceData.products.length > 0){
-        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-        const currency = logindata.currency;
-        return(
-          <div>
-            <h2>SET DETAILS</h2>
-            <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-              <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice[currency] ? parseInt(setReferenceData.totalprice[currency]) : '-'} />
-              <ReactImageFallback
-                    id="imgset"
-                     src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                     fallbackImage="/images/blank.gif"
-                     initialImage="/images/blank.gif"
-                     width={120}
-                     height={120}
-                     className="img-responsive" />
-            </div>
-            <Setreference productset={setReferenceData}/>
-          </div>
-          );
-      } else {
-        return(
-            <div>
+      if (!!setReferenceData.products) {
+          if(setReferenceData.products.length > 0){
+              const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+              const currency = logindata.currency;
+              return(
+                  <div>
+                  <h2>SET DETAILS</h2>
+                  <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
+                  <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice[currency] ? parseInt(setReferenceData.totalprice[currency]) : '-'} />
+                  <ReactImageFallback
+                  id="imgset"
+                  src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                  fallbackImage="/images/blank.gif"
+                  initialImage="/images/blank.gif"
+                  width={120}
+                  height={120}
+                  className="img-responsive" />
+                  </div>
+                  <Setreference productset={setReferenceData}/>
+                  </div>
+              );
+          } else {
+              return(
+                  <div>
 
-            </div>
+                  </div>
+              );
+          }
+      }else{
+          return(
+              <div>
+
+              </div>
           );
       }
+
     }
 
     clickSet(){
@@ -750,7 +759,8 @@ class productdetail extends Component {
 
    addMyCatalog = _=>{
 
-     this.props.getCatalogName().then(() =>{
+    //  this.props.getCatalogName().then(() =>{
+    this.props.getCatalogNameSetItem().then(() =>{
        const { fields: {
                  oldCatalogName,newCatalogName,validateCatalogName
              } } = this.props;

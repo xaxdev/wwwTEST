@@ -315,6 +315,15 @@
 			}
         },
 		{
+			"plugin": "./plugins/catalogwithsetitem",
+			"options": {
+				"select": "api",
+				"routes": {
+					"prefix": "/api/catalogwithsetitem"
+				}
+			}
+        },
+		{
 			"plugin": "./plugins/helper"
         },
 		{

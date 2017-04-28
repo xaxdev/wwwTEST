@@ -1252,9 +1252,15 @@ class GridItemsView extends Component {
             let updatedCost = '';
             let itemName = '';
             let itemNameCat = '';
+            let lblActualCost = '';
+            let lblPrice = '';
+            let lblUpdatedCost = '';
 
             if (ViewAsSet) {
-                imagesProduct = (item.image) != undefined 
+                lblActualCost = 'Total Actual Cost (USD)';
+                lblPrice = 'Total Public Price (USD)';
+                lblUpdatedCost = 'Total Update Cost (USD)';
+                imagesProduct = (item.image) != undefined
                                 ? item.image.length != 0
                                     ?item.image[0].original
                                     : '/images/blank.gif'
@@ -1273,6 +1279,9 @@ class GridItemsView extends Component {
                                   item.name
                                   ;
             }else{
+                lblActualCost = `Actual Cost (${userLogin.currency})`;
+                lblPrice = `Public Price (${userLogin.currency})`;
+                lblUpdatedCost = `Update Cost (${userLogin.currency})`;
                 imagesProduct = (item.gallery) != undefined
                                     ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
                                     : '/images/blank.gif';
@@ -1294,7 +1303,9 @@ class GridItemsView extends Component {
                 itemNameCat = (item.type != 'CER')? item.description: item.name;
             }
            return (
-              <div key={item.id} name={item.id} id={index} className="col-md-3 col-sm-3 nopadding">
+              <div key={ViewAsSet ? item.reference : item.id}
+                    name={ViewAsSet ? item.reference : item.id}
+                    id={index} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
                                  (index==1)? `searchresult-prodcut ${that.state.isOpen1? 'searchresult-border': ''}`:
                                  (index==2)? `searchresult-prodcut ${that.state.isOpen2? 'searchresult-border': ''}`:
@@ -1358,17 +1369,21 @@ class GridItemsView extends Component {
                                  (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                   ''}>
                     <div className="pull-right">
-                      <div className={`grid-add ${!ViewAsSet ? '' : 'hidden'}`}>
-                        <span className="icon-add-28" name={item.id} id={index} value={item.id}
+                      <div className="grid-add">
+                        <span className="icon-add-28"
+                            name={ViewAsSet ? item.reference : item.id} id={index}
+                            value={ViewAsSet ? item.reference : item.id}
                           onClick={onAddedOneItemMyCatalog}></span>
                       </div>
-                     <div className={`checkbox checkbox-warning ${!ViewAsSet ? '' : 'hidden'}`}>
+                     <div className="checkbox checkbox-warning">
                       <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                        name={item.id} id={index} value={item.id} onChange={onCheckedOneItemMyCatalog}
+                        name={ViewAsSet ? item.reference : item.id} id={index}
+                        value={ViewAsSet ? item.reference : item.id} onChange={onCheckedOneItemMyCatalog}
                         />
                           <label className="checkbox1"></label>
                       </div>
-                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive name={ViewAsSet ? item.reference : item.id} id={index} onClick={showDetails}/></span>
+                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive
+                        name={ViewAsSet ? item.reference : item.id} id={index} onClick={showDetails}/></span>
                     </div>
 
                     <div className="thumbnaillgrid">
@@ -1377,7 +1392,7 @@ class GridItemsView extends Component {
                              src={imagesProduct }
                              fallbackImage="/images/blank.gif"
                              initialImage="/images/blank.gif"
-                             name={item.id}
+                             name={ViewAsSet ? item.reference : item.id}
                              id={ViewAsSet ? item.reference : item.id}
                              onClick={btnEvent}
                              />
@@ -1470,16 +1485,16 @@ class GridItemsView extends Component {
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
                             <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>{ViewAsSet? 'Total Actual Cost': 'Actual Cost'} ({userLogin.currency}): </span>
+                                '' : 'hidden'}`}>{lblActualCost}: </span>
                             <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
                                 '' : 'hidden'}`}>{actualCost}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>{ViewAsSet? 'Total Update Cost': 'Update Cost'} ({userLogin.currency}): </span>
+                                '' : 'hidden'}`}>{lblUpdatedCost}: </span>
                             <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{updatedCost}</span>
                             <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                '' : 'hidden'}`}>{ViewAsSet? 'Total Public Price': 'Public Price'} ({userLogin.currency}): </span>
+                                '' : 'hidden'}`}>{lblPrice}: </span>
                             <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
                                 '' : 'hidden'}`}>{price}</span>

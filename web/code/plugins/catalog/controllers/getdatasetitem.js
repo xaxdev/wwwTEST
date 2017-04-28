@@ -21,9 +21,9 @@ export default {
         (async () => {
 
             const client = new Elasticsearch.Client({
-                        host: request.elasticsearch.host,
-                        keepAlive: false
-                    })
+                host: request.elasticsearch.host,
+                keepAlive: false
+            })
             try {
                 const userHelper = request.user
                 const helper = request.helper
@@ -42,20 +42,34 @@ export default {
                 let fCatalog = await db.collection('CatalogName').findOne({ "_id" : new ObjectID(catalogId) })
                 if (_.isNull(fCatalog)) return reply(Boom.badRequest("Invalid item."))
 
-                let fCondition = { "catalogId": new ObjectID(catalogId), "id": { $ne: null }}
+                let fCondition = { "catalogId": new ObjectID(catalogId) }
                 if (!_.isNull(itemRef)) {
                     fCondition = _.assign({ "reference": { "$regex": itemRef, "$options": "i" }}, fCondition)
                 }
 
                 const countCatalogItem = await db.collection('CatalogItem').find(fCondition).count()
                 const items = await db.collection('CatalogItem').find(fCondition, { "_id": 0, "catalogId": 0, "lastModified": 0 })
-                                        .sort(sorting).limit(size).skip((page - 1) * size).toArray()
+                .sort(sorting).limit(size).skip((page - 1) * size).toArray()
 
                 if (!!items.length) {
-                    const es = await client.search(request.helper.item.parameters(items))
-                    const inventory = await request.helper.item.inventory(items, es)
+                    let response = []
+                    const useItems = items.filter((item) => { return item.id !== null })
+                    const useSetItems = items.filter((item) => { return item.id === null })
                     const user = await userHelper.getUserById(request, request.auth.credentials.id)
-                    const response = await request.helper.item.authorization(user, inventory)
+
+                    if (!!useItems.length && useItems.length > 0) {
+                        const es = await client.search(request.helper.item.parameters(useItems))
+                        const inventory = await request.helper.item.inventory(useItems, es)
+                        const responseItem = await request.helper.item.authorization(user, inventory)
+                        response.push(...responseItem)
+                    }
+
+                    if (!!useSetItems.length && useSetItems.length > 0) {
+                        const esSetItems = await client.search(request.helper.setitem.parameters(useSetItems))
+                        const inventorySetItems = await request.helper.setitem.inventory(useSetItems, esSetItems)
+                        const responseSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
+                        response.push(...responseSetItem)
+                    }
 
                     return reply({
                         "_id": new ObjectID(fCatalog._id),

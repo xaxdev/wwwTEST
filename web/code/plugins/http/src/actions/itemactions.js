@@ -12,6 +12,57 @@ import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
+export function getCatalogItemsWithSetItem(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog/setitem/${params.id}?page=${params.page}&size=${params.size}&sort=${params.sort}&order=${params.order}`;
+  return {
+            type: GET_CATALOGITEMS,
+    		promise: fetch(url,{
+                method: 'GET',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': token
+                }
+            }),
+            catalog: params.id
+  }
+}
+export function getCatalogNameSetItem(params){
+  const token = sessionStorage.token;
+  // var url = `${ROOT_URL}/api/catalog/names`;
+  var url = `${ROOT_URL}/api/catalog/webnamessetitem`;
+  // console.log('getItems-->',url);
+
+  return {
+          type: GET_CATALOGNAME,
+    		promise: fetch(url,{
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          })
+  }
+}
+export function addCatalogSetItem(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/catalog/setitem`;
+  return {
+          type: ADD_CATALOG,
+    		promise: fetch(url,{
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+            body: JSON.stringify(params)
+          })
+  }
+}
+
 export function setIsSAveSearch(value){
     return {
             type: SET_ISSAVESEARCH,

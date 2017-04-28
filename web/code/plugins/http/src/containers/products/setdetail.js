@@ -386,31 +386,39 @@ class productdetail extends Component {
         );
       }
 
-      if(setReferenceData.products.length > 0){
-        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-        const currency = logindata.currency;
-        return(
-          <div>
-            <h2>SET DETAILS</h2>
-            {/*<div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-              <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
-              <ReactImageFallback
-                    id="imgset"
-                     src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                     fallbackImage="/images/blank.gif"
-                     initialImage="/images/blank.gif"
-                     width={120}
-                     height={120}
-                     className="img-responsive" />
-            </div>*/}
-            <Setreference productset={setReferenceData}/>
-          </div>
-          );
-      } else {
-        return(
-            <div>
+      if (!!setReferenceData.products) {
+          if(setReferenceData.products.length > 0){
+              const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+              const currency = logindata.currency;
+              return(
+                  <div>
+                  <h2>SET DETAILS</h2>
+                  {/*<div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
+                  <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
+                  <ReactImageFallback
+                  id="imgset"
+                  src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                  fallbackImage="/images/blank.gif"
+                  initialImage="/images/blank.gif"
+                  width={120}
+                  height={120}
+                  className="img-responsive" />
+                  </div>*/}
+                  <Setreference productset={setReferenceData}/>
+                  </div>
+              );
+          } else {
+              return(
+                  <div>
 
-            </div>
+                  </div>
+              );
+          }
+      }else{
+          return(
+              <div>
+
+              </div>
           );
       }
     }
@@ -664,7 +672,8 @@ class productdetail extends Component {
 
    addMyCatalog = _=>{
 
-     this.props.getCatalogName().then(() =>{
+    //  this.props.getCatalogName().then(() =>{
+     this.props.getCatalogNameSetItem().then(() =>{
        const { fields: {
                  oldCatalogName,newCatalogName,validateCatalogName
              } } = this.props;
@@ -696,9 +705,10 @@ class productdetail extends Component {
        this.setState({isOpenAddMyCatalog: false});
        const { fields: {
                  oldCatalogName,newCatalogName,validateCatalogName
-             } } = this.props;
+             }, viewAsSet } = this.props;
        const  Detail  = this.props.productdetail;
        const  listCatalogName  = this.props.listCatalogName;
+    //    console.log(oldCatalogName.value);
        let oldCatalogTitle = ''
        if (oldCatalogName.value) {
           oldCatalogTitle = listCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
@@ -709,15 +719,21 @@ class productdetail extends Component {
           catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
           items:[
              {
-                id:Detail.id,
+                id: !!Detail.id ? Detail.id : null,
                 reference:Detail.reference,
                 description:Detail.description
              }
           ]
        }
-       this.props.addCatalog(catalogdata).then( () =>{
-          this.setState({isOpenAddMyCatalogmsg: true});
-       })
+       if (viewAsSet) {
+           this.props.addCatalogSetItem(catalogdata).then( () =>{
+               this.setState({isOpenAddMyCatalogmsg: true});
+           });
+       }else{
+           this.props.addCatalog(catalogdata).then( () =>{
+               this.setState({isOpenAddMyCatalogmsg: true});
+           });
+       }
    }
 
    handleClosemsg = _=>{
@@ -909,7 +925,7 @@ class productdetail extends Component {
           <br/><br/><br/><br/><br/><br/>
         </div>
         <div className={`row ${this.state.showmovement ? 'hide' : ''}`}>
-            {!viewAsSet ? this.renderAddMyCatalog():''}
+            {this.renderAddMyCatalog()}
             {this.renderAlertmsg()}
               <div className="col-sm-12">
                   <div className="panel panel-default">

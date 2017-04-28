@@ -11,7 +11,47 @@ export default {
 
             try {
                 const db = request.mongo.db;
-                const ownList = await db.collection('CatalogName').find({ 'userId': request.auth.credentials.id }).sort({ 'catalog': 1 }).toArray();
+                const ownCatalog = await db.collection('CatalogItem').aggregate([
+                    {
+                        $lookup: {
+                            from: 'CatalogName',
+                            localField: 'catalogId',
+                            foreignField: '_id',
+                            as: 'CatalogName'
+                        }
+                    },
+                    {
+                        $unwind: '$CatalogName'
+                    },
+                    {
+                        $match: {
+                            'CatalogName.userId': request.auth.credentials.id
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 1,
+                            catalogId: 1,
+                            id : 1,
+                            reference : 1,
+                            description: 1,
+                            lastModified: 1
+                        }
+                    }])
+                    .toArray()
+                const ownCatalogHasItem = ownCatalog.filter((data) => {
+                    return data.id !== null
+                })
+                const uniqOwnCatalogHasItem = _.uniqWith(ownCatalogHasItem.map((data) => { return data.catalogId }), _.isEqual)
+                const ownList = await db.collection('CatalogName').find(
+                    {
+                        "_id": { $in: uniqOwnCatalogHasItem },
+                        "userId": request.auth.credentials.id
+                    })
+                    .sort({
+                        "catalog": 1
+                    })
+                    .toArray()
                 const markOwnList = ownList.map((item) => { return { ...item, shared: false } });
 
                 const sharedLists = await db.collection('CatalogName').aggregate([
@@ -30,7 +70,8 @@ export default {
                         $match: {
                             'CatalogShared.users.id': request.auth.credentials.id
                         }
-                    }, {
+                    },
+                    {
                         $project: {
                             _id: 1,
                             catalog: 1,
@@ -44,7 +85,6 @@ export default {
                 });
 
                 return reply(_.union(markOwnList, markSharedList));
-                // return reply({error:'',message:'Share catalog success.',statusCode:200});
             } catch (e) {
 
                 return reply(Boom.badImplementation('', e))
