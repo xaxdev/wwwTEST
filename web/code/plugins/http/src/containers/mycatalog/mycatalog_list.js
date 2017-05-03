@@ -26,6 +26,7 @@ class MyCatalog extends Component {
         super(props);
 
         this.handleGo = this.handleGo.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
         this.onClickGrid = this.onClickGrid.bind(this);
         this.selectedCatalog = this.selectedCatalog.bind(this);
         this.deleteOneItemMyCatalog = this.deleteOneItemMyCatalog.bind(this);
@@ -44,6 +45,7 @@ class MyCatalog extends Component {
         this.handleSubmitDeleteAllItem = this.handleSubmitDeleteAllItem.bind(this);
         this.printResults = this.printResults.bind(this);
         this.shareMyCatalog = this.shareMyCatalog.bind(this);
+        this.selectedPageSize = this.selectedPageSize.bind(this);
 
         this.state = {
           activePage: this.props.currentPage,
@@ -300,7 +302,7 @@ class MyCatalog extends Component {
         e.preventDefault();
 
         let sortingDirection = e.target.value;
-        const pageSize = 16;
+        const pageSize = this.refs.pageSize.value;
         const { catalogId, listCatalogItems } = this.props;
 
         let parasm = {
@@ -321,7 +323,7 @@ class MyCatalog extends Component {
         e.preventDefault();
 
         let sortingBy = e.target.value;
-        const pageSize = 16;
+        const pageSize = this.refs.pageSize.value;
         const { catalogId, listCatalogItems } = this.props;
 
         let parasm = {
@@ -401,7 +403,7 @@ class MyCatalog extends Component {
             this.setState({isOpenAddMyCatalogmsg: true});
         //   this.renderAlertmsg('Page is invalid.');
         }else{
-            const pageSize = 16;
+            const pageSize = this.refs.pageSize.value;
 
             this.setState({activePage: getPage});
 
@@ -420,7 +422,7 @@ class MyCatalog extends Component {
             if (catalogId != null) {
                 // this.props.getCatalogItems(parasm).then((value) => {
                 this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
-                    console.log(value);
+                    // console.log(value);
                 });
             }
         }
@@ -599,6 +601,17 @@ class MyCatalog extends Component {
 
       return(
           <div>
+              <Pagination
+               prev
+               next
+               first
+               last
+               ellipsis
+               boundaryLinks
+               items={totalPages}
+               maxButtons={4}
+               activePage={this.state.activePage}
+               onSelect={this.handleSelect} />
               <div>
                 <span>Page</span>
                   <input type="number" placeholder={page} ref="reletego" {...currPage}/>
@@ -784,6 +797,67 @@ class MyCatalog extends Component {
             isClose={this.handleCloseShareMyCatalog} props={this.props}/>);
     }
 
+    selectedPageSize = e =>{
+        e.preventDefault();
+
+        const pageSize = e.target.value;
+        const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const { catalogId, listCatalogItems } = this.props;
+
+        this.setState({activePage: 1});
+
+        this.setState({
+            showLoading: true
+        });
+
+        let parasm = {
+            id: catalogId,
+            page: 1,
+            size: pageSize,
+            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+        };
+        this.props.setCatalogCurrentPage(getPage);
+        if (catalogId != null) {
+            // this.props.getCatalogItems(parasm).then((value) => {
+            this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
+                // console.log(value);
+            });
+        }
+    }
+
+    handleSelect = eventKey => {
+
+        const getPage = eventKey;
+
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const { catalogId, listCatalogItems } = this.props;
+
+        const pageSize = this.refs.pageSize.value;
+
+        this.setState({activePage: getPage});
+
+        this.setState({
+          showLoading: true
+        });
+
+        let parasm = {
+                id: catalogId,
+                page: getPage,
+                size: pageSize,
+                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+            };
+        this.props.setCatalogCurrentPage(getPage);
+        if (catalogId != null) {
+            // this.props.getCatalogItems(parasm).then((value) => {
+            this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
+                // console.log(value);
+            });
+        }
+    }
+
     render() {
             const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared, ViewAsSet } = this.props;
             let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2;
@@ -860,7 +934,7 @@ class MyCatalog extends Component {
                                         onClick={ this.shareMyCatalog }></div></a>
                                 </div>
                               </div>
-                            <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 nopadding">
+                            <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 nopadding pull-right">
                               <div className="cat-sort col-xs-12 margin-t5">
                                 <ControlLabel>Sort By : </ControlLabel>
                               </div>
@@ -882,11 +956,11 @@ class MyCatalog extends Component {
                                     </select>
                                 </div>
                               </div>
-                              <div className="col-md-4 col-sm-4 pagenavi nopadding pull-right">
+                              {/*<div className="col-md-4 col-sm-4 pagenavi nopadding pull-right">
                                   <div className="searchresult-navi cat-go">
                                       {this.renderPagination()}
                                   </div>
-                              </div>
+                              </div>*/}
                             </div>
                       </div>
                   </div>
@@ -912,6 +986,22 @@ class MyCatalog extends Component {
                                 }
                                 <span className="margin-l5 text-del">Delete Items</span>
                             </div>
+                            <div className="pull-right maring-b10">
+                                  <div className="pull-left padding-r10 margin-t7">View</div>
+                                  <div className="pull-left">
+                                      <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
+                                        <option key="16" value="16">16</option>
+                                        <option key="32" value="32">32</option>
+                                        <option key="60" value="60">60</option>
+                                      </select>
+                                  </div>
+                                  <div className="pull-left padding-l10 margin-t7 margin-r10">
+                                    per page
+                                  </div>
+                                  <div className="searchresult-navi cat-go">
+                                      {this.renderPagination()}
+                                  </div>
+                            </div>
                       </div>
                         <div className="panel panel-default">
                             <div className="panel-body padding-ft0">
@@ -929,6 +1019,13 @@ class MyCatalog extends Component {
                                     isCatalogShared={isCatalogShared}
                                     ViewAsSet={ViewAsSet}/>
                                 </div>
+                                {/* Pagination */}
+                                <div className="col-sm-12 pagenavi maring-t20">
+                                  <div className="searchresult-navi cat-go">
+                                    {this.renderPagination()}
+                                  </div>
+                                </div>
+                                {/* End Pagination */}
                             </div>
                         </div>
                     </div>

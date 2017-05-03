@@ -1651,17 +1651,17 @@ class SearchResult extends Component {
                                 {this.renderPagination()}
                             </div>
                             <div className="pull-right maring-b10">
-                              <div className="pull-left padding-r10 margin-t7">View</div>
-                              <div className="pull-left">
-                              <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
-                                <option key="16" value="16">16</option>
-                                <option key="32" value="32">32</option>
-                                <option key="60" value="60">60</option>
-                              </select>
-                              </div>
-                              <div className="pull-left padding-l10 margin-t7 margin-r10">
-                              per page
-                              </div>
+                                  <div className="pull-left padding-r10 margin-t7">View</div>
+                                  <div className="pull-left">
+                                      <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
+                                        <option key="16" value="16">16</option>
+                                        <option key="32" value="32">32</option>
+                                        <option key="60" value="60">60</option>
+                                      </select>
+                                  </div>
+                                  <div className="pull-left padding-l10 margin-t7 margin-r10">
+                                    per page
+                                  </div>
                             </div>
                           </div>
                         </div>

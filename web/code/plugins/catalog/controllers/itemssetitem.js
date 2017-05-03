@@ -70,6 +70,8 @@ export default {
                     let total_setitems_pages = 0;
                     const useItems = catalog.items.filter((item) => { return item.id !== null })
                     const useSetItems = catalog.items.filter((item) => { return item.id === null })
+                    total_items = useItems.length;
+                    total_setitems = useSetItems.length;
                     const user = await request.user.getUserById(request, request.auth.credentials.id)
 
                     if (!!useItems.length && useItems.length > 0) {
@@ -84,8 +86,8 @@ export default {
                                                 .sort(sorting).limit(size).skip((page - 1) * size).toArray()
                         inventory = await request.helper.item.inventory(data, es)
                         const items = await request.helper.item.authorization(user, inventory)
-                        total_items = items.length
-                        total_pages = Math.ceil(total_items/size)
+                        // total_items = items.length
+                        total_pages = Math.ceil(catalog.items.length/size)
 
                         response.push(...items)
                     }
@@ -101,8 +103,8 @@ export default {
                                                 .sort(sorting).limit(size).skip((page - 1) * size).toArray()
                         inventorySetItems = await request.helper.setitem.inventory(dataSetItem, esSetItems)
                         const itemsSetitem = await request.helper.setitem.authorization(user, inventorySetItems)
-                        total_setitems = itemsSetitem.length
-                        total_setitems_pages = Math.ceil(total_setitems/size)
+                        // total_setitems = itemsSetitem.length
+                        total_setitems_pages = Math.ceil(catalog.items.length/size)
 
                         response.push(...itemsSetitem)
                     }
