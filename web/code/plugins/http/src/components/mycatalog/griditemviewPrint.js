@@ -42,6 +42,50 @@ class GridItemsViewPrint extends Component {
       isOpen14: false,
       isOpen15: false,
       isOpen16: false,
+      isOpen17: false,
+      isOpen18: false,
+      isOpen19: false,
+      isOpen20: false,
+      isOpen21: false,
+      isOpen22: false,
+      isOpen23: false,
+      isOpen24: false,
+      isOpen25: false,
+      isOpen26: false,
+      isOpen27: false,
+      isOpen28: false,
+      isOpen29: false,
+      isOpen30: false,
+      isOpen31: false,
+      isOpen32: false,
+      isOpen33: false,
+      isOpen34: false,
+      isOpen35: false,
+      isOpen36: false,
+      isOpen37: false,
+      isOpen38: false,
+      isOpen39: false,
+      isOpen40: false,
+      isOpen41: false,
+      isOpen42: false,
+      isOpen43: false,
+      isOpen44: false,
+      isOpen45: false,
+      isOpen46: false,
+      isOpen47: false,
+      isOpen48: false,
+      isOpen49: false,
+      isOpen50: false,
+      isOpen51: false,
+      isOpen52: false,
+      isOpen53: false,
+      isOpen54: false,
+      isOpen55: false,
+      isOpen56: false,
+      isOpen57: false,
+      isOpen58: false,
+      isOpen59: false,
+      isOpen60: false,
       isOpenPop: false,
       toggleQuickView: false
     };
@@ -82,6 +126,50 @@ class GridItemsViewPrint extends Component {
     this.setState({isOpen14:false});
     this.setState({isOpen15:false});
     this.setState({isOpen16:false});
+    this.setState({isOpen17:false});
+    this.setState({isOpen18:false});
+    this.setState({isOpen19:false});
+    this.setState({isOpen20:false});
+    this.setState({isOpen21:false});
+    this.setState({isOpen22:false});
+    this.setState({isOpen23:false});
+    this.setState({isOpen24:false});
+    this.setState({isOpen25:false});
+    this.setState({isOpen26:false});
+    this.setState({isOpen27:false});
+    this.setState({isOpen28:false});
+    this.setState({isOpen29:false});
+    this.setState({isOpen30:false});
+    this.setState({isOpen31:false});
+    this.setState({isOpen32:false});
+    this.setState({isOpen33:false});
+    this.setState({isOpen34:false});
+    this.setState({isOpen35:false});
+    this.setState({isOpen36:false});
+    this.setState({isOpen37:false});
+    this.setState({isOpen38:false});
+    this.setState({isOpen39:false});
+    this.setState({isOpen40:false});
+    this.setState({isOpen41:false});
+    this.setState({isOpen42:false});
+    this.setState({isOpen43:false});
+    this.setState({isOpen44:false});
+    this.setState({isOpen45:false});
+    this.setState({isOpen46:false});
+    this.setState({isOpen47:false});
+    this.setState({isOpen48:false});
+    this.setState({isOpen49:false});
+    this.setState({isOpen50:false});
+    this.setState({isOpen51:false});
+    this.setState({isOpen52:false});
+    this.setState({isOpen53:false});
+    this.setState({isOpen54:false});
+    this.setState({isOpen55:false});
+    this.setState({isOpen56:false});
+    this.setState({isOpen57:false});
+    this.setState({isOpen58:false});
+    this.setState({isOpen59:false});
+    this.setState({isOpen60:false});
 
     switch(e.currentTarget.id){
     case '0':
@@ -339,6 +427,622 @@ class GridItemsViewPrint extends Component {
         }
     //   this.setState({isOpen16:true});
       break;
+      case '17':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen17: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen17: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen17:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '18':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen18: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen18: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen18:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '19':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen19: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen19: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen19:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '20':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen20: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen20: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen20:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '21':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen21: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen21: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen21:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '22':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen22: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen22: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen22:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '23':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen23: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen23: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen23:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '24':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen24: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen24: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen24:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '25':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen25: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen25: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen25:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '26':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen26: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen26: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen26:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '27':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen27: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen27: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen27:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '28':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen28: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen28: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen28:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '29':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen29: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen29: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen29:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '30':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen30: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen30: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen30:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '31':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen31: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen31: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen31:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '32':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen32: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen32: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen32:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '33':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen33: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen33: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen33:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '34':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen34: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen34: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen34:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '35':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen35: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen35: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen35:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '36':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen36: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen36: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen36:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '37':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen37: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen37: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen37:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '38':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen38: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen38: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen38:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '39':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen39: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen39: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen39:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '40':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen40: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen40: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen40:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '41':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen41: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen41: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen41:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '42':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen42: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen42: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen42:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '43':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen43: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen43: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen43:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '44':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen44: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen44: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen44:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '45':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen45: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen45: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen45:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '46':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen46: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen46: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen46:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '47':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen47: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen47: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen47:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '48':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen48: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen48: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen48:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '49':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen49: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen49: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen49:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '50':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen50: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen50: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen50:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '51':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen51: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen51: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen51:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '52':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen52: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen52: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen52:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '53':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen53: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen53: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen53:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '54':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen54: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen54: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen54:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '55':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen55: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen55: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen55:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '56':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen56: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen56: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen56:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '57':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen57: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen57: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen57:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '58':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen58: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen58: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen58:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '59':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen59: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen59: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen59:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
+      case '60':
+          if (this.state.toggleQuickView) {
+              if (oldView != e.currentTarget.id) {
+                  this.setState({isOpen60: true});
+                  this.setState({toggleQuickView: true});
+              } else {
+                  this.setState({isOpen60: false});
+                  this.setState({toggleQuickView: false});
+              }
+          } else {
+              this.setState({isOpen60:true});
+              this.setState({toggleQuickView: true});
+          }
+        break;
     default:
       break;
     }
@@ -399,6 +1103,138 @@ class GridItemsViewPrint extends Component {
     case '16':
       this.setState({isOpen16:false});
       break;
+      case '17':
+        this.setState({isOpen17:false});
+        break;
+      case '18':
+        this.setState({isOpen18:false});
+        break;
+      case '19':
+        this.setState({isOpen19:false});
+        break;
+      case '20':
+        this.setState({isOpen20:false});
+        break;
+      case '21':
+        this.setState({isOpen21:false});
+        break;
+      case '22':
+        this.setState({isOpen22:false});
+        break;
+      case '23':
+        this.setState({isOpen23:false});
+        break;
+      case '24':
+        this.setState({isOpen24:false});
+        break;
+      case '25':
+        this.setState({isOpen25:false});
+        break;
+      case '26':
+        this.setState({isOpen26:false});
+        break;
+      case '27':
+        this.setState({isOpen27:false});
+        break;
+      case '28':
+        this.setState({isOpen28:false});
+        break;
+      case '29':
+        this.setState({isOpen29:false});
+        break;
+      case '30':
+        this.setState({isOpen30:false});
+        break;
+      case '31':
+        this.setState({isOpen31:false});
+        break;
+      case '32':
+        this.setState({isOpen32:false});
+        break;
+      case '33':
+        this.setState({isOpen33:false});
+        break;
+      case '34':
+        this.setState({isOpen34:false});
+        break;
+      case '35':
+        this.setState({isOpen35:false});
+        break;
+      case '36':
+        this.setState({isOpen36:false});
+        break;
+      case '37':
+        this.setState({isOpen37:false});
+        break;
+      case '38':
+        this.setState({isOpen38:false});
+        break;
+      case '39':
+        this.setState({isOpen39:false});
+        break;
+      case '40':
+        this.setState({isOpen40:false});
+        break;
+      case '41':
+        this.setState({isOpen41:false});
+        break;
+      case '42':
+        this.setState({isOpen42:false});
+        break;
+      case '43':
+        this.setState({isOpen43:false});
+        break;
+      case '44':
+        this.setState({isOpen44:false});
+        break;
+      case '45':
+        this.setState({isOpen45:false});
+        break;
+      case '46':
+        this.setState({isOpen46:false});
+        break;
+      case '47':
+        this.setState({isOpen47:false});
+        break;
+      case '48':
+        this.setState({isOpen48:false});
+        break;
+      case '49':
+        this.setState({isOpen49:false});
+        break;
+      case '50':
+        this.setState({isOpen50:false});
+        break;
+      case '51':
+        this.setState({isOpen51:false});
+        break;
+      case '52':
+        this.setState({isOpen52:false});
+        break;
+      case '53':
+        this.setState({isOpen53:false});
+        break;
+      case '54':
+        this.setState({isOpen54:false});
+        break;
+      case '55':
+        this.setState({isOpen55:false});
+        break;
+      case '56':
+        this.setState({isOpen56:false});
+        break;
+      case '57':
+        this.setState({isOpen57:false});
+        break;
+      case '58':
+        this.setState({isOpen58:false});
+        break;
+      case '59':
+        this.setState({isOpen59:false});
+        break;
+      case '60':
+        this.setState({isOpen60:false});
+        break;
     default:
       break;
     }
@@ -528,6 +1364,50 @@ class GridItemsViewPrint extends Component {
                                  (index==14)? `searchresult-prodcut ${that.state.isOpen14? 'searchresult-border': ''}`:
                                  (index==15)? `searchresult-prodcut ${that.state.isOpen15? 'searchresult-border': ''}`:
                                  (index==16)? `searchresult-prodcut ${that.state.isOpen16? 'searchresult-border': ''}`:
+                                 (index==17)? `searchresult-prodcut ${that.state.isOpen17? 'searchresult-border': ''}`:
+                                 (index==18)? `searchresult-prodcut ${that.state.isOpen18? 'searchresult-border': ''}`:
+                                 (index==19)? `searchresult-prodcut ${that.state.isOpen19? 'searchresult-border': ''}`:
+                                 (index==20)? `searchresult-prodcut ${that.state.isOpen20? 'searchresult-border': ''}`:
+                                 (index==21)? `searchresult-prodcut ${that.state.isOpen21? 'searchresult-border': ''}`:
+                                 (index==22)? `searchresult-prodcut ${that.state.isOpen22? 'searchresult-border': ''}`:
+                                 (index==23)? `searchresult-prodcut ${that.state.isOpen23? 'searchresult-border': ''}`:
+                                 (index==24)? `searchresult-prodcut ${that.state.isOpen24? 'searchresult-border': ''}`:
+                                 (index==25)? `searchresult-prodcut ${that.state.isOpen25? 'searchresult-border': ''}`:
+                                 (index==26)? `searchresult-prodcut ${that.state.isOpen26? 'searchresult-border': ''}`:
+                                 (index==27)? `searchresult-prodcut ${that.state.isOpen27? 'searchresult-border': ''}`:
+                                 (index==28)? `searchresult-prodcut ${that.state.isOpen28? 'searchresult-border': ''}`:
+                                 (index==29)? `searchresult-prodcut ${that.state.isOpen29? 'searchresult-border': ''}`:
+                                 (index==30)? `searchresult-prodcut ${that.state.isOpen30? 'searchresult-border': ''}`:
+                                 (index==31)? `searchresult-prodcut ${that.state.isOpen31? 'searchresult-border': ''}`:
+                                 (index==32)? `searchresult-prodcut ${that.state.isOpen32? 'searchresult-border': ''}`:
+                                 (index==33)? `searchresult-prodcut ${that.state.isOpen33? 'searchresult-border': ''}`:
+                                 (index==34)? `searchresult-prodcut ${that.state.isOpen34? 'searchresult-border': ''}`:
+                                 (index==35)? `searchresult-prodcut ${that.state.isOpen35? 'searchresult-border': ''}`:
+                                 (index==36)? `searchresult-prodcut ${that.state.isOpen36? 'searchresult-border': ''}`:
+                                 (index==37)? `searchresult-prodcut ${that.state.isOpen37? 'searchresult-border': ''}`:
+                                 (index==38)? `searchresult-prodcut ${that.state.isOpen38? 'searchresult-border': ''}`:
+                                 (index==39)? `searchresult-prodcut ${that.state.isOpen39? 'searchresult-border': ''}`:
+                                 (index==40)? `searchresult-prodcut ${that.state.isOpen40? 'searchresult-border': ''}`:
+                                 (index==41)? `searchresult-prodcut ${that.state.isOpen41? 'searchresult-border': ''}`:
+                                 (index==42)? `searchresult-prodcut ${that.state.isOpen42? 'searchresult-border': ''}`:
+                                 (index==43)? `searchresult-prodcut ${that.state.isOpen43? 'searchresult-border': ''}`:
+                                 (index==44)? `searchresult-prodcut ${that.state.isOpen44? 'searchresult-border': ''}`:
+                                 (index==45)? `searchresult-prodcut ${that.state.isOpen45? 'searchresult-border': ''}`:
+                                 (index==46)? `searchresult-prodcut ${that.state.isOpen46? 'searchresult-border': ''}`:
+                                 (index==47)? `searchresult-prodcut ${that.state.isOpen47? 'searchresult-border': ''}`:
+                                 (index==48)? `searchresult-prodcut ${that.state.isOpen48? 'searchresult-border': ''}`:
+                                 (index==49)? `searchresult-prodcut ${that.state.isOpen49? 'searchresult-border': ''}`:
+                                 (index==50)? `searchresult-prodcut ${that.state.isOpen50? 'searchresult-border': ''}`:
+                                 (index==51)? `searchresult-prodcut ${that.state.isOpen51? 'searchresult-border': ''}`:
+                                 (index==52)? `searchresult-prodcut ${that.state.isOpen52? 'searchresult-border': ''}`:
+                                 (index==53)? `searchresult-prodcut ${that.state.isOpen53? 'searchresult-border': ''}`:
+                                 (index==54)? `searchresult-prodcut ${that.state.isOpen54? 'searchresult-border': ''}`:
+                                 (index==55)? `searchresult-prodcut ${that.state.isOpen55? 'searchresult-border': ''}`:
+                                 (index==56)? `searchresult-prodcut ${that.state.isOpen56? 'searchresult-border': ''}`:
+                                 (index==57)? `searchresult-prodcut ${that.state.isOpen57? 'searchresult-border': ''}`:
+                                 (index==58)? `searchresult-prodcut ${that.state.isOpen58? 'searchresult-border': ''}`:
+                                 (index==59)? `searchresult-prodcut ${that.state.isOpen59? 'searchresult-border': ''}`:
+                                 (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                   ''}>
 
                     <div className="thumbnaillgrid">
@@ -569,8 +1449,53 @@ class GridItemsViewPrint extends Component {
                                             (index==14)?`${that.state.isOpen14 ? '' : 'none'}`:
                                             (index==15)?`${that.state.isOpen15 ? '' : 'none'}`:
                                             (index==16)?`${that.state.isOpen16 ? '' : 'none'}`:
+                                            (index==17)?`${that.state.isOpen17 ? '' : 'none'}`:
+                                            (index==18)?`${that.state.isOpen18 ? '' : 'none'}`:
+                                            (index==19)?`${that.state.isOpen19 ? '' : 'none'}`:
+                                            (index==20)?`${that.state.isOpen20 ? '' : 'none'}`:
+                                            (index==21)?`${that.state.isOpen21 ? '' : 'none'}`:
+                                            (index==22)?`${that.state.isOpen22 ? '' : 'none'}`:
+                                            (index==23)?`${that.state.isOpen23 ? '' : 'none'}`:
+                                            (index==24)?`${that.state.isOpen24 ? '' : 'none'}`:
+                                            (index==25)?`${that.state.isOpen25 ? '' : 'none'}`:
+                                            (index==26)? `${that.state.isOpen26? '' : 'none'}`:
+                                            (index==27)? `${that.state.isOpen27? '' : 'none'}`:
+                                            (index==28)? `${that.state.isOpen28? '' : 'none'}`:
+                                            (index==29)? `${that.state.isOpen29? '' : 'none'}`:
+                                            (index==30)? `${that.state.isOpen30? '' : 'none'}`:
+                                            (index==31)? `${that.state.isOpen31? '' : 'none'}`:
+                                            (index==32)? `${that.state.isOpen32? '' : 'none'}`:
+                                            (index==33)? `${that.state.isOpen33? '' : 'none'}`:
+                                            (index==34)? `${that.state.isOpen34? '' : 'none'}`:
+                                            (index==35)? `${that.state.isOpen35? '' : 'none'}`:
+                                            (index==36)? `${that.state.isOpen36? '' : 'none'}`:
+                                            (index==37)? `${that.state.isOpen37? '' : 'none'}`:
+                                            (index==38)? `${that.state.isOpen38? '' : 'none'}`:
+                                            (index==39)? `${that.state.isOpen39? '' : 'none'}`:
+                                            (index==40)? `${that.state.isOpen40? '' : 'none'}`:
+                                            (index==41)? `${that.state.isOpen41? '' : 'none'}`:
+                                            (index==42)? `${that.state.isOpen42? '' : 'none'}`:
+                                            (index==43)? `${that.state.isOpen43? '' : 'none'}`:
+                                            (index==44)? `${that.state.isOpen44? '' : 'none'}`:
+                                            (index==45)? `${that.state.isOpen45? '' : 'none'}`:
+                                            (index==46)? `${that.state.isOpen46? '' : 'none'}`:
+                                            (index==47)? `${that.state.isOpen47? '' : 'none'}`:
+                                            (index==48)? `${that.state.isOpen48? '' : 'none'}`:
+                                            (index==49)? `${that.state.isOpen49? '' : 'none'}`:
+                                            (index==50)? `${that.state.isOpen50? '' : 'none'}`:
+                                            (index==51)? `${that.state.isOpen51? '' : 'none'}`:
+                                            (index==52)? `${that.state.isOpen52? '' : 'none'}`:
+                                            (index==53)? `${that.state.isOpen53? '' : 'none'}`:
+                                            (index==54)? `${that.state.isOpen54? '' : 'none'}`:
+                                            (index==55)? `${that.state.isOpen55? '' : 'none'}`:
+                                            (index==56)? `${that.state.isOpen56? '' : 'none'}`:
+                                            (index==57)? `${that.state.isOpen57? '' : 'none'}`:
+                                            (index==58)? `${that.state.isOpen58? '' : 'none'}`:
+                                            (index==59)? `${that.state.isOpen59? '' : 'none'}`:
+                                            (index==60)? `${that.state.isOpen60? '' : 'none'}`:
                                             '',
-                                    }} className={(index==3||index==7 || index==11||index==15)?'over-searchresult-left':'over-searchresult' }>
+                                    }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31
+                                        ||index==35||index==39||index==43||index==47||index==51||index==55||index==59)?'over-searchresult-left':'over-searchresult' }>
                                     <img className="searchresult-close"  src="/images/icon-close.png" responsive
                                         name={item.id} id={index} onClick={hideDetails}/>
                                         <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
