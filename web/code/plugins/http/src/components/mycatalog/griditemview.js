@@ -1525,7 +1525,8 @@ class GridItemsView extends Component {
                                     }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31
                                         ||index==35||index==39||index==43||index==47||index==51||index==55||index==59)?'over-searchresult-left':'over-searchresult' }>
                                     <img className="searchresult-close"  src="/images/icon-close.png" responsive
-                                        name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`} id={index} onClick={hideDetails}/>
+                                        name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                                        id={index} onClick={hideDetails}/>
                                     <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                                     <span className="width-f100">{item.reference}</span>
                                     <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
