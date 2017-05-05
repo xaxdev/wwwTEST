@@ -1346,7 +1346,8 @@ class GridItemsViewPrint extends Component {
                   : '';
             }
            return (
-              <div key={item.id} name={item.id} className="col-md-3 col-sm-3 nopadding">
+              <div key={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                    name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
                                  (index==1)? `searchresult-prodcut ${that.state.isOpen1? 'searchresult-border': ''}`:
                                  (index==2)? `searchresult-prodcut ${that.state.isOpen2? 'searchresult-border': ''}`:
@@ -1416,22 +1417,28 @@ class GridItemsViewPrint extends Component {
                              src={imagesProduct }
                              fallbackImage="/images/blank.gif"
                              initialImage="/images/blank.gif"
-                             name={item.id}
-                             id={item.id}
+                             name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                             id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
                              onClick={btnEvent}
                              />
                     </div>
 
                     <p className="font-b fc-000">
-                      <span name={item.id} id={item.id} onClick={btnEvent}>{item.reference}</span><br/>
-                      <span name={item.id} id={item.id} onClick={btnEvent}>{(item.authorization)?item.sku:''}</span>
+                      <span name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                            id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                            onClick={btnEvent}>{item.reference}</span><br/>
+                      <span name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                            id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                            onClick={btnEvent}>{(item.authorization)?item.sku:''}</span>
                     </p>
-                    <p className="product-detail-h" name={item.id} id={item.id} onClick={btnEvent}>{itemName}</p>
+                    <p className="product-detail-h"
+                        name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                        id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`} onClick={btnEvent}>{itemName}</p>
                     <span className={`fc-ae8f3b font-b price ${(item.authorization)?(item.type != 'CER') ? '' : 'hidden':''}`}>{price}</span>
                     <span className="line"></span>
                  </div>
                     <div>
-                             <div key={item.id}  id={index} ref={'div'+index} style={{
+                             <div key={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}  id={index} ref={'div'+index} style={{
                                     display:(index==0)?`${that.state.isOpen0 ? '' : 'none'}`:
                                             (index==1)?`${that.state.isOpen1 ? '' : 'none'}`:
                                             (index==2)?`${that.state.isOpen2 ? '' : 'none'}`:
@@ -1497,7 +1504,8 @@ class GridItemsViewPrint extends Component {
                                     }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31
                                         ||index==35||index==39||index==43||index==47||index==51||index==55||index==59)?'over-searchresult-left':'over-searchresult' }>
                                     <img className="searchresult-close"  src="/images/icon-close.png" responsive
-                                        name={item.id} id={index} onClick={hideDetails}/>
+                                        name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                                        id={index} onClick={hideDetails}/>
                                         <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                                         <span className="width-f100">{item.reference}</span>
                                         <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
