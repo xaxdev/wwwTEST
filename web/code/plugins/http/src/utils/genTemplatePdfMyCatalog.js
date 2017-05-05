@@ -1,9 +1,10 @@
 export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
 
-    let dvTotal = dv.dvTotal;
+    let dvTotalItems = dv.dvTotalItems;
+    let dvTotalSetItems = dv.dvTotalSetItems;
     let dvGridview = dv.dvGridview;
 
-    let styleTotal =`background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family: '${'Open Sans'}', sans-serif; font-size:10px;`;
+    let styleTotal =`background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family: '${'Open Sans'}', sans-serif; font-size:10px;border-bottom: 1px solid #fff;`;
     let styleBodyWrapper ='margin: 0;padding: 0;';
     let styleContainerMarginb4 ='margin-bottom: 0%;padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;';
     let styleColsm12 ='width: 100%;';
@@ -25,8 +26,10 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden;';
     let thumbnaillgridimg = 'position: absolute; left: 50%; top: 50%; height: auto; width: auto; padding-bottom: 20px; transform: translate(-50%,-50%);';
 
-    dvTotal = dvTotal.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
-    dvTotal = dvTotal.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
+    dvTotalItems = dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
+    dvTotalItems = dvTotalItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
+    dvTotalSetItems = dvTotalSetItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
+    dvTotalSetItems = dvTotalSetItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     // dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
@@ -57,7 +60,10 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
                                 <div style="${styleBodyWrapper}">
                                     <div>
                                         <div style="${styleTotal}">
-                                            ${dvTotal}
+                                            ${dvTotalItems}
+                                        </div>
+                                        <div style="${styleTotal}">
+                                            ${dvTotalSetItems}
                                         </div>
                                         <div>
                                           <div style="${styleColsm12}">

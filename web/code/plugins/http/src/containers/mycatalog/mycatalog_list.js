@@ -134,11 +134,13 @@ class MyCatalog extends Component {
 
       let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
 
-      let dvTotal = jQuery('#dvTotalsub').html();
+      let dvTotalItems = jQuery('#dvTotalItems').html();
+      let dvTotalSetItems = jQuery('#dvTotalSetItems').html();
       let dvGridview = jQuery('#dvGridview').html();
 
       let dv = {
-                  'dvTotal': dvTotal,
+                  'dvTotalItems': dvTotalItems,
+                  'dvTotalSetItems': dvTotalSetItems,
                   'dvGridview': dvGridview
               };
 
@@ -665,7 +667,7 @@ class MyCatalog extends Component {
 
       return(
         <div>
-          <div id="dvTotalsub" className="bg-f7d886 text-center border-b-white">
+          <div id="dvTotalItems" className="bg-f7d886 text-center border-b-white">
                 <span>
                     <span className="font-b fc-000">All Pages :</span>
                     <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
@@ -690,7 +692,7 @@ class MyCatalog extends Component {
                     </span>
                 </span>
           </div>
-          <div id="dvTotalsub" className="bg-f7d886 text-center">
+          <div id="dvTotalSetItems" className="bg-f7d886 text-center">
                 <span>
                     <span className="font-b fc-000">All Pages :</span>
                     <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
