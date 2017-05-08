@@ -58,7 +58,7 @@ export default {
                     if (catalog.items.length === 0) {
                         return reply({ ...catalog, page: 1, total_items: 0, total_pages: 0, })
                     }
-
+                    console.log(catalog.items.length);
                     let response = []
                     let price = 0
                     let updatedCost = 0
@@ -77,9 +77,13 @@ export default {
                     if (!!useItems.length && useItems.length > 0) {
                         const es = await client.search(request.helper.item.parameters(useItems))
                         let inventory = await request.helper.item.inventory(useItems, es)
-                        const all = await request.helper.item.authorization(user, inventory)
-
-                        price = all.reduce((previous, current) => previous + current.price, 0)
+                        let all = await request.helper.item.authorization(user, inventory)
+                        all = all.filter((item) => {
+                            return item.price > -1;
+                        })
+                        price = all.reduce((previous, current) => {
+                            return previous + current.price
+                        }, 0)
                         updatedCost = all.reduce((previous, current) => previous + current.updatedCost, 0)
 
                         const data = await request.mongo.db.collection('CatalogItem').find({ catalogId, "id": { $ne: null } }, { "_id": 0, "catalogId": 0, "lastModified": 0 })
