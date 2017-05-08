@@ -68,11 +68,40 @@ module.exports = {
         })
         // console.log('setReferenceUniq-->', setReferenceUniq.length);
         // console.log('setReferenceResult-->',setReferenceResult.length);
+        let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
+        if (isViewAsSet) {
+            if (sortBy.indexOf('price') != -1) {
+                sortBy = 'totalPrice.USD';
+            }else if (sortBy.indexOf('Date') != -1) {
+                sortBy = 'createdDate';
+            }else if (sortBy.indexOf('Date') != -1) {
+                sortBy = 'createdDate';
+            }else if (sortBy.indexOf('setReference') != -1) {
+                sortBy = 'reference';
+            }else{
+                sortBy = sortBy;
+            }
+        }
+
+        let missing = '';
+
+        switch (sortDirections) {
+          case 'asc':
+            missing = '"missing" : "_first"';
+            missing = `{"${sortBy}" : {${missing}}},`;
+            break;
+          default:
+        }
+
       const query = JSON.parse(
         `{
             "timeout": "5s",
             "from": 0,
           "size": 10000,
+          "sort" : [
+              ${missing}
+              {"${sortBy}" : "${sortDirections}"}
+           ],
           "query":{
                "constant_score": {
                  "filter": {
