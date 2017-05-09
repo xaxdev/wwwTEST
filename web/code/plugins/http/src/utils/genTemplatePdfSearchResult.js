@@ -33,7 +33,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvTotal2 = dvTotal2.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
-    dvGridview = dvGridview.replace(/\/images\//g,'file:///media/mol/MME/');
+    dvGridview = dvGridview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
     dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
     dvGridview = dvGridview.replace(/class="grid-add"/g,`style="${gridAdd}"`);
@@ -48,7 +48,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvGridview = dvGridview.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
     // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
 
-    dvListview = dvListview.replace(/\/images\//g,'file:///media/mol/MME/');
+    dvListview = dvListview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvListview = dvListview.replace(/class="table-responsive"/g,'');
     dvListview = dvListview.replace(/class="table table-bordered table-searchresult"/g,'border="1" style="font-size: 8px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="100%"');
     dvListview = dvListview.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
