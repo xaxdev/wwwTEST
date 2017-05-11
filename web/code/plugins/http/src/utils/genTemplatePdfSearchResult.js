@@ -23,7 +23,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     let fontbfc000  = `font-family: '${'open_sanssemibold'}';color: #000;margin: 0 0 10px;`;
     let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
-    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:100%; display: table;';
+    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:230px; display: table;';
     let thumbnaillgridimg = 'width:auto;';
 
     dvTotal1 = dvTotal1.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
