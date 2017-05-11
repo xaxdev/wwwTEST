@@ -46,7 +46,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     dvGridview = dvGridview.replace(/class="product-detail-h"/g,`style="${productdetailh}"`);
     dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridview = dvGridview.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
-    dvGridview = dvGridview.replace(/<img/g,'<img style="width:120px; position: absolute; left: 50%; top: 50%; height: auto; padding-bottom: 20px; webkit-transform: translate(-50%,-50%); ms-transform: translate(-50%,-50%); transform: translate(-50%,-50%);" ');
+    dvGridview = dvGridview.replace(/<img/g,'<img style="width:120px; position: absolute; height: auto; padding-bottom: 20px; webkit-transform: translate(-50%,-50%); ms-transform: translate(-50%,-50%); transform: translate(-50%,-50%);" ');
     // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
 
     let htmlTemplate = '';
