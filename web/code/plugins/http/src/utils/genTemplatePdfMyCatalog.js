@@ -23,8 +23,8 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     let fontbfc000  = `font-family: '${'open_sanssemibold'}';color: #000;margin: 0 0 10px;`;
     let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
-    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:230px;';
-    let thumbnaillgridimg = 'width:120px; padding-bottom: 20px;';
+    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:230px; display: table;';
+    let thumbnaillgridimg = 'display: table-cell; vertical-align: middle; text-align: center; width:120px; padding-bottom: 20px; position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);';
 
     dvTotalItems = dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotalItems = dvTotalItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
@@ -55,7 +55,6 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
                         <head>
                             <title>Mol online 2016</title>
                             <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-                            <link rel="stylesheet" type="text/css" href="css/style.css" media="print">
                         </head>
                         <body style="margin:0;padding:0; font-family: 'Open Sans', sans-serif; font-size:10px;">
                             <form>
