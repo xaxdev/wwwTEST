@@ -24,7 +24,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
     let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:230px; display: table;';
-    let thumbnaillgridimg = 'width:auto;';
+    let thumbnaillgridimg = 'width:120px;';
 
     dvTotalItems = dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotalItems = dvTotalItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
