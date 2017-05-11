@@ -2,6 +2,8 @@ import Joi from 'joi'
 import Boom from 'boom'
 import Elasticsearch from 'elasticsearch'
 import constants from '../constants'
+// const _ = require('lodash');
+import lodash from 'lodash';
 
 export default {
     auth: {
@@ -123,14 +125,23 @@ export default {
                     }
 
                     if (!!dispSetItems.length && dispSetItems.length > 0) {
-                        const esSetItems = await client.search(request.helper.setitem.parameters(dispSetItems))                      
+                        const esSetItems = await client.search(request.helper.setitem.parameters(dispSetItems))
                         let inventorySetItems = await request.helper.setitem.inventory(dispSetItems, esSetItems)
                         const itemsSetitem = await request.helper.setitem.authorization(user, inventorySetItems)
 
                         response.push(...itemsSetitem)
                     }
 
-                    return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page, total_items, total_pages, total_setitems, "items": response })
+
+                    if (order == 1) {
+                        //asc
+                        response = response.sortBy(sort,'asc');
+                    }else{
+                       //desc
+                        response = response.sortBy(sort,'desc')
+
+                    }
+                    return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page, total_items, total_pages, total_setitems, 'items': response })
                 }
 
                 return reply(Boom.badRequest('Invalid catalog id'))
@@ -141,4 +152,32 @@ export default {
             }
         })()
     }
+}
+
+const compareBy = (property, order = 'asc') => (a, b) => {
+  if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
+    return 0;
+  }
+
+  const first = a[property]
+  const second = b[property]
+
+  if (typeof first !== typeof second) {
+    return 0
+  }
+
+  let comparison = 0
+  if (first > second) {
+    comparison = 1
+  }
+
+  if (first < second) {
+    comparison = -1
+  }
+
+  return (order === 'desc')? (comparison * -1) : comparison
+}
+
+Array.prototype.sortBy = function(property, order = 'asc') {
+  return Array.prototype.sort.call(this, compareBy(property, order))
 }

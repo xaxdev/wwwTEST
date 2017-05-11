@@ -49,7 +49,7 @@ export default function(state = INITIAL_STATE, action){
           // console.log('action.data-->',action.data);
           return {...state, ListCatalogName: action.data };
         case GET_CATALOGITEMS :
-          // console.log('action.data-->',action.data);
+        //   console.log('action.data-->',action.data.items.sort((a, b) => b.reference - a.reference));
           return {...state, listCatalogItems: action.data, currentPage: action.data.page, catalogId: action.catalog,
                     catalogName: action.data.catalog, totalPrice: action.data.price,
                     totalUpdatedCost: action.data.updatedCost
