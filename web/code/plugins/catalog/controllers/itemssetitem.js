@@ -115,6 +115,7 @@ export default {
                     }
 
                     if (!!dispItems.length && dispItems.length > 0) {
+                        const es = await client.search(request.helper.item.parameters(dispItems))
                         let inventory = await request.helper.item.inventory(dispItems, es)
                         const items = await request.helper.item.authorization(user, inventory)
 
@@ -122,6 +123,7 @@ export default {
                     }
 
                     if (!!dispSetItems.length && dispSetItems.length > 0) {
+                        const esSetItems = await client.search(request.helper.setitem.parameters(dispSetItems))                      
                         let inventorySetItems = await request.helper.setitem.inventory(dispSetItems, esSetItems)
                         const itemsSetitem = await request.helper.setitem.authorization(user, inventorySetItems)
 
