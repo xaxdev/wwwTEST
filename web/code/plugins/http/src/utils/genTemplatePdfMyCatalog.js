@@ -24,7 +24,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
     let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:230px;';
-    let thumbnaillgridimg = 'position: absolute; left: 50%; top: 50%; height: auto; width: auto; padding-bottom: 20px; transform: translate(-50%,-50%);';
+    let thumbnaillgridimg = 'width:120px; padding-bottom: 20px;';
 
     dvTotalItems = dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotalItems = dvTotalItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
@@ -46,7 +46,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     dvGridview = dvGridview.replace(/class="product-detail-h"/g,`style="${productdetailh}"`);
     dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridview = dvGridview.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
-    dvGridview = dvGridview.replace(/<img/g,'<img style="width:120px; position: absolute; height: auto; padding-bottom: 20px; webkit-transform: translate(-50%,-50%); ms-transform: translate(-50%,-50%); transform: translate(-50%,-50%);" ');
+    dvGridview = dvGridview.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
     // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
 
     let htmlTemplate = '';
@@ -55,6 +55,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
                         <head>
                             <title>Mol online 2016</title>
                             <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+                            <link rel="stylesheet" type="text/css" href="css/style.css" media="print">
                         </head>
                         <body style="margin:0;padding:0; font-family: 'Open Sans', sans-serif; font-size:10px;">
                             <form>
