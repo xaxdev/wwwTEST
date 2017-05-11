@@ -13,7 +13,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     let stylePadding ='padding: 15px 0;';
     let styleSearchproduct  ='position: relative;';
     let styleSearchproductGride  ='margin: 0 auto; text-align: center;font-size: 10px;position: relative;z-index: 2;padding: 15px 11px 0 11px;height: 380px;cursor: pointer;';
-    let colmd3colsm3nopadding  = 'width: 155px; padding: 0;float: left;height: 380px; margin: 0 auto;';
+    let colmd3colsm3nopadding  = 'width: 120px; padding: 0;float: left;height: 380px; margin: 0 auto;';
     let pullRight  = 'float: right!important;';
     let gridAdd  = 'float: left;margin-top: 0;z-index: 1;position: relative;cursor: pointer;';
     let iconAdd28  = `background: url(${ROOT_URL}/images/icon-add-28.png) no-repeat center;width: 28px;height: 28px;float: left;cursor: pointer;`;
@@ -23,8 +23,8 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     let fontbfc000  = `font-family: '${'open_sanssemibold'}';color: #000;margin: 0 0 10px;`;
     let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
-    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:120px;';
-    let thumbnaillgridimg = 'width:120px;margin: 0 auto;';
+    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:96px;';
+    let thumbnaillgridimg = 'width:96px;margin: 0 auto;';
 
     dvTotal1 = dvTotal1.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotal1 = dvTotal1.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
