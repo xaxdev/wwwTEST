@@ -975,13 +975,13 @@ class MyCatalog extends Component {
                   <div className="row">
                     <div className="col-sm-12 col-xs-12">
                       <div className={`${items.length == 0  ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
-                            <div className="checkbox checkbox-warning ">
+                            <div className={`${isCatalogShared ? 'hidden' : 'checkbox checkbox-warning '}`}>
                                 <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
                                     onChange={this.onCheckedAllItemMyCatalog} ref="selectAllItems"/>
                                 <label className="checkbox1 select"></label>
                                 <span className="margin-l10 text-vertical">Select All</span>
                             </div>
-                            <div>
+                            <div className={`${isCatalogShared ? 'hidden' : ''}`}>
                                 {this.state.enabledMyCatalog?
                                     <span className="icon-det-28" onClick={this.deleteAllItems}></span> :
                                     <span className="icon-det-28"></span>
