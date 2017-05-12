@@ -974,7 +974,7 @@ class MyCatalog extends Component {
                   {/* Util&Pagination */}
                   <div className="row">
                     <div className="col-sm-12 col-xs-12">
-                      <div className={`${isCatalogShared || items.length == 0  ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
+                      <div className={`${items.length == 0  ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
                             <div className="checkbox checkbox-warning ">
                                 <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
                                     onChange={this.onCheckedAllItemMyCatalog} ref="selectAllItems"/>
