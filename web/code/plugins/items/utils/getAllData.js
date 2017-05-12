@@ -220,6 +220,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
           }
       });
       data = data.sortBy(sortBy,sortDirections);
+      allData = allData.sortBy(sortBy,sortDirections);
 
       exportData = data;
 
