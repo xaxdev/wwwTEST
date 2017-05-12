@@ -148,7 +148,8 @@ class SearchResult extends Component {
       isOpenAddMyCatalog: false,
       enabledMyCatalog:false,
       isOpenAddMyCatalogmsg: false,
-      isOpenPrintPdfmsg: false
+      isOpenPrintPdfmsg: false,
+      isOpenMsgPageInvalid: false
     };
   }
   componentWillMount() {
@@ -369,9 +370,11 @@ class SearchResult extends Component {
         'sortDirections': sortingDirection,
         'pageSize' : pageSize
       };
-      const { filters } =  this.props;
+
+      const filters =  JSON.parse(sessionStorage.filters);
 
       let gemstoneFilter = {};
+      let lotNumberFilter = {};
       // console.log('filters-->',filters);
       filters.forEach(function(filter){
         let keys = Object.keys(filter);
@@ -386,15 +389,37 @@ class SearchResult extends Component {
             gemstoneFilter[gemstoneFields[0]] = value;
           }else if(gemstoneFields[0] == 'cerDateFrom'){
             gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'lotNumbers'){
+            lotNumberFilter[gemstoneFields[1]] = value;
           }
           else{
-            params[key] = value;
+            //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
+              switch (gemstoneFields[0]) {
+                  case 'sparePartProductHierarchy':
+                      break;
+                  case 'obaProductHierarchy':
+                      break;
+                  case 'accessoryProductHierarchy':
+                      break;
+                  case 'stoneProductHierarchy':
+                      break;
+                  case 'watchProductHierarchy':
+                      break;
+                  case 'jewelryProductHierarchy':
+                      break;
+                  default:
+                      params[key] = value;
+                      break;
+              }
           }
         });
       });
 
       if(Object.keys(gemstoneFilter).length != 0){
         params['gemstones'] = gemstoneFilter;
+      }
+      if(Object.keys(lotNumberFilter).length != 0){
+        params['lotNumbers'] = lotNumberFilter;
       }
 
       let girdView = showGridView;
@@ -409,14 +434,15 @@ class SearchResult extends Component {
 
       this.props.getItems(params)
       .then((value) => {
-        this.setState({showLoading: false});
-        if(girdView){
-          // this.setState({showGridView: true});
-          this.props.setShowGridView(true);
-        }else if (listView) {
-          // this.setState({showListView: true});
-          this.props.setShowListView(true);
-        }
+          this.props.getCatalogNameSetItem();
+          this.setState({showLoading: false});
+            if(girdView){
+              // this.setState({showGridView: true});
+              this.props.setShowGridView(true);
+            }else if (listView) {
+              // this.setState({showListView: true});
+              this.props.setShowListView(true);
+            }
       });
 
       let { currPage } = this.props.fields;
@@ -428,79 +454,112 @@ class SearchResult extends Component {
     const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
 
     const userLogin = JSON.parse(sessionStorage.logindata);
-    const { showGridView,showListView } = this.props;
+    const { showGridView,showListView,totalPages } = this.props;
 
-    let sortingBy = '';
+    if (Number(this.refs.reletego.value) > totalPages || Number(this.refs.reletego.value) < 1) {
+        this.setState({isOpenMsgPageInvalid: true});
+    //   this.renderAlertmsg('Page is invalid.');
+    }else{
+        let sortingBy = '';
 
-    switch (this.refs.sortingBy.value) {
-      case 'price':
-        sortingBy = 'price.' + userLogin.currency;
-        break;
-      default:
-        sortingBy = this.refs.sortingBy.value;
-        break;
-    }
-
-    const sortingDirection = this.refs.sortingDirection.value;
-    const pageSize = this.refs.pageSize.value;
-
-    this.setState({activePage: getPage});
-    // console.log('getPage-->',getPage);
-    let params = {
-      'page' : getPage,
-      'sortBy': sortingBy,
-      'sortDirections': sortingDirection,
-      'pageSize' : pageSize
-    };
-    let { filters } =  this.props;
-
-    let gemstoneFilter = {};
-    // console.log('filters-->',filters);
-    filters.forEach(function(filter){
-      let keys = Object.keys(filter);
-      keys.forEach((key) => {
-        const value = filter[key];
-        const gemstoneFields = keys[0].split('.');
-        if(gemstoneFields[0] == 'gemstones'){
-          gemstoneFilter[gemstoneFields[1]] = value;
-        }else if(gemstoneFields[0] == 'certificatedNumber'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'certificateAgency'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'cerDateFrom'){
-          gemstoneFilter[gemstoneFields[0]] = value;
+        switch (this.refs.sortingBy.value) {
+          case 'price':
+            sortingBy = 'price.' + userLogin.currency;
+            break;
+          default:
+            sortingBy = this.refs.sortingBy.value;
+            break;
         }
-        else{
-          params[key] = value;
+
+        const sortingDirection = this.refs.sortingDirection.value;
+        const pageSize = this.refs.pageSize.value;
+
+        this.setState({activePage: getPage});
+        // console.log('getPage-->',getPage);
+        let params = {
+          'page' : getPage,
+          'sortBy': sortingBy,
+          'sortDirections': sortingDirection,
+          'pageSize' : pageSize
+        };
+        // let { filters } =  this.props;
+        const filters =  JSON.parse(sessionStorage.filters);
+
+        let gemstoneFilter = {};
+        let lotNumberFilter = {};
+        // console.log('filters-->',filters);
+        filters.forEach(function(filter){
+          let keys = Object.keys(filter);
+          keys.forEach((key) => {
+            const value = filter[key];
+            const gemstoneFields = keys[0].split('.');
+            if(gemstoneFields[0] == 'gemstones'){
+              gemstoneFilter[gemstoneFields[1]] = value;
+            }else if(gemstoneFields[0] == 'certificatedNumber'){
+              gemstoneFilter[gemstoneFields[0]] = value;
+            }else if(gemstoneFields[0] == 'certificateAgency'){
+              gemstoneFilter[gemstoneFields[0]] = value;
+            }else if(gemstoneFields[0] == 'cerDateFrom'){
+              gemstoneFilter[gemstoneFields[0]] = value;
+            }else if(gemstoneFields[0] == 'lotNumbers'){
+              lotNumberFilter[gemstoneFields[1]] = value;
+            }
+            else{
+              //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
+                switch (gemstoneFields[0]) {
+                    case 'sparePartProductHierarchy':
+                        break;
+                    case 'obaProductHierarchy':
+                        break;
+                    case 'accessoryProductHierarchy':
+                        break;
+                    case 'stoneProductHierarchy':
+                        break;
+                    case 'watchProductHierarchy':
+                        break;
+                    case 'jewelryProductHierarchy':
+                        break;
+                    default:
+                        params[key] = value;
+                        break;
+                }
+            }
+          });
+        });
+
+        if(Object.keys(gemstoneFilter).length != 0){
+          params['gemstones'] = gemstoneFilter;
         }
-      });
-    });
+        if(Object.keys(lotNumberFilter).length != 0){
+          params['lotNumbers'] = lotNumberFilter;
+        }
 
-    if(Object.keys(gemstoneFilter).length != 0){
-      params['gemstones'] = gemstoneFilter;
+        let girdView = showGridView;
+        let listView = showListView;
+
+        this.props.setShowGridView(false);
+        this.props.setShowListView(false);
+
+        this.setState({
+          showLoading: true
+        });
+
+        // const paramsSearchStorage =  JSON.parse(sessionStorage.paramsSearch);
+        // this.props.setParams(paramsSearchStorage)
+
+        this.props.getItems(params)
+        .then((value) => {
+            this.props.getCatalogNameSetItem();
+            this.setState({showLoading: false});
+              if(girdView){
+                // this.setState({showGridView: true});
+                this.props.setShowGridView(true);
+              }else if (listView) {
+                // this.setState({showListView: true});
+                this.props.setShowListView(true);
+              }
+        });
     }
-
-    let girdView = showGridView;
-    let listView = showListView;
-
-    this.props.setShowGridView(false);
-    this.props.setShowListView(false);
-
-    this.setState({
-      showLoading: true
-    });
-
-    this.props.getItems(params)
-    .then((value) => {
-      this.setState({showLoading: false});
-      if(girdView){
-        // this.setState({showGridView: true});
-        this.props.setShowGridView(true);
-      }else if (listView) {
-        // this.setState({showListView: true});
-        this.props.setShowListView(true);
-      }
-    });
   }
   renderPagination(){
     const { fields: { currPage },
@@ -721,9 +780,10 @@ class SearchResult extends Component {
       'pageSize' : pageSize
     };
 
-    let { filters } =  this.props;
+    const filters =  JSON.parse(sessionStorage.filters);
 
     let gemstoneFilter = {};
+    let lotNumberFilter = {};
     // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
@@ -738,15 +798,37 @@ class SearchResult extends Component {
           gemstoneFilter[gemstoneFields[0]] = value;
         }else if(gemstoneFields[0] == 'cerDateFrom'){
           gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'lotNumbers'){
+          lotNumberFilter[gemstoneFields[1]] = value;
         }
         else{
-          params[key] = value;
+          //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
+            switch (gemstoneFields[0]) {
+                case 'sparePartProductHierarchy':
+                    break;
+                case 'obaProductHierarchy':
+                    break;
+                case 'accessoryProductHierarchy':
+                    break;
+                case 'stoneProductHierarchy':
+                    break;
+                case 'watchProductHierarchy':
+                    break;
+                case 'jewelryProductHierarchy':
+                    break;
+                default:
+                    params[key] = value;
+                    break;
+            }
         }
       });
     });
 
     if(Object.keys(gemstoneFilter).length != 0){
       params['gemstones'] = gemstoneFilter;
+    }
+    if(Object.keys(lotNumberFilter).length != 0){
+      params['lotNumbers'] = lotNumberFilter;
     }
 
     let girdView = showGridView;
@@ -763,14 +845,15 @@ class SearchResult extends Component {
 
     this.props.getItems(params)
     .then((value) => {
-      this.setState({showLoading: false});
-      if(girdView){
-        // this.setState({showGridView: true});
-        this.props.setShowGridView(true);
-      }else if (listView) {
-        // this.setState({showListView: true});
-        this.props.setShowListView(true);
-      }
+        this.props.getCatalogNameSetItem();
+        this.setState({showLoading: false});
+          if(girdView){
+            // this.setState({showGridView: true});
+            this.props.setShowGridView(true);
+          }else if (listView) {
+            // this.setState({showListView: true});
+            this.props.setShowListView(true);
+          }
     });
 
     let { currPage } = this.props.fields;
@@ -810,9 +893,10 @@ class SearchResult extends Component {
       'pageSize' : pageSize
     };
 
-    let { filters } =  this.props;
+    const filters =  JSON.parse(sessionStorage.filters);
 
     let gemstoneFilter = {};
+    let lotNumberFilter = {};
     // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
@@ -827,15 +911,37 @@ class SearchResult extends Component {
           gemstoneFilter[gemstoneFields[0]] = value;
         }else if(gemstoneFields[0] == 'cerDateFrom'){
           gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'lotNumbers'){
+          lotNumberFilter[gemstoneFields[1]] = value;
         }
         else{
-          params[key] = value;
+          //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
+            switch (gemstoneFields[0]) {
+                case 'sparePartProductHierarchy':
+                    break;
+                case 'obaProductHierarchy':
+                    break;
+                case 'accessoryProductHierarchy':
+                    break;
+                case 'stoneProductHierarchy':
+                    break;
+                case 'watchProductHierarchy':
+                    break;
+                case 'jewelryProductHierarchy':
+                    break;
+                default:
+                    params[key] = value;
+                    break;
+            }
         }
       });
     });
 
     if(Object.keys(gemstoneFilter).length != 0){
       params['gemstones'] = gemstoneFilter;
+    }
+    if(Object.keys(lotNumberFilter).length != 0){
+      params['lotNumbers'] = lotNumberFilter;
     }
 
     let girdView = showGridView;
@@ -852,14 +958,15 @@ class SearchResult extends Component {
 
     this.props.getItems(params)
     .then((value) => {
-      this.setState({showLoading: false});
-      if(girdView){
-        // this.setState({showGridView: true});
-        this.props.setShowGridView(true);
-      }else if (listView) {
-        // this.setState({showListView: true});
-        this.props.setShowListView(true);
-      }
+        this.props.getCatalogNameSetItem();
+          this.setState({showLoading: false});
+          if(girdView){
+            // this.setState({showGridView: true});
+            this.props.setShowGridView(true);
+          }else if (listView) {
+            // this.setState({showListView: true});
+            this.props.setShowListView(true);
+          }
     });
 
     let { currPage } = this.props.fields;
@@ -898,9 +1005,11 @@ class SearchResult extends Component {
       'sortDirections': sortingDirection,
       'pageSize' : pageSize
     };
-    let { filters } =  this.props;
+
+    const filters =  JSON.parse(sessionStorage.filters);
 
     let gemstoneFilter = {};
+    let lotNumberFilter = {};
     // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
@@ -915,15 +1024,37 @@ class SearchResult extends Component {
           gemstoneFilter[gemstoneFields[0]] = value;
         }else if(gemstoneFields[0] == 'cerDateFrom'){
           gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'lotNumbers'){
+          lotNumberFilter[gemstoneFields[1]] = value;
         }
         else{
-          params[key] = value;
+          //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
+            switch (gemstoneFields[0]) {
+                case 'sparePartProductHierarchy':
+                    break;
+                case 'obaProductHierarchy':
+                    break;
+                case 'accessoryProductHierarchy':
+                    break;
+                case 'stoneProductHierarchy':
+                    break;
+                case 'watchProductHierarchy':
+                    break;
+                case 'jewelryProductHierarchy':
+                    break;
+                default:
+                    params[key] = value;
+                    break;
+            }
         }
       });
     });
 
     if(Object.keys(gemstoneFilter).length != 0){
       params['gemstones'] = gemstoneFilter;
+    }
+    if(Object.keys(lotNumberFilter).length != 0){
+      params['lotNumbers'] = lotNumberFilter;
     }
 
     let girdView = showGridView;
@@ -940,14 +1071,15 @@ class SearchResult extends Component {
 
     this.props.getItems(params)
     .then((value) => {
-      this.setState({showLoading: false});
-      if(girdView){
-        // this.setState({showGridView: true});
-        this.props.setShowGridView(true);
-      }else if (listView) {
-        // this.setState({showListView: true});
-        this.props.setShowListView(true);
-      }
+        this.props.getCatalogNameSetItem();
+          this.setState({showLoading: false});
+          if(girdView){
+            // this.setState({showGridView: true});
+            this.props.setShowGridView(true);
+          }else if (listView) {
+            // this.setState({showListView: true});
+            this.props.setShowListView(true);
+          }
     });
 
   }
@@ -1052,7 +1184,7 @@ class SearchResult extends Component {
     const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
 
     const that = this;
-    const { items, exportItems, filters, paramsSearch, showGridView,showListView } = this.props;
+    const { items, exportItems, paramsSearch, showGridView,showListView } = this.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     let sortingBy = '';
@@ -1124,7 +1256,10 @@ class SearchResult extends Component {
 
     // default search params
 
+    const filters =  JSON.parse(sessionStorage.filters);
+
     let gemstoneFilter = {};
+    let lotNumberFilter = {};
     // console.log('filters-->',filters);
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
@@ -1139,15 +1274,37 @@ class SearchResult extends Component {
           gemstoneFilter[gemstoneFields[0]] = value;
         }else if(gemstoneFields[0] == 'cerDateFrom'){
           gemstoneFilter[gemstoneFields[0]] = value;
+        }else if(gemstoneFields[0] == 'lotNumbers'){
+          lotNumberFilter[gemstoneFields[1]] = value;
         }
         else{
-          params[key] = value;
+          //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
+            switch (gemstoneFields[0]) {
+                case 'sparePartProductHierarchy':
+                    break;
+                case 'obaProductHierarchy':
+                    break;
+                case 'accessoryProductHierarchy':
+                    break;
+                case 'stoneProductHierarchy':
+                    break;
+                case 'watchProductHierarchy':
+                    break;
+                case 'jewelryProductHierarchy':
+                    break;
+                default:
+                    params[key] = value;
+                    break;
+            }
         }
       });
     });
 
     if(Object.keys(gemstoneFilter).length != 0){
       params['gemstones'] = gemstoneFilter;
+    }
+    if(Object.keys(lotNumberFilter).length != 0){
+      params['lotNumbers'] = lotNumberFilter;
     }
 
     this.setState({
@@ -1420,7 +1577,7 @@ class SearchResult extends Component {
   renderAlertmsg = _=> {
 
     const message = 'Add to catalog success';
-    const title = 'ADD TO CATALOG';
+    const title = 'SEARCH RESULTS';
     return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
             props={this.props} message={message}  title={title}/>);
   }
@@ -1447,6 +1604,16 @@ class SearchResult extends Component {
 
     // console.log('hi');
     this.setState({isOpenAddMyCatalog: false});
+  }
+  renderAlertmsgPageInvalid = _=> {
+    const message = 'Page is invalid.';
+    const title = 'SEARCH RESULTS';
+
+    return(<Modalalertmsg isOpen={this.state.isOpenMsgPageInvalid} isClose={this.handleCloseMsgPageInvalid}
+        props={this.props} message={message}  title={title}/>);
+  }
+  handleCloseMsgPageInvalid = _=>{
+      this.setState({isOpenMsgPageInvalid: false});
   }
   render() {
     const { fields: {
@@ -1651,17 +1818,17 @@ class SearchResult extends Component {
                                 {this.renderPagination()}
                             </div>
                             <div className="pull-right maring-b10">
-                              <div className="pull-left padding-r10 margin-t7">View</div>
-                              <div className="pull-left">
-                              <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
-                                <option key="16" value="16">16</option>
-                                <option key="32" value="32">32</option>
-                                <option key="60" value="60">60</option>
-                              </select>
-                              </div>
-                              <div className="pull-left padding-l10 margin-t7 margin-r10">
-                              per page
-                              </div>
+                                  <div className="pull-left padding-r10 margin-t7">View</div>
+                                  <div className="pull-left">
+                                      <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
+                                        <option key="16" value="16">16</option>
+                                        <option key="32" value="32">32</option>
+                                        <option key="60" value="60">60</option>
+                                      </select>
+                                  </div>
+                                  <div className="pull-left padding-l10 margin-t7 margin-r10">
+                                    per page
+                                  </div>
                             </div>
                           </div>
                         </div>
@@ -1716,6 +1883,7 @@ class SearchResult extends Component {
             {this.renderAddMyCatalog()}
             {this.renderAlertmsg()}
             {this.renderAlertmsgPdf()}
+            {this.renderAlertmsgPageInvalid()}
           </form>
         );
       }

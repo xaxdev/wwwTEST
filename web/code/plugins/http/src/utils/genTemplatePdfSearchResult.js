@@ -12,8 +12,8 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     let stylePanel ='border-radius: 0;margin-bottom: 0 !important;border: 0;box-shadow: none;';
     let stylePadding ='padding: 15px 0;';
     let styleSearchproduct  ='position: relative;';
-    let styleSearchproductGride  ='text-align: center;font-size: 10px;position: relative;z-index: 2;padding: 15px 11px 0 11px;height: 380px;cursor: pointer;';
-    let colmd3colsm3nopadding  = 'width: 25%;padding: 0;float: left;height: 380px;';
+    let styleSearchproductGride  ='margin: 0 auto; text-align: center;font-size: 10px;position: relative;z-index: 2;padding: 15px 11px 0 11px;height: 380px;cursor: pointer;';
+    let colmd3colsm3nopadding  = 'width: 135px; padding: 0;float: left;height: 380px; margin: 0 auto;';
     let pullRight  = 'float: right!important;';
     let gridAdd  = 'float: left;margin-top: 0;z-index: 1;position: relative;cursor: pointer;';
     let iconAdd28  = `background: url(${ROOT_URL}/images/icon-add-28.png) no-repeat center;width: 28px;height: 28px;float: left;cursor: pointer;`;
@@ -23,8 +23,8 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     let fontbfc000  = `font-family: '${'open_sanssemibold'}';color: #000;margin: 0 0 10px;`;
     let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
-    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden;';
-    let thumbnaillgridimg = 'width:120px;';
+    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:123px;';
+    let thumbnaillgridimg = 'width:120px;margin: 0 auto;';
 
     dvTotal1 = dvTotal1.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotal1 = dvTotal1.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
@@ -33,7 +33,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvTotal2 = dvTotal2.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
-    dvGridview = dvGridview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    dvGridview = dvGridview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
     dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
     dvGridview = dvGridview.replace(/class="grid-add"/g,`style="${gridAdd}"`);
@@ -46,16 +46,16 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridview = dvGridview.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
     dvGridview = dvGridview.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
-    dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
+    // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
 
-    dvListview = dvListview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    dvListview = dvListview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvListview = dvListview.replace(/class="table-responsive"/g,'');
     dvListview = dvListview.replace(/class="table table-bordered table-searchresult"/g,'border="1" style="font-size: 8px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="100%"');
     dvListview = dvListview.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
     dvListview = dvListview.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;"');
     dvListview = dvListview.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px; border: 1px solid #5c5954;" role="columnheader" scope="col"');
     dvListview = dvListview.replace(/<td/g,'<td style="padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;" ');
-    dvListview = dvListview.replace(/\/original\//g,'/thumbnail/');
+    // dvListview = dvListview.replace(/\/original\//g,'/thumbnail/');
 
     let htmlTemplate = '';
 
