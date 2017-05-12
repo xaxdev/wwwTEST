@@ -219,6 +219,8 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
               }
           }
       });
+      data = data.sortBy(sortBy,sortDirections);
+
       exportData = data;
 
       let pageData = data.slice( (page - 1) * size, page * size );
@@ -256,7 +258,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         });
         // console.log('sumCost-->',sumCost);
       }
-    //   console.log('before get setReferences');
+    //   console.log('pageData-->',pageData.map((item) => {return item.reference}));
       //
     //   let SetReferencesData =  await getSetReferencesData(setReferences, request);
       //
@@ -346,4 +348,32 @@ const getSetReferencesData = async (setReferences, request) => {
         elastic.close();
         throw err
     }
+}
+
+const compareBy = (property, order = 'asc') => (a, b) => {
+  if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
+    return 0;
+  }
+
+  const first = a[property]
+  const second = b[property]
+
+  if (typeof first !== typeof second) {
+    return 0
+  }
+
+  let comparison = 0
+  if (first > second) {
+    comparison = 1
+  }
+
+  if (first < second) {
+    comparison = -1
+  }
+
+  return (order === 'desc')? (comparison * -1) : comparison
+}
+
+Array.prototype.sortBy = function(property, order = 'asc') {
+  return Array.prototype.sort.call(this, compareBy(property, order))
 }
