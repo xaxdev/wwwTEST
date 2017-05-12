@@ -18,14 +18,29 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       let avrgPrice = 0;
 
       let data = response.hits.hits.map((element) => element._source);
-      // if(sortDirections == 'desc'){
-      //   data = _.sortBy(data,sortBy,sortDirections).reverse();
-      // }else{
-      //   data = _.sortBy(data,sortBy,sortDirections);
-      // }
+
       let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-    //   console.log('isViewAsSet-->',isViewAsSet);
-    //   console.log(data.length);
+      if (isViewAsSet) {
+          switch (sortBy) {
+              case 'setReference':
+                  sortBy = 'reference';
+                  break;
+              case 'itemCreatedDate':
+                  sortBy = 'createdDate';
+                  break;
+              default:
+                  sortBy = sortBy.toLowerCase().indexOf('price') != -1 ? 'totalPrice' : sortBy
+                  userCurrency = sortBy.toLowerCase().indexOf('price') != -1 ? 'USD' : userCurrency
+                  break;
+          }
+      }else{
+          sortBy = sortBy.toLowerCase().indexOf('price') != -1 ? 'price' : sortBy
+      }
+    //   console.log('sortBy-->',sortBy);
+    //   console.log('userCurrency-->',userCurrency);
+
+      data = data.sortBy(sortBy,sortDirections,userCurrency);
+
       if (isViewAsSet) {
         //   console.log('keys--> viewAsSet');
           data = data.filter((item) => {
@@ -219,6 +234,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
               }
           }
       });
+
+      allData = allData.sortBy(sortBy,sortDirections,userCurrency);
+
       exportData = data;
 
       let pageData = data.slice( (page - 1) * size, page * size );
@@ -256,7 +274,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         });
         // console.log('sumCost-->',sumCost);
       }
-    //   console.log('before get setReferences');
+    //   console.log('pageData-->',pageData.map((item) => {return item.reference}));
       //
     //   let SetReferencesData =  await getSetReferencesData(setReferences, request);
       //
@@ -346,4 +364,44 @@ const getSetReferencesData = async (setReferences, request) => {
         elastic.close();
         throw err
     }
+}
+
+const compareBy = (property, order = 'asc', userCurrency) => (a, b) => {
+  if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
+    return 0;
+  }
+  let priceA = 0;
+  let priceB = 0;
+  // console.log('property-->',property);
+  // console.log('a-->',a);
+  const first = (property.toLowerCase().indexOf('price') != -1)
+                ? a[property] != undefined
+                    ? a[property][userCurrency] != undefined ? a[property][userCurrency] : 0
+                    : 0
+                : a[property]
+ // console.log('first-->',first);
+  const second = (property.toLowerCase().indexOf('price') != -1)
+                ? b[property] != undefined
+                    ? b[property][userCurrency] != undefined ? b[property][userCurrency] : 0
+                    : 0
+                : b[property]
+// console.log('second-->',second);
+  if (typeof first !== typeof second) {
+    return 0
+  }
+
+  let comparison = 0
+  if (first > second) {
+    comparison = 1
+  }
+
+  if (first < second) {
+    comparison = -1
+  }
+
+  return (order === 'desc')? (comparison * -1) : comparison
+}
+
+Array.prototype.sortBy = function(property, order = 'asc', userCurrency) {
+  return Array.prototype.sort.call(this, compareBy(property, order, userCurrency))
 }

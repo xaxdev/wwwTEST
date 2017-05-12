@@ -696,7 +696,8 @@ class productreletedetail extends Component {
 
   addMyCatalog = _=>{
 
-    this.props.getCatalogName().then(() =>{
+    // this.props.getCatalogName().then(() =>{
+    this.props.getCatalogNameSetItem().then(() =>{
       const { fields: {
                 oldCatalogName,newCatalogName,validateCatalogName
             } } = this.props;

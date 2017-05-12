@@ -63,7 +63,7 @@ class ModalMyCatalog extends Component {
                         <option key={''} value={''}>{'Please selected'}</option>
                           {listCatalogName.map(catName =>
                               {
-                                  return(<option key={catName._id} value={catName._id}>{catName.catalog}</option>);
+                                  return(!catName.shared ? <option key={catName._id} value={catName._id}>{catName.catalog}</option>: <option className="hidden" key={catName._id} value={catName._id}>{catName.catalog}</option>);
                               })
                           }
                       </select>

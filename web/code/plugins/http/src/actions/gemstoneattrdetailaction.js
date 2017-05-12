@@ -4,6 +4,7 @@ import fetch from 'isomorphic-fetch';
 import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME,
         ADD_CATALOG, GET_CERTIFICATE} from '../constants/productdetailconstants';
 
+
 export function getCertificate(params){
       const token = sessionStorage.token;
       var url = `${ROOT_URL}api/items/certificate/${params.productId}`;
@@ -20,7 +21,24 @@ export function getCertificate(params){
                   })
       }
 }
+export function getCatalogNameSetItem(params){
+  const token = sessionStorage.token;
+  // var url = `${ROOT_URL}/api/catalog/names`;
+  var url = `${ROOT_URL}api/catalog/webnamessetitem`;
+  // console.log('getItems-->',url);
 
+  return {
+          type: GET_CATALOGNAME,
+    		promise: fetch(url,{
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          })
+  }
+}
 export function getProductDetail(productId,productlist){
   const token = sessionStorage.token;
   return {

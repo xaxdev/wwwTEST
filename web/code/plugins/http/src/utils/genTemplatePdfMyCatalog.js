@@ -1,9 +1,10 @@
 export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
 
-    let dvTotal = dv.dvTotal;
+    let dvTotalItems = dv.dvTotalItems;
+    let dvTotalSetItems = dv.dvTotalSetItems;
     let dvGridview = dv.dvGridview;
 
-    let styleTotal =`background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family: '${'Open Sans'}', sans-serif; font-size:10px;`;
+    let styleTotal =`background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family: '${'Open Sans'}', sans-serif; font-size:10px;border-bottom: 1px solid #fff;`;
     let styleBodyWrapper ='margin: 0;padding: 0;';
     let styleContainerMarginb4 ='margin-bottom: 0%;padding-right: 15px;padding-left: 15px;margin-right: auto;margin-left: auto;';
     let styleColsm12 ='width: 100%;';
@@ -11,8 +12,8 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
 
     let stylePadding ='padding: 15px 0;';
     let styleSearchproduct  ='position: relative;';
-    let styleSearchproductGride  ='text-align: center;font-size: 10px;position: relative;z-index: 2;padding: 15px 11px 0 11px;height: 380px;cursor: pointer;';
-    let colmd3colsm3nopadding  = 'width: 25%;padding: 0;float: left;height: 380px;';
+    let styleSearchproductGride  ='margin: 0 auto; text-align: center;font-size: 10px;position: relative;z-index: 2;padding: 15px 11px 0 11px;height: 380px;cursor: pointer;';
+    let colmd3colsm3nopadding  = 'width: 145px; padding: 0;float: left;height: 380px; margin: 0 auto;';
     let pullRight  = 'float: right!important;';
     let gridAdd  = 'float: left;margin-top: 0;z-index: 1;position: relative;cursor: pointer;';
     let iconAdd28  = `background: url(${ROOT_URL}/images/icon-add-28.png) no-repeat center;width: 28px;height: 28px;float: left;cursor: pointer;`;
@@ -22,15 +23,18 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     let fontbfc000  = `font-family: '${'open_sanssemibold'}';color: #000;margin: 0 0 10px;`;
     let productdetailh = 'height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;';
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
-    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden;';
-    let thumbnaillgridimg = 'position: absolute; left: 50%; top: 50%; height: auto; width: auto; padding-bottom: 20px; transform: translate(-50%,-50%);';
+    let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:123px;';
+    let thumbnaillgridimg = 'width:120px;margin: 0 auto;';
 
-    dvTotal = dvTotal.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
-    dvTotal = dvTotal.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
+    dvTotalItems = dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
+    dvTotalItems = dvTotalItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
+    dvTotalSetItems = dvTotalSetItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
+    dvTotalSetItems = dvTotalSetItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     // dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
-    dvGridview = dvGridview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    // dvGridview = dvGridview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    dvGridview = dvGridview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
     dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
     dvGridview = dvGridview.replace(/class="grid-add"/g,`style="${gridAdd}"`);
@@ -42,8 +46,8 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     dvGridview = dvGridview.replace(/class="product-detail-h"/g,`style="${productdetailh}"`);
     dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridview = dvGridview.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
-    dvGridview = dvGridview.replace(/<img/g,'<img style="width:120px" ');
-    dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
+    dvGridview = dvGridview.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
+    // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
 
     let htmlTemplate = '';
 
@@ -57,7 +61,10 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
                                 <div style="${styleBodyWrapper}">
                                     <div>
                                         <div style="${styleTotal}">
-                                            ${dvTotal}
+                                            ${dvTotalItems}
+                                        </div>
+                                        <div style="${styleTotal}">
+                                            ${dvTotalSetItems}
                                         </div>
                                         <div>
                                           <div style="${styleColsm12}">
