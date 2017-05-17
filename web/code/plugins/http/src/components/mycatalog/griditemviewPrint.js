@@ -1419,21 +1419,22 @@ class GridItemsViewPrint extends Component {
                              initialImage="/images/blank.gif"
                              name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
                              id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
-                             onClick={btnEvent}
+                             onClick={item.authorization ? btnEvent: ''}
                              />
                     </div>
 
                     <p className="font-b fc-000">
                       <span name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
                             id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
-                            onClick={btnEvent}>{item.reference}</span><br/>
+                            onClick={item.authorization ? btnEvent: ''}>{item.reference}</span><br/>
                       <span name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
                             id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
-                            onClick={btnEvent}>{(item.authorization)?item.sku:''}</span>
+                            onClick={item.authorization ? btnEvent: ''}>{(item.authorization)?item.sku:''}</span>
                     </p>
                     <p className="product-detail-h"
                         name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
-                        id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`} onClick={btnEvent}>{itemName}</p>
+                        id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                        onClick={item.authorization ? btnEvent: ''}>{itemName}</p>
                     <span className={`fc-ae8f3b font-b price ${(item.authorization)?(item.type != 'CER') ? '' : 'hidden':''}`}>{price}</span>
                     <span className="line"></span>
                  </div>

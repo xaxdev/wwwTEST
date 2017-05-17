@@ -103,17 +103,17 @@ export default {
                             return item.price > -1
                         })
                         price = all.reduce((previous, current) => {
-                            return previous + current.price
+                            return previous + (!!current.price ? current.price: 0)
                         }, 0)
-                        updatedCost = all.reduce((previous, current) => previous + current.updatedCost, 0)
+                        updatedCost = all.reduce((previous, current) => previous + (!!current.updatedCost ? current.updatedCost: 0), 0)
                     }
 
                     if (!!dataWithSetItems.length && dataWithSetItems.length > 0) {
                         const esSetItems = await client.search(request.helper.setitem.parameters(dataWithSetItems))
                         let inventorySetItems = await request.helper.setitem.inventory(dataWithSetItems, esSetItems)
                         const allSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
-                        setItemPrice = allSetItem.reduce((previous, current) => previous + current.totalPrice.USD, 0)
-                        setItemUpdatedCost = allSetItem.reduce((previous, current) => previous + current.totalUpdatedCost.USD, 0)
+                        setItemPrice = allSetItem.reduce((previous, current) => previous + (!!current.totalPrice ? current.totalPrice.USD : 0), 0)
+                        setItemUpdatedCost = allSetItem.reduce((previous, current) => previous + (!!current.totalUpdatedCost ? current.totalUpdatedCost.USD : 0), 0)
                     }
 
                     if (!!dispItems.length && dispItems.length > 0) {
