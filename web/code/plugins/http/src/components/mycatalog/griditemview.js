@@ -1279,7 +1279,9 @@ class GridItemsView extends Component {
               lblPrice = `Public Price (${userLogin.currency})`;
               lblUpdatedCost = `Update Cost (${userLogin.currency})`;
               imagesProduct = (item.authorization)
-                ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                ? (item.gallery.length) != 0
+                    ? item.gallery[0].original
+                    : '/images/blank.gif'
                 :'/images/login-logo@2x.png';
                 imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
               itemDate = (item.authorization)
@@ -1314,7 +1316,7 @@ class GridItemsView extends Component {
               imagesProduct = (item.image) != undefined
                               ? item.image.length != 0
                                   ?item.image[0].original
-                                  : '/images/login-logo@2x.png'
+                                  : '/images/blank.gif'
                               : '/images/login-logo@2x.png';
 
               imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
