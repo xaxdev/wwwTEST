@@ -33,8 +33,8 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     // dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
-    // dvGridview = dvGridview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
-    dvGridview = dvGridview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
+    dvGridview = dvGridview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    // dvGridview = dvGridview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
     dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
     dvGridview = dvGridview.replace(/class="grid-add"/g,`style="${gridAdd}"`);

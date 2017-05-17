@@ -9,7 +9,8 @@ const Menu =  (props) => {
     const { role } = JSON.parse(sessionStorage.logindata);
     const UserManagement = role == 'Admin'? <NavItem href="/users" className={`${(props.currentLocation == '/users' ||
                                                                                 props.currentLocation == '/user' ||
-                                                                                props.currentLocation == '/user/new'
+                                                                                props.currentLocation == '/user/new' ||
+                                                                                props.currentLocation.indexOf('user') != -1
                                                                             )?'active':''}`}>User Management</NavItem> : '';
     const MyCatalog = <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog' ||
                                                                 props.currentLocation.indexOf('productmycatalog') != -1
@@ -27,6 +28,7 @@ const Menu =  (props) => {
             <NavItem href="/inventories" className={`${(props.currentLocation !== '/users' &&
                                                         props.currentLocation !== '/user' &&
                                                         props.currentLocation !== '/user/new' &&
+                                                        props.currentLocation.indexOf('user') == -1 &&
                                                         props.currentLocation !== '/mycatalog' &&
                                                         props.currentLocation !== '/savesearch' &&
                                                         props.currentLocation !== '/whatnewnotification' &&
