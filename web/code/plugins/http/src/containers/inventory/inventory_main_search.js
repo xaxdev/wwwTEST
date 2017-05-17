@@ -80,14 +80,14 @@ class InventorySearch extends Component {
 
     (async () => {
         if(filters.length != 0){
-            await this.props.setParams(paramsSearch)
-            await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
-            await filters.splice(0, filters.length);
+            this.props.setParams(paramsSearch)
+            sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
+            filters.splice(0, filters.length);
         }else{
             // if not have filters is mean new search
             // set params by new criterias
-            await this.props.setParams(data);
-            await sessionStorage.setItem('paramsSearch', JSON.stringify(data));
+            this.props.setParams(data);
+            sessionStorage.setItem('paramsSearch', JSON.stringify(data));
         }
     })()
     // let keyscat = Object.keys(data);
