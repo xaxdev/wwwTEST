@@ -1085,19 +1085,28 @@ class SearchResult extends Component {
   }
   newSearch(e){
     e.preventDefault();
+    (async() => {
+        const token = sessionStorage.token;
 
-    const token = sessionStorage.token;
+        this.props.setSortingBy('itemCreatedDate');
+        this.props.setSortDirection('desc');
+        this.props.setPageSize(16);
+        this.props.setShowGridView(true);
+        this.props.setShowListView(false);
+        let paramsSearch = this.props.paramsSearch;
 
-    this.props.setSortingBy('itemCreatedDate');
-    this.props.setSortDirection('desc');
-    this.props.setPageSize(16);
-    this.props.setShowGridView(true);
-    this.props.setShowListView(false);
+        let keys = Object.keys(paramsSearch);
+        keys.forEach((key) => {
+            paramsSearch[key] = '';
+        })
+        await this.props.newSearch();
 
-    this.props.newSearch();
-    if(token){
-      this.context.router.push('/inventories');
-    }
+        await this.props.setParams(paramsSearch);
+        await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
+        if(token){
+            this.context.router.push('/inventories');
+        }
+    })()
   }
   modifySearch(e){
     e.preventDefault();

@@ -80,14 +80,14 @@ class InventorySearch extends Component {
 
     (async () => {
         if(filters.length != 0){
-            await this.props.setParams(paramsSearch)
-            await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
-            await filters.splice(0, filters.length);
+            this.props.setParams(paramsSearch)
+            sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
+            filters.splice(0, filters.length);
         }else{
             // if not have filters is mean new search
             // set params by new criterias
-            await this.props.setParams(data);
-            await sessionStorage.setItem('paramsSearch', JSON.stringify(data));
+            this.props.setParams(data);
+            sessionStorage.setItem('paramsSearch', JSON.stringify(data));
         }
     })()
     // let keyscat = Object.keys(data);
@@ -288,6 +288,21 @@ class InventorySearch extends Component {
     }
 
     filters.push({'userCurrency':userLogin.currency});
+    // console.log(filters.find((item) => {return item.location != undefined}));
+    const findLocation = filters.find((item) => {return item.location != undefined});
+    const findWareHouse = filters.find((item) => {return item.warehouse != undefined});
+
+    if (!findLocation) {
+        if (userLogin.permission.onhandLocation.places.length != 0) {
+            filters.push({'location':userLogin.permission.onhandLocation.places});
+        }
+    }
+
+    if (!findWareHouse) {
+        if (userLogin.permission.onhandWarehouse.places.length != 0) {
+            filters.push({'warehouse':userLogin.permission.onhandWarehouse.places});
+        }
+    }
     // console.log('filters-->',filters);
     this.props.setCurrentPage(1);
     sessionStorage.setItem('filters', JSON.stringify(filters));

@@ -339,6 +339,8 @@ class InventoryFilter extends Component {
     let fileName = jQuery('#fileName');
     let fileNameSetReference = jQuery('#fileNameSetReference');
 
+    this.props.itemActions.newSearch();
+
     fileName.html('');
     fileNameSetReference.html('');
     let { fields:{reference, setReference }} = this.props;

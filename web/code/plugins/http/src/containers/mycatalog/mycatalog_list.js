@@ -90,7 +90,7 @@ class MyCatalog extends Component {
                     let parasm = {
                             id: catalogId,
                             page: this.props.currentPage,
-                            size: 16,
+                            size: !!this.props.pageSize ? this.props.pageSize : 16,
                             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                         };
@@ -116,6 +116,24 @@ class MyCatalog extends Component {
               inputCatalogName.value = nextProps.catalogName;
           }
       }
+    }
+
+    componentDidMount() {
+        let that = this;
+
+        if(this.refs.pageSize != undefined){
+          // let select = React.findDOMNode(this.refs.sortingBy);
+          let values = [].filter.call(this.refs.pageSize.options, function (o) {
+                o.selected = false;
+
+                if(o.value == that.props.pageSize){
+                  o.selected = true
+                }
+                return o.selected;
+              }).map(function (o) {
+                return o.value;
+              });
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -821,6 +839,8 @@ class MyCatalog extends Component {
             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
         };
         this.props.setCatalogCurrentPage(getPage);
+        this.props.setPageSize(pageSize);
+
         if (catalogId != null) {
             // this.props.getCatalogItems(parasm).then((value) => {
             this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
@@ -1059,7 +1079,8 @@ function mapStateToProps(state) {
         shareCatalogmsgError: state.myCatalog.msg,
         shareCatalogStatusCode: state.myCatalog.shareCatalogStatusCode,
         isCatalogShared: state.myCatalog.isCatalogShared,
-        ViewAsSet: state.searchResult.viewAsSet
+        ViewAsSet: state.searchResult.viewAsSet,
+        pageSize: state.searchResult.PageSize
     }
 }
 MyCatalog.contextTypes = {
