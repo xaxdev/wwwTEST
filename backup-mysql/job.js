@@ -5,18 +5,20 @@ import sendgrid from 'sendgrid';
 import config from './sendgrid.json';
 import configMySQL from './config';
 const exec = require('child_process').exec;
-let child = require('child_process').child;
 const fs = require('fs');
 const rebuild_file = '../web/code/plugins/http/public/export_files/';
 const fileSchema = '../web/code/plugins/http/public/export_files/mol-schema.sql';
 const fileData = '../web/code/plugins/http/public/export_files/moldb-data.sql';
 const enviroment = process.env.NODE_ENV || 'development';
 const mySqlConfig = configMySQL.mysql[enviroment];
+let child = require('child_process').child;
+let msgFailed = '';
+let msgSucceeded = '';
 
-const init = async _ => {
+const initBackupSchema = async _ => {
     try {
         console.log(`Start backup my-sql at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
-        await backupSchema();
+        backupSchema();
 
     } catch (err) {
         console.log(err);
@@ -59,8 +61,8 @@ const backupData = _=> {
 };
 
 const notify = err => {
-    const time = moment().tz('Asia/Bangkok').format()
-    const subject = (!!err)? `Failed to backup my-sql at ${time}` : `Succeeded backup my-sql at ${time}`
+
+    const subject = (!!err)? msgFailed : msgSucceeded
     const sg = sendgrid(config.key)
     const request = sg.emptyRequest()
 
@@ -98,23 +100,29 @@ const notify = err => {
         });
 };
 
-new CronJob({
+const jobBackupSchema = new CronJob({
   // cronTime: '00 00 2 * * 2',
-  cronTime: '00 */5 * * * *',
+  cronTime: '00 */3 * * * *',
   onTick: _ => {
-    init()
+    initBackupSchema()
         .then(_ => {
             const time = moment().tz('Asia/Bangkok').format()
             console.log(`Backup my-sql are done at: ${time}`)
         })
         .catch(err => {
+            const time = moment().tz('Asia/Bangkok').format();
+            msgFailed = `Failed to backup my-sql mol schema at ${time}`;
             notify(err)
             return err
         })
         .then(value => {
+            const time = moment().tz('Asia/Bangkok').format();
+            msgSucceeded = `Succeeded backup my-sql mol schema at ${time}`;
             notify(value)
         });
   },
   start: true,
   timeZone: 'Asia/Bangkok'
 });
+
+console.log('jobBackupSchema status', jobBackupSchema.running);
