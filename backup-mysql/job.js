@@ -25,21 +25,26 @@ const init = async _ => {
 };
 
 const runSqlScript = (file, command, callback) =>{
-        const rebuild_db = command + fileSchema;
-        console.log(rebuild_db);
+        try {
+            const rebuild_db = command + fileSchema;
+            console.log(rebuild_db);
 
-        child = exec(rebuild_db, function(error, stdout, stderr) {
-            if (error !== null) {
-                console.log('Rebuild Error: ' + error);
-                console.log('stdout: ' + stdout);
-                console.log('stderr: ' + stderr);
-                process.exit(1);
-                return;
-            }
-            console.log('Successfully Rebuild Database using: ');
-            console.log('   ' + file);
-            callback();
-        });
+            child = exec(rebuild_db, function(error, stdout, stderr) {
+                if (error !== null) {
+                    console.log('Rebuild Error: ' + error);
+                    console.log('stdout: ' + stdout);
+                    console.log('stderr: ' + stderr);
+                    process.exit(1);
+                    return;
+                }
+                console.log('Successfully Rebuild Database using: ');
+                console.log('   ' + file);
+                // callback();
+            });
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
 };
 
 const backupSchema = _=> {
@@ -93,24 +98,23 @@ const notify = err => {
         });
 };
 
-// new CronJob({
-//   cronTime: '00 00 2 * * 2',
-//   onTick: _ => {
-//     init()
-//         .then(_ => {
-//             const time = moment().tz('Asia/Bangkok').format()
-//             console.log(`Backup my-sql are done at: ${time}`)
-//         })
-//         .catch(err => {
-//             notify(err)
-//             return err
-//         })
-//         .then(value => {
-//             notify(value)
-//         });
-//   },
-//   start: true,
-//   timeZone: 'Asia/Bangkok'
-// });
-
-init();
+new CronJob({
+  // cronTime: '00 00 2 * * 2',
+  cronTime: '00 */5 * * * *',
+  onTick: _ => {
+    init()
+        .then(_ => {
+            const time = moment().tz('Asia/Bangkok').format()
+            console.log(`Backup my-sql are done at: ${time}`)
+        })
+        .catch(err => {
+            notify(err)
+            return err
+        })
+        .then(value => {
+            notify(value)
+        });
+  },
+  start: true,
+  timeZone: 'Asia/Bangkok'
+});
