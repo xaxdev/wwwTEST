@@ -4,9 +4,7 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "start": "node bootstrap.js production",
-        "test": "node bootstrap.js test",
-        "dev": "node bootstrap.js development"
+        "start": "node bootstrap.js"
     },
     "keywords": [],
     "author": "",
