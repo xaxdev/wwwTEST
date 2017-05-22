@@ -17,8 +17,19 @@ let msgSucceeded = '';
 
 const initBackupSchema = async _ => {
     try {
-        console.log(`Start backup my-sql at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
+        console.log(`Start backup my-sql mol schema at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
         backupSchema();
+
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+};
+
+const initBackupData = async _ => {
+    try {
+        console.log(`Start backup my-sql mol datas at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
+        backupData();
 
     } catch (err) {
         console.log(err);
@@ -50,14 +61,28 @@ const runSqlScript = (file, command, callback) =>{
 };
 
 const backupSchema = _=> {
-    const command = 'mysqldump -u ' + mySqlConfig.user + ' -h ' + mySqlConfig.host + ' ' + mySqlConfig.database + ' --no-data > ';
+    let command = '';
+    if (process.env.NODE_ENV != 'production') {
+        command = 'mysqldump -u ' + mySqlConfig.user + ' -h ' + mySqlConfig.host + ' ' + mySqlConfig.database + ' --no-data > ';
+    }else{
+        command = 'mysqldump -u ' + mySqlConfig.user + ' -h ' + mySqlConfig.host + ' -p' + mySqlConfig.password  + ' ' + mySqlConfig.database + ' --no-data > ';
+    }
+
     runSqlScript(fileSchema, command, function() {
                 process.exit(0);
             });
 };
 
 const backupData = _=> {
-
+    let command = '';
+    if (process.env.NODE_ENV != 'production') {
+        command = 'mysqldump -u ' + mySqlConfig.user + ' -h ' + mySqlConfig.host + ' ' + mySqlConfig.database + ' > ';
+    }else{
+        command = 'mysqldump -u ' + mySqlConfig.user + ' -h ' + mySqlConfig.host + ' -p' + mySqlConfig.password  + ' ' + mySqlConfig.database + ' > ';
+    }
+    runSqlScript(fileData, command, function() {
+                process.exit(0);
+            });
 };
 
 const notify = err => {
@@ -104,10 +129,10 @@ const jobBackupSchema = new CronJob({
   // cronTime: '00 00 2 * * 2',
   cronTime: '00 */3 * * * *',
   onTick: _ => {
-    initBackupSchema()
+    initBackupData()
         .then(_ => {
             const time = moment().tz('Asia/Bangkok').format()
-            console.log(`Backup my-sql are done at: ${time}`)
+            console.log(`Backup my-sql mol schema are done at: ${time}`)
         })
         .catch(err => {
             const time = moment().tz('Asia/Bangkok').format();
@@ -125,4 +150,30 @@ const jobBackupSchema = new CronJob({
   timeZone: 'Asia/Bangkok'
 });
 
+const jobBackupData = new CronJob({
+  // cronTime: '00 00 2 * * 2',
+  cronTime: '00 */5 * * * *',
+  onTick: _ => {
+    initBackupSchema()
+        .then(_ => {
+            const time = moment().tz('Asia/Bangkok').format()
+            console.log(`Backup my-sql mol datas are done at: ${time}`)
+        })
+        .catch(err => {
+            const time = moment().tz('Asia/Bangkok').format();
+            msgFailed = `Failed to backup my-sql mol datas at ${time}`;
+            notify(err)
+            return err
+        })
+        .then(value => {
+            const time = moment().tz('Asia/Bangkok').format();
+            msgSucceeded = `Succeeded backup my-sql mol datas at ${time}`;
+            notify(value)
+        });
+  },
+  start: true,
+  timeZone: 'Asia/Bangkok'
+});
+
 console.log('jobBackupSchema status', jobBackupSchema.running);
+console.log('jobBackupData status', jobBackupData.running);
