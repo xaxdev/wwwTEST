@@ -1,0 +1,21 @@
+{
+  "apps" : [{
+    "name": "backup-mysql",
+    "script": "./bootstrap.js",
+    "node_args": "--max_old_space_size=2048",
+    "watch": false,
+    "env": {
+      "NODE_ENV": "production",
+    },
+    "env_test": {
+	    "NODE_ENV": "test"
+	},
+    "env_development": {
+	    "NODE_ENV": "development"
+	},
+    "merge_logs": true,
+    "error_file": "./logs/backup-mysql-err.log",
+    "out_file": "./logs/backup-mysql-out.log",
+    "log_date_format": "YYYY-MM-DD HH:mm Z"
+  }]
+}
