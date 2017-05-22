@@ -6,9 +6,9 @@ import config from './sendgrid.json';
 import configMySQL from './config';
 const exec = require('child_process').exec;
 const fs = require('fs');
-const rebuild_file = '../web/code/plugins/http/public/export_files/';
-const fileSchema = '../web/code/plugins/http/public/export_files/mol-schema.sql';
-const fileData = '../web/code/plugins/http/public/export_files/moldb-data.sql';
+const rebuild_file = './backup';
+const fileSchema = './backup/mol-schema.sql';
+const fileData = './backup/moldb-data.sql';
 const enviroment = process.env.NODE_ENV || 'development';
 const mySqlConfig = configMySQL.mysql[enviroment];
 let child = require('child_process').child;
@@ -126,8 +126,8 @@ const notify = err => {
 };
 
 const jobBackupSchema = new CronJob({
-  // cronTime: '00 00 2 * * 2',
-  cronTime: '00 */3 * * * *',
+  cronTime: '00 00 2 * * 2',
+  // cronTime: '00 */3 * * * *',
   onTick: _ => {
     initBackupData()
         .then(_ => {
@@ -151,8 +151,8 @@ const jobBackupSchema = new CronJob({
 });
 
 const jobBackupData = new CronJob({
-  // cronTime: '00 00 2 * * 2',
-  cronTime: '00 */5 * * * *',
+  cronTime: '00 10 2 * * 2',
+  // cronTime: '00 */5 * * * *',
   onTick: _ => {
     initBackupSchema()
         .then(_ => {
