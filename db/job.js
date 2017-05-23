@@ -46,8 +46,8 @@ const runSqlScript = (file, command, callback) =>{
         try {
             const rebuild_db = command + file;
 
-            (async _ => {
-                child = exec(rebuild_db, function(error, stdout, stderr) {
+            child = exec(rebuild_db, function(error, stdout, stderr) {
+                (async _ => {
                     if (error !== null) {
                         console.log('Rebuild Error: ' + error);
                         console.log('stdout: ' + stdout);
@@ -58,9 +58,10 @@ const runSqlScript = (file, command, callback) =>{
                     console.log('Successfully Rebuild Database using: ');
                     console.log('   ' + file);
                     await sendToAws();
+                    console.log('Successfully Upload to s3.');
                     // callback();
-                });
-            })()
+                })()
+            });
 
         } catch (err) {
             console.log(err);
