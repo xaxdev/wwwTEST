@@ -201,10 +201,12 @@ const jobBackupData = new CronJob({
             return err
         })
         .then(value => {
-            const time = moment().tz('Asia/Bangkok').format();
-            msgSucceeded = `Succeeded backup my-sql mol datas at ${time}`;
-            await sendToAws();
-            await notify(value)
+            (async _ => {
+                const time = moment().tz('Asia/Bangkok').format();
+                msgSucceeded = `Succeeded backup my-sql mol datas at ${time}`;
+                await sendToAws();
+                await notify(value)
+            })()
         });
   },
   start: true,
