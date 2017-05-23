@@ -1,6 +1,6 @@
 {
   "apps" : [{
-    "name": "backup-mysql",
+    "name": "dbbackup",
     "script": "./bootstrap.js",
     "node_args": "--max_old_space_size=2048",
     "watch": false,

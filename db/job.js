@@ -4,21 +4,26 @@ import moment from 'moment-timezone';
 import sendgrid from 'sendgrid';
 import config from './sendgrid.json';
 import configMySQL from './config';
+import AWS from 'aws-sdk';
+
 const exec = require('child_process').exec;
 const fs = require('fs');
-const rebuild_file = './backup';
-const fileSchema = './backup/mol-schema.sql';
-const fileData = './backup/moldb-data.sql';
+const rebuild_file = './db';
+const fileSchema = './db/schema/table/mol-schema.sql';
+const fileData = './db/data/moldb-data.sql';
 const enviroment = process.env.NODE_ENV || 'development';
 const mySqlConfig = configMySQL.mysql[enviroment];
+
 let child = require('child_process').child;
 let msgFailed = '';
 let msgSucceeded = '';
 
+AWS.config.loadFromPath('./aws.json');
+
 const initBackupSchema = async _ => {
     try {
         console.log(`Start backup my-sql mol schema at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
-        backupSchema();
+        await backupSchema();
 
     } catch (err) {
         console.log(err);
@@ -85,6 +90,36 @@ const backupData = _=> {
             });
 };
 
+const upload = async params => new Promise((resolve, reject) => {
+    const { S3 } = AWS
+    const s3 = new S3({ apiVersion: '2006-03-01' })
+    console.log('uploading...')
+    s3.upload(params, (err, data) => {
+        if (err) {
+            return reject(err)
+        }
+
+        return resolve(data)
+    })
+});
+
+const sendToAws = _=>{
+    (async _ => {
+
+        try {
+             const file = fs.readFileSync('./data/moldb-data.sql')
+             const response = await upload({
+                 Bucket: 'mouawad/mol/backup/mysql/data/20170523',
+                 Key: 'moldb-data.sql',
+                 Body: file
+             })
+             console.log(JSON.stringify(response))
+        } catch (err) {
+            console.log(err)
+        }
+    })()
+};
+
 const notify = err => {
 
     const subject = (!!err)? msgFailed : msgSucceeded
@@ -125,36 +160,36 @@ const notify = err => {
         });
 };
 
-const jobBackupSchema = new CronJob({
-  cronTime: '00 00 2 * * 2',
-  // cronTime: '00 */3 * * * *',
-  onTick: _ => {
-    initBackupData()
-        .then(_ => {
-            const time = moment().tz('Asia/Bangkok').format()
-            console.log(`Backup my-sql mol schema are done at: ${time}`)
-        })
-        .catch(err => {
-            const time = moment().tz('Asia/Bangkok').format();
-            msgFailed = `Failed to backup my-sql mol schema at ${time}`;
-            notify(err)
-            return err
-        })
-        .then(value => {
-            const time = moment().tz('Asia/Bangkok').format();
-            msgSucceeded = `Succeeded backup my-sql mol schema at ${time}`;
-            notify(value)
-        });
-  },
-  start: true,
-  timeZone: 'Asia/Bangkok'
-});
+// const jobBackupSchema = new CronJob({
+//   cronTime: '00 00 2 * * 2',
+//   // cronTime: '00 */3 * * * *',
+//   onTick: _ => {
+//     initBackupSchema()
+//         .then(_ => {
+//             const time = moment().tz('Asia/Bangkok').format()
+//             console.log(`Backup my-sql mol schema are done at: ${time}`)
+//         })
+//         .catch(err => {
+//             const time = moment().tz('Asia/Bangkok').format();
+//             msgFailed = `Failed to backup my-sql mol schema at ${time}`;
+//             notify(err)
+//             return err
+//         })
+//         .then(value => {
+//             const time = moment().tz('Asia/Bangkok').format();
+//             msgSucceeded = `Succeeded backup my-sql mol schema at ${time}`;
+//             notify(value)
+//         });
+//   },
+//   start: true,
+//   timeZone: 'Asia/Bangkok'
+// });
 
 const jobBackupData = new CronJob({
-  cronTime: '00 10 2 * * 2',
+  cronTime: '00 00 2 * * 3',
   // cronTime: '00 */5 * * * *',
   onTick: _ => {
-    initBackupSchema()
+    initBackupData()
         .then(_ => {
             const time = moment().tz('Asia/Bangkok').format()
             console.log(`Backup my-sql mol datas are done at: ${time}`)
@@ -168,12 +203,13 @@ const jobBackupData = new CronJob({
         .then(value => {
             const time = moment().tz('Asia/Bangkok').format();
             msgSucceeded = `Succeeded backup my-sql mol datas at ${time}`;
-            notify(value)
+            await sendToAws();
+            await notify(value)
         });
   },
   start: true,
   timeZone: 'Asia/Bangkok'
 });
 
-console.log('jobBackupSchema status', jobBackupSchema.running);
+// console.log('jobBackupSchema status', jobBackupSchema.running);
 console.log('jobBackupData status', jobBackupData.running);
