@@ -45,20 +45,23 @@ const initBackupData = async _ => {
 const runSqlScript = (file, command, callback) =>{
         try {
             const rebuild_db = command + file;
-            console.log(rebuild_db);
 
-            child = exec(rebuild_db, function(error, stdout, stderr) {
-                if (error !== null) {
-                    console.log('Rebuild Error: ' + error);
-                    console.log('stdout: ' + stdout);
-                    console.log('stderr: ' + stderr);
-                    process.exit(1);
-                    return;
-                }
-                console.log('Successfully Rebuild Database using: ');
-                console.log('   ' + file);
-                // callback();
-            });
+            (async _ => {
+                child = exec(rebuild_db, function(error, stdout, stderr) {
+                    if (error !== null) {
+                        console.log('Rebuild Error: ' + error);
+                        console.log('stdout: ' + stdout);
+                        console.log('stderr: ' + stderr);
+                        process.exit(1);
+                        return;
+                    }
+                    console.log('Successfully Rebuild Database using: ');
+                    console.log('   ' + file);
+                    await sendToAws();
+                    // callback();
+                });
+            })()
+
         } catch (err) {
             console.log(err);
             throw err;
@@ -109,7 +112,7 @@ const sendToAws = _=>{
         try {
              const file = fs.readFileSync('./data/moldb-data.sql')
              const response = await upload({
-                 Bucket: 'mouawad/mol/backup/mysql/data/20170523',
+                 Bucket: `mouawad/mol/backup/mysql/data/${moment().tz('Asia/Bangkok').format('YYYYMMDD')}`,
                  Key: 'moldb-data.sql',
                  Body: file
              })
@@ -204,7 +207,7 @@ const jobBackupData = new CronJob({
             (async _ => {
                 const time = moment().tz('Asia/Bangkok').format();
                 msgSucceeded = `Succeeded backup my-sql mol datas at ${time}`;
-                await sendToAws();
+                // await sendToAws();
                 await notify(value)
             })()
         });
