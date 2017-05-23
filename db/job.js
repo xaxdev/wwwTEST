@@ -105,7 +105,7 @@ const upload = async params => new Promise((resolve, reject) => {
 
 const sendToAws = _=>{
     (async _ => {
-
+        console.log(`Start send file to s3 at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
         try {
              const file = fs.readFileSync('./data/moldb-data.sql')
              const response = await upload({
