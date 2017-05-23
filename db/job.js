@@ -9,8 +9,8 @@ import AWS from 'aws-sdk';
 const exec = require('child_process').exec;
 const fs = require('fs');
 const rebuild_file = './db';
-const fileSchema = './db/schema/table/mol-schema.sql';
-const fileData = './db/data/moldb-data.sql';
+const fileSchema = './schema/table/mol-schema.sql';
+const fileData = './data/moldb-data.sql';
 const enviroment = process.env.NODE_ENV || 'development';
 const mySqlConfig = configMySQL.mysql[enviroment];
 
