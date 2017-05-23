@@ -44,7 +44,7 @@ const initBackupData = async _ => {
 
 const runSqlScript = (file, command, callback) =>{
         try {
-            const rebuild_db = command + fileSchema;
+            const rebuild_db = command + file;
             console.log(rebuild_db);
 
             child = exec(rebuild_db, function(error, stdout, stderr) {
