@@ -10,7 +10,7 @@
             "password": "P@ssw0rd"
         },
         "production": {
-            "server": "10.128.133.74",
+            "server": "10.128.133.84",
             "user": "molintegration",
             "password": "NGhRt%^-09"
         }
