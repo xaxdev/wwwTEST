@@ -221,79 +221,83 @@ const Confidence = require('confidence');
                             // }
                             for (let j = 0; j < cell; j++) {
                               let column = j+1;
-                              ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+                              if (column != 1) {
+                                  ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+                              }else{
+                                  if (obj.fields.showImages){
+                                      if(isIngredients){
+                                          if(cellIngredients = column){
+                                              if(item[j] != undefined){
+                                                  if(item[j] == 'Main'){
+                                                      let pathImage = '';
 
-                              if (obj.fields.showImages){
-                                  if(isIngredients){
-                                      if(cellIngredients = column){
-                                          if(item[j] != undefined){
-                                              if(item[j] == 'Main'){
-                                                  let pathImage = '';
-
-                                                  if (item[0] != '') {
-                                                    let arrImages = item[0].split("/").slice(-1).pop();
-                                                    //   pathImage = '/var/www/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                                    // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                                    pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
-                                                  }else{
-                                                    pathImage = './images/blank.gif';
-                                                  }
-
-                                                  ws.column(1).setWidth(12);
-                                                  ws.row(row).setHeight(150);
-                                                  let isExist = fileExists(pathImage);
-                                                  if (!isExist) {
-                                                      pathImage = './images/blank.gif';
-                                                  }
-                                                  ws.addImage({
-                                                      path: pathImage,
-                                                      type: 'picture',
-                                                      position: {
-                                                          type: 'oneCellAnchor',
-                                                          from: {
-                                                              col: 1,
-                                                              colOff: '0.0in',
-                                                              row: row,
-                                                              rowOff: 0
-                                                          }
+                                                      if (item[0] != '') {
+                                                          let arrImages = item[0].split("/").slice(-1).pop();
+                                                          //   pathImage = '/var/www/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                                          // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                                          pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
+                                                      }else{
+                                                          pathImage = './images/blank.gif';
                                                       }
-                                                  });
+
+                                                      ws.column(1).setWidth(12);
+                                                      ws.row(row).setHeight(150);
+                                                      let isExist = fileExists(pathImage);
+                                                      if (!isExist) {
+                                                          pathImage = './images/blank.gif';
+                                                      }
+                                                      ws.addImage({
+                                                          path: pathImage,
+                                                          type: 'picture',
+                                                          position: {
+                                                              type: 'oneCellAnchor',
+                                                              from: {
+                                                                  col: 1,
+                                                                  colOff: '0.0in',
+                                                                  row: row,
+                                                                  rowOff: 0
+                                                              }
+                                                          }
+                                                      });
+                                                  }
                                               }
+                                          }
+                                      }else{
+                                          if(column == 1){
+                                              let pathImage = '';
+
+                                              if (item[0] != '') {
+                                                  let arrImages = item[0].split("/").slice(-1).pop();
+                                                  //   pathImage = '/var/www/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                                  // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                                  pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
+                                              }else{
+                                                  pathImage = './images/blank.gif';
+                                              }
+
+                                              ws.column(1).setWidth(20);
+                                              ws.row(row).setHeight(150);
+                                              let isExist = fileExists(pathImage);
+                                              if (!isExist) {
+                                                  pathImage = './images/blank.gif';
+                                              }
+                                              ws.addImage({
+                                                  path: pathImage,
+                                                  type: 'picture',
+                                                  position: {
+                                                      type: 'oneCellAnchor',
+                                                      from: {
+                                                          col: 1,
+                                                          colOff: '0.0in',
+                                                          row: row,
+                                                          rowOff: 0
+                                                      }
+                                                  }
+                                              });
                                           }
                                       }
                                   }else{
-                                      if(column == 1){
-                                          let pathImage = '';
-
-                                          if (item[0] != '') {
-                                            let arrImages = item[0].split("/").slice(-1).pop();
-                                            //   pathImage = '/var/www/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                            // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                            pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
-                                          }else{
-                                            pathImage = './images/blank.gif';
-                                          }
-
-                                          ws.column(1).setWidth(20);
-                                          ws.row(row).setHeight(150);
-                                          let isExist = fileExists(pathImage);
-                                          if (!isExist) {
-                                              pathImage = './images/blank.gif';
-                                          }
-                                          ws.addImage({
-                                              path: pathImage,
-                                              type: 'picture',
-                                              position: {
-                                                  type: 'oneCellAnchor',
-                                                  from: {
-                                                      col: 1,
-                                                      colOff: '0.0in',
-                                                      row: row,
-                                                      rowOff: 0
-                                                  }
-                                              }
-                                          });
-                                      }
+                                      ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
                                   }
                               }
                           };
