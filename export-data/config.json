@@ -20,11 +20,11 @@
     "rabbit": {
         "$filter": "env",
         "development": {
-            "url": "amqp://guest:guest@192.168.1.92:5672",
+            "url": "amqp://dev:P@ssw0rd@192.168.1.92:5672",
             "channel": "mol"
         },
         "test": {
-            "url": "amqp://guest:guest@192.168.1.92:5672",
+            "url": "amqp://dev:P@ssw0rd@192.168.1.92:5672",
             "channel": "mol"
         },
         "production": {

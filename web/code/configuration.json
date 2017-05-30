@@ -362,12 +362,12 @@
 				"options": {
 					"$filter": "env",
 					"development": {
-						"host": "amqp://guest:guest@192.168.1.92:5672",
+						"host": "amqp://dev:P@ssw0rd@192.168.1.92:5672",
 						"channelExcel": "mol",
 						"channelPdf": "pdf"
 					},
 					"test": {
-						"host": "amqp://guest:guest@192.168.1.92:5672",
+						"host": "amqp://dev:P@ssw0rd@192.168.1.92:5672",
 						"channelExcel": "mol",
 						"channelPdf": "pdf"
 					},
