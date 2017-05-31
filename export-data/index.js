@@ -228,7 +228,7 @@ const Confidence = require('confidence');
                                       if(isIngredients){
                                           if(cellIngredients = column){
                                               if(item[j] != undefined){
-                                                  if(item[j] == 'Main'){
+                                                  if(item[17] == 'Main'){
                                                       let pathImage = '';
 
                                                       if (item[0] != '') {
@@ -240,7 +240,7 @@ const Confidence = require('confidence');
                                                           pathImage = './images/blank.gif';
                                                       }
 
-                                                      ws.column(1).setWidth(12);
+                                                      ws.column(1).setWidth(15);
                                                       ws.row(row).setHeight(150);
                                                       let isExist = fileExists(pathImage);
                                                       if (!isExist) {
@@ -275,7 +275,7 @@ const Confidence = require('confidence');
                                                   pathImage = './images/blank.gif';
                                               }
 
-                                              ws.column(1).setWidth(20);
+                                              ws.column(1).setWidth(15);
                                               ws.row(row).setHeight(150);
                                               let isExist = fileExists(pathImage);
                                               if (!isExist) {
