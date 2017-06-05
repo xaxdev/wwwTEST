@@ -1,3 +1,5 @@
 SELECT [COLOURCODE] as code
       ,[COLOURDESC] as name
-  FROM [MWD_DB].[dbo].[CRWCOLOR]
+	  ,[MOLNUMBER] as [priority]
+FROM [MWD_DB].[dbo].[CRWCOLOR]
+Order by [MOLNUMBER],[NAME]

@@ -1,3 +1,5 @@
 SELECT [CLARITYCODE] as code
       ,[NAME] as name
-  FROM [MWD_DB].[dbo].[CRWCLARITY]
+	  ,[MOLNUMBER] as [priority]
+FROM [MWD_DB].[dbo].[CRWCLARITY]
+Order by [MOLNUMBER],[NAME]
