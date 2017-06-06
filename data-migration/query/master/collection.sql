@@ -1,3 +1,5 @@
 SELECT [COLLECTIONCODE] as code
       ,[COLLECTIONDESC] as name
-  FROM [MWD_DB].[dbo].[CRWCOLLECTION]
+	  ,[MOLNUMBER] as [priority]
+FROM [MWD_DB].[dbo].[CRWCOLLECTION]
+Order by [MOLNUMBER],[NAME]
