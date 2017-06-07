@@ -190,7 +190,7 @@ const notify = err => {
 // });
 
 const jobBackupData = new CronJob({
-  cronTime: '00 00 2 * * 3,5',
+  cronTime: '00 00 2 * * 3,6',
   // cronTime: '00 */5 * * * *',
   onTick: _ => {
     initBackupData()
