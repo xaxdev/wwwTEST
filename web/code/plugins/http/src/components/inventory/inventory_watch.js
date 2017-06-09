@@ -523,9 +523,35 @@ class InventoryWatch extends Component {
         dataDropDowntComplication = dataDropDowntComplication[0];
       }
     }
+
     let hierarchyData = [];
 
     hierarchyData.push(TreeData);
+    // console.log(JSON.stringify(hierarchyData,null,4));
+    // // delete hierarchy
+    // hierarchyData = filterByProperty(hierarchyData, 'label', 'Bijou');
+    //
+    // function filterByProperty(array, prop, value){
+    //     var filtered = [];
+    //     var traverseNodes = function (node) {
+    //         if (node.label != value) {
+    //             // filtered.push(node);
+    //             if (node.children) {
+    //                 node.children = node.children.filter((item) => {
+    //                     return item.label != value
+    //                 })
+    //                 node.children.forEach(traverseNodes);
+    //             }
+    //         }
+    //     };
+    //
+    //     array.forEach(traverseNodes);
+    //
+    //     return array;
+    //
+    // }
+    //
+    // console.log('watch hierarchyData-->',hierarchyData);
 
     return(
       <div className="panel panel-default">
