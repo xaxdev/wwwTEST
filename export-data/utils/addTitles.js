@@ -12,7 +12,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
       let userName = request.userName;
       let listFileName = [];
       let ROOT_URL = request.ROOT_URL;
-      // console.log('Response Data');
+    //   console.log('fields-->',fields);
 
       let data = responseData.hits.hits.map((element) => element._source);
 
@@ -66,7 +66,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                     'Stone Qty','Dominant Stone', 'Markup%','Certificate Number','Certificate Date', 'Vendor Code',
                     'Vendor Name', 'Metal Colour', 'Metal','Brand','Complication','Strap Type','Strap Color',
                     'Buckle Type','Dial Index','Dial Color','Movement','Serial #','Limited Edition',
-                    'Limited Edition #'
+                    'Limited Edition #','Created Date'
                   );
       }else{
         if(fields.ingredients) titles.push('Ingredients');
@@ -106,6 +106,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
         if(fields.serial) titles.push('Serial #');
         if(fields.limitedEdition) titles.push('Limited Edition');
         if(fields.limitedEditionNumber) titles.push('Limited Edition #');
+        if(fields.itemCreatedDate) titles.push('Created Date');
       }
 
       return resolve(titles)

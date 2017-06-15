@@ -227,6 +227,7 @@ const Confidence = require('confidence');
                                   if (obj.fields.showImages){
                                       if(isIngredients){
                                           if(cellIngredients = column){
+                                            //   console.log('item-->',item);
                                               if(item[j] != undefined){
                                                   if(item[17] == 'Main'){
                                                       let pathImage = '';
@@ -297,6 +298,7 @@ const Confidence = require('confidence');
                                           }
                                       }
                                   }else{
+                                    //   console.log('item-->',item);
                                       ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
                                   }
                               }
