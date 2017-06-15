@@ -3,8 +3,6 @@ import { Client as elasticsearch } from 'elasticsearch'
 import xl from 'excel4node'
 import moment from 'moment-timezone';
 import sendgrid from 'sendgrid'
-
-// import config from './config'
 import sendgridConfig from './sendgrid.json'
 import * as utils from './utils'
 
@@ -15,13 +13,11 @@ const archiver = require('archiver');
 const Confidence = require('confidence');
 
 (async _ => {
-   // 'amqp://guest:guest@192.168.1.92:5672'
    let emailBody = '';
    let listFileName = [];
    let userEmail = '';
 
    const save = (file, wb) => new Promise((resolve, reject) => {
-    //    console.log('Wirting excel.');
        wb.write(file, err => {
            if (err) {
                return reject(err)
@@ -29,18 +25,14 @@ const Confidence = require('confidence');
 
            let _pathSourceFile = Path.resolve(__dirname, './' + file);
            let _pathDistFile = Path.resolve(__dirname, '../web/code/plugins/http/public/export_files');
-        //    let readStream = fs.createReadStream(_pathSourceFile); // current file
-        //    let writeStream = fs.createWriteStream(_pathDistFile + '/' + file);
 
             var output = fs.createWriteStream(_pathDistFile + '/' + file.replace('.xlsx','.zip'));
             var archive = archiver('zip');
 
             output.on('close', function() {
-                // console.log('done!');
                 fs.unlink(_pathSourceFile,function(err){
                   if(err) return console.log(err);
                   console.log('Write file done.');
-                //   console.log('file deleted successfully');
                   return resolve()
                 });
             });
@@ -53,7 +45,6 @@ const Confidence = require('confidence');
             archive.append(fs.createReadStream(_pathSourceFile), {
                 name: file
             });
-
             archive.finalize();
        })
    });
@@ -105,17 +96,13 @@ const Confidence = require('confidence');
    const fileExists = filePath => {
        try
         {
-            // console.log('file-->',filePath);
-            // console.log('file-->',fs.statSync(filePath).isFile());
             return fs.statSync(filePath).isFile();
         }
         catch (err)
         {
             if (err.code == 'ENOENT') { // no such file or directory. File really does not exist
-            //   console.log("File does not exist.");
               return false;
             }
-
             console.log("Exception fs.statSync (" + path + "): " + e);
             throw e; // something else went wrong, we don't have rights, ...
         }
@@ -124,8 +111,6 @@ const Confidence = require('confidence');
    try {
        const store = new Confidence.Store(require('./config'));
        const config = store.get('/', { env: process.env.NODE_ENV || 'development' });
-    //    console.log(config);
-
        const q = config.rabbit.channel;
        const connection = await amqp.connect(config.rabbit.url);
        const channel = await connection.createChannel();
@@ -133,7 +118,6 @@ const Confidence = require('confidence');
        console.log('Total Queue-->',TotalQueue.messageCount);
 
        channel.prefetch(1);
-    //    const msg = await consume(channel, q)
         console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
         channel.consume(q, async msg => {
             let queue = await channel.assertQueue(q);
@@ -186,9 +170,7 @@ const Confidence = require('confidence');
                            "body": body
                        });
                         console.log(`round --> ${chkRounds}`);
-                        // console.log(`from --> ${from}`);
-                        // console.log(`sizeWrite --> ${sizeWrite}`);
-                        // console.log(`query --> ${JSON.stringify(body, null, 2)}`);
+
                         const titles = await utils.getTitles(result, obj);
                         // Create a reusable style
                         let style = wb.createStyle({
@@ -215,10 +197,6 @@ const Confidence = require('confidence');
                         totalRecord = totalRecord + data.length;
 
                         data.map(function (item) {
-                            // console.log('item-->',item);
-                            // if(item[0] == 'V1002413'){
-                            //     console.log('V1002413');
-                            // }
                             for (let j = 0; j < cell; j++) {
                               let column = j+1;
                               if (column != 1) {
@@ -227,7 +205,6 @@ const Confidence = require('confidence');
                                   if (obj.fields.showImages){
                                       if(isIngredients){
                                           if(cellIngredients = column){
-                                            //   console.log('item-->',item);
                                               if(item[j] != undefined){
                                                   if(item[17] == 'Main'){
                                                       let pathImage = '';
@@ -298,7 +275,6 @@ const Confidence = require('confidence');
                                           }
                                       }
                                   }else{
-                                    //   console.log('item-->',item);
                                       ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
                                   }
                               }
@@ -323,20 +299,16 @@ const Confidence = require('confidence');
                         if (rounds == chkRounds) {
                             let number = 1;
                             emailBody = '';
-                            // console.log('listFileName-->',listFileName.length);
                             listFileName.forEach(function (name) {
-                                // console.log('name-->',name);
                                 emailBody = emailBody + `${number}. ${name} (http:${obj.ROOT_URL}/export_files/${name})\n`;
                                 number++;
                             });
                             emailBody = `Please download the files only by today from below link .\n` + emailBody;
-                            // console.log('write file successfully');
                             client.close();
                             await notify('');
                             channel.ack(msg)
                         }
                     }
-
                 } catch (e) {
                     console.log(e);
                 }
