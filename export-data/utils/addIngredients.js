@@ -140,7 +140,8 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                           (item.movementName != undefined) ? item.movementName : '',
                           (item.serialNumber != undefined) ? item.serialNumber : '',
                           (item.limitedEdition != undefined) ? (item.limitedEdition) ? 'Yes' : 'No' : 'No',
-                          (item.limitedEditionNumber != undefined) ? item.limitedEditionNumber : ''
+                          (item.limitedEditionNumber != undefined) ? item.limitedEditionNumber : '',
+                          (item.itemCreatedDate != undefined) ? convertDate(item.itemCreatedDate) : ''
                         );
 
         }else{
@@ -191,6 +192,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
           if(fields.serial) arrayItems.push((item.serialNumber != undefined) ? item.serialNumber : '');
           if(fields.limitedEdition) arrayItems.push((item.limitedEdition != undefined) ? (item.limitedEdition) ? 'Yes' : 'No' : 'No');
           if(fields.limitedEditionNumber) arrayItems.push((item.limitedEditionNumber != undefined) ? item.limitedEditionNumber : '');
+          if(fields.itemCreatedDate) arrayItems.push((item.itemCreatedDate != undefined) ? convertDate(item.itemCreatedDate) : '');
         }
 
         if(item.gemstones != undefined){
@@ -289,6 +291,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                   if(fields.serial || fields.allFields) arrayItems.push(''); // Serial #
                   if(fields.limitedEdition || fields.allFields) arrayItems.push((item.limitedEdition != undefined) ? (item.limitedEdition) ? 'Yes' : 'No' : 'No'); // Limited Edition
                   if(fields.limitedEditionNumber || fields.allFields) arrayItems.push(''); // Limited Edition #
+                  if(fields.itemCreatedDate || fields.allFields) arrayItems.push(''); // Created Date #
                 newdata.push(arrayItems);
               });
             }

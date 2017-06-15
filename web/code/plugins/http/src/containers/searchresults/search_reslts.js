@@ -28,7 +28,7 @@ const checkFields = ['ingredients','categoryName','category', 'article', 'collec
       'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
       'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName', 'metalColor',
       'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex',
-      'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber'
+      'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber','itemCreatedDate'
     ];
 const labels = {
   ingredients: 'Ingredients',
@@ -67,8 +67,8 @@ const labels = {
   movement: 'Movement',
   serial: 'Serial #',
   limitedEdition: 'Limited Edition',
-  limitedEditionNumber: 'Limited Edition #'
-
+  limitedEditionNumber: 'Limited Edition #',
+  itemCreatedDate: 'Created Date'
 }
 
 let listMyCatalog = []
@@ -144,6 +144,7 @@ class SearchResult extends Component {
       serial: false,
       limitedEdition: false,
       limitedEditionNumber: false,
+      itemCreatedDate:false,
       showLoading: false,
       isOpenAddMyCatalog: false,
       enabledMyCatalog:false,
@@ -1249,6 +1250,7 @@ class SearchResult extends Component {
       serial: this.state.serial,
       limitedEdition: this.state.limitedEdition,
       limitedEditionNumber: this.state.limitedEditionNumber,
+      itemCreatedDate: this.state.itemCreatedDate
     };
 
     let params = {
