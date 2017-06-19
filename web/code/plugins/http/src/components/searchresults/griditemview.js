@@ -1377,7 +1377,7 @@ class GridItemsView extends Component {
                       </div>
                      <div className="checkbox checkbox-warning">
                       <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                        name={ViewAsSet ? item.reference : item.id} id={index}
+                        name={ViewAsSet ? item.reference : item.id} id={index} checked={false}
                         value={ViewAsSet ? item.reference : item.id} onChange={onCheckedOneItemMyCatalog}
                         />
                           <label className="checkbox1"></label>

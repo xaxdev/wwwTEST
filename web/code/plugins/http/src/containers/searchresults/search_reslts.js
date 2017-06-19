@@ -94,7 +94,7 @@ class SearchResult extends Component {
     this.addMyCatalog = this.addMyCatalog.bind(this);
     this.checkedOneItemMyCatalog = this.checkedOneItemMyCatalog.bind(this);
     this.addedOneItemMyCatalog = this.addedOneItemMyCatalog.bind(this);
-
+    this.onCheckedAllItems = this.onCheckedAllItems.bind(this);
     // console.log('this.props.items-->',this.props.searchResult.datas);
 
     this.state = {
@@ -600,7 +600,6 @@ class SearchResult extends Component {
         </div>
       );
   }
-
   renderTotals(){
     const { fields: { currPage },
             totalPages,
@@ -653,6 +652,22 @@ class SearchResult extends Component {
             this.context.router.push(`/productdetail/${pageNumber}`);
         }
     }
+  }
+  onCheckedAllItems = (e) =>{
+    //   e.preventDefault();
+      let allItems = jQuery('input[type="checkbox"]');
+    //   console.log(fileName);
+      const { items, ViewAsSet } = this.props;
+      let itemAdded = [];
+
+      itemAdded = items;
+
+      if (e.target.checked) {
+          allItems.attr('checked', 'checked');
+      }else{
+          allItems.removeAttr('checked');
+        //   document.getElementById('checkbox').checked = false;
+      }
   }
   checkedOneItemMyCatalog = (item) => {
     //   console.log('item.target.value-->',item.target.value);
@@ -1130,14 +1145,12 @@ class SearchResult extends Component {
   openModal(){
     this.setState({ isOpen: true });
   }
-
   hideModal = (e) => {
     e.preventDefault();
 
     this.setState({ showImages: false })
     this.setState({isOpen: false});
   }
-
   hideModalDownload = (e) => {
     e.preventDefault();
     const { showGridView,showListView } = this.props;
@@ -1158,7 +1171,6 @@ class SearchResult extends Component {
       this.props.setShowListView(true);
     }
   }
-
   hideModalNoResults = (e) => {
     e.preventDefault();
 
@@ -1429,7 +1441,6 @@ class SearchResult extends Component {
        </div>
     );
   }
-
   renderDownloadDialog(){
     let that = this;
     const { listFileName } = that.props;
@@ -1810,6 +1821,11 @@ class SearchResult extends Component {
                       <div className="panel-body padding-ft0">
                         <div className="col-sm-12 ">
                           <div className="col-md-2 col-sm-3 col-xs-12 nopadding">
+                              <div className="checkbox checkbox-warning">
+                                <input type="checkbox" id="checkAllItems" className="styled" type="checkbox"
+                                    name="all" onChange={this.onCheckedAllItems}/>
+                                <label className="checkbox1">Select All</label>
+                               </div>
                             {
                                 this.state.enabledMyCatalog
                                 ? <a><div className="icon-add margin-l10" disabled={true} enabled={false}
