@@ -3,6 +3,9 @@
 ROOT="./data/backup/mongodb"
 EXTENSION=".gz"
 
+# configure AWS CLI (e.g. use IAM role for S3 access)
+export AWS_CONFIG_FILE=/home/mol/.aws/config
+
 FOLDER=$(/bin/date +"%Y/%m")
 PATH=${ROOT}/${FOLDER}
 FILE=${PATH}/$(/bin/date +"%Y%m%d_%H%m")${EXTENSION}
