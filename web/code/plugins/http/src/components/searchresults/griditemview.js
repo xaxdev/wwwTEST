@@ -1232,18 +1232,20 @@ class GridItemsView extends Component {
 
   render(){
     // console.log('this.props.items-->',this.props.items);
-    const { submitting, onCheckedOneItemMyCatalog, onAddedOneItemMyCatalog, ViewAsSet } = this.props;
+    const { submitting, onCheckedOneItemMyCatalog, onAddedOneItemMyCatalog, ViewAsSet,
+            listMyCatalog
+          } = this.props;
     var btnEvent = this.onClickGrid;
     var btnQuickView = this.onClickQuickView;
     var showDetails = this.onMouseOverGrid;
     var hideDetails = this.onMouseOutGrid;
-    // console.log('ViewAsSet-->',ViewAsSet);
+    // console.log('chkAllItems-->',chkAllItems);
     var that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
     return (
       <div>
         {this.props.items.map(function(item, index){
-          // console.log('item-->',item);
+        //   console.log('item index -->',listMyCatalog);
             let imagesProduct = '';
             let itemDate = '';
             let lblDate = '';
@@ -1255,7 +1257,15 @@ class GridItemsView extends Component {
             let lblActualCost = '';
             let lblPrice = '';
             let lblUpdatedCost = '';
-
+            let checkItem = listMyCatalog.find((myItem) => {
+                                    if (ViewAsSet) {
+                                        return myItem.reference == item.reference
+                                    }else{
+                                        return myItem.id == item.id
+                                    }
+                                });
+            checkItem = !checkItem ? false : true;  //if undefined checked false else true
+            // console.log('checkItem-->',checkItem);
             if (ViewAsSet) {
                 lblActualCost = 'Total Actual Cost (USD)';
                 lblPrice = 'Total Public Price (USD)';
@@ -1376,8 +1386,8 @@ class GridItemsView extends Component {
                           onClick={onAddedOneItemMyCatalog}></span>
                       </div>
                      <div className="checkbox checkbox-warning">
-                      <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                        name={ViewAsSet ? item.reference : item.id} id={index}
+                      <input type="checkbox" className="styled" type="checkbox"
+                        name={ViewAsSet ? item.reference : item.id} id={index} checked={checkItem}
                         value={ViewAsSet ? item.reference : item.id} onChange={onCheckedOneItemMyCatalog}
                         />
                           <label className="checkbox1"></label>

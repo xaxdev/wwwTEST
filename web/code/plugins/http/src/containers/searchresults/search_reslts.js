@@ -30,6 +30,11 @@ const checkFields = ['ingredients','categoryName','category', 'article', 'collec
       'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex',
       'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber','itemCreatedDate'
     ];
+const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17',
+      '18','19', '20', '21', '22', '23', '24','25','26','27', '28', '29', '30', '31','32','33','34','35',
+      '36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55',
+      '56','57','58','59','60'
+    ];
 const labels = {
   ingredients: 'Ingredients',
   categoryName: 'Category Name',
@@ -94,7 +99,7 @@ class SearchResult extends Component {
     this.addMyCatalog = this.addMyCatalog.bind(this);
     this.checkedOneItemMyCatalog = this.checkedOneItemMyCatalog.bind(this);
     this.addedOneItemMyCatalog = this.addedOneItemMyCatalog.bind(this);
-
+    this.onCheckedAllItems = this.onCheckedAllItems.bind(this);
     // console.log('this.props.items-->',this.props.searchResult.datas);
 
     this.state = {
@@ -150,7 +155,8 @@ class SearchResult extends Component {
       enabledMyCatalog:false,
       isOpenAddMyCatalogmsg: false,
       isOpenPrintPdfmsg: false,
-      isOpenMsgPageInvalid: false
+      isOpenMsgPageInvalid: false,
+      checkAllItems: false
     };
   }
   componentWillMount() {
@@ -444,6 +450,7 @@ class SearchResult extends Component {
               // this.setState({showListView: true});
               this.props.setShowListView(true);
             }
+            // console.log('listMyCatalog-->',listMyCatalog);
       });
 
       let { currPage } = this.props.fields;
@@ -600,7 +607,6 @@ class SearchResult extends Component {
         </div>
       );
   }
-
   renderTotals(){
     const { fields: { currPage },
             totalPages,
@@ -654,15 +660,56 @@ class SearchResult extends Component {
         }
     }
   }
-  checkedOneItemMyCatalog = (item) => {
-    //   console.log('item.target.value-->',item.target.value);
-      const { items, ViewAsSet } = this.props;
+  onCheckedAllItems = (e) =>{
+    //   e.preventDefault();
+      const that = this;
+      const { allItems, ViewAsSet } = this.props;
       let itemAdded = [];
 
-      if (ViewAsSet) {
-          itemAdded = items.filter(oneItem => oneItem.reference === item.target.value);
+      allItems.map((item) => {
+          let itemName = (item.type != undefined)
+                          ? (item.type != 'CER')
+                              ? item.description
+                              : item.name
+                          :item.description;
+
+          let objItem = {};
+
+          if (ViewAsSet) {
+              objItem = {...objItem, reference: item.reference, description: itemName};
+          }else{
+              objItem = {...objItem, id: item.id, reference: item.reference, description: itemName};
+          }
+
+          listMyCatalog.push(objItem);
+      });
+
+      if (e.target.checked) {
+          chkAllItems.map(function(field, index){
+              that.setState({[field]: true});
+          });
+          this.setState({enabledMyCatalog: true});
+          this.setState({checkAllItems: true});
       }else{
-          itemAdded = items.filter(oneItem => oneItem.id === item.target.value);
+          listMyCatalog = [];
+          chkAllItems.map(function(field, index){
+              that.setState({[field]: false});
+          });
+          this.setState({enabledMyCatalog: false});
+          this.setState({checkAllItems: false});
+      }
+  }
+  checkedOneItemMyCatalog = (item) => {
+    //   console.log('item.target.value-->',item.target.id);
+      const { items, ViewAsSet, allItems } = this.props;
+      let itemAdded = [];
+      const itemReference = item.target.value;
+      const itemIndexId = item.target.id;
+
+      if (ViewAsSet) {
+          itemAdded = items.filter(oneItem => oneItem.reference === itemReference);
+      }else{
+          itemAdded = items.filter(oneItem => oneItem.id === itemReference);
       }
 
       itemAdded = itemAdded[0];
@@ -686,12 +733,16 @@ class SearchResult extends Component {
 
     if (item.target.checked) {
         listMyCatalog.push(objItem);
+        this.setState({[itemIndexId]: true});
+        this.setState({checkAllItems: (allItems.length == listMyCatalog.length) ? true : false});
     } else {
         if (ViewAsSet) {
-            listMyCatalog = listMyCatalog.filter(inItem => inItem.reference !== item.target.value);
+            listMyCatalog = listMyCatalog.filter(inItem => inItem.reference !== itemReference);
         }else{
-            listMyCatalog = listMyCatalog.filter(inItem => inItem.id !== item.target.value);
+            listMyCatalog = listMyCatalog.filter(inItem => inItem.id !== itemReference);
         }
+        this.setState({[itemIndexId]: false});
+        this.setState({checkAllItems: false});
     }
 
     if (listMyCatalog.length != 0) {
@@ -700,7 +751,7 @@ class SearchResult extends Component {
       this.setState({enabledMyCatalog: false});
     }
     // console.log('item -->',item.target.checked);
-    // console.log('item -->',item.target.value);
+    // console.log('item -->',itemReference);
     // console.log('listMyCatalog -->',listMyCatalog);
   }
   addedOneItemMyCatalog = (item) => {
@@ -1130,14 +1181,12 @@ class SearchResult extends Component {
   openModal(){
     this.setState({ isOpen: true });
   }
-
   hideModal = (e) => {
     e.preventDefault();
 
     this.setState({ showImages: false })
     this.setState({isOpen: false});
   }
-
   hideModalDownload = (e) => {
     e.preventDefault();
     const { showGridView,showListView } = this.props;
@@ -1158,7 +1207,6 @@ class SearchResult extends Component {
       this.props.setShowListView(true);
     }
   }
-
   hideModalNoResults = (e) => {
     e.preventDefault();
 
@@ -1429,7 +1477,6 @@ class SearchResult extends Component {
        </div>
     );
   }
-
   renderDownloadDialog(){
     let that = this;
     const { listFileName } = that.props;
@@ -1659,11 +1706,6 @@ class SearchResult extends Component {
         }
       }
     }
-
-    // console.log('this.state.activePage-->',this.state.activePage);
-
-    //  console.log('items-->',items);
-    //  console.log('allItems-->',allItems);
     if(items == null){
       return (
               <form role="form">
@@ -1810,6 +1852,13 @@ class SearchResult extends Component {
                       <div className="panel-body padding-ft0">
                         <div className="col-sm-12 ">
                           <div className="col-md-2 col-sm-3 col-xs-12 nopadding">
+                              <div className="checkbox checkbox-warning">
+                                <input type="checkbox" id="checkAllItems" className="styled" type="checkbox"
+                                    name="all"
+                                    checked={this.state.checkAllItems}
+                                    onChange={this.onCheckedAllItems} />
+                                <label className="checkbox1">Select All</label>
+                               </div>
                             {
                                 this.state.enabledMyCatalog
                                 ? <a><div className="icon-add margin-l10" disabled={true} enabled={false}
@@ -1855,11 +1904,13 @@ class SearchResult extends Component {
                             <GridItemsView  items={items} onClickGrid={this.onClickGrid}
                                 onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                 onAddedOneItemMyCatalog={this.addedOneItemMyCatalog}
-                                ViewAsSet={ViewAsSet} />
+                                ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
+                                listMyCatalog={listMyCatalog}/>
                           </div>
                           <div id="dvGridview" className="search-product hidden">
                             <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
-                                ViewAsSet={ViewAsSet}/>
+                                ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
+                                listMyCatalog={listMyCatalog}/>
                           </div>
                           <div className={`col-sm-12 search-product list-search ${showListView ? '' : 'hidden'}` }>
                             <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
