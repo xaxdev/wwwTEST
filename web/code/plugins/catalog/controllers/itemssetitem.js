@@ -63,6 +63,7 @@ export default {
                     }
 
                     let response = []
+                    let responseAllItems = []
                     let price = 0
                     let updatedCost = 0
                     let setItemPrice = 0
@@ -99,6 +100,7 @@ export default {
                         const es = await client.search(request.helper.item.parameters(dataWithItems))
                         let inventory = await request.helper.item.inventory(dataWithItems, es)
                         let all = await request.helper.item.authorization(user, inventory)
+                        responseAllItems.push(...all);
                         all = all.filter((item) => {
                             return item.price > -1
                         })
@@ -114,6 +116,7 @@ export default {
                         const allSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
                         setItemPrice = allSetItem.reduce((previous, current) => previous + (!!current.totalPrice ? current.totalPrice.USD : 0), 0)
                         setItemUpdatedCost = allSetItem.reduce((previous, current) => previous + (!!current.totalUpdatedCost ? current.totalUpdatedCost.USD : 0), 0)
+                        responseAllItems.push(...allSetItem);
                     }
 
                     if (!!dispItems.length && dispItems.length > 0) {
@@ -132,7 +135,6 @@ export default {
                         response.push(...itemsSetitem)
                     }
 
-
                     if (order == 1) {
                         //asc
                         response = response.sortBy(sort,'asc');
@@ -141,7 +143,8 @@ export default {
                         response = response.sortBy(sort,'desc')
 
                     }
-                    return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page, total_items, total_pages, total_setitems, 'items': response })
+                    return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page, total_items,
+                        total_pages, total_setitems, 'items': response, 'allItems': responseAllItems })
                 }
 
                 return reply(Boom.badRequest('Invalid catalog id'))
