@@ -30,11 +30,8 @@ const checkFields = ['ingredients','categoryName','category', 'article', 'collec
       'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex',
       'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber','itemCreatedDate'
     ];
-const checkFieldsViewAsSet = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
-      'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
-      'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName', 'metalColor',
-      'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex',
-      'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber','itemCreatedDate'
+const checkFieldsViewAsSet = ['totalActualCost','totalUpdatedCost','totalPrice', 'markup', 'companyName',
+        'warehouseName','createdDate'
     ];
 const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17',
       '18','19', '20', '21', '22', '23', '24','25','26','27', '28', '29', '30', '31','32','33','34','35',
@@ -81,7 +78,15 @@ const labels = {
   limitedEditionNumber: 'Limited Edition #',
   itemCreatedDate: 'Created Date'
 }
-
+const labelsViewAsSet = {
+    totalActualCost: 'Total Actual Cost (USD)',
+    totalUpdatedCost: 'Total Updated Cost (USD)',
+    totalPrice: 'Total Public Price (USD)',
+    markup: 'Markup (Times)',
+    companyName: 'Company',
+    warehouseName: 'Warehouse',
+    createdDate: 'Created Date'
+}
 let listMyCatalog = []
 
 class SearchResult extends Component {
@@ -107,6 +112,7 @@ class SearchResult extends Component {
     this.addedOneItemMyCatalog = this.addedOneItemMyCatalog.bind(this);
     this.onCheckedAllItems = this.onCheckedAllItems.bind(this);
     this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
+    this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
     // console.log('this.props.items-->',this.props.searchResult.datas);
 
     this.state = {
@@ -163,7 +169,17 @@ class SearchResult extends Component {
       isOpenAddMyCatalogmsg: false,
       isOpenPrintPdfmsg: false,
       isOpenMsgPageInvalid: false,
-      checkAllItems: false
+      checkAllItems: false,
+      allFieldsViewAsSet: false,
+      showImagesViewAsSet: false,
+      isOpenViewAsSet: false,
+      totalActualCost: false,
+      totalUpdatedCost: false,
+      totalPrice: false,
+      markup: false,
+      companyName: false,
+      warehouseName: false,
+      createdDate: false
     };
   }
   componentWillMount() {
@@ -1194,6 +1210,12 @@ class SearchResult extends Component {
     this.setState({ showImages: false })
     this.setState({isOpen: false});
   }
+  hideModalViewAsSet = (e) => {
+    e.preventDefault();
+
+    this.setState({ showImagesViewAsSet: false })
+    this.setState({isOpenViewAsSet: false});
+  }
   hideModalDownload = (e) => {
     e.preventDefault();
     const { showGridView,showListView } = this.props;
@@ -1243,7 +1265,13 @@ class SearchResult extends Component {
       this.setState({isOpen: true});
   }
   exportExcelViewAsSet = _=> {
-
+      const that = this;
+      checkFieldsViewAsSet.map(function(field, index){
+          that.setState({ [field]: false });
+      });
+      this.setState({ allFieldsViewAsSet: false });
+      this.setState({ showImagesViewAsSet: false });
+      this.setState({isOpenViewAsSet: true});
   }
   confirmExport(e){
     e.preventDefault();
@@ -1405,6 +1433,135 @@ class SearchResult extends Component {
           });
         });
   }
+  confirmExportViewAsSet = e =>{
+      e.preventDefault();
+
+      const host = HOSTNAME || 'localhost';
+      const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
+
+      const that = this;
+      const { items, exportItems, paramsSearch, showGridView,showListView } = this.props;
+      const userLogin = JSON.parse(sessionStorage.logindata);
+
+      let sortingBy = '';
+
+      switch (this.refs.sortingBy.value) {
+        case 'price':
+          sortingBy = 'price.' + userLogin.currency;
+          break;
+        default:
+          sortingBy = this.refs.sortingBy.value;
+          break;
+      }
+
+      const sortingDirection = this.refs.sortingDirection.value;
+
+      let fields = {
+        allFieldsViewAsSet: this.state.allFieldsViewAsSet,
+        showImagesViewAsSet: this.state.showImagesViewAsSet,
+        totalActualCost: this.state.totalActualCost,
+        totalUpdatedCost: this.state.totalUpdatedCost,
+        totalPrice: this.state.totalPrice,
+        markup: this.state.markup,
+        companyName: this.state.companyName,
+        warehouseName: this.state.warehouseName,
+        createdDate: this.state.createdDate
+      };
+
+      let params = {
+        'page' : this.props.currentPage,
+        'sortBy': sortingBy,
+        'sortDirections': sortingDirection,
+        'pageSize' : this.props.pageSize,
+        'fields': fields,
+        'price': userLogin.permission.price,
+        'ROOT_URL': ROOT_URL,
+        'userName': userLogin.username,
+        'userEmail': userLogin.email
+      };
+
+      // default search params
+
+      const filters =  JSON.parse(sessionStorage.filters);
+
+      let gemstoneFilter = {};
+      let lotNumberFilter = {};
+      // console.log('filters-->',filters);
+      filters.forEach(function(filter){
+        let keys = Object.keys(filter);
+        keys.forEach((key) => {
+          const value = filter[key];
+          const gemstoneFields = keys[0].split('.');
+          if(gemstoneFields[0] == 'gemstones'){
+            gemstoneFilter[gemstoneFields[1]] = value;
+          }else if(gemstoneFields[0] == 'certificatedNumber'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'certificateAgency'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'cerDateFrom'){
+            gemstoneFilter[gemstoneFields[0]] = value;
+          }else if(gemstoneFields[0] == 'lotNumbers'){
+            lotNumberFilter[gemstoneFields[1]] = value;
+          }
+          else{
+            //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
+              switch (gemstoneFields[0]) {
+                  case 'sparePartProductHierarchy':
+                      break;
+                  case 'obaProductHierarchy':
+                      break;
+                  case 'accessoryProductHierarchy':
+                      break;
+                  case 'stoneProductHierarchy':
+                      break;
+                  case 'watchProductHierarchy':
+                      break;
+                  case 'jewelryProductHierarchy':
+                      break;
+                  default:
+                      params[key] = value;
+                      break;
+              }
+          }
+        });
+      });
+
+      if(Object.keys(gemstoneFilter).length != 0){
+        params['gemstones'] = gemstoneFilter;
+      }
+      if(Object.keys(lotNumberFilter).length != 0){
+        params['lotNumbers'] = lotNumberFilter;
+      }
+
+      this.setState({
+        showLoading: true,
+        isOpen: false
+      });
+
+      let girdView = showGridView;
+      let listView = showListView;
+
+      this.props.setShowGridView(false);
+      this.props.setShowListView(false);
+
+      // console.log('params--:>',params);
+      this.props.exportDatas(params)
+          .then((value) => {
+            // console.log('value-->',value);
+          //   console.log('export done!');
+            if(girdView){
+              // this.setState({showGridView: true});
+              that.props.setShowGridView(true);
+            }else if (listView) {
+              // this.setState({showListView: true});
+              that.props.setShowListView(true);
+            }
+            that.setState({
+              showLoading: false,
+              isOpenDownload: true
+            });
+          });
+  }
   renderExportExcelDialog(){
     let that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
@@ -1486,6 +1643,107 @@ class SearchResult extends Component {
         </div>
        </div>
     );
+  }
+  renderExportExcelViewAsSetDialog = _=>{
+      let that = this;
+      const userLogin = JSON.parse(sessionStorage.logindata);
+      return(
+        <div>
+        <div  className="popexport">
+          <Modal isOpen={this.state.isOpenViewAsSet} onRequestHide={this.hideModalViewAsSet}>
+            <div className="modal-header">
+              <ModalClose onClick={this.hideModalViewAsSet}/>
+              <h1 className="modal-title">Export View As Set</h1>
+            </div>
+            <div className="modal-body">
+              <h3>Please choose additional fields for export.</h3>
+              <h5>(Normal export field Item Reference, Description)</h5>
+              <br/>
+              <div className="col-sm-12">
+                <div className="col-sm-3">
+                  <input type="checkbox" checked={this.state.allFieldsViewAsSet} onChange={event => {
+                          // console.log('all checked-->',event.target.checked);
+                          that.setState({ allFieldsViewAsSet: event.target.checked });
+                          if (event.target.checked) {
+                              checkFieldsViewAsSet.map(function(field, index){
+                                  that.setState({ [field]: true });
+                              });
+                          } else {
+                              checkFieldsViewAsSet.map(function(field, index){
+                                  that.setState({ [field]: false });
+                              });
+                          }
+                      }
+                  }/>
+                  <label className="control-label">Select All</label>
+                </div>
+                <div className="col-sm-3">
+                  <input type="checkbox"
+                    checked={this.state.showImagesViewAsSet}
+                    onChange={event => that.setState({ showImagesViewAsSet: event.target.checked })}/>
+                  <label className="control-label">Show Images</label>
+                </div>
+                <div className="col-sm-3">
+                </div>
+                <div className="col-sm-3">
+                </div>
+              </div>
+              <div className="col-md-12">
+                {checkFieldsViewAsSet.map(function(field, index){
+                    let showField = false;
+                    switch (field) {
+                        case 'totalPrice':
+                            showField = (userLogin.permission.price == 'Public') ||
+                                        (userLogin.permission.price == 'Updated') ||
+                                        (userLogin.permission.price == 'All')
+                                        ? true: false;
+                            break;
+                        case 'totalUpdatedCost':
+                            showField = (userLogin.permission.price == 'Updated') ||
+                                        (userLogin.permission.price == 'All')
+                                        ? true: false;
+                            break;
+                        case 'totalActualCost':
+                            showField = (userLogin.permission.price == 'All') ? true: false;
+                            break;
+                        default:
+                            showField = true;
+                            break;
+                    }
+                    if (showField) {
+                        return(
+                              <div className="col-md-3" key={index}>
+                                <label key={index}>
+                                  <input id={index} type="checkbox" checked={that.state[field]}
+                                    onChange={event => {
+                                        that.setState({ [field]: event.target.checked });
+                                        that.setState({ allFieldsViewAsSet:false });
+                                      }
+                                    }
+                                    />
+                                  {labelsViewAsSet[ field ]}
+                                </label>
+                              </div>
+                        );
+                    } else {
+                        return('');
+                    }
+                  }
+                )}
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button id="export" className="btn btn-default btn-radius" onClick={this.confirmExportViewAsSet}>
+                Export
+              </button>
+              <button className="btn btn-default btn-radius" onClick={this.hideModalViewAsSet}>
+                Cancel
+              </button>
+            </div>
+          </Modal>
+          </div>
+         </div>
+      );
   }
   renderDownloadDialog(){
     let that = this;
@@ -1964,6 +2222,7 @@ class SearchResult extends Component {
             {this.renderAlertmsg()}
             {this.renderAlertmsgPdf()}
             {this.renderAlertmsgPageInvalid()}
+            {this.renderExportExcelViewAsSetDialog()}
           </form>
         );
       }
