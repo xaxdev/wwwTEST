@@ -700,7 +700,7 @@ class SearchResult extends Component {
       }
   }
   checkedOneItemMyCatalog = (item) => {
-      console.log('item.target.value-->',item.target.id);
+    //   console.log('item.target.value-->',item.target.id);
       const { items, ViewAsSet, allItems } = this.props;
       let itemAdded = [];
       const itemReference = item.target.value;
