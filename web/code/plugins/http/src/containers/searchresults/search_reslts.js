@@ -700,7 +700,7 @@ class SearchResult extends Component {
       }
   }
   checkedOneItemMyCatalog = (item) => {
-    //   console.log('item.target.value-->',item.target.id);
+      console.log('item.target.value-->',item.target.id);
       const { items, ViewAsSet, allItems } = this.props;
       let itemAdded = [];
       const itemReference = item.target.value;
@@ -1914,11 +1914,14 @@ class SearchResult extends Component {
                           </div>
                           <div className={`col-sm-12 search-product list-search ${showListView ? '' : 'hidden'}` }>
                             <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
-                                ViewAsSet={ViewAsSet} />
+                                onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
+                                listMyCatalog={listMyCatalog}/>
                           </div>
                           <div id="dvListview" className="col-sm-12 search-product hidden">
                             <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
-                                ViewAsSet={ViewAsSet} />
+                                ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
+                                listMyCatalog={listMyCatalog}/>
                           </div>
                           <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                             <center>

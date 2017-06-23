@@ -1381,13 +1381,13 @@ class GridItemsView extends Component {
                     <div className="pull-right">
                       <div className="grid-add">
                         <span className="icon-add-28"
-                            name={ViewAsSet ? item.reference : item.id} id={index}
+                            name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}
                             value={ViewAsSet ? item.reference : item.id}
                           onClick={onAddedOneItemMyCatalog}></span>
                       </div>
                      <div className="checkbox checkbox-warning">
                       <input type="checkbox" className="styled" type="checkbox"
-                        name={ViewAsSet ? item.reference : item.id} id={index} checked={checkItem}
+                        name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id} checked={checkItem}
                         value={ViewAsSet ? item.reference : item.id} onChange={onCheckedOneItemMyCatalog}
                         />
                           <label className="checkbox1"></label>
