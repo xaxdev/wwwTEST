@@ -80,11 +80,30 @@ class ListItemsView extends Component {
            width="60"
            />;
 
-  renderCheckItem =
-    (val, row) =>
-      <div>
-        <input type="checkbox" />
-      </div>;
+  renderCheckItem = (val, row) =>{
+        const { onCheckedOneItemMyCatalog, onAddedOneItemMyCatalog, ViewAsSet,
+                listMyCatalog, items } = this.props;
+        let checkItem = false;
+        if (!!listMyCatalog) {
+            checkItem = listMyCatalog.find((myItem) => {
+                if (ViewAsSet) {
+                    return myItem.reference == row.reference
+                }else{
+                    return myItem.id == row.id
+                }
+            });
+        }
+        checkItem = !checkItem ? false : true;  //if undefined checked false else true
+        return(<div >
+                <input type="checkbox" className="styled" type="checkbox"
+                    name={ViewAsSet ? row.reference : row.id} checked={checkItem}
+                    id={ViewAsSet ? row.reference : row.id}
+                    value={ViewAsSet ? row.reference : row.id}
+                    onChange={onCheckedOneItemMyCatalog}
+                />
+                <label className="checkbox1"></label>
+            </div>);
+  }
 
   render(){
     let items = null;
@@ -184,7 +203,7 @@ class ListItemsView extends Component {
       let tableColumns = [];
       if (isCompany) {
           tableColumns = [
-            // { title: '', render: this.renderCheckItem },
+            { title: '', render: this.renderCheckItem, className: 'text-center' },
             { title: 'Images', render: this.renderImage },
             { title: 'Item Reference', prop: 'reference' },
             { title: 'Description', prop: 'itemName' },
@@ -199,7 +218,7 @@ class ListItemsView extends Component {
           ];
       }else{
           tableColumns = [
-            // { title: '', render: this.renderCheckItem },
+            { title: '', render: this.renderCheckItem, className: 'text-center' },
             { title: 'Images', render: this.renderImage },
             { title: 'Item Reference', prop: 'reference' },
             { title: 'Description', prop: 'itemName' },
@@ -218,8 +237,7 @@ class ListItemsView extends Component {
         <div>
           <DataTable
             className="col-sm-12"
-            // keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight','priceUSD','' ]}
-            keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight','priceUSD','' ]}
+            keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight','priceUSD','' ]}
             columns={tableColumns}
             initialData={items}
             initialPageLength={this.state.initialPageLength}

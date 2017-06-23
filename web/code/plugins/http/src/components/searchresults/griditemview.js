@@ -1379,23 +1379,30 @@ class GridItemsView extends Component {
                                  (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                   ''}>
                     <div className="pull-right">
-                      <div className="grid-add">
-                        <span className="icon-add-28"
-                            name={ViewAsSet ? item.reference : item.id} id={index}
-                            value={ViewAsSet ? item.reference : item.id}
-                          onClick={onAddedOneItemMyCatalog}></span>
-                      </div>
-                     <div className="checkbox checkbox-warning">
-                      <input type="checkbox" className="styled" type="checkbox"
-                        name={ViewAsSet ? item.reference : item.id} id={index} checked={checkItem}
-                        value={ViewAsSet ? item.reference : item.id} onChange={onCheckedOneItemMyCatalog}
-                        />
-                          <label className="checkbox1"></label>
-                      </div>
-                      <span className="quick-view"><img  src="/images/quick-view.jpg" responsive
-                        name={ViewAsSet ? item.reference : item.id} id={index} onClick={showDetails}/></span>
+                          <div className="grid-add">
+                            <span className="icon-add-28"
+                                name={ViewAsSet ? item.reference : item.id}
+                                id={index}
+                                value={ViewAsSet ? item.reference : item.id}
+                                onClick={onAddedOneItemMyCatalog}>
+                            </span>
+                          </div>
+                         <div className="checkbox checkbox-warning">
+                              <input type="checkbox" className="styled" type="checkbox"
+                                name={ViewAsSet ? item.reference : item.id}
+                                id={ViewAsSet ? item.reference : item.id}
+                                checked={checkItem}
+                                value={ViewAsSet ? item.reference : item.id}
+                                onChange={onCheckedOneItemMyCatalog}/>
+                              <label className="checkbox1"></label>
+                          </div>
+                          <span className="quick-view">
+                              <img src="/images/quick-view.jpg" responsive
+                                name={ViewAsSet ? item.reference : item.id}
+                                id={index}
+                                onClick={showDetails}/>
+                          </span>
                     </div>
-
                     <div className="thumbnaillgrid">
                       {/*<img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/>*/}
                       <ReactImageFallback
@@ -1407,7 +1414,6 @@ class GridItemsView extends Component {
                              onClick={btnEvent}
                              />
                     </div>
-
                     <p className="font-b fc-000">
                       <span name={ViewAsSet ? item.reference : item.id}
                             id={ViewAsSet ? item.reference : item.id}
@@ -1489,7 +1495,10 @@ class GridItemsView extends Component {
                                     '',
                             }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31
                                 ||index==35||index==39||index==43||index==47||index==51||index==55||index==59)?'over-searchresult-left':'over-searchresult' }>
-                            <img className="searchresult-close"  src="/images/icon-close.png" responsive name={ViewAsSet ? item.reference : item.id} id={index} onClick={hideDetails}/>
+                            <img className="searchresult-close"  src="/images/icon-close.png"
+                                responsive name={ViewAsSet ? item.reference : item.id}
+                                id={index}
+                                onClick={hideDetails}/>
                             <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                             <span className="width-f100">{item.reference}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
