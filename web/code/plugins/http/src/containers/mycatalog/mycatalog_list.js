@@ -19,7 +19,14 @@ import { LASTMODIFIED, REFERENCE, DESCRIPTION, DESCENDING, ASCENDING } from '../
 
 const Loading = require('react-loading');
 
-let listMyCatalog = []
+const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17',
+      '18','19', '20', '21', '22', '23', '24','25','26','27', '28', '29', '30', '31','32','33','34','35',
+      '36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55',
+      '56','57','58','59','60'
+    ];
+
+let listMyCatalog = [];
+let listDeleteMyCatalog = [];
 
 class MyCatalog extends Component {
     constructor(props) {
@@ -57,7 +64,8 @@ class MyCatalog extends Component {
           isOpenDeleteAllItem: false,
           isOpenZeroCatalog: true,
           isOpenPrintPdfmsg: false,
-          isOpenShareMyCatalog: false
+          isOpenShareMyCatalog: false,
+          checkAllItems: false
         }
 
     }
@@ -241,19 +249,16 @@ class MyCatalog extends Component {
     }
 
     onCheckedAllItemMyCatalog = (e)=> {
-        let fileName = jQuery('input[type="checkbox"]');
-        const { items } = this.props.listCatalogItems;
+        const that = this;
+        const { items, allItems } = this.props.listCatalogItems;
         const { catalogId } = this.props;
+        const totalAllItems = allItems.length;
 
         if (catalogId != null) {
             if (e.target.checked) {
-                fileName.attr('checked','checked');
                 this.setState({enabledMyCatalog: true});
-                for(let i=0, n=fileName.length;i<n;i++) {
-                    fileName[i].checked = true;
-                }
                 listMyCatalog = [];
-                items.map((item) => {
+                allItems.map((item) => {
                     let itemName = (item.type != 'CER')? item.description: item.name;
                     let objItem = {
                         id: item.id,
@@ -264,21 +269,28 @@ class MyCatalog extends Component {
                     listMyCatalog.push(objItem);
                 });
 
+                chkAllItems.map(function(field, index){
+                    that.setState({[field]: true});
+                });
+                this.setState({checkAllItems: true});
             } else {
-                fileName.removeAttr('checked');
                 listMyCatalog = [];
+                chkAllItems.map(function(field, index){
+                    that.setState({[field]: false});
+                });
                 this.setState({enabledMyCatalog: false});
+                this.setState({checkAllItems: false});
             }
         }
-        // console.log(listMyCatalog);
     }
 
     checkedOneItemMyCatalog = (e)=> {
         // console.log(e.target.value);
-        let fileName = jQuery('input[type="checkbox"]');
-        const { items } = this.props.listCatalogItems;
+        const { items,total_items,total_setitems } = this.props.listCatalogItems;
         const { catalogId } = this.props;
         const itemTargetId = e.target.value.split('=');
+        const itemIndexId =  e.target.value.split('=')[1];
+        const totalAllItems = total_items + total_setitems;
         let itemAdded = [];
         if (itemTargetId[0] == 'id') {
             itemAdded = items.filter(oneItem => oneItem.id === itemTargetId[1]);
@@ -300,12 +312,16 @@ class MyCatalog extends Component {
 
         if (e.target.checked) {
             listMyCatalog.push(objItem);
-            if (listMyCatalog.length == (fileName.length-1)) {
-                this.refs.selectAllItems.checked = true;
-            }
+            this.setState({[itemIndexId]: true});
+            this.setState({checkAllItems: (totalAllItems == listMyCatalog.length) ? true : false});
         } else {
-            this.refs.selectAllItems.checked = false;
-            listMyCatalog = listMyCatalog.filter(inItem => inItem.id !== e.target.value);
+            if (itemTargetId[0] == 'id') {
+                listMyCatalog = listMyCatalog.filter(inItem => inItem.id !== itemIndexId);
+            }else{
+                listMyCatalog = listMyCatalog.filter(inItem => inItem.reference !== itemIndexId);
+            }
+            this.setState({[itemIndexId]: false});
+            this.setState({checkAllItems: false});
         }
 
         if (listMyCatalog.length != 0) {
@@ -313,9 +329,6 @@ class MyCatalog extends Component {
         } else {
           this.setState({enabledMyCatalog: false});
         }
-        // console.log('item -->',e.target.checked);
-        // console.log('item -->',e.target.value);
-        // console.log('listMyCatalog -->',listMyCatalog);
     }
 
     changeSortingDirection = (e)=> {
@@ -470,9 +483,9 @@ class MyCatalog extends Component {
     }
 
     deleteOneItemMyCatalog = (item) => {
-        let fileName = jQuery('input[type="checkbox"]');
-        fileName.removeAttr('checked');
-        listMyCatalog  = [];
+        // let fileName = jQuery('input[type="checkbox"]');
+        // fileName.removeAttr('checked');
+        listDeleteMyCatalog  = [];
         this.setState({enabledMyCatalog: false});
         const { items } = this.props.listCatalogItems;
         const catalogId = this.props.listCatalogItems._id
@@ -492,9 +505,9 @@ class MyCatalog extends Component {
                         catalogId: catalogId
                     };
 
-        listMyCatalog.push(objItem);
+        listDeleteMyCatalog.push(objItem);
 
-        this.refs.selectAllItems.checked = false;
+        // this.refs.selectAllItems.checked = false;
 
         this.setState({isOpenDeleteItem: true});
     }
@@ -512,7 +525,7 @@ class MyCatalog extends Component {
         // console.log('listMyCatalog-->',listMyCatalog);
         let items = [];
 
-        listMyCatalog.map((item) => {
+        listDeleteMyCatalog.map((item) => {
             let itemDelete = {};
             if (item.id != null) {
                 itemDelete = {...itemDelete, id: item.id}
@@ -996,8 +1009,10 @@ class MyCatalog extends Component {
                     <div className="col-sm-12 col-xs-12">
                       <div className={`${items.length == 0  ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
                             <div className={`${isCatalogShared ? 'hidden' : 'checkbox checkbox-warning '}`}>
-                                <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                                    onChange={this.onCheckedAllItemMyCatalog} ref="selectAllItems"/>
+                                <input type="checkbox" id="checkbox1"
+                                    className="styled" ref="selectAllItems"
+                                    checked={this.state.checkAllItems}
+                                    onChange={this.onCheckedAllItemMyCatalog}/>
                                 <label className="checkbox1 select"></label>
                                 <span className="margin-l10 text-vertical">Select All</span>
                             </div>
@@ -1031,8 +1046,8 @@ class MyCatalog extends Component {
                                     <GridItemsView  items={items} onClickGrid={this.onClickGrid}
                                         onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                         onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
-                                        isCatalogShared={isCatalogShared}
-                                        ViewAsSet={ViewAsSet}/>
+                                        isCatalogShared={isCatalogShared} stateItem={this.state}
+                                        ViewAsSet={ViewAsSet} listMyCatalog={listMyCatalog}/>
                                 </div>
                                 <div id="dvGridview" className="search-product hidden">
                                   <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}

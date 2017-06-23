@@ -1249,7 +1249,9 @@ class GridItemsView extends Component {
 
   render(){
     // console.log('this.props.items-->',this.props.items);
-    const { submitting, onCheckedOneItemMyCatalog, onDeleteOneItemMyCatalog, isCatalogShared } = this.props;
+    const { submitting, onCheckedOneItemMyCatalog, onDeleteOneItemMyCatalog, isCatalogShared,
+            listMyCatalog
+          } = this.props;
     let btnEvent = this.onClickGrid;
     let btnQuickView = this.onClickQuickView;
     let showDetails = this.onMouseOverGrid;
@@ -1273,6 +1275,10 @@ class GridItemsView extends Component {
           let lblActualCost = '';
           let lblPrice = '';
           let lblUpdatedCost = '';
+          let checkItem = listMyCatalog.find((myItem) => {
+                                  return myItem.reference == item.reference
+                              });
+          checkItem = !checkItem ? false : true;  //if undefined checked false else true
 
           if (item.id != null) {
               lblActualCost = `Actual Cost (${userLogin.currency})`;
@@ -1414,9 +1420,10 @@ class GridItemsView extends Component {
                                   ''}>
                     <div className="pull-right">
                          <div className={`${isCatalogShared ? 'hidden' : 'checkbox checkbox-warning'}`}>
-                              <input type="checkbox" id="checkbox1" className="styled" type="checkbox"
-                                name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`} id={index}
+                              <input type="checkbox" className="styled"
+                                name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
                                 value={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
+                                id={index} checked={checkItem}
                                 onChange={onCheckedOneItemMyCatalog}
                                 />
                               <label className="checkbox1"></label>
