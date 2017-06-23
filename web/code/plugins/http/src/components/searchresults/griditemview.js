@@ -1315,7 +1315,7 @@ class GridItemsView extends Component {
            return (
               <div key={ViewAsSet ? item.reference : item.id}
                     name={ViewAsSet ? item.reference : item.id}
-                    id={index} className="col-md-3 col-sm-3 nopadding">
+                    id={ViewAsSet ? item.reference : item.id} className="col-md-3 col-sm-3 nopadding">
                  <div className={(index==0)? `searchresult-prodcut ${that.state.isOpen0? 'searchresult-border': ''}`:
                                  (index==1)? `searchresult-prodcut ${that.state.isOpen1? 'searchresult-border': ''}`:
                                  (index==2)? `searchresult-prodcut ${that.state.isOpen2? 'searchresult-border': ''}`:
@@ -1381,19 +1381,24 @@ class GridItemsView extends Component {
                     <div className="pull-right">
                       <div className="grid-add">
                         <span className="icon-add-28"
-                            name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}
+                            name={ViewAsSet ? item.reference : item.id}
+                            id={ViewAsSet ? item.reference : item.id}
                             value={ViewAsSet ? item.reference : item.id}
                           onClick={onAddedOneItemMyCatalog}></span>
                       </div>
                      <div className="checkbox checkbox-warning">
                       <input type="checkbox" className="styled" type="checkbox"
-                        name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id} checked={checkItem}
-                        value={ViewAsSet ? item.reference : item.id} onChange={onCheckedOneItemMyCatalog}
+                        name={ViewAsSet ? item.reference : item.id}
+                        id={ViewAsSet ? item.reference : item.id} checked={checkItem}
+                        value={ViewAsSet ? item.reference : item.id}
+                        onChange={onCheckedOneItemMyCatalog}
                         />
                           <label className="checkbox1"></label>
                       </div>
                       <span className="quick-view"><img  src="/images/quick-view.jpg" responsive
-                        name={ViewAsSet ? item.reference : item.id} id={index} onClick={showDetails}/></span>
+                        name={ViewAsSet ? item.reference : item.id}
+                        id={ViewAsSet ? item.reference : item.id}
+                        onClick={showDetails}/></span>
                     </div>
 
                     <div className="thumbnaillgrid">
@@ -1489,7 +1494,11 @@ class GridItemsView extends Component {
                                     '',
                             }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31
                                 ||index==35||index==39||index==43||index==47||index==51||index==55||index==59)?'over-searchresult-left':'over-searchresult' }>
-                            <img className="searchresult-close"  src="/images/icon-close.png" responsive name={ViewAsSet ? item.reference : item.id} id={index} onClick={hideDetails}/>
+                            <img className="searchresult-close"
+                                src="/images/icon-close.png" responsive
+                                name={ViewAsSet ? item.reference : item.id}
+                                id={ViewAsSet ? item.reference : item.id}
+                                onClick={hideDetails}/>
                             <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                             <span className="width-f100">{item.reference}</span>
                             <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
