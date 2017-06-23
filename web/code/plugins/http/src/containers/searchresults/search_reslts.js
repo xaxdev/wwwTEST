@@ -30,6 +30,12 @@ const checkFields = ['ingredients','categoryName','category', 'article', 'collec
       'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex',
       'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber','itemCreatedDate'
     ];
+const checkFieldsViewAsSet = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
+      'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
+      'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName', 'metalColor',
+      'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex',
+      'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber','itemCreatedDate'
+    ];
 const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17',
       '18','19', '20', '21', '22', '23', '24','25','26','27', '28', '29', '30', '31','32','33','34','35',
       '36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55',
@@ -100,6 +106,7 @@ class SearchResult extends Component {
     this.checkedOneItemMyCatalog = this.checkedOneItemMyCatalog.bind(this);
     this.addedOneItemMyCatalog = this.addedOneItemMyCatalog.bind(this);
     this.onCheckedAllItems = this.onCheckedAllItems.bind(this);
+    this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
     // console.log('this.props.items-->',this.props.searchResult.datas);
 
     this.state = {
@@ -1235,6 +1242,9 @@ class SearchResult extends Component {
       this.setState({ showImages: false });
       this.setState({isOpen: true});
   }
+  exportExcelViewAsSet = _=> {
+
+  }
   confirmExport(e){
     e.preventDefault();
 
@@ -1866,8 +1876,13 @@ class SearchResult extends Component {
                                 : <a><div className="icon-add margin-l10" disabled={true} enabled={false} >
                                     </div></a>
                             }
-                            <a><div className="icon-excel margin-l10" disabled={submitting}
-                                  onClick={ this.exportExcel }></div></a>
+                            {
+                                ViewAsSet
+                                ? <a><div className="icon-excel margin-l10" disabled={submitting}
+                                      onClick={ this.exportExcelViewAsSet }></div></a>
+                                : <a><div className="icon-excel margin-l10" disabled={submitting}
+                                      onClick={ this.exportExcel }></div></a>
+                            }
                             <a><div className="icon-print margin-l10" id="printproduct" disabled={submitting}
                                   onClick={ this.printResults }>
                                 </div>
