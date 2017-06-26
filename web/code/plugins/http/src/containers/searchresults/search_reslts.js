@@ -1585,7 +1585,7 @@ class SearchResult extends Component {
                   Gross Weight, Ring Size, Jewels Weight (text), Site, Company, Warehouse)</h5>
             <br/>
             <div className="col-sm-12">
-              <div className="col-sm-3">
+              <div className="col-sm-3 checkbox checkbox-warning popexport">
                 <input type="checkbox" checked={this.state.allFields} onChange={event => {
                         // console.log('all checked-->',event.target.checked);
                         that.setState({ allFields: event.target.checked });
@@ -1600,11 +1600,11 @@ class SearchResult extends Component {
                         }
                     }
                 }/>
-                <label className="control-label">Select All</label>
+                <label className="control-label checkbox1">Select All</label>
               </div>
-              <div className="col-sm-3">
+              <div className="col-sm-3 checkbox checkbox-warning popexport">
                 <input type="checkbox" checked={this.state.showImages} onChange={event => that.setState({ showImages: event.target.checked })}/>
-                <label className="control-label">Show Images</label>
+                <label className="control-label checkbox1">Show Images</label>
               </div>
               <div className="col-sm-3">
               </div>
@@ -1614,7 +1614,7 @@ class SearchResult extends Component {
             <div className="col-md-12">
               {checkFields.map(function(field, index){
                   return(
-                        <div className="col-md-3" key={index}>
+                        <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
                           <label key={index}>
                             <input id={index} type="checkbox" checked={that.state[field]}
                               onChange={event => {
@@ -1660,7 +1660,7 @@ class SearchResult extends Component {
               <h5>(Normal export field Item Reference, Description)</h5>
               <br/>
               <div className="col-sm-12">
-                <div className="col-sm-3">
+                <div className="col-sm-3 checkbox checkbox-warning popexport">
                   <input type="checkbox" checked={this.state.allFieldsViewAsSet} onChange={event => {
                           // console.log('all checked-->',event.target.checked);
                           that.setState({ allFieldsViewAsSet: event.target.checked });
@@ -1675,13 +1675,13 @@ class SearchResult extends Component {
                           }
                       }
                   }/>
-                  <label className="control-label">Select All</label>
+                  <label className="control-label checkbox1">Select All</label>
                 </div>
-                <div className="col-sm-3">
+                <div className="col-sm-3 checkbox checkbox-warning popexport">
                   <input type="checkbox"
                     checked={this.state.showImagesViewAsSet}
                     onChange={event => that.setState({ showImagesViewAsSet: event.target.checked })}/>
-                  <label className="control-label">Show Images</label>
+                  <label className="control-label checkbox1">Show Images</label>
                 </div>
                 <div className="col-sm-3">
                 </div>
@@ -1712,7 +1712,7 @@ class SearchResult extends Component {
                     }
                     if (showField) {
                         return(
-                              <div className="col-md-3" key={index}>
+                              <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
                                 <label key={index}>
                                   <input id={index} type="checkbox" checked={that.state[field]}
                                     onChange={event => {
@@ -2119,8 +2119,8 @@ class SearchResult extends Component {
                   <div className="panel panel-default">
                       <div className="panel-body padding-ft0">
                         <div className="col-sm-12 ">
-                          <div className="col-md-2 col-sm-3 col-xs-12 nopadding">
-                              <div className="checkbox checkbox-warning">
+                          <div className="col-md-3 col-sm-3 col-xs-12 nopadding">
+                              <div className="checkbox checkbox-warning check-navi">
                                 <input type="checkbox" id="checkAllItems" className="styled" type="checkbox"
                                     name="all"
                                     checked={this.state.checkAllItems}
@@ -2129,16 +2129,17 @@ class SearchResult extends Component {
                                </div>
                             {
                                 this.state.enabledMyCatalog
-                                ? <a><div className="icon-add margin-l10" disabled={true} enabled={false}
+                                ? <a><div className="icon-add" disabled={true} enabled={false}
                                     onClick={ this.addMyCatalog }></div></a>
-                                : <a><div className="icon-add margin-l10" disabled={true} enabled={false} >
+                                : <a><div className="icon-add" disabled={true} enabled={false} >
                                     </div></a>
                             }
+                            <div className="box-line-nav"><div className="line-nav"></div></div>
                             {
                                 ViewAsSet
-                                ? <a><div className="icon-excel margin-l10" disabled={submitting}
+                                ? <a><div className="icon-excel" disabled={submitting}
                                       onClick={ this.exportExcelViewAsSet }></div></a>
-                                : <a><div className="icon-excel margin-l10" disabled={submitting}
+                                : <a><div className="icon-excel" disabled={submitting}
                                       onClick={ this.exportExcel }></div></a>
                             }
                             <a><div className="icon-print margin-l10" id="printproduct" disabled={submitting}
@@ -2146,7 +2147,7 @@ class SearchResult extends Component {
                                 </div>
                             </a>
                           </div>
-                          <div className="col-md-10 col-sm-9 col-xs-12 pagenavi">
+                          <div className="col-md-9 col-sm-9 col-xs-12 pagenavi">
                             <div className="searchresult-navi search-right">
                                 {this.renderPagination()}
                             </div>

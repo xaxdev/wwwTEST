@@ -94,7 +94,7 @@ class ListItemsView extends Component {
             });
         }
         checkItem = !checkItem ? false : true;  //if undefined checked false else true
-        return(<div >
+        return(<div className="checkbox checkbox-warning">
                 <input type="checkbox" className="styled" type="checkbox"
                     name={ViewAsSet ? row.reference : row.id} checked={checkItem}
                     id={ViewAsSet ? row.reference : row.id}
