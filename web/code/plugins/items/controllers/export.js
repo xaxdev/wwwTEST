@@ -1,6 +1,7 @@
 const Boom = require('boom');
 const Hoek = require('hoek');
 const Joi = require('joi');
+const Promise = require('bluebird');
 const GetSearch = require('../utils/getSearch');
 const GetAllData = require('../utils/getAllData');
 // Require library export excel
@@ -43,54 +44,176 @@ module.exports = {
     let listFileName = [];
     let userName = request.payload.userName;
 
-    let pageSize = request.payload.pageSize;
+    let size = request.payload.pageSize;
 
     internals.query = GetSearch(request, 0, 100000);
     // console.log('searching...');
     // console.log(JSON.stringify(internals.query, null, 4));
 
-    elastic
-      .search({
-        index: 'mol',
-        type: 'items',
-        body: internals.query
-      })
-      .then(function (response) {
-        let allData = [];
-        let exportData = null;
-        // console.log('Response Data');
+    // elastic
+    //   .search({
+    //     index: 'mol',
+    //     type: 'items',
+    //     body: internals.query
+    //   })
+    //   .then(function (response) {
+    //     let allData = [];
+    //     let exportData = null;
+    //     // console.log('Response Data');
+    //
+    //     let data = response.hits.hits.map((element) => element._source);
+    //
+    //     exportData = data;
+    //     // console.log('data-->',data);
+    //     // console.log('fields.showImages-->',fields.showImages);
+    //     // console.log('userCurrency-->',userCurrency);
+    //     // console.log('price-->',price);
+    //
+    //     // console.log(response.hits.total)
+    //     const totalRecord = response.hits.total;
+    //
+    //     elastic.close();
+    //
+    //     amqp.connect(amqpHost, function(err, conn) {
+    //       conn.createChannel(function(err, ch) {
+    //         var q = amqpChannel;
+    //
+    //         ch.assertQueue(q);
+    //         // Note: on Node 6 Buffer.from(msg) should be used
+    //         ch.sendToQueue(q, new Buffer(JSON.stringify(request.payload, null, 2)), {persistent: true});
+    //         // console.log(' [x] Sent "Parameter!"');
+    //       });
+    //     });
+    //
+    //     // console.log('request.payload-->',JSON.stringify(request.payload, null, 2));
+    //     return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
+    //   })
+    //   .catch(function (error) {
+    //     console.log('error-->',error)
+    //     elastic.close();
+    //     return reply(Boom.badImplementation(err));
+    //   });
 
-        let data = response.hits.hits.map((element) => element._source);
+        const getAllItems =  elastic
+                .search({
+                    index: 'mol',
+                    type: 'items',
+                    body: internals.query
+                });
 
-        exportData = data;
-        // console.log('data-->',data);
-        // console.log('fields.showImages-->',fields.showImages);
-        // console.log('userCurrency-->',userCurrency);
-        // console.log('price-->',price);
+        const getSetReference = getAllItems.then((response) => {
+            const setReferenceResult = response.hits.hits.map((element) => element._source);
+            const setReferenceFilter = setReferenceResult.filter((item) => {
+                    return item.setReference != undefined && item.setReference != '';
+            })
+            const setReferenceArray = setReferenceFilter.map((item) => {
+                return item.setReference;
+            })
+            const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
+                return !pos || item != ary[pos - 1];
+            })
+            // console.log('setReferenceUniq-->', setReferenceUniq.length);
+            // console.log('setReferenceResult-->',setReferenceResult.length);
+            let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
+            if (isViewAsSet) {
+                if (sortBy.indexOf('price') != -1) {
+                    sortBy = 'totalPrice.USD';
+                }else if (sortBy.indexOf('Date') != -1) {
+                    sortBy = 'createdDate';
+                }else if (sortBy.indexOf('Date') != -1) {
+                    sortBy = 'createdDate';
+                }else if (sortBy.indexOf('setReference') != -1) {
+                    sortBy = 'reference';
+                }else{
+                    sortBy = sortBy;
+                }
+            }
 
-        // console.log(response.hits.total)
-        const totalRecord = response.hits.total;
+            let missing = '';
 
-        elastic.close();
+            switch (sortDirections) {
+              case 'asc':
+                missing = '"missing" : "_first"';
+                missing = `{"${sortBy}" : {${missing}}},`;
+                break;
+              default:
+            }
 
-        amqp.connect(amqpHost, function(err, conn) {
-          conn.createChannel(function(err, ch) {
-            var q = amqpChannel;
+          const query = JSON.parse(
+            `{
+                "timeout": "5s",
+                "from": 0,
+              "size": 10000,
+              "sort" : [
+                  ${missing}
+                  {"${sortBy}" : "${sortDirections}"}
+               ],
+              "query":{
+                   "constant_score": {
+                     "filter": {
+                       "bool": {
+                         "must": [
+                           {
+                             "match": {
+                               "reference": "${setReferenceUniq.join(' ')}"
+                             }
+                           }
+                         ]
+                       }
+                     }
+                   }
+                }
+              }`);
 
-            ch.assertQueue(q);
-            // Note: on Node 6 Buffer.from(msg) should be used
-            ch.sendToQueue(q, new Buffer(JSON.stringify(request.payload, null, 2)), {persistent: true});
-            // console.log(' [x] Sent "Parameter!"');
-          });
+            //   console.log(JSON.stringify(query, null, 2));
+
+              return elastic.search({
+                  index: 'mol',
+                  type: 'setitems',
+                  body: query
+              })
         });
 
-        // console.log('request.payload-->',JSON.stringify(request.payload, null, 2));
-        return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
-      })
-      .catch(function (error) {
-        console.log('error-->',error)
-        elastic.close();
-        return reply(Boom.badImplementation(err));
-      });
+      try {
+          Promise.all([getAllItems, getSetReference]).
+              spread((allItems, setReferences) => {
+              const allItemsResult = allItems.hits.hits.map((element) => element._source);
+              const totalRecord = allItems.hits.total;
+
+              const setReferenceData = setReferences.hits.hits.map((element) => element._source);
+
+              // console.log('setReferenceData-->', setReferenceData.length);
+              // console.log('totalRecord-->',setReferences.hits.total);
+              let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
+
+              elastic.close();
+
+              amqp.connect(amqpHost, function(err, conn) {
+                conn.createChannel(function(err, ch) {
+                  var q = amqpChannel;
+
+                  ch.assertQueue(q);
+                  // Note: on Node 6 Buffer.from(msg) should be used
+                  ch.sendToQueue(q, new Buffer(JSON.stringify(request.payload, null, 2)), {persistent: true});
+                  // console.log(' [x] Sent "Parameter!"');
+                });
+              });
+
+              if (isViewAsSet) {
+                  return reply(GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+              }else {
+                  return reply(GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+              }
+          })
+          .catch(function(err) {
+              elastic.close();
+              console.log(err);
+              return reply(Boom.badImplementation(err));
+          });
+      } catch (err) {
+          elastic.close();
+          return reply(Boom.badImplementation(err));
+      }
+
     }
 };

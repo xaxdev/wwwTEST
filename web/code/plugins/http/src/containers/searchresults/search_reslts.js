@@ -1535,7 +1535,7 @@ class SearchResult extends Component {
 
       this.setState({
         showLoading: true,
-        isOpen: false
+        isOpenViewAsSet: false
       });
 
       let girdView = showGridView;
@@ -1546,9 +1546,11 @@ class SearchResult extends Component {
 
       // console.log('params--:>',params);
       this.props.exportDatas(params)
+    // this.props.getItems(params)
           .then((value) => {
             // console.log('value-->',value);
           //   console.log('export done!');
+            this.props.getCatalogNameSetItem();
             if(girdView){
               // this.setState({showGridView: true});
               that.props.setShowGridView(true);
