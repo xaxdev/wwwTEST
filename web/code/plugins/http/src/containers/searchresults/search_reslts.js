@@ -1566,6 +1566,7 @@ class SearchResult extends Component {
   }
   renderExportExcelDialog(){
     let that = this;
+    let checkAll = true;
     const userLogin = JSON.parse(sessionStorage.logindata);
     return(
       <div>
@@ -1615,6 +1616,12 @@ class SearchResult extends Component {
             </div>
             <div className="col-md-12">
               {checkFields.map(function(field, index){
+                  checkAll = checkAll && that.state[field];
+                  if (checkAll) {
+                      that.setState({ allFields:true });
+                  }else{
+                      that.setState({ allFields:false });
+                  }
                   return(
                         <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
                           <label key={index}>
@@ -1648,6 +1655,7 @@ class SearchResult extends Component {
   }
   renderExportExcelViewAsSetDialog = _=>{
       let that = this;
+      let checkAll = true;
       const userLogin = JSON.parse(sessionStorage.logindata);
       return(
         <div>
@@ -1695,22 +1703,31 @@ class SearchResult extends Component {
                     let showField = false;
                     switch (field) {
                         case 'totalPrice':
+                            checkAll = checkAll && that.state[field];
                             showField = (userLogin.permission.price == 'Public') ||
                                         (userLogin.permission.price == 'Updated') ||
                                         (userLogin.permission.price == 'All')
                                         ? true: false;
                             break;
                         case 'totalUpdatedCost':
+                            checkAll = checkAll && that.state[field];
                             showField = (userLogin.permission.price == 'Updated') ||
                                         (userLogin.permission.price == 'All')
                                         ? true: false;
                             break;
                         case 'totalActualCost':
+                            checkAll = checkAll && that.state[field];
                             showField = (userLogin.permission.price == 'All') ? true: false;
                             break;
                         default:
+                            checkAll = checkAll && that.state[field];
                             showField = true;
                             break;
+                    }
+                    if (checkAll) {
+                        that.setState({ allFieldsViewAsSet:true });
+                    }else{
+                        that.setState({ allFieldsViewAsSet:false });
                     }
                     if (showField) {
                         return(
@@ -1719,7 +1736,7 @@ class SearchResult extends Component {
                                   <input id={index} type="checkbox" checked={that.state[field]}
                                     onChange={event => {
                                         that.setState({ [field]: event.target.checked });
-                                        that.setState({ allFieldsViewAsSet:false });
+                                        // that.setState({ allFieldsViewAsSet:false });
                                       }
                                     }
                                     />
