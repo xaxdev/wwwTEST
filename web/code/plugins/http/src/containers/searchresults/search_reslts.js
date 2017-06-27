@@ -2121,7 +2121,7 @@ class SearchResult extends Component {
                   <div className="panel panel-default">
                       <div className="panel-body padding-ft0">
                         <div className="col-sm-12 ">
-                          <div className="col-md-3 col-sm-3 col-xs-12 nopadding">
+                          <div className="col-md-4 col-sm-12 col-xs-12 nopadding">
                               <div className="checkbox checkbox-warning check-navi">
                                 <input type="checkbox" id="checkAllItems" className="styled" type="checkbox"
                                     name="all"
@@ -2149,7 +2149,7 @@ class SearchResult extends Component {
                                 </div>
                             </a>
                           </div>
-                          <div className="col-md-9 col-sm-9 col-xs-12 pagenavi">
+                          <div className="col-md-8 col-sm-12 col-xs-12 pagenavi">
                             <div className="searchresult-navi search-right">
                                 {this.renderPagination()}
                             </div>
