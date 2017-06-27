@@ -31,23 +31,6 @@ module.exports = {
 
     // console.log(JSON.stringify(internals.query, null, 2));
 
-    // elastic
-    //   .search({
-    //     index: 'mol',
-    //     type: 'items',
-    //     body: internals.query
-    //   }).then(function (response) {
-    //     const totalRecord = response.hits.total;
-    //
-    //     elastic.close();
-    //     return reply(GetAllData(response, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
-    //
-    //   })
-    //   .catch(function (error) {
-    //     elastic.close();
-    //     return reply(Boom.badImplementation(err));
-    //   });
-
     const getAllItems =  elastic
             .search({
                 index: 'mol',
@@ -66,8 +49,6 @@ module.exports = {
         const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
             return !pos || item != ary[pos - 1];
         })
-        // console.log('setReferenceUniq-->', setReferenceUniq.length);
-        // console.log('setReferenceResult-->',setReferenceResult.length);
         let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
         if (isViewAsSet) {
             if (sortBy.indexOf('price') != -1) {
@@ -136,8 +117,6 @@ module.exports = {
 
             const setReferenceData = setReferences.hits.hits.map((element) => element._source);
 
-            // console.log('setReferenceData-->', setReferenceData.length);
-            // console.log('totalRecord-->',setReferences.hits.total);
             let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
             elastic.close();

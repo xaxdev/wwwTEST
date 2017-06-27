@@ -14,4 +14,8 @@ const getIngredients = (result, obj) => {
     return addIngredients.ingredient(result, obj)
 };
 
-export { getBody, getTitles, getIngredients };
+const getSetItems = (result, obj) => {
+    return addIngredients.setitems(result, obj)
+};
+
+export { getBody, getTitles, getIngredients, getSetItems };
