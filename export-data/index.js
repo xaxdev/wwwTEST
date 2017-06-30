@@ -336,18 +336,18 @@ const Promise = require('bluebird');
                                 }
                                 console.log('file-->',file);
                                 await save(fileName, wb);
-                                // if (rounds == chkRounds) {
-                                //     let number = 1;
-                                //     emailBody = '';
-                                //     listFileName.forEach(function (name) {
-                                //         emailBody = emailBody + `${number}. ${name} (http:${obj.ROOT_URL}/export_files/${name})\n`;
-                                //         number++;
-                                //     });
-                                //     emailBody = `Please download the files only by today from below link .\n` + emailBody;
-                                //     client.close();
-                                //     await notify('');
-                                //     channel.ack(msg)
-                                // }
+                                if (rounds == chkRounds) {
+                                    let number = 1;
+                                    emailBody = '';
+                                    listFileName.forEach(function (name) {
+                                        emailBody = emailBody + `${number}. ${name} (http:${obj.ROOT_URL}/export_files/${name})\n`;
+                                        number++;
+                                    });
+                                    emailBody = `Please download the files only by today from below link .\n` + emailBody;
+                                    client.close();
+                                    await notify('');
+                                    channel.ack(msg)
+                                }
                             }
                         })
                         .catch(function(err) {

@@ -21,9 +21,10 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
 
       let titles = [];
 
-      if (fields.showImages)
-          titles.push('Images');
       if (viewAsSet) {
+          if (fields.showImagesViewAsSet)
+              titles.push('Images');
+
           titles.push('Item Reference', 'Description');
 
         if(fields.allFields){
@@ -40,6 +41,9 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             if(fields.createdDate) titles.push('Created Date');
         }
       }else{
+          if (fields.showImages)
+              titles.push('Images');
+              
           titles.push('Item Reference', 'Item Description', 'SKU', 'Vendor Item Reference');
           if (userCurrency != 'USD') {
             if (price == 'All') {
@@ -125,7 +129,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             if(fields.itemCreatedDate) titles.push('Created Date');
           }
       }
-      
+
       return resolve(titles)
 
     } catch (err) {

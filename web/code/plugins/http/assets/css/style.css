@@ -366,7 +366,8 @@ select.form-searchresult option{
 }
 .modal-dialog{margin: 11% auto; width: 500px;}
 .modal-title{padding:0;}
-.popexport .modal-dialog{width:50%!important;}
+.popexport .modal-dialog{width:82%!important;}
+.inline{display: inline-block;}
 .headerpanal{
   background: #ffffff;
 }
@@ -1179,7 +1180,7 @@ select.form-searchresult option{
   margin-left: -6px;
 }
 .popexport .checkbox label{
-  padding-left: 24px;
+  padding-left: 22px;
 }
 .check-detail .checkbox label::before{
   margin-left: 10px;
@@ -1226,6 +1227,7 @@ select.form-searchresult option{
 		    position: relative;
 		    padding-left: 0px;
         min-height: 24px;
+        font-size: 13px;
       }
 		    .checkbox label::before{
 		      content: "";
@@ -1254,7 +1256,7 @@ select.form-searchresult option{
 			    font-size: 16px;
 			    color: #555555; }
         .checkbox span::after{
-          margin-left: -34px;
+          margin-left: -32px;
           padding-left: 4px;
           background-color: #ddbe6a;
         }
@@ -1606,7 +1608,7 @@ select.form-searchresult option{
 	#fileName {width: 50%;}
 }
 @media (max-width:1199px){
-  .pd-10{padding:0 7px;}
+  .pd-10{padding:0px;}
   .thumbnaillgrid{
     position: relative;
     width: 100% !important;
@@ -2161,4 +2163,10 @@ select.form-searchresult option{
 .FancyMB-menu.is-leave {
   -webkit-transform: scale(1);
   transform: scale(1);
+}
+@media (min-width:1280px){
+  .popexport .modal-dialog {
+      width: 60%!important;
+  }
+  .popexport.viewset .modal-dialog{width:680px!important;}
 }

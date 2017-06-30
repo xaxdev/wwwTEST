@@ -26,7 +26,7 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
           let arrayItems = [];
           let itemReference = item.reference;
 
-          if (fields.showImages){
+          if (fields.showImagesViewAsSet){
             arrayItems.push((item.image.length) != 0
                               ? item.image[0].thumbnail
                               : '');

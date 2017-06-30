@@ -1566,6 +1566,7 @@ class SearchResult extends Component {
   }
   renderExportExcelDialog(){
     let that = this;
+    let checkAll = true;
     const userLogin = JSON.parse(sessionStorage.logindata);
     return(
       <div>
@@ -1615,6 +1616,12 @@ class SearchResult extends Component {
             </div>
             <div className="col-md-12">
               {checkFields.map(function(field, index){
+                  checkAll = checkAll && that.state[field];
+                  if (checkAll) {
+                      that.setState({ allFields:true });
+                  }else{
+                      that.setState({ allFields:false });
+                  }
                   return(
                         <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
                           <label key={index}>
@@ -1648,78 +1655,86 @@ class SearchResult extends Component {
   }
   renderExportExcelViewAsSetDialog = _=>{
       let that = this;
+      let checkAll = true;
       const userLogin = JSON.parse(sessionStorage.logindata);
       return(
         <div>
-        <div  className="popexport">
+        <div  className="popexport viewset">
           <Modal isOpen={this.state.isOpenViewAsSet} onRequestHide={this.hideModalViewAsSet}>
             <div className="modal-header">
               <ModalClose onClick={this.hideModalViewAsSet}/>
               <h1 className="modal-title">Export View As Set</h1>
             </div>
             <div className="modal-body">
-              <h3>Please choose additional fields for export.</h3>
-              <h5>(Normal export field Item Reference, Description)</h5>
+              <h3>Please choose additional fields for export.1</h3>
+              <h5 className="text-center">(Normal export field Item Reference, Description)</h5>
               <br/>
-              <div className="col-sm-12">
-                <div className="col-sm-3 checkbox checkbox-warning popexport">
-                  <input type="checkbox" checked={this.state.allFieldsViewAsSet} onChange={event => {
-                          // console.log('all checked-->',event.target.checked);
-                          that.setState({ allFieldsViewAsSet: event.target.checked });
-                          if (event.target.checked) {
-                              checkFieldsViewAsSet.map(function(field, index){
-                                  that.setState({ [field]: true });
-                              });
-                          } else {
-                              checkFieldsViewAsSet.map(function(field, index){
-                                  that.setState({ [field]: false });
-                              });
-                          }
-                      }
-                  }/>
-                  <label className="control-label checkbox1">Select All</label>
+              <div className="col-sm-12 inline">
+                <div className="col-sm-4 checkbox checkbox-warning popexport">
+                  <div className="col-md-12 col-xs-12 checkbox checkbox-warning">
+                    <input type="checkbox" checked={this.state.allFieldsViewAsSet} onChange={event => {
+                            // console.log('all checked-->',event.target.checked);
+                            that.setState({ allFieldsViewAsSet: event.target.checked });
+                            if (event.target.checked) {
+                                checkFieldsViewAsSet.map(function(field, index){
+                                    that.setState({ [field]: true });
+                                });
+                            } else {
+                                checkFieldsViewAsSet.map(function(field, index){
+                                    that.setState({ [field]: false });
+                                });
+                            }
+                        }
+                    }/>
+                    <label className="control-label checkbox1">Select All</label>
+                  </div>
+                  <div className="col-md-12 col-xs-12 checkbox checkbox-warning">
+                    <input type="checkbox"
+                      checked={this.state.showImagesViewAsSet}
+                      onChange={event => that.setState({ showImagesViewAsSet: event.target.checked })}/>
+                    <label className="control-label checkbox1">Show Images</label>
+                  </div>
                 </div>
-                <div className="col-sm-3 checkbox checkbox-warning popexport">
-                  <input type="checkbox"
-                    checked={this.state.showImagesViewAsSet}
-                    onChange={event => that.setState({ showImagesViewAsSet: event.target.checked })}/>
-                  <label className="control-label checkbox1">Show Images</label>
-                </div>
-                <div className="col-sm-3">
-                </div>
-                <div className="col-sm-3">
-                </div>
-              </div>
-              <div className="col-md-12">
+
+              <div className="col-sm-8 maring-b10">
                 {checkFieldsViewAsSet.map(function(field, index){
                     let showField = false;
                     switch (field) {
                         case 'totalPrice':
+                            checkAll = checkAll && that.state[field];
                             showField = (userLogin.permission.price == 'Public') ||
                                         (userLogin.permission.price == 'Updated') ||
                                         (userLogin.permission.price == 'All')
                                         ? true: false;
                             break;
                         case 'totalUpdatedCost':
+                            checkAll = checkAll && that.state[field];
                             showField = (userLogin.permission.price == 'Updated') ||
                                         (userLogin.permission.price == 'All')
                                         ? true: false;
                             break;
                         case 'totalActualCost':
+                            checkAll = checkAll && that.state[field];
                             showField = (userLogin.permission.price == 'All') ? true: false;
                             break;
                         default:
+                            checkAll = checkAll && that.state[field];
                             showField = true;
                             break;
                     }
+                    if (checkAll) {
+                        that.setState({ allFieldsViewAsSet:true });
+                    }else{
+                        that.setState({ allFieldsViewAsSet:false });
+                    }
                     if (showField) {
                         return(
-                              <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
+                              <div className="col-md-6 col-sm-6 col-xs-12 checkbox checkbox-warning check-detail" key={index}>
                                 <label key={index}>
                                   <input id={index} type="checkbox" checked={that.state[field]}
                                     onChange={event => {
                                         that.setState({ [field]: event.target.checked });
-                                        that.setState({ allFieldsViewAsSet:false });
+                                        // that.setState({ allFieldsViewAsSet:false });
                                       }
                                     }
                                     />
@@ -1733,6 +1748,7 @@ class SearchResult extends Component {
                   }
                 )}
               </div>
+            </div>
             </div>
             <div className="modal-footer">
               <button id="export" className="btn btn-default btn-radius" onClick={this.confirmExportViewAsSet}>
@@ -2121,7 +2137,7 @@ class SearchResult extends Component {
                   <div className="panel panel-default">
                       <div className="panel-body padding-ft0">
                         <div className="col-sm-12 ">
-                          <div className="col-md-3 col-sm-3 col-xs-12 nopadding">
+                          <div className="col-md-4 col-sm-12 col-xs-12 nopadding">
                               <div className="checkbox checkbox-warning check-navi">
                                 <input type="checkbox" id="checkAllItems" className="styled" type="checkbox"
                                     name="all"
@@ -2149,7 +2165,7 @@ class SearchResult extends Component {
                                 </div>
                             </a>
                           </div>
-                          <div className="col-md-9 col-sm-9 col-xs-12 pagenavi">
+                          <div className="col-md-8 col-sm-12 col-xs-12 pagenavi">
                             <div className="searchresult-navi search-right">
                                 {this.renderPagination()}
                             </div>
