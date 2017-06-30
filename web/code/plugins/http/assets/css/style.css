@@ -367,7 +367,7 @@ select.form-searchresult option{
 .modal-dialog{margin: 11% auto; width: 500px;}
 .modal-title{padding:0;}
 .popexport .modal-dialog{width:82%!important;}
-.modal-body{display: inline-block;}
+.inline{display: inline-block;}
 .headerpanal{
   background: #ffffff;
 }

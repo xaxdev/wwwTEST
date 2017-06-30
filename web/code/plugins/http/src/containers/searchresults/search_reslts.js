@@ -1669,7 +1669,7 @@ class SearchResult extends Component {
               <h3>Please choose additional fields for export.1</h3>
               <h5 className="text-center">(Normal export field Item Reference, Description)</h5>
               <br/>
-              <div className="col-sm-12">
+              <div className="col-sm-12 inline">
                 <div className="col-sm-4 checkbox checkbox-warning popexport">
                   <div className="col-md-12 col-xs-12 checkbox checkbox-warning">
                     <input type="checkbox" checked={this.state.allFieldsViewAsSet} onChange={event => {
