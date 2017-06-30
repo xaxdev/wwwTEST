@@ -2,6 +2,69 @@ import numberFormat from './convertNumberformat';
 import convertDate from './convertDate';
 import moment from 'moment';
 
+const setitems = (responseData, request) => new Promise((resolve, reject) => {
+    try {
+        let allData = [];
+        let exportData = null;
+        let fields = request.fields;
+        let userCurrency = request.userCurrency;
+        let price = request.price;
+        let userName = request.userName;
+        let listFileName = [];
+        let ROOT_URL = request.ROOT_URL;
+        let data = responseData.hits.hits.map((element) => element._source);
+
+        exportData = data;
+
+        let newdata = [];
+
+        let items = 0;
+
+        data.forEach(function(item){
+            items = items+1;
+          // console.log('item-->',item);
+          let arrayItems = [];
+          let itemReference = item.reference;
+
+          if (fields.showImagesViewAsSet){
+            arrayItems.push((item.image.length) != 0
+                              ? item.image[0].thumbnail
+                              : '');
+          }
+
+          // console.log(`items: ${items}--> reference: ${item.reference}`);
+          arrayItems.push(item.reference,item.description);
+
+          if(fields.allFields){
+            arrayItems.push(numberFormat((item.totalActualCost != undefined)? item.totalActualCost['USD']: 0),
+                            numberFormat((item.totalUpdatedCost != undefined)? item.totalUpdatedCost['USD']: 0),
+                            numberFormat((item.totalPrice != undefined)? item.totalPrice['USD']: 0),
+                            (item.markup != undefined) ? item.markup : '',
+                            (item.companyName != undefined) ? item.companyName : '',
+                            (item.warehouseName != undefined) ? item.warehouseName : '',
+                            (item.createdDate != undefined) ? convertDate(item.createdDate) : ''
+                          );
+
+          }else{
+            if(fields.totalActualCost) arrayItems.push(numberFormat((item.totalActualCost != undefined)? item.totalActualCost['USD']: 0));
+            if(fields.totalUpdatedCost) arrayItems.push(numberFormat((item.totalUpdatedCost != undefined)? item.totalUpdatedCost['USD']: 0));
+            if(fields.totalPrice) arrayItems.push(numberFormat((item.totalPrice != undefined)? item.totalPrice['USD']: 0));
+            if(fields.markup) arrayItems.push((item.markup != undefined) ? item.markup : '');
+            if(fields.companyName) arrayItems.push((item.companyName != undefined) ? item.companyName : '');
+            if(fields.warehouseName) arrayItems.push((item.warehouseName != undefined) ? item.warehouseName : '');
+            if(fields.createdDate) arrayItems.push((item.createdDate != undefined) ? convertDate(item.createdDate) : '');
+          }
+
+          newdata.push(arrayItems);
+
+        });
+
+        return resolve(newdata)
+    } catch (err) {
+        throw err;
+    }
+});
+
 const ingredient = (responseData, request) => new Promise((resolve, reject) => {
     try {
       let allData = [];
@@ -12,15 +75,11 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
       let userName = request.userName;
       let listFileName = [];
       let ROOT_URL = request.ROOT_URL;
-      // console.log('Response Data');
-
       let data = responseData.hits.hits.map((element) => element._source);
 
       exportData = data;
 
       let newdata = [];
-
-    //   console.log('data export-->',data.length);
 
       let items = 0;
 
@@ -308,4 +367,4 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
     }
 });
 
-export { ingredient };
+export { ingredient, setitems };

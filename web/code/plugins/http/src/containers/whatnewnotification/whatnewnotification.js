@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [3,2,1];
+            const roundData = [4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -242,6 +242,39 @@ class WhatNewNotification extends Component {
                                                         <div style="margin:15px 0px; text-align:center;"><img src="/images/mol-product-detail.gif"/></div>
                                                     </div>`
                                                 }
+                                            ]
+                                },
+                                {
+                                    'id': 4,
+                                    'round': 'June 2017',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Export excel file for Set (View as Set search)',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">June 30, 2017</p>
+                                                  <p>After user search by condition ‘View as Set” check box and can export excel file at the Search Result page via excel <img src="/images/icon-excel.png"/> icon.</p>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/mol_export_excel_view_as_set.gif"/></div>
+                                                  </div>`
+                                              },
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Select all items and add to My Catalog ',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">June 30, 2017</p>
+                                                  <p>User can select all items at the ‘Search Result’ page and add these items to My Catalog. </p>
+
+                                                  <h3 style="padding:17px 0px 0px 0px">How to use this function:</h3>
+                                                  <div style="margin-left: 20px;">
+                                                  <p>1.	At Search Result page, click ‘Select All’ <img src="/images/icon-selectall.jpg"/>  check box. The system will select all items ready to add to My Catalog.</p>
+                                                  <p>2.	Can un-select some items (if need)</p>
+                                                  <p>3.	Can un-select all items (if need)</p>
+                                                  <p>4.	Click ‘Add to Catalog’ <img src="/images/icon-favi.jpg"/> icon to select catalog or create new catalog.</p>
+                                                  <p>5.	Click 'Submit' button to confirm add item(s) to catalog.</p>
+                                                  </div>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                    <div style="margin:15px 0px; text-align:center;"><img src="/images/mol_select_all_add_to_catalog.gif"/></div>
+                                                  </div>`
+                                              }
                                             ]
                                 }
                             ];
