@@ -1659,46 +1659,44 @@ class SearchResult extends Component {
       const userLogin = JSON.parse(sessionStorage.logindata);
       return(
         <div>
-        <div  className="popexport">
+        <div  className="popexport viewset">
           <Modal isOpen={this.state.isOpenViewAsSet} onRequestHide={this.hideModalViewAsSet}>
             <div className="modal-header">
               <ModalClose onClick={this.hideModalViewAsSet}/>
               <h1 className="modal-title">Export View As Set</h1>
             </div>
             <div className="modal-body">
-              <h3>Please choose additional fields for export.</h3>
-              <h5>(Normal export field Item Reference, Description)</h5>
+              <h3>Please choose additional fields for export.1</h3>
+              <h5 className="text-center">(Normal export field Item Reference, Description)</h5>
               <br/>
               <div className="col-sm-12">
-                <div className="col-sm-3 checkbox checkbox-warning popexport">
-                  <input type="checkbox" checked={this.state.allFieldsViewAsSet} onChange={event => {
-                          // console.log('all checked-->',event.target.checked);
-                          that.setState({ allFieldsViewAsSet: event.target.checked });
-                          if (event.target.checked) {
-                              checkFieldsViewAsSet.map(function(field, index){
-                                  that.setState({ [field]: true });
-                              });
-                          } else {
-                              checkFieldsViewAsSet.map(function(field, index){
-                                  that.setState({ [field]: false });
-                              });
-                          }
-                      }
-                  }/>
-                  <label className="control-label checkbox1">Select All</label>
+                <div className="col-sm-4 checkbox checkbox-warning popexport">
+                  <div className="col-md-12 col-xs-12 checkbox checkbox-warning">
+                    <input type="checkbox" checked={this.state.allFieldsViewAsSet} onChange={event => {
+                            // console.log('all checked-->',event.target.checked);
+                            that.setState({ allFieldsViewAsSet: event.target.checked });
+                            if (event.target.checked) {
+                                checkFieldsViewAsSet.map(function(field, index){
+                                    that.setState({ [field]: true });
+                                });
+                            } else {
+                                checkFieldsViewAsSet.map(function(field, index){
+                                    that.setState({ [field]: false });
+                                });
+                            }
+                        }
+                    }/>
+                    <label className="control-label checkbox1">Select All</label>
+                  </div>
+                  <div className="col-md-12 col-xs-12 checkbox checkbox-warning">
+                    <input type="checkbox"
+                      checked={this.state.showImagesViewAsSet}
+                      onChange={event => that.setState({ showImagesViewAsSet: event.target.checked })}/>
+                    <label className="control-label checkbox1">Show Images</label>
+                  </div>
                 </div>
-                <div className="col-sm-3 checkbox checkbox-warning popexport">
-                  <input type="checkbox"
-                    checked={this.state.showImagesViewAsSet}
-                    onChange={event => that.setState({ showImagesViewAsSet: event.target.checked })}/>
-                  <label className="control-label checkbox1">Show Images</label>
-                </div>
-                <div className="col-sm-3">
-                </div>
-                <div className="col-sm-3">
-                </div>
-              </div>
-              <div className="col-md-12">
+
+              <div className="col-sm-8 maring-b10">
                 {checkFieldsViewAsSet.map(function(field, index){
                     let showField = false;
                     switch (field) {
@@ -1731,7 +1729,7 @@ class SearchResult extends Component {
                     }
                     if (showField) {
                         return(
-                              <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
+                              <div className="col-md-6 col-sm-6 col-xs-12 checkbox checkbox-warning check-detail" key={index}>
                                 <label key={index}>
                                   <input id={index} type="checkbox" checked={that.state[field]}
                                     onChange={event => {
@@ -1750,6 +1748,7 @@ class SearchResult extends Component {
                   }
                 )}
               </div>
+            </div>
             </div>
             <div className="modal-footer">
               <button id="export" className="btn btn-default btn-radius" onClick={this.confirmExportViewAsSet}>
