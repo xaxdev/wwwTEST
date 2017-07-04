@@ -8,13 +8,20 @@ import validateUserEdit from '../../utils/validateuseredit.js';
 import * as masterDataActions from '../../actions/masterdataaction';
 import GenPassword from '../../utils/genPassword';
 import MultipleCheckBoxs from '../../utils/multipleCheckBoxs';
+import Tree from '../../utils/treeview/Tree';
+import TreeDataJewelry from '../../utils/treeview/jewelry.json';
+import TreeDataWatch from '../../utils/treeview/watch.json';
+import TreeDataStone from '../../utils/treeview/stone.json';
+import TreeDataAccessory from '../../utils/treeview/accessory.json';
+import TreeDataOBA from '../../utils/treeview/oba.json';
+import TreeDataSpare from '../../utils/treeview/spare.json';
 
 let _ = require('lodash');
 
 export const fields = ['id','firstName','lastName','username','email','password','role','currency','status','company',
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
           ,'productGroupACC','productGroupOBA','productGroupSPA','onhandLocationValue','webOnly','permissionId','onhandLocation'
-          ,'onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr','movement'];
+          ,'onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr','movement','category'];
 export let countFirst = 0;
 
 class UserDetailsFrom extends Component {
@@ -652,10 +659,10 @@ class UserDetailsFrom extends Component {
   render() {
 
     const { fields: {
-              id,firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,productGroup
-              ,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT,onhandLocation,onhandAll
-              ,productGroupACC,productGroupOBA,productGroupSPA,onhandLocationValue,webOnly,permissionId,onhandWarehouse
-              ,onhandWarehouseValue,productGroupErr,movement
+              id,firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,
+              productGroup,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT,onhandLocation,onhandAll,
+              productGroupACC,productGroupOBA,productGroupSPA,onhandLocationValue,webOnly,permissionId,onhandWarehouse,
+              onhandWarehouseValue,productGroupErr,movement,category
           },handleSubmit,submitting } = this.props;
     let dataDropDowntLocations = [];
     let dataDropDowntWareHouse = [];
@@ -752,15 +759,29 @@ class UserDetailsFrom extends Component {
         }
       }
 
-    if (typeof (this.props.locationOnHand) !== 'undefined') {
-      dataDropDowntLocations.push(this.props.locationOnHand.map(location =>{
-          return ({value: location.code,name:location.name});
-        })
-      )
-      dataDropDowntLocations = dataDropDowntLocations[0];
-      }
+        if (typeof (this.props.locationOnHand) !== 'undefined') {
+          dataDropDowntLocations.push(this.props.locationOnHand.map(location =>{
+              return ({value: location.code,name:location.name});
+            })
+          )
+          dataDropDowntLocations = dataDropDowntLocations[0];
+          }
 
     }
+
+    let hierarchyDataJewelry = [];
+    let hierarchyDataWatch = [];
+    let hierarchyDataStone = [];
+    let hierarchyDataAccessory = [];
+    let hierarchyDataOBA = [];
+    let hierarchyDataSpare = [];
+
+    hierarchyDataJewelry.push(TreeDataJewelry);
+    hierarchyDataWatch.push(TreeDataWatch);
+    hierarchyDataStone.push(TreeDataStone);
+    hierarchyDataAccessory.push(TreeDataAccessory);
+    hierarchyDataOBA.push(TreeDataOBA);
+    hierarchyDataSpare.push(TreeDataSpare);
 
     return (
       <form onSubmit={handleSubmit}>
@@ -1004,7 +1025,6 @@ class UserDetailsFrom extends Component {
 
                       </div>
                       <div className="col-sm-4">
-
                           <input type="checkbox" value="Warehouse" {...onhandWarehouse}
                             checked={this.state.selectedOnHandWarehouse}
                             onChange={this.selectedOnHandWarehouse}
@@ -1036,6 +1056,75 @@ class UserDetailsFrom extends Component {
                           All Locations
                         </label>
                       </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Product Hierarchy</label>
+                        <div className="col-sm-4">
+                            <label className="col-sm-2 control-label">Categories</label>
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" {...category} value="JLY"
+                                      checked={category.value === 'JLY'}
+                                      /> Jewelry
+                                </label>
+                            </div>
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" {...category} value="WAT"
+                                      checked={category.value === 'WAT'}
+                                      /> Watch
+                                </label>
+                            </div>
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" {...category} value="STO"
+                                      checked={category.value === 'STO'}
+                                      /> Stone
+                                </label>
+                            </div>
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" {...category} value="ACC"
+                                      checked={category.value === 'ACC'}
+                                      /> Accessory
+                                </label>
+                            </div>
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" {...category} value="OBA"
+                                      checked={category.value === 'OBA'}
+                                      /> Object of Art
+                                </label>
+                            </div>
+                            <div className="radio">
+                                <label>
+                                    <input type="radio" {...category} value="SPP"
+                                      checked={category.value === 'SPP'}
+                                      /> Spare Parts
+                                </label>
+                            </div>
+                        </div>
+                        <div className="col-sm-4">
+                            <label className="col-sm-2 control-label">Product Hierarchy</label>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'JLY') ? '':'hidden'}`} >
+                              <Tree data={hierarchyDataJewelry} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                            </div>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'WAT') ? '':'hidden'}`}>
+                              <Tree data={hierarchyDataWatch} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                            </div>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'STO') ? '':'hidden'}`}>
+                              <Tree data={hierarchyDataStone} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                            </div>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'ACC') ? '':'hidden'}`}>
+                              <Tree data={hierarchyDataAccessory} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                            </div>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'OBA') ? '':'hidden'}`}>
+                              <Tree data={hierarchyDataOBA} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                            </div>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'SPP') ? '':'hidden'}`}>
+                              <Tree data={hierarchyDataSpare} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                            </div>
+                        </div>
                     </div>
                   </div>
                 </div>

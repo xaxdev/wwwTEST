@@ -24,7 +24,7 @@ class UserDetails extends Component {
   }
 
   handleSubmit(data){
-    // console.log('data-->',data);
+    console.log('handleSubmit data-->',data);
     let FLAG_ZERO = 0x0; // 000001
     let FLAG_JLY = 0x1; // 000001
     let FLAG_WAT = 0x2; // 000010
@@ -90,7 +90,8 @@ class UserDetails extends Component {
               id: data.permissionId,
               onhandLocation: onhandLocation,
               onhandWarehouse: onhandWarehouse,
-              price: data.price
+              price: data.price,
+              category:data.category
     }
     data = Object.assign({}, data, { permission:permission });
 

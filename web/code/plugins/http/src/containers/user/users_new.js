@@ -16,7 +16,7 @@ class UsersNew extends Component {
   }
 
   handleSubmit(data) {
-    // console.log('handleSubmit data-->',data);
+    console.log('handleSubmit data-->',data);
     var FLAG_ZERO = 0x0; // 000001
     var FLAG_JLY = 0x1; // 000001
     var FLAG_WAT = 0x2; // 000010

@@ -128,6 +128,7 @@ const setnewprops = (data) => {
 
   user = {...user,
     price: permission.price,
+    category: permission.category,
     productGroup: (permission.productGroup == 63)?1:2,
     productGroupSTO: productGroupSTO,
     productGroupJLY: productGroupJLY,

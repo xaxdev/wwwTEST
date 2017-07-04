@@ -28,6 +28,10 @@ module.exports = {
       enum: ['Public', 'Updated', 'All'],
       required: true
     },
+    category:{
+        type: 'string',
+        enum: ['JLY', 'WAT', 'STO', 'ACC', 'OBA', 'SPP']
+    },
     user: {
       model: 'user'
     },

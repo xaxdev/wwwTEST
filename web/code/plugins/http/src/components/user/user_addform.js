@@ -644,10 +644,11 @@ class UsersNewFrom extends Component {
 
   render() {
     const { fields: {
-              firstName,lastName,username,email,password,role,currency,status,company,location,warehouse
-              ,productGroup,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT
-              ,productGroupACC,productGroupOBA,productGroupSPA,onhandValue,webOnly,onhandLocation,onhandAll
-              ,permissionId,onhandWarehouse,onhandWarehouseValue,onhandLocationValue,productGroupErr,movement
+              firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,
+              productGroup,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT,
+              productGroupACC,productGroupOBA,productGroupSPA,onhandValue,webOnly,onhandLocation,onhandAll,
+              permissionId,onhandWarehouse,onhandWarehouseValue,onhandLocationValue,productGroupErr,movement,
+              category
           },handleSubmit,invalid,submitting } = this.props;
     // const datas = [{value:'One',selected:true},{value:'Two'},{value:'Three'},{value:'Four',label:'Four Label'}];
 
@@ -968,6 +969,57 @@ class UsersNewFrom extends Component {
                             </label>
                           </div>
                         </div>
+                        <div className="form-group">
+                            <label className="col-sm-2 control-label">Product Hierarchy</label>
+                            <div className="col-sm-4">
+                                <label className="col-sm-2 control-label">Categories</label>
+                                <div className="radio">
+                                    <label>
+                                        <input type="radio" {...category} value="JLY"
+                                          checked={category.value === 'JLY'}
+                                          /> Jewelry
+                                    </label>
+                                </div>
+                                <div className="radio">
+                                    <label>
+                                        <input type="radio" {...category} value="WAT"
+                                          checked={category.value === 'WAT'}
+                                          /> Watch
+                                    </label>
+                                </div>
+                                <div className="radio">
+                                    <label>
+                                        <input type="radio" {...category} value="STO"
+                                          checked={category.value === 'STO'}
+                                          /> Stone
+                                    </label>
+                                </div>
+                                <div className="radio">
+                                    <label>
+                                        <input type="radio" {...category} value="ACC"
+                                          checked={category.value === 'ACC'}
+                                          /> Accessory
+                                    </label>
+                                </div>
+                                <div className="radio">
+                                    <label>
+                                        <input type="radio" {...category} value="OBA"
+                                          checked={category.value === 'OBA'}
+                                          /> Object of Art
+                                    </label>
+                                </div>
+                                <div className="radio">
+                                    <label>
+                                        <input type="radio" {...category} value="SPP"
+                                          checked={category.value === 'SPP'}
+                                          /> Spare Parts
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="col-sm-4">
+                                <label className="col-sm-2 control-label">Product Hierarchy</label>
+                            </div>
+                        </div>
                       </div>
                       <div className="col-sm-12 text-right">
                           <button type="submit" className="btn btn-primary btn-radius" disabled={submitting}>
@@ -1007,6 +1059,6 @@ module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
           ,'productGroupACC','productGroupOBA','productGroupSPA','onhandValue','webOnly','permissionId'
           ,'onhandLocation','onhandAll','onhandWarehouse','onhandWarehouseValue','onhandLocationValue','productGroupErr'
-          ,'movement'],
+          ,'movement','category'],
   validate:validateUserAdd
 },mapStateToProps, mapDispatchToProps)(UsersNewFrom);
