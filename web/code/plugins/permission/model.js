@@ -29,11 +29,13 @@ module.exports = {
       required: true
     },
     category:{
-        type: 'string',
-        enum: ['JLY', 'WAT', 'STO', 'ACC', 'OBA', 'SPP']
+        type: 'integer'
     },
     user: {
       model: 'user'
+    },
+    notUseHierarchy:{
+        type: 'string'
     },
     toJSON: function () {
       var obj = this.toObject();

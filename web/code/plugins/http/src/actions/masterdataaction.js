@@ -2,7 +2,8 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
-import { FETCH_OPTIONS, SELECTED_COMPANY, SELECTED_WAREHOUSES, ROOT_URL, GED_ONHANDWAREHOUSES } from '../constants/masterDataConstants.js';
+import { FETCH_OPTIONS, SELECTED_COMPANY, SELECTED_WAREHOUSES, ROOT_URL,
+        GED_ONHANDWAREHOUSES, SET_HIERARCHY,SET_NOTUSEHIERARCHY } from '../constants/masterDataConstants.js';
 
 export function get(){
   // console.log('action get data-->',OPTIONS_DATA);
@@ -21,7 +22,18 @@ export function get(){
           })
   }
 }
-
+export function setNotUseHierarchy(value){
+  return {
+          type: SET_NOTUSEHIERARCHY,
+          notUseHierarchy:value
+  }
+}
+export function setHierarchy(value){
+  return {
+          type: SET_HIERARCHY,
+          hierarchy:value
+  }
+}
 export function getSite(compid){
   // console.log('compid-->',compid);
   const token = sessionStorage.token;

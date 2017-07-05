@@ -2174,3 +2174,7 @@ select.form-searchresult option{
 .lineThrough {
   text-decoration: line-through;
 }
+.disabledTreeView {
+    pointer-events: none;
+    opacity: 0.4;
+}

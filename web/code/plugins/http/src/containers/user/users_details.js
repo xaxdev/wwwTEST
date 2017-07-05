@@ -33,6 +33,14 @@ class UserDetails extends Component {
     let FLAG_OBA = 0x10; //010000
     let FLAG_SPA = 0x20; //100000
     let result = FLAG_ZERO;
+    let FLAG_CAT_ZERO = 0x0; // 000001
+    let FLAG_CAT_JLY = 0x1; // 000001
+    let FLAG_CAT_WAT = 0x2; // 000010
+    let FLAG_CAT_STO = 0x4; // 000100
+    let FLAG_CAT_ACC = 0x8; // 001000
+    let FLAG_CAT_OBA = 0x10; //010000
+    let FLAG_CAT_SPP = 0x20; //100000
+    let resultCAT = FLAG_ZERO;
     let permission = null;
     let onhandLocation = null;
     let onhandWarehouse = null;
@@ -65,6 +73,26 @@ class UserDetails extends Component {
       data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPA} };
     }
 
+    if(data.categoryJLY){
+      resultCAT = resultCAT|FLAG_CAT_JLY;
+    }
+    if(data.categoryWAT){
+      resultCAT = resultCAT|FLAG_CAT_WAT;
+    }
+    if(data.categorySTO){
+      resultCAT = resultCAT|FLAG_CAT_STO;
+    }
+    if(data.categoryACC){
+      resultCAT = resultCAT|FLAG_CAT_ACC;
+    }
+    if(data.categoryOBA){
+      resultCAT = resultCAT|FLAG_CAT_OBA;
+    }
+    if(data.categorySPP){
+      resultCAT = resultCAT|FLAG_CAT_SPP;
+    }
+    data = { ...data, permission:{category:resultCAT}};
+
     onhandLocation = {
         type: 'Location',
         places: (!data.onhandLocationValue) ? [] : data.onhandLocationValue
@@ -91,7 +119,7 @@ class UserDetails extends Component {
               onhandLocation: onhandLocation,
               onhandWarehouse: onhandWarehouse,
               price: data.price,
-              category:data.category
+              notUseHierarchy:JSON.stringify(data.notUseHierarchy)
     }
     data = Object.assign({}, data, { permission:permission });
 
@@ -109,13 +137,20 @@ class UserDetails extends Component {
     delete data.onhandAll;
     delete data.onhandLocation;
     delete data.onhandWarehouse;
+    delete data.categoryACC;
+    delete data.categoryJLY;
+    delete data.categoryOBA;
+    delete data.categorySPP;
+    delete data.categorySTO;
+    delete data.categoryWAT;
+    delete data.notUseHierarchy;
 
     if(!data.password){
       delete data.password;
     }
     delete data.permissionId;
 
-    // console.log('permission-->',data);
+    console.log('permission-->',data);
     this.props.updateUser(data)
         .then(() => {
           // user has been created, navigate the user to the index

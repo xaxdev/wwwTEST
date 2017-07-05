@@ -8,7 +8,7 @@ import validateUserEdit from '../../utils/validateuseredit.js';
 import * as masterDataActions from '../../actions/masterdataaction';
 import GenPassword from '../../utils/genPassword';
 import MultipleCheckBoxs from '../../utils/multipleCheckBoxs';
-import Tree from '../../utils/treeview/Tree';
+import Tree from '../../utils/treeview/TreeLine';
 import TreeDataJewelry from '../../utils/treeview/jewelry.json';
 import TreeDataWatch from '../../utils/treeview/watch.json';
 import TreeDataStone from '../../utils/treeview/stone.json';
@@ -21,7 +21,8 @@ let _ = require('lodash');
 export const fields = ['id','firstName','lastName','username','email','password','role','currency','status','company',
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
           ,'productGroupACC','productGroupOBA','productGroupSPA','onhandLocationValue','webOnly','permissionId','onhandLocation'
-          ,'onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr','movement','category'];
+          ,'onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr','movement','categoryJLY'
+          ,'categoryWAT','categorySTO','categoryACC','categoryOBA','categorySPP','notUseHierarchy'];
 export let countFirst = 0;
 
 class UserDetailsFrom extends Component {
@@ -39,7 +40,8 @@ class UserDetailsFrom extends Component {
     this.selectedOnHandAll = this.selectedOnHandAll.bind(this);
     this.changedOnHandLocationChecked = this.changedOnHandLocationChecked.bind(this);
     this.changedOnHandWarehouseChecked = this.changedOnHandWarehouseChecked.bind(this);
-
+    this.treeOnClick = this.treeOnClick.bind(this);
+    this.treeOnUnClick = this.treeOnUnClick.bind(this);
     // console.log('constructor-->',this.props.user);
     this.state = {
       hideProductGroups: (this.props.user.productGroup == 2) ? false: true,
@@ -653,7 +655,100 @@ class UserDetailsFrom extends Component {
         }
       }
     }
+  }
 
+  treeOnUnClick(vals){
+      const { fields: { notUseHierarchy }, NotUseHierarchy } = this.props;
+      console.log(NotUseHierarchy);
+    //   if( this.state.treeViewData != null){
+    //       this.state.treeViewData[0].checked = false;
+    //       this.state.treeViewData[0].key = this.state.treeViewData[0].code;
+    //       this.refs.treeview.handleChange(this.state.treeViewData[0]);
+    //       this.props.props.inventoryActions.setHierarchy(this.state.treeViewData)
+    //   }else{
+    //       if(this.props.props.HierarchyValue != null){
+    //           if(this.props.props.SearchAction == 'New'){
+    //               if(this.props.props.HierarchyValue.length != 0){
+    //                   this.props.props.HierarchyValue[0].checked = false;
+    //                   this.props.props.HierarchyValue[0].key = this.props.props.HierarchyValue[0].code;
+    //                   this.refs.treeview.handleChange(this.props.props.HierarchyValue[0]);
+    //               }
+    //               this.props.props.inventoryActions.setHierarchy(null);
+    //           }
+    //       }
+    //   }
+  }
+
+  treeOnClick(vals){
+    // this.setState({treeViewData:vals});
+    this.props.optionsActions.setHierarchy(vals);
+    // console.log('vals-->',vals);
+    let hiJLY = false;
+    let hiWAT = false;
+    let hiSTO = false;
+    let hiACC = false;
+    let hiOBA = false;
+    let hiSPP = false;
+    let objHeirarchy = {};
+    let treeSelected = [];
+    let selectedData = vals.filter(val => {
+        let checkAllNodes = function(node){
+            switch (node.code.split('\\\\\\\\')[2]) {
+                case 'Spare':
+                    hiSPP = true;
+                    break;
+                case 'OBA':
+                    hiOBA = true;
+                    break;
+                case 'Accessories':
+                    hiACC = true;
+                    break;
+                case 'Stone':
+                    hiSTO = true;
+                    break;
+                case 'Watch':
+                    hiWAT = true;
+                    break;
+                case 'Jewelry':
+                    hiJLY = true;
+                    break;
+                default:
+
+            }
+            if (node.children) {
+                if(node.checked === true){treeSelected.push(node);}
+                node.children.forEach(checkAllNodes);
+            }else{
+                if(node.checked === true){treeSelected.push(node);}
+            }
+        }
+        if(val.checked === true){treeSelected.push(val);}
+
+        if(val.children){
+            val.children.forEach(checkAllNodes);
+        }
+        return treeSelected;
+    });
+
+    let { fields: { notUseHierarchy }, NotUseHierarchy } = this.props;
+
+    if (hiJLY) {
+        objHeirarchy = {...NotUseHierarchy, JLY: treeSelected}
+    }else if (hiWAT) {
+        objHeirarchy = {...NotUseHierarchy, WAT: treeSelected}
+    }else if (hiSTO) {
+        objHeirarchy = {...NotUseHierarchy, STO: treeSelected}
+    }else if (hiACC) {
+        objHeirarchy = {...NotUseHierarchy, ACC: treeSelected}
+    }else if (hiOBA) {
+        objHeirarchy = {...NotUseHierarchy, OBA: treeSelected}
+    }else if (hiSPP) {
+        objHeirarchy = {...NotUseHierarchy, SPP: treeSelected}
+    }
+    console.log('objHeirarchy-->',objHeirarchy);
+    this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+    notUseHierarchy.onChange(objHeirarchy);
   }
 
   render() {
@@ -662,15 +757,17 @@ class UserDetailsFrom extends Component {
               id,firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,
               productGroup,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT,onhandLocation,onhandAll,
               productGroupACC,productGroupOBA,productGroupSPA,onhandLocationValue,webOnly,permissionId,onhandWarehouse,
-              onhandWarehouseValue,productGroupErr,movement,category
-          },handleSubmit,submitting } = this.props;
+              onhandWarehouseValue,productGroupErr,movement,categoryJLY,categoryWAT,categorySTO,categoryACC,
+              categoryOBA,categorySPP,notUseHierarchy
+          },handleSubmit,submitting,NotUseHierarchy } = this.props;
     let dataDropDowntLocations = [];
     let dataDropDowntWareHouse = [];
     let that = this;
 
-    // console.log('onhandLocationValue-->',onhandLocationValue.value);
+    console.log(NotUseHierarchy);
 
     const userLogin = JSON.parse(sessionStorage.logindata);
+    console.log(userLogin);
 
     if (typeof (this.props.options) !== 'undefined') {
       if (this.state.changedOnHandLocation) {
@@ -1061,67 +1158,93 @@ class UserDetailsFrom extends Component {
                         <label className="col-sm-2 control-label">Product Hierarchy</label>
                         <div className="col-sm-4">
                             <label className="col-sm-2 control-label">Categories</label>
-                            <div className="radio">
+                        </div>
+                        <div className="col-sm-4">
+                            <label className="col-sm-2 control-label">Product Hierarchy</label>
+
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label"> </label>
+                        <div className="col-sm-4">
+                            <div className={`radio ${productGroupJLY.value?'':'hidden'}`}>
                                 <label>
-                                    <input type="radio" {...category} value="JLY"
-                                      checked={category.value === 'JLY'}
+                                    <input type="checkbox" value="JLY"
+                                      checked={categoryJLY.value === 'JLY'}
+                                      {...categoryJLY}
                                       /> Jewelry
                                 </label>
                             </div>
-                            <div className="radio">
+                            <div className={`radio ${productGroupWAT.value?'':'hidden'}`}>
                                 <label>
-                                    <input type="radio" {...category} value="WAT"
-                                      checked={category.value === 'WAT'}
+                                    <input type="checkbox" value="WAT"
+                                      checked={categoryWAT.value === 'WAT'}
+                                      {...categoryWAT}
                                       /> Watch
                                 </label>
                             </div>
-                            <div className="radio">
+                            <div className={`radio ${productGroupSTO.value?'':'hidden'}`}>
                                 <label>
-                                    <input type="radio" {...category} value="STO"
-                                      checked={category.value === 'STO'}
+                                    <input type="checkbox" value="STO"
+                                      checked={categorySTO.value === 'STO'}
+                                      {...categorySTO}
                                       /> Stone
                                 </label>
                             </div>
-                            <div className="radio">
+                            <div className={`radio ${productGroupACC.value?'':'hidden'}`}>
                                 <label>
-                                    <input type="radio" {...category} value="ACC"
-                                      checked={category.value === 'ACC'}
+                                    <input type="checkbox" value="ACC"
+                                      checked={categoryACC.value === 'ACC'}
+                                      {...categoryACC}
                                       /> Accessory
                                 </label>
                             </div>
-                            <div className="radio">
+                            <div className={`radio ${productGroupOBA.value?'':'hidden'}`}>
                                 <label>
-                                    <input type="radio" {...category} value="OBA"
-                                      checked={category.value === 'OBA'}
+                                    <input type="checkbox" value="OBA"
+                                      checked={categoryOBA.value === 'OBA'}
+                                      {...categoryOBA}
                                       /> Object of Art
                                 </label>
                             </div>
-                            <div className="radio">
+                            <div className={`radio ${productGroupSPA.value?'':'hidden'}`}>
                                 <label>
-                                    <input type="radio" {...category} value="SPP"
-                                      checked={category.value === 'SPP'}
+                                    <input type="checkbox" value="SPP"
+                                      checked={categorySPP.value === 'SPP'}
+                                      {...categorySPP}
                                       /> Spare Parts
                                 </label>
                             </div>
                         </div>
                         <div className="col-sm-4">
-                            <label className="col-sm-2 control-label">Product Hierarchy</label>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'JLY') ? '':'hidden'}`} >
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categoryJLY.value) ? '':'disabledTreeView'}
+                                            ${(productGroupJLY.value) ? '':'hidden'}`} >
                               <Tree data={hierarchyDataJewelry} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                             </div>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'WAT') ? '':'hidden'}`}>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categoryWAT.value) ? '':'disabledTreeView'}
+                                            ${(productGroupWAT.value) ? '':'hidden'}`}>
                               <Tree data={hierarchyDataWatch} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                             </div>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'STO') ? '':'hidden'}`}>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categorySTO.value) ? '':'disabledTreeView'}
+                                            ${(productGroupSTO.value) ? '':'hidden'}`}>
                               <Tree data={hierarchyDataStone} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                             </div>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'ACC') ? '':'hidden'}`}>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categoryACC.value) ? '':'disabledTreeView'}
+                                            ${(productGroupACC.value) ? '':'hidden'}`}>
                               <Tree data={hierarchyDataAccessory} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                             </div>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'OBA') ? '':'hidden'}`}>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categoryOBA.value) ? '':'disabledTreeView'}
+                                            ${(productGroupOBA.value) ? '':'hidden'}`}>
                               <Tree data={hierarchyDataOBA} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                             </div>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box ${(category.value === 'SPP') ? '':'hidden'}`}>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categorySPP.value) ? '':'disabledTreeView'}
+                                            ${(productGroupSPA.value) ? '':'hidden'}`}>
                               <Tree data={hierarchyDataSpare} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                             </div>
                         </div>
@@ -1144,12 +1267,13 @@ class UserDetailsFrom extends Component {
 function mapStateToProps(state){
     // console.log('UsersUpdateForm state -->',state);
     return {
-           initialValues: state.users.user,
-           options: state.users.options,
-           locationOnHand: state.users.locationOnHand,
-           warehouseOnHand: state.users.warehouseOnHand,
-           selectedCompany:state.users.selectedCompany,
-           selectedWarehouses:state.users.selectedWarehouses
+               initialValues: state.users.user,
+               options: state.users.options,
+               locationOnHand: state.users.locationOnHand,
+               warehouseOnHand: state.users.warehouseOnHand,
+               selectedCompany:state.users.selectedCompany,
+               selectedWarehouses:state.users.selectedWarehouses,
+               NotUseHierarchy:state.users.notUseHierarchy
            }
 }
 
