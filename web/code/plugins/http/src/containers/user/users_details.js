@@ -24,7 +24,7 @@ class UserDetails extends Component {
   }
 
   handleSubmit(data){
-    console.log('handleSubmit data-->',data);
+    // console.log('handleSubmit data-->',data);
     let FLAG_ZERO = 0x0; // 000001
     let FLAG_JLY = 0x1; // 000001
     let FLAG_WAT = 0x2; // 000010
@@ -150,12 +150,13 @@ class UserDetails extends Component {
     }
     delete data.permissionId;
 
-    console.log('permission-->',data);
+    // console.log('permission-->',data);
     this.props.updateUser(data)
         .then(() => {
           // user has been created, navigate the user to the index
           // We navigate by calling this.context.router.push with the
           // new path to navigate to.
+          this.props.setNotUseHierarchy(null);
           this.context.router.push('/users');
         });
   }

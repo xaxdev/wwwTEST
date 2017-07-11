@@ -71,13 +71,13 @@ var Tree = React.createClass({
 						? evt.target.checked
 						: (evt.checked != undefined)
 							? evt.checked
-							: evt[0].checked;
+							: evt[0] != undefined ? evt[0].checked: false;
 	    key = (evt != undefined)
 					? (evt.target != undefined)
 						? evt.target.getAttribute('data-key')
 						: (evt.key != undefined)
 							? evt.key
-							: evt[0].code
+							: evt[0] != undefined ? evt[0].code : ''
 					: '';
 
 		this.state.data.forEach(traverseNodes);

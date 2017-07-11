@@ -15,8 +15,16 @@ import TreeDataStone from '../../utils/treeview/stone.json';
 import TreeDataAccessory from '../../utils/treeview/accessory.json';
 import TreeDataOBA from '../../utils/treeview/oba.json';
 import TreeDataSpare from '../../utils/treeview/spare.json';
+import ClearHierarchy from './utils/clear_hierarchy';
+import SelectedHierarchy from './utils/selected_hierarchy';
 
 let _ = require('lodash');
+let hierarchyDataJewelry = [];
+let hierarchyDataWatch = [];
+let hierarchyDataStone = [];
+let hierarchyDataAccessory = [];
+let hierarchyDataOBA = [];
+let hierarchyDataSpare = [];
 
 export const fields = ['id','firstName','lastName','username','email','password','role','currency','status','company',
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
@@ -40,9 +48,28 @@ class UserDetailsFrom extends Component {
     this.selectedOnHandAll = this.selectedOnHandAll.bind(this);
     this.changedOnHandLocationChecked = this.changedOnHandLocationChecked.bind(this);
     this.changedOnHandWarehouseChecked = this.changedOnHandWarehouseChecked.bind(this);
-    this.treeOnClick = this.treeOnClick.bind(this);
+    this.treeOnClickJLY = this.treeOnClickJLY.bind(this);
+    this.treeOnClickWAT = this.treeOnClickWAT.bind(this);
+    this.treeOnClickSTO = this.treeOnClickSTO.bind(this);
+    this.treeOnClickACC = this.treeOnClickACC.bind(this);
+    this.treeOnClickOBA = this.treeOnClickOBA.bind(this);
+    this.treeOnClickSPP = this.treeOnClickSPP.bind(this);
     this.treeOnUnClick = this.treeOnUnClick.bind(this);
-    // console.log('constructor-->',this.props.user);
+
+    hierarchyDataJewelry.push(TreeDataJewelry);
+    hierarchyDataWatch.push(TreeDataWatch);
+    hierarchyDataStone.push(TreeDataStone);
+    hierarchyDataAccessory.push(TreeDataAccessory);
+    hierarchyDataOBA.push(TreeDataOBA);
+    hierarchyDataSpare.push(TreeDataSpare);
+    ClearHierarchy(hierarchyDataJewelry);
+    ClearHierarchy(hierarchyDataWatch);
+    ClearHierarchy(hierarchyDataStone);
+    ClearHierarchy(hierarchyDataAccessory);
+    ClearHierarchy(hierarchyDataOBA);
+    ClearHierarchy(hierarchyDataSpare);
+
+    // console.log('constructor-->',this.props.user.permission.notUseHierarchy);
     this.state = {
       hideProductGroups: (this.props.user.productGroup == 2) ? false: true,
       productGroupDatas:[],
@@ -55,7 +82,8 @@ class UserDetailsFrom extends Component {
       changedOnHandLocation: false,
       clickAllLocarion: (this.props.user.onhandLocationValue != null)?(this.props.user.onhandLocationValue.length != 0) ? false : true:false,
       clickAllWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false,
-      firstloading: true
+      firstloading: true,
+      userNotUseHierarchy: JSON.parse(this.props.user.permission.notUseHierarchy)
     };
   }
   componentWillMount(){
@@ -63,16 +91,21 @@ class UserDetailsFrom extends Component {
   }
 
   componentDidMount(){
-    // console.log('componentDidMount type-->',this.props.user.permission.onhandLocation.type);
+    // console.log('componentDidMount type-->',this.props.user.permission.notUseHierarchy);
     this.setState(
       {
         selectedOnHandWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false,
         selectedOnHandLocation: (this.props.user.permission.onhandLocation != undefined)?(this.props.user.permission.onhandLocation.type.indexOf('All') == -1) ? false : true : false,
       }
     );
+    // console.log('componentDidMount-->',this.props.user.permission.notUseHierarchy);
+    this.props.optionsActions.setHierarchy(JSON.parse(this.props.user.permission.notUseHierarchy));
+    this.props.optionsActions.setNotUseHierarchy(JSON.parse(this.props.user.permission.notUseHierarchy));
 
   }
   componentWillReceiveProps = (nextProps)=>{
+      const { props } = this;
+
     //   console.log('componentWillReceiveProps-->',nextProps);
       const { fields: {
                           onhandLocationValue, onhandWarehouseValue
@@ -94,6 +127,37 @@ class UserDetailsFrom extends Component {
               this.setState({chkWarehouse: onhandWarehouseValue.value});
           }
       }
+    //   console.log('componentWillReceiveProps-->',props.HierarchyValue);
+      if(props.HierarchyValue != null){
+          if(props.HierarchyValue.length != 0){
+              if(props.HierarchyValue.JLY != undefined){
+                  this.refs.treeviewJLY.handleChange(props.HierarchyValue.JLY);
+              }
+              if(props.HierarchyValue.WAT != undefined){
+                  this.refs.treeviewWAT.handleChange(props.HierarchyValue.WAT);
+              }
+              if(props.HierarchyValue.STO != undefined){
+                  this.refs.treeviewSTO.handleChange(props.HierarchyValue.STO);
+              }
+              if(props.HierarchyValue.ACC != undefined){
+                  this.refs.treeviewACC.handleChange(props.HierarchyValue.ACC);
+              }
+              if(props.HierarchyValue.OBA != undefined){
+                  this.refs.treeviewOBA.handleChange(props.HierarchyValue.OBA);
+              }
+              if(props.HierarchyValue.SPP != undefined){
+                  this.refs.treeviewSPP.handleChange(props.HierarchyValue.SPP);
+              }
+          }
+      }else{
+          this.refs.treeviewJLY.handleChange([]);
+          this.refs.treeviewWAT.handleChange([]);
+          this.refs.treeviewSTO.handleChange([]);
+          this.refs.treeviewACC.handleChange([]);
+          this.refs.treeviewOBA.handleChange([]);
+          this.refs.treeviewSPP.handleChange([]);
+      }
+
   }
 
   changedOnHandWarehouseChecked = e => {
@@ -658,97 +722,65 @@ class UserDetailsFrom extends Component {
   }
 
   treeOnUnClick(vals){
-      const { fields: { notUseHierarchy }, NotUseHierarchy } = this.props;
-      console.log(NotUseHierarchy);
-    //   if( this.state.treeViewData != null){
-    //       this.state.treeViewData[0].checked = false;
-    //       this.state.treeViewData[0].key = this.state.treeViewData[0].code;
-    //       this.refs.treeview.handleChange(this.state.treeViewData[0]);
-    //       this.props.props.inventoryActions.setHierarchy(this.state.treeViewData)
-    //   }else{
-    //       if(this.props.props.HierarchyValue != null){
-    //           if(this.props.props.SearchAction == 'New'){
-    //               if(this.props.props.HierarchyValue.length != 0){
-    //                   this.props.props.HierarchyValue[0].checked = false;
-    //                   this.props.props.HierarchyValue[0].key = this.props.props.HierarchyValue[0].code;
-    //                   this.refs.treeview.handleChange(this.props.props.HierarchyValue[0]);
-    //               }
-    //               this.props.props.inventoryActions.setHierarchy(null);
-    //           }
-    //       }
-    //   }
+
+  }
+  treeOnClickSPP(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'SPP');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
   }
 
-  treeOnClick(vals){
-    // this.setState({treeViewData:vals});
-    this.props.optionsActions.setHierarchy(vals);
-    // console.log('vals-->',vals);
-    let hiJLY = false;
-    let hiWAT = false;
-    let hiSTO = false;
-    let hiACC = false;
-    let hiOBA = false;
-    let hiSPP = false;
-    let objHeirarchy = {};
-    let treeSelected = [];
-    let selectedData = vals.filter(val => {
-        let checkAllNodes = function(node){
-            switch (node.code.split('\\\\\\\\')[2]) {
-                case 'Spare':
-                    hiSPP = true;
-                    break;
-                case 'OBA':
-                    hiOBA = true;
-                    break;
-                case 'Accessories':
-                    hiACC = true;
-                    break;
-                case 'Stone':
-                    hiSTO = true;
-                    break;
-                case 'Watch':
-                    hiWAT = true;
-                    break;
-                case 'Jewelry':
-                    hiJLY = true;
-                    break;
-                default:
+  treeOnClickOBA(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'OBA');
 
-            }
-            if (node.children) {
-                if(node.checked === true){treeSelected.push(node);}
-                node.children.forEach(checkAllNodes);
-            }else{
-                if(node.checked === true){treeSelected.push(node);}
-            }
-        }
-        if(val.checked === true){treeSelected.push(val);}
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
 
-        if(val.children){
-            val.children.forEach(checkAllNodes);
-        }
-        return treeSelected;
-    });
+      notUseHierarchy.onChange(objHeirarchy);
+  }
 
-    let { fields: { notUseHierarchy }, NotUseHierarchy } = this.props;
+  treeOnClickACC(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'ACC');
 
-    if (hiJLY) {
-        objHeirarchy = {...NotUseHierarchy, JLY: treeSelected}
-    }else if (hiWAT) {
-        objHeirarchy = {...NotUseHierarchy, WAT: treeSelected}
-    }else if (hiSTO) {
-        objHeirarchy = {...NotUseHierarchy, STO: treeSelected}
-    }else if (hiACC) {
-        objHeirarchy = {...NotUseHierarchy, ACC: treeSelected}
-    }else if (hiOBA) {
-        objHeirarchy = {...NotUseHierarchy, OBA: treeSelected}
-    }else if (hiSPP) {
-        objHeirarchy = {...NotUseHierarchy, SPP: treeSelected}
-    }
-    console.log('objHeirarchy-->',objHeirarchy);
-    this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
 
-    notUseHierarchy.onChange(objHeirarchy);
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+  treeOnClickSTO(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'STO');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+
+  treeOnClickWAT(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'WAT');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+
+  treeOnClickJLY(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'JLY');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
   }
 
   render() {
@@ -759,16 +791,13 @@ class UserDetailsFrom extends Component {
               productGroupACC,productGroupOBA,productGroupSPA,onhandLocationValue,webOnly,permissionId,onhandWarehouse,
               onhandWarehouseValue,productGroupErr,movement,categoryJLY,categoryWAT,categorySTO,categoryACC,
               categoryOBA,categorySPP,notUseHierarchy
-          },handleSubmit,submitting,NotUseHierarchy } = this.props;
+          },handleSubmit,submitting, CanNotUseHierarchy } = this.props;
     let dataDropDowntLocations = [];
     let dataDropDowntWareHouse = [];
     let that = this;
 
-    console.log(NotUseHierarchy);
-
     const userLogin = JSON.parse(sessionStorage.logindata);
-    console.log(userLogin);
-
+    // console.log(userLogin);
     if (typeof (this.props.options) !== 'undefined') {
       if (this.state.changedOnHandLocation) {
           if (typeof (this.props.warehouseOnHand) !== 'undefined')  {
@@ -863,22 +892,7 @@ class UserDetailsFrom extends Component {
           )
           dataDropDowntLocations = dataDropDowntLocations[0];
           }
-
     }
-
-    let hierarchyDataJewelry = [];
-    let hierarchyDataWatch = [];
-    let hierarchyDataStone = [];
-    let hierarchyDataAccessory = [];
-    let hierarchyDataOBA = [];
-    let hierarchyDataSpare = [];
-
-    hierarchyDataJewelry.push(TreeDataJewelry);
-    hierarchyDataWatch.push(TreeDataWatch);
-    hierarchyDataStone.push(TreeDataStone);
-    hierarchyDataAccessory.push(TreeDataAccessory);
-    hierarchyDataOBA.push(TreeDataOBA);
-    hierarchyDataSpare.push(TreeDataSpare);
 
     return (
       <form onSubmit={handleSubmit}>
@@ -1106,20 +1120,7 @@ class UserDetailsFrom extends Component {
                               <MultipleCheckBoxs datas={dataDropDowntLocations} name={'checkbox-allCompany'}
                                 checkedAll={this.state.selectedOnHandLocation} chekedValue={this.state.chkLocation}
                                 onChange={this.changedOnHandLocationChecked} onhandLocationValue={onhandLocationValue.value}/>
-                            {/*<select multiple
-                              {...onhandLocationValue}
-                              maxHeight={200} multiple
-                              disabled={`${this.state.selectedOnHandLocation ? 'disabled' : ''}`}
-                              onChange={this.changedOnHandLocation}
-                              ref="selectMultiLocation">
-                              {
-                                  dataDropDowntLocations.map(value =>
-                                      <option key={value.value} value={value.value}>{value.value + ' [' + value.name + ']'}</option>
-                                  )
-                              }
-                            </select>*/}
                           </div>
-
                       </div>
                       <div className="col-sm-4">
                           <input type="checkbox" value="Warehouse" {...onhandWarehouse}
@@ -1131,17 +1132,7 @@ class UserDetailsFrom extends Component {
                               <MultipleCheckBoxs datas={dataDropDowntWareHouse} name={'checkbox-allWarehouse'}
                                 checkedAll={this.state.selectedOnHandWarehouse} chekedValue={this.state.chkWarehouse}
                                 onChange={this.changedOnHandWarehouseChecked} onhandWarehouseValue={onhandWarehouseValue.value}/>
-                            {/*<select multiple
-                              {...onhandWarehouseValue}
-                              maxHeight={200} multiple
-                              ref="selectMultiWarehouse"
-                              disabled={`${this.state.selectedOnHandWarehouse ? 'disabled' : ''}`}>
-                              {
-                                dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.value + ' [' + value.name + ']'}</option>)
-                              }
-                            </select>*/}
                           </div>
-
                       </div>
                       <div className="col-sm-2 hidden">
                         <label>
@@ -1161,7 +1152,6 @@ class UserDetailsFrom extends Component {
                         </div>
                         <div className="col-sm-4">
                             <label className="col-sm-2 control-label">Product Hierarchy</label>
-
                         </div>
                     </div>
                     <div className="form-group">
@@ -1220,32 +1210,32 @@ class UserDetailsFrom extends Component {
                             <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
                                             ${(categoryJLY.value) ? '':'disabledTreeView'}
                                             ${(productGroupJLY.value) ? '':'hidden'}`} >
-                              <Tree data={hierarchyDataJewelry} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                              <Tree data={hierarchyDataJewelry} onClick={this.treeOnClickJLY} onUnClick={this.treeOnUnClick} ref="treeviewJLY"/>
                             </div>
                             <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
                                             ${(categoryWAT.value) ? '':'disabledTreeView'}
                                             ${(productGroupWAT.value) ? '':'hidden'}`}>
-                              <Tree data={hierarchyDataWatch} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                              <Tree data={hierarchyDataWatch} onClick={this.treeOnClickWAT} onUnClick={this.treeOnUnClick} ref="treeviewWAT"/>
                             </div>
                             <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
                                             ${(categorySTO.value) ? '':'disabledTreeView'}
                                             ${(productGroupSTO.value) ? '':'hidden'}`}>
-                              <Tree data={hierarchyDataStone} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                              <Tree data={hierarchyDataStone} onClick={this.treeOnClickSTO} onUnClick={this.treeOnUnClick} ref="treeviewSTO"/>
                             </div>
                             <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
                                             ${(categoryACC.value) ? '':'disabledTreeView'}
                                             ${(productGroupACC.value) ? '':'hidden'}`}>
-                              <Tree data={hierarchyDataAccessory} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                              <Tree data={hierarchyDataAccessory} onClick={this.treeOnClickACC} onUnClick={this.treeOnUnClick} ref="treeviewACC"/>
                             </div>
                             <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
                                             ${(categoryOBA.value) ? '':'disabledTreeView'}
                                             ${(productGroupOBA.value) ? '':'hidden'}`}>
-                              <Tree data={hierarchyDataOBA} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                              <Tree data={hierarchyDataOBA} onClick={this.treeOnClickOBA} onUnClick={this.treeOnUnClick} ref="treeviewOBA"/>
                             </div>
                             <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
                                             ${(categorySPP.value) ? '':'disabledTreeView'}
                                             ${(productGroupSPA.value) ? '':'hidden'}`}>
-                              <Tree data={hierarchyDataSpare} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
+                              <Tree data={hierarchyDataSpare} onClick={this.treeOnClickSPP} onUnClick={this.treeOnUnClick} ref="treeviewSPP"/>
                             </div>
                         </div>
                     </div>
@@ -1265,7 +1255,7 @@ class UserDetailsFrom extends Component {
 }
 
 function mapStateToProps(state){
-    // console.log('UsersUpdateForm state -->',state);
+    // console.log('UsersUpdateForm state -->',state.users.canNotUseHierarchy);
     return {
                initialValues: state.users.user,
                options: state.users.options,
@@ -1273,7 +1263,8 @@ function mapStateToProps(state){
                warehouseOnHand: state.users.warehouseOnHand,
                selectedCompany:state.users.selectedCompany,
                selectedWarehouses:state.users.selectedWarehouses,
-               NotUseHierarchy:state.users.notUseHierarchy
+               HierarchyValue: state.searchResult.HierarchyValue,
+               CanNotUseHierarchy: state.users.canNotUseHierarchy
            }
 }
 

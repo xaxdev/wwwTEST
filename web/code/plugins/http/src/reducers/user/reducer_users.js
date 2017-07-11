@@ -1,12 +1,13 @@
 const INITIAL_STATE = { datas:[], user: null, options:[], errors: null, statuscode: null, selectedCompany:null
   , selectedWarehouses:null, statusCode:null, message:null,locationOnHand:[],warehouseOnHand:[]
-  ,onhandLocationSelected:null,ShareEmailToValue:[],notUseHierarchy:null};
+  ,onhandLocationSelected:null,ShareEmailToValue:[],canNotUseHierarchy:null};
 
 export default function(state = INITIAL_STATE, action){
 
  switch(action.type){
      case 'SET_NOTUSEHIERARCHY':
-         return {...state,  notUseHierarchy: action.notUseHierarchy};
+        // console.log(action);
+         return {...state,  canNotUseHierarchy: action.notUseHierarchy};
          break;
      case 'FETCH_SHAREUSERS':
        return { ...state, datas: action.data.data};
