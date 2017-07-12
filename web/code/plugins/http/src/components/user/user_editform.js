@@ -8,13 +8,32 @@ import validateUserEdit from '../../utils/validateuseredit.js';
 import * as masterDataActions from '../../actions/masterdataaction';
 import GenPassword from '../../utils/genPassword';
 import MultipleCheckBoxs from '../../utils/multipleCheckBoxs';
+import Tree from '../../utils/treeview/TreeLine';
+import TreeDataJewelry from '../../utils/treeview/jewelry.json';
+import TreeDataWatch from '../../utils/treeview/watch.json';
+import TreeDataStone from '../../utils/treeview/stone.json';
+import TreeDataAccessory from '../../utils/treeview/accessory.json';
+import TreeDataOBA from '../../utils/treeview/oba.json';
+import TreeDataSpare from '../../utils/treeview/spare.json';
+import ClearHierarchy from './utils/clear_hierarchy';
+import SelectedHierarchy from './utils/selected_hierarchy';
+import FindLocationWareHouse from './utils/find_location_warehouse_edit';
+import SetCategoryHierarchy from './utils/set_category_hierarchy_edit';
+import SetProductGroup from './utils/set_productgroup';
 
 let _ = require('lodash');
+let hierarchyDataJewelry = [];
+let hierarchyDataWatch = [];
+let hierarchyDataStone = [];
+let hierarchyDataAccessory = [];
+let hierarchyDataOBA = [];
+let hierarchyDataSpare = [];
 
 export const fields = ['id','firstName','lastName','username','email','password','role','currency','status','company',
           'location','warehouse','productGroup','onhand','price','productGroupSTO','productGroupJLY','productGroupWAT'
           ,'productGroupACC','productGroupOBA','productGroupSPA','onhandLocationValue','webOnly','permissionId','onhandLocation'
-          ,'onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr','movement'];
+          ,'onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr','movement','categoryJLY'
+          ,'categoryWAT','categorySTO','categoryACC','categoryOBA','categorySPP','notUseHierarchy'];
 export let countFirst = 0;
 
 class UserDetailsFrom extends Component {
@@ -32,10 +51,33 @@ class UserDetailsFrom extends Component {
     this.selectedOnHandAll = this.selectedOnHandAll.bind(this);
     this.changedOnHandLocationChecked = this.changedOnHandLocationChecked.bind(this);
     this.changedOnHandWarehouseChecked = this.changedOnHandWarehouseChecked.bind(this);
+    this.treeOnClickJLY = this.treeOnClickJLY.bind(this);
+    this.treeOnClickWAT = this.treeOnClickWAT.bind(this);
+    this.treeOnClickSTO = this.treeOnClickSTO.bind(this);
+    this.treeOnClickACC = this.treeOnClickACC.bind(this);
+    this.treeOnClickOBA = this.treeOnClickOBA.bind(this);
+    this.treeOnClickSPP = this.treeOnClickSPP.bind(this);
+    this.treeOnUnClick = this.treeOnUnClick.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputCategoryChange = this.handleInputCategoryChange.bind(this);
 
-    // console.log('constructor-->',this.props.user);
+    hierarchyDataJewelry.push(TreeDataJewelry);
+    hierarchyDataWatch.push(TreeDataWatch);
+    hierarchyDataStone.push(TreeDataStone);
+    hierarchyDataAccessory.push(TreeDataAccessory);
+    hierarchyDataOBA.push(TreeDataOBA);
+    hierarchyDataSpare.push(TreeDataSpare);
+    ClearHierarchy(hierarchyDataJewelry);
+    ClearHierarchy(hierarchyDataWatch);
+    ClearHierarchy(hierarchyDataStone);
+    ClearHierarchy(hierarchyDataAccessory);
+    ClearHierarchy(hierarchyDataOBA);
+    ClearHierarchy(hierarchyDataSpare);
+
+    // console.log('constructor-->',this.props.user.permission.notUseHierarchy);
     this.state = {
       hideProductGroups: (this.props.user.productGroup == 2) ? false: true,
+      hidecategory: (this.props.user.productGroup != 0) ? false: true,
       productGroupDatas:[],
       selectedCompany: false,
       selectedSite: false,
@@ -46,7 +88,9 @@ class UserDetailsFrom extends Component {
       changedOnHandLocation: false,
       clickAllLocarion: (this.props.user.onhandLocationValue != null)?(this.props.user.onhandLocationValue.length != 0) ? false : true:false,
       clickAllWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false,
-      firstloading: true
+      firstloading: true,
+      userNotUseHierarchy: JSON.parse(this.props.user.permission.notUseHierarchy),
+      value: this.props.user.productGroup
     };
   }
   componentWillMount(){
@@ -54,16 +98,21 @@ class UserDetailsFrom extends Component {
   }
 
   componentDidMount(){
-    // console.log('componentDidMount type-->',this.props.user.permission.onhandLocation.type);
+    // console.log('componentDidMount type-->',this.props.user.permission.notUseHierarchy);
     this.setState(
       {
         selectedOnHandWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false,
         selectedOnHandLocation: (this.props.user.permission.onhandLocation != undefined)?(this.props.user.permission.onhandLocation.type.indexOf('All') == -1) ? false : true : false,
       }
     );
+    // console.log('componentDidMount-->',this.props.user.permission.notUseHierarchy);
+    this.props.optionsActions.setHierarchy(JSON.parse(this.props.user.permission.notUseHierarchy));
+    this.props.optionsActions.setNotUseHierarchy(JSON.parse(this.props.user.permission.notUseHierarchy));
 
   }
   componentWillReceiveProps = (nextProps)=>{
+      const { props } = this;
+
     //   console.log('componentWillReceiveProps-->',nextProps);
       const { fields: {
                           onhandLocationValue, onhandWarehouseValue
@@ -85,6 +134,37 @@ class UserDetailsFrom extends Component {
               this.setState({chkWarehouse: onhandWarehouseValue.value});
           }
       }
+    //   console.log('componentWillReceiveProps-->',props.HierarchyValue);
+      if(props.HierarchyValue != null){
+          if(props.HierarchyValue.length != 0){
+              if(props.HierarchyValue.JLY != undefined){
+                  this.refs.treeviewJLY.handleChange(props.HierarchyValue.JLY);
+              }
+              if(props.HierarchyValue.WAT != undefined){
+                  this.refs.treeviewWAT.handleChange(props.HierarchyValue.WAT);
+              }
+              if(props.HierarchyValue.STO != undefined){
+                  this.refs.treeviewSTO.handleChange(props.HierarchyValue.STO);
+              }
+              if(props.HierarchyValue.ACC != undefined){
+                  this.refs.treeviewACC.handleChange(props.HierarchyValue.ACC);
+              }
+              if(props.HierarchyValue.OBA != undefined){
+                  this.refs.treeviewOBA.handleChange(props.HierarchyValue.OBA);
+              }
+              if(props.HierarchyValue.SPP != undefined){
+                  this.refs.treeviewSPP.handleChange(props.HierarchyValue.SPP);
+              }
+          }
+      }else{
+          this.refs.treeviewJLY.handleChange([]);
+          this.refs.treeviewWAT.handleChange([]);
+          this.refs.treeviewSTO.handleChange([]);
+          this.refs.treeviewACC.handleChange([]);
+          this.refs.treeviewOBA.handleChange([]);
+          this.refs.treeviewSPP.handleChange([]);
+      }
+
   }
 
   changedOnHandWarehouseChecked = e => {
@@ -275,20 +355,34 @@ class UserDetailsFrom extends Component {
     }
   }
   selectedProductGroup(e){
-    if(e.target.value != 2) //select All disbal all check box
-    {
-      this.setState(
-        {
-          hideProductGroups: true,
-          productGroupDatas: this.props.options.productGroups
-        });
-    }else{
-      this.setState(
-        {
-          hideProductGroups: false,
-          productGroupDatas: []
-        });
-    }
+      if(e.target.value == 2) //select some productGroups
+      {
+        this.setState(
+          {
+            hideProductGroups: false,
+            productGroupDatas: this.props.options.productGroups,
+            hidecategory: false,
+            value: 2
+          });
+      }else if(e.target.value == 1) //select All disbal all check box
+      {
+        this.setState(
+          {
+            hideProductGroups: true,
+            productGroupDatas: this.props.options.productGroups,
+            hidecategory: false,
+            value: 1
+          });
+      }
+      else{
+        this.setState(
+          {
+            hideProductGroups: true,
+            productGroupDatas: [],
+            hidecategory: true,
+            value: 0
+          });
+      }
     // console.log('this.state-->',this.state);
   }
   selectedOnHandWarehouse(e){
@@ -556,9 +650,7 @@ class UserDetailsFrom extends Component {
   }
   generatePassword(){
     let pass = GenPassword();
-    this.setState({
-      genPass: pass
-    });
+    this.setState({genPass: pass});
     this.props.fields.password.onChange(pass);
     ReactDOM.findDOMNode(this.refs.password).focus();
   }
@@ -646,121 +738,105 @@ class UserDetailsFrom extends Component {
         }
       }
     }
+  }
+
+  treeOnUnClick(vals){
+
+  }
+  treeOnClickSPP(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'SPP');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+
+  treeOnClickOBA(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'OBA');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+
+  treeOnClickACC(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'ACC');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+  treeOnClickSTO(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'STO');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+
+  treeOnClickWAT(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'WAT');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+
+  treeOnClickJLY(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'JLY');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+  handleInputChange = e =>{
+      const target = e.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const name = target.name;
+
+      SetProductGroup(this, value, name, ClearHierarchy, hierarchyDataJewelry, hierarchyDataWatch,
+          hierarchyDataStone, hierarchyDataAccessory, hierarchyDataOBA, hierarchyDataSpare
+      );
+  }
+  handleInputCategoryChange = e =>{
+      const target = e.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const name = target.name;
+
+      SetCategoryHierarchy(this, value, name, ClearHierarchy, hierarchyDataJewelry, hierarchyDataWatch,
+          hierarchyDataStone, hierarchyDataAccessory, hierarchyDataOBA, hierarchyDataSpare
+      );
 
   }
 
   render() {
+      const { fields: {
+                id,firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,
+                productGroup,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT,onhandLocation,onhandAll,
+                productGroupACC,productGroupOBA,productGroupSPA,onhandLocationValue,webOnly,permissionId,onhandWarehouse,
+                onhandWarehouseValue,productGroupErr,movement,categoryJLY,categoryWAT,categorySTO,categoryACC,
+                categoryOBA,categorySPP,notUseHierarchy
+            },handleSubmit,submitting, CanNotUseHierarchy } = this.props;
+      let dataDropDowntLocations = [];
+      let dataDropDowntWareHouse = [];
+      let objWareHouseLocation = {};
 
-    const { fields: {
-              id,firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,productGroup
-              ,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT,onhandLocation,onhandAll
-              ,productGroupACC,productGroupOBA,productGroupSPA,onhandLocationValue,webOnly,permissionId,onhandWarehouse
-              ,onhandWarehouseValue,productGroupErr,movement
-          },handleSubmit,submitting } = this.props;
-    let dataDropDowntLocations = [];
-    let dataDropDowntWareHouse = [];
-    let that = this;
-
-    // console.log('onhandLocationValue-->',onhandLocationValue.value);
-
-    const userLogin = JSON.parse(sessionStorage.logindata);
-
-    if (typeof (this.props.options) !== 'undefined') {
-      if (this.state.changedOnHandLocation) {
-          if (typeof (this.props.warehouseOnHand) !== 'undefined')  {
-              dataDropDowntWareHouse.push(this.props.warehouseOnHand.map(warehouse =>{
-                return ({value: warehouse.code,name:warehouse.name});
-              })
-            )
-            dataDropDowntWareHouse = dataDropDowntWareHouse[0];
-          }
-      }else{
-        if (this.props.warehouseOnHand) {
-          let newDate = [];
-          let data = [];
-          if(dataDropDowntLocations.length != 0){
-            dataDropDowntLocations.forEach(function(location){
-              newDate.push(_.filter(that.props.warehouseOnHand,
-                function(warehouse)
-                { return warehouse.comid == location.value})
-              );
-            });
-          }else{
-            if(this.props.user.permission.onhandWarehouse != undefined){
-              if (this.props.user.permission.onhandWarehouse.type == 'Warehouse'
-                || this.props.user.permission.onhandWarehouse.type == 'All'
-                || this.props.user.permission.onhandWarehouse.type == 'AllWarehouse'){
-                  if (this.props.user.permission.onhandWarehouse.type == 'AllWarehouse') {
-                    this.props.user.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
-                      newDate.push(_.filter(that.props.warehouseOnHand,
-                        function(warehouse){
-                          // console.log('warehouse.id-->',warehouse.id);
-                          if(warehouse.code != undefined){
-                            return warehouse.code.toString() == settingWarehouse;
-                          }
-                        })
-                      );
-                    });
-
-                    let subdata = [];
-                    newDate.forEach(newdata =>{
-                        newdata.forEach(subdata =>{
-                          data.push(subdata);
-                        })
-                    });
-
-                    dataDropDowntWareHouse.push(data.map(warehouse =>{
-                        return ({value: warehouse.code,name:warehouse.name});
-                      })
-                    )
-                    dataDropDowntWareHouse = dataDropDowntWareHouse[0];
-
-                  } else if(this.props.user.permission.onhandWarehouse.type == 'Warehouse') {
-                    this.props.user.permission.onhandLocation.places.forEach(function(settingLocation){
-                      newDate.push(_.filter(that.props.warehouseOnHand,
-                        function(warehouse){
-                          // console.log('warehouse.id-->',warehouse.id);
-                          if(warehouse.code != undefined){
-                            return warehouse.comid.toString() == settingLocation;
-                          }
-                        })
-                      );
-                    });
-                    let subdata = [];
-                    newDate.forEach(newdata =>{
-                        newdata.forEach(subdata =>{
-                          data.push(subdata);
-                        })
-                    });
-                    dataDropDowntWareHouse.push(data.map(warehouse =>{
-                        return ({value: warehouse.code,name:warehouse.name});
-                      })
-                    )
-                    dataDropDowntWareHouse = dataDropDowntWareHouse[0];
-                  }else if(this.props.user.permission.onhandWarehouse.type == 'All') {
-                    if (typeof (this.props.warehouseOnHand) !== 'undefined')  {
-                        dataDropDowntWareHouse.push(this.props.warehouseOnHand.map(warehouse =>{
-                          return ({value: warehouse.code,name:warehouse.name});
-                        })
-                      )
-                      dataDropDowntWareHouse = dataDropDowntWareHouse[0];
-                    }
-                  }
-              }
-            }
-          }
-        }
-      }
-
-    if (typeof (this.props.locationOnHand) !== 'undefined') {
-      dataDropDowntLocations.push(this.props.locationOnHand.map(location =>{
-          return ({value: location.code,name:location.name});
-        })
-      )
-      dataDropDowntLocations = dataDropDowntLocations[0];
-      }
-
-    }
+      const userLogin = JSON.parse(sessionStorage.logindata);
+      objWareHouseLocation = FindLocationWareHouse(this);
+      dataDropDowntLocations = objWareHouseLocation.location;
+      dataDropDowntWareHouse = objWareHouseLocation.warehouse;
 
     return (
       <form onSubmit={handleSubmit}>
@@ -893,45 +969,54 @@ class UserDetailsFrom extends Component {
                     <div className="form-group">
                       <label className="col-sm-2 control-label">View Product Group</label>
                       <div className="col-sm-5">
-                        <select className="form-control" {...productGroup} onClick={this.selectedProductGroup}>
-                          <option key={1} value={1}>{'All Product Group'}</option>
-                          <option key={2} value={2}>{'Some Product Group'}</option>
+                        <select className="form-control" {...productGroup}
+                            value={this.state.value}
+                            onChange={this.selectedProductGroup}>
+                            <option key={0} value={0}>{'Please select Product Group'}</option>
+                            <option key={1} value={1}>{'All Product Group'}</option>
+                            <option key={2} value={2}>{'Some Product Group'}</option>
                         </select>
                         <div id="checkboxlistProduct" className={`${this.state.hideProductGroups ? 'hiddenViewProductGroup' : ''}` }>
                           <div>
                             <input type="checkbox"  value="JLY"
                               checked={productGroupJLY.value === 'JLY'}
-                              {...productGroupJLY}/>
+                              {...productGroupJLY}
+                              onChange={this.handleInputChange}/>
                             <span>Jewelry</span>
                           </div>
                           <div>
                             <input type="checkbox"  value="WAT"
                               checked={productGroupWAT.value === 'WAT'}
-                              {...productGroupWAT}/>
+                              {...productGroupWAT}
+                              onChange={this.handleInputChange}/>
                             <span>Watch</span>
                           </div>
                           <div>
                             <input type="checkbox" value="STO"
                               checked={productGroupSTO.value === 'STO'}
-                              {...productGroupSTO}/>
+                              {...productGroupSTO}
+                              onChange={this.handleInputChange}/>
                             <span>Stone</span>
                           </div>
                           <div>
                             <input type="checkbox"  value="ACC"
                               checked={productGroupACC.value === 'ACC'}
-                              {...productGroupACC}/>
+                              {...productGroupACC}
+                              onChange={this.handleInputChange}/>
                             <span>Accessory</span>
                           </div>
                           <div>
                             <input type="checkbox"  value="OBA"
                               checked={productGroupOBA.value === 'OBA'}
-                              {...productGroupOBA}/>
+                              {...productGroupOBA}
+                              onChange={this.handleInputChange}/>
                             <span>Object Of Art</span>
                           </div>
                           <div>
                             <input type="checkbox"  value="SPA"
                               checked={productGroupSPA.value === 'SPA'}
-                              {...productGroupSPA}/>
+                              {...productGroupSPA}
+                              onChange={this.handleInputChange}/>
                             <span>Spare Parts</span>
                           </div>
                         </div>
@@ -988,23 +1073,9 @@ class UserDetailsFrom extends Component {
                               <MultipleCheckBoxs datas={dataDropDowntLocations} name={'checkbox-allCompany'}
                                 checkedAll={this.state.selectedOnHandLocation} chekedValue={this.state.chkLocation}
                                 onChange={this.changedOnHandLocationChecked} onhandLocationValue={onhandLocationValue.value}/>
-                            {/*<select multiple
-                              {...onhandLocationValue}
-                              maxHeight={200} multiple
-                              disabled={`${this.state.selectedOnHandLocation ? 'disabled' : ''}`}
-                              onChange={this.changedOnHandLocation}
-                              ref="selectMultiLocation">
-                              {
-                                  dataDropDowntLocations.map(value =>
-                                      <option key={value.value} value={value.value}>{value.value + ' [' + value.name + ']'}</option>
-                                  )
-                              }
-                            </select>*/}
                           </div>
-
                       </div>
                       <div className="col-sm-4">
-
                           <input type="checkbox" value="Warehouse" {...onhandWarehouse}
                             checked={this.state.selectedOnHandWarehouse}
                             onChange={this.selectedOnHandWarehouse}
@@ -1014,17 +1085,7 @@ class UserDetailsFrom extends Component {
                               <MultipleCheckBoxs datas={dataDropDowntWareHouse} name={'checkbox-allWarehouse'}
                                 checkedAll={this.state.selectedOnHandWarehouse} chekedValue={this.state.chkWarehouse}
                                 onChange={this.changedOnHandWarehouseChecked} onhandWarehouseValue={onhandWarehouseValue.value}/>
-                            {/*<select multiple
-                              {...onhandWarehouseValue}
-                              maxHeight={200} multiple
-                              ref="selectMultiWarehouse"
-                              disabled={`${this.state.selectedOnHandWarehouse ? 'disabled' : ''}`}>
-                              {
-                                dataDropDowntWareHouse.map(value => <option key={value.value} value={value.value}>{value.value + ' [' + value.name + ']'}</option>)
-                              }
-                            </select>*/}
                           </div>
-
                       </div>
                       <div className="col-sm-2 hidden">
                         <label>
@@ -1037,6 +1098,155 @@ class UserDetailsFrom extends Component {
                         </label>
                       </div>
                     </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label">Product Hierarchy</label>
+                        <div className="col-sm-4">
+                            <label className="col-sm-2 control-label">Categories</label>
+                        </div>
+                        <div className="col-sm-4">
+                            <label className="col-sm-2 control-label">Product Hierarchy</label>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="col-sm-2 control-label"> </label>
+                        <div className={`col-sm-4 ${this.state.hidecategory ? 'hiddenViewProductGroup' : ''}`}>
+                            <div>
+                                <label>
+                                    <input type="checkbox" value="JLY"
+                                      checked={categoryJLY.value === 'JLY'}
+                                      {...categoryJLY}
+                                      disabled={this.state.hidecategory
+                                          ?true
+                                          :this.state.value == 1
+                                              ?false
+                                              :productGroupJLY.value != undefined && productGroupJLY.value
+                                                  ?false
+                                                  :true
+                                      }
+                                      onChange={this.handleInputCategoryChange}
+                                      /> Jewelry
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" value="WAT"
+                                      checked={categoryWAT.value === 'WAT'}
+                                      {...categoryWAT}
+                                      disabled={this.state.hidecategory
+                                          ?true
+                                          :this.state.value == 1
+                                              ?false
+                                              :productGroupWAT.value != undefined && productGroupWAT.value
+                                                  ?false
+                                                  :true
+                                      }
+                                      onChange={this.handleInputCategoryChange}
+                                      /> Watch
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" value="STO"
+                                      checked={categorySTO.value === 'STO'}
+                                      {...categorySTO}
+                                      disabled={this.state.hidecategory
+                                          ?true
+                                          :this.state.value == 1
+                                              ?false
+                                              :productGroupSTO.value != undefined && productGroupSTO.value
+                                                  ?false
+                                                  :true
+                                      }
+                                      onChange={this.handleInputCategoryChange}
+                                      /> Stone
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" value="ACC"
+                                      checked={categoryACC.value === 'ACC'}
+                                      {...categoryACC}
+                                      disabled={this.state.hidecategory
+                                          ?true
+                                          :this.state.value == 1
+                                              ?false
+                                              :productGroupACC.value != undefined && productGroupACC.value
+                                                  ?false
+                                                  :true
+                                      }
+                                      onChange={this.handleInputCategoryChange}
+                                      /> Accessory
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" value="OBA"
+                                      checked={categoryOBA.value === 'OBA'}
+                                      {...categoryOBA}
+                                      disabled={this.state.hidecategory
+                                          ?true
+                                          :this.state.value == 1
+                                              ?false
+                                              :productGroupOBA.value != undefined && productGroupOBA.value
+                                                  ?false
+                                                  :true
+                                      }
+                                      onChange={this.handleInputCategoryChange}
+                                      /> Object of Art
+                                </label>
+                            </div>
+                            <div>
+                                <label>
+                                    <input type="checkbox" value="SPP"
+                                      checked={categorySPP.value === 'SPP'}
+                                      {...categorySPP}
+                                      disabled={this.state.hidecategory
+                                          ?true
+                                          :this.state.value == 1
+                                              ?false
+                                              :productGroupSPA.value != undefined && productGroupSPA.value
+                                                  ?false
+                                                  :true
+                                      }
+                                      onChange={this.handleInputCategoryChange}
+                                      /> Spare Parts
+                                </label>
+                            </div>
+                        </div>
+                        <div className="col-sm-4">
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categoryJLY.value) ? '':'disabledTreeView'}
+                                            ${(this.state.hidecategory) ? 'hidden':''}`} >
+                              <Tree data={hierarchyDataJewelry} onClick={this.treeOnClickJLY} onUnClick={this.treeOnUnClick} ref="treeviewJLY"/>
+                            </div>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categoryWAT.value) ? '':'disabledTreeView'}
+                                            ${(this.state.hidecategory) ? 'hidden':''}`}>
+                              <Tree data={hierarchyDataWatch} onClick={this.treeOnClickWAT} onUnClick={this.treeOnUnClick} ref="treeviewWAT"/>
+                            </div>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categorySTO.value) ? '':'disabledTreeView'}
+                                            ${(this.state.hidecategory) ? 'hidden':''}`}>
+                              <Tree data={hierarchyDataStone} onClick={this.treeOnClickSTO} onUnClick={this.treeOnUnClick} ref="treeviewSTO"/>
+                            </div>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categoryACC.value) ? '':'disabledTreeView'}
+                                            ${(this.state.hidecategory) ? 'hidden':''}`}>
+                              <Tree data={hierarchyDataAccessory} onClick={this.treeOnClickACC} onUnClick={this.treeOnUnClick} ref="treeviewACC"/>
+                            </div>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categoryOBA.value) ? '':'disabledTreeView'}
+                                            ${(this.state.hidecategory) ? 'hidden':''}`}>
+                              <Tree data={hierarchyDataOBA} onClick={this.treeOnClickOBA} onUnClick={this.treeOnUnClick} ref="treeviewOBA"/>
+                            </div>
+                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
+                                            ${(categorySPP.value) ? '':'disabledTreeView'}
+                                            ${(this.state.hidecategory) ? 'hidden':''}`}>
+                              <Tree data={hierarchyDataSpare} onClick={this.treeOnClickSPP} onUnClick={this.treeOnUnClick} ref="treeviewSPP"/>
+                            </div>
+                        </div>
+                    </div>
+
                   </div>
                 </div>
                 <div className="col-sm-12 col-xs-12 m-nopadding text-right">
@@ -1053,14 +1263,16 @@ class UserDetailsFrom extends Component {
 }
 
 function mapStateToProps(state){
-    // console.log('UsersUpdateForm state -->',state);
+    // console.log('UsersUpdateForm state -->',state.users.canNotUseHierarchy);
     return {
-           initialValues: state.users.user,
-           options: state.users.options,
-           locationOnHand: state.users.locationOnHand,
-           warehouseOnHand: state.users.warehouseOnHand,
-           selectedCompany:state.users.selectedCompany,
-           selectedWarehouses:state.users.selectedWarehouses
+               initialValues: state.users.user,
+               options: state.users.options,
+               locationOnHand: state.users.locationOnHand,
+               warehouseOnHand: state.users.warehouseOnHand,
+               selectedCompany:state.users.selectedCompany,
+               selectedWarehouses:state.users.selectedWarehouses,
+               HierarchyValue: state.searchResult.HierarchyValue,
+               CanNotUseHierarchy: state.users.canNotUseHierarchy
            }
 }
 

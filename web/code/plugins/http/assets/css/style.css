@@ -2170,3 +2170,11 @@ select.form-searchresult option{
   }
   .popexport.viewset .modal-dialog{width:680px!important;}
 }
+
+.lineThrough {
+  text-decoration: line-through;
+}
+.disabledTreeView {
+    pointer-events: none;
+    opacity: 0.4;
+}

@@ -1,10 +1,14 @@
 const INITIAL_STATE = { datas:[], user: null, options:[], errors: null, statuscode: null, selectedCompany:null
   , selectedWarehouses:null, statusCode:null, message:null,locationOnHand:[],warehouseOnHand:[]
-  ,onhandLocationSelected:null,ShareEmailToValue:[]};
+  ,onhandLocationSelected:null,ShareEmailToValue:[],canNotUseHierarchy:null};
 
 export default function(state = INITIAL_STATE, action){
 
  switch(action.type){
+     case 'SET_NOTUSEHIERARCHY':
+        // console.log(action);
+         return {...state,  canNotUseHierarchy: action.notUseHierarchy};
+         break;
      case 'FETCH_SHAREUSERS':
        return { ...state, datas: action.data.data};
   case 'SET_SHAREEMAILTO':
@@ -46,18 +50,27 @@ export default function(state = INITIAL_STATE, action){
 }
 const setnewprops = (data) => {
   // console.log('setnewprops-->',data);
-  var user = data;
-  var permission = data.permission;
-  var bitwise = Number(permission.productGroup).toString(2);
-  var checkbits = bitwise.split('')
-  var numberDiit = checkbits.length;
-  var productGroupSTO=false;
-  var productGroupJLY=false;
-  var productGroupWAT=false;
-  var productGroupACC=false;
-  var productGroupOBA=false;
-  var productGroupSPA=false;
-  var onhandLocationValue = [];
+  let user = data;
+  let permission = data.permission;
+  let bitwise = Number(permission.productGroup).toString(2);
+  let bitwiseCategory = Number(permission.category).toString(2);
+  let checkbits = bitwise.split('');
+  let checkbitsCategory = bitwiseCategory.split('');
+  let numberDiit = checkbits.length;
+  let numberDiitCategory = checkbitsCategory.length;
+  let productGroupSTO=false;
+  let productGroupJLY=false;
+  let productGroupWAT=false;
+  let productGroupACC=false;
+  let productGroupOBA=false;
+  let productGroupSPA=false;
+  let onhandLocationValue = [];
+  let categorySTO=false;
+  let categoryJLY=false;
+  let categoryWAT=false;
+  let categoryACC=false;
+  let categoryOBA=false;
+  let categorySPP=false;
 
   checkbits.map(function(value,key){
     switch (numberDiit) {
@@ -122,12 +135,81 @@ const setnewprops = (data) => {
       default:
         break;
     }
-    // console.log(key);
-    // console.log(value);
+  });
+
+  checkbitsCategory.map(function(value,key){
+    switch (numberDiitCategory) {
+      case 1:
+        categoryJLY = (value == '1')?true:false;
+        break;
+      case 2:
+        if(key == 0){
+          categoryWAT = (value == '1')?true:false;
+        }else if (key == 1) {
+          categoryJLY = (value == '1')?true:false;
+        }
+        break;
+      case 3:
+        if(key == 0){
+          categorySTO = (value == '1')?true:false;
+        }else if (key == 1) {
+          categoryWAT = (value == '1')?true:false;
+        }else if (key == 2) {
+          categoryJLY = (value == '1')?true:false;
+        }
+        break;
+      case 4:
+        if(key == 0){
+          categoryACC = (value == '1')?true:false;
+        }else if (key == 1) {
+          categorySTO = (value == '1')?true:false;
+        }else if (key == 2) {
+          categoryWAT = (value == '1')?true:false;
+        }else if (key == 3) {
+          categoryJLY = (value == '1')?true:false;
+        }
+        break;
+      case 5:
+        if(key == 0){
+          categoryOBA = (value == '1')?true:false;
+        }else if (key == 1) {
+          categoryACC = (value == '1')?true:false;
+        }else if (key == 2) {
+          categorySTO = (value == '1')?true:false;
+        }else if (key == 3) {
+          categoryWAT = (value == '1')?true:false;
+        }else if (key == 4) {
+          categoryJLY = (value == '1')?true:false;
+        }
+        break;
+      case 6:
+        if(key == 0){
+          categorySPP = (value == '1')?true:false;
+        }else if (key == 1) {
+          categoryOBA = (value == '1')?true:false;
+        }else if (key == 2) {
+          categoryACC = (value == '1')?true:false;
+        }else if (key == 3) {
+          categorySTO = (value == '1')?true:false;
+        }else if (key == 4) {
+          categoryWAT = (value == '1')?true:false;
+        }else if (key == 5) {
+          categoryJLY = (value == '1')?true:false;
+        }
+        break;
+      default:
+        break;
+    }
   });
 
   user = {...user,
     price: permission.price,
+    categoryJLY: categoryJLY,
+    categoryWAT: categoryWAT,
+    categorySTO: categorySTO,
+    categoryACC: categoryACC,
+    categoryOBA: categoryOBA,
+    categorySPP: categorySPP,
     productGroup: (permission.productGroup == 63)?1:2,
     productGroupSTO: productGroupSTO,
     productGroupJLY: productGroupJLY,
@@ -140,7 +222,8 @@ const setnewprops = (data) => {
     onhandAll: (permission.onhandLocation != null) ? (permission.onhandLocation.type.indexOf('All') != -1) ? true : false : false,
     permissionId: permission.id,
     onhandLocationValue: (permission.onhandLocation != null) ? permission.onhandLocation.places : null,
-    onhandWarehouseValue: (permission.onhandWarehouse != null) ? permission.onhandWarehouse.places : null
+    onhandWarehouseValue: (permission.onhandWarehouse != null) ? permission.onhandWarehouse.places : null,
+    notUseHierarchy: JSON.parse(permission.notUseHierarchy)
   }
   // console.log('custom user-->',user);
   return user
