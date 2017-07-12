@@ -6,6 +6,7 @@ import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/accessory.json';
+import RemoveHierarchy from './utils/remove_hierarchy';
 
 class InventoryAccessory extends Component {
   constructor(props) {
@@ -279,9 +280,10 @@ class InventoryAccessory extends Component {
         dataDropDowntDominantStone = dataDropDowntDominantStone[0];
       }
     }
-    let hierarchyData = [];
 
-    hierarchyData.push(TreeData);
+    const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
+    // delete hierarchy
+    const hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'ACC');
 
     return(
       <div className="panel panel-default">

@@ -5,8 +5,9 @@ import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/jewelry.json';
 import * as xls from '../../utils/xlsSetReference';
-let X = XLSX;
+import RemoveHierarchy from './utils/remove_hierarchy';
 
+let X = XLSX;
 
 class InventoryJewelry extends Component {
   constructor(props) {
@@ -359,9 +360,10 @@ class InventoryJewelry extends Component {
       }
     }
 
-    let hierarchyData = [];
+    const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
+    // delete hierarchy
+    const hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'JLY');
 
-    hierarchyData.push(TreeData);
     // console.log('ViewAsSet-->',props.ViewAsSet);
     // console.log('hierarchyData-->',mapObj);
 
@@ -378,7 +380,6 @@ class InventoryJewelry extends Component {
                   </label>
                   <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
                     <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
-                    {/*<Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>*/}
                     <div className="col-sm-7">
                         <input type="checkbox" value="ViewAsSet" {...viewAsSet}
                             checked={props.ViewAsSet}
@@ -452,68 +453,8 @@ class InventoryJewelry extends Component {
                   <input type="text" className="form-control" {...ringSize}/>
                 </div>
               </div>
-              {/*<div className="form-group">
-                <label className="col-sm-4 control-label">Set Reference Number</label>
-                <div className="col-sm-7">
-                  <input type="text" className="form-control" {...setReference}/>
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Dominant Stone</label>
-                <div className="col-sm-7">
-                  <Select multi simpleValue value={props.DominantStoneValue}
-                    placeholder="Select your Dominant Stone"
-                    options={dataDropDowntDominantStone}
-                    onChange={this.handleDominantStoneSelectChange} />
-                </div>
-              </div>*/}
             </div>
             <div className="col-lg-6 form-horizontal">
-              {/*<div className={`form-group ${(userLogin.permission.price == 'All') ?
-                  '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalCostFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalCostTo}/>
-                  </div>
-                </div>
-              </div>
-              <div className={`form-group ${(userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All') ?
-                                            '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalUpdatedCostFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalUpdatedCostTo}/>
-                  </div>
-                </div>
-              </div>
-              <div className={`form-group ${(userLogin.permission.price == 'Public'
-                                            || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
-                 <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...publicPriceFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...publicPriceTo}/>
-                  </div>
-                </div>
-              </div>*/}
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
@@ -546,21 +487,6 @@ class InventoryJewelry extends Component {
                   </div>
                 </div>
               </div>
-              {/*<div className="form-group">
-                <label className="col-sm-4 control-label">Set Reference Number</label>
-                <div className="col-sm-7">
-                  <input type="text" className="form-control" {...setReference}/>
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-4 control-label">Dominant Stone</label>
-                <div className="col-sm-7">
-                  <Select multi simpleValue value={props.DominantStoneValue}
-                    placeholder="Select your Dominant Stone"
-                    options={dataDropDowntDominantStone}
-                    onChange={this.handleDominantStoneSelectChange} />
-                </div>
-              </div>*/}
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Metal Type
                   <OverlayTrigger placement="top" overlay={tooltipMetalType}>
