@@ -95,6 +95,20 @@ class UserDetailsFrom extends Component {
   }
   componentWillMount(){
     this.props.optionsActions.get();
+
+    $(window).scroll(function() {
+        let w = $('#page-wrapper').width();
+				if ($(window).scrollTop() > 100) {
+					$('#scroller').addClass('stuck');
+				} else {
+					$('#scroller').removeClass('stuck').css({'width':w});
+				}
+
+			});
+    $( window ).resize(function() {
+        let w = $('#page-wrapper').width();
+      $('#scroller').removeClass('stuck').css({'width':w});
+    });
   }
 
   componentDidMount(){
@@ -840,7 +854,8 @@ class UserDetailsFrom extends Component {
 
     return (
       <form onSubmit={handleSubmit}>
-            <div className="col-sm-12 bg-hearder bg-header-inventories">
+        <div id="page-wrapper">
+            <div id="scroller" className="col-sm-12 bg-hearder bg-header-inventories">
                 <div className="col-xs-6 m-width-60 ft-white m-nopadding">
                   <h1>User Details</h1>
                 </div>
@@ -1062,25 +1077,29 @@ class UserDetailsFrom extends Component {
                       </div>
                     </div>
                     <div className="form-group">
-                      <label className="col-sm-2 control-label">View On-hand</label>
-                      <div className="col-sm-4">
+                      <label className="col-md-2 col-sm-2 control-label">View On-hand</label>
+                        <div className="col-md-4 col-sm-12 col-xs-12">
+                          <div className="col-sm-12 col-xs-12 nopadding">
                           <input type="checkbox" value="Location" {...onhandLocation}
                             checked={this.state.selectedOnHandLocation}
                             onChange={this.selectedOnHandLocation}
                             ref="location"
                           /> All Company
+                          </div>
                           <div className="user-edit user-per-height">
                               <MultipleCheckBoxs datas={dataDropDowntLocations} name={'checkbox-allCompany'}
                                 checkedAll={this.state.selectedOnHandLocation} chekedValue={this.state.chkLocation}
                                 onChange={this.changedOnHandLocationChecked} onhandLocationValue={onhandLocationValue.value}/>
                           </div>
                       </div>
-                      <div className="col-sm-4">
+                      <div className="col-md-4 col-sm-12 col-xs-12">
+                        <div className="col-sm-12 col-xs-12 nopadding">
                           <input type="checkbox" value="Warehouse" {...onhandWarehouse}
                             checked={this.state.selectedOnHandWarehouse}
                             onChange={this.selectedOnHandWarehouse}
                             ref="warehouse"
                           /> All Warehouse
+                          </div>
                           <div className="user-edit user-per-height">
                               <MultipleCheckBoxs datas={dataDropDowntWareHouse} name={'checkbox-allWarehouse'}
                                 checkedAll={this.state.selectedOnHandWarehouse} chekedValue={this.state.chkWarehouse}
@@ -1098,20 +1117,17 @@ class UserDetailsFrom extends Component {
                         </label>
                       </div>
                     </div>
-                    <div className="form-group">
-                        <label className="col-sm-2 control-label">Product Hierarchy</label>
-                        <div className="col-sm-4">
-                            <label className="col-sm-2 control-label">Categories</label>
-                        </div>
-                        <div className="col-sm-4">
-                            <label className="col-sm-2 control-label">Product Hierarchy</label>
+                    <div className="form-group maring-t30">
+                        <label className="col-md-2 control-label">Product Hierarchy</label>
+                        <div className="col-md-8">
+                          <div className="user-alert">Restricted Product Hierarchy (You can grant permission to view Product Hierarchy)</div>
                         </div>
                     </div>
                     <div className="form-group">
                         <label className="col-sm-2 control-label"> </label>
-                        <div className={`col-sm-4 ${this.state.hidecategory ? 'hiddenViewProductGroup' : ''}`}>
+                        <div className={`col-sm-10 nopadding ${this.state.hidecategory ? 'hiddenViewProductGroup' : ''}`}>
                             <div>
-                                <label>
+                                <label className="col-sm-12 control-label">
                                     <input type="checkbox" value="JLY"
                                       checked={categoryJLY.value === 'JLY'}
                                       {...categoryJLY}
@@ -1126,9 +1142,14 @@ class UserDetailsFrom extends Component {
                                       onChange={this.handleInputCategoryChange}
                                       /> Jewelry
                                 </label>
+                                <div className={`col-md-12 control-label bd-box
+                                                ${(categoryJLY.value) ? '':'disabledTreeView'}
+                                                ${(this.state.hidecategory) ? 'hidden':''}`} >
+                                  <Tree data={hierarchyDataJewelry} onClick={this.treeOnClickJLY} onUnClick={this.treeOnUnClick} ref="treeviewJLY"/>
+                                </div>
                             </div>
                             <div>
-                                <label>
+                                <label className="col-md-12 control-label">
                                     <input type="checkbox" value="WAT"
                                       checked={categoryWAT.value === 'WAT'}
                                       {...categoryWAT}
@@ -1143,9 +1164,14 @@ class UserDetailsFrom extends Component {
                                       onChange={this.handleInputCategoryChange}
                                       /> Watch
                                 </label>
+                                <div className={`col-md-12 control-label bd-box
+                                                ${(categoryWAT.value) ? '':'disabledTreeView'}
+                                                ${(this.state.hidecategory) ? 'hidden':''}`}>
+                                  <Tree data={hierarchyDataWatch} onClick={this.treeOnClickWAT} onUnClick={this.treeOnUnClick} ref="treeviewWAT"/>
+                                </div>
                             </div>
                             <div>
-                                <label>
+                                <label className="col-md-12 control-label">
                                     <input type="checkbox" value="STO"
                                       checked={categorySTO.value === 'STO'}
                                       {...categorySTO}
@@ -1160,9 +1186,14 @@ class UserDetailsFrom extends Component {
                                       onChange={this.handleInputCategoryChange}
                                       /> Stone
                                 </label>
+                                <div className={`col-md-12 control-label bd-box
+                                                ${(categorySTO.value) ? '':'disabledTreeView'}
+                                                ${(this.state.hidecategory) ? 'hidden':''}`}>
+                                  <Tree data={hierarchyDataStone} onClick={this.treeOnClickSTO} onUnClick={this.treeOnUnClick} ref="treeviewSTO"/>
+                                </div>
                             </div>
                             <div>
-                                <label>
+                                <label className="col-md-12 control-label">
                                     <input type="checkbox" value="ACC"
                                       checked={categoryACC.value === 'ACC'}
                                       {...categoryACC}
@@ -1177,9 +1208,14 @@ class UserDetailsFrom extends Component {
                                       onChange={this.handleInputCategoryChange}
                                       /> Accessory
                                 </label>
+                                <div className={`col-md-12 control-label bd-box
+                                                ${(categoryACC.value) ? '':'disabledTreeView'}
+                                                ${(this.state.hidecategory) ? 'hidden':''}`}>
+                                  <Tree data={hierarchyDataAccessory} onClick={this.treeOnClickACC} onUnClick={this.treeOnUnClick} ref="treeviewACC"/>
+                                </div>
                             </div>
                             <div>
-                                <label>
+                                <label  className="col-md-12 control-label">
                                     <input type="checkbox" value="OBA"
                                       checked={categoryOBA.value === 'OBA'}
                                       {...categoryOBA}
@@ -1194,9 +1230,14 @@ class UserDetailsFrom extends Component {
                                       onChange={this.handleInputCategoryChange}
                                       /> Object of Art
                                 </label>
+                                <div className={`col-md-12 bd-box control-label
+                                                ${(categoryOBA.value) ? '':'disabledTreeView'}
+                                                ${(this.state.hidecategory) ? 'hidden':''}`}>
+                                  <Tree data={hierarchyDataOBA} onClick={this.treeOnClickOBA} onUnClick={this.treeOnUnClick} ref="treeviewOBA"/>
+                                </div>
                             </div>
                             <div>
-                                <label>
+                                <label className="col-md-12 control-label">
                                     <input type="checkbox" value="SPP"
                                       checked={categorySPP.value === 'SPP'}
                                       {...categorySPP}
@@ -1211,42 +1252,15 @@ class UserDetailsFrom extends Component {
                                       onChange={this.handleInputCategoryChange}
                                       /> Spare Parts
                                 </label>
+                                <div className={`col-md-12 bd-box control-label
+                                                ${(categorySPP.value) ? '':'disabledTreeView'}
+                                                ${(this.state.hidecategory) ? 'hidden':''}`}>
+                                  <Tree data={hierarchyDataSpare} onClick={this.treeOnClickSPP} onUnClick={this.treeOnUnClick} ref="treeviewSPP"/>
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-sm-4">
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
-                                            ${(categoryJLY.value) ? '':'disabledTreeView'}
-                                            ${(this.state.hidecategory) ? 'hidden':''}`} >
-                              <Tree data={hierarchyDataJewelry} onClick={this.treeOnClickJLY} onUnClick={this.treeOnUnClick} ref="treeviewJLY"/>
-                            </div>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
-                                            ${(categoryWAT.value) ? '':'disabledTreeView'}
-                                            ${(this.state.hidecategory) ? 'hidden':''}`}>
-                              <Tree data={hierarchyDataWatch} onClick={this.treeOnClickWAT} onUnClick={this.treeOnUnClick} ref="treeviewWAT"/>
-                            </div>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
-                                            ${(categorySTO.value) ? '':'disabledTreeView'}
-                                            ${(this.state.hidecategory) ? 'hidden':''}`}>
-                              <Tree data={hierarchyDataStone} onClick={this.treeOnClickSTO} onUnClick={this.treeOnUnClick} ref="treeviewSTO"/>
-                            </div>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
-                                            ${(categoryACC.value) ? '':'disabledTreeView'}
-                                            ${(this.state.hidecategory) ? 'hidden':''}`}>
-                              <Tree data={hierarchyDataAccessory} onClick={this.treeOnClickACC} onUnClick={this.treeOnUnClick} ref="treeviewACC"/>
-                            </div>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
-                                            ${(categoryOBA.value) ? '':'disabledTreeView'}
-                                            ${(this.state.hidecategory) ? 'hidden':''}`}>
-                              <Tree data={hierarchyDataOBA} onClick={this.treeOnClickOBA} onUnClick={this.treeOnUnClick} ref="treeviewOBA"/>
-                            </div>
-                            <div className={`col-lg-9 col-md-7 col-sm-7 bd-box
-                                            ${(categorySPP.value) ? '':'disabledTreeView'}
-                                            ${(this.state.hidecategory) ? 'hidden':''}`}>
-                              <Tree data={hierarchyDataSpare} onClick={this.treeOnClickSPP} onUnClick={this.treeOnUnClick} ref="treeviewSPP"/>
-                            </div>
+
                         </div>
                     </div>
-
                   </div>
                 </div>
                 <div className="col-sm-12 col-xs-12 m-nopadding text-right">
@@ -1256,6 +1270,7 @@ class UserDetailsFrom extends Component {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </form>
     );

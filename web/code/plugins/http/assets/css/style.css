@@ -11,7 +11,15 @@ body{
 	font-family: 'open_sanslight';
 	color: #383735;
 }
-
+.user-alert{
+  background: url(/images/icon-alert.png) top left no-repeat;
+  border: 1px solid red;
+  color: red;
+  padding: 5px 30px;
+  border-radius: 5px;
+  background-position: 8px;
+  background-size: 16px;
+}
 #scroller{
     height:60px;
 }
@@ -1160,7 +1168,7 @@ select.form-searchresult option{
   margin-top: 10px;
 }
 .user-edit select{min-height: 200px; width: 290px;}
-.user-per-height{height:200px; overflow-y:scroll; border:1px solid #ccc; padding:5px 5px;width: 290px;}
+.user-per-height{height:200px; overflow-y:scroll; border:1px solid #ccc; padding:5px 5px;max-width: 290px;}
 .tooltiop-span span{margin-right: 5px;}
 .image-gallery-image{text-align: center; margin:0 auto;}
 .image-gallery-image img{width: auto !important;}
