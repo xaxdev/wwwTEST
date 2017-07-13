@@ -23,6 +23,7 @@ import moment from 'moment-timezone';
 import convertDate from '../../utils/convertDate';
 import validateCatalog from '../../utils/validatecatalog';
 import GenTemplateHtml from '../../utils/genTemplatePdfSearchResult';
+import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter'
 
 const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
       'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
@@ -183,9 +184,6 @@ class SearchResult extends Component {
     };
   }
   componentWillMount() {
-      // console.log('this.props.sortingBy->',this.props.sortingBy);
-      // console.log('this.props.sortDirection->',this.props.sortDirection);
-
       const userLogin = JSON.parse(sessionStorage.logindata);
 
       let sortingBy = '';
@@ -205,67 +203,14 @@ class SearchResult extends Component {
         'pageSize' : this.props.pageSize
       };  // default search params
 
-      // const { filters } =  this.props;
       const filters =  JSON.parse(sessionStorage.filters);
-      let gemstoneFilter = {};
-      let lotNumberFilter = {};
-    //   console.log('filters-->',filters);
-      filters.forEach(function(filter){
-        let keys = Object.keys(filter);
-        keys.forEach((key) => {
-          const value = filter[key];
-          const gemstoneFields = keys[0].split('.');
-          if(gemstoneFields[0] == 'gemstones'){
-            gemstoneFilter[gemstoneFields[1]] = value;
-          }else if(gemstoneFields[0] == 'certificatedNumber'){
-            gemstoneFilter[gemstoneFields[0]] = value;
-          }else if(gemstoneFields[0] == 'certificateAgency'){
-            gemstoneFilter[gemstoneFields[0]] = value;
-          }else if(gemstoneFields[0] == 'cerDateFrom'){
-            gemstoneFilter[gemstoneFields[0]] = value;
-          }else if(gemstoneFields[0] == 'lotNumbers'){
-            lotNumberFilter[gemstoneFields[1]] = value;
-          }
-          else{
-            //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
-              switch (gemstoneFields[0]) {
-                  case 'sparePartProductHierarchy':
-                      break;
-                  case 'obaProductHierarchy':
-                      break;
-                  case 'accessoryProductHierarchy':
-                      break;
-                  case 'stoneProductHierarchy':
-                      break;
-                  case 'watchProductHierarchy':
-                      break;
-                  case 'jewelryProductHierarchy':
-                      break;
-                  default:
-                      params[key] = value;
-                      break;
-              }
-          }
-        });
-      });
+      params = GetGemstoneLotnumberFilter(filters, params);
 
-      if(Object.keys(gemstoneFilter).length != 0){
-        params['gemstones'] = gemstoneFilter;
-      }
-      if(Object.keys(lotNumberFilter).length != 0){
-        params['lotNumbers'] = lotNumberFilter;
-      }
-    //   console.log('params-->',params);
       const paramsSearchStorage =  JSON.parse(sessionStorage.paramsSearch);
-    //   console.log('paramsSearchStorage-->',paramsSearchStorage);
-      // this.props.setShowGridView(true);
-      // this.props.setShowListView(false);
+
       this.props.setParams(paramsSearchStorage)
       this.props.getItems(params)
       .then((value) => {
-        //   console.log('params-->',params);
-        //   this.props.setParams(params)
-        //   this.props.getCatalogName();
           this.props.getCatalogNameSetItem();
       });
 
@@ -402,55 +347,7 @@ class SearchResult extends Component {
       };
 
       const filters =  JSON.parse(sessionStorage.filters);
-
-      let gemstoneFilter = {};
-      let lotNumberFilter = {};
-      // console.log('filters-->',filters);
-      filters.forEach(function(filter){
-        let keys = Object.keys(filter);
-        keys.forEach((key) => {
-          const value = filter[key];
-          const gemstoneFields = keys[0].split('.');
-          if(gemstoneFields[0] == 'gemstones'){
-            gemstoneFilter[gemstoneFields[1]] = value;
-          }else if(gemstoneFields[0] == 'certificatedNumber'){
-            gemstoneFilter[gemstoneFields[0]] = value;
-          }else if(gemstoneFields[0] == 'certificateAgency'){
-            gemstoneFilter[gemstoneFields[0]] = value;
-          }else if(gemstoneFields[0] == 'cerDateFrom'){
-            gemstoneFilter[gemstoneFields[0]] = value;
-          }else if(gemstoneFields[0] == 'lotNumbers'){
-            lotNumberFilter[gemstoneFields[1]] = value;
-          }
-          else{
-            //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
-              switch (gemstoneFields[0]) {
-                  case 'sparePartProductHierarchy':
-                      break;
-                  case 'obaProductHierarchy':
-                      break;
-                  case 'accessoryProductHierarchy':
-                      break;
-                  case 'stoneProductHierarchy':
-                      break;
-                  case 'watchProductHierarchy':
-                      break;
-                  case 'jewelryProductHierarchy':
-                      break;
-                  default:
-                      params[key] = value;
-                      break;
-              }
-          }
-        });
-      });
-
-      if(Object.keys(gemstoneFilter).length != 0){
-        params['gemstones'] = gemstoneFilter;
-      }
-      if(Object.keys(lotNumberFilter).length != 0){
-        params['lotNumbers'] = lotNumberFilter;
-      }
+      params = GetGemstoneLotnumberFilter(filters, params);
 
       let girdView = showGridView;
       let listView = showListView;
@@ -467,13 +364,10 @@ class SearchResult extends Component {
           this.props.getCatalogNameSetItem();
           this.setState({showLoading: false});
             if(girdView){
-              // this.setState({showGridView: true});
               this.props.setShowGridView(true);
             }else if (listView) {
-              // this.setState({showListView: true});
               this.props.setShowListView(true);
             }
-            // console.log('listMyCatalog-->',listMyCatalog);
       });
 
       let { currPage } = this.props.fields;
@@ -481,7 +375,6 @@ class SearchResult extends Component {
   }
   handleGo(e){
     e.preventDefault();
-    // console.log('handleGo-->',this.refs.reletego.value);
     const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
 
     const userLogin = JSON.parse(sessionStorage.logindata);
@@ -489,7 +382,6 @@ class SearchResult extends Component {
 
     if (Number(this.refs.reletego.value) > totalPages || Number(this.refs.reletego.value) < 1) {
         this.setState({isOpenMsgPageInvalid: true});
-    //   this.renderAlertmsg('Page is invalid.');
     }else{
         let sortingBy = '';
 
@@ -506,7 +398,6 @@ class SearchResult extends Component {
         const pageSize = this.refs.pageSize.value;
 
         this.setState({activePage: getPage});
-        // console.log('getPage-->',getPage);
         let params = {
           'page' : getPage,
           'sortBy': sortingBy,
@@ -516,54 +407,7 @@ class SearchResult extends Component {
         // let { filters } =  this.props;
         const filters =  JSON.parse(sessionStorage.filters);
 
-        let gemstoneFilter = {};
-        let lotNumberFilter = {};
-        // console.log('filters-->',filters);
-        filters.forEach(function(filter){
-          let keys = Object.keys(filter);
-          keys.forEach((key) => {
-            const value = filter[key];
-            const gemstoneFields = keys[0].split('.');
-            if(gemstoneFields[0] == 'gemstones'){
-              gemstoneFilter[gemstoneFields[1]] = value;
-            }else if(gemstoneFields[0] == 'certificatedNumber'){
-              gemstoneFilter[gemstoneFields[0]] = value;
-            }else if(gemstoneFields[0] == 'certificateAgency'){
-              gemstoneFilter[gemstoneFields[0]] = value;
-            }else if(gemstoneFields[0] == 'cerDateFrom'){
-              gemstoneFilter[gemstoneFields[0]] = value;
-            }else if(gemstoneFields[0] == 'lotNumbers'){
-              lotNumberFilter[gemstoneFields[1]] = value;
-            }
-            else{
-              //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
-                switch (gemstoneFields[0]) {
-                    case 'sparePartProductHierarchy':
-                        break;
-                    case 'obaProductHierarchy':
-                        break;
-                    case 'accessoryProductHierarchy':
-                        break;
-                    case 'stoneProductHierarchy':
-                        break;
-                    case 'watchProductHierarchy':
-                        break;
-                    case 'jewelryProductHierarchy':
-                        break;
-                    default:
-                        params[key] = value;
-                        break;
-                }
-            }
-          });
-        });
-
-        if(Object.keys(gemstoneFilter).length != 0){
-          params['gemstones'] = gemstoneFilter;
-        }
-        if(Object.keys(lotNumberFilter).length != 0){
-          params['lotNumbers'] = lotNumberFilter;
-        }
+        params = GetGemstoneLotnumberFilter(filters, params);
 
         let girdView = showGridView;
         let listView = showListView;
@@ -575,18 +419,13 @@ class SearchResult extends Component {
           showLoading: true
         });
 
-        // const paramsSearchStorage =  JSON.parse(sessionStorage.paramsSearch);
-        // this.props.setParams(paramsSearchStorage)
-
         this.props.getItems(params)
         .then((value) => {
             this.props.getCatalogNameSetItem();
             this.setState({showLoading: false});
               if(girdView){
-                // this.setState({showGridView: true});
                 this.props.setShowGridView(true);
               }else if (listView) {
-                // this.setState({showListView: true});
                 this.props.setShowListView(true);
               }
         });
@@ -600,11 +439,7 @@ class SearchResult extends Component {
             handleSubmit,
             resetForm,
             submitting } = this.props;
-    // console.log('totalPages-->',totalPages);
-    // console.log('this.state.activePage-->',this.state.activePage);
     const page = this.state.activePage;
-    // currPage.value = this.state.activePage;
-    // console.log('renderPagination-->',this.state.activePage);
 
     return(
         <div>
@@ -773,9 +608,6 @@ class SearchResult extends Component {
     } else {
       this.setState({enabledMyCatalog: false});
     }
-    // console.log('item -->',item.target.checked);
-    // console.log('item -->',itemReference);
-    // console.log('listMyCatalog -->',listMyCatalog);
   }
   addedOneItemMyCatalog = (item) => {
       let fileName = jQuery('input[type="checkbox"]');
@@ -810,20 +642,12 @@ class SearchResult extends Component {
       this.setState({isOpenAddMyCatalog: true});
   }
   gridViewResults(){
-    this.props.setShowGridView(true);
-    this.props.setShowListView(false);
-    // this.setState({
-    //   showGridView: true,
-    //   showListView:false
-    // });
+      this.props.setShowGridView(true);
+      this.props.setShowListView(false);
   }
   listViewResults(){
-    this.props.setShowGridView(false);
-    this.props.setShowListView(true);
-    // this.setState({
-    //   showGridView: false,
-    //   showListView: true
-    // });
+      this.props.setShowGridView(false);
+      this.props.setShowListView(true);
   }
   sortingBy(e){
     e.preventDefault();
@@ -847,7 +671,6 @@ class SearchResult extends Component {
     const { searchResult } = this.props;
     const sortingDirection = this.refs.sortingDirection.value;
     const pageSize = this.refs.pageSize.value;
-    // this.props.sortBy(searchResult, sortingBy, sortingDirection);
     let params = {
       'page' : 1,
       'sortBy': sortingBy,
@@ -857,54 +680,7 @@ class SearchResult extends Component {
 
     const filters =  JSON.parse(sessionStorage.filters);
 
-    let gemstoneFilter = {};
-    let lotNumberFilter = {};
-    // console.log('filters-->',filters);
-    filters.forEach(function(filter){
-      let keys = Object.keys(filter);
-      keys.forEach((key) => {
-        const value = filter[key];
-        const gemstoneFields = keys[0].split('.');
-        if(gemstoneFields[0] == 'gemstones'){
-          gemstoneFilter[gemstoneFields[1]] = value;
-        }else if(gemstoneFields[0] == 'certificatedNumber'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'certificateAgency'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'cerDateFrom'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'lotNumbers'){
-          lotNumberFilter[gemstoneFields[1]] = value;
-        }
-        else{
-          //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
-            switch (gemstoneFields[0]) {
-                case 'sparePartProductHierarchy':
-                    break;
-                case 'obaProductHierarchy':
-                    break;
-                case 'accessoryProductHierarchy':
-                    break;
-                case 'stoneProductHierarchy':
-                    break;
-                case 'watchProductHierarchy':
-                    break;
-                case 'jewelryProductHierarchy':
-                    break;
-                default:
-                    params[key] = value;
-                    break;
-            }
-        }
-      });
-    });
-
-    if(Object.keys(gemstoneFilter).length != 0){
-      params['gemstones'] = gemstoneFilter;
-    }
-    if(Object.keys(lotNumberFilter).length != 0){
-      params['lotNumbers'] = lotNumberFilter;
-    }
+    params = GetGemstoneLotnumberFilter(filters, params);
 
     let girdView = showGridView;
     let listView = showListView;
@@ -923,10 +699,8 @@ class SearchResult extends Component {
         this.props.getCatalogNameSetItem();
         this.setState({showLoading: false});
           if(girdView){
-            // this.setState({showGridView: true});
             this.props.setShowGridView(true);
           }else if (listView) {
-            // this.setState({showListView: true});
             this.props.setShowListView(true);
           }
     });
@@ -934,8 +708,6 @@ class SearchResult extends Component {
     let { currPage } = this.props.fields;
     currPage.onChange(1);
     currPage.value = 1;
-    // console.log('currPage.value-->',currPage.value);
-
   }
   sortingDirection(e){
     e.preventDefault();
@@ -970,54 +742,7 @@ class SearchResult extends Component {
 
     const filters =  JSON.parse(sessionStorage.filters);
 
-    let gemstoneFilter = {};
-    let lotNumberFilter = {};
-    // console.log('filters-->',filters);
-    filters.forEach(function(filter){
-      let keys = Object.keys(filter);
-      keys.forEach((key) => {
-        const value = filter[key];
-        const gemstoneFields = keys[0].split('.');
-        if(gemstoneFields[0] == 'gemstones'){
-          gemstoneFilter[gemstoneFields[1]] = value;
-        }else if(gemstoneFields[0] == 'certificatedNumber'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'certificateAgency'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'cerDateFrom'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'lotNumbers'){
-          lotNumberFilter[gemstoneFields[1]] = value;
-        }
-        else{
-          //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
-            switch (gemstoneFields[0]) {
-                case 'sparePartProductHierarchy':
-                    break;
-                case 'obaProductHierarchy':
-                    break;
-                case 'accessoryProductHierarchy':
-                    break;
-                case 'stoneProductHierarchy':
-                    break;
-                case 'watchProductHierarchy':
-                    break;
-                case 'jewelryProductHierarchy':
-                    break;
-                default:
-                    params[key] = value;
-                    break;
-            }
-        }
-      });
-    });
-
-    if(Object.keys(gemstoneFilter).length != 0){
-      params['gemstones'] = gemstoneFilter;
-    }
-    if(Object.keys(lotNumberFilter).length != 0){
-      params['lotNumbers'] = lotNumberFilter;
-    }
+    params = GetGemstoneLotnumberFilter(filters, params);
 
     let girdView = showGridView;
     let listView = showListView;
@@ -1036,10 +761,8 @@ class SearchResult extends Component {
         this.props.getCatalogNameSetItem();
           this.setState({showLoading: false});
           if(girdView){
-            // this.setState({showGridView: true});
             this.props.setShowGridView(true);
           }else if (listView) {
-            // this.setState({showListView: true});
             this.props.setShowListView(true);
           }
     });
@@ -1083,54 +806,7 @@ class SearchResult extends Component {
 
     const filters =  JSON.parse(sessionStorage.filters);
 
-    let gemstoneFilter = {};
-    let lotNumberFilter = {};
-    // console.log('filters-->',filters);
-    filters.forEach(function(filter){
-      let keys = Object.keys(filter);
-      keys.forEach((key) => {
-        const value = filter[key];
-        const gemstoneFields = keys[0].split('.');
-        if(gemstoneFields[0] == 'gemstones'){
-          gemstoneFilter[gemstoneFields[1]] = value;
-        }else if(gemstoneFields[0] == 'certificatedNumber'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'certificateAgency'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'cerDateFrom'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'lotNumbers'){
-          lotNumberFilter[gemstoneFields[1]] = value;
-        }
-        else{
-          //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
-            switch (gemstoneFields[0]) {
-                case 'sparePartProductHierarchy':
-                    break;
-                case 'obaProductHierarchy':
-                    break;
-                case 'accessoryProductHierarchy':
-                    break;
-                case 'stoneProductHierarchy':
-                    break;
-                case 'watchProductHierarchy':
-                    break;
-                case 'jewelryProductHierarchy':
-                    break;
-                default:
-                    params[key] = value;
-                    break;
-            }
-        }
-      });
-    });
-
-    if(Object.keys(gemstoneFilter).length != 0){
-      params['gemstones'] = gemstoneFilter;
-    }
-    if(Object.keys(lotNumberFilter).length != 0){
-      params['lotNumbers'] = lotNumberFilter;
-    }
+    params = GetGemstoneLotnumberFilter(filters, params);
 
     let girdView = showGridView;
     let listView = showListView;
@@ -1149,10 +825,8 @@ class SearchResult extends Component {
         this.props.getCatalogNameSetItem();
           this.setState({showLoading: false});
           if(girdView){
-            // this.setState({showGridView: true});
             this.props.setShowGridView(true);
           }else if (listView) {
-            // this.setState({showListView: true});
             this.props.setShowListView(true);
           }
     });
@@ -1248,9 +922,7 @@ class SearchResult extends Component {
     const token = sessionStorage.token;
 
     let modalOpen = jQuery('.modal-open');
-    modalOpen.removeClass()
-    // console.log('modalOpen-->',modalOpen);
-
+    modalOpen.removeClass();
     if(token){
       this.context.router.push('/inventories');
     }
@@ -1355,54 +1027,7 @@ class SearchResult extends Component {
 
     const filters =  JSON.parse(sessionStorage.filters);
 
-    let gemstoneFilter = {};
-    let lotNumberFilter = {};
-    // console.log('filters-->',filters);
-    filters.forEach(function(filter){
-      let keys = Object.keys(filter);
-      keys.forEach((key) => {
-        const value = filter[key];
-        const gemstoneFields = keys[0].split('.');
-        if(gemstoneFields[0] == 'gemstones'){
-          gemstoneFilter[gemstoneFields[1]] = value;
-        }else if(gemstoneFields[0] == 'certificatedNumber'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'certificateAgency'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'cerDateFrom'){
-          gemstoneFilter[gemstoneFields[0]] = value;
-        }else if(gemstoneFields[0] == 'lotNumbers'){
-          lotNumberFilter[gemstoneFields[1]] = value;
-        }
-        else{
-          //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
-            switch (gemstoneFields[0]) {
-                case 'sparePartProductHierarchy':
-                    break;
-                case 'obaProductHierarchy':
-                    break;
-                case 'accessoryProductHierarchy':
-                    break;
-                case 'stoneProductHierarchy':
-                    break;
-                case 'watchProductHierarchy':
-                    break;
-                case 'jewelryProductHierarchy':
-                    break;
-                default:
-                    params[key] = value;
-                    break;
-            }
-        }
-      });
-    });
-
-    if(Object.keys(gemstoneFilter).length != 0){
-      params['gemstones'] = gemstoneFilter;
-    }
-    if(Object.keys(lotNumberFilter).length != 0){
-      params['lotNumbers'] = lotNumberFilter;
-    }
+    params = GetGemstoneLotnumberFilter(filters, params);
 
     this.setState({
       showLoading: true,
@@ -1415,16 +1040,11 @@ class SearchResult extends Component {
     this.props.setShowGridView(false);
     this.props.setShowListView(false);
 
-    // console.log('params--:>',params);
     this.props.exportDatas(params)
         .then((value) => {
-          // console.log('value-->',value);
-        //   console.log('export done!');
           if(girdView){
-            // this.setState({showGridView: true});
             that.props.setShowGridView(true);
           }else if (listView) {
-            // this.setState({showListView: true});
             that.props.setShowListView(true);
           }
           that.setState({
@@ -1484,54 +1104,7 @@ class SearchResult extends Component {
 
       const filters =  JSON.parse(sessionStorage.filters);
 
-      let gemstoneFilter = {};
-      let lotNumberFilter = {};
-      // console.log('filters-->',filters);
-      filters.forEach(function(filter){
-        let keys = Object.keys(filter);
-        keys.forEach((key) => {
-          const value = filter[key];
-          const gemstoneFields = keys[0].split('.');
-          if(gemstoneFields[0] == 'gemstones'){
-            gemstoneFilter[gemstoneFields[1]] = value;
-          }else if(gemstoneFields[0] == 'certificatedNumber'){
-            gemstoneFilter[gemstoneFields[0]] = value;
-          }else if(gemstoneFields[0] == 'certificateAgency'){
-            gemstoneFilter[gemstoneFields[0]] = value;
-          }else if(gemstoneFields[0] == 'cerDateFrom'){
-            gemstoneFilter[gemstoneFields[0]] = value;
-          }else if(gemstoneFields[0] == 'lotNumbers'){
-            lotNumberFilter[gemstoneFields[1]] = value;
-          }
-          else{
-            //   console.log('gemstoneFields[0]-->',gemstoneFields[0]);
-              switch (gemstoneFields[0]) {
-                  case 'sparePartProductHierarchy':
-                      break;
-                  case 'obaProductHierarchy':
-                      break;
-                  case 'accessoryProductHierarchy':
-                      break;
-                  case 'stoneProductHierarchy':
-                      break;
-                  case 'watchProductHierarchy':
-                      break;
-                  case 'jewelryProductHierarchy':
-                      break;
-                  default:
-                      params[key] = value;
-                      break;
-              }
-          }
-        });
-      });
-
-      if(Object.keys(gemstoneFilter).length != 0){
-        params['gemstones'] = gemstoneFilter;
-      }
-      if(Object.keys(lotNumberFilter).length != 0){
-        params['lotNumbers'] = lotNumberFilter;
-      }
+      params = GetGemstoneLotnumberFilter(filters, params);
 
       this.setState({
         showLoading: true,
@@ -1544,18 +1117,12 @@ class SearchResult extends Component {
       this.props.setShowGridView(false);
       this.props.setShowListView(false);
 
-      // console.log('params--:>',params);
       this.props.exportDatas(params)
-    // this.props.getItems(params)
           .then((value) => {
-            // console.log('value-->',value);
-          //   console.log('export done!');
             this.props.getCatalogNameSetItem();
             if(girdView){
-              // this.setState({showGridView: true});
               that.props.setShowGridView(true);
             }else if (listView) {
-              // this.setState({showListView: true});
               that.props.setShowListView(true);
             }
             that.setState({
