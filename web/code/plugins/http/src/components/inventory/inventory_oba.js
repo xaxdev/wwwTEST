@@ -6,6 +6,7 @@ import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/oba.json';
+import RemoveHierarchy from './utils/remove_hierarchy';
 
 class InventoryOBA extends Component {
   constructor(props) {
@@ -256,9 +257,9 @@ class InventoryOBA extends Component {
       }
     }
 
-    let hierarchyData = [];
-
-    hierarchyData.push(TreeData);
+    const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
+    // delete hierarchy
+    const hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'OBA');
 
     return(
       <div className="panel panel-default">

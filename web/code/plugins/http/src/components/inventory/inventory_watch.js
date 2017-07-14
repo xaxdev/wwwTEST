@@ -6,6 +6,7 @@ import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/watch.json';
+import RemoveHierarchy from './utils/remove_hierarchy';
 
 class InventoryWatch extends Component {
   constructor(props) {
@@ -524,34 +525,9 @@ class InventoryWatch extends Component {
       }
     }
 
-    let hierarchyData = [];
-
-    hierarchyData.push(TreeData);
-    // console.log(JSON.stringify(hierarchyData,null,4));
-    // // delete hierarchy
-    // hierarchyData = filterByProperty(hierarchyData, 'label', 'Bijou');
-    //
-    // function filterByProperty(array, prop, value){
-    //     var filtered = [];
-    //     var traverseNodes = function (node) {
-    //         if (node.label != value) {
-    //             // filtered.push(node);
-    //             if (node.children) {
-    //                 node.children = node.children.filter((item) => {
-    //                     return item.label != value
-    //                 })
-    //                 node.children.forEach(traverseNodes);
-    //             }
-    //         }
-    //     };
-    //
-    //     array.forEach(traverseNodes);
-    //
-    //     return array;
-    //
-    // }
-    //
-    // console.log('watch hierarchyData-->',hierarchyData);
+    const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
+    // delete hierarchy
+    const hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'WAT');
 
     return(
       <div className="panel panel-default">
@@ -648,15 +624,6 @@ class InventoryWatch extends Component {
                     onChange={this.handleMetalColourSelectChange} />
                   </div>
               </div>
-              {/*<div className="form-group">
-                <label className="col-sm-4 control-label">Dominant Stone</label>
-                <div className="col-sm-7">
-                  <Select multi simpleValue value={props.DominantStoneValue}
-                    placeholder="Select your Dominant Stone"
-                    options={dataDropDowntDominantStone}
-                    onChange={this.handleDominantStoneSelectChange} />
-                  </div>
-              </div>*/}
               <div className="form-group">
                 <label className="col-sm-4 control-label tooltiop-span">Limited Edition
                   <OverlayTrigger placement="top" overlay={tooltipLimitedEdition}>
@@ -711,52 +678,6 @@ class InventoryWatch extends Component {
 
             </div>
             <div className="col-lg-6 form-horizontal">
-              {/*<div className={`form-group ${(userLogin.permission.price == 'All') ?
-                  '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})
-                </label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalCostFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalCostTo}/>
-                  </div>
-                </div>
-              </div>
-              <div className={`form-group ${(userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All') ?
-                                            '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalUpdatedCostFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalUpdatedCostTo}/>
-                  </div>
-                </div>
-              </div>
-              <div className={`form-group ${(userLogin.permission.price == 'Public'
-                                            || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...publicPriceFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...publicPriceTo}/>
-                  </div>
-                </div>
-              </div>*/}
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
@@ -912,20 +833,6 @@ class InventoryWatch extends Component {
                     onChange={this.handleStrapColorSelectChange} />
                 </div>
               </div>
-              {/*<div className="form-group">
-                <label className="col-sm-4 control-label tooltiop-span">Complication
-                  <OverlayTrigger placement="top" overlay={tooltipComplication}>
-                    <img src="/images/alphanumeric.png" />
-                  </OverlayTrigger>
-                </label>
-                <div className="col-sm-7">
-                  <Select multi simpleValue value={props.ComplicationValue}
-                    placeholder="Select your Complication"
-                    options={dataDropDowntComplication}
-                    onChange={this.handleComplicationSelectChange} />
-                </div>
-              </div>*/}
-
             </div>
           </div>
         </div>

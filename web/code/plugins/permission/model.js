@@ -28,8 +28,14 @@ module.exports = {
       enum: ['Public', 'Updated', 'All'],
       required: true
     },
+    category:{
+        type: 'integer'
+    },
     user: {
       model: 'user'
+    },
+    notUseHierarchy:{
+        type: 'string'
     },
     toJSON: function () {
       var obj = this.toObject();

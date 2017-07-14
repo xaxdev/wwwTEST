@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {ROOT_URL,FETCH_USERS,CREATE_USER,FETCH_USER,UPDATE_USER,
-  DELETE_USER,DISABLE_USER,SET_SHAREEMAILTO,FETCH_SHAREUSERS} from '../constants/userConstants';
+  DELETE_USER,DISABLE_USER,SET_SHAREEMAILTO,FETCH_SHAREUSERS,SET_NOTUSEHIERARCHY} from '../constants/userConstants';
 
 export function fetchShareUsers(){
     const token = sessionStorage.token;
@@ -18,7 +18,12 @@ export function fetchShareUsers(){
           })
     	}
 }
-
+export function setNotUseHierarchy(value){
+  return {
+          type: SET_NOTUSEHIERARCHY,
+          notUseHierarchy:value
+  }
+}
 export function setDataSendEmailTo(value){
     return {
             type: SET_SHAREEMAILTO,

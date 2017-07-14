@@ -6,6 +6,7 @@ import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/spare.json';
+import RemoveHierarchy from './utils/remove_hierarchy';
 
 class InventorySparePart extends Component {
   constructor(props) {
@@ -241,9 +242,9 @@ class InventorySparePart extends Component {
       }
     }
 
-    let hierarchyData = [];
-
-    hierarchyData.push(TreeData);
+    const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
+    // delete hierarchy
+    const hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'SPP');
 
     return(
       <div className="panel panel-default">

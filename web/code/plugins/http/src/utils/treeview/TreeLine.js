@@ -1,5 +1,5 @@
 import React from 'react'
-var TreeNode = require('./TreeNode');
+var TreeNode = require('./TreeNodeLine');
 
 var Tree = React.createClass({
 	/* jshint ignore:start */
@@ -55,55 +55,58 @@ var Tree = React.createClass({
 	  	}
 	};
 
-	if (!!evt[0]) {
-		// if data from save search db
-		// console.log(evt.length);
-		evt.map((val,i) => {
-			// console.log(val);
-			// console.log(i);
-			checked = val.checked;
-			key = val.code;
-			this.state.data.forEach(traverseNodes);
-		})
-	}else{
-		// if data from web by click on hierarchy
-		checked = (evt.target != undefined)
-						? evt.target.checked
-						: (evt.checked != undefined)
-							? evt.checked
-							: evt[0] != undefined ? evt[0].checked: false;
-	    key = (evt != undefined)
-					? (evt.target != undefined)
-						? evt.target.getAttribute('data-key')
-						: (evt.key != undefined)
-							? evt.key
-							: evt[0] != undefined ? evt[0].code : ''
-					: '';
-
-		this.state.data.forEach(traverseNodes);
-		// set primary node false
-		if(!checked){
-			// this.state.data[0] = {...this.state.data[0], checked: false};
-			this.state.data[0].checked = false;
-			this.state.data.forEach(traverseNodesUnChecked);
-			if (listParentNode.length != 1) {
-				this.state.data.forEach(setUncheckedParentNode);
-			}
-		}else{
-			// set primary node true
-			const childrens = this.state.data[0].children.length;
-			let counts = 0;
-			this.state.data[0].children.map((val) => {
-				if (val.checked) {
-					counts++;
-					if (counts == childrens) {
-						// this.state.data[0] = {...this.state.data[0], checked: true};
-						this.state.data[0].checked = true;
-					}
-				}
+	if (evt != null) {
+		if (!!evt[0]) {
+			// if data from save search db
+			// console.log(evt.length);
+			evt.map((val,i) => {
+				// console.log(val);
+				// console.log(i);
+				checked = val.checked;
+				key = val.code;
+				this.state.data.forEach(traverseNodes);
 			})
+		}else{
+			// if data from web by click on hierarchy
+			checked = (evt.target != undefined)
+			? evt.target.checked
+			: (evt.checked != undefined)
+			? evt.checked
+			: evt[0] != undefined ? evt[0].checked: false;
+			key = (evt != undefined)
+			? (evt.target != undefined)
+			? evt.target.getAttribute('data-key')
+			: (evt.key != undefined)
+			? evt.key
+			: evt[0] != undefined ? evt[0].code : ''
+			: '';
+
+			this.state.data.forEach(traverseNodes);
+			// set primary node false
+			if(!checked){
+				// this.state.data[0] = {...this.state.data[0], checked: false};
+				this.state.data[0].checked = false;
+				this.state.data.forEach(traverseNodesUnChecked);
+				if (listParentNode.length != 1) {
+					this.state.data.forEach(setUncheckedParentNode);
+				}
+			}else{
+				// set primary node true
+				const childrens = this.state.data[0].children.length;
+				let counts = 0;
+				this.state.data[0].children.map((val) => {
+					if (val.checked) {
+						counts++;
+						if (counts == childrens) {
+							// this.state.data[0] = {...this.state.data[0], checked: true};
+							this.state.data[0].checked = true;
+						}
+					}
+				})
+			}
 		}
 	}
+
 
 	// var dataSource = Object.create(this.state.data);
 	// console.log('dataSource-->',dataSource);

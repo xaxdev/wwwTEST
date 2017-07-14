@@ -6,6 +6,7 @@ import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/stone.json';
+import RemoveHierarchy from './utils/remove_hierarchy';
 
 class InventoryStone extends Component {
   constructor(props) {
@@ -453,9 +454,9 @@ class InventoryStone extends Component {
         dataDropDowntOrigin = dataDropDowntOrigin[0];
       }
     }
-    let hierarchyData = [];
-
-    hierarchyData.push(TreeData);
+    const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
+    // delete hierarchy
+    const hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'STO');
     return (
       <div className="panel panel-default">
         <div className="panel-body">
@@ -585,51 +586,6 @@ class InventoryStone extends Component {
                   </div>
                 </div>
               </div>
-              {/*<div className={`form-group ${(userLogin.permission.price == 'All') ?
-                  '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalCostFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalCostTo}/>
-                  </div>
-                </div>
-              </div>
-              <div className={`form-group ${(userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All') ?
-                                            '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalUpdatedCostFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...totalUpdatedCostTo}/>
-                  </div>
-                </div>
-              </div>
-              <div className={`form-group ${(userLogin.permission.price == 'Public'
-                                            || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}>
-                <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
-                <div className="col-sm-7">
-                  <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...publicPriceFrom}/>
-                  </div>
-                  <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                  <div className="col-sm-4 nopadding">
-                    <input type="text" className="form-control" {...publicPriceTo}/>
-                  </div>
-                </div>
-              </div>*/}
               <div className={`form-group ${(userLogin.permission.price == 'All'
                   || userLogin.permission.price == 'Updated') ?
                   '' : 'hidden'}`}>
