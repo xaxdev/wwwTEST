@@ -146,14 +146,21 @@ class MyCatalog extends Component {
         let dvTotalSetItems = jQuery('#dvTotalSetItems').html();
         let dvGridview = jQuery('#dvGridview').html();
         let dv = {
-                    'dvTotalItems': dvTotalItems, 'dvTotalSetItems': dvTotalSetItems, 'dvGridview': dvGridview
+                    'dvTotalItems': dvTotalItems, 'dvTotalSetItems': dvTotalSetItems, 'dvGridview': dvGridview,
+                    'printPrice': printPrice
                 };
         let htmlTemplate = '';
-        htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
-        let params = {
-                        'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
-                        'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL
-                    }
+        switch (printPage) {
+            case 'current':
+                htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
+                break;
+            default:
+                htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
+        }
+        console.log('htmlTemplate-->',htmlTemplate);
+
+        let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
+                        'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL};
       //   this.props.writeHtml(params)
       //       .then((value) => {
       //           if (value) {
@@ -171,6 +178,13 @@ class MyCatalog extends Component {
         this.setState({isOpenPrintOptions: false});
     }
     renderDialogPrintOptions = _ =>{
+        const { fields: {printPage, printPrice} } = this.props;
+        if (printPage.value == undefined) {
+            printPage.onChange('all');
+        }
+        if (printPrice.value == undefined) {
+            printPrice.onChange('all');
+        }
         return(<ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions}
             isClose={this.handleClosePrintOptions} props={this.props} />);
     }

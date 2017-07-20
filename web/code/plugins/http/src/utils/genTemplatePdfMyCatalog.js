@@ -1,5 +1,5 @@
 export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
-
+    const printPrice = dv.printPrice.value;
     let dvTotalItems = dv.dvTotalItems;
     let dvTotalSetItems = dv.dvTotalSetItems;
     let dvGridview = dv.dvGridview;
@@ -28,6 +28,18 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
 
     dvTotalItems = dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotalItems = dvTotalItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
+    switch (printPrice) {
+        case 'public':
+            dvTotalItems = dvTotalItems.replace(/class="spItemsUpdated "/g,'style="display: none !important;visibility: hidden !important;"');
+            dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsUpdated "/g,'style="display: none !important;visibility: hidden !important;"');
+            break;
+        case 'updated':
+            dvTotalItems = dvTotalItems.replace(/class="spItemsPublicPrice "/g,'style="display: none !important;visibility: hidden !important;"');
+            dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsPublicPrice "/g,'style="display: none !important;visibility: hidden !important;"');
+            break;
+        default:
+
+    }
     dvTotalSetItems = dvTotalSetItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotalSetItems = dvTotalSetItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
 
