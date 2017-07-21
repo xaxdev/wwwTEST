@@ -79,10 +79,7 @@ class InventoryFilter extends Component {
   };
 
   componentWillMount(){
-    // console.log('componentWillMount-->');
-    // this.props.resetFilter();
     let that = this;
-    // console.log('componentWillMount');
     this.props.masterDataActions.get()
     .then( () => {
 
@@ -95,8 +92,6 @@ class InventoryFilter extends Component {
     });
   }
   componentDidMount(){
-    // console.log('componentDidMount-->');
-    // console.log('componentDidMount-->',this.refs.jewelry);
     this.setState({ showLoading: true });
     this.refs.jewelry.treeOnUnClick();
     this.refs.watch.treeOnUnClick();
@@ -138,15 +133,12 @@ class InventoryFilter extends Component {
         let w = $('#page-wrapper').width();
       $('#scroller').removeClass('stuck').css({'width':w});
     });
-
-
   }
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
   renderAlertMessage(){
-
     return(
       <div key={this.props.statusCode}>
         <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
@@ -170,8 +162,6 @@ class InventoryFilter extends Component {
     );
   }
   tabsSelected(activeKey){
-    // console.log('activeKey-->',activeKey);
-    // console.log('this.props.activeTabCategory-->',this.props.activeTabCategory);
     if(activeKey != this.props.activeTabCategory){
       this.setState({
         alert:true,
@@ -182,11 +172,8 @@ class InventoryFilter extends Component {
   }
   advanceSearchClick(e){
     e.preventDefault();
-
     let btnadvance = document.querySelector('.btn-advance') // Using a class instead, see note below.
     btnadvance.classList.toggle('btn-activebtn');
-    // console.log('btnadvance --->',btnadvance);
-    // console.log('click Advance');
     if (this.props.IsAdvance) { // Hide
       this.setState({ hideAdvanceSearch: false });
       this.props.inventoryActions.setAdvance(false);
@@ -196,14 +183,12 @@ class InventoryFilter extends Component {
     }
     let { activeTabCategory } = this.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
-    // console.log('userLogin-->',userLogin);
 
     let permission = userLogin.permission;
     let bitwise = Number(permission.productGroup).toString(2);
     let checkbits = bitwise.split('')
     let numberDiit = checkbits.length;
     let setActiveTab = activeTabCategory;
-    // console.log('numberDiit-->',numberDiit);
 
     checkbits.map(function(value,key){
       switch (numberDiit) {
@@ -269,7 +254,6 @@ class InventoryFilter extends Component {
           break;
       }
     });
-
     if (productGroupJLY) {
       setActiveTab = setActiveTab;
       this.setState({ beforeActiveTab: setActiveTab });
@@ -288,7 +272,6 @@ class InventoryFilter extends Component {
       }else{
         this.props.inventoryActions.setAdvance(false);
       }
-
       activeTabCategory = setActiveTab;
       this.setState({ beforeActiveTab: setActiveTab });
       this.props.inventoryActions.selectedTabCategory(setActiveTab);
@@ -300,7 +283,6 @@ class InventoryFilter extends Component {
   confirmModal(e){
     e.preventDefault();
     let { activeTab } = this.state;
-    // console.log('activeTab-->',activeTab);
     this.setState({
       isOpen: false,
       beforeActiveTab: activeTab
@@ -317,7 +299,6 @@ class InventoryFilter extends Component {
   hideModal = (e) => {
     e.preventDefault();
     let { beforeActiveTab } = this.state;
-    // console.log('beforeActiveTab-->',beforeActiveTab);
     this.setState({
       isOpen: false,
       activeTab: beforeActiveTab
@@ -334,8 +315,6 @@ class InventoryFilter extends Component {
     this.refs.sparepart.treeOnUnClick();
   }
   resetFormInventory() {
-    // console.log('ResetFormMain-->');
-
     let fileName = jQuery('#fileName');
     let fileNameSetReference = jQuery('#fileNameSetReference');
 
@@ -351,12 +330,8 @@ class InventoryFilter extends Component {
     setReference.onChange('');
 
     ResetFormMain(this);
-    // console.log('this.props.SearchAction-->',this.props.SearchAction);
     this.props.resetForm();
-    // console.log('reset form')
-    // console.log('this.props.SearchAction-->',this.props.SearchAction);
     this.refs.jewelry.treeOnUnClick();
-    // console.log('reset hierarchy')
     this.refs.watch.treeOnUnClick();
     this.refs.stone.treeOnUnClick();
     this.refs.accessory.treeOnUnClick();
@@ -367,10 +342,7 @@ class InventoryFilter extends Component {
 
   handleSaveSearch = _=> {
     const { fields: { searchName } } = this.props;
-    // searchName.onChange('');
-    // searchName.value = '';
     (async _ => {
-        // console.log(this.props.fields);
         await this.props.inventoryActions.setSubmitAction('save');
         this.setState({showDialogSaveSearch: false});
         this.props.handleSubmit();
@@ -388,7 +360,6 @@ class InventoryFilter extends Component {
   }
 
   renderSaveSearch = _=> {
-    //   console.log(this);
       const { submitting } = this.props;
       return(<ModalSaveSearch onSubmit={this.handleSaveSearch}
           isOpen={this.state.showDialogSaveSearch}
@@ -403,17 +374,13 @@ class InventoryFilter extends Component {
   }
 
   handleSelection = (data) =>{
-    //   console.log(data);
       switch (data.activity.toLowerCase()) {
           case 'reset':
                 this.resetFormInventory();
-                // console.log('reset');
               break;
           default:
-                // console.log('save as Or Save');
                 this.renderDialogSaveSearch();
                 break;
-
       }
   }
 
@@ -426,8 +393,6 @@ class InventoryFilter extends Component {
     const isNotOwnerSharedSearch = this.props.searchResult.criteriaSaveSearch != null
                                     ? this.props.searchResult.criteriaSaveSearch.shared
                                     : false ;
-    // console.log('this.props-->',this.props);
-    // console.log('isNotOwnerSharedSearch-->',isNotOwnerSharedSearch);
 
     let permission = userLogin.permission;
     let bitwise = Number(permission.productGroup).toString(2);
@@ -499,8 +464,7 @@ class InventoryFilter extends Component {
           break;
       }
     });
-    // console.log('this.props.searchResult.idEditSaveSearch-->',this.props.searchResult.idEditSaveSearch);
-    // console.log('isNotOwnerSharedSearch-->',isNotOwnerSharedSearch);
+
     let btnMenu = [];
     if (this.props.searchResult.idEditSaveSearch != null) {
         if (isNotOwnerSharedSearch) {
@@ -519,7 +483,6 @@ class InventoryFilter extends Component {
     }
 
     const fancyMenuItems = btnMenu.map((activity, i) => (
-
         <MenuItem
             value={{
               activity,
@@ -550,7 +513,6 @@ class InventoryFilter extends Component {
         </CSSTransitionGroup>
       );
     };
-    // console.log('this.state.showLoading-->',this.state.showLoading);
       return (
 
         <form role="form">
@@ -569,12 +531,6 @@ class InventoryFilter extends Component {
                     </div>
                     <div className="col-sm-6 m-width-40 m-nopadding">
                         <div className="text-right maring-t15">
-                            {/*<button type="button" className="btn btn-primary btn-radius"
-                                disabled={submitting} onClick={this.renderDialogSaveSearch}>
-                                {`${this.props.searchResult.idEditSaveSearch != null
-                                                    ? isNotOwnerSharedSearch ? 'Save As' : 'Save'
-                                                    : 'Save As'}`}
-                            </button>*/}
                             <button type="button" className="btn btn-primary btn-radius"
                                 disabled={submitting} onClick={this.handleSearch}>Search</button>
                             <Wrapper
@@ -591,10 +547,6 @@ class InventoryFilter extends Component {
                                   {menuInnards}
                                 </Menu>
                             </Wrapper>
-                          {/*<button type="button" className="btn btn-primary btn-radius"
-                            disabled={submitting} onClick={this.resetFormInventory}>
-                            <i/> Reset
-                          </button>*/}
                         </div>
                     </div>
                 </div>

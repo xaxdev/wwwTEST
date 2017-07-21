@@ -4,7 +4,6 @@ import { Button,FormControl,Pagination, ControlLabel, DropdownButton, MenuItem }
 import ToolTip from 'react-portal-tooltip';
 import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment-timezone';
-
 import * as itemactions from '../../actions/itemactions';
 import numberFormat from '../../utils/convertNumberformat';
 import GridItemsView from '../../components/mycatalog/griditemview';
@@ -14,6 +13,8 @@ import Modalalertmsg from '../../utils/modalalertmsg';
 import GenTemplateHtml from '../../utils/genTemplatePdfMyCatalog';
 import ModalShareMyCatalog from '../../utils/modalShareMyCatalog';
 import validateEmail from '../../utils/validateemail';
+import RenderClassTotals from './utils/render_total';
+import ModalPrintOptions from './utils/modalPrintOptions';
 
 import { LASTMODIFIED, REFERENCE, DESCRIPTION, DESCENDING, ASCENDING } from '../../constants/itemconstants';
 
@@ -53,31 +54,21 @@ class MyCatalog extends Component {
         this.printResults = this.printResults.bind(this);
         this.shareMyCatalog = this.shareMyCatalog.bind(this);
         this.selectedPageSize = this.selectedPageSize.bind(this);
+        this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
 
         this.state = {
-          activePage: this.props.currentPage,
-          isOpenDeleteItem: false,
-          isOpenAddMyCatalogmsg: false,
-          isTooltipActive: false,
-          isOpenDeleteCatalog: false,
-          enabledMyCatalog: false,
-          isOpenDeleteAllItem: false,
-          isOpenZeroCatalog: true,
-          isOpenPrintPdfmsg: false,
-          isOpenShareMyCatalog: false,
-          checkAllItems: false
+          activePage: this.props.currentPage, isOpenDeleteItem: false, isOpenAddMyCatalogmsg: false,
+          isTooltipActive: false, isOpenDeleteCatalog: false, enabledMyCatalog: false, isOpenDeleteAllItem: false,
+          isOpenZeroCatalog: true, isOpenPrintPdfmsg: false, isOpenShareMyCatalog: false, checkAllItems: false,
+          isOpenPrintOptions: false
         }
-
     }
 
     componentWillMount = _=>{
-
         let catalogName = '';
         const { fields: { catalog } } = this.props;
         this.props.getCatalogNameSetItem().then((value) => {
-        // this.props.getCatalogName().then((value) => {
             if (value) {
-                // console.log('componentWillMount this.props-->',this.props.catalogId);
                 let catalogId = '';
                 let isCatalogShared = false;
                 if(this.props.listCatalogName != undefined){
@@ -86,7 +77,6 @@ class MyCatalog extends Component {
                         isCatalogShared = this.props.isCatalogShared;
                     }else{
                         if(this.props.listCatalogName.length != 0){
-                            // console.log('componentWillMount this.props.listCatalogName[0].shared-->',this.props.listCatalogName[0].shared);
                             catalogId = this.props.listCatalogName[0]._id;
                             catalogName = this.props.listCatalogName[0].catalog;
                             isCatalogShared = this.props.listCatalogName[0].shared;
@@ -94,10 +84,8 @@ class MyCatalog extends Component {
                             isCatalogShared = true;
                         }
                     }
-
                     let parasm = {
-                            id: catalogId,
-                            page: this.props.currentPage,
+                            id: catalogId, page: this.props.currentPage,
                             size: !!this.props.pageSize ? this.props.pageSize : 16,
                             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
@@ -106,7 +94,6 @@ class MyCatalog extends Component {
                         catalog.value = catalogName;
                         catalog.onChange(catalogName);
                         this.props.setRenameCatalog(catalogName);
-                        // this.props.getCatalogItems(parasm);
                         this.props.getCatalogItemsWithSetItem(parasm);
                         this.props.setIsCatalogShare(isCatalogShared);
                     }else{
@@ -128,12 +115,9 @@ class MyCatalog extends Component {
 
     componentDidMount() {
         let that = this;
-
         if(this.refs.pageSize != undefined){
-          // let select = React.findDOMNode(this.refs.sortingBy);
           let values = [].filter.call(this.refs.pageSize.options, function (o) {
                 o.selected = false;
-
                 if(o.value == that.props.pageSize){
                   o.selected = true
                 }
@@ -149,60 +133,67 @@ class MyCatalog extends Component {
     }
 
     printResults(e){
-      e.preventDefault();
+        //   e.preventDefault();
+        const { fields: {printPage, printPrice} } = this.props;
+        let items = this.props.listCatalogName != undefined ?
+                        this.props.listCatalogName.length != 0 ?
+                            this.props.listCatalogItems.allItems != undefined ? this.props.listCatalogItems.allItems : [] :
+                        [] :
+                    [];
+        // console.log('items-->',items);
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const host = HOSTNAME || 'localhost';
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+        let imagesReplace = ROOT_URL+'/images/';
+        let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
+        let dvTotalItems = jQuery('#dvTotalItems').html();
+        let dvTotalSetItems = jQuery('#dvTotalSetItems').html();
+        let dvGridview = jQuery('#dvGridview').html();
+        let dv = {
+                    'dvTotalItems': dvTotalItems, 'dvTotalSetItems': dvTotalSetItems, 'dvGridview': dvGridview,
+                    'printPage':printPage, 'printPrice': printPrice, 'items': items, 'userLogin': userLogin
+                };
+        let htmlTemplate = '';
+        htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
 
-    //   const { showGridView,showListView } = this.props;
-      const userLogin = JSON.parse(sessionStorage.logindata);
+        // console.log('htmlTemplate-->',htmlTemplate);
 
-      const host = HOSTNAME || 'localhost';
-      const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
-      let imagesReplace = ROOT_URL+'/images/';
+        let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
+                        'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL};
+        this.props.writeHtml(params)
+            .then((value) => {
+                if (value) {
+                    this.setState({isOpenPrintPdfmsg: true});
+                }
+                // console.log(value);
+            });
+          this.setState({isOpenPrintOptions: false});
+    }
 
-      let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
-
-      let dvTotalItems = jQuery('#dvTotalItems').html();
-      let dvTotalSetItems = jQuery('#dvTotalSetItems').html();
-      let dvGridview = jQuery('#dvGridview').html();
-
-      let dv = {
-                  'dvTotalItems': dvTotalItems,
-                  'dvTotalSetItems': dvTotalSetItems,
-                  'dvGridview': dvGridview
-              };
-
-      let htmlTemplate = '';
-
-      htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
-
-      console.log(htmlTemplate);
-
-      let params = {
-                      'temp': htmlTemplate,
-                      'userName': `${userLogin.username}_${exportDate}`,
-                      'userEmail': userLogin.email,
-                      'ROOT_URL': ROOT_URL
-                  }
-
-      this.props.writeHtml(params)
-          .then((value) => {
-              if (value) {
-                  this.setState({isOpenPrintPdfmsg: true});
-              }
-              console.log(value);
-          });
-
+    showDialogPrintOptions = _ =>{
+        this.setState({isOpenPrintOptions: true});
+    }
+    handleClosePrintOptions = _ =>{
+        this.setState({isOpenPrintOptions: false});
+    }
+    renderDialogPrintOptions = _ =>{
+        const { fields: {printPage, printPrice} } = this.props;
+        if (printPage.value == undefined) {
+            printPage.onChange('all');
+        }
+        if (printPrice.value == undefined) {
+            printPrice.onChange('all');
+        }
+        return(<ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions}
+            isClose={this.handleClosePrintOptions} props={this.props} />);
     }
 
     handleSubmitDeleteAllItem = (e)=>{
         e.preventDefault();
-        // console.log('handleSubmitDeleteAllItem');
         const { catalogId } = this.props;
         let catalog = this.refs.catalog;
-
         this.setState({isOpenDeleteAllItem: false});
-        // console.log('listMyCatalog-->',listMyCatalog);
         let items = [];
-
         listMyCatalog.map((item) => {
             let itemDelete = {};
             if (item.id != null) {
@@ -213,39 +204,27 @@ class MyCatalog extends Component {
             items.push(itemDelete);
         })
         let paramsItem ={id: catalogId, items: items};
-        // console.log('params-->',params);
         if (catalogId != null) {
             this.props.deleteCatalogItems(paramsItem).then( () =>{
-                // console.log('Deleted!');
                 let params = {
-                                id: catalogId,
-                                page: this.props.currentPage,
-                                size: 16,
+                                id: catalogId, page: this.props.currentPage, size: 16,
                                 sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                             };
-                // this.props.getCatalogItems(params);
                 this.props.getCatalogItemsWithSetItem(params);
-
             });
         }
-        // console.log('catalog-->',catalog);
     }
 
     deleteAllItems = _=> {
         const { catalogId } = this.props;
         let catalog = this.refs.catalog;
-
-        // console.log('listMyCatalog-->',listMyCatalog);
         let items = [];
-
         listMyCatalog.map((item) => {
             items.push({id: item.id});
         })
         let params ={id: catalogId, items: items};
-        // console.log('params-->',params);
         this.setState({isOpenDeleteAllItem: true});
-
     }
 
     onCheckedAllItemMyCatalog = (e)=> {
@@ -253,7 +232,6 @@ class MyCatalog extends Component {
         const { items, allItems } = this.props.listCatalogItems;
         const { catalogId } = this.props;
         const totalAllItems = allItems.length;
-
         if (catalogId != null) {
             if (e.target.checked) {
                 this.setState({enabledMyCatalog: true});
@@ -261,14 +239,10 @@ class MyCatalog extends Component {
                 allItems.map((item) => {
                     let itemName = (item.type != 'CER')? item.description: item.name;
                     let objItem = {
-                        id: item.id,
-                        reference: item.reference,
-                        description: itemName,
-                        catalogId: catalogId
+                        id: item.id, reference: item.reference, description: itemName, catalogId: catalogId
                     };
                     listMyCatalog.push(objItem);
                 });
-
                 chkAllItems.map(function(field, index){
                     that.setState({[field]: true});
                 });
@@ -285,7 +259,6 @@ class MyCatalog extends Component {
     }
 
     checkedOneItemMyCatalog = (e)=> {
-        // console.log(e.target.value);
         const { items,total_items,total_setitems } = this.props.listCatalogItems;
         const { catalogId } = this.props;
         const itemTargetId = e.target.value.split('=');
@@ -300,16 +273,13 @@ class MyCatalog extends Component {
         itemAdded = itemAdded[0];
         let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
         let objItem = {
-                        id: itemAdded.id,
-                        reference: itemAdded.reference,
-                        description: itemName,
+                        id: itemAdded.id, reference: itemAdded.reference, description: itemName,
                         catalogId: catalogId
                     };
 
         if(!this.state.enabledMyCatalog){
             listMyCatalog = [];
         }
-
         if (e.target.checked) {
             listMyCatalog.push(objItem);
             this.setState({[itemIndexId]: true});
@@ -323,7 +293,6 @@ class MyCatalog extends Component {
             this.setState({[itemIndexId]: false});
             this.setState({checkAllItems: false});
         }
-
         if (listMyCatalog.length != 0) {
           this.setState({enabledMyCatalog: true});
         } else {
@@ -333,42 +302,30 @@ class MyCatalog extends Component {
 
     changeSortingDirection = (e)=> {
         e.preventDefault();
-
         let sortingDirection = e.target.value;
         const pageSize = this.refs.pageSize.value;
         const { catalogId, listCatalogItems } = this.props;
-
         let parasm = {
-                id: catalogId,
-                page: this.props.currentPage,
-                size: pageSize,
-                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
-                order: sortingDirection
+                id: catalogId, page: this.props.currentPage, size: pageSize, order: sortingDirection,
+                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2
             };
         this.props.setCatalogSortDirection(sortingDirection);
         if (catalogId != null) {
-            // this.props.getCatalogItems(parasm);
             this.props.getCatalogItemsWithSetItem(parasm);
         }
     }
 
     changeSortingBy = (e)=> {
         e.preventDefault();
-
         let sortingBy = e.target.value;
         const pageSize = this.refs.pageSize.value;
         const { catalogId, listCatalogItems } = this.props;
-
         let parasm = {
-                id: catalogId,
-                page: this.props.currentPage,
-                size: pageSize,
-                sort: sortingBy,
+                id: catalogId, page: this.props.currentPage, size: pageSize, sort: sortingBy,
                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
             };
         this.props.setCatalogSortingBy(sortingBy);
         if (catalogId != null) {
-            // this.props.getCatalogItems(parasm);
             this.props.getCatalogItemsWithSetItem(parasm);
         }
     }
@@ -377,12 +334,10 @@ class MyCatalog extends Component {
         e.preventDefault();
         const { fields: { catalog }, catalogId } = this.props;
         let params = {id: catalogId, catalog: catalog.value};
-        // console.log(params);
         this.setState({isTooltipActive: false});
         if (catalogId != null) {
             this.props.setNewCatalogName(params).then((value) => {
                 if(value){
-                    // this.props.getCatalogName();
                     this.props.getCatalogNameSetItem();
                 }
             });
@@ -390,30 +345,24 @@ class MyCatalog extends Component {
     }
 
     changeCatalogName = (e)=> {
-        // e.preventDefault();
         const catalogName = e.target.value;
         const { fields: { catalog } } = this.props;
-        // console.log('catalogName-->',catalogName);
         catalog.value = catalogName;
         catalog.onChange(catalogName);
         this.props.setRenameCatalog(catalogName);
     }
 
     showTooltip = _=> {
-        // console.log('showTooltip');
         let catalogName = this.refs.catalogName;
         this.setState({isTooltipActive: true})
     }
     hideTooltip = _=>{
-        // console.log('hideTooltip');
         this.setState({isTooltipActive: false});
     }
 
     onClickGrid(pageNumber){
-      // console.log('onClickGrid==>',pageNumber);
       const token = sessionStorage.token;
       const getIdReference = pageNumber.split('=');
-    //   console.log('getIdReference-->',getIdReference);
       if(token){
           if (getIdReference[0] == 'id') {
               this.context.router.push(`/productmycatalog/${getIdReference[1]}`);
@@ -425,37 +374,23 @@ class MyCatalog extends Component {
 
     handleGo(e){
         e.preventDefault();
-        // console.log('handleGo-->',this.refs.reletego.value);
-
         const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
-
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { catalogId, listCatalogItems } = this.props;
-
         if (Number(this.refs.reletego.value) > listCatalogItems.total_pages || Number(this.refs.reletego.value) < 1) {
             this.setState({isOpenAddMyCatalogmsg: true});
-        //   this.renderAlertmsg('Page is invalid.');
         }else{
             const pageSize = this.refs.pageSize.value;
-
             this.setState({activePage: getPage});
-
-            this.setState({
-              showLoading: true
-            });
-
+            this.setState({showLoading: true});
             let parasm = {
-                    id: catalogId,
-                    page: getPage,
-                    size: pageSize,
+                    id: catalogId, page: getPage, size: pageSize,
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
             this.props.setCatalogCurrentPage(getPage);
             if (catalogId != null) {
-                // this.props.getCatalogItems(parasm).then((value) => {
                 this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
-                    // console.log(value);
                 });
             }
         }
@@ -467,24 +402,17 @@ class MyCatalog extends Component {
         const catalogId = e.target.value;
         this.setState({activePage: 1});
         this.props.setCatalogCurrentPage(1);
-        // console.log('listCatalogName-->',listCatalogName);
         let [selectedCatalog] = listCatalogName.filter((catalog) => {return catalog._id == catalogId});
-        // console.log('selectedCatalog-->',selectedCatalog.shared);
         let parasm = {
-                    id: catalogId,
-                    page: 1,
-                    size: 16,
+                    id: catalogId, page: 1, size: 16,
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
-        // this.props.getCatalogItems(parasm);
         this.props.getCatalogItemsWithSetItem(parasm)
         this.props.setIsCatalogShare(selectedCatalog.shared);
     }
 
     deleteOneItemMyCatalog = (item) => {
-        // let fileName = jQuery('input[type="checkbox"]');
-        // fileName.removeAttr('checked');
         listDeleteMyCatalog  = [];
         this.setState({enabledMyCatalog: false});
         const { items } = this.props.listCatalogItems;
@@ -499,16 +427,11 @@ class MyCatalog extends Component {
         itemAdded = itemAdded[0];
         let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
         let objItem = {
-                        id: itemAdded.id,
-                        reference: itemAdded.reference,
-                        description: itemName,
+                        id: itemAdded.id, reference: itemAdded.reference, description: itemName,
                         catalogId: catalogId
                     };
 
         listDeleteMyCatalog.push(objItem);
-
-        // this.refs.selectAllItems.checked = false;
-
         this.setState({isOpenDeleteItem: true});
     }
 
@@ -520,11 +443,8 @@ class MyCatalog extends Component {
         e.preventDefault();
         const { catalogId } = this.props;
         let catalog = this.refs.catalog;
-
         this.setState({isOpenDeleteItem: false});
-        // console.log('listMyCatalog-->',listMyCatalog);
         let items = [];
-
         listDeleteMyCatalog.map((item) => {
             let itemDelete = {};
             if (item.id != null) {
@@ -535,49 +455,36 @@ class MyCatalog extends Component {
             items.push(itemDelete);
         })
         let params ={id: catalogId, items: items};
-        // console.log('params-->',params);
         if (catalogId != null) {
             this.props.deleteCatalogItems(params).then( () =>{
-                // console.log('Deleted!');
                 let parasm = {
-                    id: catalogId,
-                    page: this.props.currentPage,
-                    size: 16,
+                    id: catalogId, page: this.props.currentPage, size: 16,
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
-                // this.props.getCatalogItems(parasm);
                 this.props.getCatalogItemsWithSetItem(parasm)
-
             });
         }
-        // console.log('catalog-->',catalog);
     }
 
     handleSubmitDeleteCatalog = (e)=>{
         e.preventDefault();
         const { catalogId } = this.props;
-        // console.log('Deleted!-->',catalogId);
         let params = {id: catalogId}
         this.setState({isOpenDeleteCatalog: false});
         if (catalogId != null) {
             this.props.deleteCatalog(params).then((valueDelete) => {
                 if (valueDelete) {
                     this.props.getCatalogNameSetItem().then((valueGetCatalog) => {
-                    // this.props.getCatalogName().then((valueGetCatalog) => {
                         if (valueGetCatalog) {
-                            // console.log('componentWillMount-->',this.props.listCatalogName);
                             let isCatalogShared = false;
                             if(this.props.listCatalogName.length != 0){
                                 isCatalogShared = this.props.listCatalogName[0].shared;
                                 let parasm = {
-                                    id: this.props.listCatalogName[0]._id,
-                                    page: this.props.currentPage,
-                                    size: 16,
+                                    id: this.props.listCatalogName[0]._id, page: this.props.currentPage, size: 16,
                                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                                 };
-                                // this.props.getCatalogItems(parasm);
                                 this.props.getCatalogItemsWithSetItem(parasm)
                                 this.props.setIsCatalogShare(isCatalogShared);
                             }else{
@@ -609,10 +516,6 @@ class MyCatalog extends Component {
 
     handleClosemsgZeroCatalog = _=>{
         this.setState({isOpenZeroCatalog: false});
-        // const token = sessionStorage.token;
-        // if(token){
-        //     this.context.router.push('/inventories');
-        // }
     }
 
     handleCloseDeleteCatalog = _=>{
@@ -620,29 +523,12 @@ class MyCatalog extends Component {
     }
 
     renderPagination(){
-      const { fields: { currPage },
-              currentPage,
-              handleSubmit,
-              resetForm,
-              submitting } = this.props;
-      // console.log('totalPages-->',totalPages);
-      // console.log('this.state.activePage-->',this.state.activePage);
+      const { fields: { currPage }, currentPage, handleSubmit, resetForm, submitting } = this.props;
       const page = this.state.activePage;
       const totalPages = this.props.listCatalogItems.total_pages;
-      // currPage.value = this.state.activePage;
-      // console.log('renderPagination-->',this.state.activePage);
-
       return(
           <div>
-              <Pagination
-               prev
-               next
-               first
-               last
-               ellipsis
-               boundaryLinks
-               items={totalPages}
-               maxButtons={4}
+              <Pagination prev next first last ellipsis boundaryLinks items={totalPages} maxButtons={4}
                activePage={this.state.activePage}
                onSelect={this.handleSelect} />
               <div>
@@ -679,77 +565,20 @@ class MyCatalog extends Component {
     }
 
     renderTotals(){
-      const { fields: { currPage },
-              totalPages,
-              currentPage,
-              items,listCatalogItems,totalPrice,totalUpdatedCost,
-              handleSubmit,
-              resetForm,
-              submitting } = this.props;
+        const { fields: { currPage },totalPages,currentPage,items,listCatalogItems,totalPrice,totalUpdatedCost,
+                handleSubmit,resetForm,submitting } = this.props;
 
-        // console.log('listCatalogItems-->',listCatalogItems);
         const { setItemPrice,setItemUpdatedCost } = listCatalogItems;
         let _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
         let _totalPublicPrice =  (totalPrice!=null) ? numberFormat(totalPrice) : 0;
         let _totalPublicPriceSet = (setItemPrice!=null) ? numberFormat(setItemPrice) : 0;
         let _totalUpdatedCostSet = (setItemUpdatedCost!=null) ? numberFormat(setItemUpdatedCost) : 0;
-
         const userLogin = JSON.parse(sessionStorage.logindata);
 
-      return(
-        <div>
-          <div id="dvTotalItems" className="bg-f7d886 text-center border-b-white">
-                <span>
-                    <span className="font-b fc-000">All Pages :</span>
-                    <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
-                    <span className="padding-lf15">|</span>
-                </span>
-                <span>
-                    <span className="font-b fc-000">Total Items :</span>
-                    <span className="font-w9">{ numberFormat(listCatalogItems.total_items) } Items </span>
-                    <span className="padding-lf15">|</span>
-                </span>
-                <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                        || userLogin.permission.price == 'All') ?
-                        '' : 'hidden'}`}>
-                    <span className="font-b fc-000">Total Public Price :</span>
-                    <span className="font-w9">{ _totalPublicPrice } { userLogin.currency }</span>
-                </span>
-                <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
-                    '' : 'hidden'}`}>
-                    <span className="padding-lf15"> | </span>
-                    <span className="font-b fc-000">Total Updated Cost :</span>
-                    <span className="font-w9">{ _totalUpdatedCost } { userLogin.currency }
-                    </span>
-                </span>
-          </div>
-          <div id="dvTotalSetItems" className="bg-f7d886 text-center">
-                <span>
-                    <span className="font-b fc-000">All Pages :</span>
-                    <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
-                    <span className="padding-lf15">|</span>
-                </span>
-                <span>
-                    <span className="font-b fc-000">Total SetItems :</span>
-                    <span className="font-w9">{ numberFormat(listCatalogItems.total_setitems) } Sets </span>
-                    <span className="padding-lf15">|</span>
-                </span>
-                <span className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                        || userLogin.permission.price == 'All') ?
-                        '' : 'hidden'}`}>
-                    <span className="font-b fc-000">Total Public Price(Set) :</span>
-                    <span className="font-w9">{ _totalPublicPriceSet } USD</span>
-                </span>
-                <span className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
-                    '' : 'hidden'}`}>
-                    <span className="padding-lf15"> | </span>
-                    <span className="font-b fc-000">Total Updated Cost(Set) :</span>
-                    <span className="font-w9">{ _totalUpdatedCostSet } USD
-                    </span>
-                </span>
-          </div>
-        </div>
-      );
+        return(<RenderClassTotals userLogin={userLogin} listCatalogItems = {listCatalogItems}
+                _totalPublicPrice={_totalPublicPrice} _totalUpdatedCost = {_totalUpdatedCost}
+                _totalPublicPriceSet = {_totalPublicPriceSet} _totalUpdatedCostSet = {_totalUpdatedCostSet}
+                />);
     }
 
     renderAlertmsg = _=> {
@@ -766,7 +595,6 @@ class MyCatalog extends Component {
 
     renderAlertmsgShareCatalog = _=> {
         const { shareCatalogStatus, shareCatalogStatusCode, shareCatalogmsgError} = this.props;
-
         const title = 'SHARE CATALOG';
         let isOpen = shareCatalogStatusCode >= 200 ? true : false;
 
@@ -775,7 +603,6 @@ class MyCatalog extends Component {
     }
 
     renderAlertmsgPdf = _=> {
-
       const message = 'Please check your email for printing files.';
       const title = 'MY CATALOG';
       return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
@@ -803,7 +630,6 @@ class MyCatalog extends Component {
         }
         params.id = catalogId;
         params.users = paramEmails;
-        // console.log('params-->',params);
         this.props.shareCatalog(params)
             .then((response)=>{
                 this.setState({isOpenShareMyCatalog: false});
@@ -814,9 +640,7 @@ class MyCatalog extends Component {
     }
 
     handleCloseShareMyCatalog = _=> {
-        const { fields: {
-                  shareTo
-              } } = this.props;
+        const { fields: { shareTo } } = this.props;
         this.props.setDataSendEmailTo('');
         shareTo.onChange('');
         shareTo.value = '';
@@ -832,63 +656,40 @@ class MyCatalog extends Component {
 
     selectedPageSize = e =>{
         e.preventDefault();
-
         const pageSize = e.target.value;
         const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { catalogId, listCatalogItems } = this.props;
-
         this.setState({activePage: 1});
-
-        this.setState({
-            showLoading: true
-        });
-
+        this.setState({showLoading: true});
         let parasm = {
-            id: catalogId,
-            page: 1,
-            size: pageSize,
+            id: catalogId, page: 1, size: pageSize,
             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
         };
         this.props.setCatalogCurrentPage(getPage);
         this.props.setPageSize(pageSize);
-
         if (catalogId != null) {
-            // this.props.getCatalogItems(parasm).then((value) => {
             this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
-                // console.log(value);
             });
         }
     }
 
     handleSelect = eventKey => {
-
         const getPage = eventKey;
-
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { catalogId, listCatalogItems } = this.props;
-
         const pageSize = this.refs.pageSize.value;
-
         this.setState({activePage: getPage});
-
-        this.setState({
-          showLoading: true
-        });
-
+        this.setState({showLoading: true});
         let parasm = {
-                id: catalogId,
-                page: getPage,
-                size: pageSize,
+                id: catalogId, page: getPage, size: pageSize,
                 sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
             };
         this.props.setCatalogCurrentPage(getPage);
         if (catalogId != null) {
-            // this.props.getCatalogItems(parasm).then((value) => {
             this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
-                // console.log(value);
             });
         }
     }
@@ -908,10 +709,6 @@ class MyCatalog extends Component {
                     borderColor: false
                 }
             }
-            // let isOpenMsg =  this.state.isOpenAddMyCatalogmsg;
-            // console.log('this.props.-->',this.props.listCatalogName);
-            // console.log('catalogName-->',catalogName);
-            // console.log('isCatalogShared-->',isCatalogShared);
 
             let items = this.props.listCatalogName != undefined ?
                             this.props.listCatalogName.length != 0 ?
@@ -921,7 +718,6 @@ class MyCatalog extends Component {
             return(
                 <form role="form">
                   {/* Header Search */}
-
                   <div className="col-sm-12 col-xs-12 padding-b10 bg-hearder-mycatalog">
                       <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
                       <div className="col-md-12 col-sm-12 col-xs-12">
@@ -942,9 +738,7 @@ class MyCatalog extends Component {
                                       </div>
                                   </div>
                                 </div>
-
                                 <div className="col-lg-5 col-md-5 col-sm-6 col-xs-12 nopadding"  >
-
                                     <a><div className={`${isCatalogShared ? 'disabled' : 'icon-edit'}`} id="edit" onMouseEnter={this.showTooltip}
                                         onMouseLeave={this.hideTooltip} ></div></a>
                                     <ToolTip active={this.state.isTooltipActive} position="bottom"
@@ -964,7 +758,7 @@ class MyCatalog extends Component {
                                     </ToolTip>
                                     <a><div className={`${isCatalogShared ? 'hidden' : 'icon-del'}`} onClick={this.deleteCatalog}></div></a>
                                     <a><div className={`${items.length == 0 ? 'hidden' : 'icon-print'}`} id="printproduct"
-                                        onClick={ this.printResults }></div></a>
+                                        onClick={ this.showDialogPrintOptions }></div></a>
                                       <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`}
                                         onClick={ this.shareMyCatalog }></div></a>
                                 </div>
@@ -991,11 +785,6 @@ class MyCatalog extends Component {
                                     </select>
                                 </div>
                               </div>
-                              {/*<div className="col-md-4 col-sm-4 pagenavi nopadding pull-right">
-                                  <div className="searchresult-navi cat-go">
-                                      {this.renderPagination()}
-                                  </div>
-                              </div>*/}
                             </div>
                       </div>
                   </div>
@@ -1003,7 +792,6 @@ class MyCatalog extends Component {
                     {this.renderTotals()}
                   </div>
                   {/* End Header Search */}
-
                   {/* Util&Pagination */}
                   <div className="row">
                     <div className="col-sm-12 col-xs-12">
@@ -1074,6 +862,7 @@ class MyCatalog extends Component {
                   {this.renderAlertmsgPdf()}
                   {this.renderShareMyCatalog()}
                   {this.renderAlertmsgShareCatalog()}
+                  {this.renderDialogPrintOptions()}
                 </form>
             );
     }
@@ -1103,6 +892,6 @@ MyCatalog.contextTypes = {
 };
 module.exports = reduxForm({
   form: 'MyCatalog',
-  fields: ['currPage', 'catalog', 'shareTo', 'validateEmailTo'],
+  fields: ['currPage', 'catalog', 'shareTo', 'validateEmailTo', 'printPage', 'printPrice'],
   validate: validateEmail
 },mapStateToProps,itemactions)(MyCatalog)
