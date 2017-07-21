@@ -56,6 +56,8 @@ class ModalPrintOptions extends Component {
                                 /> Current Page
                             </div>
                         </div>
+                        Price
+                        <br/>
                         <div className="col-sm-8">
                             <div>
                                 <input type="radio" {...printPrice} value="all"

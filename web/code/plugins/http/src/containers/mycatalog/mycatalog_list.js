@@ -135,8 +135,12 @@ class MyCatalog extends Component {
     printResults(e){
         //   e.preventDefault();
         const { fields: {printPage, printPrice} } = this.props;
-        console.log('printPage-->',printPage.value);
-        console.log('printPrice-->',printPrice.value);
+        let items = this.props.listCatalogName != undefined ?
+                        this.props.listCatalogName.length != 0 ?
+                            this.props.listCatalogItems.allItems != undefined ? this.props.listCatalogItems.allItems : [] :
+                        [] :
+                    [];
+        // console.log('items-->',items);
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
         const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
@@ -147,27 +151,22 @@ class MyCatalog extends Component {
         let dvGridview = jQuery('#dvGridview').html();
         let dv = {
                     'dvTotalItems': dvTotalItems, 'dvTotalSetItems': dvTotalSetItems, 'dvGridview': dvGridview,
-                    'printPrice': printPrice
+                    'printPage':printPage, 'printPrice': printPrice, 'items': items, 'userLogin': userLogin
                 };
         let htmlTemplate = '';
-        switch (printPage) {
-            case 'current':
-                htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
-                break;
-            default:
-                htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
-        }
-        console.log('htmlTemplate-->',htmlTemplate);
+        htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
+
+        // console.log('htmlTemplate-->',htmlTemplate);
 
         let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
                         'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL};
-      //   this.props.writeHtml(params)
-      //       .then((value) => {
-      //           if (value) {
-      //               this.setState({isOpenPrintPdfmsg: true});
-      //           }
-      //           console.log(value);
-      //       });
+        this.props.writeHtml(params)
+            .then((value) => {
+                if (value) {
+                    this.setState({isOpenPrintPdfmsg: true});
+                }
+                // console.log(value);
+            });
           this.setState({isOpenPrintOptions: false});
     }
 
