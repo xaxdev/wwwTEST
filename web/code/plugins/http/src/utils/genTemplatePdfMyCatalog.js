@@ -6,6 +6,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     const userLogin = dv.userLogin;
     const printPage = dv.printPage.value;
     const printPrice = dv.printPrice.value;
+    const env = process.env.NODE_ENV || 'development';
     let dvTotalItems = dv.dvTotalItems;
     let dvTotalSetItems = dv.dvTotalSetItems;
     let dvGridview = dv.dvGridview;
@@ -31,6 +32,10 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
     let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:123px;';
     let thumbnaillgridimg = 'width:120px;margin: 0 auto;';
+    let imgPath = env == 'production'
+                            ? 'file:///var/www/mol/web/code/plugins/http/public/images/'
+                            : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+
 
     dvTotalItems = dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotalItems = dvTotalItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
@@ -51,7 +56,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     // dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
-    dvGridview = dvGridview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    dvGridview = dvGridview.replace(/\/images\//g,imgPath);
     // dvGridview = dvGridview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
     dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
@@ -69,7 +74,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
 
     dvGridviewAll = dvGridviewAll.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     // dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
-    dvGridviewAll = dvGridviewAll.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    dvGridviewAll = dvGridviewAll.replace(/\/images\//g,imgPath);
     // dvGridview = dvGridview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvGridviewAll = dvGridviewAll.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
     dvGridviewAll = dvGridviewAll.replace(/class="pull-right"/g,`style="${pullRight}"`);
