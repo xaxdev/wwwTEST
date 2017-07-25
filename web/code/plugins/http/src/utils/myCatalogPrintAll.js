@@ -99,7 +99,7 @@ export default function MyCatalogPrintAll(items, userLogin){
                                 <div class="col-md-3 col-sm-3 nopadding">
                                     <div class="searchresult-prodcut ">
                                         <div className="thumbnaillgrid">
-                                            <img  src=${imagesProduct}/>
+                                            <img  src="${imagesProduct}" />
                                         </div>
                                         <p class="font-b fc-000">
                                             <span>${item.reference}</span><br/>
