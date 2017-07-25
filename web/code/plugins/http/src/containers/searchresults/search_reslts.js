@@ -196,7 +196,7 @@ class SearchResult extends Component {
       };
       let htmlTemplate = '';
       htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
-      console.log('htmlTemplate-->',htmlTemplate);
+    //   console.log('htmlTemplate-->',htmlTemplate);
       let params = {
                       'temp': htmlTemplate,
                       'userName': `${userLogin.username}_${exportDate}`,
@@ -204,12 +204,12 @@ class SearchResult extends Component {
                       'ROOT_URL': ROOT_URL
                   }
 
-    //   this.props.writeHtml(params)
-    //       .then((value) => {
-    //           if (value) {
-    //               this.setState({isOpenPrintPdfmsg: true});
-    //           }
-    //       });
+      this.props.writeHtml(params)
+          .then((value) => {
+              if (value) {
+                  this.setState({isOpenPrintPdfmsg: true});
+              }
+          });
       this.setState({isOpenPrintOptions: false});
   }
   showDialogPrintOptions = _ =>{
