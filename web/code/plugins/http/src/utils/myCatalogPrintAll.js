@@ -1,11 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { reduxForm, reset } from 'redux-form';
-import { responsive } from 'react-bootstrap';
-import shallowCompare from 'react-addons-shallow-compare';
 import numberFormat from './convertNumberformat';
 import convertDate from './convertDate';
-import ReactImageFallback from 'react-image-fallback';
-import {ReactPageClick} from 'react-page-click';
 
 export default function MyCatalogPrintAll(items, userLogin){
     let temPlate = '';
