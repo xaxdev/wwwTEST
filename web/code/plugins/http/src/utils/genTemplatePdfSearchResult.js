@@ -1,5 +1,5 @@
 export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv){
-
+    const env = process.env.NODE_ENV || 'development';
     let dvTotal1 = dv.dvTotal1;
     let dvTotal2 = dv.dvTotal2;
     let dvGridview = dv.dvGridview;
@@ -25,6 +25,9 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
     let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:123px;';
     let thumbnaillgridimg = 'width:120px;margin: 0 auto;';
+    let imgPath = env == 'production'
+                            ? 'file:///var/www/mol/web/code/plugins/http/public/images/'
+                            : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
 
     dvTotal1 = dvTotal1.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotal1 = dvTotal1.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
@@ -33,7 +36,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvTotal2 = dvTotal2.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
-    dvGridview = dvGridview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    dvGridview = dvGridview.replace(/\/images\//g,imgPath);
     // dvGridview = dvGridview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
     dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
@@ -49,7 +52,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvGridview = dvGridview.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
     // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
 
-    dvListview = dvListview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    dvListview = dvListview.replace(/\/images\//g,imgPath);
     // dvListview = dvListview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvListview = dvListview.replace(/class="table-responsive"/g,'');
     dvListview = dvListview.replace(/class="table table-bordered table-searchresult"/g,'border="1" style="font-size: 8px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="100%"');
