@@ -135,6 +135,7 @@ select:focus::-ms-value {background: none;}
 }
 .border-line-right{
   border-right: 1px solid #eeeeee;
+  height: 100px;
 }
 .mg-tb{margin:25px auto;}
 .margin-b4{margin-bottom: 4%;}

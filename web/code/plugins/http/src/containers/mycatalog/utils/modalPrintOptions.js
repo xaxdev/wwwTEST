@@ -33,18 +33,18 @@ class ModalPrintOptions extends Component {
                     <h1 className="modal-title">MY CATALOG</h1>
                   </div>
                   <div className="modal-body bg-gray">
-                    <div className="col-md-6 maring-b10 nopadding">
+                    <div className="col-md-6 col-sm-6 col-xs-6 maring-b10 nopadding">
                       <b>Please select a print choices.</b>
                     </div>
-                    <div className="col-md-6 pull-right maring-b10 text-right">
+                    <div className="col-md-6 col-sm-6 col-xs-6 pull-right maring-b10 text-right">
                       <b>{`Total: ${totalPages}`}</b>
                     </div>
                   </div>
                   <div className="modal-body">
                     <div className="col-md-12 maring-b10 nopadding">
-                      <div className="col-sm-6 nopadding border-line-right">
-                        <div className="col-sm-2 nopadding"><b>Page</b></div>
-                        <div className="col-sm-8 nopadding">
+                      <div className="col-sm-5 col-xs-5 nopadding">
+                        <div className="col-sm-2 col-xs-2 nopadding"><b>Page</b></div>
+                        <div className="col-sm-8 col-xs-8 nopadding">
                               <div className="radio">
                                   <input type="radio" {...printPage} value="all"
                                       checked={printPage.value === 'all'}
@@ -61,9 +61,12 @@ class ModalPrintOptions extends Component {
                               </div>
                         </div>
                       </div>
-                      <div className="col-sm-6 nopadding">
-                        <div className="col-sm-3"><b>Price</b></div>
-                        <div className="col-sm-8 nopadding">
+                      <div className="col-sm-1 col-xs-1">
+                        <div className="border-line-right"></div>
+                      </div>
+                      <div className="col-sm-6 col-xs-6 nopadding">
+                        <div className="col-sm-2 col-xs-2"><b>Price</b></div>
+                        <div className="col-sm-10 col-xs-10">
                             <div className="radio">
                                 <input type="radio" {...printPrice} value="all"
                                     checked={printPrice.value === 'all'}

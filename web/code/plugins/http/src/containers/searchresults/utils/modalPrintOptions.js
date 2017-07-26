@@ -32,28 +32,32 @@ class ModalPrintOptions extends Component {
                     <ModalClose onClick={isClose}/>
                     <h1 className="modal-title">SEARCH RESULTS</h1>
                   </div>
-                  <div className="modal-body">
-                    <div className="col-md-6 maring-b10">
-                      Please select a print choices.
+                  <div className="modal-body bg-gray">
+                    <div className="col-md-6 col-sm-6 col-xs-6 maring-b10 nopadding">
+                      <b>Please select a print choices.</b>
                     </div>
-                    <div className="col-md-6 pull-right maring-b10">
-                      {`Total: ${totalPage}`}
+                    <div className="col-md-6 col-sm-6 col-xs-6 pull-right maring-b10 text-right">
+                      <b>{`Total: ${totalPage}`}</b>
                     </div>
                   </div>
                   <div className="modal-body">
-                    Page
-                    <br/>
                     <div className="col-md-12 maring-b10">
-                        <div className="col-sm-3">
-                            <div>
+                        <div className="col-sm-4 col-xs-4 nopadding"></div>
+                        <div className="col-sm-1 col-xs-1 nopadding"><b>Page</b></div>
+                        <div className="col-sm-7 col-xs-7 nopadding">
+                            <div className="radio">
                                 <input type="radio" {...printPage} value="all"
                                     checked={printPage.value === 'all'}
-                                /> All
+                                />
+                                <label className="select"></label>
+                                <span className="margin-l10 text-vertical">All</span>
                             </div>
-                            <div>
+                            <div className="radio">
                                 <input type="radio" {...printPage} value="current"
                                     checked={printPage.value === 'current'}
-                                /> Current Page
+                                />
+                                <label className="select"></label>
+                                <span className="margin-l10 text-vertical">Current Page</span>
                             </div>
                         </div>
                     </div>
