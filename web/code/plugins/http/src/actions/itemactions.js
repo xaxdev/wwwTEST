@@ -133,7 +133,6 @@ export function writeHtml(params){
   return {
           type: WRITE_HTML,
     		promise: fetch(url,{
-                size: 94371840,
                 method: 'POST',
                 body: JSON.stringify(params),
                 headers: {

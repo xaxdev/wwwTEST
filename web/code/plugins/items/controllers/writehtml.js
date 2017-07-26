@@ -10,6 +10,10 @@ module.exports = {
   auth: {
     strategy: 'authentication'
   },
+  payload: {
+      parse: true,
+      maxBytes: 94371840
+  },
   handler: (request, reply) => {
       const amqpHost = request.server.plugins.amqp.host;
       const amqpChannel = request.server.plugins.amqp.channelPdf;
