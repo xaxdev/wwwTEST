@@ -98,7 +98,6 @@ class UsersNew extends Component {
       if(data.categorySPP){
         resultCAT = resultCAT|FLAG_CAT_SPP;
       }
-      console.log(resultCAT);
       if (resultCAT != 0){
           data = { ...data, permission:{ ...data.permission, category:resultCAT }};
       }
