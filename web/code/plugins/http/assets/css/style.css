@@ -472,6 +472,7 @@ select.form-searchresult option{
 	padding-right: 0;
 }
 .navbar{border-radius: 0;}
+.navbar-nav{width: 100%;}
 .navbar-inverse {
     background-color: #5b5959;
     border-color: #5b5959;
