@@ -133,14 +133,14 @@ export function writeHtml(params){
   return {
           type: WRITE_HTML,
     		promise: fetch(url,{
-            method: 'POST',
-            body: JSON.stringify(params),
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': token
-            },
-          })
+                method: 'POST',
+                body: JSON.stringify(params),
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': token
+                },
+            })
   }
 }
 export function setRenameCatalog(value){

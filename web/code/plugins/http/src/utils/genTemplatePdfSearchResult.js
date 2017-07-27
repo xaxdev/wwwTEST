@@ -1,9 +1,18 @@
-export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv){
+import React, { Component, PropTypes } from 'react';
+import SearchResultGridViewPrintAll from './searchResultGridViewPrintAll';
 
+export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv){
+    const items = dv.items;
+    const userLogin = dv.userLogin;
+    const printPage = dv.printPage.value;
+    const ViewAsSet = dv.ViewAsSet;
+    const env = process.env.NODE_ENV || 'development';
     let dvTotal1 = dv.dvTotal1;
     let dvTotal2 = dv.dvTotal2;
     let dvGridview = dv.dvGridview;
+    let dvGridviewAll = SearchResultGridViewPrintAll(items, userLogin, ViewAsSet);
     let dvListview = dv.dvListview;
+    let dvListviewAll = dv.dvListviewAll;
 
     let styleTotal1 =`background-color: #debe6b;float: left;width: 100%;padding: 15px 0;margin: 0px 0 1px 0;text-align: center; font-family: '${'Open Sans'}', sans-serif; font-size: 10px;`;
     let styleTotal2 =`background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family:'${'Open Sans'}', sans-serif; font-size: 10px;`;
@@ -25,6 +34,9 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
     let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:123px;';
     let thumbnaillgridimg = 'width:120px;margin: 0 auto;';
+    let imgPath = env == 'production'
+                            ? 'file:///var/www/mol/web/code/plugins/http/public/images/'
+                            : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
 
     dvTotal1 = dvTotal1.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotal1 = dvTotal1.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
@@ -33,7 +45,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvTotal2 = dvTotal2.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
-    dvGridview = dvGridview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    dvGridview = dvGridview.replace(/\/images\//g,imgPath);
     // dvGridview = dvGridview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
     dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
@@ -49,7 +61,24 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvGridview = dvGridview.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
     // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
 
-    dvListview = dvListview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    dvGridviewAll = dvGridviewAll.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
+    dvGridviewAll = dvGridviewAll.replace(/\/images\//g,imgPath);
+    // dvGridview = dvGridview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
+    dvGridviewAll = dvGridviewAll.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
+    dvGridviewAll = dvGridviewAll.replace(/class="pull-right"/g,`style="${pullRight}"`);
+    dvGridviewAll = dvGridviewAll.replace(/class="grid-add"/g,`style="${gridAdd}"`);
+    dvGridviewAll = dvGridviewAll.replace(/class="icon-add-28"/g,`style="${iconAdd28}"`);
+    dvGridviewAll = dvGridviewAll.replace(/class="checkbox checkbox-warning"/g,`style="${checkbox}"`);
+    dvGridviewAll = dvGridviewAll.replace(/class="checkbox1"/g,`style="${checkbox1}"`);
+    dvGridviewAll = dvGridviewAll.replace(/class="quick-view"/g,`style="${quickView}"`);
+    dvGridviewAll = dvGridviewAll.replace(/class="font-b fc-000"/g,`style="${fontbfc000}"`);
+    dvGridviewAll = dvGridviewAll.replace(/class="product-detail-h"/g,`style="${productdetailh}"`);
+    dvGridviewAll = dvGridviewAll.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
+    dvGridviewAll = dvGridviewAll.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
+    dvGridviewAll = dvGridviewAll.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
+    // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
+
+    dvListview = dvListview.replace(/\/images\//g,imgPath);
     // dvListview = dvListview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvListview = dvListview.replace(/class="table-responsive"/g,'');
     dvListview = dvListview.replace(/class="table table-bordered table-searchresult"/g,'border="1" style="font-size: 8px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="100%"');
@@ -57,6 +86,16 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvListview = dvListview.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;"');
     dvListview = dvListview.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px; border: 1px solid #5c5954;" role="columnheader" scope="col"');
     dvListview = dvListview.replace(/<td/g,'<td style="padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;" ');
+    // dvListview = dvListview.replace(/\/original\//g,'/thumbnail/');
+
+    dvListviewAll = dvListviewAll.replace(/\/images\//g,imgPath);
+    // dvListview = dvListview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
+    dvListviewAll = dvListviewAll.replace(/class="table-responsive"/g,'');
+    dvListviewAll = dvListviewAll.replace(/class="table table-bordered table-searchresult"/g,'border="1" style="font-size: 8px; border: 1px solid #5c5954; border-spacing: 0;border-collapse: collapse; margin:0 auto;" width="100%"');
+    dvListviewAll = dvListviewAll.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
+    dvListviewAll = dvListviewAll.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;"');
+    dvListviewAll = dvListviewAll.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px; border: 1px solid #5c5954;" role="columnheader" scope="col"');
+    dvListviewAll = dvListviewAll.replace(/<td/g,'<td style="padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;" ');
     // dvListview = dvListview.replace(/\/original\//g,'/thumbnail/');
 
     let htmlTemplate = '';
@@ -81,7 +120,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
                                                             ${dvTotal2}
                                                         </div>
                                                         <div style="${styleSearchproduct}">
-                                                            ${dvGridview}
+                                                            ${printPage == 'all'? dvGridviewAll: dvGridview}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -113,7 +152,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
                                                             ${dvTotal2}
                                                         </div>
                                                         <div style="${styleSearchproduct}">
-                                                            ${dvListview}
+                                                            ${printPage == 'all'? dvListviewAll: dvListview}
                                                         </div>
                                                     </div>
                                                 </div>

@@ -31,58 +31,65 @@ let hierarchyDataOBA = [];
 let hierarchyDataSpare = [];
 
 class UsersNewFrom extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      hideProductGroups: true,
-      hidecategory: true,
-      productGroupDatas:[],
-      selectedCompany: false,
-      selectedSite: false,
-      // selectedOnHandWarehouse: (this.props.user != undefined)?(this.props.user.onhandWarehouse)? true: false : false,
-      selectedOnHandWarehouse: true,
-      // selectedOnHandLocation: (this.props.user != undefined)?(this.props.user.onhandLocation)? true: false: false,
-      selectedOnHandLocation: true,
-      selectedOnHandAll: (this.props.user != undefined)?(!this.props.user.onhandLocation && !this.props.user.onhandWarehouse)? true: false: false,
-      genPass:'',
-      selectedStatus: true,
-      changedOnHandLocation:false,
-      clickAllLocarion: true,
-      clickAllWarehouse: true,
-      value: 0
-    };
+        this.state = {
+          hideProductGroups: true,
+          hidecategory: true,
+          productGroupDatas:[],
+          selectedCompany: false,
+          selectedSite: false,
+          // selectedOnHandWarehouse: (this.props.user != undefined)?(this.props.user.onhandWarehouse)? true: false : false,
+          selectedOnHandWarehouse: true,
+          // selectedOnHandLocation: (this.props.user != undefined)?(this.props.user.onhandLocation)? true: false: false,
+          selectedOnHandLocation: true,
+          selectedOnHandAll: (this.props.user != undefined)?(!this.props.user.onhandLocation && !this.props.user.onhandWarehouse)? true: false: false,
+          genPass:'',
+          selectedStatus: true,
+          changedOnHandLocation:false,
+          clickAllLocarion: true,
+          clickAllWarehouse: true,
+          value: 0
+        };
 
-    this.generatePassword = this.generatePassword.bind(this);
-    this.selectedCompany = this.selectedCompany.bind(this);
-    this.selectedSite = this.selectedSite.bind(this);
-    this.selectedProductGroup = this.selectedProductGroup.bind(this);
-    this.selectedOnHandWarehouse = this.selectedOnHandWarehouse.bind(this);
-    this.selectedOnHandLocation = this.selectedOnHandLocation.bind(this);
-    this.changedOnHandLocation = this.changedOnHandLocation.bind(this);
-    this.selectedOnHandAll = this.selectedOnHandAll.bind(this);
-    this.changedOnHandLocationChecked = this.changedOnHandLocationChecked.bind(this);
-    this.changedOnHandWarehouseChecked = this.changedOnHandWarehouseChecked.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleInputCategoryChange = this.handleInputCategoryChange.bind(this);
+        this.generatePassword = this.generatePassword.bind(this);
+        this.selectedCompany = this.selectedCompany.bind(this);
+        this.selectedSite = this.selectedSite.bind(this);
+        this.selectedProductGroup = this.selectedProductGroup.bind(this);
+        this.selectedOnHandWarehouse = this.selectedOnHandWarehouse.bind(this);
+        this.selectedOnHandLocation = this.selectedOnHandLocation.bind(this);
+        this.changedOnHandLocation = this.changedOnHandLocation.bind(this);
+        this.selectedOnHandAll = this.selectedOnHandAll.bind(this);
+        this.changedOnHandLocationChecked = this.changedOnHandLocationChecked.bind(this);
+        this.changedOnHandWarehouseChecked = this.changedOnHandWarehouseChecked.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputCategoryChange = this.handleInputCategoryChange.bind(this);
+        this.treeOnClickJLY = this.treeOnClickJLY.bind(this);
+        this.treeOnClickWAT = this.treeOnClickWAT.bind(this);
+        this.treeOnClickSTO = this.treeOnClickSTO.bind(this);
+        this.treeOnClickACC = this.treeOnClickACC.bind(this);
+        this.treeOnClickOBA = this.treeOnClickOBA.bind(this);
+        this.treeOnClickSPP = this.treeOnClickSPP.bind(this);
 
-    hierarchyDataJewelry.push(TreeDataJewelry);
-    hierarchyDataWatch.push(TreeDataWatch);
-    hierarchyDataStone.push(TreeDataStone);
-    hierarchyDataAccessory.push(TreeDataAccessory);
-    hierarchyDataOBA.push(TreeDataOBA);
-    hierarchyDataSpare.push(TreeDataSpare);
-    ClearHierarchy(hierarchyDataJewelry);
-    ClearHierarchy(hierarchyDataWatch);
-    ClearHierarchy(hierarchyDataStone);
-    ClearHierarchy(hierarchyDataAccessory);
-    ClearHierarchy(hierarchyDataOBA);
-    ClearHierarchy(hierarchyDataSpare);
+        hierarchyDataJewelry.push(TreeDataJewelry);
+        hierarchyDataWatch.push(TreeDataWatch);
+        hierarchyDataStone.push(TreeDataStone);
+        hierarchyDataAccessory.push(TreeDataAccessory);
+        hierarchyDataOBA.push(TreeDataOBA);
+        hierarchyDataSpare.push(TreeDataSpare);
+        ClearHierarchy(hierarchyDataJewelry);
+        ClearHierarchy(hierarchyDataWatch);
+        ClearHierarchy(hierarchyDataStone);
+        ClearHierarchy(hierarchyDataAccessory);
+        ClearHierarchy(hierarchyDataOBA);
+        ClearHierarchy(hierarchyDataSpare);
 
-    this.props.fields.status.onChange(true);
-    this.props.fields.onhand.onChange('Warehouse');
-    this.props.fields.price.onChange('Public');
-    }
+        this.props.fields.status.onChange(true);
+        this.props.fields.onhand.onChange('Warehouse');
+        this.props.fields.price.onChange('Public');
+      }
+
   componentWillMount(){
     this.props.optionsActions.get();
 
@@ -100,6 +107,7 @@ class UsersNewFrom extends Component {
       $('#scroller').removeClass('stuck').css({'width':w});
     });
   }
+
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
@@ -697,6 +705,64 @@ class UsersNewFrom extends Component {
       }
     }
   }
+  treeOnClickSPP(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'SPP');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+
+  treeOnClickOBA(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'OBA');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+
+  treeOnClickACC(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'ACC');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+  treeOnClickSTO(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'STO');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+
+  treeOnClickWAT(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'WAT');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
+
+  treeOnClickJLY(vals){
+      let { fields: { notUseHierarchy } } = this.props;
+      this.props.optionsActions.setHierarchy(vals);
+      let objHeirarchy = SelectedHierarchy(this, vals, 'JLY');
+
+      this.props.optionsActions.setNotUseHierarchy(objHeirarchy);
+
+      notUseHierarchy.onChange(objHeirarchy);
+  }
   handleInputChange = e =>{
       const target = e.target;
       const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -724,7 +790,7 @@ class UsersNewFrom extends Component {
                 productGroupACC,productGroupOBA,productGroupSPA,onhandValue,webOnly,onhandLocation,onhandAll,
                 permissionId,onhandWarehouse,onhandWarehouseValue,onhandLocationValue,productGroupErr,movement,
                 categoryJLY,categoryWAT,categorySTO,categoryACC,categoryOBA,categorySPP,notUseHierarchy
-            },handleSubmit,invalid,submitting } = this.props;
+            },handleSubmit,invalid,submitting, CanNotUseHierarchy } = this.props;
 
       let dataDropDowntLocations = [];
       let dataDropDowntWareHouse = [];
@@ -1190,7 +1256,8 @@ function mapStateToProps(state) {
     selectedCompany:state.users.selectedCompany,
     selectedWarehouses:state.users.selectedWarehouses,
     statusCode: state.users.statusCode,
-    message: state.users.message
+    message: state.users.message,
+    CanNotUseHierarchy: state.users.canNotUseHierarchy
   };
 }
 function mapDispatchToProps(dispatch) {
