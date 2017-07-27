@@ -33,6 +33,7 @@ module.exports = {
                     places: Joi.array().items(Joi.string())
                 }).allow(null),
                 price: Joi.string().required(),
+                notUseHierarchy: Joi.string(),
                 category: Joi.number().integer()
             }).required(),
             webOnly: Joi.boolean(),
