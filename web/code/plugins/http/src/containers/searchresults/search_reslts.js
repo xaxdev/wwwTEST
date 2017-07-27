@@ -27,6 +27,7 @@ import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter';
 import RenderClassTotals from './utils/render_total';
 import RenderExportExcelDialog from './utils/render_export_excel_dialog';
 import RenderExportExcelViewAsSetDialog from './utils/render_export_excel_viewasset_dialog'
+import ModalPrintOptions from './utils/modalPrintOptions';
 
 const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
       'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
@@ -85,6 +86,7 @@ class SearchResult extends Component {
     this.onCheckedAllItems = this.onCheckedAllItems.bind(this);
     this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
     this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
+    this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
     // console.log('this.props.items-->',this.props.searchResult.datas);
 
     this.state = {
@@ -100,7 +102,7 @@ class SearchResult extends Component {
       isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, checkAllItems: false,
       allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
       totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false,
-      createdDate: false
+      createdDate: false, isOpenPrintOptions: false
     };
   }
   componentWillMount() {
@@ -174,35 +176,56 @@ class SearchResult extends Component {
     }
   }
   printResults(e){
-    e.preventDefault();
-    const { showGridView,showListView } = this.props;
-    const userLogin = JSON.parse(sessionStorage.logindata);
-    const host = HOSTNAME || 'localhost';
-    const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
-    let imagesReplace = ROOT_URL+'/images/';
-    let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
-    let dvTotal1 = jQuery('#dvTotalsub1').html();
-    let dvTotal2 = jQuery('#dvTotalsub2').html();
-    let dvGridview = jQuery('#dvGridview').html();
-    let dvListview = jQuery('#dvListview').html();
-    let dv = {
-                'dvTotal1': dvTotal1, 'dvTotal2': dvTotal2, 'dvGridview': dvGridview, 'dvListview': dvListview
-            };
-    let htmlTemplate = '';
-    htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
-    let params = {
-                    'temp': htmlTemplate,
-                    'userName': `${userLogin.username}_${exportDate}`,
-                    'userEmail': userLogin.email,
-                    'ROOT_URL': ROOT_URL
-                }
+      e.preventDefault();
+      const { fields: { printPage }, totalPages, items, exportItems,ViewAsSet } = this.props;
+      const { showGridView, showListView } = this.props;
+      const userLogin = JSON.parse(sessionStorage.logindata);
+      const host = HOSTNAME || 'localhost';
+      const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+      let imagesReplace = ROOT_URL+'/images/';
+      let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
+      let dvTotal1 = jQuery('#dvTotalsub1').html();
+      let dvTotal2 = jQuery('#dvTotalsub2').html();
+      let dvGridview = jQuery('#dvGridview').html();
+      let dvListview = jQuery('#dvListview').html();
+      let dvListviewAll = jQuery('#dvListviewAll').html();
+      let dv = {
+          'dvTotal1': dvTotal1, 'dvTotal2': dvTotal2, 'dvGridview': dvGridview, 'dvListview': dvListview,
+          'printPage':printPage, 'items': exportItems, 'userLogin': userLogin, 'ViewAsSet': ViewAsSet,
+          'dvListviewAll': dvListviewAll
+      };
+      let htmlTemplate = '';
+      htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
+    //   console.log('htmlTemplate-->',htmlTemplate);
+      let params = {
+                      'temp': htmlTemplate,
+                      'userName': `${userLogin.username}_${exportDate}`,
+                      'userEmail': userLogin.email,
+                      'ROOT_URL': ROOT_URL
+                  }
 
-    this.props.writeHtml(params)
-        .then((value) => {
-            if (value) {
-                this.setState({isOpenPrintPdfmsg: true});
-            }
-        });
+      this.props.writeHtml(params)
+          .then((value) => {
+              if (value) {
+                  this.setState({isOpenPrintPdfmsg: true});
+              }
+          });
+      this.setState({isOpenPrintOptions: false});
+  }
+  showDialogPrintOptions = _ =>{
+      this.setState({isOpenPrintOptions: true});
+  }
+  handleClosePrintOptions = _ =>{
+      this.setState({isOpenPrintOptions: false});
+  }
+  renderDialogPrintOptions = _ =>{
+      const { fields: {printPage } } = this.props;
+      if (printPage.value == undefined) {
+          printPage.onChange('all');
+      }
+
+      return(<ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions}
+          isClose={this.handleClosePrintOptions} props={this.props} />);
   }
   handleSelect(eventKey) {
       this.setState({activePage: eventKey});
@@ -976,7 +999,7 @@ class SearchResult extends Component {
   }
   render() {
       const { fields: { oldCatalogName, newCatalogName, validateCatalogName },
-            totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize,
+            totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize,exportItems,
             items, totalPublicPrice, totalUpdatedCost, handleSubmit, resetForm, submitting } = this.props;
       const { isOpenMessage } = this.state;
       const userLogin = JSON.parse(sessionStorage.logindata);
@@ -1168,7 +1191,7 @@ class SearchResult extends Component {
                                             onClick={ this.exportExcel }></div></a>
                                   }
                               <a><div className="icon-print margin-l10" id="printproduct" disabled={submitting}
-                                    onClick={ this.printResults }>
+                                    onClick={ this.showDialogPrintOptions }>
                                   </div>
                               </a>
                             </div>
@@ -1222,6 +1245,11 @@ class SearchResult extends Component {
                                   ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
                                   listMyCatalog={listMyCatalog}/>
                             </div>
+                            <div id="dvListviewAll" className="col-sm-12 search-product hidden">
+                              <ListItemsViewPrint items={exportItems} pageSize={exportItems.length}
+                                    onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
+                                    chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
+                            </div>
                             <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                               <center>
                                 <br/><br/><br/><br/><br/><br/>
@@ -1249,6 +1277,7 @@ class SearchResult extends Component {
               {this.renderAlertmsgPdf()}
               {this.renderAlertmsgPageInvalid()}
               {this.renderExportExcelViewAsSetDialog()}
+              {this.renderDialogPrintOptions()}
             </form>
           );
         }
@@ -1279,6 +1308,6 @@ SearchResult.contextTypes = {
 };
 module.exports = reduxForm({
   form: 'SearchResult',
-  fields: [ 'currPage','oldCatalogName','newCatalogName','validateCatalogName' ],
+  fields: [ 'currPage','oldCatalogName','newCatalogName','validateCatalogName','printPage' ],
   validate:validateCatalog
 },mapStateToProps,itemactions)(SearchResult)

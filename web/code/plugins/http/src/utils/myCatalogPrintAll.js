@@ -1,11 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { reduxForm, reset } from 'redux-form';
-import { responsive } from 'react-bootstrap';
-import shallowCompare from 'react-addons-shallow-compare';
 import numberFormat from './convertNumberformat';
 import convertDate from './convertDate';
-import ReactImageFallback from 'react-image-fallback';
-import {ReactPageClick} from 'react-page-click';
 
 export default function MyCatalogPrintAll(items, userLogin){
     let temPlate = '';
@@ -99,7 +93,7 @@ export default function MyCatalogPrintAll(items, userLogin){
                                 <div class="col-md-3 col-sm-3 nopadding">
                                     <div class="searchresult-prodcut ">
                                         <div className="thumbnaillgrid">
-                                            <img  src=${imagesProduct}/>
+                                            <img  src="${imagesProduct}" />
                                         </div>
                                         <p class="font-b fc-000">
                                             <span>${item.reference}</span><br/>

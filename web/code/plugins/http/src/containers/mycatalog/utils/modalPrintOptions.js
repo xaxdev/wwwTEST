@@ -32,49 +32,64 @@ class ModalPrintOptions extends Component {
                     <ModalClose onClick={isClose}/>
                     <h1 className="modal-title">MY CATALOG</h1>
                   </div>
-                  <div className="modal-body">
-                    <div className="col-md-6 maring-b10">
-                      Please select a print choices.
+                  <div className="modal-body bg-gray">
+                    <div className="col-md-6 col-sm-6 col-xs-6 maring-b10 nopadding">
+                      <b>Please select a print choices.</b>
                     </div>
-                    <div className="col-md-6 pull-right maring-b10">
-                      {`Total: ${totalPages}`}
+                    <div className="col-md-6 col-sm-6 col-xs-6 pull-right maring-b10 text-right">
+                      <b>{`Total: ${totalPages}`}</b>
                     </div>
                   </div>
                   <div className="modal-body">
-                    Page
-                    <br/>
-                    <div className="col-md-12 maring-b10">
-                        <div className="col-sm-3">
-                            <div>
-                                <input type="radio" {...printPage} value="all"
-                                    checked={printPage.value === 'all'}
-                                /> All
-                            </div>
-                            <div>
-                                <input type="radio" {...printPage} value="current"
-                                    checked={printPage.value === 'current'}
-                                /> Current Page
-                            </div>
+                    <div className="col-md-12 maring-b10 nopadding">
+                      <div className="col-sm-5 col-xs-5 nopadding">
+                        <div className="col-sm-2 col-xs-2 nopadding"><b>Page</b></div>
+                        <div className="col-sm-8 col-xs-8 nopadding">
+                              <div className="radio">
+                                  <input type="radio" {...printPage} value="all"
+                                      checked={printPage.value === 'all'}
+                                  />
+                                  <label className="select"></label>
+                                  <span className="margin-l10 text-vertical">All</span>
+                              </div>
+                              <div className="radio">
+                                  <input type="radio" {...printPage} value="current"
+                                      checked={printPage.value === 'current'}
+                                  />
+                                  <label className="select"></label>
+                                  <span className="margin-l10 text-vertical">Current Page</span>
+                              </div>
                         </div>
-                        Price
-                        <br/>
-                        <div className="col-sm-8">
-                            <div>
+                      </div>
+                      <div className="col-sm-1 col-xs-1">
+                        <div className="border-line-right"></div>
+                      </div>
+                      <div className="col-sm-6 col-xs-6 nopadding">
+                        <div className="col-sm-2 col-xs-2"><b>Price</b></div>
+                        <div className="col-sm-10 col-xs-10">
+                            <div className="radio">
                                 <input type="radio" {...printPrice} value="all"
                                     checked={printPrice.value === 'all'}
-                                /> All
+                                />
+                                <label className="select"></label>
+                                <span className="margin-l10 text-vertical">All</span>
                             </div>
-                            <div>
+                            <div className="radio">
                                 <input type="radio" {...printPrice} value="updated"
                                     checked={printPrice.value === 'updated'}
-                                /> Updated Cost
+                                />
+                                <label className="select"></label>
+                                <span className="margin-l10 text-vertical">Updated Cost</span>
                             </div>
-                            <div>
+                            <div className="radio">
                                 <input type="radio" {...printPrice} value="public"
                                     checked={printPrice.value === 'public'}
-                                /> Public Price
+                                />
+                                <label className="select"></label>
+                                <span className="margin-l10 text-vertical">Public Price</span>
                             </div>
                         </div>
+                      </div>
                     </div>
                   </div>
                   <div className="modal-footer">

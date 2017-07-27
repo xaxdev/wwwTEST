@@ -1414,15 +1414,15 @@ class GridItemsViewPrint extends Component {
                                   ''}>
 
                     <div className="thumbnaillgrid">
-                      {/*<img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/>*/}
-                      <ReactImageFallback
+                      <img  src={imagesProduct} />
+                      {/*<ReactImageFallback
                              src={imagesProduct }
                              fallbackImage="/images/blank.gif"
                              initialImage="/images/blank.gif"
                              name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
                              id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
                              onClick={item.authorization ? btnEvent: ''}
-                             />
+                             />*/}
                     </div>
 
                     <p className="font-b fc-000">

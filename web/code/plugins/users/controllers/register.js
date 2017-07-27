@@ -32,7 +32,9 @@ module.exports = {
                     type: Joi.string(),
                     places: Joi.array().items(Joi.string())
                 }).allow(null),
-                price: Joi.string().required()
+                price: Joi.string().required(),
+                notUseHierarchy: Joi.string(),
+                category: Joi.number().integer()
             }).required(),
             webOnly: Joi.boolean(),
             movement: Joi.boolean()
