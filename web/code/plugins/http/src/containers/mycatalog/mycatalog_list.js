@@ -143,6 +143,7 @@ class MyCatalog extends Component {
         // console.log('items-->',items);
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
+        const env_web = ENVIRONMENT !== 'production' ? 'development' : 'production';
         const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
         let imagesReplace = ROOT_URL+'/images/';
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
@@ -151,7 +152,8 @@ class MyCatalog extends Component {
         let dvGridview = jQuery('#dvGridview').html();
         let dv = {
                     'dvTotalItems': dvTotalItems, 'dvTotalSetItems': dvTotalSetItems, 'dvGridview': dvGridview,
-                    'printPage':printPage, 'printPrice': printPrice, 'items': items, 'userLogin': userLogin
+                    'printPage':printPage, 'printPrice': printPrice, 'items': items, 'userLogin': userLogin,
+                    'env': env_web
                 };
         let htmlTemplate = '';
         htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);

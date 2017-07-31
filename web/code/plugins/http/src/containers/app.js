@@ -22,7 +22,7 @@ class App extends Component {
         <footer className="footer navbar-grau">
           <div className="container">
             <div className="text-muted">
-              <div className="text-left float-l">Copyright © 2016 Mouawad. All Rights Reserved.  Design And Develop by ITORAMA</div>
+              <div className="text-left float-l">Copyright © 2016 Mouawad. All Rights Reserved.  Designed And Developed by ITORAMA</div>
               <div className="text-right float-r">Version 2.0</div>
             </div>
           </div>
