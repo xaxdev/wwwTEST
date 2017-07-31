@@ -181,6 +181,7 @@ class SearchResult extends Component {
       const { showGridView, showListView } = this.props;
       const userLogin = JSON.parse(sessionStorage.logindata);
       const host = HOSTNAME || 'localhost';
+      const env_web = ENVIRONMENT;
       const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
       let imagesReplace = ROOT_URL+'/images/';
       let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
@@ -192,7 +193,7 @@ class SearchResult extends Component {
       let dv = {
           'dvTotal1': dvTotal1, 'dvTotal2': dvTotal2, 'dvGridview': dvGridview, 'dvListview': dvListview,
           'printPage':printPage, 'items': exportItems, 'userLogin': userLogin, 'ViewAsSet': ViewAsSet,
-          'dvListviewAll': dvListviewAll
+          'dvListviewAll': dvListviewAll, 'env': env_web
       };
       let htmlTemplate = '';
       htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
