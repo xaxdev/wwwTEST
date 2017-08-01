@@ -233,19 +233,28 @@ class ListItemsView extends Component {
           ];
       }
 
-      return (
-        <div>
-          <DataTable
-            className="col-sm-12"
-            keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight','priceUSD','' ]}
-            columns={tableColumns}
-            initialData={items}
-            initialPageLength={this.state.initialPageLength}
-            initialSortBy={{ prop: 'reference', order: 'ascending' }}
-            pageLengthOptions={[ 5, 20, 50 ]}
-          />
-        </div>
-      );
+      if (ViewAsSet) {
+          console.log('items-->',items);
+          return (
+              <div>
+              Please wait
+              </div>
+          );
+      }else{
+          return (
+              <div>
+                  <DataTable
+                    className="col-sm-12"
+                    keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight','priceUSD','' ]}
+                    columns={tableColumns}
+                    initialData={items}
+                    initialPageLength={this.state.initialPageLength}
+                    initialSortBy={{ prop: 'reference', order: 'ascending' }}
+                    pageLengthOptions={[ 5, 20, 50 ]}
+                  />
+              </div>
+          );
+      }
 
     }else{
       items = {...this.props.items};
