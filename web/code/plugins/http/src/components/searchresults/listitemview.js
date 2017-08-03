@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { reduxForm, reset } from 'redux-form';
-import { responsive } from 'react-bootstrap';
-import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
 import ReactImageFallback from 'react-image-fallback';
 import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat from '../../utils/convertNumberformat';
+import ListItemsViewASSet from './listitemview_view_as_set';
 
 class ListItemsView extends Component {
   constructor(props) {
@@ -81,8 +79,7 @@ class ListItemsView extends Component {
            />;
 
   renderCheckItem = (val, row) =>{
-        const { onCheckedOneItemMyCatalog, onAddedOneItemMyCatalog, ViewAsSet,
-                listMyCatalog, items } = this.props;
+        const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog, items } = this.props;
         let checkItem = false;
         if (!!listMyCatalog) {
             checkItem = listMyCatalog.find((myItem) => {
@@ -107,7 +104,7 @@ class ListItemsView extends Component {
 
   render(){
     let items = null;
-    const { ViewAsSet } = this.props;
+    const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog } = this.props;
     const userLogin = JSON.parse(sessionStorage.logindata);
     const currency = userLogin.currency;
     // console.log('list view pageSize-->',this.props.pageSize);
@@ -234,11 +231,33 @@ class ListItemsView extends Component {
       }
 
       if (ViewAsSet) {
-          console.log('items-->',items);
           return (
               <div>
-              Please wait
+                  <table className="table table-bordered table-searchresult">
+                      <thead>
+                          <th><span></span></th>
+                          <th><span>Images</span></th>
+                          <th><span>Set Product Number</span></th>
+                          <th><span>Item Reference</span></th>
+                          <th><span>Description</span></th>
+                          <th><span>SKU</span></th>
+                          <th><span>Category Name</span></th>
+                          <th><span>Company</span></th>
+                          <th><span>Warehouse</span></th>
+                          <th><span>Gross Weight</span></th>
+                          <th><span>Group Cost Price (USD)</span></th>
+                          <th><span>Updated Cost Price (USD)</span></th>
+                          <th><span>Selling Cost Price (USD)</span></th>
+                      </thead>
+                      {items.map((item) => {
+                          return(
+                              <ListItemsViewASSet item={item} onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog}
+                                ViewAsSet={ViewAsSet} listMyCatalog={listMyCatalog}/>
+                          );
+                      })}
+                  </table>
               </div>
+
           );
       }else{
           return (

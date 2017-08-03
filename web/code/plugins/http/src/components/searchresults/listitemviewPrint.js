@@ -6,6 +6,7 @@ import { DataTable } from '../../utils/DataTabelSearch/index';
 import ReactImageFallback from 'react-image-fallback';
 import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat from '../../utils/convertNumberformat';
+import ListItemsViewASSet from './listitemview_view_as_set';
 
 class ListItemsView extends Component {
   constructor(props) {
@@ -190,20 +191,49 @@ class ListItemsView extends Component {
         { title: 'Public Price', prop: 'priceUSD' },
       ];
 
-      return (
-        <div>
-          <DataTable
-            className="col-sm-12"
-            keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight','priceUSD' ]}
-            columns={tableColumns}
-            initialData={items}
-            initialPageLength={this.state.initialPageLength}
-            initialSortBy={{ prop: 'reference', order: 'ascending' }}
-            pageLengthOptions={[ 5, 20, 50 ]}
-          />
-        </div>
-      );
+      if (ViewAsSet) {
+          return (
+              <div>
+                  <table className="table table-bordered table-searchresult">
+                      <thead>
+                          <th><span></span></th>
+                          <th><span>Images</span></th>
+                          <th><span>Set Product Number</span></th>
+                          <th><span>Item Reference</span></th>
+                          <th><span>Description</span></th>
+                          <th><span>SKU</span></th>
+                          <th><span>Category Name</span></th>
+                          <th><span>Company</span></th>
+                          <th><span>Warehouse</span></th>
+                          <th><span>Gross Weight</span></th>
+                          <th><span>Group Cost Price (USD)</span></th>
+                          <th><span>Updated Cost Price (USD)</span></th>
+                          <th><span>Selling Cost Price (USD)</span></th>
+                      </thead>
+                      {items.map((item) => {
+                          return(
+                              <ListItemsViewASSet item={item} ViewAsSet={ViewAsSet}/>
+                          );
+                      })}
+                  </table>
+              </div>
 
+          );
+      }else{
+          return (
+            <div>
+              <DataTable
+                className="col-sm-12"
+                keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight','priceUSD' ]}
+                columns={tableColumns}
+                initialData={items}
+                initialPageLength={this.state.initialPageLength}
+                initialSortBy={{ prop: 'reference', order: 'ascending' }}
+                pageLengthOptions={[ 5, 20, 50 ]}
+              />
+            </div>
+          );
+      }
     }else{
       items = {...this.props.items};
       // console.log('items-->',items);
