@@ -74,6 +74,7 @@ const getitemSets = async (index, exchangeRates) => {
                 const item = {
                     id: record.id,
                     reference: record.reference,
+                    description: record.description,
                     image: {
                         original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
                         thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
@@ -89,6 +90,8 @@ const getitemSets = async (index, exchangeRates) => {
                     venderReference: record.venderReference,
                     sku: record.sku,
                     type: record.type,
+                    hierarchy: record.hierarchy,
+                    grossWeight: record.grossWeight,
                     createdDate: record.createdDate
                 }
 
@@ -154,6 +157,7 @@ const getitemSets = async (index, exchangeRates) => {
                     const item = {
                         id: record.id,
                         reference: record.reference,
+                        description: record.description,
                         image: {
                             original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
                             thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
@@ -169,6 +173,8 @@ const getitemSets = async (index, exchangeRates) => {
                         venderReference: record.venderReference,
                         sku: record.sku,
                         type: record.type,
+                        hierarchy: record.hierarchy,
+                        grossWeight: record.grossWeight,
                         createdDate: record.createdDate
                     }
 
