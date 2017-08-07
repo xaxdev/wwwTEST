@@ -1,19 +1,22 @@
 var X = XLSX;
 
 function to_csv(workbook) {
-   var result = [];
-  workbook.SheetNames.forEach(function(sheetName) {
-    // var csv = X.utils.sheet_to_csv(workbook.Sheets[sheetName]);
-    var csv = X.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-    if(csv.length > 0){
-      csv.forEach(function(val,key){
-        // console.log('key-->',key);
-        // console.log('val-->',val.item);
-        result.push(val.item_reference);
-      });
-    }
-  });
-  return result;
+    let result = {};
+    let item = [];
+    let AllData = [];
+    workbook.SheetNames.forEach(function(sheetName) {
+      // var csv = X.utils.sheet_to_csv(workbook.Sheets[sheetName]);
+      var csv = X.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+      if(csv.length > 0){
+        csv.forEach(function(val,key){
+          // console.log('key-->',key);
+          // console.log('val-->',val.item);
+          item.push(val.item_reference);
+          AllData.push(val);
+        });
+      }
+    });
+    return {...result,'item':item,'AllData':AllData};
 }
 function to_formulae(workbook) {
    var result = [];

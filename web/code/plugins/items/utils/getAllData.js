@@ -5,7 +5,8 @@ const _ = require('lodash');
 const GetPriceCurrency = require('./getPriceCurrency');
 // import numberFormat from '../../http/src/utils/convertNumberformatwithcomma2digit';
 
-module.exports = async (response, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, cb) => {
+module.exports = async (response, sortDirections, sortBy, size, page, userCurrency, keys, obj, request,
+    itemsOrder, cb) => {
 
   try {
       // console.log(response.hits.total)
@@ -18,6 +19,21 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       let avrgPrice = 0;
 
       let data = response.hits.hits.map((element) => element._source);
+
+      if (itemsOrder != null) {
+          data.map((item) => {
+              let order = itemsOrder.find((val) => {
+                  return val.item_reference == item.reference;
+              })
+            //   console.log('order-->',order);
+            //   item = {...item,'order':parseInt(order.order)};
+              item.order = parseInt(order.order)
+            //   console.log('item-->',item);
+              return item;
+          });
+          data = data.sortBy('order','asc',userCurrency);
+        //   console.log('data-->',JSON.stringify(data, null, 2));
+      }
 
       let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
       if (isViewAsSet) {
@@ -36,10 +52,10 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       }else{
           sortBy = sortBy.toLowerCase().indexOf('price') != -1 ? 'price' : sortBy
       }
-    //   console.log('sortBy-->',sortBy);
-    //   console.log('userCurrency-->',userCurrency);
 
-      data = data.sortBy(sortBy,sortDirections,userCurrency);
+      if (itemsOrder == null) {
+          data = data.sortBy(sortBy,sortDirections,userCurrency);
+      }
 
       if (isViewAsSet) {
         //   console.log('keys--> viewAsSet');
@@ -235,7 +251,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
           }
       });
 
-      allData = allData.sortBy(sortBy,sortDirections,userCurrency);
+      if (itemsOrder == null) {
+          allData = allData.sortBy(sortBy,sortDirections,userCurrency);
+      }
 
       exportData = data;
 

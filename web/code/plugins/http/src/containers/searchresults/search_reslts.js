@@ -29,6 +29,8 @@ import RenderExportExcelDialog from './utils/render_export_excel_dialog';
 import RenderExportExcelViewAsSetDialog from './utils/render_export_excel_viewasset_dialog'
 import ModalPrintOptions from './utils/modalPrintOptions';
 
+let sortBy = require('lodash.sortby');
+
 const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
       'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
       'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName', 'metalColor',
@@ -106,6 +108,7 @@ class SearchResult extends Component {
     };
   }
   componentWillMount() {
+      const { ItemsOrder } = this.props;
       const userLogin = JSON.parse(sessionStorage.logindata);
       let sortingBy = '';
       switch (this.props.sortingBy) {
@@ -118,7 +121,7 @@ class SearchResult extends Component {
       }
       let params = {
         'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': this.props.sortDirection,
-        'pageSize' : this.props.pageSize
+        'pageSize' : this.props.pageSize, 'ItemsOrder': ItemsOrder
       };  // default search params
 
       const filters =  JSON.parse(sessionStorage.filters);
@@ -231,7 +234,7 @@ class SearchResult extends Component {
   handleSelect(eventKey) {
       this.setState({activePage: eventKey});
       const userLogin = JSON.parse(sessionStorage.logindata);
-      const { showGridView,showListView } = this.props;
+      const { showGridView,showListView,ItemsOrder } = this.props;
       let sortingBy = '';
       switch (this.refs.sortingBy.value) {
         case 'price':
@@ -244,7 +247,8 @@ class SearchResult extends Component {
       const sortingDirection = this.refs.sortingDirection.value;
       const pageSize = this.refs.pageSize.value;
       let params = {
-        'page' : eventKey, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize
+        'page' : eventKey, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+        'ItemsOrder': ItemsOrder
       };
       const filters =  JSON.parse(sessionStorage.filters);
       params = GetGemstoneLotnumberFilter(filters, params);
@@ -270,7 +274,7 @@ class SearchResult extends Component {
     e.preventDefault();
     const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
     const userLogin = JSON.parse(sessionStorage.logindata);
-    const { showGridView,showListView,totalPages } = this.props;
+    const { showGridView,showListView,totalPages,ItemsOrder } = this.props;
     if (Number(this.refs.reletego.value) > totalPages || Number(this.refs.reletego.value) < 1) {
         this.setState({isOpenMsgPageInvalid: true});
     }else{
@@ -287,7 +291,8 @@ class SearchResult extends Component {
         const pageSize = this.refs.pageSize.value;
         this.setState({activePage: getPage});
         let params = {
-          'page' : getPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize
+          'page' : getPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+          'ItemsOrder': ItemsOrder
         };
         const filters =  JSON.parse(sessionStorage.filters);
         params = GetGemstoneLotnumberFilter(filters, params);
@@ -482,7 +487,8 @@ class SearchResult extends Component {
     const sortingDirection = this.refs.sortingDirection.value;
     const pageSize = this.refs.pageSize.value;
     let params = {
-      'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize
+      'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+      'ItemsOrder': null
     };
     const filters =  JSON.parse(sessionStorage.filters);
     params = GetGemstoneLotnumberFilter(filters, params);
@@ -491,6 +497,7 @@ class SearchResult extends Component {
     this.props.setShowGridView(false);
     this.props.setShowListView(false);
     this.setState({ showLoading: true });
+    this.props.setItemsOrder(null);
     this.props.setSortingBy(e.target.value);
     this.props.getItems(params)
     .then((value) => {
@@ -524,7 +531,8 @@ class SearchResult extends Component {
     this.setState({activePage: 1});
     const pageSize = this.refs.pageSize.value;
     let params = {
-      'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize
+      'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+      'ItemsOrder': null
     };
 
     const filters =  JSON.parse(sessionStorage.filters);
@@ -534,6 +542,7 @@ class SearchResult extends Component {
     this.props.setShowGridView(false);
     this.props.setShowListView(false);
     this.setState({ showLoading: true });
+    this.props.setItemsOrder(null);
     this.props.setSortDirection(e.target.value);
     this.props.getItems(params)
     .then((value) => {
@@ -554,7 +563,7 @@ class SearchResult extends Component {
     const pageSize = e.target.value;
     const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
     const userLogin = JSON.parse(sessionStorage.logindata);
-    const { showGridView,showListView } = this.props;
+    const { showGridView,showListView,ItemsOrder } = this.props;
     let sortingBy = '';
 
     switch (this.refs.sortingBy.value) {
@@ -570,7 +579,8 @@ class SearchResult extends Component {
 
     this.setState({activePage: 1});
     let params = {
-      'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize
+      'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+      'ItemsOrder': ItemsOrder
     };
 
     const filters =  JSON.parse(sessionStorage.filters);
@@ -1001,9 +1011,11 @@ class SearchResult extends Component {
   render() {
       const { fields: { oldCatalogName, newCatalogName, validateCatalogName },
             totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize,exportItems,
-            items, totalPublicPrice, totalUpdatedCost, handleSubmit, resetForm, submitting } = this.props;
+            totalPublicPrice, totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsOrder,
+            sortingBy, sortDirection } = this.props;
       const { isOpenMessage } = this.state;
       const userLogin = JSON.parse(sessionStorage.logindata);
+      let { items } = this.props;
       var numbers = document.querySelectorAll('input[type="number"]');
 
       for (var i in numbers) {
@@ -1109,178 +1121,178 @@ class SearchResult extends Component {
           );
 
         }else{
-          return(
-            <form role="form">
-              {/* Header Search */}
-              <div className="col-sm-12 bg-hearder bg-header-searchresult">
-                <div className="col-md-4 col-sm-12 ft-white m-nopadding">
-                  <h1>SEARCH RESULTS</h1>
-                </div>
-                <div className="col-md-8 col-sm-12 nopadding">
-                <div className="m-width-100 text-right maring-t15 float-r ip-font m-pt">
-                  <div className="col-sm-4 col-xs-12 nopadding">
-                      <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                        <button className="btn btn-searchresult" disabled={submitting} onClick={this.newSearch}>New Search</button>
-                      </div>
-                      <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                        <button className="btn btn-searchresult" disabled={submitting} onClick={this.modifySearch}>Modify Search</button>
-                      </div>
+            return(
+              <form role="form">
+                {/* Header Search */}
+                <div className="col-sm-12 bg-hearder bg-header-searchresult">
+                  <div className="col-md-4 col-sm-12 ft-white m-nopadding">
+                    <h1>SEARCH RESULTS</h1>
                   </div>
-                  <div className="col-sm-2 col-xs-12 ft-white margin-t5">
-                    <ControlLabel> <span className="fc-ddbe6a m-none">|</span> Sort By: </ControlLabel>
-                  </div>
-                  <div className="col-sm-2 col-xs-12 nopadding">
-                    <div className="styled-select">
-                      <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy">
-                        <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                        <option key={'price'} value={'price'}>{'Public Price'}</option>
-                        <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
-                        <option key={'description'} value={'description'}>{'Description'}</option>
-                        <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>
-                      </select>
+                  <div className="col-md-8 col-sm-12 nopadding">
+                  <div className="m-width-100 text-right maring-t15 float-r ip-font m-pt">
+                    <div className="col-sm-4 col-xs-12 nopadding">
+                        <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
+                          <button className="btn btn-searchresult" disabled={submitting} onClick={this.newSearch}>New Search</button>
+                        </div>
+                        <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
+                          <button className="btn btn-searchresult" disabled={submitting} onClick={this.modifySearch}>Modify Search</button>
+                        </div>
                     </div>
-                  </div>
-                  <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
-                    <div className="styled-select">
-                        <select className="form-searchresult" onChange={this.sortingDirection} ref="sortingDirection">
-                          <option key={'desc'} value={'desc'}>{'Descending'}</option>
-                          <option key={'asc'} value={'asc'}>{'Ascending'}</option>
+                    <div className="col-sm-2 col-xs-12 ft-white margin-t5">
+                      <ControlLabel> <span className="fc-ddbe6a m-none">|</span> Sort By: </ControlLabel>
+                    </div>
+                    <div className="col-sm-2 col-xs-12 nopadding">
+                      <div className="styled-select">
+                        <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy">
+                          <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
+                          <option key={'price'} value={'price'}>{'Public Price'}</option>
+                          <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
+                          <option key={'description'} value={'description'}>{'Description'}</option>
+                          <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>
                         </select>
-                    </div>
-                  </div>
-                  <div className="col-sm-2 ft-white nopadding pd-10">
-                    <div
-                      disabled={submitting} onClick={ this.gridViewResults } >
-                        <div className={`icon-grid m-pt-mgl ${showGridView ? 'icon-grid-active' : ''}` }></div>
-                    </div>
-                    <div
-                      disabled={submitting} onClick={ this.listViewResults } >
-                        <div className={`icon-list m-pt-mgl ${showListView ? 'icon-list-active' : ''}` }></div>
-                    </div>
-                  </div>
-                </div>
-                </div>
-              </div>
-              {/* End Header Search */}
-              {/* Util&Pagination */}
-              <div className="row">
-                <div className="col-sm-12">
-                    <div className="panel panel-default">
-                        <div className="panel-body padding-ft0">
-                          <div className="col-sm-12 ">
-                            <div className="col-md-3 col-sm-12 col-xs-12 nopadding">
-                                <div className="checkbox checkbox-warning check-navi">
-                                  <input type="checkbox" id="checkAllItems" className="styled" type="checkbox"
-                                      name="all"
-                                      checked={this.state.checkAllItems}
-                                      onChange={this.onCheckedAllItems} />
-                                  <label className="checkbox1">Select All</label>
-                                 </div>
-                                  {
-                                      this.state.enabledMyCatalog
-                                      ? <a><div className="icon-add" disabled={true} enabled={false}
-                                          onClick={ this.addMyCatalog }></div></a>
-                                      : <a><div className="icon-add" disabled={true} enabled={false} >
-                                          </div></a>
-                                  }
-                              <div className="box-line-nav"><div className="line-nav"></div></div>
-                                  {
-                                      ViewAsSet
-                                      ? <a><div className="icon-excel" disabled={submitting}
-                                            onClick={ this.exportExcelViewAsSet }></div></a>
-                                      : <a><div className="icon-excel" disabled={submitting}
-                                            onClick={ this.exportExcel }></div></a>
-                                  }
-                              <a><div className="icon-print margin-l10" id="printproduct" disabled={submitting}
-                                    onClick={ this.showDialogPrintOptions }>
-                                  </div>
-                              </a>
-                            </div>
-                            <div className="col-md-9 col-sm-12 col-xs-12 pagenavi">
-                              <div className="searchresult-navi search-right">
-                                  {this.renderPagination()}
-                              </div>
-                              <div className="pull-right maring-b10">
-                                    <div className="pull-left padding-r10 margin-t7">View</div>
-                                    <div className="pull-left">
-                                        <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
-                                          <option key="16" value="16">16</option>
-                                          <option key="32" value="32">32</option>
-                                          <option key="60" value="60">60</option>
-                                        </select>
-                                    </div>
-                                    <div className="pull-left padding-l10 margin-t7 margin-r10">
-                                      per page
-                                    </div>
-                              </div>
-                            </div>
-                          </div>
-                          {/* End Util&Pagination */}
-                          <div id="dvContainerPrint">
-                            {/* Total Data */}
-                              <div id="dvTotal">
-                                {this.renderTotals()}
-                              </div>
-                            {/* End Total Data */}
-                            {/* Grid Product */}
-                            <div className={`search-product  ${showGridView ? '' : 'hidden'}` }>
-                              <GridItemsView  items={items} onClickGrid={this.onClickGrid}
-                                  onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                  onAddedOneItemMyCatalog={this.addedOneItemMyCatalog}
-                                  ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
-                                  listMyCatalog={listMyCatalog}/>
-                            </div>
-                            <div id="dvGridview" className="search-product hidden">
-                              <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
-                                  ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
-                                  listMyCatalog={listMyCatalog}/>
-                            </div>
-                            <div className={`col-sm-12 search-product list-search ${showListView ? '' : 'hidden'}` }>
-                              <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
-                                  onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                  ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
-                                  listMyCatalog={listMyCatalog}/>
-                            </div>
-                            <div id="dvListview" className="col-sm-12 search-product hidden">
-                              <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
-                                  ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
-                                  listMyCatalog={listMyCatalog}/>
-                            </div>
-                            <div id="dvListviewAll" className="col-sm-12 search-product hidden">
-                              <ListItemsViewPrint items={exportItems} pageSize={exportItems.length}
-                                    onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
-                                    chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
-                            </div>
-                            <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
-                              <center>
-                                <br/><br/><br/><br/><br/><br/>
-                                  <Loading type="spin" color="#202020" width="10%"/>
-                              </center>
-                              <br/><br/><br/><br/><br/><br/>
-                            </div>
-                            {/* Grid Product */}
-                          </div>
-                          {/* Pagination */}
-                          <div className="col-sm-12 pagenavi maring-t20">
-                            <div className="searchresult-navi pull-right margin-r20">
-                              {this.renderPagination()}
-                            </div>
-                          </div>
-                          {/* End Pagination */}
                       </div>
                     </div>
+                    <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
+                      <div className="styled-select">
+                          <select className="form-searchresult" onChange={this.sortingDirection} ref="sortingDirection">
+                            <option key={'desc'} value={'desc'}>{'Descending'}</option>
+                            <option key={'asc'} value={'asc'}>{'Ascending'}</option>
+                          </select>
+                      </div>
+                    </div>
+                    <div className="col-sm-2 ft-white nopadding pd-10">
+                      <div
+                        disabled={submitting} onClick={ this.gridViewResults } >
+                          <div className={`icon-grid m-pt-mgl ${showGridView ? 'icon-grid-active' : ''}` }></div>
+                      </div>
+                      <div
+                        disabled={submitting} onClick={ this.listViewResults } >
+                          <div className={`icon-list m-pt-mgl ${showListView ? 'icon-list-active' : ''}` }></div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
                 </div>
-              </div>
-              {this.renderExportExcelDialog()}
-              {this.renderDownloadDialog()}
-              {this.renderAddMyCatalog()}
-              {this.renderAlertmsg()}
-              {this.renderAlertmsgPdf()}
-              {this.renderAlertmsgPageInvalid()}
-              {this.renderExportExcelViewAsSetDialog()}
-              {this.renderDialogPrintOptions()}
-            </form>
-          );
+                {/* End Header Search */}
+                {/* Util&Pagination */}
+                <div className="row">
+                  <div className="col-sm-12">
+                      <div className="panel panel-default">
+                          <div className="panel-body padding-ft0">
+                            <div className="col-sm-12 ">
+                              <div className="col-md-3 col-sm-12 col-xs-12 nopadding">
+                                  <div className="checkbox checkbox-warning check-navi">
+                                    <input type="checkbox" id="checkAllItems" className="styled" type="checkbox"
+                                        name="all"
+                                        checked={this.state.checkAllItems}
+                                        onChange={this.onCheckedAllItems} />
+                                    <label className="checkbox1">Select All</label>
+                                   </div>
+                                    {
+                                        this.state.enabledMyCatalog
+                                        ? <a><div className="icon-add" disabled={true} enabled={false}
+                                            onClick={ this.addMyCatalog }></div></a>
+                                        : <a><div className="icon-add" disabled={true} enabled={false} >
+                                            </div></a>
+                                    }
+                                <div className="box-line-nav"><div className="line-nav"></div></div>
+                                    {
+                                        ViewAsSet
+                                        ? <a><div className="icon-excel" disabled={submitting}
+                                              onClick={ this.exportExcelViewAsSet }></div></a>
+                                        : <a><div className="icon-excel" disabled={submitting}
+                                              onClick={ this.exportExcel }></div></a>
+                                    }
+                                <a><div className="icon-print margin-l10" id="printproduct" disabled={submitting}
+                                      onClick={ this.showDialogPrintOptions }>
+                                    </div>
+                                </a>
+                              </div>
+                              <div className="col-md-9 col-sm-12 col-xs-12 pagenavi">
+                                <div className="searchresult-navi search-right">
+                                    {this.renderPagination()}
+                                </div>
+                                <div className="pull-right maring-b10">
+                                      <div className="pull-left padding-r10 margin-t7">View</div>
+                                      <div className="pull-left">
+                                          <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
+                                            <option key="16" value="16">16</option>
+                                            <option key="32" value="32">32</option>
+                                            <option key="60" value="60">60</option>
+                                          </select>
+                                      </div>
+                                      <div className="pull-left padding-l10 margin-t7 margin-r10">
+                                        per page
+                                      </div>
+                                </div>
+                              </div>
+                            </div>
+                            {/* End Util&Pagination */}
+                            <div id="dvContainerPrint">
+                              {/* Total Data */}
+                                <div id="dvTotal">
+                                  {this.renderTotals()}
+                                </div>
+                              {/* End Total Data */}
+                              {/* Grid Product */}
+                              <div className={`search-product  ${showGridView ? '' : 'hidden'}` }>
+                                <GridItemsView  items={items} onClickGrid={this.onClickGrid}
+                                    onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                    onAddedOneItemMyCatalog={this.addedOneItemMyCatalog}
+                                    ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
+                                    listMyCatalog={listMyCatalog}/>
+                              </div>
+                              <div id="dvGridview" className="search-product hidden">
+                                <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
+                                    ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
+                                    listMyCatalog={listMyCatalog}/>
+                              </div>
+                              <div className={`col-sm-12 search-product list-search ${showListView ? '' : 'hidden'}` }>
+                                <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
+                                    onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                    ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
+                                    listMyCatalog={listMyCatalog}/>
+                              </div>
+                              <div id="dvListview" className="col-sm-12 search-product hidden">
+                                <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
+                                    ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
+                                    listMyCatalog={listMyCatalog}/>
+                              </div>
+                              <div id="dvListviewAll" className="col-sm-12 search-product hidden">
+                                <ListItemsViewPrint items={exportItems} pageSize={exportItems.length}
+                                      onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
+                                      chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
+                              </div>
+                              <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
+                                <center>
+                                  <br/><br/><br/><br/><br/><br/>
+                                    <Loading type="spin" color="#202020" width="10%"/>
+                                </center>
+                                <br/><br/><br/><br/><br/><br/>
+                              </div>
+                              {/* Grid Product */}
+                            </div>
+                            {/* Pagination */}
+                            <div className="col-sm-12 pagenavi maring-t20">
+                              <div className="searchresult-navi pull-right margin-r20">
+                                {this.renderPagination()}
+                              </div>
+                            </div>
+                            {/* End Pagination */}
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                {this.renderExportExcelDialog()}
+                {this.renderDownloadDialog()}
+                {this.renderAddMyCatalog()}
+                {this.renderAlertmsg()}
+                {this.renderAlertmsgPdf()}
+                {this.renderAlertmsgPageInvalid()}
+                {this.renderExportExcelViewAsSetDialog()}
+                {this.renderDialogPrintOptions()}
+              </form>
+            );
         }
       }
   }
@@ -1295,7 +1307,8 @@ function mapStateToProps(state) {
     avrgPrice: state.searchResult.avrgPrice, pageSize: state.searchResult.PageSize, sortingBy: state.searchResult.SortingBy,
     sortDirection: state.searchResult.SortDirection, showGridView: state.searchResult.ShowGridView,
     showListView: state.searchResult.ShowListView, listCatalogName: state.myCatalog.ListCatalogName,
-    ViewAsSet: state.searchResult.viewAsSet
+    ViewAsSet: state.searchResult.viewAsSet,
+    ItemsOrder: state.searchResult.itemsOrder
    }
 }
 SearchResult.propTypes = {
