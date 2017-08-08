@@ -108,7 +108,7 @@ class SearchResult extends Component {
     };
   }
   componentWillMount() {
-      const { ItemsOrder } = this.props;
+      const { ItemsOrder,SetReferencdOrder } = this.props;
       const userLogin = JSON.parse(sessionStorage.logindata);
       let sortingBy = '';
       switch (this.props.sortingBy) {
@@ -121,7 +121,7 @@ class SearchResult extends Component {
       }
       let params = {
         'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': this.props.sortDirection,
-        'pageSize' : this.props.pageSize, 'ItemsOrder': ItemsOrder
+        'pageSize' : this.props.pageSize, 'ItemsOrder': ItemsOrder,'SetReferencdOrder': SetReferencdOrder
       };  // default search params
 
       const filters =  JSON.parse(sessionStorage.filters);
@@ -234,7 +234,7 @@ class SearchResult extends Component {
   handleSelect(eventKey) {
       this.setState({activePage: eventKey});
       const userLogin = JSON.parse(sessionStorage.logindata);
-      const { showGridView,showListView,ItemsOrder } = this.props;
+      const { showGridView,showListView,ItemsOrder,SetReferencdOrder } = this.props;
       let sortingBy = '';
       switch (this.refs.sortingBy.value) {
         case 'price':
@@ -248,7 +248,7 @@ class SearchResult extends Component {
       const pageSize = this.refs.pageSize.value;
       let params = {
         'page' : eventKey, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
-        'ItemsOrder': ItemsOrder
+        'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
       };
       const filters =  JSON.parse(sessionStorage.filters);
       params = GetGemstoneLotnumberFilter(filters, params);
@@ -274,7 +274,7 @@ class SearchResult extends Component {
     e.preventDefault();
     const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
     const userLogin = JSON.parse(sessionStorage.logindata);
-    const { showGridView,showListView,totalPages,ItemsOrder } = this.props;
+    const { showGridView,showListView,totalPages,ItemsOrder,SetReferencdOrder } = this.props;
     if (Number(this.refs.reletego.value) > totalPages || Number(this.refs.reletego.value) < 1) {
         this.setState({isOpenMsgPageInvalid: true});
     }else{
@@ -292,7 +292,7 @@ class SearchResult extends Component {
         this.setState({activePage: getPage});
         let params = {
           'page' : getPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
-          'ItemsOrder': ItemsOrder
+          'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
         };
         const filters =  JSON.parse(sessionStorage.filters);
         params = GetGemstoneLotnumberFilter(filters, params);
@@ -488,7 +488,7 @@ class SearchResult extends Component {
     const pageSize = this.refs.pageSize.value;
     let params = {
       'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
-      'ItemsOrder': null
+      'ItemsOrder': null, 'SetReferencdOrder': null
     };
     const filters =  JSON.parse(sessionStorage.filters);
     params = GetGemstoneLotnumberFilter(filters, params);
@@ -498,6 +498,7 @@ class SearchResult extends Component {
     this.props.setShowListView(false);
     this.setState({ showLoading: true });
     this.props.setItemsOrder(null);
+    this.props.setSetReferenceOrder(null);
     this.props.setSortingBy(e.target.value);
     this.props.getItems(params)
     .then((value) => {
@@ -532,7 +533,7 @@ class SearchResult extends Component {
     const pageSize = this.refs.pageSize.value;
     let params = {
       'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
-      'ItemsOrder': null
+      'ItemsOrder': null, 'SetReferencdOrder': null
     };
 
     const filters =  JSON.parse(sessionStorage.filters);
@@ -543,6 +544,7 @@ class SearchResult extends Component {
     this.props.setShowListView(false);
     this.setState({ showLoading: true });
     this.props.setItemsOrder(null);
+    this.props.setSetReferenceOrder(null);
     this.props.setSortDirection(e.target.value);
     this.props.getItems(params)
     .then((value) => {
@@ -563,7 +565,7 @@ class SearchResult extends Component {
     const pageSize = e.target.value;
     const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
     const userLogin = JSON.parse(sessionStorage.logindata);
-    const { showGridView,showListView,ItemsOrder } = this.props;
+    const { showGridView,showListView,ItemsOrder,SetReferencdOrder } = this.props;
     let sortingBy = '';
 
     switch (this.refs.sortingBy.value) {
@@ -580,7 +582,7 @@ class SearchResult extends Component {
     this.setState({activePage: 1});
     let params = {
       'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
-      'ItemsOrder': ItemsOrder
+      'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
     };
 
     const filters =  JSON.parse(sessionStorage.filters);
@@ -1308,7 +1310,8 @@ function mapStateToProps(state) {
     sortDirection: state.searchResult.SortDirection, showGridView: state.searchResult.ShowGridView,
     showListView: state.searchResult.ShowListView, listCatalogName: state.myCatalog.ListCatalogName,
     ViewAsSet: state.searchResult.viewAsSet,
-    ItemsOrder: state.searchResult.itemsOrder
+    ItemsOrder: state.searchResult.itemsOrder,
+    SetReferencdOrder: state.searchResult.setReferenceOrder
    }
 }
 SearchResult.propTypes = {

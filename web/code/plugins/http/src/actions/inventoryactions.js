@@ -8,14 +8,20 @@ import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CU
         SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE,SET_HIERARCHY,
         SET_GEMS_CERTIFICATE_DATE_FROM,SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM,SET_STONE_CERTIFICATE_DATE_TO,
         SET_PRODUCTION_DATE_FROM,SET_PRODUCTION_DATE_TO,SET_SUBMITACTION,SET_SAVESEARCHHIERARCHY,SET_VIEWASSET,
-        SET_ITEMSORDER
+        SET_ITEMSORDER,SET_SETREFERENCEORDER
       } from '../constants/inventoryConstants';
 
-export function setItemsOrder(value){
+export function setSetReferenceOrder(value){
       return {
-              type: SET_ITEMSORDER,
-              itemsOrder: value
+              type: SET_SETREFERENCEORDER,
+              setReferenceOrder: value
       }
+}
+export function setItemsOrder(value){
+    return {
+        type: SET_ITEMSORDER,
+        itemsOrder: value
+    }
 }
 export function setViewAsSet(value){
       return {

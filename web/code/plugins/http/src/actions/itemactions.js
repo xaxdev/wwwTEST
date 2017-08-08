@@ -6,12 +6,18 @@ import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_
   GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG,
   SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE,
   SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, POST_SAVESEARCH,
-  SET_ISSAVESEARCH,SET_ITEMSORDER
+  SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
+export function setSetReferenceOrder(value){
+      return {
+              type: SET_SETREFERENCEORDER,
+              setReferenceOrder: value
+      }
+}
 export function setItemsOrder(value){
       return {
               type: SET_ITEMSORDER,
