@@ -15,13 +15,14 @@ class ListItemsViewASSetPrint extends Component {
          const isItems = item.items != undefined
                              ? item.items.length > 0 ? true : false
                              : false;
+         let row = item.items.length +1;
          return (
              <tbody>
+               <td rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
+               <td rowSpan={row}>{item.reference}</td>
                 {item.items.map((subitem) => {
                     return (
                         <tr>
-                            <td><img src={item.imageThumbnail} width="60"/></td>
-                            <td>{item.reference}</td>
                             <td>{subitem.reference}</td>
                             <td>{subitem.description}</td>
                             <td>{subitem.sku}</td>
@@ -36,18 +37,14 @@ class ListItemsViewASSetPrint extends Component {
                     );
                 })}
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td className="font-b fc-000">Total</td>
-                    <td className="font-b fc-000">{numberFormat(item.totalActualCost['USD'])}</td>
-                    <td className="font-b fc-000">{numberFormat(item.totalUpdatedCost['USD'])}</td>
-                    <td className="font-b fc-000">{numberFormat(item.totalPrice['USD'])}</td>
+                    <td  colSpan="9" className="bd-lb-white"></td>
+                    <td className="font-b fc-000 text-center bg-eb">Total</td>
+                    <td className="font-b fc-000 bg-eb">{numberFormat(item.totalActualCost['USD'])}</td>
+                    <td className="font-b fc-000 bg-eb">{numberFormat(item.totalUpdatedCost['USD'])}</td>
+                    <td className="font-b fc-000 bg-eb">{numberFormat(item.totalPrice['USD'])}</td>
+                </tr>
+                <tr>
+                  <td colSpan="13" height="40px" className="bd-tblr-white"></td>
                 </tr>
              </tbody>
          );

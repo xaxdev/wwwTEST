@@ -34,6 +34,7 @@ body{
 .text-vertical{vertical-align: bottom;}
 .text-vertical-top{vertical-align: text-top;}
 .text-del{padding-top: 6px; position: absolute;}
+.text-right{text-align: right;}
 h1{
   color: #fff !important;
   padding: 17px 0;
@@ -67,6 +68,18 @@ input[type=checkbox], input[type=radio]{margin: 9px 5px 0 0px;}
 
 .border-b-white{
   border-bottom: 1px solid #fff;
+}
+.bd-tblr-white{
+  border-left: 1px solid #fff !important;
+  border-right: 1px solid #fff !important;
+  border-bottom: 1px solid #383735 !important;
+}
+.bd-lb-white{
+  border-left: 1px solid #fff !important;
+  border-bottom: 1px solid #fff !important;
+}
+.bg-eb{
+  background-color: #ebd79a;
 }
 #page-wrapper{
   border:1px solid #dfdfdf;
@@ -1414,6 +1427,12 @@ select.form-searchresult option{
     }
     .table-searchresult>tbody>tr>td{word-break: break-word;}
 		.sort-icon:after{float:none !important;}
+    .table.table-searchset>tbody+tbody{
+      border-top: 1px solid #000;
+    }
+    .table-searchset .checkbox label::after, .table-searchset .checkbox span::after{
+      left: 4px;
+    }
 
 .searchresult-prodcut .pull-right
 .searchresult-prodcut .pull-right {
