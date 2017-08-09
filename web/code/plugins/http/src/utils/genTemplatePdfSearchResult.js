@@ -86,11 +86,12 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvListview = dvListview.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
     dvListview = dvListview.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;"');
     dvListview = dvListview.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px; border: 1px solid #5c5954;" role="columnheader" scope="col"');
-    dvListview = dvListview.replace(/<td/g,'<td style="padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;" ');
-    dvListview = dvListview.replace(/class="bd-lb-white"/g,'style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;"');
-    dvListview = dvListview.replace(/class="font-b fc-000 text-center bg-eb"/g,'style="font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;text-align: center;background-color: #ebd79a;"');
-    dvListview = dvListview.replace(/class="font-b fc-000 bg-eb"/g,'style="font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;"');
-    dvListview = dvListview.replace(/class="bd-tblr-white"/g,'style="border-left: 1px solid #fff;border-right: 1px solid #fff;border-bottom: 1px solid #383735"');
+    // dvListview = dvListview.replace(/<td/g,'<td style="padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;" ');
+    dvListview = dvListview.replace(/class="tdd"/g,'style="padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;" ');
+    dvListview = dvListview.replace(/class="bd-lb-white"/g,'style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 8px;"');
+    dvListview = dvListview.replace(/class="font-b fc-000 text-center bg-eb"/g,`style="font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;text-align: center;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;"`);
+    dvListview = dvListview.replace(/class="font-b fc-000 bg-eb"/g,`style="font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 8px;"`);
+    dvListview = dvListview.replace(/class="bd-tblr-white"/g,'style="border-left: 1px solid #fff;border-right: 1px solid #fff;border-bottom: 1px solid #383735;padding:5px 5px;word-break: normal;font-size: 8px;"');
 
     // dvListview = dvListview.replace(/\/original\//g,'/thumbnail/');
 
@@ -101,11 +102,12 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvListviewAll = dvListviewAll.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
     dvListviewAll = dvListviewAll.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;"');
     dvListviewAll = dvListviewAll.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px; border: 1px solid #5c5954;" role="columnheader" scope="col"');
-    dvListviewAll = dvListviewAll.replace(/<td/g,'<td style="padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;" ');
-    dvListviewAll = dvListviewAll.replace(/class="bd-lb-white"/g,'style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;"');
-    dvListviewAll = dvListviewAll.replace(/class="font-b fc-000 text-center bg-eb"/g,'style="font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;text-align: center;background-color: #ebd79a;"');
-    dvListviewAll = dvListviewAll.replace(/class="font-b fc-000 bg-eb"/g,'style="font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;"');
-    dvListviewAll = dvListviewAll.replace(/class="bd-tblr-white"/g,'style="border-left: 1px solid #fff;border-right: 1px solid #fff;border-bottom: 1px solid #383735"');
+    // dvListviewAll = dvListviewAll.replace(/<td/g,'<td style="padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;" ');
+    dvListviewAll = dvListviewAll.replace(/class="tdd"/g,'style="padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;" ');
+    dvListviewAll = dvListviewAll.replace(/class="bd-lb-white"/g,'style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 8px;"');
+    dvListviewAll = dvListviewAll.replace(/class="font-b fc-000 text-center bg-eb"/g,`style="font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;text-align: center;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 8px; border: 1px solid #5c5954;"`);
+    dvListviewAll = dvListviewAll.replace(/class="font-b fc-000 bg-eb"/g,`style="font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 8px;"`);
+    dvListviewAll = dvListviewAll.replace(/class="bd-tblr-white"/g,'style="border-left: 1px solid #fff;border-right: 1px solid #fff;border-bottom: 1px solid #383735;padding:5px 5px;word-break: normal;font-size: 8px;"');
 
     // dvListview = dvListview.replace(/\/original\//g,'/thumbnail/');
 

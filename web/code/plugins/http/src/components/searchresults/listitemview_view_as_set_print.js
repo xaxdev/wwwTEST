@@ -16,23 +16,24 @@ class ListItemsViewASSetPrint extends Component {
                              ? item.items.length > 0 ? true : false
                              : false;
          let row = item.items.length +1;
+
          return (
              <tbody>
-               <td rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
-               <td rowSpan={row}>{item.reference}</td>
+               <td className="tdd" rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
+               <td className="tdd" rowSpan={row}>{item.reference}</td>
                 {item.items.map((subitem) => {
                     return (
                         <tr>
-                            <td>{subitem.reference}</td>
-                            <td>{subitem.description}</td>
-                            <td>{subitem.sku}</td>
-                            <td>{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                            <td>{subitem.company}</td>
-                            <td>{subitem.warehouse}</td>
-                            <td>{numberFormat2digit(subitem.grossWeight)}</td>
-                            <td>{numberFormat(subitem.actualCost['USD'])}</td>
-                            <td>{numberFormat(subitem.updatedCost['USD'])}</td>
-                            <td>{numberFormat(subitem.price['USD'])}</td>
+                            <td className="tdd">{subitem.reference}</td>
+                            <td className="tdd">{subitem.description}</td>
+                            <td className="tdd">{subitem.sku}</td>
+                            <td className="tdd">{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
+                            <td className="tdd">{subitem.company}</td>
+                            <td className="tdd">{subitem.warehouse}</td>
+                            <td className="tdd">{numberFormat2digit(subitem.grossWeight)}</td>
+                            <td className="tdd">{numberFormat(subitem.actualCost['USD'])}</td>
+                            <td className="tdd">{numberFormat(subitem.updatedCost['USD'])}</td>
+                            <td className="tdd">{numberFormat(subitem.price['USD'])}</td>
                         </tr>
                     );
                 })}
@@ -44,7 +45,7 @@ class ListItemsViewASSetPrint extends Component {
                     <td className="font-b fc-000 bg-eb">{numberFormat(item.totalPrice['USD'])}</td>
                 </tr>
                 <tr>
-                  <td colSpan="12" height="40px" className="bd-tblr-white"></td>
+                  <td className="bd-tblr-white" colSpan="12" height="40px" ></td>
                 </tr>
              </tbody>
          );
