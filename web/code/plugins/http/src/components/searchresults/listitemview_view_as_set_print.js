@@ -37,14 +37,14 @@ class ListItemsViewASSetPrint extends Component {
                     );
                 })}
                 <tr>
-                    <td  colSpan="9" className="bd-lb-white"></td>
+                    <td  colSpan="8" className="bd-lb-white"></td>
                     <td className="font-b fc-000 text-center bg-eb">Total</td>
                     <td className="font-b fc-000 bg-eb">{numberFormat(item.totalActualCost['USD'])}</td>
                     <td className="font-b fc-000 bg-eb">{numberFormat(item.totalUpdatedCost['USD'])}</td>
                     <td className="font-b fc-000 bg-eb">{numberFormat(item.totalPrice['USD'])}</td>
                 </tr>
                 <tr>
-                  <td colSpan="13" height="40px" className="bd-tblr-white"></td>
+                  <td colSpan="12" height="40px" className="bd-tblr-white"></td>
                 </tr>
              </tbody>
          );
