@@ -472,19 +472,19 @@ class productdetail extends Component {
               const currency = logindata.currency;
               return(
                   <div>
-                  <h2>SET DETAILS</h2>
-                  <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-                  <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice[currency] ? parseInt(setReferenceData.totalprice[currency]) : '-'} />
-                  <ReactImageFallback
-                  id="imgset"
-                  src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                  fallbackImage="/images/blank.gif"
-                  initialImage="/images/blank.gif"
-                  width={120}
-                  height={120}
-                  className="img-responsive" />
-                  </div>
-                  <Setreference productset={setReferenceData}/>
+                      <h2>SET DETAILS</h2>
+                      <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
+                          <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
+                          <ReactImageFallback
+                              id="imgset"
+                              src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                              fallbackImage="/images/blank.gif"
+                              initialImage="/images/blank.gif"
+                              width={120}
+                              height={120}
+                              className="img-responsive" />
+                      </div>
+                      <Setreference productset={setReferenceData}/>
                   </div>
               );
           } else {
@@ -523,7 +523,7 @@ class productdetail extends Component {
             const currency = logindata.currency;
 
             jQuery('#galleryimgset').attr('src',activegallery);
-            jQuery('#showtotal').text('Total Public Price (Set): '+numberFormat(totalprice)+' '+currency);
+            jQuery('#showtotal').text('Total Public Price (Set): '+numberFormat(totalprice)+' '+'USD');
             let rotatecount = 0;
             jQuery('#btnupset').click(function(){
               jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
