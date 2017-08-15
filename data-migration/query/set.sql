@@ -3,6 +3,7 @@ USE [ITORAMA]
 SELECT jewelry.[SetReference] AS 'setReference'
       ,item.[Id] AS 'id'
       ,item.[Reference] AS 'reference'
+      ,item.[DESCRIPTION] AS 'description'
       ,item.[Price] AS 'price'
 	  ,item.[ActualCost] AS 'actualCost'
 	  ,item.[UpdatedCost] AS 'updatedCost'
@@ -19,6 +20,8 @@ SELECT jewelry.[SetReference] AS 'setReference'
       ,ISNULL(img.[FILENAME], '') AS 'imageName'
       ,ISNULL(img.[FILETYPE], '') AS 'imageType'
       , 'JLY' AS 'type'
+      ,item.[Hierarchy] AS 'hierarchy'
+      ,item.[GROSSWEIGHT] AS 'grossWeight'
 	  ,item.[CreatedDate] AS 'createdDate'
 FROM [ITORAMA].[dbo].[Jewelry] jewelry
 INNER JOIN [ITORAMA].[dbo].[Items] item

@@ -336,6 +336,31 @@ module.exports = (obj) => {
                   }
                 }`;
           }
+          else if(key == 'notUseHierarchy'){
+            let filterSplit = [];
+            let vals = value.split('|');
+            vals.forEach((val)=>{
+              let mapField =
+                    `{
+                        "match": {
+                          "hierarchy": {
+                            "query": "${val.trim()}",
+                            "type": "phrase"
+                          }
+                        }
+                      }`;
+              // console.log('mapField-->',mapField);
+              filterSplit.push(JSON.parse(mapField));
+            });
+            filter =
+              `{
+                "bool": {
+                  "must_not": [
+                      ${JSON.stringify(filterSplit)}
+                    ]
+                  }
+                }`;
+          }
           else if(key == 'hierarchy'){
             let filterSplit = [];
             // console.log('hierarchy value-->', value)

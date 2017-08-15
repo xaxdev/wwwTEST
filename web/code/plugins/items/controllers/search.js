@@ -26,6 +26,8 @@ module.exports = {
     let keys = Object.keys(obj);
 
     let size = request.payload.pageSize;
+    let itemsOrder = request.payload.ItemsOrder;
+    let setReferencdOrder = request.payload.SetReferencdOrder;
 
     internals.query = GetSearch(request, 0, 100000);
 
@@ -50,18 +52,29 @@ module.exports = {
             return !pos || item != ary[pos - 1];
         })
         let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-        if (isViewAsSet) {
-            if (sortBy.indexOf('price') != -1) {
-                sortBy = 'totalPrice.USD';
-            }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'createdDate';
-            }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'createdDate';
-            }else if (sortBy.indexOf('setReference') != -1) {
-                sortBy = 'reference';
-            }else{
-                sortBy = sortBy;
-            }
+        // if (isViewAsSet) {
+        //     if (sortBy.indexOf('price') != -1) {
+        //         sortBy = 'totalPrice.USD';
+        //     }else if (sortBy.indexOf('Date') != -1) {
+        //         sortBy = 'createdDate';
+        //     }else if (sortBy.indexOf('Date') != -1) {
+        //         sortBy = 'createdDate';
+        //     }else if (sortBy.indexOf('setReference') != -1) {
+        //         sortBy = 'reference';
+        //     }else{
+        //         sortBy = sortBy;
+        //     }
+        // }
+        if (sortBy.indexOf('price') != -1) {
+            sortBy = 'totalPrice.USD';
+        }else if (sortBy.indexOf('Date') != -1) {
+            sortBy = 'createdDate';
+        }else if (sortBy.indexOf('Date') != -1) {
+            sortBy = 'createdDate';
+        }else if (sortBy.indexOf('setReference') != -1) {
+            sortBy = 'reference';
+        }else{
+            sortBy = sortBy;
         }
 
         let missing = '';
@@ -121,9 +134,11 @@ module.exports = {
 
             elastic.close();
             if (isViewAsSet) {
-                return reply(GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+                return reply(GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
+                            obj, request, itemsOrder, setReferencdOrder));
             }else {
-                return reply(GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+                return reply(GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys,
+                            obj, request, itemsOrder, setReferencdOrder));
             }
         })
         .catch(function(err) {
