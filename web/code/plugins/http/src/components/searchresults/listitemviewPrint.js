@@ -6,7 +6,7 @@ import { DataTable } from '../../utils/DataTabelSearch/index';
 import ReactImageFallback from 'react-image-fallback';
 import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat from '../../utils/convertNumberformat';
-import ListItemsViewASSet from './listitemview_view_as_set';
+import ListItemsViewASSetPrint from './listitemview_view_as_set_print';
 
 class ListItemsView extends Component {
   constructor(props) {
@@ -196,7 +196,6 @@ class ListItemsView extends Component {
                 <div>
                     <table className="table table-bordered table-searchresult">
                         <thead>
-                            <th><span></span></th>
                             <th><span>Images</span></th>
                             <th><span>Set Product Number</span></th>
                             <th><span>Item Reference</span></th>
@@ -212,7 +211,7 @@ class ListItemsView extends Component {
                         </thead>
                         {items.map((item) => {
                             return(
-                                <ListItemsViewASSet item={item} ViewAsSet={ViewAsSet}/>
+                                <ListItemsViewASSetPrint item={item} ViewAsSet={ViewAsSet}/>
                             );
                         })}
                     </table>

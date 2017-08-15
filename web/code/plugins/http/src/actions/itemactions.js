@@ -6,12 +6,24 @@ import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_
   GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG,
   SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE,
   SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, POST_SAVESEARCH,
-  SET_ISSAVESEARCH
+  SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
+export function setSetReferenceOrder(value){
+      return {
+              type: SET_SETREFERENCEORDER,
+              setReferenceOrder: value
+      }
+}
+export function setItemsOrder(value){
+      return {
+              type: SET_ITEMSORDER,
+              itemsOrder: value
+      }
+}
 export function getCatalogItemsWithSetItem(params){
   const token = sessionStorage.token;
   var url = `${ROOT_URL}/api/catalog/setitem/${params.id}?page=${params.page}&size=${params.size}&sort=${params.sort}&order=${params.order}`;

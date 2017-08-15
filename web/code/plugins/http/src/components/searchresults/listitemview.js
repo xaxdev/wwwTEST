@@ -234,7 +234,7 @@ class ListItemsView extends Component {
         if (ViewAsSet) {
             return (
                 <div>
-                    <table className="table table-bordered table-searchresult">
+                    <table className="table table-bordered table-searchresult table-searchset">
                         <thead>
                             <th><span></span></th>
                             <th><span>Images</span></th>

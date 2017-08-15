@@ -26,6 +26,8 @@ module.exports = {
     let keys = Object.keys(obj);
 
     let size = request.payload.pageSize;
+    let itemsOrder = request.payload.ItemsOrder;
+    let setReferencdOrder = request.payload.SetReferencdOrder;
 
     internals.query = GetSearch(request, 0, 100000);
 
@@ -132,9 +134,11 @@ module.exports = {
 
             elastic.close();
             if (isViewAsSet) {
-                return reply(GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+                return reply(GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
+                            obj, request, itemsOrder, setReferencdOrder));
             }else {
-                return reply(GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+                return reply(GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys,
+                            obj, request, itemsOrder, setReferencdOrder));
             }
         })
         .catch(function(err) {

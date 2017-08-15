@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Select from 'react-select';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import InitModifyData from '../../utils/initModifyData';
@@ -6,6 +7,7 @@ import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/jewelry.json';
 import * as xls from '../../utils/xlsSetReference';
 import RemoveHierarchy from './utils/remove_hierarchy';
+import * as inventoryActions from '../../actions/inventoryactions';
 
 let X = XLSX;
 
@@ -253,33 +255,33 @@ class InventoryJewelry extends Component {
     //   console.log(e.target.checked);
   }
   readFile(e){
-    e.preventDefault();
-    let { fields:{setReference }} = this.props.props;
-    let X = XLSX;
+      e.preventDefault();
+      let { fields:{setReference }, inventoryActions} = this.props.props;
+      let X = XLSX;
 
-    let that = this;
-    let rABS = false;
-    let use_worker = false;
+      let that = this;
+      let rABS = false;
+      let use_worker = false;
 
-    let files = e.target.files;
-    // console.log('files-->',files);
-    let f = files[0];
-    {
-  		let reader = new FileReader();
-  		let name = f.name;
-  		reader.onload = function(e) {
-  			// if(typeof console !== 'undefined') console.log('onload', new Date(), rABS, use_worker);
-  			let data = e.target.result;
+      let files = e.target.files;
+      // console.log('files-->',files);
 
-  				let arr = xls.fixdata(data);
-  				let wb = X.read(btoa(arr), {type: 'base64'});
-  				let items = xls.process_wb(wb);
-          setReference.onChange(items);
-          // console.log(JSON.stringify(items, 2, 2));
-  		}
-        if(rABS) reader.readAsBinaryString(f);
-        else reader.readAsArrayBuffer(f);
-	};
+      let f = files[0];
+      {
+    		let reader = new FileReader();
+    		let name = f.name;
+    		reader.onload = function(e) {
+                let data = e.target.result;
+                let arr = xls.fixdata(data);
+                let wb = X.read(btoa(arr), {type: 'base64'});
+                let items = xls.process_wb(wb);
+                setReference.onChange(items.set);
+                inventoryActions.setSetReferenceOrder(items.AllData);
+                // console.log(JSON.stringify(items, 2, 2));
+    		}
+          if(rABS) reader.readAsBinaryString(f);
+          else reader.readAsArrayBuffer(f);
+  	};
   }
   render() {
     const { props } = this.props;
@@ -585,3 +587,4 @@ const tooltipMetalColour = (
   <Tooltip id="tooltip"><strong>Search By Metal Color of the Product</strong></Tooltip>
 );
 module.exports = InventoryJewelry;
+// module.exports = connect(null,inventoryActions)(InventoryJewelry);

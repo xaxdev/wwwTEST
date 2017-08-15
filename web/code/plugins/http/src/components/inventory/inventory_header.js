@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Select from 'react-select';
 import InitDataLocation from '../../utils/initDataLocation';
 import InitDataCompany from '../../utils/initDataCompany';
 import InitModifyData from '../../utils/initModifyData';
 import * as xls from '../../utils/xls';
+import * as inventoryActions from '../../actions/inventoryactions';
 import jQuery from 'jquery';
 let _ = require('lodash');
 let X = XLSX;
@@ -77,34 +79,34 @@ class InventoryHeader extends Component {
 
   }
   readFile(e){
-    e.preventDefault();
-    let { fields:{reference }} = this.props.props;
-    let X = XLSX;
+      e.preventDefault();
+      let that = this;
+      let { fields:{reference }} = this.props.props;
+      let X = XLSX;
+      let rABS = false;
+      let use_worker = false;
 
-    let that = this;
-    let rABS = false;
-    let use_worker = false;
+      let files = e.target.files;
+    //   console.log('files-->',files);
 
-    let files = e.target.files;
-    // console.log('files-->',files);
-    let f = files[0];
-    {
-  		let reader = new FileReader();
-  		let name = f.name;
-  		reader.onload = function(e) {
-  			// if(typeof console !== 'undefined') console.log('onload', new Date(), rABS, use_worker);
-  			let data = e.target.result;
-
-  				let arr = xls.fixdata(data);
-  				let wb = X.read(btoa(arr), {type: 'base64'});
-  				let items = xls.process_wb(wb);
-          reference.onChange(items);
-          // console.log(JSON.stringify(items, 2, 2));
-  		}
-        if(rABS) reader.readAsBinaryString(f);
-        else reader.readAsArrayBuffer(f);
-	};
+      let f = files[0];
+      {
+    		let reader = new FileReader();
+    		let name = f.name;
+    		reader.onload = function(e) {
+                let data = e.target.result;
+                let arr = xls.fixdata(data);
+                let wb = X.read(btoa(arr), {type: 'base64'});
+                let items = xls.process_wb(wb);
+                reference.onChange(items.item);
+                that.props.setItemsOrder(items.AllData);
+                // console.log(JSON.stringify(items, 2, 2));
+    		}
+          if(rABS) reader.readAsBinaryString(f);
+          else reader.readAsArrayBuffer(f);
+  	};
   }
+
   render() {
     // console.log('props-->',this.props.props);
     const { props } = this.props;
@@ -373,4 +375,5 @@ class InventoryHeader extends Component {
   }
 }
 
-module.exports = InventoryHeader;
+// module.exports = InventoryHeader;
+module.exports = connect(null,inventoryActions)(InventoryHeader);

@@ -804,7 +804,7 @@ class MyCatalog extends Component {
                                     checked={this.state.checkAllItems}
                                     onChange={this.onCheckedAllItemMyCatalog}/>
                                 <label className="checkbox1 select"></label>
-                                <span className="margin-l10 text-vertical">Select All</span>
+                              <span className="margin-l10 text-vertical margin-t5">Select All</span>
                             </div>
                             <div className={`${isCatalogShared ? 'hidden' : ''}`}>
                                 {this.state.enabledMyCatalog?
