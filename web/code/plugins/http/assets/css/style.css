@@ -2245,3 +2245,6 @@ select.form-searchresult option{
     pointer-events: none;
     opacity: 0.4;
 }
+.td-text{
+  word-break: initial !important;
+}
