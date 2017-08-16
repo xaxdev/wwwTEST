@@ -1059,6 +1059,9 @@ select.form-searchresult option{
 .list-search span{
   cursor: pointer;
 }
+.list-search img{
+  cursor: pointer;
+}
 .block-product{
 	position: relative;
 	z-index: 1;
