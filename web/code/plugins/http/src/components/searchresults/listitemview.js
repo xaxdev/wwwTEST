@@ -13,7 +13,7 @@ class ListItemsView extends Component {
     this.renderCheckItem = this.renderCheckItem.bind(this);
     this.renderAction = this.renderAction.bind(this);
     this.onClickGrid = this.onClickGrid.bind(this);
-
+    this.onClickListSet = this.onClickListSet.bind(this);
 
     this.state = {
       initialPageLength:16
@@ -68,6 +68,10 @@ class ListItemsView extends Component {
     // console.log('onClickGrid->',event.currentTarget.id);
     event.preventDefault();
     this.props.onClickGrid(event.currentTarget.id);
+  }
+  onClickListSet(id) {
+    // console.log('onClickGrid->',event.currentTarget.id);
+    this.props.onClickGrid(id);
   }
   renderImage=
    (val,row) =>
@@ -252,8 +256,9 @@ class ListItemsView extends Component {
                         </thead>
                         {items.map((item) => {
                             return(
-                                <ListItemsViewASSet item={item} onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog}
-                                  ViewAsSet={ViewAsSet} listMyCatalog={listMyCatalog}/>
+                                <ListItemsViewASSet item={item} ViewAsSet={ViewAsSet}
+                                    onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog}
+                                    listMyCatalog={listMyCatalog} onClickList={this.onClickListSet}/>
                             );
                         })}
                     </table>

@@ -1056,6 +1056,12 @@ select.form-searchresult option{
 	position: relative;
 }
 .list-search td:nth-child(7),.list-search td:nth-child(8),.list-search td:nth-child(9),.list-search td:nth-child(10){text-align: right;}
+.list-search span{
+  cursor: pointer;
+}
+.list-search img{
+  cursor: pointer;
+}
 .block-product{
 	position: relative;
 	z-index: 1;

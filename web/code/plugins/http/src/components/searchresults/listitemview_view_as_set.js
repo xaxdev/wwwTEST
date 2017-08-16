@@ -8,7 +8,16 @@ class ListItemsViewASSet extends Component {
          super(props);
 
          this.renderCheckItem = this.renderCheckItem.bind(this);
+         this.onClickGrid = this.onClickGrid.bind(this);
 
+     }
+     static propTypes = {
+       onClickGrid: PropTypes.func.isRequired
+     };
+     onClickGrid(event) {
+       // console.log('onClickGrid->',event.currentTarget.id);
+       event.preventDefault();
+       this.props.onClickList(event.currentTarget.id);
      }
      renderCheckItem = (val, row) =>{
            const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog, items } = this.props;
@@ -43,8 +52,9 @@ class ListItemsViewASSet extends Component {
                           return (
                               <tr>
                                   <td>{this.renderCheckItem(item.reference)}</td>
-                                  <td><img src={item.imageThumbnail} width="60"/></td>
-                                  <td>{item.reference}</td>
+                                  <td><img id={item.reference} src={item.imageThumbnail} width="60"
+                                        onClick={this.onClickGrid}/></td>
+                                  <td><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
                                   <td>{subitem.reference}</td>
                                   <td>{subitem.description}</td>
                                   <td>{subitem.sku}</td>
@@ -75,8 +85,9 @@ class ListItemsViewASSet extends Component {
                   <tbody>
                       <tr>
                           <td rowSpan={row}>{this.renderCheckItem(item.reference)}</td>
-                          <td rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
-                          <td rowSpan={row}>{item.reference}</td>
+                          <td rowSpan={row}><img id={item.reference} src={item.imageThumbnail} width="60"
+                                                onClick={this.onClickGrid}/></td>
+                          <td rowSpan={row}><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
                       </tr>
                       {item.items.map((subitem) => {
                           return (
