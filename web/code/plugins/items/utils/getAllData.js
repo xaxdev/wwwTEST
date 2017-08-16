@@ -207,48 +207,56 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       let maxPrice = 0;
 
       data.forEach(function(item){
-        allData.push({'id': item.id,'reference':item.reference});
-        if (item.setReference !== undefined && item.setReference !== '') {
-            setReferences.push({'reference':item.setReference});
-        }
-
-        if(item.price != undefined){
-          if(item.price[userCurrency] != undefined){
-            // console.log('item.reference-->',item.reference);
-            // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
-            if(item.price[userCurrency] != 0){
-              maxPrice = Math.max(maxPrice, item.price[userCurrency]);
-            }else{
-              maxPrice = Math.max(maxPrice, 0);
-            }
+        //   console.log('item-->',item);
+          if (isViewAsSet) {
+              allData.push({'id': item.id,'reference':item.reference,'createdDate':item.createdDate,
+                            'totalPrice':item.totalPrice,'description':item.description,'setReference':item.reference
+                            });
           }else{
-            item.price[userCurrency] = 0;
-            maxPrice = Math.max(maxPrice, 0);
+              allData.push({'id': item.id,'reference':item.reference,'itemCreatedDate':item.itemCreatedDate,
+                            'price':item.price,'description':item.description,'setReference':item.setReference
+                            });
           }
 
-          // console.log('maxPrice-->',maxPrice);
-        }else{
-            if (isViewAsSet) {
-                if(item.totalPrice['USD'] != undefined){
-                  // console.log('item.reference-->',item.reference);
-                  // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
-                  if(item.totalPrice['USD'] != 0){
-                    maxPrice = Math.max(maxPrice, item.totalPrice['USD']);
-                  }else{
-                    maxPrice = Math.max(maxPrice, 0);
-                  }
+
+          if (item.setReference !== undefined && item.setReference !== '') {
+              setReferences.push({'reference':item.setReference});
+          }
+          if(item.price != undefined){
+              if(item.price[userCurrency] != undefined){
+                // console.log('item.reference-->',item.reference);
+                // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
+                if(item.price[userCurrency] != 0){
+                  maxPrice = Math.max(maxPrice, item.price[userCurrency]);
                 }else{
-                  item.totalPrice['USD'] = 0;
                   maxPrice = Math.max(maxPrice, 0);
                 }
-            }else {
-                if(maxPrice > 0){
-                  maxPrice = maxPrice;
-                }else{
-                  maxPrice = 0;
-                }
-            }
-        }
+              }else{
+                item.price[userCurrency] = 0;
+                maxPrice = Math.max(maxPrice, 0);
+              }
+          }else{
+              if (isViewAsSet) {
+                  if(item.totalPrice['USD'] != undefined){
+                    // console.log('item.reference-->',item.reference);
+                    // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
+                    if(item.totalPrice['USD'] != 0){
+                      maxPrice = Math.max(maxPrice, item.totalPrice['USD']);
+                    }else{
+                      maxPrice = Math.max(maxPrice, 0);
+                    }
+                  }else{
+                    item.totalPrice['USD'] = 0;
+                    maxPrice = Math.max(maxPrice, 0);
+                  }
+              }else {
+                  if(maxPrice > 0){
+                    maxPrice = maxPrice;
+                  }else{
+                    maxPrice = 0;
+                  }
+              }
+          }
       });
 
       let minPrice = maxPrice;

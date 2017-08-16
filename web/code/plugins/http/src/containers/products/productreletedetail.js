@@ -399,7 +399,7 @@ class productreletedetail extends Component {
                   <div>
                   <h2>SET DETAILS</h2>
                   <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-                  <input id="totalsetprice" type="hidden" value={parseInt(setReferenceData.totalprice[currency])} />
+                  <input id="totalsetprice" type="hidden" value={parseInt(setReferenceData.totalprice['USD'])} />
                   <ReactImageFallback
                   id="imgset"
                   src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
@@ -445,7 +445,7 @@ class productreletedetail extends Component {
             const currency = logindata.currency;
 
             jQuery('#galleryimgset').attr('src',activegallery);
-            jQuery('#showtotal').text('Total Public Price (Set): '+numberFormat(totalprice)+' '+currency);
+            jQuery('#showtotal').text('Total Public Price (Set): '+numberFormat(totalprice)+' '+'USD');
             let rotatecount = 0;
             jQuery('#btnupset').click(function(){
               jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
