@@ -82,7 +82,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvListview = dvListview.replace(/\/images\//g,imgPath);
     // dvListview = dvListview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvListview = dvListview.replace(/class="table-responsive"/g,'');
-    dvListview = dvListview.replace(/class="table table-bordered table-searchresult"/g,'style="font-size: 8px; border-spacing: 0;margin:0 auto; width:794px;"');
+    dvListview = dvListview.replace(/class="table table-bordered table-searchresult"/g,'style="font-size: 8px; border-spacing: 0;margin:0 auto; width:209mm;"');
     dvListview = dvListview.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
     dvListview = dvListview.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;"');
     dvListview = dvListview.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px; border: 1px solid #5c5954;" role="columnheader" scope="col"');
@@ -99,7 +99,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvListviewAll = dvListviewAll.replace(/\/images\//g,imgPath);
     // dvListview = dvListview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvListviewAll = dvListviewAll.replace(/class="table-responsive"/g,'');
-    dvListviewAll = dvListviewAll.replace(/class="table table-bordered table-searchresult"/g,'style="font-size: 8px; border-spacing: 0; margin:0 auto; width:794px;"');
+    dvListviewAll = dvListviewAll.replace(/class="table table-bordered table-searchresult"/g,'style="font-size: 8px; border-spacing: 0; margin:0 auto; width:209mm;"');
     dvListviewAll = dvListviewAll.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
     dvListviewAll = dvListviewAll.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px;"');
     dvListviewAll = dvListviewAll.replace(/<th role="columnheader" scope="col"/g,'<th style="border: 1px solid #5c5954; padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 8px; border: 1px solid #5c5954;" role="columnheader" scope="col"');
