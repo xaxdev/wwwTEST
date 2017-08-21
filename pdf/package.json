@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "test": "mocha tests --recursive",
+      "testpdf": "mocha tests --recursive",
       "precommit": "lint-staged",
       "start": "node bootstrap.js --max_old_space_size=4096"
   },
   "lint-staged": {
     "gitDir": "../",
     "*": [
-      "test",
+      "testpdf",
       "git add"
     ]
   },

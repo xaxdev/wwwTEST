@@ -1,7 +1,7 @@
 function CartSummary() {}
 
 CartSummary.prototype.getSubtotal = function() {
-  return 0;
+  return 1;
 };
 
 module.exports = CartSummary;
