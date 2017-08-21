@@ -99,7 +99,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvListviewAll = dvListviewAll.replace(/\/images\//g,imgPath);
     // dvListview = dvListview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
     dvListviewAll = dvListviewAll.replace(/class="table-responsive"/g,'');
-    dvListviewAll = dvListviewAll.replace(/class="table table-bordered table-searchresult"/g,'style="font-size: 6px; border-spacing: 0; margin:0 auto; width:80%;"');
+    dvListviewAll = dvListviewAll.replace(/class="table table-bordered table-searchresult"/g,'style="font-size: 6px; border-spacing: 0;margin:0 auto; width:80%;"');
     dvListviewAll = dvListviewAll.replace(/class="sr-only"/g,'style="position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;"');
     dvListviewAll = dvListviewAll.replace(/<thead/g,'<thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px;"');
     dvListviewAll = dvListviewAll.replace(/<th role="columnheader" scope="col"/g,'<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"');
