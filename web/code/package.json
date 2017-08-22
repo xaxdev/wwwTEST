@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha tests --recursive",
+    "testpdf": "mocha ../../pdf/tests --recursive",
     "precommit": "lint-staged",
     "build": "NODE_ENV=production webpack --progress --color --define HOSTNAME='\"mol.mouawad.com\"' --define ENVIRONMENT='\"production\"'",
     "build:dev": "webpack --progress --color --define HOSTNAME='\"localhost\"' --define ENVIRONMENT='\"development\"'",
@@ -17,6 +18,7 @@
     "gitDir": "../../",
     "*": [
       "test",
+      "testpdf",
       "git add"
     ]
   },
