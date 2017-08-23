@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-      "testpdf": "mocha tests --recursive",
+      "test": "mocha tests --recursive",
       "precommit": "lint-staged",
       "start": "node bootstrap.js --max_old_space_size=4096"
   },
