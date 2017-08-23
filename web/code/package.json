@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha tests --recursive",
-    "lint-staged": "lint-staged",
+    "precommit": "lint-staged",
     "build": "NODE_ENV=production webpack --progress --color --define HOSTNAME='\"mol.mouawad.com\"' --define ENVIRONMENT='\"production\"'",
     "build:dev": "webpack --progress --color --define HOSTNAME='\"localhost\"' --define ENVIRONMENT='\"development\"'",
     "build:test": "NODE_ENV=test webpack --progress --color --define HOSTNAME='\"192.168.1.92\"' --define ENVIRONMENT='\"test\"'",
