@@ -16,7 +16,7 @@ class App extends Component {
         {loginstatus ? <Header {...logindata}/> : ''}
         {loginstatus ? <Menu {...logindata} currentLocation={currentLocation}/> : ''}
         <div className="container margin-b4">
-        {this.props.children}
+            {this.props.children}
         </div>
 
         <footer className="footer navbar-grau">
