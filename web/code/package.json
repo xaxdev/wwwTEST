@@ -5,21 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha tests --recursive",
-    "precommit": "lint-staged",
     "build": "NODE_ENV=production webpack --progress --color --define HOSTNAME='\"mol.mouawad.com\"' --define ENVIRONMENT='\"production\"'",
     "build:dev": "webpack --progress --color --define HOSTNAME='\"localhost\"' --define ENVIRONMENT='\"development\"'",
     "build:test": "NODE_ENV=test webpack --progress --color --define HOSTNAME='\"192.168.1.92\"' --define ENVIRONMENT='\"test\"'",
     "build:staging": "NODE_ENV=staging webpack --progress --color --define HOSTNAME='\"52.220.154.139\"' --define ENVIRONMENT='\"staging\"'",
     "build:watch": "webpack --progress --color --watch --define HOSTNAME='\"localhost\"' --define ENVIRONMENT='\"development\"'",
     "start": "node bootstrap.js"
-  },
-  "lint-staged": {
-    "gitDir": "../../",
-    "*.js": [
-      "eslint --fix",
-      "git add",
-      "jest --bail --findRelatedTests"
-    ]
   },
   "author": "",
   "license": "ISC",
@@ -114,7 +105,6 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "husky": "^0.14.3",
-    "jest": "^20.0.4",
     "json-loader": "^0.5.4",
     "json-server": "^0.8.12",
     "lint-staged": "^4.0.3",
