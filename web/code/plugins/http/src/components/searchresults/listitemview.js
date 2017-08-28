@@ -112,7 +112,6 @@ class ListItemsView extends Component {
       const userLogin = JSON.parse(sessionStorage.logindata);
       const currency = userLogin.currency;
 
-      // console.log('list view pageSize-->',this.props.pageSize);
       if (this.props.items.length != 0){
           let isCompany = true;
         items = this.props.items.map(function (col, idx) {

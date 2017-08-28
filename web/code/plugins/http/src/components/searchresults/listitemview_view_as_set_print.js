@@ -17,7 +17,7 @@ class ListItemsViewASSetPrint extends Component {
                              : false;
          let row = item.items.length +1;
          const userLogin = JSON.parse(sessionStorage.logindata);
-
+         
          if (item.items.length == 1) {
              return (
                  <tbody>
@@ -34,14 +34,14 @@ class ListItemsViewASSetPrint extends Component {
                                  <td className="tdd">{subitem.warehouse}</td>
                                  <td className="tdd">{numberFormat2digit(subitem.grossWeight)}</td>
                                  <td className={`tdd${(userLogin.permission.price == 'All') ?
-                                    '' : 'hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
+                                    '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                  <td className={`tdd${(userLogin.permission.price == 'Updated'
                                      || userLogin.permission.price == 'All') ?
-                                     '' : 'hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
+                                     '' : ' hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
                                  <td className={`tdd${(userLogin.permission.price == 'Public'
                                      || userLogin.permission.price == 'Updated'
                                      || userLogin.permission.price == 'All') ?
-                                     '' : 'hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
+                                     '' : ' hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
                              </tr>
                          );
                      })}
@@ -49,14 +49,14 @@ class ListItemsViewASSetPrint extends Component {
                          <td colSpan="8" className="bd-lb-white"></td>
                          <td className="font-b fc-000 text-center bg-eb">Total</td>
                          <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'All') ?
-                            '' : 'hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
+                            '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
                          <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'Updated'
                              || userLogin.permission.price == 'All') ?
-                             '' : 'hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
+                             '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
                          <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'Public'
                              || userLogin.permission.price == 'Updated'
                              || userLogin.permission.price == 'All') ?
-                             '' : 'hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
+                             '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
                      </tr>
                      <tr>
                         <td className="bd-tblr-white" colSpan="12" height="40px" ></td>
@@ -79,14 +79,14 @@ class ListItemsViewASSetPrint extends Component {
                                  <td className="tdd">{subitem.warehouse}</td>
                                  <td className="tdd">{numberFormat2digit(subitem.grossWeight)}</td>
                                  <td className={`tdd${(userLogin.permission.price == 'All') ?
-                                    '' : 'hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
+                                    '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                  <td className={`tdd${(userLogin.permission.price == 'Updated'
                                      || userLogin.permission.price == 'All') ?
-                                     '' : 'hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
+                                     '' : ' hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
                                  <td className={`tdd${(userLogin.permission.price == 'Public'
                                      || userLogin.permission.price == 'Updated'
                                      || userLogin.permission.price == 'All') ?
-                                     '' : 'hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
+                                     '' : ' hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
                              </tr>
                          );
                      })}
@@ -94,14 +94,14 @@ class ListItemsViewASSetPrint extends Component {
                          <td  colSpan="8" className="bd-lb-white"></td>
                          <td className="font-b fc-000 text-center bg-eb">Total</td>
                          <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'All') ?
-                            '' : 'hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
+                            '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
                          <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'Updated'
                              || userLogin.permission.price == 'All') ?
-                             '' : 'hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
+                             '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
                          <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'Public'
                              || userLogin.permission.price == 'Updated'
                              || userLogin.permission.price == 'All') ?
-                             '' : 'hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
+                             '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
                      </tr>
                      <tr>
                         <td className="bd-tblr-white" colSpan="12" height="40px" ></td>

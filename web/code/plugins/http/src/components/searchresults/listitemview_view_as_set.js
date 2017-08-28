@@ -46,7 +46,7 @@ class ListItemsViewASSet extends Component {
                              : false;
           let row = item.items.length +1;
           const userLogin = JSON.parse(sessionStorage.logindata);
-
+           
           if (item.items.length == 1) {
               return (
                   <tbody>
@@ -65,14 +65,14 @@ class ListItemsViewASSet extends Component {
                                   <td className="text-right">{subitem.warehouse}</td>
                                   <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
                                   <td className={`${(userLogin.permission.price == 'All') ?
-                                      '' : 'hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
+                                      '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                   <td className={`${(userLogin.permission.price == 'Updated'
                                       || userLogin.permission.price == 'All') ?
-                                      '' : 'hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
+                                      '' : ' hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
                                   <td className={`${(userLogin.permission.price == 'Public'
                                       || userLogin.permission.price == 'Updated'
                                       || userLogin.permission.price == 'All') ?
-                                      '' : 'hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
+                                      '' : ' hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
                               </tr>
                           );
                       })}
@@ -81,16 +81,16 @@ class ListItemsViewASSet extends Component {
                           <td className="font-b fc-000 text-center bg-eb">Total</td>
                           <td className={`font-b fc-000 bg-eb td-text
                               ${(userLogin.permission.price == 'All') ?
-                              '' : 'hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
+                              '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
                           <td className={`font-b fc-000 bg-eb td-text
                               ${(userLogin.permission.price == 'Updated'
                               || userLogin.permission.price == 'All') ?
-                              '' : 'hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
+                              '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
                           <td className={`font-b fc-000 bg-eb td-text
                               ${(userLogin.permission.price == 'Public'
                               || userLogin.permission.price == 'Updated'
                               || userLogin.permission.price == 'All') ?
-                              '' : 'hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
+                              '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
                       </tr>
                       <tr>
                         <td colSpan="13" height="40px" className="bd-tblr-white"></td>
@@ -117,14 +117,14 @@ class ListItemsViewASSet extends Component {
                                   <td className="text-right">{subitem.warehouse}</td>
                                   <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
                                   <td className={`${(userLogin.permission.price == 'All') ?
-                                      '' : 'hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
+                                      '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                   <td className={`${(userLogin.permission.price == 'Updated'
                                       || userLogin.permission.price == 'All') ?
-                                      '' : 'hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
+                                      '' : ' hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
                                   <td className={`${(userLogin.permission.price == 'Public'
                                       || userLogin.permission.price == 'Updated'
                                       || userLogin.permission.price == 'All') ?
-                                      '' : 'hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
+                                      '' : ' hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
                               </tr>
                           );
                       })}
@@ -133,16 +133,16 @@ class ListItemsViewASSet extends Component {
                       <td className="font-b fc-000 text-center bg-eb">Total</td>
                       <td className={`font-b fc-000 text-right bg-eb td-text
                           ${(userLogin.permission.price == 'All') ?
-                          '' : 'hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
+                          '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
                       <td className={`font-b fc-000 text-right bg-eb td-text
                           ${(userLogin.permission.price == 'Updated'
                           || userLogin.permission.price == 'All') ?
-                          '' : 'hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
+                          '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
                       <td className={`font-b fc-000 text-right bg-eb td-text
                           ${(userLogin.permission.price == 'Public'
                           || userLogin.permission.price == 'Updated'
                           || userLogin.permission.price == 'All') ?
-                          '' : 'hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
+                          '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
                   </tr>
                   <tr>
                         <td colSpan="13" height="40px" className="bd-tblr-white"></td>
