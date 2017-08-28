@@ -112,7 +112,6 @@ class ListItemsView extends Component {
       const userLogin = JSON.parse(sessionStorage.logindata);
       const currency = userLogin.currency;
 
-      // console.log('list view pageSize-->',this.props.pageSize);
       if (this.props.items.length != 0){
           let isCompany = true;
         items = this.props.items.map(function (col, idx) {
@@ -250,9 +249,15 @@ class ListItemsView extends Component {
                             <th><span>Company</span></th>
                             <th><span>Warehouse</span></th>
                             <th><span>Gross Weight</span></th>
-                            <th><span>Group Cost Price (USD)</span></th>
-                            <th><span>Updated Cost Price (USD)</span></th>
-                            <th><span>Selling Cost Price (USD)</span></th>
+                            <th className={`${(userLogin.permission.price == 'All') ?
+                                '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                            <th className={`${(userLogin.permission.price == 'Updated'
+                                || userLogin.permission.price == 'All') ?
+                                '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
+                            <th className={`${(userLogin.permission.price == 'Public'
+                                || userLogin.permission.price == 'Updated'
+                                || userLogin.permission.price == 'All') ?
+                                '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
                         </thead>
                         {items.map((item) => {
                             return(
