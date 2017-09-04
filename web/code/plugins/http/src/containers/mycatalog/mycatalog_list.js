@@ -773,8 +773,11 @@ class MyCatalog extends Component {
                                 <div className="styled-select-black">
                                   <select onChange={this.changeSortingBy} value={catalogSortingBy}
                                     ref="sortingBy">
-                                    <option key={2} value={2}>{'Item Reference'}</option>
-                                    <option key={3} value={3}>{'Description'}</option>
+                                    <option key={1} value={1}>{'Updated Date'}</option>
+                                    <option key={2} value={2}>{'Public Price'}</option>
+                                    <option key={3} value={3}>{'Item Reference'}</option>
+                                    <option key={4} value={4}>{'Description'}</option>
+                                    <option key={5} value={5}>{'Set Reference Number'}</option>
                                   </select>
                                 </div>
                               </div>
