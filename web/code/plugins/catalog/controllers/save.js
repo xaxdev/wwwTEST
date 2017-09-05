@@ -72,7 +72,7 @@ export default {
                                         'reference': item.reference,
                                         'description': item.description,
                                         'lastModified': new Date(),
-                                        'priceUSD': item.priceInUSD,
+                                        'priceUSD': Number(item.priceInUSD),
                                         'setReference': item.setReference
                                     }
                                 },

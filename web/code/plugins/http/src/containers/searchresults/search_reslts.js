@@ -401,7 +401,6 @@ class SearchResult extends Component {
           itemAdded = items.filter(oneItem => oneItem.id === itemReference);
       }
       itemAdded = itemAdded[0];
-      console.log('itemAdded-->>',itemAdded);
       let itemName = (itemAdded.type != undefined)
                       ? (itemAdded.type != 'CER')
                           ? itemAdded.description
