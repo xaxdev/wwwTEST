@@ -87,7 +87,7 @@ class MyCatalog extends Component {
                     let parasm = {
                             id: catalogId, page: this.props.currentPage,
                             size: !!this.props.pageSize ? this.props.pageSize : 16,
-                            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                         };
                     if (catalogId != '') {
@@ -210,7 +210,7 @@ class MyCatalog extends Component {
             this.props.deleteCatalogItems(paramsItem).then( () =>{
                 let params = {
                                 id: catalogId, page: this.props.currentPage, size: 16,
-                                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                             };
                 this.props.getCatalogItemsWithSetItem(params);
@@ -309,7 +309,7 @@ class MyCatalog extends Component {
         const { catalogId, listCatalogItems } = this.props;
         let parasm = {
                 id: catalogId, page: this.props.currentPage, size: pageSize, order: sortingDirection,
-                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2
+                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1
             };
         this.props.setCatalogSortDirection(sortingDirection);
         if (catalogId != null) {
@@ -387,7 +387,7 @@ class MyCatalog extends Component {
             this.setState({showLoading: true});
             let parasm = {
                     id: catalogId, page: getPage, size: pageSize,
-                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
             this.props.setCatalogCurrentPage(getPage);
@@ -407,7 +407,7 @@ class MyCatalog extends Component {
         let [selectedCatalog] = listCatalogName.filter((catalog) => {return catalog._id == catalogId});
         let parasm = {
                     id: catalogId, page: 1, size: 16,
-                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
         this.props.getCatalogItemsWithSetItem(parasm)
@@ -461,7 +461,7 @@ class MyCatalog extends Component {
             this.props.deleteCatalogItems(params).then( () =>{
                 let parasm = {
                     id: catalogId, page: this.props.currentPage, size: 16,
-                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
                 this.props.getCatalogItemsWithSetItem(parasm)
@@ -484,7 +484,7 @@ class MyCatalog extends Component {
                                 isCatalogShared = this.props.listCatalogName[0].shared;
                                 let parasm = {
                                     id: this.props.listCatalogName[0]._id, page: this.props.currentPage, size: 16,
-                                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                                 };
                                 this.props.getCatalogItemsWithSetItem(parasm)
@@ -666,7 +666,7 @@ class MyCatalog extends Component {
         this.setState({showLoading: true});
         let parasm = {
             id: catalogId, page: 1, size: pageSize,
-            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
         };
         this.props.setCatalogCurrentPage(getPage);
@@ -686,7 +686,7 @@ class MyCatalog extends Component {
         this.setState({showLoading: true});
         let parasm = {
                 id: catalogId, page: getPage, size: pageSize,
-                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2,
+                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
             };
         this.props.setCatalogCurrentPage(getPage);
@@ -698,7 +698,7 @@ class MyCatalog extends Component {
 
     render() {
             const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared, ViewAsSet } = this.props;
-            let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 2;
+            let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1;
             let catalogSortDirection = (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1;
             let style = {
                 style: {
