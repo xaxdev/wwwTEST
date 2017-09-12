@@ -75,5 +75,10 @@ export default [
         method: 'GET',
         path: '/setitem/{id}',
         config: controllers.itemssetitem
-    }
+    },
+    {
+        method: 'GET',
+        path: '/migrateprice',
+        config: controllers.migrateprice
+    },
 ]
