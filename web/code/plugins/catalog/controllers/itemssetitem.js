@@ -71,7 +71,6 @@ export default {
                     let total_items = 0;
                     let total_pages = 0;
                     let total_setitems = 0;
-
                     const data = await request.mongo.db.collection('CatalogItem').find(
                         {
                             catalogId
