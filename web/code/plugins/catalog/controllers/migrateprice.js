@@ -15,9 +15,10 @@ export default {
             })
 
             try {
-                // let responseItems = []
-                // let responseSetItems = []
-                // let responseNone = []
+                const responseItems = []
+                const responseSetItems = []
+                const responseMissItems = []
+                const responseMissSetItems = []
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
                 const user = await request.user.getUserById(request, request.auth.credentials.id)
@@ -30,16 +31,16 @@ export default {
                     const inventory = await request.helper.item.inventory(dataWithItems, es)
                     const all = await request.helper.item.authorization(user, inventory)
                     const hasPrice = all.filter((item) => {
-                        return item.priceInUSD > -1
+                        return item.priceInUSD
                     })
 
                     const noPrice = all.filter((item) => {
                         return !!!item.priceInUSD
                     })
 
-                    hasPrice.forEach(async (item) => {
+                    hasPrice.map(async (item) => {
 
-                        await db.collection('CatalogItem_test').findOneAndUpdate(
+                        return await db.collection('CatalogItem').updateOne(
                             {
                                 '_id': new ObjectID(item._id)
                             },
@@ -50,14 +51,16 @@ export default {
                                 }
                             },
                             {
-                                upsert: false,
-                                returnNewDocument: true
+                                upsert: false
                             })
-                    })
+                            .then((value) => {
+                                responseItems.push(value.result)
+                            })
+                        })
 
-                    noPrice.forEach(async (item) => {
+                    noPrice.map(async (item) => {
 
-                        await db.collection('CatalogItem_test').update(
+                        return await db.collection('CatalogItem').updateMany(
                             {
                                 'id': item.id,
                                 'reference': item.reference
@@ -69,11 +72,12 @@ export default {
                                 }
                             },
                             {
-                                upsert: false,
-                                multi: true,
-                                returnNewDocument: true
+                                upsert: false
                             })
-                    })
+                            .then((value) => {
+                                responseMissItems.push(value.result)
+                            })
+                        })
                 }
 
                 if (!!dataWithSetItems.length && dataWithSetItems.length > 0) {
@@ -81,16 +85,16 @@ export default {
                     const inventorySetItems = await request.helper.setitem.inventory(dataWithSetItems, esSetItems)
                     const allSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
                     const hasSetPrice = allSetItem.filter((item) => {
-                        return item.priceInUSD > -1
+                        return item.priceInUSD
                     })
 
                     const noSetPrice = allSetItem.filter((item) => {
                         return !!!item.priceInUSD
                     })
 
-                    hasSetPrice.forEach(async (setitem) => {
+                    hasSetPrice.map(async (setitem) => {
 
-                        await db.collection('CatalogItem_test').findOneAndUpdate(
+                        return await db.collection('CatalogItem').updateOne(
                             {
                                 '_id': new ObjectID(setitem._id)
                             },
@@ -101,14 +105,16 @@ export default {
                                 }
                             },
                             {
-                                upsert: false,
-                                returnNewDocument: true
+                                upsert: false
                             })
-                    })
+                            .then((value) => {
+                                responseSetItems.push(value.result)
+                            })
+                        })
 
-                    noSetPrice.forEach(async (setitem) => {
+                    noSetPrice.map(async (setitem) => {
 
-                        await db.collection('CatalogItem_test').update(
+                        return await db.collection('CatalogItem').updateMany(
                             {
                                 'id': setitem.id,
                                 'reference': setitem.reference
@@ -120,14 +126,33 @@ export default {
                                 }
                             },
                             {
-                                upsert: false,
-                                multi: true,
-                                returnNewDocument: true
+                                upsert: false
                             })
-                    })
+                            .then((value) => {
+                                responseMissSetItems.push(value.result)
+                            })
+                        })
                 }
 
-                return reply('OK')
+                return reply({
+                    total: data.length,
+                    items: {
+                        updated: responseItems.filter((item) => { return item.nModified === 1 }),
+                        notUpdated: responseItems.filter((item) => { return item.nModified === 0 })
+                    },
+                    missItems: {
+                        updated: responseMissItems.filter((item) => { return item.nModified === 1 }),
+                        notUpdated: responseMissItems.filter((item) => { return item.nModified === 0 })
+                    },
+                    setItems: {
+                        updated: responseSetItems.filter((item) => { return item.nModified === 1 }),
+                        notUpdated: responseSetItems.filter((item) => { return item.nModified === 0 })
+                    },
+                    missSetItems: {
+                        updated: responseMissSetItems.filter((item) => { return item.nModified === 1 }),
+                        notUpdated: responseMissSetItems.filter((item) => { return item.nModified === 0 })
+                    }
+                })
             } catch (e) {
                 return reply(Boom.badImplementation('', e))
             } finally {
