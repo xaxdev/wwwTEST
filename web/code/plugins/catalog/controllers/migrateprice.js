@@ -65,7 +65,7 @@ export default {
                             {
                                 $set: {
                                     'priceInUSD': 0,
-                                    'setReference': ""
+                                    'setReference': ''
                                 }
                             },
                             {
@@ -116,7 +116,7 @@ export default {
                             {
                                 $set: {
                                     'priceInUSD': 0,
-                                    'setReference': ""
+                                    'setReference': ''
                                 }
                             },
                             {
@@ -127,7 +127,7 @@ export default {
                     })
                 }
 
-                return reply("OK")
+                return reply('OK')
             } catch (e) {
                 return reply(Boom.badImplementation('', e))
             } finally {
