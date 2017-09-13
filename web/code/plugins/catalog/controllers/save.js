@@ -31,47 +31,56 @@ export default {
                 if(refuseItem.length > 0) return reply.invalidItems(refuseItem)
 
                 if (!!!catalogPayloadId) {
-                    const existingCatalog = await db.collection('CatalogName').find({ "catalog": request.payload.catalog, "userId": request.auth.credentials.id }).toArray()
+                    const existingCatalog = await db.collection('CatalogName')
+                                                    .find({
+                                                            'catalog': request.payload.catalog,
+                                                            'userId': request.auth.credentials.id
+                                                        }).toArray()
 
-                    if(existingCatalog.length > 0) return reply(Boom.badRequest("Your required name is existing."))
+                    if(existingCatalog.length > 0) return reply(Boom.badRequest('Your required name is existing.'))
                 }
 
-                const catalogCollection = await db.collection('CatalogName').findOneAndUpdate(
-                    {
-                        _id: new ObjectID(catalogPayloadId)
-                    },
-                    {
-                        $set: {
-                            "catalog": request.payload.catalog,
-                            "userId": request.auth.credentials.id,
-                            "lastModified": new Date()
-                        }
-                    },
-                    {
-                        upsert: true,
-                        returnOriginal: false
-                    })
-                const catalogColId = catalogCollection.lastErrorObject.updatedExisting ? catalogCollection.value._id : catalogCollection.lastErrorObject.upserted
+                const catalogCollection = await db.collection('CatalogName')
+                                                .findOneAndUpdate(
+                                                    {
+                                                        _id: new ObjectID(catalogPayloadId)
+                                                    },
+                                                    {
+                                                        $set: {
+                                                            'catalog': request.payload.catalog,
+                                                            'userId': request.auth.credentials.id,
+                                                            'lastModified': new Date()
+                                                        }
+                                                    },
+                                                    {
+                                                        upsert: true,
+                                                        returnOriginal: false
+                                                    });
+                const catalogColId = catalogCollection.lastErrorObject.updatedExisting
+                                    ? catalogCollection.value._id
+                                    : catalogCollection.lastErrorObject.upserted
 
                 response.forEach(async (item) => {
-
-                    await db.collection('CatalogItem').findOneAndUpdate(
-                        {
-                            "catalogId": new ObjectID(catalogColId),
-                            "id": item.id.toString()
-                        },
-                        {
-                            $set: {
-                                "reference": item.reference,
-                                "description": item.description,
-                                "lastModified": new Date()
-                            }
-                        },
-                        {
-                            upsert: true,
-                            returnOriginal: false
-                        })
-                })
+                    await db.collection('CatalogItem')
+                            .findOneAndUpdate(
+                                {
+                                    'catalogId': new ObjectID(catalogColId),
+                                    'id': item.id.toString()
+                                },
+                                {
+                                    $set: {
+                                        'reference': item.reference,
+                                        'description': item.description,
+                                        'lastModified': new Date(),
+                                        'priceInUSD': Number(item.priceInUSD),
+                                        'setReference': item.setReference
+                                    }
+                                },
+                                {
+                                    upsert: true,
+                                    returnOriginal: false
+                                });
+                });
 
                 reply.success()
 

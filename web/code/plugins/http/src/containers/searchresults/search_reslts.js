@@ -369,9 +369,9 @@ class SearchResult extends Component {
 
           let objItem = {};
           if (ViewAsSet) {
-              objItem = {...objItem, reference: item.reference, description: itemName};
+              objItem = {...objItem, reference: item.reference, description: itemName, priceUSD: item.totalPrice['USD']};
           }else{
-              objItem = {...objItem, id: item.id, reference: item.reference, description: itemName};
+              objItem = {...objItem, id: item.id, reference: item.reference, description: itemName, priceUSD: item.price['USD']};
           }
           listMyCatalog.push(objItem);
       });
@@ -406,11 +406,12 @@ class SearchResult extends Component {
                           ? itemAdded.description
                           : itemAdded.name
                       :itemAdded.description;
+
     let objItem = {};
     if (ViewAsSet) {
-        objItem = {...objItem, reference: itemAdded.reference, description: itemName};
+        objItem = {...objItem, reference: itemAdded.reference, description: itemName, priceUSD: itemAdded.priceUSD};
     }else{
-        objItem = {...objItem, id: itemAdded.id, reference: itemAdded.reference, description: itemName};
+        objItem = {...objItem, id: itemAdded.id, reference: itemAdded.reference, description: itemName, priceUSD: itemAdded.price['USD']};
     }
     if(!this.state.enabledMyCatalog){
         listMyCatalog = [];
@@ -454,9 +455,9 @@ class SearchResult extends Component {
                         :itemAdded.description;
       let objItem = {};
       if (ViewAsSet) {
-          objItem = {...objItem, reference: itemAdded.reference, description: itemName};
+          objItem = {...objItem, reference: itemAdded.reference, description: itemName, priceUSD: itemAdded.priceUSD};
       }else{
-          objItem = {...objItem, id: itemAdded.id, reference: itemAdded.reference, description: itemName};
+          objItem = {...objItem, id: itemAdded.id, reference: itemAdded.reference, description: itemName, priceUSD: itemAdded.price['USD']};
       }
       listMyCatalog.push(objItem);
       this.setState({isOpenAddMyCatalog: true});

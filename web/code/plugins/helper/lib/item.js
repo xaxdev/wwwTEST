@@ -1,15 +1,15 @@
 const parameters = items => {
     const parameters = {
-        "index": "mol",
-        "type": "items",
-        "size": items.length,
-        "filter_path": "**._source",
-        "body": {
-            "query": {
-                "constant_score": {
-                    "query": {
-                        "bool": {
-                            "should": []
+        'index': 'mol',
+        'type': 'items',
+        'size': items.length,
+        'filter_path': '**._source',
+        'body': {
+            'query': {
+                'constant_score': {
+                    'query': {
+                        'bool': {
+                            'should': []
                         }
                     }
                 }
@@ -17,7 +17,7 @@ const parameters = items => {
         }
     }
 
-    parameters.body.query.constant_score.query.bool.should.push(items.map(item => ({ "match": { "id": String(item.id) } })))
+    parameters.body.query.constant_score.query.bool.should.push(items.map(item => ({ 'match': { 'id': String(item.id) } })))
 
     return parameters
 }
@@ -86,7 +86,7 @@ const applyPermission = (user, item) => {
         result.gemstones.forEach(gemstone => delete gemstone.cost)
 
         switch (user.permission.price.toUpperCase()) {
-            case "PUBLIC":
+            case 'PUBLIC':
                 delete result.actualCost
                 delete result.actualCostInUSD
                 delete result.actualCostInHomeCurrency
@@ -95,7 +95,7 @@ const applyPermission = (user, item) => {
                 delete result.updatedCostInHomeCurrency
                 delete result.markup
                 break;
-            case "UPDATED":
+            case 'UPDATED':
                 delete result.actualCost
                 delete result.actualCostInUSD
                 delete result.actualCostInHomeCurrency

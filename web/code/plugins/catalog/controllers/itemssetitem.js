@@ -31,7 +31,7 @@ export default {
                 const catalogId = request.mongo.ObjectID(id)
                 const page = Number(request.query.page || request.pagination.page)
                 const size = Number(request.query.size || request.pagination.size)
-                const sort = constants.sort[request.query.sort] || 'lastModified'
+                const sort = constants.sort[request.query.sort] || 'lastModified';
                 const order = request.query.order || -1
                 const sorting = { [sort]: order }
                 const cursor = await request.mongo.db.collection('CatalogName').aggregate([
@@ -62,16 +62,15 @@ export default {
                         return reply({ ...catalog, page: 1, total_items: 0, total_pages: 0, })
                     }
 
-                    let response = []
-                    let responseAllItems = []
-                    let price = 0
-                    let updatedCost = 0
-                    let setItemPrice = 0
-                    let setItemUpdatedCost = 0
+                    let response = [];
+                    let responseAllItems = [];
+                    let price = 0;
+                    let updatedCost = 0;
+                    let setItemPrice = 0;
+                    let setItemUpdatedCost = 0;
                     let total_items = 0;
                     let total_pages = 0;
                     let total_setitems = 0;
-
                     const data = await request.mongo.db.collection('CatalogItem').find(
                         {
                             catalogId
@@ -134,17 +133,10 @@ export default {
 
                         response.push(...itemsSetitem)
                     }
+                    response.sort(sortBy(sort,order != 1));
 
-                    if (order == 1) {
-                        //asc
-                        response = response.sortBy(sort,'asc');
-                    }else{
-                       //desc
-                        response = response.sortBy(sort,'desc')
-
-                    }
-                    return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page, total_items,
-                        total_pages, total_setitems, 'items': response, 'allItems': responseAllItems })
+                    return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page,
+                        total_items, total_pages, total_setitems, 'items': response, 'allItems': responseAllItems })
                 }
 
                 return reply(Boom.badRequest('Invalid catalog id'))
@@ -157,30 +149,41 @@ export default {
     }
 }
 
-const compareBy = (property, order = 'asc') => (a, b) => {
-  if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
-    return 0;
-  }
+/**
+     * @description
+     * Returns a function which will sort an
+     * array of objects by the given key.
+     *
+     * @param  {String}  key
+     * @param  {Boolean} reverse
+     * @return {Function}
+ */
+function sortBy(key, reverse) {
+    // Move smaller items towards the front
+    // or back of the array depending on if
+    // we want to sort the array in reverse
+    // order or not.
+    const moveSmaller = reverse ? 1 : -1;
 
-  const first = a[property]
-  const second = b[property]
+    // Move larger items towards the front
+    // or back of the array depending on if
+    // we want to sort the array in reverse
+    // order or not.
+    const moveLarger = reverse ? -1 : 1;
 
-  if (typeof first !== typeof second) {
-    return 0
-  }
+    /**
+     * @param  {*} a
+     * @param  {*} b
+     * @return {Number}
+     */
 
-  let comparison = 0
-  if (first > second) {
-    comparison = 1
-  }
-
-  if (first < second) {
-    comparison = -1
-  }
-
-  return (order === 'desc')? (comparison * -1) : comparison
-}
-
-Array.prototype.sortBy = function(property, order = 'asc') {
-  return Array.prototype.sort.call(this, compareBy(property, order))
+     return function(a, b) {
+         if (a[key] < b[key]) {
+             return moveSmaller;
+         }
+         if (a[key] > b[key]) {
+             return moveLarger;
+         }
+         return 0;
+     };
 }
