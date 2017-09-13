@@ -25,69 +25,17 @@ class GridItemsView extends Component {
     this.onClickQuickView = this.onClickQuickView.bind(this);
 
     this.state = {
-      isOpen0: false,
-      isOpen1: false,
-      isOpen2: false,
-      isOpen3: false,
-      isOpen4: false,
-      isOpen5: false,
-      isOpen6: false,
-      isOpen7: false,
-      isOpen8: false,
-      isOpen9: false,
-      isOpen10: false,
-      isOpen11: false,
-      isOpen12: false,
-      isOpen13: false,
-      isOpen14: false,
-      isOpen15: false,
-      isOpen16: false,
-      isOpen17: false,
-      isOpen18: false,
-      isOpen19: false,
-      isOpen20: false,
-      isOpen21: false,
-      isOpen22: false,
-      isOpen23: false,
-      isOpen24: false,
-      isOpen25: false,
-      isOpen26: false,
-      isOpen27: false,
-      isOpen28: false,
-      isOpen29: false,
-      isOpen30: false,
-      isOpen31: false,
-      isOpen32: false,
-      isOpen33: false,
-      isOpen34: false,
-      isOpen35: false,
-      isOpen36: false,
-      isOpen37: false,
-      isOpen38: false,
-      isOpen39: false,
-      isOpen40: false,
-      isOpen41: false,
-      isOpen42: false,
-      isOpen43: false,
-      isOpen44: false,
-      isOpen45: false,
-      isOpen46: false,
-      isOpen47: false,
-      isOpen48: false,
-      isOpen49: false,
-      isOpen50: false,
-      isOpen51: false,
-      isOpen52: false,
-      isOpen53: false,
-      isOpen54: false,
-      isOpen55: false,
-      isOpen56: false,
-      isOpen57: false,
-      isOpen58: false,
-      isOpen59: false,
-      isOpen60: false,
-      isOpenPop: false,
-      toggleQuickView: false
+      isOpen0: false, isOpen1: false, isOpen2: false, isOpen3: false, isOpen4: false, isOpen5: false
+      , isOpen6: false, isOpen7: false, isOpen8: false, isOpen9: false, isOpen10: false, isOpen11: false
+      , isOpen12: false, isOpen13: false, isOpen14: false, isOpen15: false, isOpen16: false, isOpen17: false
+      , isOpen18: false, isOpen19: false, isOpen20: false, isOpen21: false, isOpen22: false, isOpen23: false
+      , isOpen24: false, isOpen25: false, isOpen26: false, isOpen27: false, isOpen28: false, isOpen29: false
+      , isOpen30: false, isOpen31: false, isOpen32: false, isOpen33: false, isOpen34: false, isOpen35: false
+      , isOpen36: false, isOpen37: false, isOpen38: false, isOpen39: false, isOpen40: false, isOpen41: false
+      , isOpen42: false, isOpen43: false, isOpen44: false, isOpen45: false, isOpen46: false, isOpen47: false
+      , isOpen48: false, isOpen49: false, isOpen50: false, isOpen51: false, isOpen52: false, isOpen53: false
+      , isOpen54: false, isOpen55: false, isOpen56: false, isOpen57: false, isOpen58: false, isOpen59: false
+      , isOpen60: false, isOpenPop: false, toggleQuickView: false
     };
   }
   static propTypes = {
@@ -97,17 +45,14 @@ class GridItemsView extends Component {
     return shallowCompare(this, nextProps, nextState);
   }
   onClickGrid(event) {
-    // console.log('onClickGrid->',event.currentTarget.id);
     event.preventDefault();
     this.props.onClickGrid(event.currentTarget.id);
   }
   onClickQuickView(event) {
-    // console.log('onClickQuickView->',event.currentTarget.id);
     event.preventDefault();
     // this.props.onClickGrid(event.currentTarget.id);
   }
   onMouseOverGrid(e){
-    // console.log('onMouseOverGrid e->',e.currentTarget.id);
 
     this.setState({isOpen0:false});
     this.setState({isOpen1:false});
@@ -1241,14 +1186,15 @@ class GridItemsView extends Component {
   }
 
   renderShowDetails(){
-    // console.log('renderShowDetails this.state.isOpen-->',this.state.isOpen);
       return(
-        <div style={{margin: '0 auto', textAlign: 'center'}} ><h1> pop up header </h1> <p> pop up content </p></div>
+        <div style={{margin: '0 auto', textAlign: 'center'}} >
+            <h1> pop up header </h1>
+            <p> pop up content </p>
+        </div>
       );
   }
 
   render(){
-    // console.log('this.props.items-->',this.props.items);
     const { submitting, onCheckedOneItemMyCatalog, onDeleteOneItemMyCatalog, isCatalogShared,
             listMyCatalog
           } = this.props;
@@ -1256,14 +1202,12 @@ class GridItemsView extends Component {
     let btnQuickView = this.onClickQuickView;
     let showDetails = this.onMouseOverGrid;
     let hideDetails = this.onMouseOutGrid;
-    // console.log('this.props.items-->',this.props.items);
     let that = this;
     const userLogin = JSON.parse(sessionStorage.logindata);
-    // console.log('that.state.toggleQuickView-->',that.state.toggleQuickView);
+
     return (
       <div>
         {this.props.items.map(function(item, index){
-        //   console.log('item-->',item);
           let imagesProduct = '';
           let itemDate = '';
           let lblDate = '';
@@ -1297,14 +1241,20 @@ class GridItemsView extends Component {
                 ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
                 : '';
               price = (item.authorization)
-                ? (item.price != -1)? numberFormat(item.price) + ' ' + item.userCurrency: '- ' + userLogin.currency
-                : '- ' + userLogin.currency;
+                ? (item.priceInUSD != -1)
+                    ? numberFormat(item.priceInUSD) + ' ' + 'USD'
+                    : '- ' + 'USD'
+                : '- ' + 'USD';
               actualCost = (item.authorization)
-                ? (item.actualCost != -1)? numberFormat(item.actualCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
-                : '- ' + userLogin.currency;
+                ? (item.actualCostInUSD != -1)
+                    ? numberFormat(item.actualCostInUSD) + ' ' + 'USD'
+                    : '- ' + 'USD'
+                : '- ' + 'USD';
               updatedCost = (item.authorization)
-                ? (item.updatedCost != -1)? numberFormat(item.updatedCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
-                : '- ' + userLogin.currency;
+                ? (item.updatedCostInUSD != -1)
+                    ? numberFormat(item.updatedCostInUSD) + ' ' + 'USD'
+                    : '- ' + 'USD'
+                : '- ' + 'USD';
               itemName = (item.authorization)
                 ? (item.type != 'CER')?
                     (item.description != undefined) ?
@@ -1334,13 +1284,19 @@ class GridItemsView extends Component {
                 ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
                 : '';
               price = (item.authorization)
-                ? (item.totalPrice['USD'] != -1)? numberFormat(item.totalPrice['USD']) + ' ' + 'USD': '- ' + 'USD'
+                ? (item.totalPrice['USD'] != -1)
+                    ? numberFormat(item.totalPrice['USD']) + ' ' + 'USD'
+                    : '- ' + 'USD'
                 : '- ' + 'USD';
               actualCost = (item.authorization)
-                ? (item.totalActualCost['USD'] != -1)? numberFormat(item.totalActualCost['USD']) + ' ' + 'USD': '- ' + 'USD'
+                ? (item.totalActualCost['USD'] != -1)
+                    ? numberFormat(item.totalActualCost['USD']) + ' ' + 'USD'
+                    : '- ' + 'USD'
                 : '- ' + 'USD';
               updatedCost = (item.authorization)
-                ? (item.totalUpdatedCost['USD'] != -1)? numberFormat(item.totalUpdatedCost['USD']) + ' ' + 'USD': '- ' + 'USD'
+                ? (item.totalUpdatedCost['USD'] != -1)
+                    ? numberFormat(item.totalUpdatedCost['USD']) + ' ' + 'USD'
+                    : '- ' + 'USD'
                 : '- ' + 'USD';
               itemName = (item.authorization)
                 ? (item.type != 'CER')?
@@ -1463,7 +1419,9 @@ class GridItemsView extends Component {
                         name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
                         id={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
                         onClick={item.authorization ? btnEvent: ''}>{itemName}</p>
-                    <span className={`fc-ae8f3b font-b price ${(item.authorization)?(item.type != 'CER') ? '' : 'hidden':''}`}>{price}</span>
+                    <span className={`fc-ae8f3b font-b price ${(item.authorization)
+                                        ?(item.type != 'CER') ? '' : 'hidden'
+                                        :''}`}>{price}</span>
                     <span className="line"></span>
                  </div>
                     <div>
