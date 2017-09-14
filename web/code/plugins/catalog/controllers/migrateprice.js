@@ -19,123 +19,130 @@ export default {
                 const responseSetItems = []
                 const responseMissItems = []
                 const responseMissSetItems = []
+                const maxRecord = 1000
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
                 const user = await request.user.getUserById(request, request.auth.credentials.id)
-                const data = await request.mongo.db.collection('CatalogItem').find().toArray()
-                const dataWithItems = data.filter((item) => { return item.id !== null })
-                const dataWithSetItems = data.filter((item) => { return item.id === null })
+                const dataCount = await request.mongo.db.collection('CatalogItem').count();
+                const rounds = Math.ceil(dataCount/maxRecord)
 
-                if (!!dataWithItems.length && dataWithItems.length > 0) {
-                    const es = await client.search(request.helper.item.parameters(dataWithItems))
-                    const inventory = await request.helper.item.inventory(dataWithItems, es)
-                    const all = await request.helper.item.authorization(user, inventory)
-                    const hasPrice = all.filter((item) => {
-                        return item.priceInUSD
-                    })
+                for (let i = 0; i < rounds; i++) {
 
-                    const noPrice = all.filter((item) => {
-                        return !!!item.priceInUSD
-                    })
+                    const data = await request.mongo.db.collection('CatalogItem').find().limit(maxRecord).skip(maxRecord * i).toArray()
+                    const dataWithItems = data.filter((item) => { return item.id !== null })
+                    const dataWithSetItems = data.filter((item) => { return item.id === null })
 
-                    hasPrice.map(async (item) => {
-
-                        return await db.collection('CatalogItem').updateOne(
-                            {
-                                '_id': new ObjectID(item._id)
-                            },
-                            {
-                                $set: {
-                                    'priceInUSD': item.priceInUSD,
-                                    'setReference': item.reference
-                                }
-                            },
-                            {
-                                upsert: false
-                            })
-                            .then((value) => {
-                                responseItems.push(value.result)
-                            })
+                    if (!!dataWithItems.length && dataWithItems.length > 0) {
+                        const es = await client.search(request.helper.item.parameters(dataWithItems))
+                        const inventory = await request.helper.item.inventory(dataWithItems, es)
+                        const all = await request.helper.item.authorization(user, inventory)
+                        const hasPrice = all.filter((item) => {
+                            return item.priceInUSD
                         })
 
-                    noPrice.map(async (item) => {
-
-                        return await db.collection('CatalogItem').updateMany(
-                            {
-                                'id': item.id,
-                                'reference': item.reference
-                            },
-                            {
-                                $set: {
-                                    'priceInUSD': 0,
-                                    'setReference': ''
-                                }
-                            },
-                            {
-                                upsert: false
-                            })
-                            .then((value) => {
-                                responseMissItems.push(value.result)
-                            })
-                        })
-                }
-
-                if (!!dataWithSetItems.length && dataWithSetItems.length > 0) {
-                    const esSetItems = await client.search(request.helper.setitem.parameters(dataWithSetItems))
-                    const inventorySetItems = await request.helper.setitem.inventory(dataWithSetItems, esSetItems)
-                    const allSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
-                    const hasSetPrice = allSetItem.filter((item) => {
-                        return item.priceInUSD
-                    })
-
-                    const noSetPrice = allSetItem.filter((item) => {
-                        return !!!item.priceInUSD
-                    })
-
-                    hasSetPrice.map(async (setitem) => {
-
-                        return await db.collection('CatalogItem').updateOne(
-                            {
-                                '_id': new ObjectID(setitem._id)
-                            },
-                            {
-                                $set: {
-                                    'priceInUSD': setitem.priceInUSD,
-                                    'setReference': setitem.reference
-                                }
-                            },
-                            {
-                                upsert: false
-                            })
-                            .then((value) => {
-                                responseSetItems.push(value.result)
-                            })
+                        const noPrice = all.filter((item) => {
+                            return !!!item.priceInUSD
                         })
 
-                    noSetPrice.map(async (setitem) => {
+                        hasPrice.map(async (item) => {
 
-                        return await db.collection('CatalogItem').updateMany(
-                            {
-                                'id': setitem.id,
-                                'reference': setitem.reference
-                            },
-                            {
-                                $set: {
-                                    'priceInUSD': 0,
-                                    'setReference': ''
-                                }
-                            },
-                            {
-                                upsert: false
+                            return await db.collection('CatalogItem').updateOne(
+                                {
+                                    '_id': new ObjectID(item._id)
+                                },
+                                {
+                                    $set: {
+                                        'priceInUSD': item.priceInUSD,
+                                        'setReference': item.reference
+                                    }
+                                },
+                                {
+                                    upsert: false
+                                })
+                                .then((value) => {
+                                    responseItems.push(value.result)
+                                })
                             })
-                            .then((value) => {
-                                responseMissSetItems.push(value.result)
+
+                        noPrice.map(async (item) => {
+
+                            return await db.collection('CatalogItem').updateMany(
+                                {
+                                    'id': item.id,
+                                    'reference': item.reference
+                                },
+                                {
+                                    $set: {
+                                        'priceInUSD': 0,
+                                        'setReference': ''
+                                    }
+                                },
+                                {
+                                    upsert: false
+                                })
+                                .then((value) => {
+                                    responseMissItems.push(value.result)
+                                })
                             })
+                    }
+
+                    if (!!dataWithSetItems.length && dataWithSetItems.length > 0) {
+                        const esSetItems = await client.search(request.helper.setitem.parameters(dataWithSetItems))
+                        const inventorySetItems = await request.helper.setitem.inventory(dataWithSetItems, esSetItems)
+                        const allSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
+                        const hasSetPrice = allSetItem.filter((item) => {
+                            return item.priceInUSD
                         })
+
+                        const noSetPrice = allSetItem.filter((item) => {
+                            return !!!item.priceInUSD
+                        })
+
+                        hasSetPrice.map(async (setitem) => {
+
+                            return await db.collection('CatalogItem').updateOne(
+                                {
+                                    '_id': new ObjectID(setitem._id)
+                                },
+                                {
+                                    $set: {
+                                        'priceInUSD': setitem.priceInUSD,
+                                        'setReference': setitem.reference
+                                    }
+                                },
+                                {
+                                    upsert: false
+                                })
+                                .then((value) => {
+                                    responseSetItems.push(value.result)
+                                })
+                            })
+
+                        noSetPrice.map(async (setitem) => {
+
+                            return await db.collection('CatalogItem').updateMany(
+                                {
+                                    'id': setitem.id,
+                                    'reference': setitem.reference
+                                },
+                                {
+                                    $set: {
+                                        'priceInUSD': 0,
+                                        'setReference': ''
+                                    }
+                                },
+                                {
+                                    upsert: false
+                                })
+                                .then((value) => {
+                                    responseMissSetItems.push(value.result)
+                                })
+                            })
+                    }
                 }
 
                 return reply({
-                    total: data.length,
+                    total: dataCount,
                     items: {
                         updated: responseItems.filter((item) => { return item.nModified === 1 }),
                         notUpdated: responseItems.filter((item) => { return item.nModified === 0 })
@@ -153,6 +160,7 @@ export default {
                         notUpdated: responseMissSetItems.filter((item) => { return item.nModified === 0 })
                     }
                 })
+                // return reply('ok');
             } catch (e) {
                 return reply(Boom.badImplementation('', e))
             } finally {
