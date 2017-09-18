@@ -5,12 +5,20 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha tests --recursive",
+    "precommit": "lint-staged",
     "build": "NODE_ENV=production webpack --progress --color --define HOSTNAME='\"mol.mouawad.com\"' --define ENVIRONMENT='\"production\"'",
     "build:dev": "webpack --progress --color --define HOSTNAME='\"localhost\"' --define ENVIRONMENT='\"development\"'",
     "build:test": "NODE_ENV=test webpack --progress --color --define HOSTNAME='\"192.168.1.92\"' --define ENVIRONMENT='\"test\"'",
     "build:staging": "NODE_ENV=staging webpack --progress --color --define HOSTNAME='\"52.220.154.139\"' --define ENVIRONMENT='\"staging\"'",
     "build:watch": "webpack --progress --color --watch --define HOSTNAME='\"localhost\"' --define ENVIRONMENT='\"development\"'",
     "start": "node bootstrap.js"
+  },
+  "lint-staged": {
+    "gitDir": "../../",
+    "*": [
+      "test",
+      "git add"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -97,7 +105,6 @@
     "babel-preset-stage-0": "^6.5.0",
     "browser-sync": "^2.11.1",
     "browser-sync-webpack-plugin": "^1.0.1",
-    "chai": "^4.1.2",
     "css-loader": "^0.23.1",
     "del": "^2.2.0",
     "eslint": "^4.5.0",
@@ -110,7 +117,6 @@
     "json-server": "^0.8.12",
     "lint-staged": "^4.0.3",
     "nodemon": "^1.9.1",
-    "sinon": "^3.2.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
