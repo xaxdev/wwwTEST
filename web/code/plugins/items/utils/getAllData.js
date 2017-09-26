@@ -3,13 +3,11 @@ import Elasticsearch from 'elasticsearch'
 const Promise = require('bluebird');
 const _ = require('lodash');
 const GetPriceCurrency = require('./getPriceCurrency');
-// import numberFormat from '../../http/src/utils/convertNumberformatwithcomma2digit';
 
 module.exports = async (response, sortDirections, sortBy, size, page, userCurrency, keys, obj, request,
-    itemsOrder, setReferencdOrder, cb) => {
+    itemsOrder, setReferencdOrder, itemsNotMMECONSResult, cb) => {
 
   try {
-      // console.log(response.hits.total)
       let allData = [];
       let setReferences = [];
       let sumPriceData = [];
@@ -20,42 +18,48 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
       let data = response.hits.hits.map((element) => element._source);
 
-      function printUniqueResults (arrayOfObj, key) {
-          return arrayOfObj.filter((item, index, array) => {
-              return array.map((mapItem) => mapItem[key]).indexOf(item[key]) === index
-          })
+      //    Find unique item reference
+      const unique = [...new Set(data.map(item => item.reference))];
+
+      //   Create data item reference and count items {'reference:xx'}
+      let countReference = count(data, function (item) {
+          return item.reference
+      });
+
+      //   Find key condition warehouse
+      if (!!keys.find((key) => {return key == 'warehouse'})) {
+          if (obj['warehouse'].indexOf('MME.CONS') != -1) {
+              //   intersection first array
+              data = inFirstOnly(data, itemsNotMMECONSResult);
+          }
+      } else {
+          //   remove duplicate item warehouse = MME.CONS
+          if (unique.length != data.length) {
+              data.map(async (item, index, array) => {
+                  await unique.map((it) => {
+                      if (countReference[it] > 1) {
+                          if (item.reference == it) {
+                              if (item.warehouse == 'MME.CONS') {
+                                  data.splice(index,1)
+                              }
+                          }
+                      }
+                  })
+              })
+          }
       }
-
-      const unique = printUniqueResults(data, 'reference')
-
-      data.map((item, index, array) => {
-          unique.map((it) => {
-              if (item.reference == it.reference) {
-                  if (item.warehouse == 'MME.CONS') {
-                      data.splice(index,1)
-                  }
-              }
-          })
-      })
-
-    //   console.log('data-->',data);
 
       if (itemsOrder != null) {
           data.map((item) => {
               let order = itemsOrder.find((val) => {
                   return val.item_reference == item.reference;
               })
-            //   console.log('order-->',order);
-            //   item = {...item,'order':parseInt(order.order)};
               item.order = parseInt(order.order)
-            //   console.log('item-->',item);
               return item;
           });
           data = data.sortBy('order','asc',userCurrency);
-        //   console.log('data-->',JSON.stringify(data, null, 2));
       }
       if (setReferencdOrder != null) {
-        //   console.log('data_set-->',JSON.stringify(data, null, 2));
           data.map((item) => {
               let order = null;
               if (isViewAsSet) {
@@ -67,14 +71,10 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                       return val.set_reference == item.setReference;
                   });
               }
-            //   console.log('order-->',order);
-            //   item = {...item,'order':parseInt(order.order)};
               item.order = parseInt(order.order)
-            //   console.log('item-->',item);
               return item;
           });
           data = data.sortBy('order','asc',userCurrency);
-        //   console.log('data-->',JSON.stringify(data, null, 2));
       }
 
       if (isViewAsSet) {
@@ -99,12 +99,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       }
 
       if (isViewAsSet) {
-        //   console.log('keys--> viewAsSet');
           data = data.filter((item) => {
-            //   console.log('setReference-->',item.setReference !== '');
               return item.setReference !== '';
           });
-        //   console.log(data.length);
       }
 
       data.forEach(function(item){
@@ -114,7 +111,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             if (item.lotNumbers.length > 0) {
                     if (keys.length != 3 ){
                         keys.forEach((key) => {
-                            // console.log('key-->',key);
                             if(key == 'lotNumbers'){
                                 const valusObj = obj[key];
                                 const lotFields = Object.keys(valusObj);
@@ -154,7 +150,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                                     if (field == 'cut') {
                                         let customLot = [];
                                         let custom = [];
-                                        // console.log('newLot-->',newLot);
                                         if (fieldValus.indexOf(',') != -1) {
                                             let values =  fieldValus.split(',');
                                             values.forEach((val)=>{
@@ -208,7 +203,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                                                                     return item.clarity == fieldValus
                                                                 });
                                         }
-                                        // console.log(newLot);
                                     }
                                 })
                             }
@@ -227,7 +221,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       let maxPrice = 0;
 
       data.forEach(function(item){
-        //   console.log('item-->',item);
           if (isViewAsSet) {
               allData.push({'id': item.id,'reference':item.reference,'createdDate':item.createdDate,
                             'totalPrice':item.totalPrice,'description':item.description,'setReference':item.reference
@@ -244,8 +237,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
           }
           if(item.price != undefined){
               if(item.price[userCurrency] != undefined){
-                // console.log('item.reference-->',item.reference);
-                // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
                 if(item.price[userCurrency] != 0){
                   maxPrice = Math.max(maxPrice, item.price[userCurrency]);
                 }else{
@@ -258,8 +249,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
           }else{
               if (isViewAsSet) {
                   if(item.totalPrice['USD'] != undefined){
-                    // console.log('item.reference-->',item.reference);
-                    // console.log('item.price[userCurrency]-->',item.price[userCurrency]);
                     if(item.totalPrice['USD'] != 0){
                       maxPrice = Math.max(maxPrice, item.totalPrice['USD']);
                     }else{
@@ -312,7 +301,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
 
       if(pageData.length != 0){
         data.forEach(function(item){
-          // console.log('item.priceUSD-->',item.priceUSD);
           if (isViewAsSet) {
               sumPriceData.push(item.totalPrice['USD']);
           }else {
@@ -326,27 +314,17 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         avrgPrice = sumPrice/itemCount;
 
         data.forEach(function(item){
-          // console.log('item.priceUSD-->',item.priceUSD);
           if (isViewAsSet) {
               sumCostData.push(item.totalUpdatedCost['USD']);
           }else {
               sumCostData.push(GetPriceCurrency(item,'updatedCost',userCurrency));
           }
-        //   console.log('lot-last-->',item.lotNumbers.length);
         });
 
         sumCostData.forEach(function(cost) {
-          // console.log('cost-->',cost);
           sumCost = sumCost+Math.round(cost);
         });
-        // console.log('sumCost-->',sumCost);
       }
-    //   console.log('pageData-->',pageData.map((item) => {return item.reference}));
-      //
-    //   let SetReferencesData =  await getSetReferencesData(setReferences, request);
-      //
-    //   console.log('after get setReferences');
-    //   console.log('SetReferencesData-->',SetReferencesData);
 
       const sendData = {
               'data':pageData,
@@ -404,19 +382,12 @@ const getSetReferencesData = async (setReferences, request) => {
         };
         const listSetData =  (setReferences) =>{
             setReferences.map((set) => {
-                // await console.log('set-->',set.reference);
                 return set.reference;
-                // let setData = await getSetreference(set.reference);
-                // const [setResult] = setData.hits.hits.map((element) => element._source);
-                // await console.log('setResult-->');
-                // await setReferencesData.push(setResult);
             });
         }
 
         Promise.all([listSetData(setReferences), getSetreference]).spread((setDatas, setReference) => {
-            console.log('setData-->',setData);
             let setData = setReference(set.reference);
-            console.log('setReference-->',setReference);
         })
         .catch(function(err) {
             elastic.close();
@@ -439,20 +410,16 @@ const compareBy = (property, order = 'asc', userCurrency) => (a, b) => {
     }
     let priceA = 0;
     let priceB = 0;
-    // console.log('property-->',property);
-    // console.log('a-->',a);
     const first = (property.toLowerCase().indexOf('price') != -1)
                   ? a[property] != undefined
                       ? a[property][userCurrency] != undefined ? a[property][userCurrency] : 0
                       : 0
                   : a[property]
-   // console.log('first-->',first);
     const second = (property.toLowerCase().indexOf('price') != -1)
                   ? b[property] != undefined
                       ? b[property][userCurrency] != undefined ? b[property][userCurrency] : 0
                       : 0
                   : b[property]
-  // console.log('second-->',second);
     if (typeof first !== typeof second) {
         return 0
     }
@@ -471,4 +438,31 @@ const compareBy = (property, order = 'asc', userCurrency) => (a, b) => {
 
 Array.prototype.sortBy = function(property, order = 'asc', userCurrency) {
     return Array.prototype.sort.call(this, compareBy(property, order, userCurrency))
+}
+
+const count = (ary, classifier) => {
+    classifier = classifier || String;
+    return ary.reduce(function (counter, item) {
+        var p = classifier(item);
+        counter[p] = counter.hasOwnProperty(p) ? counter[p] + 1 : 1;
+        return counter;
+    }, {})
+};
+
+// Generic helper function that can be used for the three operations:
+const operation = (list1, list2, isUnion) => {
+    return list1.filter( a => isUnion === list2.some( b => a.reference === b.reference ) );
+}
+
+// Following functions are to be used:
+const unionAarry = (list1, list2) => {
+    return operation(list1, list2, true);
+}
+
+const inFirstOnly = (list1, list2) => {
+    return operation(list1, list2, false);
+}
+
+const inSecondOnly = (list1, list2) => {
+    return inFirstOnly(list2, list1);
 }
