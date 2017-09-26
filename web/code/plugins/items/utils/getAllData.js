@@ -20,6 +20,26 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
       let data = response.hits.hits.map((element) => element._source);
 
+      function printUniqueResults (arrayOfObj, key) {
+          return arrayOfObj.filter((item, index, array) => {
+              return array.map((mapItem) => mapItem[key]).indexOf(item[key]) === index
+          })
+      }
+
+      const unique = printUniqueResults(data, 'reference')
+
+      data.map((item, index, array) => {
+          unique.map((it) => {
+              if (item.reference == it.reference) {
+                  if (item.warehouse == 'MME.CONS') {
+                      data.splice(index,1)
+                  }
+              }
+          })
+      })
+
+    //   console.log('data-->',data);
+
       if (itemsOrder != null) {
           data.map((item) => {
               let order = itemsOrder.find((val) => {
