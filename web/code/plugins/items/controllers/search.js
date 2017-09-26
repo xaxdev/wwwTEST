@@ -120,23 +120,91 @@ module.exports = {
           })
     });
 
+    const getItemsNotMMECONS = getAllItems.then((response) => {
+
+        let missing = '';
+
+        switch (sortDirections) {
+            case 'asc':
+                missing = '"missing" : "_first"';
+                missing = `{"${sortBy}" : {${missing}}},`;
+                break;
+            default:
+        }
+
+        const query = JSON.parse(
+          `{
+              "timeout": "5s",
+              "from": 0,
+            "size": 100000,
+            "sort" : [
+                ${missing}
+                {"${sortBy}" : "${sortDirections}"}
+             ],
+            "query":{
+                 "constant_score": {
+                   "filter": {
+                     "bool": {
+                       "must": [
+                           {
+                              "match": {
+                                  "company": {
+                                      "query": "DAT CSL DTD MBS MDT MGC MKU MDO MJW MME MMF MMU MAM STD STS STSA VC"
+                                  }
+                              }
+                          }
+                       ],
+                        "must_not":[
+                          {
+                                "match": {
+                                    "warehouse": {
+                                        "query": "MME.CONS"
+                                    }
+                                }
+                            }
+                        ]
+                     }
+                   }
+                 }
+              }
+            }`);
+
+        if (!!keys.find((key) => {return key == 'warehouse'})) {
+            if (obj['warehouse'].indexOf('MME.CONS') != -1) {
+                  return elastic.search({
+                      index: 'mol',
+                      type: 'items',
+                      body: query
+                  })
+            }
+        } else {
+            return [{}]
+        }
+    });
+
     try {
-        Promise.all([getAllItems, getSetReference]).
-            spread((allItems, setReferences) => {
+        Promise.all([getAllItems, getSetReference, getItemsNotMMECONS]).
+            spread((allItems, setReferences, itemsNotMMECONS) => {
             const allItemsResult = allItems.hits.hits.map((element) => element._source);
             const totalRecord = allItems.hits.total;
-
             const setReferenceData = setReferences.hits.hits.map((element) => element._source);
+            let itemsNotMMECONSResult =[{}];
+
+            if (!!keys.find((key) => {return key == 'warehouse'})) {
+                if (obj['warehouse'].indexOf('MME.CONS') != -1) {
+                      itemsNotMMECONSResult = itemsNotMMECONS.hits.hits.map((element) => element._source);
+                }
+            }
 
             let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
             elastic.close();
             if (isViewAsSet) {
                 return reply(GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
-                            obj, request, itemsOrder, setReferencdOrder));
+                            obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult));
             }else {
                 return reply(GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys,
-                            obj, request, itemsOrder, setReferencdOrder));
+                            obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult));
             }
         })
         .catch(function(err) {
