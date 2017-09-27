@@ -149,7 +149,7 @@ module.exports = {
                            {
                               "match": {
                                   "company": {
-                                      "query": "DAT CSL DTD MBS MDT MGC MKU MDO MJW MME MMF MMU MAM STD STS STSA VC"
+                                      "query": "DAT CSL DTD MBS MDT MGC MKU MDO MJW MME MMF MMU MAM STD STS STSA MAT VC"
                                   }
                               }
                           }
