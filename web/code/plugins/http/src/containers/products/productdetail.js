@@ -13,6 +13,7 @@ import ProductJewelryAttributes from '../../components/productdetail/productJewa
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
 import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
+import ModalShowCOA from '../../components/productdetail/modalShowCOA';
 import Modalalertmsg from '../../components/productdetail/modalalertmsg';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
@@ -53,7 +54,8 @@ class productdetail extends Component {
       isOpenAddMyCatalog: false,
       isOpenAddMyCatalogmsg: false,
       isOpenDownloadCerMsg: false,
-      showmovement: false
+      showmovement: false,
+      showCOA: false
     };
   }
 
@@ -94,7 +96,16 @@ class productdetail extends Component {
       jQuery('#zoomimg').magnificPopup({
         key: 'my-popup',
         items: {
-          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimg"/></div><div class="white-popup-right"><button id="btnup" class="btn btn-primary btn-radius">Up</button><button id="btndown" class="btn btn-primary btn-radius">Down</button><button id="btnzoom" class="btn btn-primary btn-radius" style="float:right">zoom</button></div></div>'),
+          src: jQuery(`<div class="white-popup m-pt">
+                            <div class="white-popup-left">
+                                <img id="galleryimg"/>
+                            </div>
+                            <div class="white-popup-right">
+                                <button id="btnup" class="btn btn-primary btn-radius">Up</button>
+                                <button id="btndown" class="btn btn-primary btn-radius">Down</button>
+                                <button id="btnzoom" class="btn btn-primary btn-radius" style="float:right">zoom</button>
+                            </div>
+                        </div>`),
           type: 'inline'
         },
         callbacks: {
@@ -513,7 +524,17 @@ class productdetail extends Component {
       jQuery('#popupset').magnificPopup({
         key: 'my-popup2',
         items: {
-          src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimgset"/><div id="showtotal"></div></div><div class="white-popup-right"><button id="btnupset" class="btn btn-primary btn-radius">Up</button><button id="btndownset" class="btn btn-primary btn-radius">Down</button><button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button></div></div>'),
+          src: jQuery(`<div class="white-popup m-pt">
+                            <div class="white-popup-left">
+                                <img id="galleryimgset"/>
+                                <div id="showtotal"></div>
+                            </div>
+                            <div class="white-popup-right">
+                                <button id="btnupset" class="btn btn-primary btn-radius">Up</button>
+                                <button id="btndownset" class="btn btn-primary btn-radius">Down</button>
+                                <button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button>
+                            </div>
+                        </div>`),
           type: 'inline'
         },
         callbacks: {
@@ -640,25 +661,29 @@ class productdetail extends Component {
 
     renderImagegallery(){
       const { gallery } = this.props.productdetail;
-    //   console.log(gallery);
-      // if(!gallery){
-      //   return(
-      //     <div><img src="/images/blank.gif" width="100%"/></div>
-      //   );
-      // }
+
       if(gallery !== undefined){
           if(gallery.length > 0) {
-            return(
-              <div>
-                <ProductGallery imagegallery={gallery}/>
-              </div>
-            );
+              return(
+                  <div>
+                    <ProductGallery imagegallery={gallery}/>
+                  </div>
+              );
           } else {
-            return(
-                <div><img src="/images/blank.gif" width="100%"/></div>
+              return(
+                  <div><img src="/images/blank.gif" width="100%"/></div>
               );
           }
         }
+     }
+     renderImageGalleryCOA = _=>{
+         const { imagesCOA } = this.props.productdetail;
+
+         return(
+             <ModalShowCOA imagesCOA={imagesCOA}
+                isOpen={this.state.showCOA} isClose={this.handleCloseShowCOA} />
+         );
+
      }
      renderReleteproduct(){
        const { totalpage,products,page } = this.props.productrelete;
@@ -860,25 +885,52 @@ class productdetail extends Component {
     //  }
    }
    zoomicon() {
-     const { gallery } = this.props.productdetail;
-     var styles ={
-       displaynone:{
-         display:'none'
+       const { gallery } = this.props.productdetail;
+       var styles ={
+           displaynone:{
+               display:'none'
+           }
+       };
+       if(!!gallery && gallery.length > 0){
+           return(
+               <div>
+                    <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+               </div>
+           );
+       } else {
+           return(
+               <div>
+                    <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+               </div>
+           );
        }
-     };
-     if(!!gallery && gallery.length > 0){
-       return(
-         <div>
-         <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
-         </div>
-       );
-     } else {
-       return(
-         <div>
-         <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
-         </div>
-       );
-     }
+   }
+   showImageGalleryCOA = _=>{
+       this.setState({showCOA:true})
+   }
+   handleCloseShowCOA = _=>{
+       this.setState({showCOA:false})
+   }
+   imagesCOAIcon = _=>{
+       const { imagesCOA } = this.props.productdetail;
+       var styles ={
+           displaynone:{
+               display:'none'
+           }
+       };
+       if(!!imagesCOA && imagesCOA.length > 0){
+           return(
+               <div>
+                    <a><div className="icon-zoom margin-l10" id="imagesCOA" onClick={this.showImageGalleryCOA} ></div></a>
+               </div>
+           );
+       } else {
+           return(
+               <div>
+                    <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="imagesCOA"></div></a>
+               </div>
+           );
+       }
    }
 
   downloadCertificateAll = _=>{
@@ -1043,10 +1095,11 @@ class productdetail extends Component {
                     :
                     <a><div className=""></div></a>
                   }
+                  {this.imagesCOAIcon()}
                   <a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>
                 </div>
                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
-
+                <div className="col-md-6 col-sm-12">{this.renderImageGalleryCOA()}</div>
                 <div className="col-md-6 col-sm-12">
                   <div className="col-md-12 col-sm-12">
                     {this.renderDesc()}
@@ -1108,12 +1161,10 @@ class productdetail extends Component {
                  }
 
                </div>
-
              </div>
           </div>
         </div>
        </div>
-
     </div>
     );
   }

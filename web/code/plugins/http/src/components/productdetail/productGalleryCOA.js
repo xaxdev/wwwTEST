@@ -38,13 +38,13 @@ class Gallery extends Component {
   // }
 
   render() {
-    const { gallery } = this.props.productdetail;
+    const { imagesCOA } = this.props.productdetail;
 
     return (
         <div>
             <ImageGallery
               ref={i => this._imageGallery = i}
-              items={gallery}
+              items={imagesCOA}
               lazyLoad={false}
               infinite={this.state.infinite}
               showBullets={this.state.showBullets}
