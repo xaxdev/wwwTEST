@@ -13,7 +13,7 @@ import ProductJewelryAttributes from '../../components/productdetail/productJewa
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
 import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
-import ModalShowCOA from '../../components/productdetail/modalShowCOA';
+import ModalShowImages from '../../components/productdetail/modalShowImages';
 import Modalalertmsg from '../../components/productdetail/modalalertmsg';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
@@ -55,7 +55,8 @@ class productdetail extends Component {
       isOpenAddMyCatalogmsg: false,
       isOpenDownloadCerMsg: false,
       showmovement: false,
-      showCOA: false
+      showCOA: false,
+      showDBC: false
     };
   }
 
@@ -680,8 +681,19 @@ class productdetail extends Component {
          const { imagesCOA } = this.props.productdetail;
 
          return(
-             <ModalShowCOA imagesCOA={imagesCOA}
-                isOpen={this.state.showCOA} isClose={this.handleCloseShowCOA} />
+             <ModalShowImages images={imagesCOA}
+                isOpen={this.state.showCOA} isClose={this.handleCloseShowCOA}
+                productId={this.props.params.id} getCertificate={this.props.getCertificate}/>
+         );
+
+     }
+     renderImageGalleryDBC = _=>{
+         const { imagesDBC } = this.props.productdetail;
+
+         return(
+             <ModalShowImages images={imagesDBC}
+                isOpen={this.state.showDBC} isClose={this.handleCloseShowDBC}
+                productId={this.props.params.id} getCertificate={this.props.getCertificate}/>
          );
 
      }
@@ -911,6 +923,12 @@ class productdetail extends Component {
    handleCloseShowCOA = _=>{
        this.setState({showCOA:false})
    }
+   showImageGalleryDBC = _=>{
+       this.setState({showDBC:true})
+   }
+   handleCloseShowDBC = _=>{
+       this.setState({showDBC:false})
+   }
    imagesCOAIcon = _=>{
        const { imagesCOA } = this.props.productdetail;
        var styles ={
@@ -928,6 +946,27 @@ class productdetail extends Component {
            return(
                <div>
                     <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="imagesCOA"></div></a>
+               </div>
+           );
+       }
+   }
+   imagesDBCIcon = _=>{
+       const { imagesDBC } = this.props.productdetail;
+       var styles ={
+           displaynone:{
+               display:'none'
+           }
+       };
+       if(!!imagesDBC && imagesDBC.length > 0){
+           return(
+               <div>
+                    <a><div className="icon-zoom margin-l10" id="imagesDBC" onClick={this.showImageGalleryDBC} ></div></a>
+               </div>
+           );
+       } else {
+           return(
+               <div>
+                    <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="imagesDBC"></div></a>
                </div>
            );
        }
@@ -1096,10 +1135,12 @@ class productdetail extends Component {
                     <a><div className=""></div></a>
                   }
                   {this.imagesCOAIcon()}
+                  {this.imagesDBCIcon()}
                   <a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>
                 </div>
                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
                 <div className="col-md-6 col-sm-12">{this.renderImageGalleryCOA()}</div>
+                <div className="col-md-6 col-sm-12">{this.renderImageGalleryDBC()}</div>
                 <div className="col-md-6 col-sm-12">
                   <div className="col-md-12 col-sm-12">
                     {this.renderDesc()}

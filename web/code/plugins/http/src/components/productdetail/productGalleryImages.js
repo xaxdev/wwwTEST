@@ -39,12 +39,17 @@ class Gallery extends Component {
 
   render() {
     const { imagesCOA } = this.props.productdetail;
+    const { imagesGallery } = this.props;
+    let images = [];
+    if (!!imagesGallery) {
+        images = imagesGallery;
+    }
 
     return (
         <div>
             <ImageGallery
               ref={i => this._imageGallery = i}
-              items={imagesCOA}
+              items={images}
               lazyLoad={false}
               infinite={this.state.infinite}
               showBullets={this.state.showBullets}
