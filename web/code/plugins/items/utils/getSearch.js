@@ -70,8 +70,8 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             || key == 'metalColour' || key == 'gemstones' || key == 'limitedEdition' || key == 'sku'
             || key == 'origin' || key == 'watchCategory'
             || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal'
-            || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse'
-            || key == 'color' || key == 'setReference'
+            || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'color'
+            || key == 'setReference' || key == 'warehouse'
         ){
             value = `${value}`
             value = value.replace(/,/gi, ' ');
@@ -447,8 +447,6 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
         });
       }
 
-      // console.log('sortBy-->',sortBy);
-      // console.log('sortDirections-->',sortDirections);
       let missing = '';
 
       switch (sortDirections) {
@@ -459,27 +457,91 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
         default:
       }
 
-      // console.log('missing-->',missing);
-
-      internals.query = JSON.parse(
-      `{
-        "timeout": "5s",
-        "from": ${fromRecord},
-        "size": ${sizeRecord},
-        "sort" : [
-            ${missing}
-            {"${sortBy}" : "${sortDirections}"}
-         ],
-        "query": {
-          "constant_score": {
-            "query": {
-              "bool": {
-                "must": ${JSON.stringify(internals.filters)}
-              }
-            }
+      if (!!keys.find((key) => {return key == 'warehouse'})) {
+          let value = obj['warehouse'];
+          //    have MME.CONS
+          if (value.indexOf('MME.CONS') != -1) {
+              //   intersection first array
+              internals.query = JSON.parse(
+                  `{
+                      "timeout": "5s",
+                      "from": ${fromRecord},
+                      "size": ${sizeRecord},
+                      "sort" : [
+                          ${missing}
+                          {"${sortBy}" : "${sortDirections}"}
+                      ],
+                      "query": {
+                          "constant_score": {
+                              "query": {
+                                  "bool": {
+                                        "must": ${JSON.stringify(internals.filters)}
+                                  }
+                              }
+                          }
+                      }
+                  }`);
+          }else{
+              //    not have MME.CONS
+              internals.query = JSON.parse(
+                  `{
+                      "timeout": "5s",
+                      "from": ${fromRecord},
+                      "size": ${sizeRecord},
+                      "sort" : [
+                          ${missing}
+                          {"${sortBy}" : "${sortDirections}"}
+                      ],
+                      "query": {
+                          "constant_score": {
+                              "query": {
+                                  "bool": {
+                                        "must": ${JSON.stringify(internals.filters)},
+                                        "must_not":[
+                                          {
+                                                "match": {
+                                                    "warehouse": {
+                                                        "query": "MME.CONS"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                  }
+                              }
+                          }
+                      }
+                  }`);
           }
-        }
-      }`);
+      }else{
+          internals.query = JSON.parse(
+              `{
+                  "timeout": "5s",
+                  "from": ${fromRecord},
+                  "size": ${sizeRecord},
+                  "sort" : [
+                      ${missing}
+                      {"${sortBy}" : "${sortDirections}"}
+                  ],
+                  "query": {
+                      "constant_score": {
+                          "query": {
+                              "bool": {
+                                    "must": ${JSON.stringify(internals.filters)},
+                                    "must_not":[
+                                      {
+                                            "match": {
+                                                "warehouse": {
+                                                    "query": "MME.CONS"
+                                                }
+                                            }
+                                        }
+                                    ]
+                              }
+                          }
+                      }
+                  }
+              }`);
+      }
     }
     else
     {
