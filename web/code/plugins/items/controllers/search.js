@@ -63,17 +63,6 @@ module.exports = {
                 sortBy = sortBy;
             }
         }
-        // if (sortBy.indexOf('price') != -1) {
-        //     sortBy = 'totalPrice.USD';
-        // }else if (sortBy.indexOf('Date') != -1) {
-        //     sortBy = 'createdDate';
-        // }else if (sortBy.indexOf('Date') != -1) {
-        //     sortBy = 'createdDate';
-        // }else if (sortBy.indexOf('setReference') != -1) {
-        //     sortBy = 'reference';
-        // }else{
-        //     sortBy = sortBy;
-        // }
 
         let missing = '';
 
@@ -111,8 +100,6 @@ module.exports = {
             }
           }`);
 
-        //   console.log(JSON.stringify(query, null, 2));
-
           return elastic.search({
               index: 'mol',
               type: 'setitems',
@@ -120,91 +107,24 @@ module.exports = {
           })
     });
 
-    const getItemsNotMMECONS = getAllItems.then((response) => {
-
-        let missing = '';
-
-        switch (sortDirections) {
-            case 'asc':
-                missing = '"missing" : "_first"';
-                missing = `{"${sortBy}" : {${missing}}},`;
-                break;
-            default:
-        }
-
-        const query = JSON.parse(
-          `{
-              "timeout": "5s",
-              "from": 0,
-            "size": 100000,
-            "sort" : [
-                ${missing}
-                {"${sortBy}" : "${sortDirections}"}
-             ],
-            "query":{
-                 "constant_score": {
-                   "filter": {
-                     "bool": {
-                       "must": [
-                           {
-                              "match": {
-                                  "company": {
-                                      "query": "DAT CSL DTD MBS MDT MGC MKU MDO MJW MME MMF MMU MAM STD STS STSA MAT VC"
-                                  }
-                              }
-                          }
-                       ],
-                        "must_not":[
-                          {
-                                "match": {
-                                    "warehouse": {
-                                        "query": "MME.CONS"
-                                    }
-                                }
-                            }
-                        ]
-                     }
-                   }
-                 }
-              }
-            }`);
-
-        if (!!keys.find((key) => {return key == 'warehouse'})) {
-            if (obj['warehouse'].indexOf('MME.CONS') != -1) {
-                  return elastic.search({
-                      index: 'mol',
-                      type: 'items',
-                      body: query
-                  })
-            }
-        } else {
-            return [{}]
-        }
-    });
-
     try {
-        Promise.all([getAllItems, getSetReference, getItemsNotMMECONS]).
-            spread((allItems, setReferences, itemsNotMMECONS) => {
+        Promise.all([getAllItems, getSetReference]).
+            spread((allItems, setReferences) => {
             const allItemsResult = allItems.hits.hits.map((element) => element._source);
             const totalRecord = allItems.hits.total;
             const setReferenceData = setReferences.hits.hits.map((element) => element._source);
             let itemsNotMMECONSResult =[{}];
-
-            if (!!keys.find((key) => {return key == 'warehouse'})) {
-                if (obj['warehouse'].indexOf('MME.CONS') != -1) {
-                      itemsNotMMECONSResult = itemsNotMMECONS.hits.hits.map((element) => element._source);
-                }
-            }
+            let itemsMMECONSResult =[{}];
 
             let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
             elastic.close();
             if (isViewAsSet) {
                 return reply(GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
-                            obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult));
+                            obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult));
             }else {
                 return reply(GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys,
-                            obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult));
+                            obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult));
             }
         })
         .catch(function(err) {
