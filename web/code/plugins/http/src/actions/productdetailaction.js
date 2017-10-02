@@ -2,10 +2,29 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME,
-        ADD_CATALOG,GET_CERTIFICATE,GET_LOTNUMBER,GET_LOTNUMBERPAGE, GET_MOVEMENT,FETCH_SETDETAILS
+        ADD_CATALOG,GET_CERTIFICATE,GET_LOTNUMBER,GET_LOTNUMBERPAGE, GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS
         } from '../constants/productdetailconstants';
 // const fakeApiurl = 'http://localhost:4500/jewelry/';
 
+export function getItems(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}api/items/search`;
+  // console.log('getItems-->',url);
+
+  return {
+          type: FETCH_ALLITEMS,
+    		promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          }),
+          currPage: params.page
+  }
+}
 export function getCatalogNameSetItem(params){
   const token = sessionStorage.token;
   // var url = `${ROOT_URL}/api/catalog/names`;
