@@ -60,7 +60,8 @@ class productdetail extends Component {
   componentWillMount(){
     //   console.log('componentWillMount-->');
       let setReferenceId = this.props.params.id;
-      const setReferencelist = !!sessionStorage.navigation ? JSON.parse(sessionStorage.navigation):[];
+      const { allItems } =  this.props;
+      const setReferencelist = !!allItems ? allItems:[];
 
       this.setState({
           productdetailLoading: true
@@ -174,7 +175,8 @@ class productdetail extends Component {
     //   console.log('componentWillReceiveProps-->');
     if (nextProps.params.id !== this.props.params.id) {
         const setReferenceId = nextProps.params.id;
-        const setReferencelist = !!sessionStorage.navigation ? JSON.parse(sessionStorage.navigation):[];
+        const { allItems } =  this.props;
+        const setReferencelist = !!allItems ? allItems:[];
 
         this.setState({
             productdetailLoading: true
@@ -991,7 +993,8 @@ function mapStateToProps(state) {
     totalpage: state.productdetail.totalpage,
     stonePageSize: state.productdetail.stonePageSize,
     filterSearch: state.searchResult.paramsSearch,
-    viewAsSet: state.searchResult.viewAsSet
+    viewAsSet: state.searchResult.viewAsSet,
+    allItems: state.searchResult.allItems
    }
 }
 

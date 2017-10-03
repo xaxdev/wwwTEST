@@ -1,9 +1,10 @@
 import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,FETCH_SETREFERENCE,ADD_CATALOG,ADD_CATALOG_SUCCESS,
-        GET_LOTNUMBER,GET_LOTNUMBERPAGE,GET_MOVEMENT,FETCH_SETDETAILS} from '../../constants/productdetailconstants';
+        GET_LOTNUMBER,GET_LOTNUMBERPAGE,GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS
+        } from '../../constants/productdetailconstants';
 import { GET_CATALOGNAME} from '../../constants/itemconstants';
 const INITIAL_STATE = {detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1,
                         setreference:'',ListCatalogName: [], lotNumbers: [],stonActivePage:1,totalpage:null
-                        ,stonePageSize:20, activities:[]
+                        ,stonePageSize:20, activities:[], allData:[]
                       };
 
 
@@ -11,6 +12,8 @@ export default function(state = INITIAL_STATE,action){
     // console.log(action.type);
 
     switch (action.type) {
+        case FETCH_ALLITEMS:
+            return { ...state, allData: action.data.allData};
         case FETCH_SETDETAILS:
             // console.log('FETCH_SETDETAILS-->',action.data);
             // return {...state,detail:action.data,index:action.productlist?findproductindex(action.productlist,action.productid):0

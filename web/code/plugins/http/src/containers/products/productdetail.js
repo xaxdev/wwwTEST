@@ -57,36 +57,37 @@ class productdetail extends Component {
     };
   }
 
-  componentWillMount(){
-    const productId = this.props.params.id;
-    const productlist = JSON.parse(sessionStorage.navigation);
-    this.setState({
-        productdetailLoading: true
-    });
-
-    this.props.getProductDetail(productId,productlist).then(()=>{
-    // console.log(this.props);
-      const  Detail  = this.props.productdetail;
-      const { lotNumbers } = this.props.productdetail;
-      const { stonePageSize } = this.props;
-      const params = {
-          datas: lotNumbers,
-          page: 1,
-          size: !!stonePageSize ? stonePageSize : 20
-      };
-      this.props.getLotNaumberPerPage(params);
-    //   console.log(Detail);
-      if(Detail.type != 'STO' || Detail.type != 'CER'){
-        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-        const currency = logindata.currency;
-        if(Detail.dominant){
-        this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
-        }
-      }
+  componentWillMount = _ => {
+      const productId = this.props.params.id;
+      const { allItems } =  this.props;
+      const productlist = allItems;
       this.setState({
-        productdetailLoading: false
+          productdetailLoading: true
       });
-    });
+
+      this.props.getProductDetail(productId,productlist).then(()=>{
+          // console.log(this.props);
+          const  Detail  = this.props.productdetail;
+          const { lotNumbers } = this.props.productdetail;
+          const { stonePageSize } = this.props;
+          const params = {
+              datas: lotNumbers,
+              page: 1,
+              size: !!stonePageSize ? stonePageSize : 20
+          };
+          this.props.getLotNaumberPerPage(params);
+          //   console.log(Detail);
+          if(Detail.type != 'STO' || Detail.type != 'CER'){
+              const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+              const currency = logindata.currency;
+              if(Detail.dominant){
+                  this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+              }
+          }
+          this.setState({
+              productdetailLoading: false
+          });
+      });
   }
   componentDidMount() {
 
@@ -1136,7 +1137,10 @@ function mapStateToProps(state) {
     stonActivePage: state.productdetail.stonActivePage,
     totalpage: state.productdetail.totalpage,
     stonePageSize: state.productdetail.stonePageSize,
-    filterSearch: state.searchResult.paramsSearch
+    filterSearch: state.searchResult.paramsSearch,
+    ItemsOrder: state.searchResult.itemsOrder,
+    SetReferencdOrder: state.searchResult.setReferenceOrder,
+    allItems: state.searchResult.allItems
    }
 }
 

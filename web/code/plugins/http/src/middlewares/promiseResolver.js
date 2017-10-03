@@ -27,9 +27,7 @@ export default function promiseMiddleware() {
         return response.json();
       })
       .then(data => {
-        if(type== 'FETCH_ALLITEMS'){
-          sessionStorage.setItem('navigation',JSON.stringify(data.allData));
-        }
+
         if(type== 'SELECTED_COMPANY'){
           const sites = data.locations
                         .filter(function(site){
