@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [4,3,2,1];
+            const roundData = [5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -273,6 +273,24 @@ class WhatNewNotification extends Component {
                                                   </div>
                                                   <div style="padding:15px 20px 0 20px;">
                                                     <div style="margin:15px 0px; text-align:center;"><img src="/images/mol_select_all_add_to_catalog.gif"/></div>
+                                                  </div>`
+                                              }
+                                            ]
+                                },
+                                {
+                                    'id': 5,
+                                    'round': 'October 2017',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Select sort by at My Catalog page ',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">October 10, 2017</p>
+                                                  <p>User can select sort by to sort the item at 'My Catalog' page.<p>
+                                                  <h3 style="padding:17px 0px 0px 0px">How to use this function:</h3>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <p>1. At My Catalog page, click 'Updated Date' to select sort by.</p>
+                                                  <p>2. The items will show result follow user select sorting.</p>
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/my-sort-catalog.gif"/></div>
                                                   </div>`
                                               }
                                             ]
