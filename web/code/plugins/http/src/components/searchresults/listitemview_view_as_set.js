@@ -11,9 +11,7 @@ class ListItemsViewASSet extends Component {
          this.onClickGrid = this.onClickGrid.bind(this);
 
      }
-     static propTypes = {
-       onClickGrid: PropTypes.func.isRequired
-     };
+
      onClickGrid(event) {
        // console.log('onClickGrid->',event.currentTarget.id);
        event.preventDefault();
@@ -44,12 +42,14 @@ class ListItemsViewASSet extends Component {
          const isItems = item.items != undefined
                              ? item.items.length > 0 ? true : false
                              : false;
-          let row = item.items.length +1;
+          let row = item.items != undefined
+                         ? item.items.length +1
+                         : 0;
           const userLogin = JSON.parse(sessionStorage.logindata);
-           
-          if (item.items.length == 1) {
+
+          if (item.items != undefined && item.items.length == 1) {
               return (
-                  <tbody>
+                  <tbody key={item.reference} id={item.reference}>
                       {item.items.map((subitem) => {
                           return (
                               <tr>
@@ -97,9 +97,9 @@ class ListItemsViewASSet extends Component {
                       </tr>
                   </tbody>
               );
-          }else{
+          }else if(item.items != undefined && item.items.length != 1){
               return (
-                  <tbody>
+                  <tbody key={item.reference} id={item.reference}>
                       <tr>
                           <td rowSpan={row}>{this.renderCheckItem(item.reference)}</td>
                           <td rowSpan={row}><img id={item.reference} src={item.imageThumbnail} width="60"
@@ -128,25 +128,56 @@ class ListItemsViewASSet extends Component {
                               </tr>
                           );
                       })}
-                  <tr>
-                      <td  colSpan="9" className="bd-lb-white"></td>
-                      <td className="font-b fc-000 text-center bg-eb">Total</td>
-                      <td className={`font-b fc-000 text-right bg-eb td-text
-                          ${(userLogin.permission.price == 'All') ?
-                          '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
-                      <td className={`font-b fc-000 text-right bg-eb td-text
-                          ${(userLogin.permission.price == 'Updated'
-                          || userLogin.permission.price == 'All') ?
-                          '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
-                      <td className={`font-b fc-000 text-right bg-eb td-text
-                          ${(userLogin.permission.price == 'Public'
-                          || userLogin.permission.price == 'Updated'
-                          || userLogin.permission.price == 'All') ?
-                          '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
-                  </tr>
-                  <tr>
-                        <td colSpan="13" height="40px" className="bd-tblr-white"></td>
-                  </tr>
+                      <tr>
+                          <td  colSpan="9" className="bd-lb-white"></td>
+                          <td className="font-b fc-000 text-center bg-eb">Total</td>
+                          <td className={`font-b fc-000 text-right bg-eb td-text
+                              ${(userLogin.permission.price == 'All') ?
+                              '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
+                          <td className={`font-b fc-000 text-right bg-eb td-text
+                              ${(userLogin.permission.price == 'Updated'
+                              || userLogin.permission.price == 'All') ?
+                              '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
+                          <td className={`font-b fc-000 text-right bg-eb td-text
+                              ${(userLogin.permission.price == 'Public'
+                              || userLogin.permission.price == 'Updated'
+                              || userLogin.permission.price == 'All') ?
+                              '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
+                      </tr>
+                      <tr>
+                            <td colSpan="13" height="40px" className="bd-tblr-white"></td>
+                      </tr>
+                  </tbody>
+              );
+          }else{
+              return (
+                  <tbody key={item.reference} id={item.reference}>
+                      <tr>
+                          <td rowSpan={row}>{this.renderCheckItem(item.reference)}</td>
+                          <td rowSpan={row}><img id={item.reference} src={item.imageThumbnail} width="60"
+                                                onClick={this.onClickGrid}/></td>
+                          <td rowSpan={row}><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
+                      </tr>
+
+                      <tr>
+                          <td  colSpan="9" className="bd-lb-white"></td>
+                          <td className="font-b fc-000 text-center bg-eb">Total</td>
+                          <td className={`font-b fc-000 text-right bg-eb td-text
+                              ${(userLogin.permission.price == 'All') ?
+                              '' : ' hidden'}`}>{numberFormat(!!item.totalActualCost?item.totalActualCost['USD']:0)}</td>
+                          <td className={`font-b fc-000 text-right bg-eb td-text
+                              ${(userLogin.permission.price == 'Updated'
+                              || userLogin.permission.price == 'All') ?
+                              '' : ' hidden'}`}>{numberFormat(!!item.totalUpdatedCost?item.totalUpdatedCost['USD']:0)}</td>
+                          <td className={`font-b fc-000 text-right bg-eb td-text
+                              ${(userLogin.permission.price == 'Public'
+                              || userLogin.permission.price == 'Updated'
+                              || userLogin.permission.price == 'All') ?
+                              '' : ' hidden'}`}>{numberFormat(!!item.totalPrice?item.totalPrice['USD']:0)}</td>
+                      </tr>
+                      <tr>
+                            <td colSpan="13" height="40px" className="bd-tblr-white"></td>
+                      </tr>
                   </tbody>
               );
           }

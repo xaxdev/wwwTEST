@@ -134,40 +134,44 @@ class SearchResult extends Component {
       });
   }
   componentDidMount() {
-    let that = this;
-    if(this.refs.sortingBy != undefined){
-      let values = [].filter.call(this.refs.sortingBy.options, function (o) {
-            o.selected = false;
-            if(o.value == that.props.sortingBy){
-              o.selected = true
-            }
-            return o.selected;
-          }).map(function (o) {
-            return o.value;
-          });
-    }
-    if(this.refs.sortingDirection != undefined){
-      let values = [].filter.call(this.refs.sortingDirection.options, function (o) {
-            o.selected = false;
-            if(o.value == that.props.sortDirection){
-              o.selected = true
-            }
-            return o.selected;
-          }).map(function (o) {
-            return o.value;
-          });
-    }
-    if(this.refs.pageSize != undefined){
-      let values = [].filter.call(this.refs.pageSize.options, function (o) {
-            o.selected = false;
-            if(o.value == that.props.pageSize){
-              o.selected = true
-            }
-            return o.selected;
-          }).map(function (o) {
-            return o.value;
-          });
-    }
+      let that = this;
+      const { fields: {printPage } } = this.props;
+      if (printPage.value == undefined) {
+          printPage.onChange('all');
+      }
+      if(this.refs.sortingBy != undefined){
+        let values = [].filter.call(this.refs.sortingBy.options, function (o) {
+              o.selected = false;
+              if(o.value == that.props.sortingBy){
+                o.selected = true
+              }
+              return o.selected;
+            }).map(function (o) {
+              return o.value;
+            });
+      }
+      if(this.refs.sortingDirection != undefined){
+        let values = [].filter.call(this.refs.sortingDirection.options, function (o) {
+              o.selected = false;
+              if(o.value == that.props.sortDirection){
+                o.selected = true
+              }
+              return o.selected;
+            }).map(function (o) {
+              return o.value;
+            });
+      }
+      if(this.refs.pageSize != undefined){
+        let values = [].filter.call(this.refs.pageSize.options, function (o) {
+              o.selected = false;
+              if(o.value == that.props.pageSize){
+                o.selected = true
+              }
+              return o.selected;
+            }).map(function (o) {
+              return o.value;
+            });
+      }
   }
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
@@ -223,10 +227,6 @@ class SearchResult extends Component {
       this.setState({isOpenPrintOptions: false});
   }
   renderDialogPrintOptions = _ =>{
-      const { fields: {printPage } } = this.props;
-      if (printPage.value == undefined) {
-          printPage.onChange('all');
-      }
 
       return(<ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions}
           isClose={this.handleClosePrintOptions} props={this.props} />);
@@ -361,17 +361,19 @@ class SearchResult extends Component {
       const { allItems, ViewAsSet } = this.props;
       let itemAdded = [];
       allItems.map((item) => {
-          let itemName = (item.type != undefined)
-                          ? (item.type != 'CER')
-                              ? item.description
-                              : item.name
-                          :item.description;
+
 
           let objItem = {};
           if (ViewAsSet) {
+              let itemName = (item.type != undefined)
+                              ? (item.type != 'CER')
+                                  ? item.description
+                                  : item.name
+                              :item.description;
               objItem = {...objItem, reference: item.reference, description: itemName, priceUSD: item.totalPrice['USD']};
           }else{
-              objItem = {...objItem, id: item.id, reference: item.reference, description: itemName, priceUSD: item.price['USD']};
+            //   objItem = {...objItem, id: item.id, reference: item.reference, description: itemName, priceUSD: item.price['USD']};
+            objItem = {...objItem, id: item.id};
           }
           listMyCatalog.push(objItem);
       });
@@ -832,12 +834,13 @@ class SearchResult extends Component {
     return(<RenderExportExcelDialog that={this} userLogin={userLogin} checkFields={checkFields}
                 labels={labels}/>);
   }
+
   renderExportExcelViewAsSetDialog = _=>{
       let that = this;
       const userLogin = JSON.parse(sessionStorage.logindata);
       return(<RenderExportExcelViewAsSetDialog that={this} userLogin={userLogin}
                 checkFieldsViewAsSet ={checkFieldsViewAsSet }
-                  labelsViewAsSet={labelsViewAsSet}/>
+                labelsViewAsSet={labelsViewAsSet}/>
       );
   }
   renderDownloadDialog(){
@@ -1251,11 +1254,13 @@ class SearchResult extends Component {
                                     listMyCatalog={listMyCatalog}/>
                               </div>
                               <div className={`col-sm-12 search-product list-search ${showListView ? '' : 'hidden'}` }>
-                                <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
+                                <ListItemsView key={'listView'} id={'listView'}
+                                    items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
                                     onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
                                     listMyCatalog={listMyCatalog}/>
                               </div>
+                              {/*
                               <div id="dvListview" className="col-sm-12 search-product hidden">
                                 <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
@@ -1266,6 +1271,7 @@ class SearchResult extends Component {
                                       onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
                                       chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
                               </div>
+                              */}
                               <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                                 <center>
                                   <br/><br/><br/><br/><br/><br/>

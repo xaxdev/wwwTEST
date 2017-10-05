@@ -7,7 +7,6 @@ class ListItemsViewASSetPrint extends Component {
      constructor(props) {
          super(props);
 
-
      }
 
      render(){
@@ -15,10 +14,12 @@ class ListItemsViewASSetPrint extends Component {
          const isItems = item.items != undefined
                              ? item.items.length > 0 ? true : false
                              : false;
-         let row = item.items.length +1;
+         let row = item.items != undefined
+                        ? item.items.length +1
+                        : 0;
          const userLogin = JSON.parse(sessionStorage.logindata);
-         
-         if (item.items.length == 1) {
+
+         if (item.items != undefined && item.items.length == 1) {
              return (
                  <tbody>
                      {item.items.map((subitem) => {
@@ -63,7 +64,7 @@ class ListItemsViewASSetPrint extends Component {
                      </tr>
                  </tbody>
              );
-         }else{
+         }else if(item.items != undefined && item.items.length != 1){
              return (
                  <tbody>
                      <td className="tdd" rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
@@ -102,6 +103,30 @@ class ListItemsViewASSetPrint extends Component {
                              || userLogin.permission.price == 'Updated'
                              || userLogin.permission.price == 'All') ?
                              '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
+                     </tr>
+                     <tr>
+                        <td className="bd-tblr-white" colSpan="12" height="40px" ></td>
+                     </tr>
+                 </tbody>
+             );
+         }else{
+             return (
+                 <tbody>
+                     <td className="tdd" rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
+                     <td className="tdd" rowSpan={row}>{item.reference}</td>
+
+                     <tr>
+                         <td  colSpan="8" className="bd-lb-white"></td>
+                         <td className="font-b fc-000 text-center bg-eb">Total</td>
+                         <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'All') ?
+                            '' : ' hidden'}`}>{numberFormat(!!item.totalActualCost?item.totalActualCost['USD']:0)}</td>
+                         <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'Updated'
+                             || userLogin.permission.price == 'All') ?
+                             '' : ' hidden'}`}>{numberFormat(!!item.totalUpdatedCost?item.totalUpdatedCost['USD']:0)}</td>
+                         <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'Public'
+                             || userLogin.permission.price == 'Updated'
+                             || userLogin.permission.price == 'All') ?
+                             '' : ' hidden'}`}>{numberFormat(!!item.totalPrice?item.totalPrice['USD']:0)}</td>
                      </tr>
                      <tr>
                         <td className="bd-tblr-white" colSpan="12" height="40px" ></td>
