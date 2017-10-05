@@ -182,7 +182,7 @@ class SearchResult extends Component {
       currPage.onChange(nextProps.currentPage);
     }
   }
-  printResults(e){
+  printResults = async(e)=>{
       e.preventDefault();
       const { fields: { printPage }, totalPages, items, exportItems,ViewAsSet } = this.props;
       const { showGridView, showListView } = this.props;
@@ -203,7 +203,34 @@ class SearchResult extends Component {
           'dvListviewAll': dvListviewAll, 'env': env_web
       };
       let htmlTemplate = '';
-      htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
+      if (printPage.value != 'all') {
+          htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
+      } else {
+          const { showGridView,showListView,ItemsOrder,SetReferencdOrder } = this.props;
+          let sortingBy = '';
+          switch (this.refs.sortingBy.value) {
+            case 'price':
+              sortingBy = 'price.' + userLogin.currency;
+              break;
+            default:
+              sortingBy = this.refs.sortingBy.value;
+              break;
+          }
+          const sortingDirection = this.refs.sortingDirection.value;
+          const pageSize = this.refs.pageSize.value;
+          let params = {
+            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+            'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
+          };
+          const filters =  JSON.parse(sessionStorage.filters);
+          params = GetGemstoneLotnumberFilter(filters, params);
+
+          this.props.getAllPDF(params)
+          .then((value) => {
+              console.log('value-->',value);
+          });
+      }
+      console.log('printPage-->',printPage);
     //   console.log('htmlTemplate-->',htmlTemplate);
       let params = {
                       'temp': htmlTemplate,

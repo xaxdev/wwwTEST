@@ -1,5 +1,5 @@
 const GetSearchGemstone = require('./getSearchGemstone');
-const GetSearchLotNumber = require('../utils/getSearchLotNaumber');
+const GetSearchLotNumber = require('./getSearchLotNaumber');
 
 const internals = {
   filters: []
