@@ -127,7 +127,7 @@ const Promise = require('bluebird');
             if (msg !== null) {
                 const obj = JSON.parse(msg.content.toString());
                 userEmail = obj.userEmail;
-                let body = utils.getBody(obj);
+                let body = utils.getBody(obj, 0, 100000);
                 let parameter = {
                    index: config.elasticsearch.index,
                    type: config.elasticsearch.typeItems,

@@ -21,10 +21,10 @@ class ListItemsViewASSetPrint extends Component {
 
          if (item.items != undefined && item.items.length == 1) {
              return (
-                 <tbody>
+                 <tbody key={item.reference} id={item.reference}>
                      {item.items.map((subitem) => {
                          return (
-                             <tr>
+                             <tr key={subitem.reference} id={subitem.reference}>
                                 <td className="tdd"><img src={item.imageThumbnail} width="60"/></td>
                                 <td className="tdd">{item.reference}</td>
                                  <td className="tdd">{subitem.reference}</td>
@@ -66,12 +66,14 @@ class ListItemsViewASSetPrint extends Component {
              );
          }else if(item.items != undefined && item.items.length != 1){
              return (
-                 <tbody>
-                     <td className="tdd" rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
-                     <td className="tdd" rowSpan={row}>{item.reference}</td>
-                     {item.items.map((subitem) => {
+                 <tbody key={item.reference} id={item.reference}>
+                    <tr>
+                        <td className="tdd" rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
+                        <td className="tdd" rowSpan={row}>{item.reference}</td>
+                    </tr>
+                     {item.items.map((subitem,index) => {
                          return (
-                             <tr>
+                             <tr key={index} id={index}>
                                  <td className="tdd">{subitem.reference}</td>
                                  <td className="tdd">{subitem.description}</td>
                                  <td className="tdd">{subitem.sku}</td>
@@ -112,9 +114,10 @@ class ListItemsViewASSetPrint extends Component {
          }else{
              return (
                  <tbody>
-                     <td className="tdd" rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
-                     <td className="tdd" rowSpan={row}>{item.reference}</td>
-
+                    <tr>
+                        <td className="tdd" rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
+                        <td className="tdd" rowSpan={row}>{item.reference}</td>
+                    </tr>
                      <tr>
                          <td  colSpan="8" className="bd-lb-white"></td>
                          <td className="font-b fc-000 text-center bg-eb">Total</td>

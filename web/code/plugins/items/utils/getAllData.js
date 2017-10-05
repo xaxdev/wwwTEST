@@ -345,7 +345,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       const sendData = {
               'data':pageData,
               'allData':allData,
-              'exportData': [{}],
+              'exportData': isViewAsSet?exportData:[{}],
               'pageSize': size,
               'summary':{
                   'count': allData.length,

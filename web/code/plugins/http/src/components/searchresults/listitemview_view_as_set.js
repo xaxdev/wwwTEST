@@ -52,7 +52,7 @@ class ListItemsViewASSet extends Component {
                   <tbody key={item.reference} id={item.reference}>
                       {item.items.map((subitem) => {
                           return (
-                              <tr>
+                              <tr key={subitem.reference} id={subitem.reference}>
                                   <td>{this.renderCheckItem(item.reference)}</td>
                                   <td><img id={item.reference} src={item.imageThumbnail} width="60"
                                         onClick={this.onClickGrid}/></td>
@@ -106,9 +106,9 @@ class ListItemsViewASSet extends Component {
                                                 onClick={this.onClickGrid}/></td>
                           <td rowSpan={row}><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
                       </tr>
-                      {item.items.map((subitem) => {
+                      {item.items.map((subitem,index) => {
                           return (
-                              <tr>
+                              <tr key={index} id={index}>
                                   <td>{subitem.reference}</td>
                                   <td>{subitem.description}</td>
                                   <td>{subitem.sku}</td>

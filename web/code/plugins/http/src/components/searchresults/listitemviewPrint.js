@@ -214,10 +214,10 @@ class ListItemsViewPrint extends Component {
           }
           if (ViewAsSet) {
               return (
-                  <div key={'listView'} id={'listView'}>
-                      <table key={'listView'} id={'listView'}
+                  <div key={'listViewPrint'} id={'listViewPrint'}>
+                      <table key={'listViewPrint'} id={'listViewPrint'}
                             className="table table-bordered table-searchresult">
-                          <thead>
+                          <thead key={'listViewPrint'} id={'listViewPrint'}>
                                 <tr>
                                     <th><span>Images</span></th>
                                     <th><span>Set Product Number</span></th>

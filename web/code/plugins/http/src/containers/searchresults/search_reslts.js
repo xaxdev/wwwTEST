@@ -1260,7 +1260,6 @@ class SearchResult extends Component {
                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
                                     listMyCatalog={listMyCatalog}/>
                               </div>
-                              {/*
                               <div id="dvListview" className="col-sm-12 search-product hidden">
                                 <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
@@ -1271,7 +1270,7 @@ class SearchResult extends Component {
                                       onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
                                       chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
                               </div>
-                              */}
+
                               <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                                 <center>
                                   <br/><br/><br/><br/><br/><br/>
