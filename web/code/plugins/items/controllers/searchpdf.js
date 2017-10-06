@@ -122,6 +122,7 @@ module.exports = {
             if (isViewAsSet) {
                 // return reply(GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
                 //             obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult));
+                let temp = GetHTMLViewASSetAll()
                 return reply({temp:'<html></html>'});
             }else {
                 // return reply(GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys,

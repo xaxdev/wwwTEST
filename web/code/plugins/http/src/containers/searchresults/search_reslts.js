@@ -205,6 +205,22 @@ class SearchResult extends Component {
       let htmlTemplate = '';
       if (printPage.value != 'all') {
           htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
+          console.log('printPage-->',printPage);
+        //   console.log('htmlTemplate-->',htmlTemplate);
+          let params = {
+                          'temp': htmlTemplate,
+                          'userName': `${userLogin.username}_${exportDate}`,
+                          'userEmail': userLogin.email,
+                          'ROOT_URL': ROOT_URL
+                      }
+
+          this.props.writeHtml(params)
+              .then((value) => {
+                  if (value) {
+                      this.setState({isOpenPrintPdfmsg: true});
+                  }
+              });
+          this.setState({isOpenPrintOptions: false});
       } else {
           const { showGridView,showListView,ItemsOrder,SetReferencdOrder } = this.props;
           let sortingBy = '';
@@ -225,27 +241,28 @@ class SearchResult extends Component {
           const filters =  JSON.parse(sessionStorage.filters);
           params = GetGemstoneLotnumberFilter(filters, params);
 
-          this.props.getAllPDF(params)
+          await this.props.getAllPDF(params)
           .then((value) => {
               console.log('value-->',value);
           });
-      }
-      console.log('printPage-->',printPage);
-    //   console.log('htmlTemplate-->',htmlTemplate);
-      let params = {
-                      'temp': htmlTemplate,
-                      'userName': `${userLogin.username}_${exportDate}`,
-                      'userEmail': userLogin.email,
-                      'ROOT_URL': ROOT_URL
-                  }
+          console.log('printPage-->',printPage);
+        //   console.log('htmlTemplate-->',htmlTemplate);
+          let paramsHtml = {
+                          'temp': '',
+                          'userName': `${userLogin.username}_${exportDate}`,
+                          'userEmail': userLogin.email,
+                          'ROOT_URL': ROOT_URL
+                      }
 
-      this.props.writeHtml(params)
-          .then((value) => {
-              if (value) {
-                  this.setState({isOpenPrintPdfmsg: true});
-              }
-          });
-      this.setState({isOpenPrintOptions: false});
+        //   await this.props.writeHtml(paramsHtml)
+        //       .then((value) => {
+        //           if (value) {
+        //               this.setState({isOpenPrintPdfmsg: true});
+        //           }
+        //       });
+        //   this.setState({isOpenPrintOptions: false});
+      }
+
   }
   showDialogPrintOptions = _ =>{
       this.setState({isOpenPrintOptions: true});
