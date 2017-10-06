@@ -236,7 +236,8 @@ class SearchResult extends Component {
           const pageSize = this.refs.pageSize.value;
           let params = {
             'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
-            'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
+            'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`,
+            'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web
           };
           const filters =  JSON.parse(sessionStorage.filters);
           params = GetGemstoneLotnumberFilter(filters, params);
@@ -245,14 +246,14 @@ class SearchResult extends Component {
           .then((value) => {
               console.log('value-->',value);
           });
-          console.log('printPage-->',printPage);
-        //   console.log('htmlTemplate-->',htmlTemplate);
-          let paramsHtml = {
-                          'temp': '',
-                          'userName': `${userLogin.username}_${exportDate}`,
-                          'userEmail': userLogin.email,
-                          'ROOT_URL': ROOT_URL
-                      }
+        //   console.log('printPage-->',printPage);
+        // //   console.log('htmlTemplate-->',htmlTemplate);
+        //   let paramsHtml = {
+        //                   'temp': '',
+        //                   'userName': `${userLogin.username}_${exportDate}`,
+        //                   'userEmail': userLogin.email,
+        //                   'ROOT_URL': ROOT_URL
+        //               }
 
         //   await this.props.writeHtml(paramsHtml)
         //       .then((value) => {

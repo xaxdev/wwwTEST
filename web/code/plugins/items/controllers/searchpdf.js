@@ -1,10 +1,16 @@
 import Elasticsearch from 'elasticsearch'
+import GetHTMLViewASSetAll from '../utils/getHtmlViewAsSetAll';
+import * as file from '../utils/file'
 const Boom = require('boom');
 const Hoek = require('hoek');
 const Joi = require('joi');
 const Promise = require('bluebird');
 const GetSearch = require('../utils/getSearch');
-const GetAllData = require('../utils/getAllData');
+const GetAllData = require('../utils/getAllDataPDF');
+
+const fs = require('fs');
+const Path = require('path');
+const amqp = require('amqplib/callback_api');
 
 const internals = {
   filters: []
@@ -28,6 +34,9 @@ module.exports = {
     let size = request.payload.pageSize;
     let itemsOrder = request.payload.ItemsOrder;
     let setReferencdOrder = request.payload.SetReferencdOrder;
+
+    const amqpHost = request.server.plugins.amqp.host;
+    const amqpChannel = request.server.plugins.amqp.channelPdf;
 
     internals.query = GetSearch(request, 0, 100000);
 
@@ -119,16 +128,70 @@ module.exports = {
             let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
             elastic.close();
-            if (isViewAsSet) {
-                // return reply(GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
-                //             obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult));
-                let temp = GetHTMLViewASSetAll()
-                return reply({temp:'<html></html>'});
-            }else {
-                // return reply(GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys,
-                //             obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult));
-                return reply('<html></html>');
-            }
+            console.log('writing html...');
+            let temp = '';
+            let userName =  request.payload.userName;
+            let env =  request.payload.env;
+            let datas = null;
+            let curr = isViewAsSet ? 'USD' : userCurrency
+            console.log('userName-->',userName);
+            (async _ => {
+                if (isViewAsSet) {
+                    datas = await GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
+                                obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
+
+                    temp = await GetHTMLViewASSetAll(datas,curr,isViewAsSet,env)
+                    const destination = Path.resolve(__dirname, '../../../../../pdf/import_html')
+
+                    await file.write(`${destination}/${userName}.html`, temp);
+                    console.log('writing done!');
+                    amqp.connect(amqpHost, function(err, conn) {
+                      conn.createChannel(function(err, ch) {
+                        var q = amqpChannel;
+
+                        ch.assertQueue(q);
+                        // Note: on Node 6 Buffer.from(msg) should be used
+                      //   console.log('request.payload.ROOT_URL-->',request.payload.ROOT_URL);
+                        let params = {
+                                      'userName': userName,
+                                      'userEmail': request.payload.userEmail,
+                                      'ROOT_URL': request.payload.ROOT_URL
+                                      };
+                        ch.sendToQueue(q, new Buffer(JSON.stringify(params, null, 2)), {persistent: true});
+                        // console.log(' [x] Sent "Parameter!"');
+
+                      });
+                    });
+                    return reply({temp:'done!'});
+                }else {
+                    datas = await GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys,
+                                obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
+                    temp = await GetHTMLViewASSetAll(datas,curr,isViewAsSet,env)
+                    const destination = Path.resolve(__dirname, '../../../../../pdf/import_html')
+
+                    await file.write(`${destination}/${userName}.html`, temp);
+                    console.log('writing done!');
+                    amqp.connect(amqpHost, function(err, conn) {
+                      conn.createChannel(function(err, ch) {
+                        var q = amqpChannel;
+
+                        ch.assertQueue(q);
+                        // Note: on Node 6 Buffer.from(msg) should be used
+                      //   console.log('request.payload.ROOT_URL-->',request.payload.ROOT_URL);
+                        let params = {
+                                      'userName': userName,
+                                      'userEmail': request.payload.userEmail,
+                                      'ROOT_URL': request.payload.ROOT_URL
+                                      };
+                        ch.sendToQueue(q, new Buffer(JSON.stringify(params, null, 2)), {persistent: true});
+                        // console.log(' [x] Sent "Parameter!"');
+
+                      });
+                    });
+                    return reply({temp:'done!'});
+                }
+            })()
+
         })
         .catch(function(err) {
             elastic.close();
