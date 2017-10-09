@@ -222,7 +222,7 @@ class SearchResult extends Component {
               });
           this.setState({isOpenPrintOptions: false});
       } else {
-          const { showGridView,showListView,ItemsOrder,SetReferencdOrder } = this.props;
+          const { showGridView,showListView,ItemsOrder,SetReferencdOrder,ViewAsSet } = this.props;
           let sortingBy = '';
           switch (this.refs.sortingBy.value) {
             case 'price':
@@ -234,10 +234,16 @@ class SearchResult extends Component {
           }
           const sortingDirection = this.refs.sortingDirection.value;
           const pageSize = this.refs.pageSize.value;
+          let viewType = '';
+          if (showGridView) {
+              viewType = 'grid';
+          } else {
+              viewType = 'list';
+          }
           let params = {
             'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
             'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`,
-            'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web
+            'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web, 'viewType': viewType
           };
           const filters =  JSON.parse(sessionStorage.filters);
           params = GetGemstoneLotnumberFilter(filters, params);

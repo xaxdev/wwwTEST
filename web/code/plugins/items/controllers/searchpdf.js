@@ -1,5 +1,7 @@
 import Elasticsearch from 'elasticsearch'
-import GetHTMLViewASSetAll from '../utils/getHtmlViewAsSetAll';
+import GetHTMLViewASSetGridAll from '../utils/getHtmlViewAsSetGridAll';
+import GetHtmlListAll from '../utils/getHtmlListAll';
+import GetHtmlListViewAsSetAll from '../utils/getHtmlListViewAsSetAll';
 import * as file from '../utils/file'
 const Boom = require('boom');
 const Hoek = require('hoek');
@@ -24,16 +26,16 @@ module.exports = {
 
     const elastic = request.server.plugins.elastic.client;
 
-    let obj = request.payload;
-    let page = request.payload.page;
+    const obj = request.payload;
+    const page = request.payload.page;
     let sortBy = request.payload.sortBy;
-    let sortDirections = request.payload.sortDirections;
-    let userCurrency = request.payload.userCurrency;
-    let keys = Object.keys(obj);
+    const sortDirections = request.payload.sortDirections;
+    const userCurrency = request.payload.userCurrency;
+    const keys = Object.keys(obj);
 
-    let size = request.payload.pageSize;
-    let itemsOrder = request.payload.ItemsOrder;
-    let setReferencdOrder = request.payload.SetReferencdOrder;
+    const size = request.payload.pageSize;
+    const itemsOrder = request.payload.ItemsOrder;
+    const setReferencdOrder = request.payload.SetReferencdOrder;
 
     const amqpHost = request.server.plugins.amqp.host;
     const amqpChannel = request.server.plugins.amqp.channelPdf;
@@ -130,18 +132,24 @@ module.exports = {
             elastic.close();
             console.log('writing html...');
             let temp = '';
-            let userName =  request.payload.userName;
-            let env =  request.payload.env;
+            const userName =  request.payload.userName;
+            const env =  request.payload.env;
+            const viewType =  request.payload.viewType;
             let datas = null;
             let curr = isViewAsSet ? 'USD' : userCurrency
             console.log('userName-->',userName);
             (async _ => {
+                console.log('isViewAsSet-->',isViewAsSet);
                 if (isViewAsSet) {
                     datas = await GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
                                 obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
 
-                    temp = await GetHTMLViewASSetAll(datas,curr,isViewAsSet,env)
-                    const destination = Path.resolve(__dirname, '../../../../../pdf/import_html')
+                    if (viewType == 'grid') {
+                        temp = await GetHTMLViewASSetGridAll(datas,curr,isViewAsSet,env);
+                    } else {
+                        temp = await GetHtmlListViewAsSetAll(datas,curr,isViewAsSet,env);
+                    }
+                    const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
 
                     await file.write(`${destination}/${userName}.html`, temp);
                     console.log('writing done!');
@@ -166,8 +174,13 @@ module.exports = {
                 }else {
                     datas = await GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys,
                                 obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
-                    temp = await GetHTMLViewASSetAll(datas,curr,isViewAsSet,env)
-                    const destination = Path.resolve(__dirname, '../../../../../pdf/import_html')
+                    console.log('viewType-->',viewType);
+                    if (viewType == 'grid') {
+                        temp = await GetHTMLViewASSetGridAll(datas,curr,isViewAsSet,env)
+                    } else if (viewType == 'list') {
+                        temp = await GetHtmlListAll(datas,curr,isViewAsSet,env)
+                    }
+                    const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
 
                     await file.write(`${destination}/${userName}.html`, temp);
                     console.log('writing done!');
