@@ -31,6 +31,7 @@ module.exports = {
     let sortBy = request.payload.sortBy;
     const sortDirections = request.payload.sortDirections;
     const userCurrency = request.payload.userCurrency;
+    const userPermissionPrice = request.payload.userPermissionPrice;
     const keys = Object.keys(obj);
 
     const size = request.payload.pageSize;
@@ -137,17 +138,15 @@ module.exports = {
             const viewType =  request.payload.viewType;
             let datas = null;
             let curr = isViewAsSet ? 'USD' : userCurrency
-            console.log('userName-->',userName);
             (async _ => {
-                console.log('isViewAsSet-->',isViewAsSet);
                 if (isViewAsSet) {
                     datas = await GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
                                 obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
 
                     if (viewType == 'grid') {
-                        temp = await GetHTMLViewASSetGridAll(datas,curr,isViewAsSet,env);
+                        temp = await GetHTMLViewASSetGridAll(datas,curr,isViewAsSet,env,userPermissionPrice);
                     } else {
-                        temp = await GetHtmlListViewAsSetAll(datas,curr,isViewAsSet,env);
+                        temp = await GetHtmlListViewAsSetAll(datas,curr,isViewAsSet,env,userPermissionPrice);
                     }
                     const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
 
@@ -174,11 +173,10 @@ module.exports = {
                 }else {
                     datas = await GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys,
                                 obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
-                    console.log('viewType-->',viewType);
                     if (viewType == 'grid') {
-                        temp = await GetHTMLViewASSetGridAll(datas,curr,isViewAsSet,env)
+                        temp = await GetHTMLViewASSetGridAll(datas,curr,isViewAsSet,env,userPermissionPrice)
                     } else if (viewType == 'list') {
-                        temp = await GetHtmlListAll(datas,curr,isViewAsSet,env)
+                        temp = await GetHtmlListAll(datas,curr,isViewAsSet,env,userPermissionPrice)
                     }
                     const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
 

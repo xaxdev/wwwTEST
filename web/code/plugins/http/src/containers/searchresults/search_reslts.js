@@ -234,6 +234,7 @@ class SearchResult extends Component {
           }
           const sortingDirection = this.refs.sortingDirection.value;
           const pageSize = this.refs.pageSize.value;
+          const userPermissionPrice = userLogin.permission.price;
           let viewType = '';
           if (showGridView) {
               viewType = 'grid';
@@ -243,7 +244,8 @@ class SearchResult extends Component {
           let params = {
             'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
             'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`,
-            'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web, 'viewType': viewType
+            'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web, 'viewType': viewType,
+            'userPermissionPrice': userPermissionPrice
           };
           const filters =  JSON.parse(sessionStorage.filters);
           params = GetGemstoneLotnumberFilter(filters, params);

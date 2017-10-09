@@ -1,7 +1,7 @@
 import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 
-export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env){
+export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userPermissionPrice){
 
     let htmlViewAsSetAll = '';
     htmlViewAsSetAll =
@@ -23,26 +23,31 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env){
                                             <span class="font-w9" >
                                                 <span>${datas.summary.count}</span>
                                                 <span> </span>
-                                                <span>Items</span>
+                                                <span>${isViewAsSet ? 'Sets' : 'Items'}</span>
                                                 <span> </span>
                                             </span>
                                             <span style="padding: 0 15px;">|</span>
                                         </span>
-                                        <span class="">
+                                        <span class="${(userPermissionPrice == 'Public'
+                                            || userPermissionPrice == 'Updated'
+                                            || userPermissionPrice == 'All') ?
+                                            '' : 'hidden'}">
                                             <span style="font-weight: bold; color: #000;">Total Public Price :</span>
                                             <span class="font-w9" >
                                                 <span>${numberFormat(datas.summary.price)}</span>
                                                 <span> </span>
-                                                <span>${currency}</span>
+                                                <span>${isViewAsSet ? 'USD' : currency}</span>
                                             </span>
                                         </span>
-                                        <span class="">
+                                        <span class="${(userPermissionPrice == 'Updated'
+                                            || userPermissionPrice == 'All') ?
+                                            '' : 'hidden'}">
                                             <span style="padding: 0 15px;">|</span>
                                             <span style="font-weight: bold; color: #000;">Total Updated Cost :</span>
                                             <span class="font-w9">
                                                 <span>${numberFormat(datas.summary.cost)}</span>
                                                 <span> </span>
-                                                <span>${currency}</span>
+                                                <span>${isViewAsSet ? 'USD' : currency}</span>
                                             </span>
                                         </span>
                                     </div>
@@ -52,7 +57,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env){
                                             <span class="font-w9">
                                                 <span>${numberFormat(datas.summary.maxPrice)}</span>
                                                 <span> </span>
-                                                <span>${currency}</span>
+                                                <span>${isViewAsSet ? 'USD' : currency}</span>
                                                 <span> </span>
                                             </span>
                                             <span style="padding: 0 15px;">|</span>
@@ -62,7 +67,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env){
                                             <span class="font-w9">
                                                 <span>${numberFormat(datas.summary.minPrice)}</span>
                                                 <span> </span>
-                                                <span>${currency}</span>
+                                                <span>${isViewAsSet ? 'USD' : currency}</span>
                                                 <span> </span>
                                             </span>
                                             <span style="padding: 0 15px;">|</span>
@@ -72,7 +77,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env){
                                             <span class="font-w9">
                                                 <span>${numberFormat(datas.summary.avrgPrice)}</span>
                                                 <span> </span>
-                                                <span>${currency}</span>
+                                                <span>${isViewAsSet ? 'USD' : currency}</span>
                                                 <span> </span>
                                             </span>
                                         </span>
@@ -120,7 +125,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env){
                                                                     <span ${isViewAsSet?'style="display:none;"':''} name="${item.id}" id="${item.id}" >${item.sku}</span>
                                                                 </p>
                                                                 <p style="height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;" name="${item.id}" id="${item.id}">${itemName}</p>
-                                                                <span style="color: #ae8f3b; font-weight: bold;">${price}</span>
+                                                                <span style="color: #ae8f3b; font-weight: bold; ${(item.type != 'CER') ? '' : 'hidden'}">${price}</span>
                                                                 <span class="line"></span>
                                                             </div>
                                                         </div>`)
