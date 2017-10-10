@@ -939,13 +939,13 @@ class productdetail extends Component {
        if(!!imagesCOA && imagesCOA.length > 0){
            return(
                <div>
-                    <a><div className="icon-zoom margin-l10" id="imagesCOA" onClick={this.showImageGalleryCOA} ></div></a>
+                    <a><div className="icon-coa margin-l10" id="imagesCOA" onClick={this.showImageGalleryCOA} ></div></a>
                </div>
            );
        } else {
            return(
                <div>
-                    <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="imagesCOA"></div></a>
+                    <a style={styles.displaynone}><div className="icon-coa margin-l10" id="imagesCOA"></div></a>
                </div>
            );
        }
@@ -960,13 +960,13 @@ class productdetail extends Component {
        if(!!imagesDBC && imagesDBC.length > 0){
            return(
                <div>
-                    <a><div className="icon-zoom margin-l10" id="imagesDBC" onClick={this.showImageGalleryDBC} ></div></a>
+                    <a><div className="icon-dbc margin-l10" id="imagesDBC" onClick={this.showImageGalleryDBC} ></div></a>
                </div>
            );
        } else {
            return(
                <div>
-                    <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="imagesDBC"></div></a>
+                    <a style={styles.displaynone}><div className="icon-dbc margin-l10" id="imagesDBC"></div></a>
                </div>
            );
        }
@@ -1134,8 +1134,10 @@ class productdetail extends Component {
                     :
                     <a><div className=""></div></a>
                   }
+
                   {this.imagesCOAIcon()}
                   {this.imagesDBCIcon()}
+                  
                   <a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>
                 </div>
                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>

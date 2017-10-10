@@ -81,24 +81,27 @@ class ModalShowImages extends Component {
       }
 
       return(
-            <div  className="addMyCatalog">
-              <Modal isOpen={isOpen} >
-                <div className="modal-body">
-                    <ModalClose onClick={isClose}/>
-                    <div>
-                      <ProductGalleryImages imagesGallery={img}/>
-                    </div>
-                </div>
-                <div className="modal-footer">
-                    {img.length > 1
-                        ? <button type="button"
-                                className="btn btn-default btn-radius"
-                                onClick={ this.downloadCertificateAll }>
-                            </button>
-                        : <a href={imageCerDownload} download={imageName} ><div className="icon-certificate margin-l10"/></a>
-                    }
-                </div>
-              </Modal>
+            <div className="addMyCatalog">
+              <div className="coapopup">
+                <Modal isOpen={isOpen} >
+                  <div className="modal-body">
+                      <ModalClose onClick={isClose}/>
+                      <div>
+                        <ProductGalleryImages imagesGallery={img}/>
+                      </div>
+                  </div>
+                  <div className="modal-footer">
+                      {img.length > 1
+                          ? <button type="button"
+                                  className="btn btn-default btn-radius"
+                                  onClick={ this.downloadCertificateAll }>
+                                  Download
+                              </button>
+                          : <a href={imageCerDownload} download={imageName} className="btn btn-default btn-radius"><div className="icon-certificate"/></a>
+                      }
+                  </div>
+                </Modal>
+              </div>
               {this.renderAlertmsgCer()}
             </div>
       );
