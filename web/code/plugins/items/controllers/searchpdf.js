@@ -138,6 +138,7 @@ module.exports = {
             const viewType =  request.payload.viewType;
             let datas = null;
             let curr = isViewAsSet ? 'USD' : userCurrency
+            console.log('isViewAsSet-->',isViewAsSet);
             (async _ => {
                 if (isViewAsSet) {
                     datas = await GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
