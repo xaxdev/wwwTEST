@@ -196,7 +196,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                     jewelsWeight = '';
                                                                 }
                                                                 jewelsWeight = numberFormat2digit(jewelsWeight);
-                                                                grossWeight:numberFormat2digit(item.grossWeight)
+                                                                grossWeight = numberFormat2digit(item.grossWeight)
 
                                                                 return (`<tr>
                                                                             <td>
