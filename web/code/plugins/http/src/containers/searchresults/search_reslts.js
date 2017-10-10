@@ -252,26 +252,12 @@ class SearchResult extends Component {
 
           await this.props.getAllPDF(params)
           .then((value) => {
-              console.log('value-->',value);
+              if (value) {
+                  this.setState({isOpenPrintPdfmsg: true});
+              }
           });
-        //   console.log('printPage-->',printPage);
-        // //   console.log('htmlTemplate-->',htmlTemplate);
-        //   let paramsHtml = {
-        //                   'temp': '',
-        //                   'userName': `${userLogin.username}_${exportDate}`,
-        //                   'userEmail': userLogin.email,
-        //                   'ROOT_URL': ROOT_URL
-        //               }
-
-        //   await this.props.writeHtml(paramsHtml)
-        //       .then((value) => {
-        //           if (value) {
-        //               this.setState({isOpenPrintPdfmsg: true});
-        //           }
-        //       });
-        //   this.setState({isOpenPrintOptions: false});
+          this.setState({isOpenPrintOptions: false});
       }
-
   }
   showDialogPrintOptions = _ =>{
       this.setState({isOpenPrintOptions: true});
