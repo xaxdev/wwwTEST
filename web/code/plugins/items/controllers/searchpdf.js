@@ -189,7 +189,7 @@ module.exports = {
 
                         ch.assertQueue(q);
                         // Note: on Node 6 Buffer.from(msg) should be used
-                      //   console.log('request.payload.ROOT_URL-->',request.payload.ROOT_URL);
+                        // console.log('request.payload.ROOT_URL-->',request.payload.ROOT_URL);
                         let params = {
                                       'userName': userName,
                                       'userEmail': request.payload.userEmail,

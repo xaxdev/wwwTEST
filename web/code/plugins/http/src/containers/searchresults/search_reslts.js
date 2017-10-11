@@ -46,16 +46,16 @@ const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12'
       '56','57','58','59','60'
     ];
 const labels = {
-  ingredients: 'Ingredients', categoryName: 'Category Name', category: 'Category', article: 'Article',
-  collection: 'Collection', setReferenceNumber: 'Set Reference Number', cut: 'Cut', color: 'Color',
-  clarity: 'Clarity', caratWt: 'Carat Wt', unit: 'Unit', qty: 'Qty', origin: 'Origin', symmetry: 'Symmetry',
-  flourance: 'Flourance', batch: 'Batch', netWeight: 'Net Weight', stoneQty: 'Stone Qty', dominantStone: 'Dominant Stone',
-  markup: 'Markup%', certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date',
-  vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalColor: 'Metal Colour', metalType: 'Metal Type',
-  brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color',
-  buckleType: 'Buckle Type', dialIndex: 'Dial Index', dialColor: 'Dial Color', movement: 'Movement',
-  serial: 'Serial #', limitedEdition: 'Limited Edition', limitedEditionNumber: 'Limited Edition #',
-  itemCreatedDate: 'Created Date'
+    ingredients: 'Ingredients', categoryName: 'Category Name', category: 'Category', article: 'Article',
+    collection: 'Collection', setReferenceNumber: 'Set Reference Number', cut: 'Cut', color: 'Color',
+    clarity: 'Clarity', caratWt: 'Carat Wt', unit: 'Unit', qty: 'Qty', origin: 'Origin', symmetry: 'Symmetry',
+    flourance: 'Flourance', batch: 'Batch', netWeight: 'Net Weight', stoneQty: 'Stone Qty', dominantStone: 'Dominant Stone',
+    markup: 'Markup%', certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date',
+    vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalColor: 'Metal Colour', metalType: 'Metal Type',
+    brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color',
+    buckleType: 'Buckle Type', dialIndex: 'Dial Index', dialColor: 'Dial Color', movement: 'Movement',
+    serial: 'Serial #', limitedEdition: 'Limited Edition', limitedEditionNumber: 'Limited Edition #',
+    itemCreatedDate: 'Created Date'
 }
 const labelsViewAsSet = {
     totalActualCost: 'Total Actual Cost (USD)', totalUpdatedCost: 'Total Updated Cost (USD)',
@@ -65,63 +65,63 @@ const labelsViewAsSet = {
 let listMyCatalog = []
 
 class SearchResult extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleGo = this.handleGo.bind(this);
-    this.onClickGrid = this.onClickGrid.bind(this);
-    this.gridViewResults = this.gridViewResults.bind(this);
-    this.listViewResults = this.listViewResults.bind(this);
-    this.sortingBy = this.sortingBy.bind(this);
-    this.sortingDirection = this.sortingDirection.bind(this);
-    this.newSearch = this.newSearch.bind(this);
-    this.modifySearch = this.modifySearch.bind(this);
-    this.exportExcel = this.exportExcel.bind(this);
-    this.confirmExport = this.confirmExport.bind(this);
-    this.hideModalNoResults = this.hideModalNoResults.bind(this);
-    this.printResults = this.printResults.bind(this);
-    this.selectedPageSize = this.selectedPageSize.bind(this);
-    this.addMyCatalog = this.addMyCatalog.bind(this);
-    this.checkedOneItemMyCatalog = this.checkedOneItemMyCatalog.bind(this);
-    this.addedOneItemMyCatalog = this.addedOneItemMyCatalog.bind(this);
-    this.onCheckedAllItems = this.onCheckedAllItems.bind(this);
-    this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
-    this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
-    this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
-    // console.log('this.props.items-->',this.props.searchResult.datas);
+        this.handleSelect = this.handleSelect.bind(this);
+        this.handleGo = this.handleGo.bind(this);
+        this.onClickGrid = this.onClickGrid.bind(this);
+        this.gridViewResults = this.gridViewResults.bind(this);
+        this.listViewResults = this.listViewResults.bind(this);
+        this.sortingBy = this.sortingBy.bind(this);
+        this.sortingDirection = this.sortingDirection.bind(this);
+        this.newSearch = this.newSearch.bind(this);
+        this.modifySearch = this.modifySearch.bind(this);
+        this.exportExcel = this.exportExcel.bind(this);
+        this.confirmExport = this.confirmExport.bind(this);
+        this.hideModalNoResults = this.hideModalNoResults.bind(this);
+        this.printResults = this.printResults.bind(this);
+        this.selectedPageSize = this.selectedPageSize.bind(this);
+        this.addMyCatalog = this.addMyCatalog.bind(this);
+        this.checkedOneItemMyCatalog = this.checkedOneItemMyCatalog.bind(this);
+        this.addedOneItemMyCatalog = this.addedOneItemMyCatalog.bind(this);
+        this.onCheckedAllItems = this.onCheckedAllItems.bind(this);
+        this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
+        this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
+        this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
+        // console.log('this.props.items-->',this.props.searchResult.datas);
+        this.state = {
+            activePage: this.props.currentPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false,
+            isOpenNoResults: true, showImages: false, ingredients: false, categoryName: false, category: false,
+            article: false, collection: false, setReferenceNumber: false, cut: false, color: false, clarity: false,
+            caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false,
+            netWeight: false,stoneQty: false, dominantStone: false, markup: false, certificatedNumber: false,
+            certificateDate: false, vendorCode: false, vendorName: false, metalColor: false, metalType: false,
+            brand: false, complication: false, strapType: false, strapColor: false, buckleType: false, dialIndex: false,
+            dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false,
+            itemCreatedDate:false,showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false,
+            isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, checkAllItems: false,
+            allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
+            totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false,
+            createdDate: false, isOpenPrintOptions: false
+        };
+    }
 
-    this.state = {
-      activePage: this.props.currentPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false,
-      isOpenNoResults: true, showImages: false, ingredients: false, categoryName: false, category: false,
-      article: false, collection: false, setReferenceNumber: false, cut: false, color: false, clarity: false,
-      caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false,
-      netWeight: false,stoneQty: false, dominantStone: false, markup: false, certificatedNumber: false,
-      certificateDate: false, vendorCode: false, vendorName: false, metalColor: false, metalType: false,
-      brand: false, complication: false, strapType: false, strapColor: false, buckleType: false, dialIndex: false,
-      dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false,
-      itemCreatedDate:false,showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false,
-      isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, checkAllItems: false,
-      allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
-      totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false,
-      createdDate: false, isOpenPrintOptions: false
-    };
-  }
   componentWillMount() {
       const { ItemsOrder,SetReferencdOrder } = this.props;
       const userLogin = JSON.parse(sessionStorage.logindata);
       let sortingBy = '';
       switch (this.props.sortingBy) {
-        case 'price':
-          sortingBy = 'price.' + userLogin.currency;
-          break;
-        default:
-          sortingBy = this.props.sortingBy;
-          break;
+          case 'price':
+            sortingBy = 'price.' + userLogin.currency;
+            break;
+          default:
+            sortingBy = this.props.sortingBy;
+            break;
       }
       let params = {
-        'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': this.props.sortDirection,
-        'pageSize' : this.props.pageSize, 'ItemsOrder': ItemsOrder,'SetReferencdOrder': SetReferencdOrder
+          'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': this.props.sortDirection,
+          'pageSize' : this.props.pageSize, 'ItemsOrder': ItemsOrder,'SetReferencdOrder': SetReferencdOrder
       };  // default search params
 
       const filters =  JSON.parse(sessionStorage.filters);
@@ -174,13 +174,13 @@ class SearchResult extends Component {
       }
   }
   shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
+      return shallowCompare(this, nextProps, nextState);
   }
   componentWillReceiveProps(nextProps) {
-    if(this.props.currentPage != nextProps.currentPage){
-      let { currPage } = this.props.fields;
-      currPage.onChange(nextProps.currentPage);
-    }
+      if(this.props.currentPage != nextProps.currentPage){
+          let { currPage } = this.props.fields;
+          currPage.onChange(nextProps.currentPage);
+      }
   }
   printResults = async(e)=>{
       e.preventDefault();
@@ -205,7 +205,6 @@ class SearchResult extends Component {
       let htmlTemplate = '';
       if (printPage.value != 'all') {
           htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
-          console.log('printPage-->',printPage);
         //   console.log('htmlTemplate-->',htmlTemplate);
           let params = {
                           'temp': htmlTemplate,
@@ -225,12 +224,12 @@ class SearchResult extends Component {
           const { showGridView,showListView,ItemsOrder,SetReferencdOrder,ViewAsSet } = this.props;
           let sortingBy = '';
           switch (this.refs.sortingBy.value) {
-            case 'price':
-              sortingBy = 'price.' + userLogin.currency;
-              break;
-            default:
-              sortingBy = this.refs.sortingBy.value;
-              break;
+              case 'price':
+                sortingBy = 'price.' + userLogin.currency;
+                break;
+              default:
+                sortingBy = this.refs.sortingBy.value;
+                break;
           }
           const sortingDirection = this.refs.sortingDirection.value;
           const pageSize = this.refs.pageSize.value;
@@ -1305,7 +1304,7 @@ class SearchResult extends Component {
                                     listMyCatalog={listMyCatalog}/>
                               </div>
                               <div id="dvListviewAll" className="col-sm-12 search-product hidden">
-                                <ListItemsViewPrint items={exportItems} pageSize={exportItems.length}
+                                <ListItemsViewPrint items={items} pageSize={exportItems.length}
                                       onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
                                       chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
                               </div>
