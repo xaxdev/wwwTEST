@@ -305,10 +305,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
           allData = allData.sortBy(sortBy,sortDirections,userCurrency);
       }
 
-      if (!isViewAsSet) {
-          allData = allData.map((item) => {return {'id':item.id}})
-      }
-
       exportData = data;
 
       let pageData = data.slice( (page - 1) * size, page * size );
@@ -345,7 +341,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       const sendData = {
               'data':pageData,
               'allData':allData,
-              'exportData': isViewAsSet?exportData:[{}],
+              'exportData': exportData,
               'pageSize': size,
               'summary':{
                   'count': allData.length,

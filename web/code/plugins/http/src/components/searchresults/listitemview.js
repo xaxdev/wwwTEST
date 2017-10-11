@@ -114,178 +114,180 @@ class ListItemsView extends Component {
 
       if (this.props.items.length != 0){
           let isCompany = true;
-        items = this.props.items.map(function (col, idx) {
-            let imagesOriginal = '';
-            let imagesThumbnail = '';
-            let size = '';
-            let jewelsWeight = 0;
-            let itemName = '';
-            isCompany = col.companyName != undefined ? true : false;
-            if (ViewAsSet) {
-                imagesOriginal = (col.image) != undefined
-                                  ? col.image.length != 0
-                                      ? col.image[0].original
-                                      : '/images/blank.gif'
-                                  : '/images/blank.gif';
-                imagesThumbnail = (col.image) != undefined
-                                  ?  col.image.length != 0
-                                      ? col.image[0].thumbnail
-                                      : '/images/blank.gif'
-                                  : '/images/blank.gif';
+          items = this.props.items.map(function (col, idx) {
+              let imagesOriginal = '';
+              let imagesThumbnail = '';
+              let size = '';
+              let jewelsWeight = 0;
+              let itemName = '';
+              isCompany = col.companyName != undefined ? true : false;
+              if (ViewAsSet) {
+                  imagesOriginal = (col.image) != undefined
+                                    ? col.image.length != 0
+                                        ? col.image[0].original
+                                        : '/images/blank.gif'
+                                    : '/images/blank.gif';
+                  imagesThumbnail = (col.image) != undefined
+                                    ?  col.image.length != 0
+                                        ? col.image[0].thumbnail
+                                        : '/images/blank.gif'
+                                    : '/images/blank.gif';
 
-                if(col.totalPrice != undefined){
-                    col.priceUSD = (col.totalPrice['USD'] != undefined)
-                                  ? numberFormat(col.totalPrice['USD'])
-                                  : '- ';
-                }else{
+                  if(col.totalPrice != undefined){
+                      col.priceUSD = (col.totalPrice['USD'] != undefined)
+                                    ? numberFormat(col.totalPrice['USD'])
+                                    : '- ';
+                  }else{
+                      col.priceUSD = '- ';
+                  }
+
+                  col.jewelsWeight = numberFormat2digit(jewelsWeight);
+
+                  itemName = (col.description != undefined) ? col.description: '-';
+                  col.grossWeight = 0;
+
+              }else{
+                  // console.log('col-->',col);
+                  imagesOriginal = (col.gallery) != undefined
+                                    ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif'
+                                     : '/images/blank.gif';
+                  imagesThumbnail = (col.gallery) != undefined
+                                    ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
+                                    : '/images/blank.gif';
+
+                  switch (col.type) {
+                    case 'JLY':
+                      size = (col.size != undefined) ? col.size : '';
+                      break;
+                    case 'WAT':
+                      size = (col.caseDimension != undefined) ? col.caseDimension : '';
+                      break;
+                    case 'OBA':
+                      size = (col.dimension != undefined) ? col.dimension : '';
+                      break;
+                    default:
+                      break;
+                  }
+
+                  if(col.price != undefined){
+                    col.priceUSD = (col.price[currency] != undefined) ?
+                           numberFormat(col.price[currency]) :
+                           '- ';
+                  }else{
                     col.priceUSD = '- ';
-                }
+                  }
 
-                col.jewelsWeight = numberFormat2digit(jewelsWeight);
+                  if (col.gemstones != undefined) {
+                    col.gemstones.forEach(function(gemstone) {
+                      if(gemstone.carat != undefined){
+                        jewelsWeight = jewelsWeight + gemstone.carat;
+                      }
+                    });
+                  } else {
+                    jewelsWeight = '';
+                  }
 
-                itemName = (col.description != undefined) ? col.description: '-';
-                col.grossWeight = 0;
+                  col.jewelsWeight = numberFormat2digit(jewelsWeight);
+                  // col.jewelsWeight = jewelsWeight;
 
-            }else{
-                // console.log('col-->',col);
-                imagesOriginal = (col.gallery) != undefined
-                                  ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif'
-                                   : '/images/blank.gif';
-                imagesThumbnail = (col.gallery) != undefined
-                                  ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
-                                  : '/images/blank.gif';
+                  itemName = (col.type != 'CER')
+                                    ?
+                                    (col.description != undefined) ? col.description: '-' :
+                                    col.name
+                                    ;
 
-                switch (col.type) {
-                  case 'JLY':
-                    size = (col.size != undefined) ? col.size : '';
-                    break;
-                  case 'WAT':
-                    size = (col.caseDimension != undefined) ? col.caseDimension : '';
-                    break;
-                  case 'OBA':
-                    size = (col.dimension != undefined) ? col.dimension : '';
-                    break;
-                  default:
-                    break;
-                }
+              }
+              return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
+                  itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
+          });
 
-                if(col.price != undefined){
-                  col.priceUSD = (col.price[currency] != undefined) ?
-                         numberFormat(col.price[currency]) :
-                         '- ';
-                }else{
-                  col.priceUSD = '- ';
-                }
+          let tableColumns = [];
+          if (isCompany) {
+              tableColumns = [
+                { title: '', render: this.renderCheckItem, className: 'text-center' },
+                { title: 'Images', render: this.renderImage },
+                { title: 'Item Reference', prop: 'reference' },
+                { title: 'Description', prop: 'itemName' },
+                { title: 'SKU', prop: 'sku' },
+                { title: 'Company', prop: 'companyName' },
+                { title: 'Warehouse', prop: 'warehouseName' },
+                { title: 'Size', prop: 'size' },
+                { title: 'Jewelry Weight', prop: 'jewelsWeight' },
+                { title: 'Gross Weight', prop: 'grossWeight' },
+                { title: 'Public Price', prop: 'priceUSD' },
+                { title: '', render: this.renderAction, className: 'text-center' },
+              ];
+          }else{
+              tableColumns = [
+                { title: '', render: this.renderCheckItem, className: 'text-center' },
+                { title: 'Images', render: this.renderImage },
+                { title: 'Item Reference', prop: 'reference' },
+                { title: 'Description', prop: 'itemName' },
+                { title: 'SKU', prop: 'sku' },
+                { title: 'Company', prop: 'company' },
+                { title: 'Warehouse', prop: 'warehouse' },
+                { title: 'Size', prop: 'size' },
+                { title: 'Jewelry Weight', prop: 'jewelsWeight' },
+                { title: 'Gross Weight', prop: 'grossWeight' },
+                { title: 'Public Price', prop: 'priceUSD' },
+                { title: '', render: this.renderAction, className: 'text-center' },
+              ];
+          }
+          if (ViewAsSet) {
+              return (
+                  <div key={'listView'} id={'listView'}>
+                      <table key={'listView'} id={'listView'}
+                          className="table table-bordered table-searchresult table-searchset">
+                          <thead key={'listView'} id={'listView'}>
+                                <tr>
+                                    <th><span></span></th>
+                                    <th><span>Images</span></th>
+                                    <th><span>Set Product Number</span></th>
+                                    <th><span>Item Reference</span></th>
+                                    <th><span>Description</span></th>
+                                    <th><span>SKU</span></th>
+                                    <th><span>Category Name</span></th>
+                                    <th><span>Company</span></th>
+                                    <th><span>Warehouse</span></th>
+                                    <th><span>Gross Weight</span></th>
+                                    <th className={`${(userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Public'
+                                        || userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
+                                </tr>
+                          </thead>
+                          {items.map((item) => {
+                              return(
+                                  <ListItemsViewASSet key={item.reference} id={item.reference}
+                                      item={item} ViewAsSet={ViewAsSet}
+                                      onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog}
+                                      listMyCatalog={listMyCatalog} onClickList={this.onClickListSet}/>
+                              );
+                          })}
+                      </table>
+                  </div>
 
-                if (col.gemstones != undefined) {
-                  col.gemstones.forEach(function(gemstone) {
-                    if(gemstone.carat != undefined){
-                      jewelsWeight = jewelsWeight + gemstone.carat;
-                    }
-                  });
-                } else {
-                  jewelsWeight = '';
-                }
-
-                col.jewelsWeight = numberFormat2digit(jewelsWeight);
-                // col.jewelsWeight = jewelsWeight;
-
-                itemName = (col.type != 'CER')
-                                  ?
-                                  (col.description != undefined) ? col.description: '-' :
-                                  col.name
-                                  ;
-
-            }
-            return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
-                itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
-        });
-
-        let tableColumns = [];
-        if (isCompany) {
-            tableColumns = [
-              { title: '', render: this.renderCheckItem, className: 'text-center' },
-              { title: 'Images', render: this.renderImage },
-              { title: 'Item Reference', prop: 'reference' },
-              { title: 'Description', prop: 'itemName' },
-              { title: 'SKU', prop: 'sku' },
-              { title: 'Company', prop: 'companyName' },
-              { title: 'Warehouse', prop: 'warehouseName' },
-              { title: 'Size', prop: 'size' },
-              { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-              { title: 'Gross Weight', prop: 'grossWeight' },
-              { title: 'Public Price', prop: 'priceUSD' },
-              { title: '', render: this.renderAction, className: 'text-center' },
-            ];
-        }else{
-            tableColumns = [
-              { title: '', render: this.renderCheckItem, className: 'text-center' },
-              { title: 'Images', render: this.renderImage },
-              { title: 'Item Reference', prop: 'reference' },
-              { title: 'Description', prop: 'itemName' },
-              { title: 'SKU', prop: 'sku' },
-              { title: 'Company', prop: 'company' },
-              { title: 'Warehouse', prop: 'warehouse' },
-              { title: 'Size', prop: 'size' },
-              { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-              { title: 'Gross Weight', prop: 'grossWeight' },
-              { title: 'Public Price', prop: 'priceUSD' },
-              { title: '', render: this.renderAction, className: 'text-center' },
-            ];
-        }
-
-        if (ViewAsSet) {
-            return (
-                <div>
-                    <table className="table table-bordered table-searchresult table-searchset">
-                        <thead>
-                            <th><span></span></th>
-                            <th><span>Images</span></th>
-                            <th><span>Set Product Number</span></th>
-                            <th><span>Item Reference</span></th>
-                            <th><span>Description</span></th>
-                            <th><span>SKU</span></th>
-                            <th><span>Category Name</span></th>
-                            <th><span>Company</span></th>
-                            <th><span>Warehouse</span></th>
-                            <th><span>Gross Weight</span></th>
-                            <th className={`${(userLogin.permission.price == 'All') ?
-                                '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
-                            <th className={`${(userLogin.permission.price == 'Updated'
-                                || userLogin.permission.price == 'All') ?
-                                '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
-                            <th className={`${(userLogin.permission.price == 'Public'
-                                || userLogin.permission.price == 'Updated'
-                                || userLogin.permission.price == 'All') ?
-                                '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
-                        </thead>
-                        {items.map((item) => {
-                            return(
-                                <ListItemsViewASSet item={item} ViewAsSet={ViewAsSet}
-                                    onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog}
-                                    listMyCatalog={listMyCatalog} onClickList={this.onClickListSet}/>
-                            );
-                        })}
-                    </table>
-                </div>
-
-            );
-        }else{
-            return (
-                <div>
-                    <DataTable
-                      className="col-sm-12"
-                      keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight','priceUSD','' ]}
-                      columns={tableColumns}
-                      initialData={items}
-                      initialPageLength={this.state.initialPageLength}
-                      initialSortBy={{ prop: 'reference', order: 'ascending' }}
-                      pageLengthOptions={[ 5, 20, 50 ]}
-                    />
-                </div>
-            );
-        }
-
+              );
+          }else{
+              return (
+                  <div>
+                      <DataTable
+                        className="col-sm-12"
+                        keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight','priceUSD','' ]}
+                        columns={tableColumns}
+                        initialData={items}
+                        initialPageLength={this.state.initialPageLength}
+                        initialSortBy={{ prop: 'reference', order: 'ascending' }}
+                        pageLengthOptions={[ 5, 20, 50 ]}
+                      />
+                  </div>
+              );
+          }
       }else{
           items = {...this.props.items};
           // console.log('items-->',items);

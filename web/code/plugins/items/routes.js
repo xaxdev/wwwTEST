@@ -7,6 +7,11 @@ const controllers = require('require-all')(Path.normalize(__dirname + '/controll
 module.exports = [
     {
         method: 'POST',
+        path: '/searchpdf',
+        config: controllers.searchpdf
+    },
+    {
+        method: 'POST',
         path: '/writehtml',
         config: controllers.writehtml
     },

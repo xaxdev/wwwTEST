@@ -20,19 +20,20 @@ class RenderExportExcelViewAsSetDialog extends Component {
                   <div className="col-sm-12 inline">
                     <div className="col-sm-4 checkbox checkbox-warning popexport">
                       <div className="col-md-12 col-xs-12 checkbox checkbox-warning">
-                        <input type="checkbox" checked={that.state.allFieldsViewAsSet} onChange={event => {
-                                that.setState({ allFieldsViewAsSet: event.target.checked });
-                                if (event.target.checked) {
-                                    checkFieldsViewAsSet.map(function(field, index){
-                                        that.setState({ [field]: true });
-                                    });
-                                } else {
-                                    checkFieldsViewAsSet.map(function(field, index){
-                                        that.setState({ [field]: false });
-                                    });
+                        <input type="checkbox" checked={that.state.allFieldsViewAsSet}
+                            onChange={event => {
+                                    that.setState({ allFieldsViewAsSet: event.target.checked });
+                                    if (event.target.checked) {
+                                        checkFieldsViewAsSet.map(function(field, index){
+                                            that.setState({ [field]: true });
+                                        });
+                                    } else {
+                                        checkFieldsViewAsSet.map(function(field, index){
+                                            that.setState({ [field]: false });
+                                        });
+                                    }
                                 }
-                            }
-                        }/>
+                            }/>
                         <label className="control-label checkbox1">Select All</label>
                       </div>
                       <div className="col-md-12 col-xs-12 checkbox checkbox-warning">
