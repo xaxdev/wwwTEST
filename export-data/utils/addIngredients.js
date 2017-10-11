@@ -22,44 +22,41 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
 
         data.forEach(function(item){
             items = items+1;
-          // console.log('item-->',item);
-          let arrayItems = [];
-          let itemReference = item.reference;
+            // console.log('item-->',item);
+            let arrayItems = [];
+            let itemReference = item.reference;
 
-          if (fields.showImagesViewAsSet){
-            arrayItems.push((item.image.length) != 0
-                              ? item.image[0].thumbnail
-                              : '');
-          }
+            if (fields.showImagesViewAsSet){
+                 arrayItems.push((item.image.length) != 0
+                                ? item.image[0].thumbnail
+                                : '');
+            }
+            // console.log(`items: ${items}--> reference: ${item.reference}`);
+            arrayItems.push(item.reference,item.description);
 
-          // console.log(`items: ${items}--> reference: ${item.reference}`);
-          arrayItems.push(item.reference,item.description);
-
-          if(fields.allFields){
-            arrayItems.push(numberFormat((item.totalActualCost != undefined)? item.totalActualCost['USD']: 0),
-                            numberFormat((item.totalUpdatedCost != undefined)? item.totalUpdatedCost['USD']: 0),
-                            numberFormat((item.totalPrice != undefined)? item.totalPrice['USD']: 0),
-                            (item.markup != undefined) ? item.markup : '',
-                            (item.companyName != undefined) ? item.companyName : '',
-                            (item.warehouseName != undefined) ? item.warehouseName : '',
-                            (item.createdDate != undefined) ? convertDate(item.createdDate) : ''
-                          );
-
-          }else{
-            if(fields.totalActualCost) arrayItems.push(numberFormat((item.totalActualCost != undefined)? item.totalActualCost['USD']: 0));
-            if(fields.totalUpdatedCost) arrayItems.push(numberFormat((item.totalUpdatedCost != undefined)? item.totalUpdatedCost['USD']: 0));
-            if(fields.totalPrice) arrayItems.push(numberFormat((item.totalPrice != undefined)? item.totalPrice['USD']: 0));
-            if(fields.markup) arrayItems.push((item.markup != undefined) ? item.markup : '');
-            if(fields.companyName) arrayItems.push((item.companyName != undefined) ? item.companyName : '');
-            if(fields.warehouseName) arrayItems.push((item.warehouseName != undefined) ? item.warehouseName : '');
-            if(fields.createdDate) arrayItems.push((item.createdDate != undefined) ? convertDate(item.createdDate) : '');
-          }
-
-          newdata.push(arrayItems);
-
+            if(fields.allFields){
+                arrayItems.push(numberFormat((item.totalActualCost != undefined)? item.totalActualCost['USD']: 0),
+                                numberFormat((item.totalUpdatedCost != undefined)? item.totalUpdatedCost['USD']: 0),
+                                numberFormat((item.totalPrice != undefined)? item.totalPrice['USD']: 0),
+                                (item.markup != undefined) ? item.markup : '',
+                                (item.companyName != undefined) ? item.companyName : '',
+                                (item.warehouseName != undefined) ? item.warehouseName : '',
+                                (item.createdDate != undefined) ? convertDate(item.createdDate) : ''
+                              );
+            }else{
+                if(fields.totalActualCost) arrayItems.push(numberFormat((item.totalActualCost != undefined)? item.totalActualCost['USD']: 0));
+                if(fields.totalUpdatedCost) arrayItems.push(numberFormat((item.totalUpdatedCost != undefined)? item.totalUpdatedCost['USD']: 0));
+                if(fields.totalPrice) arrayItems.push(numberFormat((item.totalPrice != undefined)? item.totalPrice['USD']: 0));
+                if(fields.markup) arrayItems.push((item.markup != undefined) ? item.markup : '');
+                if(fields.companyName) arrayItems.push((item.companyName != undefined) ? item.companyName : '');
+                if(fields.warehouseName) arrayItems.push((item.warehouseName != undefined) ? item.warehouseName : '');
+                if(fields.createdDate) arrayItems.push((item.createdDate != undefined) ? convertDate(item.createdDate) : '');
+            }
+            newdata.push(arrayItems);
         });
 
         return resolve(newdata)
+        
     } catch (err) {
         throw err;
     }

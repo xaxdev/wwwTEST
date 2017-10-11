@@ -194,7 +194,9 @@ class productdetail extends Component {
         productdetailLoading: true
       });
       const productId = nextProps.params.id;
-      const productlist = this.props.productlist;
+      const { allItems } =  this.props;
+      const productlist = allItems;
+    //   const productlist = this.props.productlist;
       this.props.getProductDetail(productId,productlist).then(()=>{
         const  Detail  = this.props.productdetail;
         const { lotNumbers } = this.props.productdetail;

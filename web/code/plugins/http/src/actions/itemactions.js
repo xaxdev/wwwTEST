@@ -6,12 +6,31 @@ import { FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_
   GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG,
   SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE,
   SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, POST_SAVESEARCH,
-  SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER
+  SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER,FETCH_ALLPDF
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
 
+export function getAllPDF(params){
+  const token = sessionStorage.token;
+  var url = `${ROOT_URL}/api/items/searchpdf`;
+  // console.log('getItems-->',url);
+
+  return {
+          type: FETCH_ALLPDF,
+    		promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': token
+            },
+          }),
+          currPage: params.page
+  }
+}
 export function setSetReferenceOrder(value){
       return {
               type: SET_SETREFERENCEORDER,

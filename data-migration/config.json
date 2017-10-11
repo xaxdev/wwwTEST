@@ -3,7 +3,7 @@
       "server": "10.128.133.84",
       "user": "molintegration",
       "password": "NGhRt%^-09",
-      "requestTimeout": 100000
+      "requestTimeout": 160000
     },
     "elasticsearch": {
         "host": "10.128.133.77:9200 ",

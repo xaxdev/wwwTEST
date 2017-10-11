@@ -2,8 +2,8 @@ import getSearchBody from './getSearchBody';
 import * as addTitles from './addTitles';
 import * as addIngredients from './addIngredients';
 
-const getBody = (obj) => {
-    return getSearchBody(obj)
+const getBody = (obj, fromRecord, sizeRecord) => {
+    return getSearchBody(obj, fromRecord, sizeRecord)
 };
 
 const getTitles = (result, obj) => {

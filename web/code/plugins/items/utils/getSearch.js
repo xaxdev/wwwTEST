@@ -11,6 +11,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
     let sortBy = request.payload.sortBy;
     let sortDirections = request.payload.sortDirections;
     let userCurrency = request.payload.userCurrency;
+    let userPermissionPrice = request.payload.userPermissionPrice;
     let keys = Object.keys(obj);
     let fields = request.payload.fields;
     let price = request.payload.price;
@@ -68,10 +69,9 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
             || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
             || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType'
             || key == 'metalColour' || key == 'gemstones' || key == 'limitedEdition' || key == 'sku'
-            || key == 'origin' || key == 'watchCategory'
-            || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal'
-            || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'color'
-            || key == 'setReference' || key == 'warehouse'
+            || key == 'origin' || key == 'watchCategory' || key == 'movement' || key == 'dialIndex'
+            || key == 'dialColor' || key == 'dialMetal' || key == 'strapType' || key == 'strapColor'
+            || key == 'complication' || key == 'color' || key == 'setReference' || key == 'warehouse'
         ){
             value = `${value}`
             value = value.replace(/,/gi, ' ');
@@ -79,7 +79,8 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
 
         if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
             && key != 'price' && key != 'pageSize' && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail'
-            && key != 'viewAsSet' && key != 'ItemsOrder' && key != 'SetReferencdOrder'
+            && key != 'viewAsSet' && key != 'ItemsOrder' && key != 'SetReferencdOrder' && key != 'env'
+            && key != 'viewType' && key != 'userPermissionPrice'
         ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
              || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'fluorescence'
@@ -405,13 +406,9 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                 }
               }`;
           }
-          // console.log('objRange-->',objRange);
-          // console.log('objRange.length-->',objRange.length);
-          // console.log('filter-->',filter);
           if(filter != ''){
             internals.filters.push(JSON.parse(filter));
             filter = '';
-            // console.log('internals.filters-->',JSON.stringify(internals.filters));
           }
         }
       });
@@ -543,22 +540,21 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
               }`);
       }
     }
-    else
-    {
-      internals.query = JSON.parse(
-      `{
-        "timeout": "5s",
-        "from": ${fromRecord},
-        "size": ${sizeRecord},
-        "sort" : [
-            ${missing}
-            {"${sortBy}" : "${sortDirections}"}
-         ],
-        "query":
-         {
-          "match_all": {}
-         }
-      }`);
+    else {
+        internals.query = JSON.parse(
+        `{
+          "timeout": "5s",
+          "from": ${fromRecord},
+          "size": ${sizeRecord},
+          "sort" : [
+              ${missing}
+              {"${sortBy}" : "${sortDirections}"}
+           ],
+          "query":
+           {
+            "match_all": {}
+           }
+        }`);
     }
     return internals.query;
 }

@@ -134,40 +134,44 @@ class SearchResult extends Component {
       });
   }
   componentDidMount() {
-    let that = this;
-    if(this.refs.sortingBy != undefined){
-      let values = [].filter.call(this.refs.sortingBy.options, function (o) {
-            o.selected = false;
-            if(o.value == that.props.sortingBy){
-              o.selected = true
-            }
-            return o.selected;
-          }).map(function (o) {
-            return o.value;
-          });
-    }
-    if(this.refs.sortingDirection != undefined){
-      let values = [].filter.call(this.refs.sortingDirection.options, function (o) {
-            o.selected = false;
-            if(o.value == that.props.sortDirection){
-              o.selected = true
-            }
-            return o.selected;
-          }).map(function (o) {
-            return o.value;
-          });
-    }
-    if(this.refs.pageSize != undefined){
-      let values = [].filter.call(this.refs.pageSize.options, function (o) {
-            o.selected = false;
-            if(o.value == that.props.pageSize){
-              o.selected = true
-            }
-            return o.selected;
-          }).map(function (o) {
-            return o.value;
-          });
-    }
+      let that = this;
+      const { fields: {printPage } } = this.props;
+      if (printPage.value == undefined) {
+          printPage.onChange('all');
+      }
+      if(this.refs.sortingBy != undefined){
+        let values = [].filter.call(this.refs.sortingBy.options, function (o) {
+              o.selected = false;
+              if(o.value == that.props.sortingBy){
+                o.selected = true
+              }
+              return o.selected;
+            }).map(function (o) {
+              return o.value;
+            });
+      }
+      if(this.refs.sortingDirection != undefined){
+        let values = [].filter.call(this.refs.sortingDirection.options, function (o) {
+              o.selected = false;
+              if(o.value == that.props.sortDirection){
+                o.selected = true
+              }
+              return o.selected;
+            }).map(function (o) {
+              return o.value;
+            });
+      }
+      if(this.refs.pageSize != undefined){
+        let values = [].filter.call(this.refs.pageSize.options, function (o) {
+              o.selected = false;
+              if(o.value == that.props.pageSize){
+                o.selected = true
+              }
+              return o.selected;
+            }).map(function (o) {
+              return o.value;
+            });
+      }
   }
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
@@ -178,7 +182,7 @@ class SearchResult extends Component {
       currPage.onChange(nextProps.currentPage);
     }
   }
-  printResults(e){
+  printResults = async(e)=>{
       e.preventDefault();
       const { fields: { printPage }, totalPages, items, exportItems,ViewAsSet } = this.props;
       const { showGridView, showListView } = this.props;
@@ -199,22 +203,61 @@ class SearchResult extends Component {
           'dvListviewAll': dvListviewAll, 'env': env_web
       };
       let htmlTemplate = '';
-      htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
-    //   console.log('htmlTemplate-->',htmlTemplate);
-      let params = {
-                      'temp': htmlTemplate,
-                      'userName': `${userLogin.username}_${exportDate}`,
-                      'userEmail': userLogin.email,
-                      'ROOT_URL': ROOT_URL
-                  }
+      if (printPage.value != 'all') {
+          htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
+          console.log('printPage-->',printPage);
+        //   console.log('htmlTemplate-->',htmlTemplate);
+          let params = {
+                          'temp': htmlTemplate,
+                          'userName': `${userLogin.username}_${exportDate}`,
+                          'userEmail': userLogin.email,
+                          'ROOT_URL': ROOT_URL
+                      }
 
-      this.props.writeHtml(params)
+          this.props.writeHtml(params)
+              .then((value) => {
+                  if (value) {
+                      this.setState({isOpenPrintPdfmsg: true});
+                  }
+              });
+          this.setState({isOpenPrintOptions: false});
+      } else {
+          const { showGridView,showListView,ItemsOrder,SetReferencdOrder,ViewAsSet } = this.props;
+          let sortingBy = '';
+          switch (this.refs.sortingBy.value) {
+            case 'price':
+              sortingBy = 'price.' + userLogin.currency;
+              break;
+            default:
+              sortingBy = this.refs.sortingBy.value;
+              break;
+          }
+          const sortingDirection = this.refs.sortingDirection.value;
+          const pageSize = this.refs.pageSize.value;
+          const userPermissionPrice = userLogin.permission.price;
+          let viewType = '';
+          if (showGridView) {
+              viewType = 'grid';
+          } else {
+              viewType = 'list';
+          }
+          let params = {
+            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+            'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`,
+            'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web, 'viewType': viewType,
+            'userPermissionPrice': userPermissionPrice
+          };
+          const filters =  JSON.parse(sessionStorage.filters);
+          params = GetGemstoneLotnumberFilter(filters, params);
+
+          await this.props.getAllPDF(params)
           .then((value) => {
               if (value) {
                   this.setState({isOpenPrintPdfmsg: true});
               }
           });
-      this.setState({isOpenPrintOptions: false});
+          this.setState({isOpenPrintOptions: false});
+      }
   }
   showDialogPrintOptions = _ =>{
       this.setState({isOpenPrintOptions: true});
@@ -223,10 +266,6 @@ class SearchResult extends Component {
       this.setState({isOpenPrintOptions: false});
   }
   renderDialogPrintOptions = _ =>{
-      const { fields: {printPage } } = this.props;
-      if (printPage.value == undefined) {
-          printPage.onChange('all');
-      }
 
       return(<ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions}
           isClose={this.handleClosePrintOptions} props={this.props} />);
@@ -361,17 +400,19 @@ class SearchResult extends Component {
       const { allItems, ViewAsSet } = this.props;
       let itemAdded = [];
       allItems.map((item) => {
-          let itemName = (item.type != undefined)
-                          ? (item.type != 'CER')
-                              ? item.description
-                              : item.name
-                          :item.description;
+
 
           let objItem = {};
           if (ViewAsSet) {
+              let itemName = (item.type != undefined)
+                              ? (item.type != 'CER')
+                                  ? item.description
+                                  : item.name
+                              :item.description;
               objItem = {...objItem, reference: item.reference, description: itemName, priceUSD: item.totalPrice['USD']};
           }else{
-              objItem = {...objItem, id: item.id, reference: item.reference, description: itemName, priceUSD: item.price['USD']};
+            //   objItem = {...objItem, id: item.id, reference: item.reference, description: itemName, priceUSD: item.price['USD']};
+            objItem = {...objItem, id: item.id};
           }
           listMyCatalog.push(objItem);
       });
@@ -832,12 +873,13 @@ class SearchResult extends Component {
     return(<RenderExportExcelDialog that={this} userLogin={userLogin} checkFields={checkFields}
                 labels={labels}/>);
   }
+
   renderExportExcelViewAsSetDialog = _=>{
       let that = this;
       const userLogin = JSON.parse(sessionStorage.logindata);
       return(<RenderExportExcelViewAsSetDialog that={this} userLogin={userLogin}
                 checkFieldsViewAsSet ={checkFieldsViewAsSet }
-                  labelsViewAsSet={labelsViewAsSet}/>
+                labelsViewAsSet={labelsViewAsSet}/>
       );
   }
   renderDownloadDialog(){
@@ -1251,7 +1293,8 @@ class SearchResult extends Component {
                                     listMyCatalog={listMyCatalog}/>
                               </div>
                               <div className={`col-sm-12 search-product list-search ${showListView ? '' : 'hidden'}` }>
-                                <ListItemsView items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
+                                <ListItemsView key={'listView'} id={'listView'}
+                                    items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
                                     onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
                                     listMyCatalog={listMyCatalog}/>
@@ -1266,6 +1309,7 @@ class SearchResult extends Component {
                                       onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
                                       chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
                               </div>
+
                               <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                                 <center>
                                   <br/><br/><br/><br/><br/><br/>
