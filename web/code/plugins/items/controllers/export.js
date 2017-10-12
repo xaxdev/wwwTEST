@@ -115,18 +115,16 @@ module.exports = {
             // console.log('setReferenceUniq-->', setReferenceUniq.length);
             // console.log('setReferenceResult-->',setReferenceResult.length);
             let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-            if (isViewAsSet) {
-                if (sortBy.indexOf('price') != -1) {
-                    sortBy = 'totalPrice.USD';
-                }else if (sortBy.indexOf('Date') != -1) {
-                    sortBy = 'createdDate';
-                }else if (sortBy.indexOf('Date') != -1) {
-                    sortBy = 'createdDate';
-                }else if (sortBy.indexOf('setReference') != -1) {
-                    sortBy = 'reference';
-                }else{
-                    sortBy = sortBy;
-                }
+            if (sortBy.indexOf('price') != -1) {
+                sortBy = 'totalPrice.USD';
+            }else if (sortBy.indexOf('Date') != -1) {
+                sortBy = 'createdDate';
+            }else if (sortBy.indexOf('Date') != -1) {
+                sortBy = 'createdDate';
+            }else if (sortBy.indexOf('setReference') != -1) {
+                sortBy = 'reference';
+            }else{
+                sortBy = sortBy;
             }
 
             let missing = '';

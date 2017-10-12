@@ -183,7 +183,6 @@ class ListItemsViewPrint extends Component {
           let tableColumns = [];
           if (isCompany) {
               tableColumns = [
-                { title: '', render: this.renderCheckItem, className: 'text-center' },
                 { title: 'Images', render: this.renderImage },
                 { title: 'Item Reference', prop: 'reference' },
                 { title: 'Description', prop: 'itemName' },
@@ -194,11 +193,9 @@ class ListItemsViewPrint extends Component {
                 { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                 { title: 'Gross Weight', prop: 'grossWeight' },
                 { title: 'Public Price', prop: 'priceUSD' },
-                { title: '', render: this.renderAction, className: 'text-center' },
               ];
           }else{
               tableColumns = [
-                { title: '', render: this.renderCheckItem, className: 'text-center' },
                 { title: 'Images', render: this.renderImage },
                 { title: 'Item Reference', prop: 'reference' },
                 { title: 'Description', prop: 'itemName' },
@@ -209,7 +206,6 @@ class ListItemsViewPrint extends Component {
                 { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                 { title: 'Gross Weight', prop: 'grossWeight' },
                 { title: 'Public Price', prop: 'priceUSD' },
-                { title: '', render: this.renderAction, className: 'text-center' },
               ];
           }
           if (ViewAsSet) {
@@ -247,7 +243,6 @@ class ListItemsViewPrint extends Component {
                           })}
                       </table>
                   </div>
-
               );
           }else{
               return (
