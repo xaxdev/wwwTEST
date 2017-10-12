@@ -19,7 +19,7 @@ LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
     ON [ITORAMA].[dbo].[CertificateMaster].[Item] = certimage.[ITEMID]
     AND certimage.[Company] = 'mme'
-    AND certimage.[TYPEID] = 'Image'
+    AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[Company] company
     ON [ITORAMA].[dbo].[CertificateMaster].[Company] = company.[Code]
 WHERE [ITORAMA].[dbo].[CertificateMaster].[RecId] BETWEEN @from AND @to

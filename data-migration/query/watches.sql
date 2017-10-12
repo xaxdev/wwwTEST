@@ -76,6 +76,7 @@ SELECT item.[Id] AS 'id'
     , ISNULL(watch.[ProductionDate], '') AS 'productionDate'
     , ISNULL(img.[FILENAME], '') AS 'imageName'
     , ISNULL(img.[FILETYPE], '') AS 'imageType'
+    , ISNULL(img.[TYPEID], '') AS 'imageTypeId'
     , ISNULL(cert.CERTIFICATIONNO, '') AS [CertificateNo]
     , ISNULL(cert.AGENCYID, '') AS [CertificateAgency]
     , ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
@@ -90,16 +91,16 @@ INNER JOIN [ITORAMA].[dbo].[Watches] watch
   ON item.[Reference] = watch.[ItemReference]
   AND item.[Company] =  watch.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
-  ON item.[Id] = img.[ITEMRECID]
-  AND item.[Company] = img.[Company]
-  AND img.[TYPEID] = 'Image'
+      ON item.[Reference] = img.[ITEMID]
+      AND img.[Company] = 'mme'
+      AND img.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
   ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
   AND item.[Company] = cert.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
   ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
   AND certimage.[Company] = 'mme'
-  AND certimage.[TYPEID] = 'Image'
+  AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
   ON cert.[CERTIFICATIONNO] = certmaster.[Item]
   AND item.[Company] = certmaster.[Company]
