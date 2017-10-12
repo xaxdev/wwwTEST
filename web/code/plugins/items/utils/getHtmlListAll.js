@@ -199,36 +199,36 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                 grossWeight = numberFormat2digit(item.grossWeight)
 
                                                                 return (`<tr>
-                                                                            <td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>
                                                                                     <img src="${imagesProduct}" width="60">
                                                                                 </span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${item.reference}</span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${itemName}</span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${item.sku}</span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${item.companyName}</span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${item.warehouseName}</span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${size}</span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${jewelsWeight}</span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${grossWeight}</span>
                                                                             </td>
-                                                                            <td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${price}</span>
                                                                             </td>
                                                                         </tr>`)

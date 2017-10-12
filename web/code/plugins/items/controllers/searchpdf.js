@@ -64,16 +64,14 @@ module.exports = {
             return !pos || item != ary[pos - 1];
         })
         let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-        if (isViewAsSet) {
-            if (sortBy.indexOf('price') != -1) {
-                sortBy = 'totalPrice.USD';
-            }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'createdDate';
-            }else if (sortBy.indexOf('setReference') != -1) {
-                sortBy = 'reference';
-            }else{
-                sortBy = sortBy;
-            }
+        if (sortBy.indexOf('price') != -1) {
+            sortBy = 'totalPrice.USD';
+        }else if (sortBy.indexOf('Date') != -1) {
+            sortBy = 'createdDate';
+        }else if (sortBy.indexOf('setReference') != -1) {
+            sortBy = 'reference';
+        }else{
+            sortBy = sortBy;
         }
 
         let missing = '';
@@ -189,7 +187,7 @@ module.exports = {
 
                         ch.assertQueue(q);
                         // Note: on Node 6 Buffer.from(msg) should be used
-                      //   console.log('request.payload.ROOT_URL-->',request.payload.ROOT_URL);
+                        // console.log('request.payload.ROOT_URL-->',request.payload.ROOT_URL);
                         let params = {
                                       'userName': userName,
                                       'userEmail': request.payload.userEmail,
