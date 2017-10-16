@@ -863,7 +863,7 @@ select.form-searchresult option{
 	float: left;
 	cursor:pointer;
 }
-.icon-gallery{
+.icon-filesMonograph{
   background: url(/images/icon-gallery.png) no-repeat center;
   width:40px;
   height: 40px;
@@ -2298,4 +2298,9 @@ select.form-searchresult option{
 }
 .td-text{
   word-break: initial !important;
+}
+.modal-headerPDF{
+    background: transparent;
+    padding: 35px;
+    border-bottom: 1px solid transparent;
 }

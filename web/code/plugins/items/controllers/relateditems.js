@@ -59,7 +59,12 @@ module.exports = {
                   "must_not": [
                     {
                       "match": {
-                        "id": "${productId}"
+                          "id": "${productId}"
+                      },
+                      "match": {
+                          "warehouse": {
+                              "query": "MME.CONS"
+                          }
                       }
                     }
                   ]
