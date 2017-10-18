@@ -89,8 +89,8 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                             <div class="col-sm-12">
                                                 <div class="row"></div>
                                                 <div>
-                                                    <table style="font-size: 5px; border-spacing: 0;margin:0 auto; width:80%;">
-                                                        <thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 5px;" id="listViewPrint">
+                                                    <table style="font-size: 4px; border-spacing: 0;margin:0 auto; width:80%;">
+                                                        <thead style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 4px;" id="listViewPrint">
                                                             <tr>
                                                                 <th><span>Images</span></th>
                                                                 <th><span>Set Product Number</span></th>
