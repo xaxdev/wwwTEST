@@ -17,51 +17,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       let avrgPrice = 0;
       let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
       let data = response.hits.hits.map((element) => element._source);
-    //   let dataRemove = response.hits.hits.map((element) => element._source);
-    //
-    //   //    Find unique item reference
-    //   const unique = [...new Set(data.map(item => item.reference))];
-    //
-    //   //   Create data item reference and count items {'reference:xx'}
-    //   let countReference = count(data, function (item) {
-    //       return item.reference
-    //   });
-    //
-    // //   console.log('countReference-->',countReference);
-    // //   console.log('data.length-->',data.length);
-    //
-    //   //   Find key condition warehouse
-    //   if (!!keys.find((key) => {return key == 'warehouse'})) {
-    //       if (obj['warehouse'].indexOf('MME.CONS') != -1) {
-    //           //   intersection first array
-    //           data = inFirstOnly(data, itemsNotMMECONSResult);
-    //       }
-    //   } else {
-    //       //   intersection first array
-    //     //   data = inFirstOnly(data, itemsMMECONSResult);
-    //       //   remove duplicate item warehouse = MME.CONS
-    //       if (unique.length != data.length) {
-    //           data.map(async (item, index, array) => {
-    //             //   console.log('item.reference-->',item.reference );
-    //             //   console.log('item.warehouse-->',item.warehouse );
-    //               unique.map((it) => {
-    //                 //   console.log('it-->',it);
-    //                 //   console.log('countReference[it]-->',countReference[it]);
-    //                   if (countReference[it] > 1) {
-    //                       if (item.reference == it) {
-    //                           if (item.warehouse == 'MME.CONS') {
-    //                               dataRemove.splice(index,1)
-    //                             //   console.log('dataRemove-->',dataRemove.length);
-    //                             //   console.log('data-->',data.length);
-    //                           }
-    //                       }
-    //                   }
-    //               })
-    //           })
-    //           data = dataRemove;
-    //       }
-    //   }
-
+    
       if (itemsOrder != null) {
           data.map((item) => {
               let order = itemsOrder.find((val) => {

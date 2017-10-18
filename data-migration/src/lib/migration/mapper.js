@@ -5,7 +5,6 @@ const sanitize = value => value.replace('(', '\\(').replace(')', '\\)').replace(
 const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_cutName', 'gemstone_color', 'gemstone_colorName', 'gemstone_clarity', 'gemstone_clarityName', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence', 'gemstone_stoneTypeId', 'gemstone_stoneTypeName', 'gemstone_type', 'gemstone_unit'];
 
 const mapProperties = (item, record, exchangeRates) => {
-    // console.log(record);
     // add gemstone, if not existed
     if (!!record.gemstone_id && item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
         const gemstone = {};
@@ -89,15 +88,53 @@ const mapProperties = (item, record, exchangeRates) => {
         };
         item.lotNumbers.push(stoneLotNumber);
     }
-
+    
     // add image, if not existed
     if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
-        const image = {
-            original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
-            thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
-        };
+        if (record.imageTypeId == 'Image') {
+            const image = {
+                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+            };
 
-        item.gallery.push(image);
+            item.gallery.push(image);
+        }
+    }
+
+    // add COA, if not existed
+    if (!!record.imageName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
+        if (record.imageTypeId == 'COA') {
+            const image = {
+                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+            };
+
+            item.imagesCOA.push(image);
+        }
+    }
+
+    // add DBC, if not existed
+    if (!!record.imageName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
+        if (record.imageTypeId == 'DBC') {
+            const image = {
+                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+            };
+
+            item.imagesDBC.push(image);
+        }
+    }
+
+    // add Monograph, if not existed
+    if (!!record.imageName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
+        if (record.imageTypeId == 'Monograph') {
+            const image = {
+                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+            };
+
+            item.filesMonograph.push(image);
+        }
     }
 
     // add certificate image, if not existed
@@ -257,6 +294,9 @@ const mapItem = (recordset, exchangeRates) => {
             item.gemstones = [];
             item.gallery = [];
             item.certificates = [];
+            item.imagesCOA = [];
+            item.imagesDBC = [];
+            item.filesMonograph = [];
             calculatePrices(item, exchangeRates);
             items.push(item);
         }
@@ -292,7 +332,10 @@ const mapCertificate = recordset => {
         if (id != record.id) {
             id = Number(record.id)
             const item = {...record}
-            item.gallery = []
+            item.gallery = [];
+            item.imagesCOA = [];
+            item.imagesDBC = [];
+            item.filesMonograph = [];
             items.push(item)
         }
 
@@ -316,6 +359,9 @@ const mapStoneItem = (recordset, exchangeRates) => {
             item.gallery = [];
             item.certificates = [];
             item.lotNumbers = [];
+            item.imagesCOA = [];
+            item.imagesDBC = [];
+            item.filesMonograph = [];
             calculatePrices(item, exchangeRates);
             items.push(item);
         }
