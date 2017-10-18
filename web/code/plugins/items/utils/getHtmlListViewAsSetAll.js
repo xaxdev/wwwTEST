@@ -101,6 +101,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                 <th><span>Company</span></th>
                                                                 <th><span>Warehouse</span></th>
                                                                 <th><span>Gross Weight</span></th>
+                                                                <th><span>Stone Detail</span></th>
                                                                 <th><span style="${(userPermissionPrice == 'All') ?
                                                                     '' : 'hidden'}">Group Cost Price (USD)</span></th>
                                                                 <th><span style="${(userPermissionPrice == 'Updated'

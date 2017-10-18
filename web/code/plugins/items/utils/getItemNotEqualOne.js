@@ -32,6 +32,7 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPe
                         <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${subitem.company}</td>
                         <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${subitem.warehouse}</td>
                         <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${numberFormat2digit(subitem.grossWeight)}</td>
+                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${subitem.stoneDetail}</td>
                         <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;${(userPermissionPrice == 'All') ?
                             '' : ' hidden'}">${numberFormat(subitem.actualCost['USD'])}</td>
                         <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;${(userPermissionPrice == 'Updated'
@@ -45,7 +46,7 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPe
             );
         }).join('')}
         <tr>
-            <td colspan="8" style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 6px;"></td>
+            <td colspan="9" style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 6px;"></td>
             <td style="font-weight: bold; font-family:'open_sanssemibold';color:#000;text-align: center;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"
                 >Total</td>
             <td style="${(userPermissionPrice == 'All') ?

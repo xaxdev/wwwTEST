@@ -22,6 +22,7 @@ SELECT [Id] AS 'id'
       ,[Type] AS 'type'
       ,[Hierarchy] AS 'hierarchy'
       ,[GrossWeight] AS 'grossWeight'
+      ,[StoneDetail] AS 'stoneDetail'
       ,[CreatedDate] AS 'createdDate'
 FROM [ITORAMA].[dbo].[SetItem]
 ORDER BY [SetReference], [Reference]
