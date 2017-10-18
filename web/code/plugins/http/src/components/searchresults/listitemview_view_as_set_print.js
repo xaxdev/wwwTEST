@@ -34,7 +34,7 @@ class ListItemsViewASSetPrint extends Component {
                                 <td className="tdd">{subitem.company}</td>
                                 <td className="tdd">{subitem.warehouse}</td>
                                 <td className="tdd">{numberFormat2digit(subitem.grossWeight)}</td>
-                                <td className="tdd">{subitem.stoneDetail}</td>
+                                <td className="tdd">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
                                 <td className={`tdd${(userLogin.permission.price == 'All') ?
                                     '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                 <td className={`tdd${(userLogin.permission.price == 'Updated'
@@ -82,7 +82,7 @@ class ListItemsViewASSetPrint extends Component {
                                  <td className="tdd">{subitem.company}</td>
                                  <td className="tdd">{subitem.warehouse}</td>
                                  <td className="tdd">{numberFormat2digit(subitem.grossWeight)}</td>
-                                 <td className="tdd">{subitem.stoneDetail}</td>
+                                 <td className="tdd">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
                                  <td className={`tdd${(userLogin.permission.price == 'All') ?
                                     '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                  <td className={`tdd${(userLogin.permission.price == 'Updated'
