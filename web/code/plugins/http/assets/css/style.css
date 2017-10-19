@@ -35,6 +35,7 @@ body{
 .text-vertical-top{vertical-align: text-top;}
 .text-del{padding-top: 6px; position: absolute;}
 .text-right{text-align: right;}
+.text-left{text-align: left !important;}
 h1{
   color: #fff !important;
   padding: 17px 0;
@@ -863,6 +864,27 @@ select.form-searchresult option{
 	float: left;
 	cursor:pointer;
 }
+.icon-filesMonograph{
+  background: url(/images/icon-gallery.png) no-repeat center;
+  width:40px;
+  height: 40px;
+  float: left;
+  cursor:pointer;
+}
+.icon-coa{
+  background: url(/images/icon-coa.png) no-repeat center;
+  width:40px;
+  height: 40px;
+  float: left;
+  cursor:pointer;
+}
+.icon-dbc{
+  background: url(/images/icon-dbc.png) no-repeat center;
+  width:40px;
+  height: 40px;
+  float: left;
+  cursor:pointer;
+}
 .fa{
     opacity:0.5;
 }
@@ -917,7 +939,7 @@ select.form-searchresult option{
     border: 1px solid #5b5959; width: 50px;}
 .searchresult-navi span{padding:0 3px;}
 .searchresult-navi div, .searchresult-navi ul{float:left; margin-bottom:10px;}
-.relete ul{width:100%;}
+.relete ul{width:57%;}
 .searchresult-navi	button	{
 		background-color: #ddbe6a;
     border-color: #ddbe6a;
@@ -1105,6 +1127,7 @@ select.form-searchresult option{
 }
 .relete div {
 	margin-left: 0px;
+  width: 42%;
 }
 .relete span, .relete input{float:left;}
 .pagination>li>a, .pagination>li>span{
@@ -1250,6 +1273,27 @@ select.form-searchresult option{
   margin: 6px auto;
   text-align: center;
   width: 2px;
+}
+.coapopup .modal-dialog{
+  width: 800px;
+}
+.coapopup .modal-content,
+.coapopup .image-gallery-thumbnails{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background: transparent;
+  border: 1px solid transparent;
+}
+.coapopup .image-gallery-thumbnail.active {
+    border: 2px solid #fff !important;
+    padding-right: 0px;
+}
+.coapopup .close{
+  font-size: 60px;
+  color: #b9b7b9;
+}
+.coapopup .modal-footer{
+  text-align: right;
 }
 /*All Page*/
 		.checkbox, .radio {
@@ -1698,14 +1742,16 @@ select.form-searchresult option{
   }
   .searchresult-navi input{width: 33px;}
   .cat-go	button{margin-left:0;}
-}
-
-@media (max-width: 1199px){
   .margin-l15 {
     margin-left: 0px;
   }
+  .relete ul, .relete div {
+    width: 100%;
+  }
+  .coapopup .modal-dialog {
+    width: 80%;
+  }
 }
-
 
 @media screen and (max-width: 991px) and (min-width: 767px){
   .m-margin{margin:0;}
@@ -2253,4 +2299,9 @@ select.form-searchresult option{
 }
 .td-text{
   word-break: initial !important;
+}
+.modal-headerPDF{
+    background: transparent;
+    padding: 35px;
+    border-bottom: 1px solid transparent;
 }

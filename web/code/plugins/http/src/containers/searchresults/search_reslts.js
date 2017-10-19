@@ -1308,7 +1308,6 @@ class SearchResult extends Component {
                                       onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
                                       chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
                               </div>
-
                               <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                                 <center>
                                   <br/><br/><br/><br/><br/><br/>

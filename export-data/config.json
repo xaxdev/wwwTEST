@@ -47,7 +47,7 @@
         },
         "production": {
             "bufferSize": 500,
-            "maxRow": 10000
+            "maxRow": 5000
         }
     }
 }

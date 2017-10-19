@@ -40,14 +40,6 @@ const getitemSets = async (index, exchangeRates) => {
                     image:[]
                 }
 
-                // if (!!record.setImageName && !!record.setImageType) {
-                //     // console.log(record.setImageName);
-                //     setImages.push({
-                //         original: `${config.gallery.original}/${record.setImageName}.${record.setImageType}`,
-                //         thumbnail: `${config.gallery.thumbnail}/${record.setImageName}.${record.setImageType}`
-                //     });
-                // }
-
                 itemSets.push(itemSet)
 
                 // in each set reference
@@ -92,6 +84,7 @@ const getitemSets = async (index, exchangeRates) => {
                     type: record.type,
                     hierarchy: record.hierarchy,
                     grossWeight: record.grossWeight,
+                    stoneDetail: record.stoneDetail,
                     createdDate: record.createdDate
                 }
 
@@ -175,6 +168,7 @@ const getitemSets = async (index, exchangeRates) => {
                         type: record.type,
                         hierarchy: record.hierarchy,
                         grossWeight: record.grossWeight,
+                        stoneDetail: record.stoneDetail,
                         createdDate: record.createdDate
                     }
 

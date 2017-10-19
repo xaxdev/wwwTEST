@@ -12,32 +12,34 @@ class ListItemsViewASSet extends Component {
 
      }
 
-     onClickGrid(event) {
-       // console.log('onClickGrid->',event.currentTarget.id);
-       event.preventDefault();
-       this.props.onClickList(event.currentTarget.id);
-     }
-     renderCheckItem = (val, row) =>{
-           const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog, items } = this.props;
-           let checkItem = false;
-           if (!!listMyCatalog) {
-               checkItem = listMyCatalog.find((myItem) => {
-                   return myItem.reference == val;
-               });
-           }
-           checkItem = !checkItem ? false : true;  //if undefined checked false else true
-           return(<div className="checkbox checkbox-warning">
-                   <input type="checkbox" className="styled" type="checkbox"
-                       name={val} checked={checkItem}
-                       id={val}
-                       value={val}
-                       onChange={onCheckedOneItemMyCatalog}
-                   />
-                   <label className="checkbox1"></label>
-               </div>);
+     onClickGrid = (event) => {
+         event.preventDefault();
+         this.props.onClickList(event.currentTarget.id);
      }
 
-     render(){
+     renderCheckItem = (val, row) => {
+         const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog, items } = this.props;
+         let checkItem = false;
+         if (!!listMyCatalog) {
+             checkItem = listMyCatalog.find((myItem) => {
+                 return myItem.reference == val;
+             });
+         }
+         checkItem = !checkItem ? false : true;  //if undefined checked false else true
+         return(
+             <div className="checkbox checkbox-warning">
+                 <input type="checkbox" className="styled" type="checkbox"
+                     name={val} checked={checkItem}
+                     id={val}
+                     value={val}
+                     onChange={onCheckedOneItemMyCatalog}
+                 />
+                 <label className="checkbox1"></label>
+             </div>
+         );
+     }
+
+     render = _ => {
          const { item } = this.props;
          const isItems = item.items != undefined
                              ? item.items.length > 0 ? true : false
@@ -60,10 +62,11 @@ class ListItemsViewASSet extends Component {
                                   <td>{subitem.reference}</td>
                                   <td>{subitem.description}</td>
                                   <td>{subitem.sku}</td>
-                                  <td className="text-right">{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                                  <td className="text-right">{subitem.company}</td>
-                                  <td className="text-right">{subitem.warehouse}</td>
+                                  <td>{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
+                                  <td>{subitem.company}</td>
+                                  <td>{subitem.warehouse}</td>
                                   <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
+                                  <td className="text-left">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
                                   <td className={`${(userLogin.permission.price == 'All') ?
                                       '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                   <td className={`${(userLogin.permission.price == 'Updated'
@@ -77,7 +80,7 @@ class ListItemsViewASSet extends Component {
                           );
                       })}
                       <tr>
-                          <td  colSpan="9" className="bd-lb-white"></td>
+                          <td  colSpan="10" className="bd-lb-white"></td>
                           <td className="font-b fc-000 text-center bg-eb">Total</td>
                           <td className={`font-b fc-000 bg-eb td-text
                               ${(userLogin.permission.price == 'All') ?
@@ -112,10 +115,11 @@ class ListItemsViewASSet extends Component {
                                   <td>{subitem.reference}</td>
                                   <td>{subitem.description}</td>
                                   <td>{subitem.sku}</td>
-                                  <td className="text-right">{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                                  <td className="text-right">{subitem.company}</td>
-                                  <td className="text-right">{subitem.warehouse}</td>
+                                  <td>{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
+                                  <td>{subitem.company}</td>
+                                  <td>{subitem.warehouse}</td>
                                   <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
+                                  <td className="text-left">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
                                   <td className={`${(userLogin.permission.price == 'All') ?
                                       '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                   <td className={`${(userLogin.permission.price == 'Updated'
@@ -129,7 +133,7 @@ class ListItemsViewASSet extends Component {
                           );
                       })}
                       <tr>
-                          <td  colSpan="9" className="bd-lb-white"></td>
+                          <td  colSpan="10" className="bd-lb-white"></td>
                           <td className="font-b fc-000 text-center bg-eb">Total</td>
                           <td className={`font-b fc-000 text-right bg-eb td-text
                               ${(userLogin.permission.price == 'All') ?
@@ -160,7 +164,7 @@ class ListItemsViewASSet extends Component {
                       </tr>
 
                       <tr>
-                          <td  colSpan="9" className="bd-lb-white"></td>
+                          <td  colSpan="10" className="bd-lb-white"></td>
                           <td className="font-b fc-000 text-center bg-eb">Total</td>
                           <td className={`font-b fc-000 text-right bg-eb td-text
                               ${(userLogin.permission.price == 'All') ?

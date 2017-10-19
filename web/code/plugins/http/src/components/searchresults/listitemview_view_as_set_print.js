@@ -34,6 +34,7 @@ class ListItemsViewASSetPrint extends Component {
                                 <td className="tdd">{subitem.company}</td>
                                 <td className="tdd">{subitem.warehouse}</td>
                                 <td className="tdd">{numberFormat2digit(subitem.grossWeight)}</td>
+                                <td className="tdd">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
                                 <td className={`tdd${(userLogin.permission.price == 'All') ?
                                     '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                 <td className={`tdd${(userLogin.permission.price == 'Updated'
@@ -47,7 +48,7 @@ class ListItemsViewASSetPrint extends Component {
                          );
                      })}
                      <tr>
-                         <td colSpan="8" className="bd-lb-white"></td>
+                         <td colSpan="9" className="bd-lb-white"></td>
                          <td className="font-b fc-000 text-center bg-eb">Total</td>
                          <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'All') ?
                             '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
@@ -81,6 +82,7 @@ class ListItemsViewASSetPrint extends Component {
                                  <td className="tdd">{subitem.company}</td>
                                  <td className="tdd">{subitem.warehouse}</td>
                                  <td className="tdd">{numberFormat2digit(subitem.grossWeight)}</td>
+                                 <td className="tdd">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
                                  <td className={`tdd${(userLogin.permission.price == 'All') ?
                                     '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                  <td className={`tdd${(userLogin.permission.price == 'Updated'
@@ -94,7 +96,7 @@ class ListItemsViewASSetPrint extends Component {
                          );
                      })}
                      <tr>
-                         <td  colSpan="8" className="bd-lb-white"></td>
+                         <td  colSpan="9" className="bd-lb-white"></td>
                          <td className="font-b fc-000 text-center bg-eb">Total</td>
                          <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'All') ?
                             '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
@@ -119,7 +121,7 @@ class ListItemsViewASSetPrint extends Component {
                         <td className="tdd" rowSpan={row}>{item.reference}</td>
                     </tr>
                     <tr>
-                        <td  colSpan="8" className="bd-lb-white"></td>
+                        <td  colSpan="9" className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
                         <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'All') ?
                             '' : ' hidden'}`}>{numberFormat(!!item.totalActualCost?item.totalActualCost['USD']:0)}</td>
