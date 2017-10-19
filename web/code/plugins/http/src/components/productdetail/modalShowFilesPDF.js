@@ -35,7 +35,7 @@ class ModalShowFilesPDF extends Component {
                 if(ENVIRONMENT == 'development'){
                     fileCerDownload = `/images/products/original/${file[0].original.split('/').slice(-1).pop()}`;
                 }else if (ENVIRONMENT == 'test') {
-                    fileCerDownload = `/original/${file[0].original.split('/').slice(-1).pop()}`;
+                    fileCerDownload = `/images/products/original/${file[0].original.split('/').slice(-1).pop()}`;
                 }else if (ENVIRONMENT == 'production') {
                     fileCerDownload = `/original/${file[0].original.split('/').slice(-1).pop()}`;
                 }
