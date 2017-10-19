@@ -136,6 +136,11 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                     <span>Gross Weight</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
+                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
+                                                                    tabindex="0" aria-sort="none" aria-label="Gross Weight: activate to sort column ascending" style="width: 0px;">
+                                                                    <span>Stone Detail</span>
+                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
+                                                                </th>
                                                                 <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader"
                                                                     scope="col" tabindex="0" aria-sort="none" aria-label="Public Price: activate to sort column ascending" style="width: 0px;">
                                                                     <span>Public Price</span>
@@ -227,6 +232,9 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                             </td>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${grossWeight}</span>
+                                                                            </td>
+                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                <span>${item.stoneDetail != ''? item.stoneDetail: '-'}</span>
                                                                             </td>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${price}</span>
