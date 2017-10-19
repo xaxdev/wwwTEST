@@ -97,7 +97,7 @@ class ModalShowImages extends Component {
                                   onClick={ this.downloadCertificateAll }>
                                   Download
                               </button>
-                          : <a href={imageCerDownload} download={imageName} className="btn btn-default btn-radius"><div className="icon-certificate"/></a>
+                          : <a href={imageCerDownload} download={imageName} className="btn btn-default btn-radius">Download</a>
                       }
                   </div>
                 </Modal>

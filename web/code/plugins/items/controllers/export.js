@@ -25,152 +25,99 @@ module.exports = {
     strategy: 'authentication'
   },
   handler: (request, reply) => {
+      const elastic = request.server.plugins.elastic.client;
+      const amqpHost = request.server.plugins.amqp.host;
+      const amqpChannel = request.server.plugins.amqp.channelExcel;
+      let obj = request.payload;
+      let page = request.payload.page;
+      let sortBy = request.payload.sortBy;
+      let sortDirections = request.payload.sortDirections;
+      let userCurrency = request.payload.userCurrency;
+      let keys = Object.keys(obj);
+      let fields = request.payload.fields;
+      let price = request.payload.price;
+      let ROOT_URL = request.payload.ROOT_URL;
+      let listFileName = [];
+      let userName = request.payload.userName;
 
-    const elastic = request.server.plugins.elastic.client;
-    const amqpHost = request.server.plugins.amqp.host;
-    const amqpChannel = request.server.plugins.amqp.channelExcel;
-    // console.log(amqpHost);
-    // console.log(amqpChannel);
+      let size = request.payload.pageSize;
 
-    let obj = request.payload;
-    let page = request.payload.page;
-    let sortBy = request.payload.sortBy;
-    let sortDirections = request.payload.sortDirections;
-    let userCurrency = request.payload.userCurrency;
-    let keys = Object.keys(obj);
-    let fields = request.payload.fields;
-    let price = request.payload.price;
-    let ROOT_URL = request.payload.ROOT_URL;
-    let listFileName = [];
-    let userName = request.payload.userName;
+      internals.query = GetSearch(request, 0, 100000);
 
-    let size = request.payload.pageSize;
+      const getAllItems =  elastic.search({
+          index: 'mol',
+          type: 'items',
+          body: internals.query
+      });
 
-    internals.query = GetSearch(request, 0, 100000);
-    // console.log('searching...');
-    // console.log(JSON.stringify(internals.query, null, 4));
+      const getSetReference = getAllItems.then((response) => {
+          const setReferenceResult = response.hits.hits.map((element) => element._source);
+          const setReferenceFilter = setReferenceResult.filter((item) => {
+                  return item.setReference != undefined && item.setReference != '';
+          });
+          const setReferenceArray = setReferenceFilter.map((item) => {
+              return item.setReference;
+          });
+          const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
+              return !pos || item != ary[pos - 1];
+          });
+          let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
+          if (sortBy.indexOf('price') != -1) {
+              sortBy = 'totalPrice.USD';
+          }else if (sortBy.indexOf('Date') != -1) {
+              sortBy = 'createdDate';
+          }else if (sortBy.indexOf('Date') != -1) {
+              sortBy = 'createdDate';
+          }else if (sortBy.indexOf('setReference') != -1) {
+              sortBy = 'reference';
+          }else{
+              sortBy = sortBy;
+          }
 
-    // elastic
-    //   .search({
-    //     index: 'mol',
-    //     type: 'items',
-    //     body: internals.query
-    //   })
-    //   .then(function (response) {
-    //     let allData = [];
-    //     let exportData = null;
-    //     // console.log('Response Data');
-    //
-    //     let data = response.hits.hits.map((element) => element._source);
-    //
-    //     exportData = data;
-    //     // console.log('data-->',data);
-    //     // console.log('fields.showImages-->',fields.showImages);
-    //     // console.log('userCurrency-->',userCurrency);
-    //     // console.log('price-->',price);
-    //
-    //     // console.log(response.hits.total)
-    //     const totalRecord = response.hits.total;
-    //
-    //     elastic.close();
-    //
-    //     amqp.connect(amqpHost, function(err, conn) {
-    //       conn.createChannel(function(err, ch) {
-    //         var q = amqpChannel;
-    //
-    //         ch.assertQueue(q);
-    //         // Note: on Node 6 Buffer.from(msg) should be used
-    //         ch.sendToQueue(q, new Buffer(JSON.stringify(request.payload, null, 2)), {persistent: true});
-    //         // console.log(' [x] Sent "Parameter!"');
-    //       });
-    //     });
-    //
-    //     // console.log('request.payload-->',JSON.stringify(request.payload, null, 2));
-    //     return reply(GetAllData(response, sortDirections, sortBy, pageSize, page, userCurrency, listFileName));
-    //   })
-    //   .catch(function (error) {
-    //     console.log('error-->',error)
-    //     elastic.close();
-    //     return reply(Boom.badImplementation(err));
-    //   });
+          let missing = '';
 
-        const getAllItems =  elastic
-                .search({
-                    index: 'mol',
-                    type: 'items',
-                    body: internals.query
-                });
+          switch (sortDirections) {
+            case 'asc':
+              missing = '"missing" : "_first"';
+              missing = `{"${sortBy}" : {${missing}}},`;
+              break;
+            default:
+          }
 
-        const getSetReference = getAllItems.then((response) => {
-            const setReferenceResult = response.hits.hits.map((element) => element._source);
-            const setReferenceFilter = setReferenceResult.filter((item) => {
-                    return item.setReference != undefined && item.setReference != '';
-            })
-            const setReferenceArray = setReferenceFilter.map((item) => {
-                return item.setReference;
-            })
-            const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
-                return !pos || item != ary[pos - 1];
-            })
-            // console.log('setReferenceUniq-->', setReferenceUniq.length);
-            // console.log('setReferenceResult-->',setReferenceResult.length);
-            let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-            if (sortBy.indexOf('price') != -1) {
-                sortBy = 'totalPrice.USD';
-            }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'createdDate';
-            }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'createdDate';
-            }else if (sortBy.indexOf('setReference') != -1) {
-                sortBy = 'reference';
-            }else{
-                sortBy = sortBy;
-            }
-
-            let missing = '';
-
-            switch (sortDirections) {
-              case 'asc':
-                missing = '"missing" : "_first"';
-                missing = `{"${sortBy}" : {${missing}}},`;
-                break;
-              default:
-            }
-
-          const query = JSON.parse(
-            `{
-                "timeout": "5s",
-                "from": 0,
-              "size": 10000,
-              "sort" : [
-                  ${missing}
-                  {"${sortBy}" : "${sortDirections}"}
-               ],
-              "query":{
-                   "constant_score": {
-                     "filter": {
-                       "bool": {
-                         "must": [
-                           {
-                             "match": {
-                               "reference": "${setReferenceUniq.join(' ')}"
-                             }
+        const query = JSON.parse(
+          `{
+              "timeout": "5s",
+              "from": 0,
+            "size": 10000,
+            "sort" : [
+                ${missing}
+                {"${sortBy}" : "${sortDirections}"}
+             ],
+            "query":{
+                 "constant_score": {
+                   "filter": {
+                     "bool": {
+                       "must": [
+                         {
+                           "match": {
+                             "reference": "${setReferenceUniq.join(' ')}"
                            }
-                         ]
-                       }
+                         }
+                       ]
                      }
                    }
-                }
-              }`);
+                 }
+              }
+            }`);
 
-            //   console.log(JSON.stringify(query, null, 2));
+          //   console.log(JSON.stringify(query, null, 2));
 
-              return elastic.search({
-                  index: 'mol',
-                  type: 'setitems',
-                  body: query
-              })
-        });
+            return elastic.search({
+                index: 'mol',
+                type: 'setitems',
+                body: query
+            })
+      });
 
       try {
           Promise.all([getAllItems, getSetReference]).
@@ -180,8 +127,6 @@ module.exports = {
 
               const setReferenceData = setReferences.hits.hits.map((element) => element._source);
 
-              // console.log('setReferenceData-->', setReferenceData.length);
-              // console.log('totalRecord-->',setReferences.hits.total);
               let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
               elastic.close();

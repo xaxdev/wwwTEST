@@ -66,7 +66,7 @@ class ListItemsViewASSet extends Component {
                                   <td>{subitem.company}</td>
                                   <td>{subitem.warehouse}</td>
                                   <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
-                                  <td>{subitem.stoneDetail}</td>
+                                  <td className="text-left">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
                                   <td className={`${(userLogin.permission.price == 'All') ?
                                       '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                   <td className={`${(userLogin.permission.price == 'Updated'
@@ -119,7 +119,7 @@ class ListItemsViewASSet extends Component {
                                   <td>{subitem.company}</td>
                                   <td>{subitem.warehouse}</td>
                                   <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
-                                  <td>{subitem.stoneDetail}</td>
+                                  <td className="text-left">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
                                   <td className={`${(userLogin.permission.price == 'All') ?
                                       '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                   <td className={`${(userLogin.permission.price == 'Updated'

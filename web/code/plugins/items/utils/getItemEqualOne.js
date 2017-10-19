@@ -19,24 +19,24 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,userPermis
         ${item.items.map((subitem) => {
             return (
                     `<tr id=${subitem.reference} >
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">
                             <img src="${imagesProduct}" width="60">
                         </td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${item.reference}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${subitem.reference}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${subitem.description}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${subitem.sku}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${subitem.company}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${subitem.warehouse}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${numberFormat2digit(subitem.grossWeight)}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">${subitem.stoneDetail}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;${(userPermissionPrice == 'All') ?
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${item.reference}</td>
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.reference}</td>
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.description}</td>
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.sku}</td>
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.company}</td>
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.warehouse}</td>
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${numberFormat2digit(subitem.grossWeight)}</td>
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(userPermissionPrice == 'All') ?
                             '' : ' hidden'}">${numberFormat(subitem.actualCost['USD'])}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;${(userPermissionPrice == 'Updated'
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(userPermissionPrice == 'Updated'
                             || userPermissionPrice == 'All') ?
                              '' : ' hidden'}">${numberFormat(subitem.updatedCost['USD'])}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;${(userPermissionPrice == 'Public'
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(userPermissionPrice == 'Public'
                             || userPermissionPrice == 'Updated'
                             || userPermissionPrice == 'All') ?
                             '' : ' hidden'}">${numberFormat(subitem.price['USD'])}</td>
@@ -44,20 +44,20 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,userPermis
             );
         }).join('')}
         <tr>
-            <td colspan="9" style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 6px;"></td>
-            <td style="font-weight: bold; font-family:'open_sanssemibold';color:#000;text-align: center;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"
+            <td colspan="9" style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 4px;"></td>
+            <td style="font-weight: bold; font-family:'open_sanssemibold';color:#000;text-align: center;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"
                 >Total</td>
             <td style="${(userPermissionPrice == 'All') ?
-               '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 6px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"
+               '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"
                 >${numberFormat(item.totalActualCost['USD'])}</td>
             <td style="${(userPermissionPrice == 'Updated'
                 || userPermissionPrice == 'All') ?
-                '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 6px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"
+                '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"
                 >${numberFormat(item.totalUpdatedCost['USD'])}</td>
             <td style="${(userPermissionPrice == 'Public'
                 || userPermissionPrice == 'Updated'
                 || userPermissionPrice == 'All') ?
-                '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 6px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"
+                '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"
                 >${numberFormat(item.totalPrice['USD'])}</td>
         </tr>
         <tr>

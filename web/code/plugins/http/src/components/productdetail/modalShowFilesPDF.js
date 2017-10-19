@@ -35,7 +35,7 @@ class ModalShowFilesPDF extends Component {
                 if(ENVIRONMENT == 'development'){
                     fileCerDownload = `/images/products/original/${file[0].original.split('/').slice(-1).pop()}`;
                 }else if (ENVIRONMENT == 'test') {
-                    fileCerDownload = `/original/${file[0].original.split('/').slice(-1).pop()}`;
+                    fileCerDownload = `/images/products/original/${file[0].original.split('/').slice(-1).pop()}`;
                 }else if (ENVIRONMENT == 'production') {
                     fileCerDownload = `/original/${file[0].original.split('/').slice(-1).pop()}`;
                 }
@@ -75,7 +75,7 @@ class ModalShowFilesPDF extends Component {
                                         onClick={ this.downloadCertificateAll }>
                                         Download
                                     </button>
-                                : <a href={fileCerDownload} download={fileName} className="btn btn-default btn-radius"><div className="icon-certificate"/></a>
+                                : <a href={fileCerDownload} download={fileName} className="btn btn-default btn-radius">Download</a>
                             }
                         </div>
                     </Modal>
