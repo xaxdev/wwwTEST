@@ -130,6 +130,7 @@ class ListItemsViewPrint extends Component {
 
                     itemName = (col.description != undefined) ? col.description: '-';
                     col.grossWeight = 0;
+                    col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 
                 }else{
                     imagesOriginal = (col.gallery) != undefined
@@ -172,6 +173,7 @@ class ListItemsViewPrint extends Component {
                     }
 
                     col.jewelsWeight = numberFormat2digit(jewelsWeight);
+                    col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 
                     itemName = (col.type != 'CER')
                                       ?
@@ -256,7 +258,7 @@ class ListItemsViewPrint extends Component {
                   <div>
                     <DataTable
                       className="col-sm-12"
-                      keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight','priceUSD' ]}
+                      keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight', 'stoneDetail','priceUSD' ]}
                       columns={tableColumns}
                       initialData={items}
                       initialPageLength={this.state.initialPageLength}

@@ -124,6 +124,7 @@ class ListItemsViewPrintAll extends Component {
 
                   itemName = (col.description != undefined) ? col.description: '-';
                   col.grossWeight = 0;
+                  col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 
               }else{
                   // console.log('col-->',col);
@@ -167,7 +168,7 @@ class ListItemsViewPrintAll extends Component {
                   }
 
                   col.jewelsWeight = numberFormat2digit(jewelsWeight);
-                  // col.jewelsWeight = jewelsWeight;
+                  col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 
                   itemName = (col.type != 'CER')
                                     ?
@@ -252,7 +253,7 @@ class ListItemsViewPrintAll extends Component {
                 <div>
                   <DataTable
                     className="col-sm-12"
-                    keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight','priceUSD' ]}
+                    keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight', 'stoneDetail','priceUSD' ]}
                     columns={tableColumns}
                     initialData={items}
                     initialPageLength={this.state.initialPageLength}
