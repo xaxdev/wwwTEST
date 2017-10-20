@@ -359,7 +359,7 @@ const Promise = require('bluebird');
                          });
                      }else{
                          const { count }  = await client.count(parameter);
-                         const sizeWrite = config.excel.bufferSize;
+                         const sizeWrite = config.excel.maxRow;
                          const from = 0;
                          const result = await client.search({
                              "index": config.elasticsearch.index,

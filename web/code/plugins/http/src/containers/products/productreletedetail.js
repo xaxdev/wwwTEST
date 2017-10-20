@@ -1,7 +1,7 @@
 import React,{ Component,PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Button,FormControl,Pagination } from 'react-bootstrap';
+import { Button, FormControl, Pagination, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { reduxForm,reset } from 'redux-form';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import jQuery from 'jquery';
@@ -723,7 +723,12 @@ class productreletedetail extends Component {
         if(!!imagesCOA && imagesCOA.length > 0){
             return(
                 <div>
-                     <a><div className="icon-coa margin-l10" id="imagesCOA" onClick={this.showImageGalleryCOA} ></div></a>
+                    <a>
+                        <OverlayTrigger placement="bottom" overlay={tooltipCOA}>
+                            <div className="icon-coa margin-l10" id="imagesCOA" onClick={this.showImageGalleryCOA} >
+                            </div>
+                        </OverlayTrigger>
+                    </a>
                 </div>
             );
         } else {
@@ -745,7 +750,12 @@ class productreletedetail extends Component {
         if(!!imagesDBC && imagesDBC.length > 0){
             return(
                 <div>
-                     <a><div className="icon-dbc margin-l10" id="imagesDBC" onClick={this.showImageGalleryDBC} ></div></a>
+                    <a>
+                        <OverlayTrigger placement="bottom" overlay={tooltipDBC}>
+                            <div className="icon-dbc margin-l10" id="imagesDBC" onClick={this.showImageGalleryDBC} >
+                            </div>
+                        </OverlayTrigger>
+                    </a>
                 </div>
             );
         } else {
@@ -767,7 +777,12 @@ class productreletedetail extends Component {
         if(!!filesMonograph && filesMonograph.length > 0){
             return(
                 <div>
-                     <a><div className="icon-filesMonograph margin-l10" id="filesMonograph" onClick={this.showFilesMonograph} ></div></a>
+                    <a>
+                        <OverlayTrigger placement="bottom" overlay={tooltipMonograph}>
+                            <div className="icon-filesMonograph margin-l10" id="filesMonograph" onClick={this.showFilesMonograph} >
+                            </div>
+                        </OverlayTrigger>
+                    </a>
                 </div>
             );
         } else {
@@ -1083,6 +1098,16 @@ class productreletedetail extends Component {
         );
     }
 }
+
+const tooltipCOA = (
+  <Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>
+);
+const tooltipDBC = (
+  <Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>
+);
+const tooltipMonograph = (
+  <Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>
+);
 
 function mapStateToProps(state) {
 
