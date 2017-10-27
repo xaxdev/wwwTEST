@@ -399,7 +399,8 @@ const Promise = require('bluebird');
                                     if (obj.fields.showImages){
                                         if(isIngredients){
                                             if(data[i][j] != undefined){
-                                                if(data[i][17] == 'Main'){
+                                                let columnMain = obj.userCurrency != 'USD'? 17: 14;
+                                                if(data[i][columnMain] == 'Main'){
                                                     let pathImage = '';
 
                                                     if (data[i][0] != '') {
