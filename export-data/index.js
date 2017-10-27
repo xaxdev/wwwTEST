@@ -389,48 +389,45 @@ const Promise = require('bluebird');
 
                         //  data.map(async(item)=> {
                         for (let i = 0; i < data.length; i++) {
+                            let column = 0;
                             for (let j = 0; j < cell; j++) {
-                                // console.log('data-->',data[i]);
-                                let column = j+1;
+                                column = j+1;
                                 if (column != 1) {
                                     ws.cell(row,column).string((data[i][j] != undefined) ? data[i][j].toString() : '').style(style);
                                 }else{
+                                    // console.log('showImages-->',obj.fields.showImages);
                                     if (obj.fields.showImages){
                                         if(isIngredients){
-                                            if(cellIngredients = column){
-                                                if(data[i][j] != undefined){
-                                                    if(data[i][17] == 'Main'){
-                                                        let pathImage = '';
+                                            if(data[i][j] != undefined){
+                                                if(data[i][14] == 'Main'){
+                                                    let pathImage = '';
 
-                                                        if (data[i][0] != '') {
-                                                            let arrImages = data[i][0].split("/").slice(-1).pop();
-                                                            //   pathImage = '/var/www/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                                            // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                                            pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
-                                                        }else{
-                                                            pathImage = './images/blank.gif';
-                                                        }
-
-                                                        ws.column(1).setWidth(15);
-                                                        ws.row(row).setHeight(150);
-                                                        let isExist = fileExists(pathImage);
-                                                        if (!isExist) {
-                                                            pathImage = './images/blank.gif';
-                                                        }
-                                                        ws.addImage({
-                                                            path: pathImage,
-                                                            type: 'picture',
-                                                            position: {
-                                                                type: 'oneCellAnchor',
-                                                                from: {
-                                                                    col: 1,
-                                                                    colOff: '0.0in',
-                                                                    row: row,
-                                                                    rowOff: 0
-                                                                }
-                                                            }
-                                                        });
+                                                    if (data[i][0] != '') {
+                                                        let arrImages = data[i][0].split("/").slice(-1).pop();
+                                                        pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
+                                                    }else{
+                                                        pathImage = './images/blank.gif';
                                                     }
+
+                                                    ws.column(1).setWidth(15);
+                                                    ws.row(row).setHeight(150);
+                                                    let isExist = fileExists(pathImage);
+                                                    if (!isExist) {
+                                                        pathImage = './images/blank.gif';
+                                                    }
+                                                    ws.addImage({
+                                                        path: pathImage,
+                                                        type: 'picture',
+                                                        position: {
+                                                            type: 'oneCellAnchor',
+                                                            from: {
+                                                                col: 1,
+                                                                colOff: '0.0in',
+                                                                row: row,
+                                                                rowOff: 0
+                                                            }
+                                                        }
+                                                    });
                                                 }
                                             }
                                         }else{
