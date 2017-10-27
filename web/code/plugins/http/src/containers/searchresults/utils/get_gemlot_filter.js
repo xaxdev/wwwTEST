@@ -2,6 +2,7 @@ export default function GetGemstoneLotnumberFilter(filters, params){
     let gemstoneFilter = {};
     let lotNumberFilter = {};
     const obj = {};
+    const userLogin = JSON.parse(sessionStorage.logindata);
 
     filters.forEach(function(filter){
       let keys = Object.keys(filter);
@@ -35,7 +36,15 @@ export default function GetGemstoneLotnumberFilter(filters, params){
                 case 'jewelryProductHierarchy':
                     break;
                 default:
-                    params[key] = value;
+                    if (key == 'userCurrency') {
+                        if (value != userLogin.currency) {
+                            params[key] = userLogin.currency;
+                        }else{
+                            params[key] = value;
+                        }
+                    }else{
+                        params[key] = value;
+                    }
                     break;
             }
         }
