@@ -399,7 +399,7 @@ const Promise = require('bluebird');
                                     if (obj.fields.showImages){
                                         if(isIngredients){
                                             if(data[i][j] != undefined){
-                                                if(data[i][14] == 'Main'){
+                                                if(data[i][17] == 'Main'){
                                                     let pathImage = '';
 
                                                     if (data[i][0] != '') {
