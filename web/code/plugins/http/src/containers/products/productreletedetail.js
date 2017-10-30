@@ -977,10 +977,11 @@ class productreletedetail extends Component {
                     if (item.certificate.images != undefined) {
                         isCertificate = true;
                         countImages++;
-                    }
-                    if (countImages == 1) {
-                        imageCerDownload = `/original/${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
-                        imageName = `${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
+
+                        if (countImages == 1) {
+                            imageCerDownload = `/original/${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
+                            imageName = `${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
+                        }
                     }
                 }
             })
