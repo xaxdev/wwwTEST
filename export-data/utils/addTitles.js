@@ -26,6 +26,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 titles.push('Images');
 
             titles.push('Item Reference', 'Description');
+
             if (price == 'All') {
                 titles.push('Total Actual Cost (USD)');
             }
@@ -36,7 +37,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 titles.push('Total Public Price (USD)');
             }
 
-          if(fields.allFields){
+          if(fields.allFieldsViewAsSet){
               titles.push('Markup (Times)', 'Company','Warehouse', 'Created Date');
           }else{
               if(fields.totalActualCost) titles.push('Total Actual Cost (USD)');
