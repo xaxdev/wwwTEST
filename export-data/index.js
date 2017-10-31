@@ -405,23 +405,24 @@ const Promise = require('bluebird');
                                                     if (price == 'All') {
                                                         columnMain = 17;
                                                     }
-                                                    if (price == 'Updated' || price == 'All') {
-                                                        columnMain = 16;
-                                                    }
-                                                    if (price == 'Public' || price == 'Updated' || price == 'All') {
+                                                    if (price == 'Updated') {
                                                         columnMain = 15;
+                                                    }
+                                                    if (price == 'Public') {
+                                                        columnMain = 13;
                                                     }
                                                 } else {
                                                     if (price == 'All') {
                                                         columnMain = 14;
                                                     }
-                                                    if (price == 'Updated' || price == 'All') {
+                                                    if (price == 'Updated') {
                                                         columnMain = 13;
                                                     }
-                                                    if (price == 'Public' || price == 'Updated' || price == 'All') {
+                                                    if (price == 'Public') {
                                                         columnMain = 12;
                                                     }
                                                 }
+                                                console.log('columnMain-->',columnMain);
                                                 if(data[i][columnMain] == 'Main'){
                                                     let pathImage = '';
 
