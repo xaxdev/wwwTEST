@@ -34,10 +34,18 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
             // console.log(`items: ${items}--> reference: ${item.reference}`);
             arrayItems.push(item.reference,item.description);
 
-            if(fields.allFields){
-                arrayItems.push(numberFormat((item.totalActualCost != undefined)? item.totalActualCost['USD']: 0),
-                                numberFormat((item.totalUpdatedCost != undefined)? item.totalUpdatedCost['USD']: 0),
-                                numberFormat((item.totalPrice != undefined)? item.totalPrice['USD']: 0),
+            if (price == 'All') {
+              arrayItems.push(numberFormat((item.totalActualCost != undefined)? item.totalActualCost['USD']: 0));
+            }
+            if (price == 'Updated' || price == 'All') {
+              arrayItems.push(numberFormat((item.totalUpdatedCost != undefined)? item.totalUpdatedCost['USD']: 0));
+            }
+            if (price == 'Public' || price == 'Updated' || price == 'All') {
+              arrayItems.push(numberFormat((item.totalPrice != undefined)? item.totalPrice['USD']: 0));
+            }
+
+            if(fields.allFieldsViewAsSet){
+                arrayItems.push(
                                 (item.markup != undefined) ? item.markup : '',
                                 (item.companyName != undefined) ? item.companyName : '',
                                 (item.warehouseName != undefined) ? item.warehouseName : '',
@@ -56,7 +64,7 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
         });
 
         return resolve(newdata)
-        
+
     } catch (err) {
         throw err;
     }
