@@ -401,7 +401,7 @@ const Promise = require('bluebird');
                                             if(data[i][j] != undefined){
                                                 let price = obj.price;
                                                 let columnMain = 0;
-                                                if (userCurrency != 'USD') {
+                                                if (obj.userCurrency != 'USD') {
                                                     if (price == 'All') {
                                                         columnMain = 17;
                                                     }
