@@ -399,7 +399,29 @@ const Promise = require('bluebird');
                                     if (obj.fields.showImages){
                                         if(isIngredients){
                                             if(data[i][j] != undefined){
-                                                let columnMain = obj.userCurrency != 'USD'? 17: 14;
+                                                let price = obj.price;
+                                                let columnMain = 0;
+                                                if (userCurrency != 'USD') {
+                                                    if (price == 'All') {
+                                                        columnMain = 17;
+                                                    }
+                                                    if (price == 'Updated' || price == 'All') {
+                                                        columnMain = 16;
+                                                    }
+                                                    if (price == 'Public' || price == 'Updated' || price == 'All') {
+                                                        columnMain = 15;
+                                                    }
+                                                } else {
+                                                    if (price == 'All') {
+                                                        columnMain = 14;
+                                                    }
+                                                    if (price == 'Updated' || price == 'All') {
+                                                        columnMain = 13;
+                                                    }
+                                                    if (price == 'Public' || price == 'Updated' || price == 'All') {
+                                                        columnMain = 12;
+                                                    }
+                                                }
                                                 if(data[i][columnMain] == 'Main'){
                                                     let pathImage = '';
 
