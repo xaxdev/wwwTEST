@@ -1295,6 +1295,30 @@ select.form-searchresult option{
 .coapopup .modal-footer{
   text-align: right;
 }
+.coapopupimg .modal-dialog{
+  width: 1500px;
+}
+.coapopupimg .modal-content,
+.coapopupimg .image-gallery-thumbnails{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background: transparent;
+  border: 1px solid transparent;
+}
+.coapopupimg .image-gallery-thumbnail.active {
+    border: 2px solid #fff !important;
+    padding-right: 0px;
+}
+.coapopupimg .close{
+  font-size: 60px;
+  color: #b9b7b9;
+}
+.coapopupimg .modal-footer{
+  text-align: right;
+}
+.coapopupimg .image-gallery-image img{
+    max-width: 700px;
+}
 /*All Page*/
 		.checkbox, .radio {
 		  padding-left: 10px;
