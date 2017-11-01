@@ -422,7 +422,6 @@ const Promise = require('bluebird');
                                                         columnMain = 12;
                                                     }
                                                 }
-                                                console.log('columnMain-->',columnMain);
                                                 if(data[i][columnMain] == 'Main'){
                                                     let pathImage = '';
 

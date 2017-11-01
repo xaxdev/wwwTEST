@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import { reduxForm } from 'redux-form';
+import jQuery from 'jquery';
 import ProductGalleryImages from './productGalleryImages';
 import ModalalertMsgObj from '../../utils/modalalertmsg';
 import moment from 'moment-timezone';
@@ -17,6 +18,23 @@ class ModalShowImages extends Component {
           isOpenDownloadCerMsg: false
         };
 
+  }
+  componentDidMount = _ => {
+      let zoomimg = false;
+      let count = 0;
+      jQuery('#btnzoom').click(function(){
+          count++;
+          jQuery('.image-gallery-image img').css({'width': 'auto' ,'max-width':'700px'});
+          if(zoomimg == false){
+              if (count > 0) {
+                  zoomimg = true;
+                  jQuery('.image-gallery-image img').css({'width': jQuery('.image-gallery-image img').width() * 2 ,'max-width':'1400px'});
+              }
+          } else {
+              zoomimg = false;
+              jQuery('.image-gallery-image img').css({'width': 'auto' ,'max-width':'700px'});
+          }
+      });
   }
 
   downloadCertificateAll = _=>{
@@ -37,13 +55,13 @@ class ModalShowImages extends Component {
       }
     //   console.log(allCer);
       let params = {
-                      'allCer': allCer,
-                      'userName': `${userLogin.username}`,
-                      'fileName': `${userLogin.username}_${exportDate}`,
-                      'userEmail': userLogin.email,
-                      'ROOT_URL': ROOT_URL,
-                      'productId': productId
-                  }
+          'allCer': allCer,
+          'userName': `${userLogin.username}`,
+          'fileName': `${userLogin.username}_${exportDate}`,
+          'userEmail': userLogin.email,
+          'ROOT_URL': ROOT_URL,
+          'productId': productId
+      }
 
       getCertificate(params)
           .then((value) => {
@@ -54,9 +72,9 @@ class ModalShowImages extends Component {
           });
   }
   renderAlertmsgCer = _=> {
-    const message = 'Please check your email for download certificate.';
-    const title = 'DOWNLOAD CERTIFICATE';
-    return(<ModalalertMsgObj isOpen={this.state.isOpenDownloadCerMsg}
+      const message = 'Please check your email for download certificate.';
+      const title = 'DOWNLOAD CERTIFICATE';
+      return(<ModalalertMsgObj isOpen={this.state.isOpenDownloadCerMsg}
                 isClose={this.handleCloseDownloadCerMsg} props={this.props}
                 message={message}  title={title}/>);
   }
@@ -68,30 +86,39 @@ class ModalShowImages extends Component {
   render() {
       const { props } = this.props;
       const { images, isOpen, isClose, handleSubmitCatalog, onSubmit } = this.props;
-      let img = [];
+      let imgs = [];
       let imageCerDownload = '';
       let imageName = '';
 
       if (!!images) {
-          img = images;
-          if(img.length>0){
-              imageCerDownload = `/original/${img[0].original.split('/').slice(-1).pop()}`;
-              imageName = `${img[0].original.split('/').slice(-1).pop()}`;
+          images.map((img) => {
+              const image = {
+                  original: `/original/${img.original.split('/').slice(-1).pop()}`,
+                  thumbnail: `/images/products/thumbnail/${img.original.split('/').slice(-1).pop()}`,
+                  sizes: '700px'
+              };
+
+              imgs.push(image);
+          });
+          if(imgs.length>0){
+              imageCerDownload = `/original/${imgs[0].original.split('/').slice(-1).pop()}`;
+              imageName = `${imgs[0].original.split('/').slice(-1).pop()}`;
           }
       }
 
       return(
             <div className="addMyCatalog">
-              <div className="coapopup">
+              <div className="coapopupimg">
                 <Modal isOpen={isOpen} >
                   <div className="modal-body">
                       <ModalClose onClick={isClose}/>
                       <div>
-                        <ProductGalleryImages imagesGallery={img}/>
+                        <ProductGalleryImages imagesGallery={imgs}/>
                       </div>
                   </div>
                   <div className="modal-footer">
-                      {img.length > 1
+                      <button id="btnzoom" className="btn btn-primary btn-radius" style="float:right">zoom</button>
+                      {imgs.length > 1
                           ? <button type="button"
                                   className="btn btn-default btn-radius"
                                   onClick={ this.downloadCertificateAll }>
