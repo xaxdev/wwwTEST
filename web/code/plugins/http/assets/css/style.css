@@ -1316,6 +1316,9 @@ select.form-searchresult option{
 .coapopupimg .modal-footer{
   text-align: right;
 }
+.coapopupimg .image-gallery-image img{
+    max-width: 700px;
+}
 /*All Page*/
 		.checkbox, .radio {
 		  padding-left: 10px;

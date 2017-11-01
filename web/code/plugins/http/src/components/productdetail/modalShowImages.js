@@ -21,10 +21,15 @@ class ModalShowImages extends Component {
   }
   componentDidMount = _ => {
       let zoomimg = false;
+      let count = 0;
       jQuery('#btnzoom').click(function(){
+          count++;
+          jQuery('.image-gallery-image img').css({'width': 'auto' ,'max-width':'700px'});
           if(zoomimg == false){
-              zoomimg = true;
-              jQuery('.image-gallery-image img').css({'width': jQuery('#galleryimg').width() * 2 ,'max-width':'1400px'});
+              if (count > 0) {
+                  zoomimg = true;
+                  jQuery('.image-gallery-image img').css({'width': jQuery('.image-gallery-image img').width() * 2 ,'max-width':'1400px'});
+              }
           } else {
               zoomimg = false;
               jQuery('.image-gallery-image img').css({'width': 'auto' ,'max-width':'700px'});
@@ -112,9 +117,7 @@ class ModalShowImages extends Component {
                       </div>
                   </div>
                   <div className="modal-footer">
-                      <div>
-                           <button id="btnzoom" className="btn btn-primary btn-radius" style="float:right">zoom</button>
-                      </div>
+                      <button id="btnzoom" className="btn btn-primary btn-radius" style="float:right">zoom</button>
                       {imgs.length > 1
                           ? <button type="button"
                                   className="btn btn-default btn-radius"
