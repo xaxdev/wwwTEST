@@ -28,7 +28,7 @@ class ModalShowImages extends Component {
           if(zoomimg == false){
               if (count > 0) {
                   zoomimg = true;
-                  jQuery('.image-gallery-image img').css({'width': jQuery('.image-gallery-image img').width() * 2 ,'max-width':'1400px'});
+                  jQuery('.image-gallery-image img').css({'width': jQuery('.image-gallery-image img').width() * 2 ,'max-width':'1200px'});
               }
           } else {
               zoomimg = false;
