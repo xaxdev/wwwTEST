@@ -3,6 +3,8 @@ USE [ITORAMA]
 SELECT [Id] AS 'id'
       ,[SetReference] AS 'setReference'
       ,[Reference] AS 'reference'
+	  ,[ItemType] AS 'itemType'
+      ,[Priority] AS 'priority'
       ,[Description] AS 'description'
       ,[Price] AS 'price'
       ,[ActualCost] AS 'actualCost'
@@ -25,4 +27,4 @@ SELECT [Id] AS 'id'
       ,[StoneDetail] AS 'stoneDetail'
       ,[CreatedDate] AS 'createdDate'
 FROM [ITORAMA].[dbo].[SetItem]
-ORDER BY [SetReference], [Reference]
+ORDER BY [SetReference], [Priority] DESC, [Reference]
