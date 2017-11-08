@@ -17,6 +17,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
     let price = request.payload.price;
     let userName = request.payload.userName;
     let ROOT_URL = request.payload.ROOT_URL;
+    let isSetReference = !!request.payload.setReference? true: false;
 
     let objRange={length:0};
     let filter = '';
@@ -445,6 +446,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
       }
 
       let missing = '';
+      let sortEs = '';
 
       switch (sortDirections) {
         case 'asc':
@@ -452,6 +454,22 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           missing = `{"${sortBy}" : {${missing}}},`;
           break;
         default:
+      }
+
+      if (isSetReference) {
+          if (sortBy == 'setReference') {
+              sortEs = `${missing}
+                        {"${sortBy}" : "${sortDirections}"},
+                        {"priority" : "${sortDirections}"}`;
+          }else{
+              sortEs = `${missing}
+                        {"${sortBy}" : "${sortDirections}"},
+                        {"setReference" : "${sortDirections}"},
+                        {"priority" : "${sortDirections}"}`;
+          }
+      } else {
+          sortEs = `${missing}
+                    {"${sortBy}" : "${sortDirections}"}`;
       }
 
       if (!!keys.find((key) => {return key == 'warehouse'})) {
@@ -465,8 +483,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                       "from": ${fromRecord},
                       "size": ${sizeRecord},
                       "sort" : [
-                          ${missing}
-                          {"${sortBy}" : "${sortDirections}"}
+                          ${sortEs}
                       ],
                       "query": {
                           "constant_score": {
@@ -486,8 +503,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                       "from": ${fromRecord},
                       "size": ${sizeRecord},
                       "sort" : [
-                          ${missing}
-                          {"${sortBy}" : "${sortDirections}"}
+                          ${sortEs}
                       ],
                       "query": {
                           "constant_score": {
@@ -516,8 +532,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                   "from": ${fromRecord},
                   "size": ${sizeRecord},
                   "sort" : [
-                      ${missing}
-                      {"${sortBy}" : "${sortDirections}"}
+                      ${sortEs}
                   ],
                   "query": {
                       "constant_score": {
@@ -547,8 +562,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
           "from": ${fromRecord},
           "size": ${sizeRecord},
           "sort" : [
-              ${missing}
-              {"${sortBy}" : "${sortDirections}"}
+              ${sortEs}
            ],
           "query":
            {

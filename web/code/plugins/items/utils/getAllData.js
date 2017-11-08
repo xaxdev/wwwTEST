@@ -5,7 +5,7 @@ const _ = require('lodash');
 const GetPriceCurrency = require('./getPriceCurrency');
 
 module.exports = async (response, sortDirections, sortBy, size, page, userCurrency, keys, obj, request,
-    itemsOrder, setReferencdOrder, itemsNotMMECONSResult, itemsMMECONSResult, cb) => {
+    itemsOrder, setReferencdOrder, itemsNotMMECONSResult, itemsMMECONSResult, isSetReference, cb) => {
 
   try {
       let allData = [];
@@ -17,6 +17,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       let avrgPrice = 0;
       let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
       let data = response.hits.hits.map((element) => element._source);
+    //   console.log('data-->',data);
 
       if (itemsOrder != null) {
           data.map((item) => {
@@ -64,7 +65,10 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
       }
 
       if (itemsOrder == null && setReferencdOrder == null) {
-          data = data.sortBy(sortBy,sortDirections,userCurrency);
+          //   Not have SetReference criteria
+          if (!isSetReference) {
+              data = data.sortBy(sortBy,sortDirections,userCurrency);
+          }
       }
 
       if (isViewAsSet) {

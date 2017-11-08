@@ -66,6 +66,8 @@ const getitemSets = async (index, exchangeRates) => {
                 const item = {
                     id: record.id,
                     reference: record.reference,
+                    itemType: record.itemType,
+                    priority: record.priority,
                     description: record.description,
                     image: {
                         original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
@@ -150,6 +152,8 @@ const getitemSets = async (index, exchangeRates) => {
                     const item = {
                         id: record.id,
                         reference: record.reference,
+                        itemType: record.itemType,
+                        priority: record.priority,
                         description: record.description,
                         image: {
                             original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
