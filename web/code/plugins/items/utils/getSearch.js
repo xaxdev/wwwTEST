@@ -456,18 +456,11 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
         default:
       }
 
-      if (isSetReference) {
-          if (sortBy == 'setReference') {
-              sortEs = `${missing}
-                        {"${sortBy}" : "${sortDirections}"},
-                        {"priority" : "${sortDirections}"}`;
-          }else{
-              sortEs = `${missing}
-                        {"${sortBy}" : "${sortDirections}"},
-                        {"setReference" : "${sortDirections}"},
-                        {"priority" : "${sortDirections}"}`;
-          }
-      } else {
+      if (sortBy == 'setReference') {
+          sortEs = `${missing}
+                    {"${sortBy}" : "${sortDirections}"},
+                    {"priority" : "${sortDirections}"}`;
+      }else{
           sortEs = `${missing}
                     {"${sortBy}" : "${sortDirections}"}`;
       }
