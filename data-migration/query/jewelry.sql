@@ -54,6 +54,7 @@ SELECT item.[Id] AS 'id'
     , 'JLY' AS 'type'
     , ISNULL(jewelry.[Type], '') AS 'subType'
     , ISNULL(jewelry.[TypeName], '') AS 'subTypeName'
+    , jewelrytype.[Priority] AS 'priority'
     , ISNULL(jewelry.[Size], '') AS 'size'
     , ISNULL(jewelry.[SetReference], '') AS 'setReference'
     , ISNULL(jewelry.[JewelsQty], '') AS 'stoneDetail'
@@ -68,28 +69,30 @@ SELECT item.[Id] AS 'id'
     , certmaster.[CertificateCreateDate] AS [CertifiedDate]
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
-  ON item.[Reference] = gemstone.[ItemReference]
-  AND item.[Company] = gemstone.[Company]
+    ON item.[Reference] = gemstone.[ItemReference]
+    AND item.[Company] = gemstone.[Company]
 INNER JOIN [ITORAMA].[dbo].[Jewelry] jewelry
-  ON item.[Reference] = jewelry.[ItemReference]
-  AND item.[Company] = jewelry.[Company]
+    ON item.[Reference] = jewelry.[ItemReference]
+    AND item.[Company] = jewelry.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
     ON item.[Reference] = img.[ITEMID]
     AND img.[Company] = 'mme'
     AND img.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
-  ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
-  AND item.[Company] = cert.[Company]
+    ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
+    AND item.[Company] = cert.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
-  ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
-  AND certimage.[Company] = 'mme'
-  AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
+    ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
+    AND certimage.[Company] = 'mme'
+    AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
-  ON cert.[CERTIFICATIONNO] = certmaster.[Item]
-  AND item.[Company] = certmaster.[Company]
+    ON cert.[CERTIFICATIONNO] = certmaster.[Item]
+    AND item.[Company] = certmaster.[Company]
 LEFT JOIN [ITORAMA].[dbo].[DominantStone] dominantstone
-  ON dominantstone.[Code] = item.[DominantStone]
+    ON dominantstone.[Code] = item.[DominantStone]
 LEFT JOIN [ITORAMA].[dbo].[Company] company
-  ON item.[Company] = company.[Code]
+    ON item.[Company] = company.[Code]
+LEFT JOIN [ITORAMA].[dbo].[JewelryType] jewelrytype
+	ON jewelry.[Type] = jewelrytype.[code]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]
