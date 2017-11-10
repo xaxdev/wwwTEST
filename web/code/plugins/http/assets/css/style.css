@@ -1296,7 +1296,8 @@ select.form-searchresult option{
   text-align: right;
 }
 .coapopupimg .modal-dialog{
-  width: 1500px;
+    max-width: 1300px;
+    width: 100%;
 }
 .coapopupimg .modal-content,
 .coapopupimg .image-gallery-thumbnails{
