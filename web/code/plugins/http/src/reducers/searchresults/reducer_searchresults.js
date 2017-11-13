@@ -29,7 +29,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                         SubmitAction: null, saveSearchStatus: false, msg: '',saveSearchStatusCode: 100,
                         isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null,
                         idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null, viewAsSet: false,
-                        itemsOrder:null,setReferenceOrder:null,tempPDF:null
+                        itemsOrder:null,setReferenceOrder:null,tempPDF:null, ArticleValue:[]
                       };
 
   export default function(state = INITIAL_STATE, action){
@@ -88,7 +88,8 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null,
                 ListCatalogName: [],SubmitAction: null, saveSearchStatus: false, msg: '',saveSearchStatusCode: 100,
                 isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null,
-                idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null,viewAsSet: false
+                idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null,viewAsSet: false,
+                ArticleValue:[]
               };
     //   case WRITE_HTML :
     //     // console.log('SET_POLISH -->',action);
@@ -262,7 +263,7 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
                 exporttems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null,
                 GemCertificateDateTo:null, StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null,
                 ProductionDateTo:null, PageSize:16, ShowGridView: true, showListView: false, ListCatalogName: [],
-                viewAsSet: false
+                viewAsSet: false, ArticleValue:[]
               }
       case SET_PARAMS:
         // console.log('action.params-->',action.params);
