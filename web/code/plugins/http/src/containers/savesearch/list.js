@@ -29,29 +29,27 @@ class SaveSearch extends Component {
     }
 
     render(){
-        // console.log('this.props.criteriaSaveSearch-->',this.props.criteriaSaveSearch);
         if (!this.props.listSaveSearch) {
           return (
-                  <div >
-                    <center>
+              <div >
+                  <center>
                       <br/><br/><br/><br/><br/><br/>
-                        <Loading type="spin" color="#202020" width="10%"/>
-                    </center>
-                    <br/><br/><br/><br/><br/><br/>
-                  </div>
-                  );
+                      <Loading type="spin" color="#202020" width="10%"/>
+                  </center>
+                  <br/><br/><br/><br/><br/><br/>
+              </div>
+          );
          }else{
-            //  console.log(this.props.listSaveSearch);
              return (
                  <div>
                      <div className="col-sm-12 bg-hearder bg-header-inventories">
-                        <div className="col-sm-6 m-width-60 ft-white m-nopadding">
+                         <div className="col-sm-6 m-width-60 ft-white m-nopadding">
                             <h1>List of Saved Searches</h1>
-                        </div>
-                      </div>
-                      <div className="col-sm-12  panel panel-default">
+                         </div>
+                     </div>
+                     <div className="col-sm-12  panel panel-default">
                          <div className="panel-body">
-                            <SaveSearchList saveSearches = {this.props.listSaveSearch}
+                             <SaveSearchList saveSearches = {this.props.listSaveSearch}
                                 criteriaSaveSearch = {this.props.criteriaSaveSearch}
                                 shareSaveSearch = {this.props.saveSearchAction.shareSaveSearch}
                                 getSaveCriteria = {this.props.saveSearchAction.getSaveCriteria}
@@ -60,8 +58,8 @@ class SaveSearch extends Component {
                                 getListsSaveSearch = {this.props.saveSearchAction.getListsSaveSearch}
                                 props = {this.props}/>
                          </div>
-                       </div>
-                       {this.renderAlertmsgSharedSaveSearch()}
+                     </div>
+                     {this.renderAlertmsgSharedSaveSearch()}
                  </div>
              );
          }
@@ -69,37 +67,35 @@ class SaveSearch extends Component {
 }
 
 function mapStateToProps(state) {
-  // console.log('state list form-->',state);
-  return {
-      listSaveSearch: state.searchResult.listSaveSearch,
-      saveSearchStatus: state.searchResult.saveSearchStatus,
-      saveSearchMsgError: state.searchResult.msg,
-      saveSearchStatusCode: state.searchResult.saveSearchStatusCode,
-      criteriaSaveSearch: state.searchResult.criteriaSaveSearch,
-      paramsSearch: state.searchResult.paramsSearch,
-      filters: state.searchResult.filters,
-      activeTabCategory: state.searchResult.activeTabCategory,
-      isAdvance: state.searchResult.IsAdvance,
-      submitAction: state.searchResult.SubmitAction,
-      IdDeleteSaveSearch: state.searchResult.idDeleteSaveSearch,
-      IdEditSaveSearch: state.searchResult.idEditSaveSearch,
-      NameEditSaveSearch: state.searchResult.nameEditSaveSearch,
-  };
+    return {
+        listSaveSearch: state.searchResult.listSaveSearch,
+        saveSearchStatus: state.searchResult.saveSearchStatus,
+        saveSearchMsgError: state.searchResult.msg,
+        saveSearchStatusCode: state.searchResult.saveSearchStatusCode,
+        criteriaSaveSearch: state.searchResult.criteriaSaveSearch,
+        paramsSearch: state.searchResult.paramsSearch,
+        filters: state.searchResult.filters,
+        activeTabCategory: state.searchResult.activeTabCategory,
+        isAdvance: state.searchResult.IsAdvance,
+        submitAction: state.searchResult.SubmitAction,
+        IdDeleteSaveSearch: state.searchResult.idDeleteSaveSearch,
+        IdEditSaveSearch: state.searchResult.idEditSaveSearch,
+        NameEditSaveSearch: state.searchResult.nameEditSaveSearch,
+    };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    inventoryActions: bindActionCreators(Object.assign({}, inventoryActions), dispatch),
-    // itemActions: bindActionCreators(Object.assign({}, itemactions), dispatch),
-    // masterDataActions: bindActionCreators(Object.assign({}, masterDataActions), dispatch),
-    saveSearchAction: bindActionCreators(Object.assign({}, saveSearchAction), dispatch)
-  }
+    return {
+        inventoryActions: bindActionCreators(Object.assign({}, inventoryActions), dispatch),
+        saveSearchAction: bindActionCreators(Object.assign({}, saveSearchAction), dispatch)
+    }
 }
-
 // module.exports = connect(mapStateToProps, mapDispatchToProps)(SaveSearch)
-module.exports = reduxForm({
-  form: 'SaveSearch',
-  fields: ['reference','description','venderReference','vendorName',
+module.exports = reduxForm(
+    {
+        form: 'SaveSearch',
+        fields: [
+            'reference','description','venderReference','vendorName',
             'certificatedNumber','sku','location','warehouse','attachment',
             'stoneType','cut','stoneProductHierarchy','lotNumber',
             'cutGrade','color','colorGrade','clarity','lotQuantityFrom','lotQuantityTo',
@@ -124,5 +120,6 @@ module.exports = reduxForm({
             'preciousMetalWeightFrom','preciousMetalWeightTo','buckleType','strapType','strapColor',
             'accessoryProductHierarchy','accessoryType','obaProductHierarchy','obaDimension','searchName',
             'sparePartProductHierarchy','sparePartType','validateSearchName','viewAsSet'
-          ]
-},mapStateToProps,mapDispatchToProps)(SaveSearch);
+        ]
+    }, mapStateToProps, mapDispatchToProps
+)(SaveSearch);

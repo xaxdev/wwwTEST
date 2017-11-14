@@ -25,6 +25,7 @@ class InventoryJewelry extends Component {
         this.handleDominantStoneSelectChange = this.handleDominantStoneSelectChange.bind(this);
         this.handleMetalTypeSelectChange = this.handleMetalTypeSelectChange.bind(this);
         this.handleMetalColourSelectChange = this.handleMetalColourSelectChange.bind(this);
+        this.handleArticleSelectedChanged = this.handleArticleSelectedChanged.bind(this);
         this.readFile = this.readFile.bind(this);
 
         this.state = {
@@ -241,6 +242,29 @@ class InventoryJewelry extends Component {
         props.inventoryActions.setDataMetalColour(MetalColourSelectValue);
     }
 
+    handleArticleSelectedChanged = (ArticleSelectedValue) => {
+        const { props } = this.props;
+        let { fields: { collection, article }, searchResult } = props;
+        let findFieldName = [];
+        console.log('ArticleSelectedValue-->',ArticleSelectedValue);
+        console.log('props-->',props);
+        console.log('fields collection-->',collection);
+
+        if(props.options != undefined){
+            if (props.options.jewelryCategories) {
+                console.log('jewelryCategories-->',props.options.jewelryCategories);
+                findFieldName = props.options.jewelryCategories.filter((item) => {
+                    if (item.name == ArticleSelectedValue) {
+                        return item.name
+                    }
+                }).map((item) => { return item.code });
+            }
+        }
+        console.log('findFieldName-->',findFieldName);
+        props.inventoryActions.setDataJewelryCategory(findFieldName);
+        props.inventoryActions.setDataArticle(ArticleSelectedValue);
+    }
+
     selectedViewAsSet = e => {
         const { props } = this.props;
         let { fields: { viewAsSet }, searchResult } = props;
@@ -285,12 +309,11 @@ class InventoryJewelry extends Component {
     render() {
         const { props } = this.props;
         const musthaves = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
-        let {  fields:
-            {
-                collection, totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,
-                publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo, setReference, brand, mustHave,
-                ringSize, dominantStone, metalType, metalColour, viewAsSet
-            }
+        let {  fields: {
+                    collection, totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,
+                    publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo, setReference, brand, mustHave,
+                    ringSize, dominantStone, metalType, metalColour, viewAsSet
+                }
         } = props;
 
         let dataDropDowntJewelryCategory = [];
@@ -354,7 +377,7 @@ class InventoryJewelry extends Component {
             }
             if (props.options.articles) {
                 dataDropDowntArticle.push(props.options.articles.map(article =>{
-                    return ({value: article.id,label:article.name});
+                    return ({value: article.name,label:article.name});
                 }))
                 dataDropDowntArticle = dataDropDowntArticle[0];
             }
@@ -376,10 +399,10 @@ class InventoryJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.ArticleValue}
+                                    <Select simpleValue value={props.ArticleValue}
                                         placeholder="Select your Article Grouping"
                                         options={dataDropDowntArticle}
-                                        onChange={this.handleJewelryCategorySelectChange} />
+                                        onChange={this.handleArticleSelectedChanged} />
                                 </div>
                             </div>
                         </div>
