@@ -311,6 +311,6 @@ export function setDatastoneType(value){
 export function setDataArticle(value){
     return {
         type: SET_ARTICLE,
-        article:value
+        article: value
     }
 }

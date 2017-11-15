@@ -2,7 +2,7 @@ const GetSearchGemstone = require('./getSearchGemstone');
 const GetSearchLotNumber = require('./getSearchLotNaumber');
 
 const internals = {
-  filters: []
+    filters: []
 };
 module.exports = (obj, fromRecord, sizeRecord) => {
     // console.log('request-->',request);
@@ -78,7 +78,7 @@ module.exports = (obj, fromRecord, sizeRecord) => {
         // console.log('key.value-->',value);
         if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
             && key != 'price' && key != 'pageSize' && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail'
-            && key != 'viewAsSet' && key != 'ItemsOrder' && key != 'SetReferencdOrder'
+            && key != 'viewAsSet' && key != 'ItemsOrder' && key != 'SetReferencdOrder' && key != 'article'
         ){
           if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
              || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'fluorescence'

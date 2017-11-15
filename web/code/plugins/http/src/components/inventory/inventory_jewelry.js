@@ -244,24 +244,89 @@ class InventoryJewelry extends Component {
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
         const { props } = this.props;
-        let { fields: { collection, article }, searchResult } = props;
+        let { fields: { article, jewelryCategory, collection }, searchResult } = props;
         let findFieldName = [];
-        console.log('ArticleSelectedValue-->',ArticleSelectedValue);
-        console.log('props-->',props);
-        console.log('fields collection-->',collection);
+
+        let paramsSearch = (searchResult.paramsSearch != null)
+                                ? searchResult.paramsSearch
+                                : null;
 
         if(props.options != undefined){
             if (props.options.jewelryCategories) {
-                console.log('jewelryCategories-->',props.options.jewelryCategories);
+                findFieldName = []
                 findFieldName = props.options.jewelryCategories.filter((item) => {
                     if (item.name == ArticleSelectedValue) {
                         return item.name
                     }
                 }).map((item) => { return item.code });
+
+                if(paramsSearch != null)
+                    paramsSearch.jewelryCategory = findFieldName;
+
+                jewelryCategory.onChange(findFieldName);
+                props.inventoryActions.setDataJewelryCategory(findFieldName);
+            }
+            if (props.options.collections) {
+                findFieldName = []
+                findFieldName = props.options.collections.filter((item) => {
+                    if (item.name == ArticleSelectedValue) {
+                        return item.name
+                    }
+                }).map((item) => { return item.code });
+
+                if(paramsSearch != null)
+                    paramsSearch.collection = findFieldName;
+
+                collection.onChange(findFieldName);
+                props.inventoryActions.setDataCollection(findFieldName);
+            }
+            if (props.options.brands) {
+                findFieldName = []
+                findFieldName = props.options.brands.filter((item) => {
+                    if (item.name == ArticleSelectedValue) {
+                        return item.name
+                    }
+                }).map((item) => { return item.code });
+                props.inventoryActions.setDataBrand(findFieldName);
+            }
+            if (props.options.ringSizes) {
+                findFieldName = []
+                findFieldName = props.options.ringSizes.filter((item) => {
+                    if (item.name == ArticleSelectedValue) {
+                        return item.name
+                    }
+                }).map((item) => { return item.code });
+                props.inventoryActions.setDataRingSize(findFieldName);
+            }
+            if (props.options.dominantStones) {
+                findFieldName = []
+                findFieldName = props.options.dominantStones.filter((item) => {
+                    if (item.name == ArticleSelectedValue) {
+                        return item.name
+                    }
+                }).map((item) => { return item.code });
+                props.inventoryActions.setDataDominantStone(findFieldName);
+            }
+            if (props.options.metalTypes) {
+                findFieldName = []
+                findFieldName = props.options.metalTypes.filter((item) => {
+                    if (item.name == ArticleSelectedValue) {
+                        return item.name
+                    }
+                }).map((item) => { return item.code });
+                props.inventoryActions.setDataMetalType(findFieldName);
+            }
+            if (props.options.metalColours) {
+                findFieldName = []
+                findFieldName = props.options.metalColours.filter((item) => {
+                    if (item.name == ArticleSelectedValue) {
+                        return item.name
+                    }
+                }).map((item) => { return item.code });
+                props.inventoryActions.setDataMetalColour(findFieldName);
             }
         }
-        console.log('findFieldName-->',findFieldName);
-        props.inventoryActions.setDataJewelryCategory(findFieldName);
+        article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
     }
 
@@ -386,6 +451,9 @@ class InventoryJewelry extends Component {
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
         // delete hierarchy
         const hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'JLY');
+
+        console.log('props.ArticleValue-->',props.ArticleValue);
+        console.log('props.JewelryCategoryValue-->',props.JewelryCategoryValue);
 
         return(
             <div className="panel panel-default">

@@ -68,6 +68,9 @@ const setstate = async (props,criterias) => {
                 case 'jewelryCategory':
                     props.inventoryActions.setDataJewelryCategory(valueKeys);
                     break;
+                case 'article':
+                    props.inventoryActions.setDataArticle(valueKeys);
+                    break;
                 // case 'hierarchy':
                 //     props.inventoryActions.setHierarchy(valueKeys);
                 //     break;

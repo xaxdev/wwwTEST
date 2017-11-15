@@ -17,7 +17,7 @@ export default function InitModifyData(props) {
             gemstone_cerDateTo,gemstone_stoneCostFrom,gemstone_stoneCostTo,gemstone_quantityFrom,gemstone_quantityTo,
             gemstone_totalCaratWeightFrom,gemstone_totalCaratWeightTo,gemstone_polish,gemstone_symmetry,gemstone_treatment,
             gemstone_fluorescence,gemstone_origin,accessoryProductHierarchy,accessoryType,obaProductHierarchy,
-            obaDimension,sparePartProductHierarchy,sparePartType
+            obaDimension,sparePartProductHierarchy,sparePartType,article
         },
         searchResult
     } = props;
@@ -322,6 +322,11 @@ export default function InitModifyData(props) {
         metalColour.value = InitData(paramsSearch,metalColour.value,'metalColour');
         if(paramsSearch != null)
             paramsSearch.metalColour = metalColour.value
+    }
+    if(article != undefined){
+        article.value = InitData(paramsSearch,article.value,'article');
+        if(paramsSearch != null)
+            paramsSearch.article = article.value
     }
     //
     // Gemstones Search
