@@ -5,7 +5,9 @@ import Select from 'react-select';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
 import TreeData from '../../utils/treeview/jewelry.json';
+import ClearHierarchy from './utils/clear_hierarchy';
 import RemoveHierarchy from './utils/remove_hierarchy';
+import SearchHierarchy from './utils/search_hierarchy';
 import * as xls from '../../utils/xlsSetReference';
 import * as inventoryActions from '../../actions/inventoryactions';
 
@@ -243,7 +245,10 @@ class InventoryJewelry extends Component {
     }
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
+        console.log('ArticleSelectedValue-->',ArticleSelectedValue);
         const { props } = this.props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
         let { fields: { article, jewelryCategory, collection }, searchResult } = props;
         let findFieldName = [];
 
@@ -325,6 +330,10 @@ class InventoryJewelry extends Component {
                 }).map((item) => { return item.code });
                 props.inventoryActions.setDataMetalColour(findFieldName);
             }
+        }
+        if (ArticleSelectedValue == '') {
+            let hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'JLY');
+            ClearHierarchy(hierarchyData);
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
@@ -450,10 +459,10 @@ class InventoryJewelry extends Component {
 
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
         // delete hierarchy
-        const hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'JLY');
-
-        console.log('props.ArticleValue-->',props.ArticleValue);
-        console.log('props.JewelryCategoryValue-->',props.JewelryCategoryValue);
+        let hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'JLY');
+        if (props.ArticleValue.length != 0) {
+            hierarchyData = SearchHierarchy(hierarchyData, props.ArticleValue);
+        }
 
         return(
             <div className="panel panel-default">

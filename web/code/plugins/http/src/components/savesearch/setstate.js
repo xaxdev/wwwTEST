@@ -4,8 +4,6 @@ const setstate = async (props,criterias) => {
     await criterias.map((criteria) => {
         const keyscat = Object.keys(criteria);
         const valueKeys = criteria[keyscat[0]];
-        // console.log('criteria-->',criteria);
-        // console.log('valueKeys-->',valueKeys);
         if (keyscat.length != 0) {
             switch (keyscat[0]) {
                 case 'viewAsSet':
