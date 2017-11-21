@@ -59,7 +59,6 @@ class UserDetailsFrom extends Component {
         this.treeOnClickACC = this.treeOnClickACC.bind(this);
         this.treeOnClickOBA = this.treeOnClickOBA.bind(this);
         this.treeOnClickSPP = this.treeOnClickSPP.bind(this);
-        this.treeOnUnClick = this.treeOnUnClick.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleInputCategoryChange = this.handleInputCategoryChange.bind(this);
 

@@ -32,7 +32,7 @@ var TreeNode = React.createClass({
 		if (node.checked != undefined) {
 	  		containerClass = '';
 	  	}
-
+		// console.log('node.checked-->',node.checked);
 		return (
 			<li className={containerClass}>
 				<span onClick={this.handleClick} onTouchEnd={this.handleClick}>
@@ -42,8 +42,8 @@ var TreeNode = React.createClass({
 				  	}
 				</span>
 				<input type="checkbox" checked={node.checked || false} onChange={this.props.handleChange}
-					data-key={node.code} />
-				<span className={node.checked ? 'lineThrough': ''} onClick={this.handleClick}
+					data-key={node.code} disabled={node.checked == undefined ? false : node.checked ? false: true}/>
+				<span className={node.checked == undefined ? '' : node.checked ? '': 'lineThrough'} onClick={this.handleClick}
 					onTouchEnd={this.handleClick}>{node.label}</span>
 				{childNodes}
             </li>

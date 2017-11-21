@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Select from 'react-select';
 import InitModifyData from '../../utils/initModifyData';
-import Tree from '../../utils/treeview/Tree';
+import Tree from '../../utils/treeview/TreeArticle';
 import TreeData from '../../utils/treeview/jewelry.json';
 import ClearHierarchy from './utils/clear_hierarchy';
 import RemoveHierarchy from './utils/remove_hierarchy';
+import DeleteHierarchy from './utils/delete_hierarchy_attr';
 import SearchHierarchy from './utils/search_hierarchy';
 import * as xls from '../../utils/xlsSetReference';
 import * as inventoryActions from '../../actions/inventoryactions';
 
 let X = XLSX;
+let hiTreeData = TreeData;
 
 class InventoryJewelry extends Component {
     constructor(props) {
@@ -245,11 +247,11 @@ class InventoryJewelry extends Component {
     }
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
-        console.log('ArticleSelectedValue-->',ArticleSelectedValue);
         const { props } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
-        let { fields: { article, jewelryCategory, collection }, searchResult } = props;
+        let { fields: { article, jewelryCategory, collection, brand, ringSize, dominantStone, metalType, metalColour
+        }, searchResult } = props;
         let findFieldName = [];
 
         let paramsSearch = (searchResult.paramsSearch != null)
@@ -292,6 +294,11 @@ class InventoryJewelry extends Component {
                         return item.name
                     }
                 }).map((item) => { return item.code });
+
+                if(paramsSearch != null)
+                    paramsSearch.brand = findFieldName;
+
+                brand.onChange(findFieldName);
                 props.inventoryActions.setDataBrand(findFieldName);
             }
             if (props.options.ringSizes) {
@@ -301,6 +308,11 @@ class InventoryJewelry extends Component {
                         return item.name
                     }
                 }).map((item) => { return item.code });
+
+                if(paramsSearch != null)
+                    paramsSearch.ringSize = findFieldName;
+
+                ringSize.onChange(findFieldName);
                 props.inventoryActions.setDataRingSize(findFieldName);
             }
             if (props.options.dominantStones) {
@@ -310,6 +322,11 @@ class InventoryJewelry extends Component {
                         return item.name
                     }
                 }).map((item) => { return item.code });
+
+                if(paramsSearch != null)
+                    paramsSearch.dominantStone = findFieldName;
+
+                dominantStone.onChange(findFieldName);
                 props.inventoryActions.setDataDominantStone(findFieldName);
             }
             if (props.options.metalTypes) {
@@ -319,6 +336,11 @@ class InventoryJewelry extends Component {
                         return item.name
                     }
                 }).map((item) => { return item.code });
+
+                if(paramsSearch != null)
+                    paramsSearch.metalType = findFieldName;
+
+                metalType.onChange(findFieldName);
                 props.inventoryActions.setDataMetalType(findFieldName);
             }
             if (props.options.metalColours) {
@@ -328,11 +350,19 @@ class InventoryJewelry extends Component {
                         return item.name
                     }
                 }).map((item) => { return item.code });
+
+                if(paramsSearch != null)
+                    paramsSearch.metalColour = findFieldName;
+
+                metalColour.onChange(findFieldName);
                 props.inventoryActions.setDataMetalColour(findFieldName);
             }
         }
         if (ArticleSelectedValue == '') {
-            let hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'JLY');
+            let hierarchyData = RemoveHierarchy(notUseHierarchy, hiTreeData, 'JLY');
+            DeleteHierarchy(hierarchyData)
+        }else{
+            let hierarchyData = RemoveHierarchy(notUseHierarchy, hiTreeData, 'JLY');
             ClearHierarchy(hierarchyData);
         }
         article.onChange(ArticleSelectedValue);

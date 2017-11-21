@@ -1,5 +1,5 @@
 import React from 'react'
-var TreeNode = require('./TreeNodeLine');
+var TreeNode = require('./TreeNodeArticle');
 
 var Tree = React.createClass({
 	/* jshint ignore:start */
@@ -39,9 +39,11 @@ var Tree = React.createClass({
       	};
 
       	const setUncheckedParentNode = function (node) {
+            // console.log('setUncheckedParentNode-->',node);
       		listParentNode.map((parent) => {
       			if (parent === node.id) {
-      				node.checked = false;
+      				// node.checked = false;
+                    delete node.checked
       			}
       		})
       	  	if (node.children) {

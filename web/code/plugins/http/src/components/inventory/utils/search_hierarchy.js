@@ -1,5 +1,5 @@
 export default function RemoveHierarchy(hierarchy, article){
-    console.log('hierarchy-->',hierarchy);
+    // console.log('hierarchy-->',hierarchy);
     let hierarchyData = filterByProperty(hierarchy, 'label', article);
 
     // let labelHierarchy = [];
@@ -51,28 +51,32 @@ export default function RemoveHierarchy(hierarchy, article){
 }
 
 function filterByProperty(array, prop, value){
-    console.log('value-->',value);
+    // console.log('value-->',value);
     var filtered = [];
     var traverseNodesChecked = function (node) {
-        node.checked = true;
+        if (node.checked != undefined) {
+            node.checked = true;
+        }
         if (node.children) {
             node.children.forEach(traverseNodesChecked);
         }
 
     };
     var traverseNodes = function (node) {
-        console.log('node.label-->',node.label);
-        console.log('value-->',value);
+        // console.log('node.label-->',node.label);
+        // console.log('value-->',value);
         if (node.label == value) {
             // console.log('node.label-->',node.label);
             // console.log('value-->',value);
-            node.checked = true;
+            if (node.checked != undefined) {
+                node.checked = true;
+            }
             if (node.children) {
                 node.children.forEach(traverseNodesChecked);
             }
         }
     };
     array[0].children.forEach(traverseNodes);
-    console.log('array-->',array);
+    // console.log('array-->',array);
     return array;
 }
