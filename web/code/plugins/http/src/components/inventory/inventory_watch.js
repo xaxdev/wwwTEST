@@ -4,9 +4,14 @@ import Select from 'react-select';
 import Calendar from 'react-input-calendar';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
-import Tree from '../../utils/treeview/Tree';
+import Tree from '../../utils/treeview/TreeArticle';
 import TreeData from '../../utils/treeview/watch.json';
+import ClearHierarchy from './utils/clear_hierarchy';
 import RemoveHierarchy from './utils/remove_hierarchy';
+import SearchHierarchy from './utils/search_hierarchy';
+import DeleteHierarchy from './utils/delete_hierarchy_attr';
+
+let hiTreeData = TreeData;
 
 class InventoryWatch extends Component {
     constructor(props) {
@@ -610,15 +615,15 @@ class InventoryWatch extends Component {
                 props.inventoryActions.setDataComplication(findFieldName);
             }
         }
-        // if (ArticleSelectedValue == '') {
-        //     let hierarchyData = RemoveHierarchy(notUseHierarchy, hiTreeData, 'JLY');
-        //     DeleteHierarchy(hierarchyData)
-        // }else{
-        //     let hierarchyData = RemoveHierarchy(notUseHierarchy, hiTreeData, 'JLY');
-        //     ClearHierarchy(hierarchyData);
-        // }
-        // article.onChange(ArticleSelectedValue);
-        // props.inventoryActions.setDataArticle(ArticleSelectedValue);
+        if (ArticleSelectedValue == '') {
+            let hierarchyData = RemoveHierarchy(notUseHierarchy, hiTreeData, 'WAT');
+            DeleteHierarchy(hierarchyData)
+        }else{
+            let hierarchyData = RemoveHierarchy(notUseHierarchy, hiTreeData, 'WAT');
+            ClearHierarchy(hierarchyData);
+        }
+        article.onChange(ArticleSelectedValue);
+        props.inventoryActions.setDataArticle(ArticleSelectedValue);
     }
 
     render() {
@@ -748,7 +753,10 @@ class InventoryWatch extends Component {
 
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
         // delete hierarchy
-        const hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'WAT');
+        let hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'WAT');
+        if (props.ArticleValue.length != 0) {
+            hierarchyData = SearchHierarchy(hierarchyData, props.ArticleValue);
+        }
 
         return(
             <div className="panel panel-default">
@@ -1074,80 +1082,30 @@ class InventoryWatch extends Component {
     }
 }
 
-const tooltipArticle = (
-    <Tooltip id="tooltip"><strong>Article Grouping</strong></Tooltip>
-);
-const tooltipHierarchy = (
-    <Tooltip id="tooltip"><strong>Product Hierarchy!</strong></Tooltip>
-);
-const tooltipWatchCategory = (
-    <Tooltip id="tooltip"><strong>Search By Type of the Watch (eg. Ladies Watch, Gents Watch etc.)</strong></Tooltip>
-);
-const tooltipCollection = (
-    <Tooltip id="tooltip"><strong>Search By Collection (eg. Grand Ellipse Royale, Grand Ellipse Reveil, Grand Ellipse Lady etc.) of the Watch</strong></Tooltip>
-);
-const tooltipBrand = (
-    <Tooltip id="tooltip"><strong>Seacrh By Brand (eg. Mouawad, Chopard, Cartier etc.) </strong></Tooltip>
-);
-const tooltipMustHave = (
-    <Tooltip id="tooltip"><strong>Search By Must Have (yes/no)</strong></Tooltip>
-);
-const tooltipMetalType = (
-    <Tooltip id="tooltip"><strong>Search By Metal Type of the Watch</strong></Tooltip>
-);
-const tooltipMetalColour = (
-    <Tooltip id="tooltip"><strong>Search By Metal Color of the Watch</strong></Tooltip>
-);
-const tooltipLimitedEdition = (
-    <Tooltip id="tooltip"><strong>Search Limited Edition Watches</strong></Tooltip>
-);
-const tooltipLimitedEditionNumber = (
-    <Tooltip id="tooltip"><strong>Limited Edition Number!</strong></Tooltip>
-);
-const tooltipSerialNumber = (
-    <Tooltip id="tooltip"><strong>Serial Number!</strong></Tooltip>
-);
-const tooltipMovement = (
-    <Tooltip id="tooltip"><strong>Search By Movement of the Watch (eg. Quartz, Automatic, Manual etc.) </strong></Tooltip>
-);
-const tooltipTotalCost = (
-    <Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>
-);
-const tooltipTotalUpdatedCost = (
-    <Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>
-);
-const tooltipPublicPrice = (
-    <Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>
-);
-const tooltipMarkup = (
-    <Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>
-);
-const tooltipGrossWeight = (
-    <Tooltip id="tooltip"><strong>Gross Weight (Grams)!</strong></Tooltip>
-);
-const tooltipProductionDate = (
-    <Tooltip id="tooltip"><strong>Production Date</strong></Tooltip>
-);
-const tooltipDialIndex = (
-    <Tooltip id="tooltip"><strong>Search By Dial Index of the Watch (eg. Diamond on Index, Ruby on Index etc.)</strong></Tooltip>
-);
-const tooltipDialColor = (
-    <Tooltip id="tooltip"><strong>Search By Dial Color of the Watch (eg. Black, Blue, Brown etc.)</strong></Tooltip>
-);
-const tooltipDialMetal = (
-    <Tooltip id="tooltip"><strong>Search By Dial Metal of the Watch (eg. Gold, Rose Gold, Steel etc.)</strong></Tooltip>
-);
-const tooltipBuckleType = (
-    <Tooltip id="tooltip"><strong>Search By Buckle Type of the Watch</strong></Tooltip>
-);
-const tooltipStrapType = (
-    <Tooltip id="tooltip"><strong>Search By Strap Type of the Watch (Steel, Leather, Rubber etc.)</strong></Tooltip>
-);
-const tooltipStrapColor = (
-    <Tooltip id="tooltip"><strong>Search By Strap Color of the Watch (eg. Blue, Black, Brown etc.)</strong></Tooltip>
-);
-const tooltipComplication = (
-    <Tooltip id="tooltip"><strong>Search By Complication of the Watch</strong></Tooltip>
-);
+const tooltipArticle = (<Tooltip id="tooltip"><strong>Article Grouping</strong></Tooltip>);
+const tooltipHierarchy = (<Tooltip id="tooltip"><strong>Product Hierarchy!</strong></Tooltip>);
+const tooltipWatchCategory = (<Tooltip id="tooltip"><strong>Search By Type of the Watch (eg. Ladies Watch, Gents Watch etc.)</strong></Tooltip>);
+const tooltipCollection = (<Tooltip id="tooltip"><strong>Search By Collection (eg. Grand Ellipse Royale, Grand Ellipse Reveil, Grand Ellipse Lady etc.) of the Watch</strong></Tooltip>);
+const tooltipBrand = (<Tooltip id="tooltip"><strong>Seacrh By Brand (eg. Mouawad, Chopard, Cartier etc.) </strong></Tooltip>);
+const tooltipMustHave = (<Tooltip id="tooltip"><strong>Search By Must Have (yes/no)</strong></Tooltip>);
+const tooltipMetalType = (<Tooltip id="tooltip"><strong>Search By Metal Type of the Watch</strong></Tooltip>);
+const tooltipMetalColour = (<Tooltip id="tooltip"><strong>Search By Metal Color of the Watch</strong></Tooltip>);
+const tooltipLimitedEdition = (<Tooltip id="tooltip"><strong>Search Limited Edition Watches</strong></Tooltip>);
+const tooltipLimitedEditionNumber = (<Tooltip id="tooltip"><strong>Limited Edition Number!</strong></Tooltip>);
+const tooltipSerialNumber = (<Tooltip id="tooltip"><strong>Serial Number!</strong></Tooltip>);
+const tooltipMovement = (<Tooltip id="tooltip"><strong>Search By Movement of the Watch (eg. Quartz, Automatic, Manual etc.) </strong></Tooltip>);
+const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>);
+const tooltipTotalUpdatedCost = (<Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>);
+const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>);
+const tooltipMarkup = (<Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>);
+const tooltipGrossWeight = (<Tooltip id="tooltip"><strong>Gross Weight (Grams)!</strong></Tooltip>);
+const tooltipProductionDate = (<Tooltip id="tooltip"><strong>Production Date</strong></Tooltip>);
+const tooltipDialIndex = (<Tooltip id="tooltip"><strong>Search By Dial Index of the Watch (eg. Diamond on Index, Ruby on Index etc.)</strong></Tooltip>);
+const tooltipDialColor = (<Tooltip id="tooltip"><strong>Search By Dial Color of the Watch (eg. Black, Blue, Brown etc.)</strong></Tooltip>);
+const tooltipDialMetal = (<Tooltip id="tooltip"><strong>Search By Dial Metal of the Watch (eg. Gold, Rose Gold, Steel etc.)</strong></Tooltip>);
+const tooltipBuckleType = (<Tooltip id="tooltip"><strong>Search By Buckle Type of the Watch</strong></Tooltip>);
+const tooltipStrapType = (<Tooltip id="tooltip"><strong>Search By Strap Type of the Watch (Steel, Leather, Rubber etc.)</strong></Tooltip>);
+const tooltipStrapColor = (<Tooltip id="tooltip"><strong>Search By Strap Color of the Watch (eg. Blue, Black, Brown etc.)</strong></Tooltip>);
+const tooltipComplication = (<Tooltip id="tooltip"><strong>Search By Complication of the Watch</strong></Tooltip>);
 
 module.exports = InventoryWatch;

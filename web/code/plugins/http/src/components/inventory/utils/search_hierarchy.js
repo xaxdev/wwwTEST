@@ -47,7 +47,7 @@ export default function RemoveHierarchy(hierarchy, article){
     //     array.forEach(traverseNodes);
     //     return array;
     // }
-    // return hierarchyData;
+    return hierarchyData;
 }
 
 function filterByProperty(array, prop, value){
@@ -60,7 +60,6 @@ function filterByProperty(array, prop, value){
         if (node.children) {
             node.children.forEach(traverseNodesChecked);
         }
-
     };
     var traverseNodes = function (node) {
         // console.log('node.label-->',node.label);
