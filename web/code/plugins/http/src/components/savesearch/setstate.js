@@ -6,6 +6,81 @@ const setstate = async (props,criterias) => {
         const valueKeys = criteria[keyscat[0]];
         if (keyscat.length != 0) {
             switch (keyscat[0]) {
+                case 'origin':
+                    props.inventoryActions.setDataOrigin(valueKeys);
+                    break;
+                case 'fluorescence':
+                    props.inventoryActions.setDataFluorescence(valueKeys);
+                    break;
+                case 'treatment':
+                    props.inventoryActions.setDataTreatment(valueKeys);
+                    break;
+                case 'symmetry':
+                    props.inventoryActions.setDataSymmetry(valueKeys);
+                    break;
+                case 'polish':
+                    props.inventoryActions.setDataPolish(valueKeys);
+                    break;
+                case 'certificateAgency':
+                    props.inventoryActions.setDataCertificateAgency(valueKeys);
+                    break;
+                case 'lotNumbers.clarity':
+                    props.inventoryActions.setDataClarity(valueKeys);
+                    break;
+                case 'colorGrade':
+                    props.inventoryActions.setDataColorGrade(valueKeys);
+                    break;
+                case 'lotNumbers.color':
+                    props.inventoryActions.setDataColor(valueKeys);
+                    break;
+                case 'cutGrade':
+                    props.inventoryActions.setDataCutGrade(valueKeys);
+                    break;
+                case 'lotNumbers.cut':
+                    props.inventoryActions.setDataCut(valueKeys);
+                    break;
+                case 'stoneType':
+                    props.inventoryActions.setDatastoneType(valueKeys);
+                    break;
+                case 'accessoryType':
+                    props.inventoryActions.setDataAccessoryType(valueKeys);
+                    break;
+                case 'complication':
+                    props.inventoryActions.setDataComplication(valueKeys);
+                    break;
+                case 'strapColor':
+                    props.inventoryActions.setDataStrapColor(valueKeys);
+                    break;
+                case 'strapType':
+                    props.inventoryActions.setDataStrapType(valueKeys);
+                    break;
+                case 'dialMetal':
+                    props.inventoryActions.setDataDialMetal(valueKeys);
+                    break;
+                case 'dialColor':
+                    props.inventoryActions.setDataDialColor(valueKeys);
+                    break;
+                case 'dialIndex':
+                    props.inventoryActions.setDataDialIndex(valueKeys);
+                    break;
+                case 'movement':
+                    props.inventoryActions.setDataMovement(valueKeys);
+                    break;
+                case 'limitedEdition':
+                    props.inventoryActions.setDataLimitedEdition(valueKeys);
+                    break;
+                case 'watchCategory':
+                    props.inventoryActions.setDataWatchCategory(valueKeys);
+                    break;
+                case 'buckleType':
+                    props.inventoryActions.setDataBuckleType(valueKeys);
+                    break;
+                case 'sparePartType':
+                    props.inventoryActions.setDataSparePartType(valueKeys);
+                    break;
+                case 'ringSize':
+                    props.inventoryActions.setDataRingSize(valueKeys);
+                    break;
                 case 'viewAsSet':
                     props.inventoryActions.setViewAsSet(valueKeys);
                     break;
@@ -69,9 +144,6 @@ const setstate = async (props,criterias) => {
                 case 'article':
                     props.inventoryActions.setDataArticle(valueKeys);
                     break;
-                // case 'hierarchy':
-                //     props.inventoryActions.setHierarchy(valueKeys);
-                //     break;
                 case 'type':
                     const types = valueKeys.split(' ');
                     if (types.length > 1) {
@@ -114,11 +186,19 @@ const setstate = async (props,criterias) => {
                 default:
                     break;
             }
-            // console.log('keyscat[0]-->',keyscat[0]);
             let casegem = keyscat[0].indexOf('gemstones.') != -1;
             switch (casegem) {
                 case true :
                     data[keyscat[0].replace('gemstones.','gemstone_')] = valueKeys;
+                    break;
+                default:
+                    data[keyscat[0]] = valueKeys;
+                    break;
+            }
+            let caselot = keyscat[0].indexOf('lotNumbers.') != -1;
+            switch (caselot) {
+                case true :
+                    data[keyscat[0].replace('lotNumbers.','')] = valueKeys;
                     break;
                 default:
                     data[keyscat[0]] = valueKeys;
