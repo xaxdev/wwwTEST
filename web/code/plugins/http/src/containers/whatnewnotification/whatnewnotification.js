@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [5,4,3,2,1];
+            const roundData = [7,6,5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -290,6 +290,43 @@ class WhatNewNotification extends Component {
                                                   <div style="padding:15px 20px 0 20px;">
                                                   <p>1. At My Catalog page, click 'Updated Date' to select sort by.</p>
                                                   <p>2. The items will show result follow user select sorting.</p>
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/my-sort-catalog.gif"/></div>
+                                                  </div>`
+                                              }
+                                            ]
+                                },
+                                {
+                                    'id': 6,
+                                    'round': 'November 2017',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'COA/DBC/Monograph',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">November 27, 2017</p>
+                                                  <h3 style="padding:17px 0px 0px 0px">Click icons at Product Detail page for download COA/DBC/Monograph files.</h3>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <p>1. When users click icon the system will auto download, if it is 1 image or PDF file.</p>
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/COA1.gif"/></div>
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/DBC1.gif"/></div>
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/M1.gif"/></div>
+                                                  <p>2. When users click icon the system will send the download link to your e-mail.</p>
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/set-item.gif"/></div>
+                                                  </div>`
+                                              }
+                                            ]
+                                },
+                                {
+                                    'id': 7,
+                                    'round': 'November 2017',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Set items display order',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">November 27, 2017</p>
+                                                  <h3 style="padding:17px 0px 0px 0px">Click icons at Product Detail page for download COA/DBC/Monograph files.</h3>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <p>1. User search by condition 'Set Reference Number</p>
+                                                  <p>2. At Search Result page,user can select sort by 'Set Item Reference' to get the result as Necklace, Bracelet, Earring and Ring.</p>
                                                       <div style="margin:15px 0px; text-align:center;"><img src="/images/my-sort-catalog.gif"/></div>
                                                   </div>`
                                               }
