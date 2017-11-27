@@ -306,11 +306,11 @@ class WhatNewNotification extends Component {
                                                   <h3 style="padding:17px 0px 0px 0px">Click icons at Product Detail page for download COA/DBC/Monograph files.</h3>
                                                   <div style="padding:15px 20px 0 20px;">
                                                   <p>1. When users click icon the system will auto download, if it is 1 image or PDF file.</p>
+                                                  <p>2. When users click icon the system will send the download link to your e-mail.</p>
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/COA1.gif"/></div>
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/DBC1.gif"/></div>
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/M1.gif"/></div>
-                                                  <p>2. When users click icon the system will send the download link to your e-mail.</p>
-                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/set-item.gif"/></div>
+                                                  
                                                   </div>`
                                               }
                                             ]
@@ -327,7 +327,7 @@ class WhatNewNotification extends Component {
                                                   <div style="padding:15px 20px 0 20px;">
                                                   <p>1. User search by condition 'Set Reference Number</p>
                                                   <p>2. At Search Result page,user can select sort by 'Set Item Reference' to get the result as Necklace, Bracelet, Earring and Ring.</p>
-                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/my-sort-catalog.gif"/></div>
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/set-item.gif"/></div>
                                                   </div>`
                                               }
                                             ]
