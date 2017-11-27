@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [7,6,5,4,3,2,1];
+            const roundData = [6,5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -312,13 +312,7 @@ class WhatNewNotification extends Component {
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/M1.gif"/></div>
                                                   
                                                   </div>`
-                                              }
-                                            ]
-                                },
-                                {
-                                    'id': 7,
-                                    'round': 'November 2017',
-                                    'datas': [
+                                              },
                                               {
                                                   'type':'new',
                                                   'title': 'Set items display order',
