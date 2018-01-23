@@ -335,7 +335,10 @@ class InventorySparePart extends Component {
                 dataDropDowntMetalColour = dataDropDowntMetalColour[0];
             }
             if (props.options.articles) {
-                dataDropDowntArticle.push(props.options.articles.map(article =>{
+                let articleFilter = props.options.articles.filter(article =>{
+                    return article.catalog == 'SPA'
+                });
+                dataDropDowntArticle.push(articleFilter.map(article =>{
                     return ({value: article.name,label:article.name});
                 }))
                 dataDropDowntArticle = dataDropDowntArticle[0];
