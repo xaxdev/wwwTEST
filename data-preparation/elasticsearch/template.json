@@ -141,6 +141,20 @@
                     }
                 },
                 {
+                    "master_gemstones_clarity_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "gemstones_clarity",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
                     "master_color_multiple": {
                         "match_mapping_type": "string",
                         "match": "color",
@@ -214,7 +228,12 @@
                     "gemstones": {
                         "match": "gemstones",
                         "mapping": {
-                            "type": "nested"
+                            "type": "nested",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
                          }
                     }
                 },

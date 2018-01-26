@@ -349,7 +349,10 @@ class InventoryOBA extends Component {
                 dataDropDowntDominantStone = dataDropDowntDominantStone[0];
             }
             if (props.options.articles) {
-                dataDropDowntArticle.push(props.options.articles.map(article =>{
+                let articleFilter = props.options.articles.filter(article =>{
+                    return article.catalog == 'OBA'
+                });
+                dataDropDowntArticle.push(articleFilter.map(article =>{
                     return ({value: article.name,label:article.name});
                 }))
                 dataDropDowntArticle = dataDropDowntArticle[0];
