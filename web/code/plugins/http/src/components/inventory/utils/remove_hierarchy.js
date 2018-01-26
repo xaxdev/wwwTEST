@@ -21,14 +21,12 @@ export default function RemoveHierarchy(notUseHierarchy, treeData, category){
                     val.children.forEach(checkAllNodes);
                 }
             });
-
         }
 
         labelHierarchy.map((lbl) => {
             hierarchyData = filterByProperty(hierarchyData, 'label', lbl);
         });
     }
-
 
     function filterByProperty(array, prop, value){
         var filtered = [];
@@ -43,9 +41,7 @@ export default function RemoveHierarchy(notUseHierarchy, treeData, category){
                 }
             }
         };
-
         array.forEach(traverseNodes);
-
         return array;
     }
     return hierarchyData;

@@ -2,13 +2,13 @@ export default function ClearHierarchy(value){
     return value.map((val) => {
         let checkAllNodes = function(node){
             if (node.children) {
-                node.checked = false
+                delete node.checked
                 node.children.forEach(checkAllNodes);
             }else{
-                node.checked = false
+                delete node.checked
             }
         }
-        val.checked = false
+        delete val.checked
         if(val.children){
             val.children.forEach(checkAllNodes);
         }

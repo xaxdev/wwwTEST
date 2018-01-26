@@ -1,5 +1,5 @@
 import React from 'react'
-var TreeNode = require('./TreeNodeLine');
+var TreeNode = require('./TreeNodeArticle');
 
 var Tree = React.createClass({
 	/* jshint ignore:start */
@@ -17,7 +17,6 @@ var Tree = React.createClass({
                 node.checked = checked;
         		if (node.children) { node.children.forEach(checkAllNodes); }
             }
-
             // Check true at children
             if (node.children) {
                 node.children.forEach(traverseNodes);
@@ -31,7 +30,9 @@ var Tree = React.createClass({
 
       	const traverseNodesUnChecked = function (node) {
       		if (key.indexOf(node.code) != -1) {
-      			listParentNode.push(node.id);
+                if (key.length == node.code.length) {
+                    listParentNode.push(node.id);
+                }
       		}
       	  	if (node.children) {
       			node.children.forEach(traverseNodesUnChecked);
@@ -41,11 +42,26 @@ var Tree = React.createClass({
       	const setUncheckedParentNode = function (node) {
       		listParentNode.map((parent) => {
       			if (parent === node.id) {
-      				node.checked = false;
+      				// node.checked = false;
+                    delete node.checked
       			}
       		})
+            // delete node.checked
       	  	if (node.children) {
       			node.children.forEach(setUncheckedParentNode);
+      	  	}
+      	};
+
+        const setUncheckedAll = function (node) {
+      		listParentNode.map((parent) => {
+      			if (parent === node.id) {
+      				// node.checked = false;
+                    delete node.checked
+      			}
+      		})
+            delete node.checked
+      	  	if (node.children) {
+      			node.children.forEach(setUncheckedAll);
       	  	}
       	};
 
@@ -83,7 +99,13 @@ var Tree = React.createClass({
       				this.state.data.forEach(traverseNodesUnChecked);
       				if (listParentNode.length != 1) {
       					this.state.data.forEach(setUncheckedParentNode);
-      				}
+      				}else{
+                        if (listParentNode[0] == this.state.data[0].id) {
+                            this.state.data.forEach(setUncheckedAll);
+                        }else{
+                            this.state.data.forEach(setUncheckedParentNode);
+                        }
+                    }
       			}else{
       				// set primary node true
       				const childrens = this.state.data[0].children.length;
