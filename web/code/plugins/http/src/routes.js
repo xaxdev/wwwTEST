@@ -181,6 +181,14 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/savesearch/list'));
                     }, 'savesearch');
                 }
+            }, {
+                onEnter: requireAuth,
+                path: 'setcatalog',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/setcatalog/setcatalog_list'));
+                    }, 'mycatalog');
+                }
             },{
                 path: '*',
                 getComponent: (location, cb) => {

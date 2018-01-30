@@ -81,4 +81,14 @@ export default [
         path: '/migrateprice',
         config: controllers.migrateprice
     },
+    {
+        method: 'POST',
+        path: '/setcatalogitem',
+        config: controllers.savesetcatalogitem
+    },
+    {
+        method: 'GET',
+        path: '/webnamessetcatalog',
+        config: controllers.getnameswithsharedcatalog
+    }
 ]

@@ -10,25 +10,25 @@ export default {
             try {
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
-                const catalogPayload = request.payload
-                const catalogPayloadId = request.payload.id
+                const setCatalogPayload = request.payload
+                const setCatalogPayloadId = request.payload.id
                 const helper = request.helper
                 const setitems = request.payload.items
                 const user = await request.user.getUserById(request, request.auth.credentials.id)
 
-                if (!!!catalogPayloadId) {
-                    const existingCatalog = await db.collection('CatalogName').find({ 'catalog': request.payload.catalog, 'userId': request.auth.credentials.id }).toArray()
+                if (!!!setCatalogPayloadId) {
+                    const existingSetCatalog = await db.collection('SetCatalogName').find({ 'setCatalog': request.payload.setcatalog, 'userId': request.auth.credentials.id }).toArray()
 
-                    if(existingCatalog.length > 0) return reply(Boom.badRequest('Your required name is existing.'))
+                    if(existingSetCatalog.length > 0) return reply(Boom.badRequest('Your required name is existing.'))
                 }
 
-                const catalogCollection = await db.collection('CatalogName').findOneAndUpdate(
+                const setCatalogCollection = await db.collection('SetCatalogName').findOneAndUpdate(
                     {
-                        _id: new ObjectID(catalogPayloadId)
+                        _id: new ObjectID(setCatalogPayloadId)
                     },
                     {
                         $set: {
-                            'catalog': request.payload.catalog,
+                            'setCatalog': request.payload.setcatalog,
                             'userId': request.auth.credentials.id,
                             'lastModified': new Date()
                         }
@@ -37,12 +37,12 @@ export default {
                         upsert: true,
                         returnOriginal: false
                     })
-                const catalogColId = catalogCollection.lastErrorObject.updatedExisting ? catalogCollection.value._id : catalogCollection.lastErrorObject.upserted
+                const setcatalogColId = setCatalogCollection.lastErrorObject.updatedExisting ? setCatalogCollection.value._id : setCatalogCollection.lastErrorObject.upserted
 
                 setitems.forEach(async (setitem) => {
-                    await db.collection('CatalogItem').findOneAndUpdate(
+                    await db.collection('SetCatalogItem').findOneAndUpdate(
                         {
-                            'catalogId': new ObjectID(catalogColId),
+                            'setCatalogId': new ObjectID(setcatalogColId),
                             'id': null,
                             'reference': setitem.reference
                         },
