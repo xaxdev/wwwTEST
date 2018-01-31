@@ -57,7 +57,7 @@ class SetCatalog extends Component {
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
 
         this.state = {
-          activePage: this.props.currentPage, isOpenDeleteItem: false, isOpenAddMyCatalogmsg: false,
+          activePage: !!this.props.currentPage?this.props.currentPage:1, isOpenDeleteItem: false, isOpenAddMyCatalogmsg: false,
           isTooltipActive: false, isOpenDeleteCatalog: false, enabledMyCatalog: false, isOpenDeleteAllItem: false,
           isOpenZeroCatalog: true, isOpenPrintPdfmsg: false, isOpenShareMyCatalog: false, checkAllItems: false,
           isOpenPrintOptions: false
@@ -67,25 +67,25 @@ class SetCatalog extends Component {
     componentWillMount = _=>{
         let catalogName = '';
         const { fields: { catalog } } = this.props;
-        this.props.getCatalogNameSetItem().then((value) => {
+        this.props.getSetCatalogName().then((value) => {
             if (value) {
                 let catalogId = '';
                 let isCatalogShared = false;
-                if(this.props.listCatalogName != undefined){
+                if(this.props.listSetCatalogName != undefined){
                     if(this.props.catalogId != null){
                         catalogId = this.props.catalogId;
                         isCatalogShared = this.props.isCatalogShared;
                     }else{
-                        if(this.props.listCatalogName.length != 0){
-                            catalogId = this.props.listCatalogName[0]._id;
-                            catalogName = this.props.listCatalogName[0].catalog;
-                            isCatalogShared = this.props.listCatalogName[0].shared;
+                        if(this.props.listSetCatalogName.length != 0){
+                            catalogId = this.props.listSetCatalogName[0]._id;
+                            catalogName = this.props.listSetCatalogName[0].setCatalog;
+                            isCatalogShared = this.props.listSetCatalogName[0].shared;
                         }else{
                             isCatalogShared = true;
                         }
                     }
                     let parasm = {
-                            id: catalogId, page: this.props.currentPage,
+                            id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1,
                             size: !!this.props.pageSize ? this.props.pageSize : 16,
                             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
@@ -94,7 +94,7 @@ class SetCatalog extends Component {
                         catalog.value = catalogName;
                         catalog.onChange(catalogName);
                         this.props.setRenameCatalog(catalogName);
-                        this.props.getCatalogItemsWithSetItem(parasm);
+                        this.props.getSetCatalogItemsWithSetItem(parasm);
                         this.props.setIsCatalogShare(isCatalogShared);
                     }else{
                         this.props.setIsCatalogShare(isCatalogShared);
@@ -135,9 +135,9 @@ class SetCatalog extends Component {
     printResults(e){
         //   e.preventDefault();
         const { fields: {printPage, printPrice} } = this.props;
-        let items = this.props.listCatalogName != undefined ?
-                        this.props.listCatalogName.length != 0 ?
-                            this.props.listCatalogItems.allItems != undefined ? this.props.listCatalogItems.allItems : [] :
+        let items = this.props.listSetCatalogName != undefined ?
+                        this.props.listSetCatalogName.length != 0 ?
+                            this.props.listSetCatalogItems.allItems != undefined ? this.props.listSetCatalogItems.allItems : [] :
                         [] :
                     [];
         // console.log('items-->',items);
@@ -209,11 +209,11 @@ class SetCatalog extends Component {
         if (catalogId != null) {
             this.props.deleteCatalogItems(paramsItem).then( () =>{
                 let params = {
-                                id: catalogId, page: this.props.currentPage, size: 16,
+                                id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: 16,
                                 sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                             };
-                this.props.getCatalogItemsWithSetItem(params);
+                this.props.getSetCatalogItemsWithSetItem(params);
             });
         }
     }
@@ -231,7 +231,7 @@ class SetCatalog extends Component {
 
     onCheckedAllItemMyCatalog = (e)=> {
         const that = this;
-        const { items, allItems } = this.props.listCatalogItems;
+        const { items, allItems } = this.props.listSetCatalogItems;
         const { catalogId } = this.props;
         const totalAllItems = allItems.length;
         if (catalogId != null) {
@@ -261,7 +261,7 @@ class SetCatalog extends Component {
     }
 
     checkedOneItemMyCatalog = (e)=> {
-        const { items,total_items,total_setitems } = this.props.listCatalogItems;
+        const { items,total_items,total_setitems } = this.props.listSetCatalogItems;
         const { catalogId } = this.props;
         const itemTargetId = e.target.value.split('=');
         const itemIndexId =  e.target.value.split('=')[1];
@@ -306,14 +306,14 @@ class SetCatalog extends Component {
         e.preventDefault();
         let sortingDirection = e.target.value;
         const pageSize = this.refs.pageSize.value;
-        const { catalogId, listCatalogItems } = this.props;
+        const { catalogId, listSetCatalogItems } = this.props;
         let parasm = {
-                id: catalogId, page: this.props.currentPage, size: pageSize, order: sortingDirection,
+                id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: pageSize, order: sortingDirection,
                 sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1
             };
         this.props.setCatalogSortDirection(sortingDirection);
         if (catalogId != null) {
-            this.props.getCatalogItemsWithSetItem(parasm);
+            this.props.getSetCatalogItemsWithSetItem(parasm);
         }
     }
 
@@ -321,14 +321,14 @@ class SetCatalog extends Component {
         e.preventDefault();
         let sortingBy = e.target.value;
         const pageSize = this.refs.pageSize.value;
-        const { catalogId, listCatalogItems } = this.props;
+        const { catalogId, listSetCatalogItems } = this.props;
         let parasm = {
-                id: catalogId, page: this.props.currentPage, size: pageSize, sort: sortingBy,
+                id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: pageSize, sort: sortingBy,
                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
             };
         this.props.setCatalogSortingBy(sortingBy);
         if (catalogId != null) {
-            this.props.getCatalogItemsWithSetItem(parasm);
+            this.props.getSetCatalogItemsWithSetItem(parasm);
         }
     }
 
@@ -340,7 +340,7 @@ class SetCatalog extends Component {
         if (catalogId != null) {
             this.props.setNewCatalogName(params).then((value) => {
                 if(value){
-                    this.props.getCatalogNameSetItem();
+                    this.props.getSetCatalogName();
                 }
             });
         }
@@ -378,8 +378,8 @@ class SetCatalog extends Component {
         e.preventDefault();
         const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
         const userLogin = JSON.parse(sessionStorage.logindata);
-        const { catalogId, listCatalogItems } = this.props;
-        if (Number(this.refs.reletego.value) > listCatalogItems.total_pages || Number(this.refs.reletego.value) < 1) {
+        const { catalogId, listSetCatalogItems } = this.props;
+        if (Number(this.refs.reletego.value) > listSetCatalogItems.total_pages || Number(this.refs.reletego.value) < 1) {
             this.setState({isOpenAddMyCatalogmsg: true});
         }else{
             const pageSize = this.refs.pageSize.value;
@@ -392,7 +392,7 @@ class SetCatalog extends Component {
                 };
             this.props.setCatalogCurrentPage(getPage);
             if (catalogId != null) {
-                this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
+                this.props.getSetCatalogItemsWithSetItem(parasm).then((value) => {
                 });
             }
         }
@@ -400,25 +400,25 @@ class SetCatalog extends Component {
 
     selectedCatalog = (e) =>{
         e.preventDefault();
-        const { fields: { catalog }, listCatalogName } = this.props;
+        const { fields: { catalog }, listSetCatalogName } = this.props;
         const catalogId = e.target.value;
         this.setState({activePage: 1});
         this.props.setCatalogCurrentPage(1);
-        let [selectedCatalog] = listCatalogName.filter((catalog) => {return catalog._id == catalogId});
+        let [selectedCatalog] = listSetCatalogName.filter((catalog) => {return catalog._id == catalogId});
         let parasm = {
                     id: catalogId, page: 1, size: 16,
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
-        this.props.getCatalogItemsWithSetItem(parasm)
+        this.props.getSetCatalogItemsWithSetItem(parasm)
         this.props.setIsCatalogShare(selectedCatalog.shared);
     }
 
     deleteOneItemMyCatalog = (item) => {
         listDeleteMyCatalog  = [];
         this.setState({enabledMyCatalog: false});
-        const { items } = this.props.listCatalogItems;
-        const catalogId = this.props.listCatalogItems._id
+        const { items } = this.props.listSetCatalogItems;
+        const catalogId = this.props.listSetCatalogItems._id
         const itemTargetId = item.target.attributes[3].value.split('=');
         let itemAdded = [];
         if (itemTargetId[0] == 'id') {
@@ -460,11 +460,11 @@ class SetCatalog extends Component {
         if (catalogId != null) {
             this.props.deleteCatalogItems(params).then( () =>{
                 let parasm = {
-                    id: catalogId, page: this.props.currentPage, size: 16,
+                    id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: 16,
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
-                this.props.getCatalogItemsWithSetItem(parasm)
+                this.props.getSetCatalogItemsWithSetItem(parasm)
             });
         }
     }
@@ -477,17 +477,17 @@ class SetCatalog extends Component {
         if (catalogId != null) {
             this.props.deleteCatalog(params).then((valueDelete) => {
                 if (valueDelete) {
-                    this.props.getCatalogNameSetItem().then((valueGetCatalog) => {
+                    this.props.getSetCatalogName().then((valueGetCatalog) => {
                         if (valueGetCatalog) {
                             let isCatalogShared = false;
-                            if(this.props.listCatalogName.length != 0){
-                                isCatalogShared = this.props.listCatalogName[0].shared;
+                            if(this.props.listSetCatalogName.length != 0){
+                                isCatalogShared = this.props.listSetCatalogName[0].shared;
                                 let parasm = {
-                                    id: this.props.listCatalogName[0]._id, page: this.props.currentPage, size: 16,
+                                    id: this.props.listSetCatalogName[0]._id, page: !!this.props.currentPage?this.props.currentPage:1, size: 16,
                                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                                 };
-                                this.props.getCatalogItemsWithSetItem(parasm)
+                                this.props.getSetCatalogItemsWithSetItem(parasm)
                                 this.props.setIsCatalogShare(isCatalogShared);
                             }else{
                                 isCatalogShared = true;
@@ -527,7 +527,7 @@ class SetCatalog extends Component {
     renderPagination(){
       const { fields: { currPage }, currentPage, handleSubmit, resetForm, submitting } = this.props;
       const page = this.state.activePage;
-      const totalPages = this.props.listCatalogItems.total_pages;
+      const totalPages = this.props.listSetCatalogItems.total_pages;
       return(
           <div>
               <Pagination prev next first last ellipsis boundaryLinks items={totalPages} maxButtons={4}
@@ -567,17 +567,17 @@ class SetCatalog extends Component {
     }
 
     renderTotals(){
-        const { fields: { currPage },totalPages,currentPage,items,listCatalogItems,totalPrice,totalUpdatedCost,
+        const { fields: { currPage },totalPages,currentPage,items,listSetCatalogItems,totalPrice,totalUpdatedCost,
                 handleSubmit,resetForm,submitting } = this.props;
 
-        const { setItemPrice,setItemUpdatedCost } = listCatalogItems;
+        const { setItemPrice,setItemUpdatedCost } = listSetCatalogItems;
         let _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
         let _totalPublicPrice =  (totalPrice!=null) ? numberFormat(totalPrice) : 0;
         let _totalPublicPriceSet = (setItemPrice!=null) ? numberFormat(setItemPrice) : 0;
         let _totalUpdatedCostSet = (setItemUpdatedCost!=null) ? numberFormat(setItemUpdatedCost) : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
 
-        return(<RenderClassTotals userLogin={userLogin} listCatalogItems = {listCatalogItems}
+        return(<RenderClassTotals userLogin={userLogin} listSetCatalogItems = {listSetCatalogItems}
                 _totalPublicPrice={_totalPublicPrice} _totalUpdatedCost = {_totalUpdatedCost}
                 _totalPublicPriceSet = {_totalPublicPriceSet} _totalUpdatedCostSet = {_totalUpdatedCostSet}
                 />);
@@ -661,7 +661,7 @@ class SetCatalog extends Component {
         const pageSize = e.target.value;
         const getPage = parseInt((this.refs.reletego.value != ''?this.refs.reletego.value:this.state.activePage));
         const userLogin = JSON.parse(sessionStorage.logindata);
-        const { catalogId, listCatalogItems } = this.props;
+        const { catalogId, listSetCatalogItems } = this.props;
         this.setState({activePage: 1});
         this.setState({showLoading: true});
         let parasm = {
@@ -672,7 +672,7 @@ class SetCatalog extends Component {
         this.props.setCatalogCurrentPage(getPage);
         this.props.setPageSize(pageSize);
         if (catalogId != null) {
-            this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
+            this.props.getSetCatalogItemsWithSetItem(parasm).then((value) => {
             });
         }
     }
@@ -680,7 +680,7 @@ class SetCatalog extends Component {
     handleSelect = eventKey => {
         const getPage = eventKey;
         const userLogin = JSON.parse(sessionStorage.logindata);
-        const { catalogId, listCatalogItems } = this.props;
+        const { catalogId, listSetCatalogItems } = this.props;
         const pageSize = this.refs.pageSize.value;
         this.setState({activePage: getPage});
         this.setState({showLoading: true});
@@ -691,7 +691,7 @@ class SetCatalog extends Component {
             };
         this.props.setCatalogCurrentPage(getPage);
         if (catalogId != null) {
-            this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
+            this.props.getSetCatalogItemsWithSetItem(parasm).then((value) => {
             });
         }
     }
@@ -712,9 +712,9 @@ class SetCatalog extends Component {
                 }
             }
 
-            let items = this.props.listCatalogName != undefined ?
-                            this.props.listCatalogName.length != 0 ?
-                                this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [] :
+            let items = this.props.listSetCatalogName != undefined ?
+                            this.props.listSetCatalogName.length != 0 ?
+                                this.props.listSetCatalogItems.items != undefined ? this.props.listSetCatalogItems.items : [] :
                             [] :
                         [];
             return(
@@ -731,9 +731,9 @@ class SetCatalog extends Component {
                                         <select onChange={this.selectedCatalog}  value={catalogId}
                                             ref="catalog">
                                           {
-                                              this.props.listCatalogName.length != 0 ?
-                                              this.props.listCatalogName.map((cat) => {
-                                                  return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
+                                              this.props.listSetCatalogName.length != 0 ?
+                                              this.props.listSetCatalogName.map((cat) => {
+                                                  return (<option key={cat._id} value={cat._id}>{cat.setCatalog}</option>);
                                               }) : <option value="">Please select</option>
                                           }
                                         </select>
@@ -874,16 +874,16 @@ class SetCatalog extends Component {
 }
 function mapStateToProps(state) {
     return {
-        initialValues: state.myCatalog.listCatalogItems,
-        listCatalogName: state.myCatalog.ListCatalogName,
-        listCatalogItems: state.myCatalog.listCatalogItems,
-        currentPage: state.myCatalog.currentPage,
-        catalogId: state.myCatalog.catalogId,
-        catalogName: state.myCatalog.catalogName,
+        initialValues: state.myCatalog.listSetCatalogItems,
+        listSetCatalogName: state.myCatalog.ListSetCatalogName,
+        listSetCatalogItems: state.myCatalog.listSetCatalogItems,
+        currentPage: state.myCatalog.setCurrentPage,
+        catalogId: state.myCatalog.setCatalogId,
+        catalogName: state.myCatalog.setCatalogName,
         catalogSortingBy: state.myCatalog.catalogSortingBy,
         catalogSortDirection: state.myCatalog.catalogSortDirection,
-        totalPrice: state.myCatalog.totalPrice,
-        totalUpdatedCost: state.myCatalog.totalUpdatedCost,
+        totalPrice: state.myCatalog.setTotalPrice,
+        totalUpdatedCost: state.myCatalog.setTotalUpdatedCost,
         shareCatalogStatus: state.myCatalog.shareCatalogStatus,
         shareCatalogmsgError: state.myCatalog.msg,
         shareCatalogStatusCode: state.myCatalog.shareCatalogStatusCode,

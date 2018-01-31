@@ -1,13 +1,14 @@
 import  {
     GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG, SET_NEWCATALOGNAME, DELETE_CATALOG,
     GET_CATALOGNAME, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG,
-    SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, GET_SETCATALOGNAME
+    SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, GET_SETCATALOGNAME, GET_SETCATALOGITEMS
 } from '../../constants/itemconstants';
 
 const INITIAL_STATE = {
     datas:null, ListCatalogName: [], listCatalogItems:[], currentPage: 1, catalogId: null,catalogName: null, catalogSortingBy: null
     , catalogSortDirection: null, totalPrice: null, totalUpdatedCost: null,shareCatalogStatus: false, msg: ''
-    ,shareCatalogStatusCode: 100, isCatalogShared: false, ListSetCatalogName: []
+    , shareCatalogStatusCode: 100, isCatalogShared: false, ListSetCatalogName: [], listSetCatalogItems:[], setCurrentPage: 1
+    , setCatalogId: null, setCatalogName: null, setTotalPrice: null, setTotalUpdatedCost: null
 };
 
 export default function(state = INITIAL_STATE, action){
@@ -45,6 +46,12 @@ export default function(state = INITIAL_STATE, action){
                 ...state, listCatalogItems: action.data, currentPage: action.data.page, catalogId: action.catalog,
                         catalogName: action.data.catalog, totalPrice: action.data.price,
                         totalUpdatedCost: action.data.updatedCost
+            };
+        case GET_SETCATALOGITEMS :
+            return {
+                ...state, listSetCatalogItems: action.data, setCurrentPage: action.data.page, setCatalogId: action.catalog,
+                        setCatalogName: action.data.setCatalog, setTotalPrice: action.data.setItemPrice,
+                        setTotalUpdatedCost: action.data.setItemUpdatedCost
             };
         default:
             return {...state};

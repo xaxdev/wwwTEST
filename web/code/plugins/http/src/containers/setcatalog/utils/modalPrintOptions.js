@@ -23,8 +23,8 @@ class ModalPrintOptions extends Component {
 
     render() {
         const { props, isOpen, isClose, onSubmit } = this.props;
-        const { fields: { printPage, printPrice }, listCatalogItems } = props;
-        const totalPages = numberFormat(listCatalogItems.total_pages);
+        const { fields: { printPage, printPrice }, listSetCatalogItems } = props;
+        const totalPages = numberFormat(!!listSetCatalogItems?listSetCatalogItems.total_pages:0);
         return(
               <div  className="addMyCatalog">
                 <Modal isOpen={isOpen} >

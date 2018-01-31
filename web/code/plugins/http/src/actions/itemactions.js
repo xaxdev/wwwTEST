@@ -2,12 +2,11 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {
-    FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS,
-    SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW,
-    GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG,
-    SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE,
-    SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, POST_SAVESEARCH,
-    SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER,FETCH_ALLPDF,ADD_NEWSETCATALOGITEM, GET_SETCATALOGNAME
+    FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE, SET_PAGESIZE,
+    SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS,
+    DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG, SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION,
+    SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, POST_SAVESEARCH,
+    SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER,FETCH_ALLPDF,ADD_NEWSETCATALOGITEM, GET_SETCATALOGNAME, GET_SETCATALOGITEMS
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
@@ -43,11 +42,29 @@ export function setItemsOrder(value){
         itemsOrder: value
     }
 }
+
 export function getCatalogItemsWithSetItem(params){
     const token = sessionStorage.token;
     let url = `${ROOT_URL}/api/catalog/setitem/${params.id}?page=${params.page}&size=${params.size}&sort=${params.sort}&order=${params.order}`;
     return {
         type: GET_CATALOGITEMS,
+        promise: fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        }),
+        catalog: params.id
+    }
+}
+
+export function getSetCatalogItemsWithSetItem(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/catalog/setcatalogitem/${params.id}?page=${params.page}&size=${params.size}&sort=${params.sort}&order=${params.order}`;
+    return {
+        type: GET_SETCATALOGITEMS,
         promise: fetch(url,{
             method: 'GET',
             headers: {

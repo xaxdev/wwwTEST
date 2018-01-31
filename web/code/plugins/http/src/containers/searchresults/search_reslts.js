@@ -302,8 +302,9 @@ class SearchResult extends Component {
         this.props.setShowGridView(false);
         this.props.setShowListView(false);
         this.setState({ showLoading: true });
-        this.props.getItems(params).then((value) => {
-            this.props.getCatalogNameSetItem();
+        this.props.getItems(params).then(async (value) => {
+            await this.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -346,8 +347,9 @@ class SearchResult extends Component {
             this.props.setShowGridView(false);
             this.props.setShowListView(false);
             this.setState({ showLoading: true });
-            this.props.getItems(params).then((value) => {
-                this.props.getCatalogNameSetItem();
+            this.props.getItems(params).then(async (value) => {
+                await his.props.getCatalogNameSetItem();
+                await this.props.getSetCatalogName();
                 this.setState({showLoading: false});
                 if(girdView){
                     this.props.setShowGridView(true);
@@ -556,8 +558,9 @@ class SearchResult extends Component {
         this.props.setItemsOrder(null);
         this.props.setSetReferenceOrder(null);
         this.props.setSortingBy(e.target.value);
-        this.props.getItems(params).then((value) => {
-            this.props.getCatalogNameSetItem();
+        this.props.getItems(params).then(async (value) => {
+            await this.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -602,8 +605,9 @@ class SearchResult extends Component {
         this.props.setItemsOrder(null);
         this.props.setSetReferenceOrder(null);
         this.props.setSortDirection(e.target.value);
-        this.props.getItems(params).then((value) => {
-            this.props.getCatalogNameSetItem();
+        this.props.getItems(params).then(async (value) => {
+            await this.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -649,8 +653,9 @@ class SearchResult extends Component {
         this.props.setShowListView(false);
         this.setState({ showLoading: true });
         this.props.setPageSize(pageSize);
-        this.props.getItems(params).then((value) => {
-            this.props.getCatalogNameSetItem();
+        this.props.getItems(params).then(async (value) => {
+            await his.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -879,8 +884,9 @@ class SearchResult extends Component {
         this.props.setShowGridView(false);
         this.props.setShowListView(false);
 
-        this.props.exportDatas(params).then((value) => {
-            this.props.getCatalogNameSetItem();
+        this.props.exportDatas(params).then(async (value) => {
+            await this.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
             if(girdView){
                 that.props.setShowGridView(true);
             }else if (listView) {
@@ -1045,7 +1051,7 @@ class SearchResult extends Component {
             }
 
         } else {
-            this.props.addCatalog(catalogdata).then( () =>{
+            this.props.addCatalog(catalogdata).then(async () =>{
                 newCatalogName.value = '';
                 oldCatalogName.value = '';
                 newCatalogName.onChange('');
@@ -1053,7 +1059,8 @@ class SearchResult extends Component {
 
                 this.setState({isOpenAddMyCatalogmsg: true});
                 this.setState({enabledMyCatalog: false});
-                this.props.getCatalogNameSetItem();
+                await this.props.getCatalogNameSetItem();
+                await this.props.getSetCatalogName();
             })
         }
     }

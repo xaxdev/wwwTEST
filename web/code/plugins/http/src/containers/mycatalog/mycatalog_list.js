@@ -57,7 +57,7 @@ class MyCatalog extends Component {
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
 
         this.state = {
-          activePage: this.props.currentPage, isOpenDeleteItem: false, isOpenAddMyCatalogmsg: false,
+          activePage: !!this.props.currentPage?this.props.currentPage:1, isOpenDeleteItem: false, isOpenAddMyCatalogmsg: false,
           isTooltipActive: false, isOpenDeleteCatalog: false, enabledMyCatalog: false, isOpenDeleteAllItem: false,
           isOpenZeroCatalog: true, isOpenPrintPdfmsg: false, isOpenShareMyCatalog: false, checkAllItems: false,
           isOpenPrintOptions: false
@@ -85,7 +85,7 @@ class MyCatalog extends Component {
                         }
                     }
                     let parasm = {
-                            id: catalogId, page: this.props.currentPage,
+                            id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1,
                             size: !!this.props.pageSize ? this.props.pageSize : 16,
                             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
@@ -209,7 +209,7 @@ class MyCatalog extends Component {
         if (catalogId != null) {
             this.props.deleteCatalogItems(paramsItem).then( () =>{
                 let params = {
-                                id: catalogId, page: this.props.currentPage, size: 16,
+                                id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: 16,
                                 sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                             };
@@ -308,7 +308,7 @@ class MyCatalog extends Component {
         const pageSize = this.refs.pageSize.value;
         const { catalogId, listCatalogItems } = this.props;
         let parasm = {
-                id: catalogId, page: this.props.currentPage, size: pageSize, order: sortingDirection,
+                id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: pageSize, order: sortingDirection,
                 sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1
             };
         this.props.setCatalogSortDirection(sortingDirection);
@@ -323,7 +323,7 @@ class MyCatalog extends Component {
         const pageSize = this.refs.pageSize.value;
         const { catalogId, listCatalogItems } = this.props;
         let parasm = {
-                id: catalogId, page: this.props.currentPage, size: pageSize, sort: sortingBy,
+                id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: pageSize, sort: sortingBy,
                 order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
             };
         this.props.setCatalogSortingBy(sortingBy);
@@ -460,7 +460,7 @@ class MyCatalog extends Component {
         if (catalogId != null) {
             this.props.deleteCatalogItems(params).then( () =>{
                 let parasm = {
-                    id: catalogId, page: this.props.currentPage, size: 16,
+                    id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: 16,
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
@@ -483,7 +483,7 @@ class MyCatalog extends Component {
                             if(this.props.listCatalogName.length != 0){
                                 isCatalogShared = this.props.listCatalogName[0].shared;
                                 let parasm = {
-                                    id: this.props.listCatalogName[0]._id, page: this.props.currentPage, size: 16,
+                                    id: this.props.listCatalogName[0]._id, page: !!this.props.currentPage?this.props.currentPage:1, size: 16,
                                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                                 };

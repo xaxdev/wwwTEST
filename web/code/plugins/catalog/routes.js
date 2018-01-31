@@ -90,5 +90,10 @@ export default [
         method: 'GET',
         path: '/webnamessetcatalog',
         config: controllers.getnameswithsharedcatalog
+    },
+    {
+        method: 'GET',
+        path: '/setcatalogitem/{id}',
+        config: controllers.itemssetcatalogitem
     }
 ]
