@@ -6,7 +6,9 @@ import {
     SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS,
     DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG, SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION,
     SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, POST_SAVESEARCH,
-    SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER,FETCH_ALLPDF,ADD_NEWSETCATALOGITEM, GET_SETCATALOGNAME, GET_SETCATALOGITEMS
+    SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER,FETCH_ALLPDF,ADD_NEWSETCATALOGITEM, GET_SETCATALOGNAME, GET_SETCATALOGITEMS,
+    SET_RENAMESETCATALOG, SET_NEWSETCATALOGNAME, DELETE_SETCATALOG, SET_SHARESETCATALOG, SET_CLOSEALERTMSGSET, SET_SETCATALOGSORTBY,
+    SET_SETCATALOGSORTDIRECTION
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
@@ -183,6 +185,13 @@ export function setCloseAlertMsg(value){
     }
 }
 
+export function setCloseAlertMsgSet(value){
+    return {
+        type: SET_CLOSEALERTMSGSET,
+        closeAlertMsgSet:value
+    }
+}
+
 export function shareCatalog(params){
     const token = sessionStorage.token;
     let url = `${ROOT_URL}/api/catalog/shared`;
@@ -199,6 +208,24 @@ export function shareCatalog(params){
         })
     }
 }
+
+export function shareSetCatalog(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/catalog/sharedset`;
+    return {
+        type: SET_SHARESETCATALOG,
+        promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        })
+    }
+}
+
 export function setDataSendEmailTo(value){
     return {
         type: SET_SHAREEMAILTO,
@@ -229,11 +256,33 @@ export function setRenameCatalog(value){
         catalogName: value
     }
 }
+export function setRenameSetCatalog(value){
+    return {
+        type: SET_RENAMESETCATALOG,
+        setCatalogName: value
+    }
+}
 export function deleteCatalog(params){
     const token = sessionStorage.token;
     let url = `${ROOT_URL}/api/catalog/${params.id}`;
     return {
         type: DELETE_CATALOG,
+        promise: fetch(url,{
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        }),
+        catalogId: params.id
+    }
+}
+export function deleteSetCatalog(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/catalog/set/${params.id}`;
+    return {
+        type: DELETE_SETCATALOG,
         promise: fetch(url,{
             method: 'DELETE',
             headers: {
@@ -260,6 +309,23 @@ export function setNewCatalogName(params){
             body: JSON.stringify(params)
         }),
         catalogName: params.catalog
+    }
+}
+export function setNewSetCatalogName(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/catalog/renameset`;
+    return {
+        type: SET_NEWSETCATALOGNAME,
+        promise: fetch(url,{
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(params)
+        }),
+        setCatalogName: params.setCatalog
     }
 }
 export function setSelectedCatalog(value){
@@ -357,9 +423,21 @@ export function setCatalogSortingBy(value){
         sortingBy: value
     }
 }
+export function setSetCatalogSortingBy(value){
+    return {
+        type: SET_SETCATALOGSORTBY,
+        sortingBy: value
+    }
+}
 export function setCatalogSortDirection(value){
     return {
         type: SET_CATALOGSORTDIRECTION,
+        sortDirection: value
+    }
+}
+export function setSetCatalogSortDirection(value){
+    return {
+        type: SET_SETCATALOGSORTDIRECTION,
         sortDirection: value
     }
 }

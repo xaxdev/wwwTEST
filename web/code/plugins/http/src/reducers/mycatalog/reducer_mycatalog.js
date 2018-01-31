@@ -1,18 +1,36 @@
 import  {
-    GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG, SET_NEWCATALOGNAME, DELETE_CATALOG,
-    GET_CATALOGNAME, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG,
-    SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, GET_SETCATALOGNAME, GET_SETCATALOGITEMS
+    GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG, SET_NEWCATALOGNAME, DELETE_CATALOG, GET_CATALOGNAME,
+    SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG, SET_SHARECATALOG, SET_CLOSEALERTMSG,
+    SET_ISCATALOGSHARED, GET_SETCATALOGNAME, GET_SETCATALOGITEMS,SET_RENAMESETCATALOG, SET_NEWSETCATALOGNAME, DELETE_SETCATALOG,
+    SET_SHARESETCATALOG, SET_CLOSEALERTMSGSET, SET_SETCATALOGSORTBY, SET_SETCATALOGSORTDIRECTION
 } from '../../constants/itemconstants';
 
 const INITIAL_STATE = {
     datas:null, ListCatalogName: [], listCatalogItems:[], currentPage: 1, catalogId: null,catalogName: null, catalogSortingBy: null
     , catalogSortDirection: null, totalPrice: null, totalUpdatedCost: null,shareCatalogStatus: false, msg: ''
     , shareCatalogStatusCode: 100, isCatalogShared: false, ListSetCatalogName: [], listSetCatalogItems:[], setCurrentPage: 1
-    , setCatalogId: null, setCatalogName: null, setTotalPrice: null, setTotalUpdatedCost: null
+    , setCatalogId: null, setCatalogName: null, setTotalPrice: null, setTotalUpdatedCost: null, shareSetCatalogStatus: false
+    , shareSetCatalogStatusCode: 100, msgSet: '', setCatalogSortingBy: null, setCatalogSortDirection: null
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case SET_SETCATALOGSORTDIRECTION :
+            return {...state, setCatalogSortDirection: action.sortDirection };
+        case SET_SETCATALOGSORTBY :
+            return {...state, setCatalogSortingBy: action.sortingBy };
+        case SET_CLOSEALERTMSGSET :
+            return {...state,  shareSetCatalogStatusCode: action.closeAlertMsg, shareSetCatalogStatus: false, msgSet: ''}
+        case SET_SHARESETCATALOG :
+            return {...state,  shareSetCatalogStatus: (action.data.statusCode >= 400) ? false : true,
+              shareSetCatalogStatusCode : action.data.statusCode,
+              msgSet: action.data.message};
+        case DELETE_SETCATALOG :
+            return {...state, setCatalogId: action.setCatalogId };
+        case SET_NEWSETCATALOGNAME :
+            return {...state, setCatalogName: action.setCatalogName };
+        case SET_RENAMESETCATALOG :
+            return {...state, setCatalogName: action.setCatalogName };
         case GET_SETCATALOGNAME :
             return {...state, ListSetCatalogName: action.data };
         case SET_ISCATALOGSHARED :

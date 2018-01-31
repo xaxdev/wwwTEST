@@ -95,5 +95,20 @@ export default [
         method: 'GET',
         path: '/setcatalogitem/{id}',
         config: controllers.itemssetcatalogitem
+    },
+    {
+        method: 'PUT',
+        path: '/renameset',
+        config: controllers.renameset
+    },
+    {
+        method: 'DELETE',
+        path: '/set/{id}',
+        config: controllers.removeset
+    },
+    {
+        method: 'POST',
+        path: '/sharedset',
+        config: controllers.savesharedset
     }
 ]

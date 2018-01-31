@@ -1008,7 +1008,7 @@ class SearchResult extends Component {
             oldCatalogTitle = listCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
         }
         if (oldSetCatalogName.value) {
-            oldSetCatalogTitle = listSetCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
+            oldSetCatalogTitle = listSetCatalogName.find(catalogname => catalogname._id === oldSetCatalogName.value)
         }
 
         const catalogdata = {...catalogdata,
@@ -1018,7 +1018,7 @@ class SearchResult extends Component {
         }
         const setcatalogdata = {...catalogdata,
             id:!!oldSetCatalogName.value ? oldSetCatalogName.value : null,
-            setcatalog: !!oldSetCatalogName.value ? oldSetCatalogTitle.setcatalog : newSetCatalogName.value,
+            setcatalog: !!oldSetCatalogName.value ? oldSetCatalogTitle.setCatalog : newSetCatalogName.value,
             items:listMyCatalog
         }
 

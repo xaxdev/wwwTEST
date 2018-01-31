@@ -1,7 +1,7 @@
 import Joi from 'joi'
 import Boom from 'boom'
 import Elasticsearch from 'elasticsearch'
-import constants from '../constants'
+import constants from '../setconstants'
 import lodash from 'lodash';
 
 export default {
