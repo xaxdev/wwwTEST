@@ -540,7 +540,8 @@ class productdetail extends Component {
                                 : '/images/blank.gif';
         if (items != undefined) {
             return (
-                <div key={'listView'} id={'listView'}>
+                <div key={'listView'} id={'listView'} className="col-sm-12  panel panel-default">
+                <div className="panel-body">
                     <table key={'listView'} id={'listView'}
                         className="table table-bordered table-searchresult table-searchset">
                         <thead key={'listView'} id={'listView'}>
@@ -563,7 +564,7 @@ class productdetail extends Component {
                         <ViewDetailSetCatalog key={reference} id={reference} setDetail={this.props.productdetail}
                             items={items} set onCheckedOneItemMyCatalog={this.handleSubmitSetCatalog}/>
                     </table>
-                    <div id="imgset">
+                    <div id="imgset" className="img-center">
 
                         <ReactImageFallback
                                src={imagesProduct }
@@ -572,6 +573,7 @@ class productdetail extends Component {
                                name={reference} id={reference}
                                />
                     </div>
+                </div>
                 </div>
             );
         }
@@ -911,7 +913,7 @@ class productdetail extends Component {
                     <div className="col-sm-12">
                         <div className="panel panel-default">
                             <div className="panel-body padding-ft0">
-                                <div>
+                                <div className="col-sm-12">
                                     <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
                                     <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                                     {this.zoomicon()}
