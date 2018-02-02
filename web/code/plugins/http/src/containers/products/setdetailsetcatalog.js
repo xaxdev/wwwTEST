@@ -924,10 +924,8 @@ class productdetail extends Component {
                                       :
                                       <a><div className=""></div></a>
                                     }
-                                    {/*<a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>*/}
                                 </div>
                                 <div id="dvContainer">
-                                    {/*this.renderImagegallery()*/}
                                     {this.renderSetDetailTable()}
                                 </div>
                             </div>
@@ -935,27 +933,6 @@ class productdetail extends Component {
                     </div>
                     {this.renderAlertmsgCer()}
                </div>
-               {/*<div className={`row ${!this.state.showmovement ? 'hide' : ''}`}>
-                   <div className="col-sm-12">
-                       <div className="panel panel-default">
-                           <div className="panel-body padding-ft0">
-                               <div className="col-md-4 col-sm-12">
-                                   <div className="mg-tb thumbnaillgrid">
-                                       <ReactImageFallback
-                                          src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
-                                            fallbackImage="/images/blank.gif"
-                                            initialImage="/images/blank.gif"
-                                            width={200}
-                                            height={200}
-                                            className="img-responsive image-gallery-image" />
-                                    </div>
-                               </div>
-                               <div className="col-md-8 col-sm-12">
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-               </div>*/}
            </div>
        );
    }
