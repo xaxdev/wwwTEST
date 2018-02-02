@@ -924,7 +924,7 @@ class productdetail extends Component {
                                     }
                                     {/*<a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>*/}
                                 </div>
-                                <div>
+                                <div id="dvContainer">
                                     {/*this.renderImagegallery()*/}
                                     {this.renderSetDetailTable()}
                                 </div>
