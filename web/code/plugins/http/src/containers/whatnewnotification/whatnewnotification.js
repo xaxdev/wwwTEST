@@ -317,7 +317,6 @@ class WhatNewNotification extends Component {
                                                   'type':'new',
                                                   'title': 'Set items display order',
                                                   'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">November 27, 2017</p>
-                                                  <h3 style="padding:17px 0px 0px 0px">Click icons at Product Detail page for download COA/DBC/Monograph files.</h3>
                                                   <div style="padding:15px 20px 0 20px;">
                                                   <p>1. User search by condition 'Set Reference Number</p>
                                                   <p>2. At Search Result page,user can select sort by 'Set Item Reference' to get the result as Necklace, Bracelet, Earring and Ring.</p>

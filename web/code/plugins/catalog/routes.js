@@ -81,4 +81,39 @@ export default [
         path: '/migrateprice',
         config: controllers.migrateprice
     },
+    {
+        method: 'POST',
+        path: '/setcatalogitem',
+        config: controllers.savesetcatalogitem
+    },
+    {
+        method: 'GET',
+        path: '/webnamessetcatalog',
+        config: controllers.getnameswithsharedcatalog
+    },
+    {
+        method: 'GET',
+        path: '/setcatalogitem/{id}',
+        config: controllers.itemssetcatalogitem
+    },
+    {
+        method: 'PUT',
+        path: '/renameset',
+        config: controllers.renameset
+    },
+    {
+        method: 'DELETE',
+        path: '/set/{id}',
+        config: controllers.removeset
+    },
+    {
+        method: 'POST',
+        path: '/sharedset',
+        config: controllers.savesharedset
+    },
+    {
+        method: 'DELETE',
+        path: '/setitem',
+        config: controllers.removesetitem
+    }
 ]

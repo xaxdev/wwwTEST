@@ -12,9 +12,9 @@ export default {
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
 
-                await db.collection('CatalogName').deleteOne({ '_id' : new ObjectID(request.params.id) })
-                await db.collection('CatalogItem').deleteMany({ 'catalogId' : new ObjectID(request.params.id) })
-                await db.collection('CatalogShared').deleteOne({ 'catalogId' : new ObjectID(request.params.id), 'owner': request.auth.credentials.id })
+                await db.collection('SetCatalogName').deleteOne({ '_id' : new ObjectID(request.params.id) })
+                await db.collection('SetCatalogItem').deleteMany({ 'setCatalogId' : new ObjectID(request.params.id) })
+                await db.collection('SetCatalogShared').deleteOne({ 'setCatalogId' : new ObjectID(request.params.id), 'owner': request.auth.credentials.id })
 
                 reply({
                     'status': true

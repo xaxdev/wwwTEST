@@ -128,7 +128,10 @@ class SearchResult extends Component {
         params = GetGemstoneLotnumberFilter(filters, params);
         const paramsSearchStorage =  JSON.parse(sessionStorage.paramsSearch);
         this.props.setParams(paramsSearchStorage)
-        this.props.getItems(params).then((value) => { this.props.getCatalogNameSetItem(); });
+        this.props.getItems(params).then(async (value) => {
+            await this.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
+        });
     }
 
     componentDidMount() {
@@ -299,8 +302,9 @@ class SearchResult extends Component {
         this.props.setShowGridView(false);
         this.props.setShowListView(false);
         this.setState({ showLoading: true });
-        this.props.getItems(params).then((value) => {
-            this.props.getCatalogNameSetItem();
+        this.props.getItems(params).then(async (value) => {
+            await this.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -343,8 +347,9 @@ class SearchResult extends Component {
             this.props.setShowGridView(false);
             this.props.setShowListView(false);
             this.setState({ showLoading: true });
-            this.props.getItems(params).then((value) => {
-                this.props.getCatalogNameSetItem();
+            this.props.getItems(params).then(async (value) => {
+                await his.props.getCatalogNameSetItem();
+                await this.props.getSetCatalogName();
                 this.setState({showLoading: false});
                 if(girdView){
                     this.props.setShowGridView(true);
@@ -553,8 +558,9 @@ class SearchResult extends Component {
         this.props.setItemsOrder(null);
         this.props.setSetReferenceOrder(null);
         this.props.setSortingBy(e.target.value);
-        this.props.getItems(params).then((value) => {
-            this.props.getCatalogNameSetItem();
+        this.props.getItems(params).then(async (value) => {
+            await this.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -599,8 +605,9 @@ class SearchResult extends Component {
         this.props.setItemsOrder(null);
         this.props.setSetReferenceOrder(null);
         this.props.setSortDirection(e.target.value);
-        this.props.getItems(params).then((value) => {
-            this.props.getCatalogNameSetItem();
+        this.props.getItems(params).then(async (value) => {
+            await this.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -646,8 +653,9 @@ class SearchResult extends Component {
         this.props.setShowListView(false);
         this.setState({ showLoading: true });
         this.props.setPageSize(pageSize);
-        this.props.getItems(params).then((value) => {
-            this.props.getCatalogNameSetItem();
+        this.props.getItems(params).then(async (value) => {
+            await his.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -876,8 +884,9 @@ class SearchResult extends Component {
         this.props.setShowGridView(false);
         this.props.setShowListView(false);
 
-        this.props.exportDatas(params).then((value) => {
-            this.props.getCatalogNameSetItem();
+        this.props.exportDatas(params).then(async (value) => {
+            await this.props.getCatalogNameSetItem();
+            await this.props.getSetCatalogName();
             if(girdView){
                 that.props.setShowGridView(true);
             }else if (listView) {
@@ -989,33 +998,60 @@ class SearchResult extends Component {
         let fileName = jQuery('input[type="checkbox"]');
         fileName.removeAttr('checked');
         this.setState({isOpenAddMyCatalog: false});
-        const { fields: { oldCatalogName, newCatalogName, validateCatalogName } } = this.props;
+        const { fields: { oldCatalogName, newCatalogName, validateCatalogName, oldSetCatalogName, newSetCatalogName } } = this.props;
         const  Detail  = this.props.productdetail;
         const  listCatalogName  = this.props.listCatalogName;
+        const  listSetCatalogName  = this.props.listSetCatalogName;
         let oldCatalogTitle = ''
+        let oldSetCatalogTitle = ''
         if (oldCatalogName.value) {
             oldCatalogTitle = listCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
         }
+        if (oldSetCatalogName.value) {
+            oldSetCatalogTitle = listSetCatalogName.find(catalogname => catalogname._id === oldSetCatalogName.value)
+        }
 
         const catalogdata = {...catalogdata,
-            id:!!oldCatalogName.value ? oldCatalogName.value:null,
-            catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
+            id:!!oldCatalogName.value ? oldCatalogName.value  :null,
+            catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog : newCatalogName.value,
+            items:listMyCatalog
+        }
+        const setcatalogdata = {...catalogdata,
+            id:!!oldSetCatalogName.value ? oldSetCatalogName.value : null,
+            setcatalog: !!oldSetCatalogName.value ? oldSetCatalogTitle.setCatalog : newSetCatalogName.value,
             items:listMyCatalog
         }
 
         if (ViewAsSet) {
-            this.props.addCatalogSetItem(catalogdata).then( () =>{
-                newCatalogName.value = '';
-                oldCatalogName.value = '';
-                newCatalogName.onChange('');
-                oldCatalogName.onChange('');
+            if (!!oldCatalogName.value || !!newCatalogName.value) {
+                this.props.addCatalogSetItem(catalogdata).then(async () =>{
+                    newCatalogName.value = '';
+                    oldCatalogName.value = '';
+                    newCatalogName.onChange('');
+                    oldCatalogName.onChange('');
 
-                this.setState({isOpenAddMyCatalogmsg: true});
-                this.setState({enabledMyCatalog: false});
-                this.props.getCatalogNameSetItem();
-            })
+                    this.setState({isOpenAddMyCatalogmsg: true});
+                    this.setState({enabledMyCatalog: false});
+                    await this.props.getCatalogNameSetItem();
+                    await this.props.getSetCatalogName();
+                })
+            }
+            if (!!oldSetCatalogName.value || !!newSetCatalogName.value) {
+                this.props.addNewSetCatalogItem(setcatalogdata).then(async () =>{
+                    newSetCatalogName.value = '';
+                    oldSetCatalogName.value = '';
+                    newSetCatalogName.onChange('');
+                    oldSetCatalogName.onChange('');
+
+                    this.setState({isOpenAddMyCatalogmsg: true});
+                    this.setState({enabledMyCatalog: false});
+                    await this.props.getCatalogNameSetItem();
+                    await this.props.getSetCatalogName();
+                })
+            }
+
         } else {
-            this.props.addCatalog(catalogdata).then( () =>{
+            this.props.addCatalog(catalogdata).then(async () =>{
                 newCatalogName.value = '';
                 oldCatalogName.value = '';
                 newCatalogName.onChange('');
@@ -1023,16 +1059,18 @@ class SearchResult extends Component {
 
                 this.setState({isOpenAddMyCatalogmsg: true});
                 this.setState({enabledMyCatalog: false});
-                this.props.getCatalogNameSetItem();
+                await this.props.getCatalogNameSetItem();
+                await this.props.getSetCatalogName();
             })
         }
     }
 
     renderAddMyCatalog = _=> {
-        const { listCatalogName, submitting } = this.props;
+        const { listCatalogName, listSetCatalogName, submitting } = this.props;
         return(
             <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName}
-                isOpen={this.state.isOpenAddMyCatalog} isClose={this.handleClose} props={this.props}/>
+                isOpen={this.state.isOpenAddMyCatalog} isClose={this.handleClose} props={this.props}
+                listSetCatalogName = {listSetCatalogName}/>
         );
     }
 
@@ -1383,7 +1421,7 @@ function mapStateToProps(state) {
         sortDirection: state.searchResult.SortDirection, showGridView: state.searchResult.ShowGridView,
         showListView: state.searchResult.ShowListView, listCatalogName: state.myCatalog.ListCatalogName,
         ViewAsSet: state.searchResult.viewAsSet, ItemsOrder: state.searchResult.itemsOrder,
-        SetReferencdOrder: state.searchResult.setReferenceOrder
+        SetReferencdOrder: state.searchResult.setReferenceOrder, listSetCatalogName: state.myCatalog.ListSetCatalogName,
     }
 }
 SearchResult.propTypes = {
@@ -1397,6 +1435,6 @@ SearchResult.contextTypes = {
 };
 module.exports = reduxForm({
     form: 'SearchResult',
-    fields: [ 'currPage','oldCatalogName','newCatalogName','validateCatalogName','printPage' ],
+    fields: [ 'currPage','oldCatalogName','newCatalogName','validateCatalogName','printPage','oldSetCatalogName','newSetCatalogName' ],
     validate:validateCatalog
 },mapStateToProps,itemactions)(SearchResult)
