@@ -38,15 +38,15 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
                             : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
 
 
-    dvTotalItems = dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
-    dvTotalItems = dvTotalItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
+    dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"'):'';
+    dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"'):'';
     switch (printPrice) {
         case 'public':
-            dvTotalItems = dvTotalItems.replace(/class="spItemsUpdated "/g,'style="display: none !important;visibility: hidden !important;"');
+            dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="spItemsUpdated "/g,'style="display: none !important;visibility: hidden !important;"'):'';
             dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsUpdated "/g,'style="display: none !important;visibility: hidden !important;"');
             break;
         case 'updated':
-            dvTotalItems = dvTotalItems.replace(/class="spItemsPublicPrice "/g,'style="display: none !important;visibility: hidden !important;"');
+            dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="spItemsPublicPrice "/g,'style="display: none !important;visibility: hidden !important;"'):'';
             dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsPublicPrice "/g,'style="display: none !important;visibility: hidden !important;"');
             break;
         default:
@@ -102,7 +102,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
                             <form>
                                 <div style="${styleBodyWrapper}">
                                     <div>
-                                        <div style="${styleTotal}">
+                                        <div style="${styleTotal + !!dvTotalItems?'':'hidden'}">
                                             ${dvTotalItems}
                                         </div>
                                         <div style="${styleTotal}">

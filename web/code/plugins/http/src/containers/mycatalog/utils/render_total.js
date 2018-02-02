@@ -11,12 +11,12 @@ class RenderClassTotals extends Component {
               <div id="dvTotalItems" className="bg-f7d886 text-center border-b-white">
                     <span className="spItemsPages">
                         <span className="font-b fc-000">All Pages :</span>
-                        <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
+                        <span className="font-w9">{ numberFormat(!!listCatalogItems?listCatalogItems.total_pages:0) } Pages </span>
                         <span className="padding-lf15">|</span>
                     </span>
                     <span className="spItems">
                         <span className="font-b fc-000">Total Items :</span>
-                        <span className="font-w9">{ numberFormat(listCatalogItems.total_items) } Items </span>
+                        <span className="font-w9">{ numberFormat(!!listCatalogItems?listCatalogItems.total_items:0) } Items </span>
                     </span>
                     <span className={`spItemsPublicPrice ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                             || userLogin.permission.price == 'All') ?
@@ -36,12 +36,12 @@ class RenderClassTotals extends Component {
               <div id="dvTotalSetItems" className="bg-f7d886 text-center">
                     <span>
                         <span className="font-b fc-000">All Pages :</span>
-                        <span className="font-w9">{ numberFormat(listCatalogItems.total_pages) } Pages </span>
+                        <span className="font-w9">{ numberFormat(!!listCatalogItems?listCatalogItems.total_pages:0) } Pages </span>
                         <span className="padding-lf15">|</span>
                     </span>
                     <span>
                         <span className="font-b fc-000">Total SetItems :</span>
-                        <span className="font-w9">{ numberFormat(listCatalogItems.total_setitems) } Sets </span>
+                        <span className="font-w9">{ numberFormat(!!listCatalogItems?listCatalogItems.total_setitems:0) } Sets </span>
                         <span className="padding-lf15">|</span>
                     </span>
                     <span className={`spSetItemsPublicPrice ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'

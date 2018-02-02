@@ -14,6 +14,14 @@ import getnameswithsharedsetitem from './getnameswithsharedsetitem'
 import getdatasetitem from './getdatasetitem'
 import itemssetitem from './itemssetitem'
 import migrateprice from './migrateprice'
+import savesetcatalogitem from './savesetcatalogitem'
+import getnameswithsharedcatalog from './getnameswithsharedcatalog'
+import itemssetcatalogitem from './itemssetcatalogitem'
+import renameset from './renameset'
+import removeset from './removeset'
+import savesharedset from './savesharedset'
+import removesetitem from './removesetitem'
 
-export { getnames, getdata, save, remove, removeitem, rename, items, exportpdf, saveshared, getnameswithshared
-        ,savesetitem, getnamessetitem, getnameswithsharedsetitem, getdatasetitem, itemssetitem, migrateprice }
+export { getnames, getdata, save, remove, removeitem, rename, items, exportpdf, saveshared, getnameswithshared , savesetitem,
+        getnamessetitem, getnameswithsharedsetitem, getdatasetitem, itemssetitem, migrateprice, savesetcatalogitem, 
+        getnameswithsharedcatalog, itemssetcatalogitem, renameset, removeset, savesharedset, removesetitem }
