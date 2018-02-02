@@ -133,14 +133,12 @@ class SetCatalog extends Component {
     }
 
     printResults(e){
-        //   e.preventDefault();
         const { fields: {printPage, printPrice} } = this.props;
         let items = this.props.listSetCatalogName != undefined ?
                         this.props.listSetCatalogName.length != 0 ?
                             this.props.listSetCatalogItems.allItems != undefined ? this.props.listSetCatalogItems.allItems : [] :
                         [] :
                     [];
-        // console.log('items-->',items);
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
         const env_web = ENVIRONMENT !== 'production' ? 'development' : 'production';
@@ -158,8 +156,6 @@ class SetCatalog extends Component {
         let htmlTemplate = '';
         htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
 
-        // console.log('htmlTemplate-->',htmlTemplate);
-
         let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
                         'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL};
         this.props.writeHtml(params)
@@ -167,7 +163,6 @@ class SetCatalog extends Component {
                 if (value) {
                     this.setState({isOpenPrintPdfmsg: true});
                 }
-                // console.log(value);
             });
           this.setState({isOpenPrintOptions: false});
     }
