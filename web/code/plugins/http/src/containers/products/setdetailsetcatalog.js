@@ -33,6 +33,8 @@ import validateCatalog from '../../utils/validatesetcatalog';
 import ModalalertMsgObj from '../../utils/modalalertmsg';
 import Movementlist from '../../components/productdetail/productmovement.js';
 import Goclist from '../../components/productdetail/productgoc.js'
+import ViewDetailSetCatalog from './viewdetailsetcatalog';
+import SetCatalogGallery from './setcataloggallery';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
@@ -78,8 +80,7 @@ class productdetail extends Component {
             },
             callbacks: {
                 open: function() {
-                    let activegallery = jQuery('.active img').attr('src').replace('thumbnail', 'original');
-
+                    let activegallery = jQuery('#imgset img').attr('src').replace('thumbnail', 'original');
                     jQuery('#galleryimg').attr('src',activegallery);
                     let rotatecount = 0;
                     jQuery('#btnup').click(function(){
@@ -414,48 +415,6 @@ class productdetail extends Component {
         }
     }
 
-    clickSet = _ => {
-        jQuery('#popupset').click();
-        jQuery('#popupset').magnificPopup({
-            key: 'my-popup2',
-            items: {
-                src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimgset"/><div id="showtotal"></div></div><div class="white-popup-right"><button id="btnupset" class="btn btn-primary btn-radius">Up</button><button id="btndownset" class="btn btn-primary btn-radius">Down</button><button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button></div></div>'),
-                type: 'inline'
-            },
-            callbacks: {
-                open: function() {
-                    let activegallery = jQuery('#imgset').attr('src');
-                    let totalprice = jQuery('#totalsetprice').val();
-
-                    const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-                    const currency = logindata.currency;
-
-                    jQuery('#galleryimgset').attr('src',activegallery);
-                    jQuery('#showtotal').text('Total Public Price (Set): '+numberFormat(totalprice)+' '+'USD');
-                    let rotatecount = 0;
-                    jQuery('#btnupset').click(function(){
-                      jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
-                    });
-                    jQuery('#btndownset').click(function(){
-
-                      jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
-                    });
-                    let zoomimg = false;
-                    jQuery('#btnzoomset').click(function(){
-                        if(zoomimg == false){
-                          zoomimg = true;
-                          jQuery('#galleryimgset').css({'width': jQuery('#galleryimgset').width() * 2 ,'max-width':'700px'});
-                        } else {
-                          zoomimg = false;
-                          jQuery('#galleryimgset').css({'width': 'auto' ,'max-width':'500px'});
-                        }
-
-                    });
-                }
-            }
-        });
-    }
-
     renderFooterAttr = _ => {
         const Detail  = this.props.productdetail;
         const gemstoneAttr = Detail.gemstones;
@@ -568,6 +527,53 @@ class productdetail extends Component {
                     <div><img src="/images/blank.gif" width="100%"/></div>
                 );
             }
+        }
+    }
+
+    renderSetDetailTable = _ => {
+        const {items,reference,image} = this.props.productdetail;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const imagesProduct = (image) != undefined
+                                ? image.length != 0
+                                    ?image[0].original
+                                    : '/images/blank.gif'
+                                : '/images/blank.gif';
+        if (items != undefined) {
+            return (
+                <div key={'listView'} id={'listView'}>
+                    <table key={'listView'} id={'listView'}
+                        className="table table-bordered table-searchresult table-searchset">
+                        <thead key={'listView'} id={'listView'}>
+                              <tr>
+                                  <th><span>Item Reference</span></th>
+                                  <th><span>Warehouse</span></th>
+                                  <th><span>Description</span></th>
+                                  <th><span>Stone Detail</span></th>
+                                  <th className={`${(userLogin.permission.price == 'All') ?
+                                      '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                                  <th className={`${(userLogin.permission.price == 'Updated'
+                                      || userLogin.permission.price == 'All') ?
+                                      '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
+                                  <th className={`${(userLogin.permission.price == 'Public'
+                                      || userLogin.permission.price == 'Updated'
+                                      || userLogin.permission.price == 'All') ?
+                                      '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
+                              </tr>
+                        </thead>
+                        <ViewDetailSetCatalog key={reference} id={reference} setDetail={this.props.productdetail}
+                            items={items} set onCheckedOneItemMyCatalog={this.handleSubmitSetCatalog}/>
+                    </table>
+                    <div id="imgset">
+
+                        <ReactImageFallback
+                               src={imagesProduct }
+                               fallbackImage="/images/blank.gif"
+                               initialImage="/images/blank.gif"
+                               name={reference} id={reference}
+                               />
+                    </div>
+                </div>
+            );
         }
     }
 
@@ -698,7 +704,6 @@ class productdetail extends Component {
         if (oldSetCatalogName.value) {
             oldSetCatalogTitle = listSetCatalogName.find(catalogname => catalogname._id === oldSetCatalogName.value)
         }
-        console.log('Detail-->',Detail);
         const catalogdata = {
             id:!!oldSetCatalogName.value ? oldSetCatalogName.value:null,
             setcatalog: !!oldSetCatalogName.value ? oldSetCatalogTitle.setCatalog:newSetCatalogName.value,
@@ -755,13 +760,13 @@ class productdetail extends Component {
    }
 
    zoomicon = _ => {
-       const { gallery } = this.props.productdetail;
+       const { gallery,image } = this.props.productdetail;
        const styles ={
            displaynone:{
                display:'none'
            }
        };
-       if(!!gallery && gallery.length > 0){
+       if(!!image && image.length > 0){
            return(
                <div>
                     <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
@@ -906,7 +911,7 @@ class productdetail extends Component {
                     <div className="col-sm-12">
                         <div className="panel panel-default">
                             <div className="panel-body padding-ft0">
-                                <div className="col-md-12 col-sm-12 icon-detail">
+                                <div>
                                     <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
                                     <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                                     {this.zoomicon()}
@@ -919,37 +924,16 @@ class productdetail extends Component {
                                     }
                                     {/*<a><div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div></a>*/}
                                 </div>
-                                <div className="col-md-6 col-sm-12">
-                                    {this.renderImagegallery()}
-                                </div>
-                                <div className="col-md-6 col-sm-12">
-                                    <div className="col-md-12 col-sm-12">
-                                        {this.renderDesc()}
-                                    </div>
-                                    <div className="col-md-12 col-sm-12 top-line-detail">
-                                        {this.renderSetreference()}
-                                    </div>
-                                    <div className="col-md-12 col-sm-12 top-line-detail">
-                                        {/*this.renderReleteproduct()*/}
-                                    </div>
-                                </div>
-                                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
-                                    <div className={`${type != 'CER' ? 'line-border' : ''}`}></div>
-                                </div>
-                                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{/*this.renderAttr()*/}</div>
-                                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterDiamondsAttr()*/}</div>
-                                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterAttr()*/}</div>
-                                <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{/*this.renderFooterRawmatirialAttr()*/}</div>
-                                <div id="dvContainer" className="hidden">
-                                    <SetPrint productdetail={this.props.productdetail}
-                                        lotNumbers={lotNumbers} pageSize={stonePageSize} activePage={stonActivePage}/>
+                                <div>
+                                    {/*this.renderImagegallery()*/}
+                                    {this.renderSetDetailTable()}
                                 </div>
                             </div>
                         </div>
                     </div>
                     {this.renderAlertmsgCer()}
                </div>
-               <div className={`row ${!this.state.showmovement ? 'hide' : ''}`}>
+               {/*<div className={`row ${!this.state.showmovement ? 'hide' : ''}`}>
                    <div className="col-sm-12">
                        <div className="panel panel-default">
                            <div className="panel-body padding-ft0">
@@ -965,12 +949,11 @@ class productdetail extends Component {
                                     </div>
                                </div>
                                <div className="col-md-8 col-sm-12">
-                                    {/*this.renderDescmovement()*/}
                                </div>
                            </div>
                        </div>
                    </div>
-               </div>
+               </div>*/}
            </div>
        );
    }
