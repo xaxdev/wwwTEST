@@ -8,7 +8,7 @@ import {
     SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, POST_SAVESEARCH,
     SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER,FETCH_ALLPDF,ADD_NEWSETCATALOGITEM, GET_SETCATALOGNAME, GET_SETCATALOGITEMS,
     SET_RENAMESETCATALOG, SET_NEWSETCATALOGNAME, DELETE_SETCATALOG, SET_SHARESETCATALOG, SET_CLOSEALERTMSGSET, SET_SETCATALOGSORTBY,
-    SET_SETCATALOGSORTDIRECTION
+    SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
@@ -355,6 +355,23 @@ export function deleteCatalogItems(params){
     let url = `${ROOT_URL}/api/catalog/item`;
     return {
         type: DELETE_ITEMSFROMCATALOG,
+        promise: fetch(url,{
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(params)
+        }),
+        catalog: params.id
+    }
+}
+export function deleteSetCatalogItems(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/catalog/setitem`;
+    return {
+        type: DELETE_ITEMSFROMSETCATALOG,
         promise: fetch(url,{
             method: 'DELETE',
             headers: {

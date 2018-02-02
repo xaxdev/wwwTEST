@@ -3,7 +3,8 @@ import fetch from 'isomorphic-fetch';
 
 import {
     FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME,ADD_CATALOG,GET_CERTIFICATE,
-    GET_LOTNUMBER,GET_LOTNUMBERPAGE, GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS,ADD_NEWSETCATALOGITEM,GET_SETCATALOGNAME
+    GET_LOTNUMBER,GET_LOTNUMBERPAGE, GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS,ADD_NEWSETCATALOGITEM,GET_SETCATALOGNAME,
+    GET_SETCATALOGITEMSLIST, FETCH_SETCATALOGDETAILS
 } from '../constants/productdetailconstants';
 
 export function getItems(params){
@@ -42,7 +43,7 @@ export function getCatalogNameSetItem(params){
 }
 export function getSetCatalogName(params){
     const token = sessionStorage.token;
-    let url = `${ROOT_URL}/api/catalog/webnamessetcatalog`;
+    let url = `${ROOT_URL}api/catalog/webnamessetcatalog`;
 
     return {
         type: GET_SETCATALOGNAME,
@@ -88,7 +89,38 @@ export function getSetDetails(setReferenceId, setReferencelist){
         productlist:setReferencelist
     }
 }
-
+export function getSetCatalogDetails(setReferenceId, setReferencelist){
+    const token = sessionStorage.token;
+    return {
+        type: FETCH_SETCATALOGDETAILS,
+        promise: fetch(`${ROOT_URL}api/items/setdetails/${setReferenceId}`,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        }),
+        productid:setReferenceId.replace('-','/'),
+        productlist:setReferencelist
+    }
+}
+export function getSetCatalogItemsWithSetItem(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}api/catalog/setcatalogitem/${params.id}?page=${params.page}&size=${params.size}&sort=${params.sort}&order=${params.order}`;
+    return {
+        type: GET_SETCATALOGITEMSLIST,
+        promise: fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        }),
+        setReferenceId: params.setReferenceId
+    }
+}
 export function getMovement(params){
     const token = sessionStorage.token;
     let url = `${ROOT_URL}api/items/movement`;
@@ -233,7 +265,7 @@ export function addCatalog(params){
 
 export function addNewSetCatalogItem(params){
     const token = sessionStorage.token;
-    let url = `${ROOT_URL}/api/catalog/setcatalogitem`;
+    let url = `${ROOT_URL}api/catalog/setcatalogitem`;
     return {
         type: ADD_NEWSETCATALOGITEM,
         promise: fetch(url,{

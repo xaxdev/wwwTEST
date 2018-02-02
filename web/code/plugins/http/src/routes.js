@@ -190,6 +190,14 @@ export default ({ dispatch,getState}) => {
                     }, 'mycatalog');
                 }
             },{
+                onEnter: requireAuth,
+                path: 'setdetailsetcatalog/:id',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/products/setdetailsetcatalog'));
+                    }, 'setdetailsetcatalog');
+                }
+            },{
                 path: '*',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {

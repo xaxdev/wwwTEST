@@ -50,7 +50,7 @@ export default {
                             $set: {
                                 'description': setitem.description,
                                 'lastModified': new Date(),
-                                'priceInUSD': parseInt(setitem.priceUSD.replace(/,/g,'')),
+                                'priceInUSD': parseInt(setitem.priceUSD.toString().replace(/,/g,'')),
                                 'setReference': setitem.reference
                             }
                         },

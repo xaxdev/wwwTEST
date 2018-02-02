@@ -16,12 +16,12 @@ export default {
                 items.forEach(({id, reference}) => {
 
                     if (id !== null) {
-                        db.collection('CatalogItem').deleteMany({ 'catalogId': new ObjectID(request.payload.id), 'id': id.toString() }, (err, result) => {
+                        db.collection('SetCatalogItem').deleteMany({ 'setCatalogId': new ObjectID(request.payload.id), 'id': id.toString() }, (err, result) => {
                             if (err) reply(Boom.badImplementation('', err))
                         })
                     }
                     else {
-                        db.collection('CatalogItem').deleteMany({ 'catalogId': new ObjectID(request.payload.id), 'reference': reference }, (err, result) => {
+                        db.collection('SetCatalogItem').deleteMany({ 'setCatalogId': new ObjectID(request.payload.id), 'reference': reference }, (err, result) => {
                             if (err) reply(Boom.badImplementation('', err))
                         })
                     }

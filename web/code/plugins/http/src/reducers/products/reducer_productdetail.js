@@ -1,10 +1,11 @@
-import { FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,FETCH_SETREFERENCE,ADD_CATALOG,ADD_CATALOG_SUCCESS,
-        GET_LOTNUMBER,GET_LOTNUMBERPAGE,GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS
-        } from '../../constants/productdetailconstants';
+import {
+    FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,FETCH_SETREFERENCE,ADD_CATALOG,ADD_CATALOG_SUCCESS,GET_LOTNUMBER,GET_LOTNUMBERPAGE,
+    GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS, GET_SETCATALOGITEMSLIST,FETCH_SETCATALOGDETAILS
+} from '../../constants/productdetailconstants';
 import { GET_CATALOGNAME} from '../../constants/itemconstants';
 const INITIAL_STATE = {detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1,
                         setreference:'',ListCatalogName: [], lotNumbers: [],stonActivePage:1,totalpage:null
-                        ,stonePageSize:20, activities:[], allData:[]
+                        ,stonePageSize:20, activities:[], allData:[],setItemIndex:1,setItemList:[]
                       };
 
 
@@ -12,15 +13,19 @@ export default function(state = INITIAL_STATE,action){
     // console.log(action.type);
 
     switch (action.type) {
+        case FETCH_SETCATALOGDETAILS:
+            return {...state,detail:action.data, index:action.productlist?findSetIndex(action.productlist,action.productid):0
+              ,indexplus:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
+              ,pagego:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
+              ,productlist:action.productlist, totalpage: Math.ceil(action.data.length/20)}
+        case GET_SETCATALOGITEMSLIST :
+            return {
+                ...state, setItemIndex:action.data.allItems?findSetIndex(action.data.allItems,action.setReferenceId):0,
+                setItemList:action.data.allItems,pagego:action.data.allItems?findSetIndexPlus(action.data.allItems,action.setReferenceId):0
+            };
         case FETCH_ALLITEMS:
             return { ...state, allData: action.data.allData};
         case FETCH_SETDETAILS:
-            // console.log('FETCH_SETDETAILS-->',action.data);
-            // return {...state,detail:action.data,index:action.productlist?findproductindex(action.productlist,action.productid):0
-            //   ,indexplus:action.productlist?findproductindexplus(action.productlist,action.productid):0
-            //   ,pagego:action.productlist?findproductindexplus(action.productlist,action.productid):0
-            //   ,productlist:action.productlist,lotNumbers:!!action.data.lotNumbers ? filterLotNumbers(action.data.lotNumbers) : []
-            //   ,totalpage:Math.ceil(!!action.data.lotNumbers ? filterLotNumbers(action.data.lotNumbers).length/20 : action.data.length/20)}
             return {...state,detail:action.data, index:action.productlist?findSetIndex(action.productlist,action.productid):0
               ,indexplus:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
               ,pagego:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
@@ -53,7 +58,6 @@ export default function(state = INITIAL_STATE,action){
 }
 
 const findSetIndex = (productList, referenceId) => {
-    // console.log('findSetIndex-->',referenceId);
     for(let i = 0; i < productList.length; i++)
     {
        if(productList[i].reference == referenceId){

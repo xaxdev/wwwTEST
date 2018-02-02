@@ -207,7 +207,7 @@ class SetCatalog extends Component {
         })
         let paramsItem ={id: setCatalogId, items: items};
         if (setCatalogId != null) {
-            this.props.deleteCatalogItems(paramsItem).then( () =>{
+            this.props.deleteSetCatalogItems(paramsItem).then( () =>{
                 let params = {
                                 id: setCatalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: 16,
                                 sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
@@ -275,9 +275,8 @@ class SetCatalog extends Component {
         itemAdded = itemAdded[0];
         let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
         let objItem = {
-                        id: itemAdded.id, reference: itemAdded.reference, description: itemName,
-                        setCatalogId: setCatalogId
-                    };
+            id: itemAdded.id, reference: itemAdded.reference, description: itemName, setCatalogId: setCatalogId
+        };
 
         if(!this.state.enabledMyCatalog){
             listMyCatalog = [];
@@ -369,7 +368,7 @@ class SetCatalog extends Component {
           if (getIdReference[0] == 'id') {
               this.context.router.push(`/productmycatalog/${getIdReference[1]}`);
           } else {
-              this.context.router.push(`/setdetailmycatalog/${getIdReference[1].replace('/','-')}`);
+              this.context.router.push(`/setdetailsetcatalog/${getIdReference[1].replace('/','-')}`);
           }
       }
     }
@@ -634,7 +633,6 @@ class SetCatalog extends Component {
         params.users = paramEmails;
         this.props.shareSetCatalog(params)
             .then((response)=>{
-                console.log('response-->',response);
                 this.setState({isOpenShareMyCatalog: false});
                 this.props.setDataSendEmailTo('');
                 shareTo.onChange('');
@@ -837,17 +835,17 @@ class SetCatalog extends Component {
                             <div className="panel-body padding-ft0">
                                 <div className={'search-product' }>
                                     <GridItemsView  items={items} onClickGrid={this.onClickGrid}
-                                        onCheckedOneItemMySetCatalog={this.checkedOneItemMySetCatalog}
-                                        onDeleteOneItemMySetCatalog={this.deleteOneItemMySetCatalog}
+                                        onCheckedOneItemMyCatalog={this.checkedOneItemMySetCatalog}
+                                        onDeleteOneItemMyCatalog={this.deleteOneItemMySetCatalog}
                                         isCatalogShared={isCatalogShared} stateItem={this.state}
                                         ViewAsSet={ViewAsSet} listMyCatalog={listMyCatalog}/>
                                 </div>
                                 <div id="dvGridview" className="search-product hidden">
-                                  <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
-                                    onCheckedOneItemMySetCatalog={this.checkedOneItemMySetCatalog}
-                                    onDeleteOneItemMySetCatalog={this.deleteOneItemMySetCatalog}
-                                    isCatalogShared={isCatalogShared}
-                                    ViewAsSet={ViewAsSet}/>
+                                    <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
+                                      onCheckedOneItemMyCatalog={this.checkedOneItemMySetCatalog}
+                                      onDeleteOneItemMyCatalog={this.deleteOneItemMySetCatalog}
+                                      isCatalogShared={isCatalogShared}
+                                      ViewAsSet={ViewAsSet}/>
                                 </div>
                                 {/* Pagination */}
                                 <div className="col-sm-12 pagenavi maring-t20">

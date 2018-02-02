@@ -32,11 +32,13 @@ class Menu extends Component {
                                                                                 )?'active':''}`}>User Management</NavItem> : '';
         const MyCatalog = <NavDropdown id="catalog" title="Catalog">
                             <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog' ||
-                                                                    props.currentLocation.indexOf('productmycatalog') != -1
+                                                                    props.currentLocation.indexOf('productmycatalog') != -1 ||
+                                                                    props.currentLocation.indexOf('setdetailmycatalog') != -1
                                                                     )?'active': ''}`}
                                                         onClick={this.handleClickMyCatalog}>My Catalog</NavItem>
                             <NavItem href="/setatalog" className={`${(props.currentLocation == '/setcatalog' ||
-                                                                    props.currentLocation.indexOf('productmycatalog') != -1
+                                                                    props.currentLocation.indexOf('productmycatalog') != -1 ||
+                                                                    props.currentLocation.indexOf('setdetailsetcatalog') != -1
                                                                 )?'active': ''}`}
                                                         onClick={this.handleClickSetCatalog}>Set Catalog</NavItem>
                           </NavDropdown>;
@@ -61,7 +63,9 @@ class Menu extends Component {
                                                               props.currentLocation !== '/setcatalog' &&
                                                               props.currentLocation !== '/savesearch' &&
                                                               props.currentLocation !== '/whatnewnotification' &&
-                                                              props.currentLocation.indexOf('productmycatalog') == -1
+                                                              props.currentLocation.indexOf('productmycatalog') == -1 &&
+                                                              props.currentLocation.indexOf('setdetailmycatalog') == -1 &&
+                                                              props.currentLocation.indexOf('setdetailsetcatalog') == -1
                                                            )?'active':''}`}>Inventory Report</NavItem>
                   {/*<NavItem href="#">My Catalog</NavItem>*/}
                   {/*<NavDropdown  title="Download" id="basic-nav-dropdown">

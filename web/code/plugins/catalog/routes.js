@@ -110,5 +110,10 @@ export default [
         method: 'POST',
         path: '/sharedset',
         config: controllers.savesharedset
+    },
+    {
+        method: 'DELETE',
+        path: '/setitem',
+        config: controllers.removesetitem
     }
 ]
