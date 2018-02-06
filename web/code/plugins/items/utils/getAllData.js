@@ -317,63 +317,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
     }
 }
 
-const getSetReferencesData = async (setReferences, request) => {
-    const setReferencesData = [];
-    const elastic = new Elasticsearch.Client({
-        host: request.elasticsearch.host,
-        keepAlive: false
-    });
-    try {
-        const getSetreference = async (response) => {
-            console.log('response-->',response);
-            const query = JSON.parse(
-                `{
-                  "query":{
-                       "constant_score": {
-                         "filter": {
-                           "bool": {
-                             "must": [
-                               {
-                                 "match": {
-                                   "reference": "${response}"
-                                 }
-                               }
-                             ]
-                           }
-                         }
-                       }
-                    }
-                  }`
-            );
-
-            return elastic.search({
-                index: 'mol',
-                type: 'setitems',
-                body: query
-            });
-        };
-        const listSetData =  (setReferences) =>{
-            setReferences.map((set) => { return set.reference; });
-        }
-
-        Promise.all([listSetData(setReferences), getSetreference]).spread((setDatas, setReference) => {
-            let setData = setReference(set.reference);
-        })
-        .catch(function(err) {
-            elastic.close();
-            console.log(err);
-            return reply(Boom.badImplementation(err));
-        });
-
-        await console.log('setReferencesData-->',setReferencesData.length);
-        await elastic.close();
-        return setReferencesData
-    } catch (err) {
-        elastic.close();
-        throw err
-    }
-}
-
 const compareBy = (property, order = 'asc', userCurrency) => (a, b) => {
     if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
         return 0;
