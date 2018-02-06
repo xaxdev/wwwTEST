@@ -4,7 +4,7 @@ const GetSearchLotNumber = require('../utils/getSearchLotNaumber');
 const internals = {
     filters: []
 };
-module.exports = (request, fromRecord, sizeRecord, cb) => {
+module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
     let obj = request.payload;
     let page = request.payload.page;
     let sortBy = request.payload.sortBy;
@@ -373,7 +373,7 @@ module.exports = (request, fromRecord, sizeRecord, cb) => {
                           }
                         }`;
                 } else if(key == 'gemstones'){
-                    filter = GetSearchGemstone(key, obj, userCurrency);
+                    filter = GetSearchGemstone(key, obj, userCurrency, clarity);
                 } else if(key == 'lotNumbers'){
                     filter = GetSearchLotNumber(key, obj, userCurrency);
                 } else {
