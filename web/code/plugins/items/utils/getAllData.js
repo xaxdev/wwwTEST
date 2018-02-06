@@ -12,10 +12,31 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         let sumPriceData = [];
         let sumCostData = [];
         let exportData = null;
-        let itemCount = response.hits.total;
+        let itemCount = response.length;
         let avrgPrice = 0;
         let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-        let data = response.hits.hits.map((element) => element._source);
+        let data = response;
+        let clarityData = [];
+
+        if (!!keys.find((key) => {return key == 'gemstones'})) {
+            const valusObj = obj['gemstones'];
+            const clarityFields = Object.keys(valusObj);
+            if (!!clarityFields.find((key) => {return key == 'clarity'})) {
+                const clarities = valusObj.clarity.split(',');
+                clarities.map((clar) => {
+                    let newSource = data;
+                    newSource.map((item) => {
+                        if (item.gemstones.findIndex(({clarity}) => clarity === clar) != -1) {
+                            if (clarityData.findIndex(({reference}) => reference === item.reference) == -1) {
+                                clarityData.push(item);
+                            }
+                        }
+                    })
+
+                })
+                data = clarityData;
+            }
+        }
 
         if (itemsOrder != null) {
             data.map((item) => {
@@ -293,63 +314,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         return sendData;
     } catch (err) {
         console.log(err);
-    }
-}
-
-const getSetReferencesData = async (setReferences, request) => {
-    const setReferencesData = [];
-    const elastic = new Elasticsearch.Client({
-        host: request.elasticsearch.host,
-        keepAlive: false
-    });
-    try {
-        const getSetreference = async (response) => {
-            console.log('response-->',response);
-            const query = JSON.parse(
-                `{
-                  "query":{
-                       "constant_score": {
-                         "filter": {
-                           "bool": {
-                             "must": [
-                               {
-                                 "match": {
-                                   "reference": "${response}"
-                                 }
-                               }
-                             ]
-                           }
-                         }
-                       }
-                    }
-                  }`
-            );
-
-            return elastic.search({
-                index: 'mol',
-                type: 'setitems',
-                body: query
-            });
-        };
-        const listSetData =  (setReferences) =>{
-            setReferences.map((set) => { return set.reference; });
-        }
-
-        Promise.all([listSetData(setReferences), getSetreference]).spread((setDatas, setReference) => {
-            let setData = setReference(set.reference);
-        })
-        .catch(function(err) {
-            elastic.close();
-            console.log(err);
-            return reply(Boom.badImplementation(err));
-        });
-
-        await console.log('setReferencesData-->',setReferencesData.length);
-        await elastic.close();
-        return setReferencesData
-    } catch (err) {
-        elastic.close();
-        throw err
     }
 }
 
