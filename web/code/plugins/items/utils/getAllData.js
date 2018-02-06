@@ -12,10 +12,31 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         let sumPriceData = [];
         let sumCostData = [];
         let exportData = null;
-        let itemCount = response.hits.total;
+        let itemCount = response.length;
         let avrgPrice = 0;
         let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-        let data = response.hits.hits.map((element) => element._source);
+        let data = response;
+        let clarityData = [];
+
+        if (!!keys.find((key) => {return key == 'gemstones'})) {
+            const valusObj = obj['gemstones'];
+            const clarityFields = Object.keys(valusObj);
+            if (!!clarityFields.find((key) => {return key == 'clarity'})) {
+                const clarities = valusObj.clarity.split(',');
+                clarities.map((clar) => {
+                    let newSource = data;
+                    newSource.map((item) => {
+                        if (item.gemstones.findIndex(({clarity}) => clarity === clar) != -1) {
+                            if (clarityData.findIndex(({reference}) => reference === item.reference) == -1) {
+                                clarityData.push(item);
+                            }
+                        }
+                    })
+
+                })
+                data = clarityData;
+            }
+        }
 
         if (itemsOrder != null) {
             data.map((item) => {

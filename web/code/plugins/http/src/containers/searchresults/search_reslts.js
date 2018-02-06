@@ -348,7 +348,7 @@ class SearchResult extends Component {
             this.props.setShowListView(false);
             this.setState({ showLoading: true });
             this.props.getItems(params).then(async (value) => {
-                await his.props.getCatalogNameSetItem();
+                await this.props.getCatalogNameSetItem();
                 await this.props.getSetCatalogName();
                 this.setState({showLoading: false});
                 if(girdView){
@@ -654,7 +654,7 @@ class SearchResult extends Component {
         this.setState({ showLoading: true });
         this.props.setPageSize(pageSize);
         this.props.getItems(params).then(async (value) => {
-            await his.props.getCatalogNameSetItem();
+            await this.props.getCatalogNameSetItem();
             await this.props.getSetCatalogName();
             this.setState({showLoading: false});
             if(girdView){
