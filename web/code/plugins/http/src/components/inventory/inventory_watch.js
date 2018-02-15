@@ -661,7 +661,7 @@ class InventoryWatch extends Component {
         if(props.options != undefined){
             if (props.options.watchCategories) {
                 dataDropDowntWatchCategory.push(props.options.watchCategories.map(watchCategory =>{
-                    return ({value: watchCategory.code,label:watchCategory.code + ' [' + watchCategory.name + ']'});
+                    return ({value: watchCategory.code,label:watchCategory.name});
                 }))
                 dataDropDowntWatchCategory = dataDropDowntWatchCategory[0];
             }

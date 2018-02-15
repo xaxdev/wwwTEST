@@ -276,7 +276,7 @@ class InventoryGemStone extends Component {
     if(props.options != undefined){
       if (props.options.stoneType) {
         dataDropDowntstoneType.push(props.options.stoneType.map(stoneType =>{
-            return ({value: stoneType.code,label:stoneType.code + ' [' + stoneType.name + ']'});
+            return ({value: stoneType.code,label:stoneType.name});
           })
         )
         dataDropDowntstoneType = dataDropDowntstoneType[0];
@@ -348,7 +348,7 @@ class InventoryGemStone extends Component {
       }
       if (props.options.origins) {
         dataDropDowntOrigin.push(props.options.origins.map(origin =>{
-            return ({value: origin.code,label:origin.code + ' [' + origin.name + ']'});
+            return ({value: origin.code,label:origin.name});
           })
         )
         dataDropDowntOrigin = dataDropDowntOrigin[0];
