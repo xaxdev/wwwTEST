@@ -574,7 +574,7 @@ class InventoryStone extends Component {
         if(props.options != undefined){
             if (props.options.stoneType) {
                 dataDropDowntstoneType.push(props.options.stoneType.map(stoneType =>{
-                    return ({value: stoneType.code,label:stoneType.code + ' [' + stoneType.name + ']'});
+                    return ({value: stoneType.code,label:stoneType.name});
                 }))
                 dataDropDowntstoneType = dataDropDowntstoneType[0];
             }

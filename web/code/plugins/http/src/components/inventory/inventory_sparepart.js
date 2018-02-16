@@ -306,7 +306,7 @@ class InventorySparePart extends Component {
         if(props.options != undefined){
             if (props.options.sparePartType) {
                 dataDropDownSparePartType.push(props.options.sparePartType.map(sparePartType =>{
-                    return ({value: sparePartType.code,label:sparePartType.code + ' [' + sparePartType.name + ']'});
+                    return ({value: sparePartType.code,label:sparePartType.name});
                 }))
                 dataDropDownSparePartType = dataDropDownSparePartType[0];
             }
@@ -318,19 +318,19 @@ class InventorySparePart extends Component {
             }
             if (props.options.dominantStones) {
                 dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
-                    return ({value: dominantStone.code,label:dominantStone.code + ' [' + dominantStone.name + ']'});
+                    return ({value: dominantStone.code,label:dominantStone.name});
                 }))
                 dataDropDowntDominantStone = dataDropDowntDominantStone[0];
             }
             if (props.options.metalTypes) {
                 dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
-                    return ({value: metalType.code,label:metalType.code + ' [' + metalType.name + ']'});
+                    return ({value: metalType.code,label:metalType.name});
                 }))
                 dataDropDowntMetalType = dataDropDowntMetalType[0];
             }
             if (props.options.metalColours) {
                 dataDropDowntMetalColour.push(props.options.metalColours.map(metalColour =>{
-                    return ({value: metalColour.code,label:metalColour.code + ' [' + metalColour.name + ']'});
+                    return ({value: metalColour.code,label:metalColour.name});
                 }))
                 dataDropDowntMetalColour = dataDropDowntMetalColour[0];
             }
