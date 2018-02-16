@@ -574,7 +574,7 @@ class InventoryStone extends Component {
         if(props.options != undefined){
             if (props.options.stoneType) {
                 dataDropDowntstoneType.push(props.options.stoneType.map(stoneType =>{
-                    return ({value: stoneType.code,label:stoneType.code + ' [' + stoneType.name + ']'});
+                    return ({value: stoneType.code,label:stoneType.name});
                 }))
                 dataDropDowntstoneType = dataDropDowntstoneType[0];
             }
@@ -833,9 +833,6 @@ class InventoryStone extends Component {
                             </div>
                             <div className="form-group">
                                 <label className="col-sm-4 control-label tooltiop-span">Laboratory
-                                      {/*<OverlayTrigger placement="top" overlay={tooltipCertificateAgency}>
-                                        <img src="/images/alphanumeric.png" />
-                                      </OverlayTrigger>*/}
                                 </label>
                                 <div className="col-sm-7">
                                     <Select multi simpleValue value={props.CertificateAgencyValue}
