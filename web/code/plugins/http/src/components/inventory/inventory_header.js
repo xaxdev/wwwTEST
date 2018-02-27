@@ -136,7 +136,7 @@ class InventoryHeader extends Component {
         if (this.props.props.options != undefined){
             if (this.props.props.options.dominantStones) {
                 dataDropDowntDominantStone.push(this.props.props.options.dominantStones.map(dominantStone =>{
-                    return ({value: dominantStone.code,label:dominantStone.code + ' [' + dominantStone.name + ']'});
+                    return ({value: dominantStone.code,label:dominantStone.name});
                   }))
                 dataDropDowntDominantStone = dataDropDowntDominantStone[0];
             }
