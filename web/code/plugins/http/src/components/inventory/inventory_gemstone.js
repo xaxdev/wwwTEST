@@ -274,7 +274,7 @@ class InventoryGemStone extends Component {
           }
           if (props.options.gemstoneStoneType) {
             dataDropDowntGemstoneStoneType.push(props.options.gemstoneStoneType.map(gemstoneStoneType =>{
-                return ({value: gemstoneStoneType.code,label:gemstoneStoneType.code + ' [' + gemstoneStoneType.name + ']'});
+                return ({value: gemstoneStoneType.code,label:gemstoneStoneType.name});
               })
             )
             dataDropDowntGemstoneStoneType = dataDropDowntGemstoneStoneType[0];
