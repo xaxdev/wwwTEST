@@ -110,6 +110,4 @@ LEFT JOIN [ITORAMA].[dbo].[DominantStone] dominantstone
 LEFT JOIN [ITORAMA].[dbo].[Company] company
   ON item.[Company] = company.[Code]
 WHERE item.[Id] BETWEEN @from AND @to
---AND item.[Reference] in ('H8010485','1000000388','H8010479')
---WHERE item.[Reference] = '1000000388'
 ORDER BY item.[Id]

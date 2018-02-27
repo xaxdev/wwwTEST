@@ -77,7 +77,7 @@ INNER JOIN [ITORAMA].[dbo].[Jewelry] jewelry
     AND item.[Company] = jewelry.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
     ON item.[Reference] = img.[ITEMID]
-    AND img.[Company] = item.[Company]
+    --AND img.[Company] = item.[Company]
     AND img.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
     ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]

@@ -10,53 +10,53 @@ const migrate = async index => {
     try {
         const exchangeRates = await item.getExchangeRates();
 
-        // await item.getCertificates(index)
-        // await item.getJewelry(index, exchangeRates);
-        // await item.getLotNumbers(index, exchangeRates);
-        // await item.getStones(index, exchangeRates);
+        await item.getCertificates(index)
+        await item.getJewelry(index, exchangeRates);
+        await item.getLotNumbers(index, exchangeRates);
+        await item.getStones(index, exchangeRates);
         await item.getWatches(index, exchangeRates);
-        // await item.getOBA(index, exchangeRates);
-        // await item.getAccessory(index, exchangeRates);
-        // await item.getSpareParts(index, exchangeRates);
-        // await item.getMovementActivities(index);
-        // await item.getGOC(index);
-        //
-        // await master.getCompany(index);
-        // await master.getLocation(index);
-        // await master.getWarehouse(index);
-        // await master.getCountry(index);
-        // await master.getCut(index);
-        // await master.getCutShap(index);
-        // await master.getColor(index);
-        // await master.getClarity(index);
-        // await master.getSymmetry(index);
-        // await master.getFluorescence(index);
-        // await master.getOrigin(index);
-        // await master.getCollection(index);
-        // await master.getBrand(index);
-        // await master.getMetalType(index);
-        // await master.getMetalColor(index);
-        // await master.getCertificateAgency(index);
-        // await master.getDialIndex(index);
-        // await master.getDialColor(index);
-        // await master.getDialMetal(index);
-        // await master.getBuckleType(index);
-        // await master.getStrapType(index);
-        // await master.getStrapColor(index);
-        // await master.getJewelryCategory(index);
-        // await master.getWatchCategory(index);
-        // await master.getAccessoryType(index);
-        // await master.getSparePartType(index);
-        //
-        // await master.getCurrency(index);
-        // await master.getRole(index);
-        // await master.getProductGroup(index);
-        //
-        // await master.getDominantStones(index);
-        // await master.getGemstoneStoneType(index);
-        // await master.getStoneType(index);
-        // await master.getHierarchy(index);
-        // await master.getArticle(index);
+        await item.getOBA(index, exchangeRates);
+        await item.getAccessory(index, exchangeRates);
+        await item.getSpareParts(index, exchangeRates);
+        await item.getMovementActivities(index);
+        await item.getGOC(index);
+
+        await master.getCompany(index);
+        await master.getLocation(index);
+        await master.getWarehouse(index);
+        await master.getCountry(index);
+        await master.getCut(index);
+        await master.getCutShap(index);
+        await master.getColor(index);
+        await master.getClarity(index);
+        await master.getSymmetry(index);
+        await master.getFluorescence(index);
+        await master.getOrigin(index);
+        await master.getCollection(index);
+        await master.getBrand(index);
+        await master.getMetalType(index);
+        await master.getMetalColor(index);
+        await master.getCertificateAgency(index);
+        await master.getDialIndex(index);
+        await master.getDialColor(index);
+        await master.getDialMetal(index);
+        await master.getBuckleType(index);
+        await master.getStrapType(index);
+        await master.getStrapColor(index);
+        await master.getJewelryCategory(index);
+        await master.getWatchCategory(index);
+        await master.getAccessoryType(index);
+        await master.getSparePartType(index);
+
+        await master.getCurrency(index);
+        await master.getRole(index);
+        await master.getProductGroup(index);
+
+        await master.getDominantStones(index);
+        await master.getGemstoneStoneType(index);
+        await master.getStoneType(index);
+        await master.getHierarchy(index);
+        await master.getArticle(index);
 
     } catch (err) {
         throw err;

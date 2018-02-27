@@ -369,7 +369,6 @@ const mapStoneItem = (recordset, exchangeRates) => {
     let id = 0;
 
     for (let record of recordset) {
-        // console.log(record.id);
         if (id != record.id) {
             id = Number(record.id);
             const item = {...record};
@@ -383,7 +382,6 @@ const mapStoneItem = (recordset, exchangeRates) => {
             calculatePrices(item, exchangeRates);
             items.push(item);
         }
-        // console.log(items);
         const latest = items[items.length - 1];
         mapProperties(latest, record, exchangeRates);
     }
@@ -396,13 +394,10 @@ const mapStoneLotNumber = (recordset, exchangeRates) => {
     let id = 0;
 
     for (let record of recordset) {
-        // console.log(record.id);
-
         const item = {...record};
         calculatePrices(item, exchangeRates);
         lotNumbers.push(item);
 
-        // console.log(items);
         const latest = lotNumbers[lotNumbers.length - 1];
         mapPropertiesLotNumber(latest, record, exchangeRates);
     }
