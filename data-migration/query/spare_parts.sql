@@ -59,6 +59,7 @@ SELECT item.[Id] AS 'id'
     , ISNULL(img.[FILENAME], '') AS 'imageName'
     , ISNULL(img.[FILETYPE], '') AS 'imageType'
     , ISNULL(img.[TYPEID], '') AS 'imageTypeId'
+    , ISNULL(img.[Company], '') AS 'imageCompany'
     , ISNULL(cert.CERTIFICATIONNO, '') AS [CertificateNo]
     , ISNULL(cert.AGENCYID, '') AS [CertificateAgency]
     , ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
@@ -74,14 +75,14 @@ INNER JOIN [ITORAMA].[dbo].[SparePart] spareparts
   AND item.[Company] = spareparts.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
     ON item.[Reference] = img.[ITEMID]
-    AND img.[Company] = 'mme'
+    --AND img.[Company] = item.[Company]
     AND img.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
   ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
   AND item.[Company] = cert.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
   ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
-  AND certimage.[Company] = 'mme'
+  AND certimage.[Company] = item.[Company]
   AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
   ON cert.[CERTIFICATIONNO] = certmaster.[Item]

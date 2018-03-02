@@ -88,13 +88,14 @@ const mapProperties = (item, record, exchangeRates) => {
         };
         item.lotNumbers.push(stoneLotNumber);
     }
-    
+
     // add image, if not existed
     if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
         if (record.imageTypeId == 'Image') {
             const image = {
                 original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`,
+                conpany: `${record.imageCompany}`
             };
 
             item.gallery.push(image);
@@ -283,6 +284,21 @@ const calculatePrices = (item, exchangeRates) => {
     item.price = price;
 };
 
+const filterImages = (items) => {
+    items.map((item) => {
+
+        if (item.gallery.length > 1) {
+            const finndMME = item.gallery.findIndex(image => image.conpany === 'mme');
+            let image = [];
+            // found MME in gallery
+            if (finndMME !== -1) {
+                image = item.gallery.filter(image => image.conpany === 'mme');
+                item.gallery = image;
+            }
+        }
+    });
+};
+
 const mapItem = (recordset, exchangeRates) => {
     const items = [];
     let id = 0;
@@ -304,6 +320,8 @@ const mapItem = (recordset, exchangeRates) => {
         const latest = items[items.length - 1];
         mapProperties(latest, record, exchangeRates);
     }
+
+    filterImages(items);
 
     return items;
 };
@@ -351,7 +369,6 @@ const mapStoneItem = (recordset, exchangeRates) => {
     let id = 0;
 
     for (let record of recordset) {
-        // console.log(record.id);
         if (id != record.id) {
             id = Number(record.id);
             const item = {...record};
@@ -365,7 +382,6 @@ const mapStoneItem = (recordset, exchangeRates) => {
             calculatePrices(item, exchangeRates);
             items.push(item);
         }
-        // console.log(items);
         const latest = items[items.length - 1];
         mapProperties(latest, record, exchangeRates);
     }
@@ -378,13 +394,10 @@ const mapStoneLotNumber = (recordset, exchangeRates) => {
     let id = 0;
 
     for (let record of recordset) {
-        // console.log(record.id);
-
         const item = {...record};
         calculatePrices(item, exchangeRates);
         lotNumbers.push(item);
 
-        // console.log(items);
         const latest = lotNumbers[lotNumbers.length - 1];
         mapPropertiesLotNumber(latest, record, exchangeRates);
     }
