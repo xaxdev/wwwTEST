@@ -1,127 +1,120 @@
+import amqp from 'amqplib'
+import moment from 'moment-timezone';
+import sendgrid from 'sendgrid'
+import sendgridConfig from './sendgrid.json'
+
 const officegen = require('officegen');
 const docx = officegen ('docx');
 const htmlDocx = require('html-docx-js');
 const fs = require('fs');
 const path = require('path');
+const Confidence = require('confidence');
 
 (async _ => {
+    let userEmail = '';
+    let emailBody = '';
 
     try {
-        // docx.on ( 'finalize', function ( written ) {
-        // 			console.log ( 'Finish to create Word file.\nTotal bytes created: ' + written + '\n' );
-        // 		});
-        //
-        // docx.on ( 'error', function ( err ) {
-        // 			console.log ( err );
-        // 		});
-        // const table = [
-        // 	[{
-        // 		val: "No.",
-        // 		opts: {
-        // 			cellColWidth: 4261,
-        // 			b:true,
-        // 			sz: '48',
-        // 			shd: {
-        // 				fill: "7F7F7F",
-        // 				themeFill: "text1",
-        // 				"themeFillTint": "80"
-        // 			},
-        // 			fontFamily: "Avenir Book"
-        // 		}
-        // 	},{
-        // 		val: "Title1",
-        // 		opts: {
-        // 			b:true,
-        // 			color: "A00000",
-        // 			align: "right",
-        // 			shd: {
-        // 				fill: "92CDDC",
-        // 				themeFill: "text1",
-        // 				"themeFillTint": "80"
-        // 			}
-        // 		}
-        // 	},{
-        // 		val: "Title2",
-        // 		opts: {
-        // 			align: "center",
-        // 			cellColWidth: 42,
-        // 			b:true,
-        // 			sz: '48',
-        // 			shd: {
-        // 				fill: "92CDDC",
-        // 				themeFill: "text1",
-        // 				"themeFillTint": "80"
-        // 			}
-        // 		}
-        // 	}],
-        // 	[1,'All grown-ups were once children',''],
-        // 	[2,'there is no harm in putting off a piece of work until another day.',''],
-        // 	[3,'But when it is a matter of baobabs, that always means a catastrophe.',''],
-        // 	[4,'watch out for the baobabs!','END'],
-        // ]
-        //
-        // const tableStyle = {
-        // 	tableColWidth: 4261,
-        // 	tableSize: 24,
-        // 	tableColor: "ada",
-        // 	tableAlign: "left",
-        // 	tableFontFamily: "Comic Sans MS",
-        //     borders: true,
-        // }
-        //
-        // const data = [
-        //     [
-        //         { align: 'right' },
-        //         {type: "text",val: "Simple"},
-        //         {type: "text",val: " with color",opt: { color: '000088' }},
-        //         {type: "text",val: "  and back color.",opt: { color: '00ffff', back: '000088' }},
-        //         {type: "linebreak"},
-        //         {type: "text",val: "Bold + underline",opt: { bold: true, underline: true }}
-        //     ],
-        //     {type: "horizontalline"},
-        //     [
-        //         { backline: 'EDEDED' },
-        //         {type: "text",val: "  backline text1.",opt: { bold: true }},
-        //         {type: "text",val: "  backline text2.",opt: { color: '000088' }
-        //     	}
-        //     ],
-        //     {type: "text",val: "Left this text.",lopt: { align: 'left' }},
-        //     {type: "text",val: "Center this text.",lopt: { align: 'center' }},
-        //     {type: "text",val: "Right this text.",lopt: { align: 'right' }},
-        //     {type: "text",val: "Fonts face only.",opt: { font_face: 'Arial' }},
-        //     {type: "text",val: "Fonts face and size.",opt: { font_face: 'Arial', font_size: 40 }},
-        //     {type: "table",val: table,opt: tableStyle},
-        //     [
-        //         {},
-        //         {type: "image",path: path.resolve(__dirname, 'images/sword_001.png')},
-        //         {type: "image",path: path.resolve(__dirname, 'images/sword_002.png')}
-        //     ],
-        // ]
-        //
-        // const pObj = docx.createByJson(data);
-        //
-        // const out = fs.createWriteStream ( 'out_json.docx' );
-        //
-        // out.on ( 'error', function ( err ) {
-        // 	console.log ( err );
-        // });
-        //
-        // docx.generate ( out );
+        const save = (content, options, _pathDistFile) => new Promise((resolve, reject) => {
+            try {
+                fs.readFile(content, 'utf-8', function(err, html) {
+                    if (err) throw err;
 
-        const content = './import_html/leointer_20171019_141742.html';
-        const out =  'out_json.docx';
-
-        fs.readFile(content, 'utf-8', function(err, html) {
-            if (err) throw err;
-
-            var docx = htmlDocx.asBlob(html);
-            fs.writeFile(out, docx, function(err) {
-                if (err) throw err;
-                else{
-                    console.log("Docx has been created");
-                }
-            });
+                    var docx = htmlDocx.asBlob(html);
+                    fs.writeFile(_pathDistFile, docx, function(err) {
+                        if (err) throw err;
+                        else{
+                            console.log("Docx has been created");
+                            return resolve();
+                        }
+                    });
+                });
+            } catch (err) {
+                console.log(err)
+                notify(err);
+            }
         });
+
+        const notify = err => new Promise((resolve, reject) => {
+            const time = moment().tz('Asia/Bangkok').format()
+            const subject = (!!err)? `Failed print data to word  ${time}` : `Succeeded print data to word ${time}`
+            const sg = sendgrid(sendgridConfig.key)
+            const request = sg.emptyRequest()
+
+            request.method = 'POST'
+            request.path = '/v3/mail/send'
+            request.body = {
+                personalizations: [
+                    {
+                        to: [
+                            {
+                                email: userEmail
+                            }
+                        ],
+                        subject
+                    }
+                ],
+                from: {
+                    email: 'dev@itorama.com',
+                    name: 'Mouawad Admin'
+                },
+                content: [
+                    {
+                        type: 'text/plain',
+                        value: (!!err)? err.message : emailBody
+                    }
+                ]
+            };
+
+            sg
+                .API(request)
+                .then(response => {
+                    console.log(response.statusCode)
+                    console.log(response.body)
+                    console.log(response.headers)
+                    return resolve()
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        });
+
+        const store = new Confidence.Store(require('./config'));
+        const config = store.get('/', { env: process.env.NODE_ENV || 'development' });
+
+        const q = config.rabbit.channel;
+        const connection = await amqp.connect(config.rabbit.url);
+        const channel = await connection.createChannel();
+        let TotalQueue = await channel.assertQueue(q);
+        console.log('Total Queue-->',TotalQueue.messageCount);
+
+        channel.prefetch(1);
+
+        console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
+        channel.consume(q, async msg => {
+            let queue = await channel.assertQueue(q);
+
+            console.log('queue-->',queue.messageCount);
+            if (msg !== null) {
+                const obj = JSON.parse(msg.content.toString());
+                const userName = obj.userName;
+                userEmail = obj.userEmail;
+
+                const content = `./import_html/${userName}.html`;
+                const options = { format: 'A4', timeout: 30000 };
+
+                const _pathDistFile = path.resolve(__dirname, `../web/code/plugins/http/public/export_files/${userName}.docx`);
+
+                console.log(`user Email: ${userEmail}`);
+                await save(content, options, _pathDistFile);
+                console.log('writing word');
+                emailBody = '';
+                emailBody = `Please download the files only by today from below link ${obj.ROOT_URL}/export_files/${userName}.docx`;
+                await notify('');
+                channel.ack(msg)
+            }
+
+        }, {noAck: false})
 
     } catch (err) {
         console.log(err)

@@ -168,23 +168,34 @@ class SetCatalog extends Component {
         htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
 
         let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
-                        'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL};
-        this.props.writeHtml(params)
-            .then((value) => {
-                if (value) {
-                    this.setState({isOpenPrintPdfmsg: true});
-                }
-            });
-          this.setState({isOpenPrintOptions: false});
+                        'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'pdf'};
+        this.props.writeHtml(params).then((value) => {
+            if (value) {
+                this.setState({isOpenPrintPdfmsg: true});
+            }
+        });
+
+        this.setState({isOpenPrintOptions: false});
     }
     confirmExport = _ =>{
         const { items, allItems } = this.props.listSetCatalogItems;
         // console.log(this.props.listSetCatalogItems);
         const { setCatalogId,fields: {printPageWord}  } = this.props;
+        const host = HOSTNAME || 'localhost';
         const dataSet = printPageWord == 'all' ? allItems : items;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+
         let htmlTemplate = '';
         htmlTemplate = GenTemplateWordHtml(this, dataSet);
-        console.log(htmlTemplate);
+        let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
+                        'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'word'};
+        this.props.writeHtml(params).then((value) => {
+            if (value) {
+                this.setState({isOpenPrintPdfmsg: true});
+            }
+        });
         this.setState({isOpenWordOptions: false});
     }
     showDialogPrintOptions = _ =>{
@@ -634,7 +645,7 @@ class SetCatalog extends Component {
 
     renderAlertmsgPdf = _=> {
       const message = 'Please check your email for printing files.';
-      const title = 'MY CATALOG';
+      const title = 'SET CATALOG';
       return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
           props={this.props} message={message}  title={title}/>);
     }
