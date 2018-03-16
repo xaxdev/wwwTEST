@@ -1,8 +1,8 @@
 #!/bin/bash
 
 SOURCE="/media/mol/"
-ORIGINAL="/var/www/mol/web/code/plugins/http/public/images/products/original"
-THUMBNAIL="/var/www/mol/web/code/plugins/http/public/images/products/thumbnail"
+ORIGINAL="/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/original"
+THUMBNAIL="/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail"
 
 PROCESS=0
 PROCESS=`ps | grep resizer.sh |grep -v grep |wc -l`

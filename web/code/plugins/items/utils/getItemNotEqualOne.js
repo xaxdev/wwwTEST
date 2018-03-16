@@ -4,7 +4,7 @@ import numberFormat2digit from './convertNumberformatwithcomma2digit';
 
 export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPermissionPrice){
     let imgPath = env == 'production'
-                            ? 'file:///var/www/mol/web/code/plugins/http/public/images/'
+                            ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                             : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
 
     let imagesThumbnail = (item.image) != undefined
