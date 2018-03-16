@@ -27,7 +27,7 @@ export default function GenTemplateHtml(items, userLogin){
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     // dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
-    dvGridview = dvGridview.replace(/\/images\//g,'file:///var/www/mol/web/code/plugins/http/public/images/');
+    dvGridview = dvGridview.replace(/\/images\//g,'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/');
     dvGridview = dvGridview.replace(/class="col-md-3 col-sm-3 nopadding"/g,`style="${colmd3colsm3nopadding}"`);
     dvGridview = dvGridview.replace(/class="pull-right"/g,`style="${pullRight}"`);
     dvGridview = dvGridview.replace(/class="grid-add"/g,`style="${gridAdd}"`);
@@ -63,7 +63,7 @@ export default function GenTemplateHtml(items, userLogin){
                                                                                     ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/login-logo@2x.png'
                                                                                     :'/images/login-logo@2x.png';
                                                               imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
-                                                              imagesProduct = 'file:///var/www/mol/web/code/plugins/http/public' + imagesProduct;
+                                                              imagesProduct = 'file:///home/mol/www/projects/mol/web/code/plugins/http/public' + imagesProduct;
 
                                                               let itemName = (item.authorization)
                                                                                 ? (item.type != 'CER')?

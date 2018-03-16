@@ -288,7 +288,7 @@ const Promise = require('bluebird');
 
                                                     if (item[0] != '') {
                                                         let arrImages = item[0].split("/").slice(-1).pop();
-                                                        //   pathImage = '/var/www/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                                        //   pathImage = '/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
                                                         // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
                                                         pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
                                                     }else{
@@ -460,7 +460,7 @@ const Promise = require('bluebird');
 
                                                if (data[i][0] != '') {
                                                    let arrImages = data[i][0].split("/").slice(-1).pop();
-                                                   //   pathImage = '/var/www/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                                   //   pathImage = '/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
                                                    // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
                                                    pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
                                                }else{

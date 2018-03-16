@@ -32,9 +32,9 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     let stylePrice = 'color: #ae8f3b; font-weight: bold;';
     let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:123px;';
     let thumbnaillgridimg = 'width:120px;margin: 0 auto;';
-    // let imgPath = 'file:///var/www/mol/web/code/plugins/http/public/images/';
+    // let imgPath = 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/';
     let imgPath = env == 'production'
-                            ? 'file:///var/www/mol/web/code/plugins/http/public/images/'
+                            ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                             : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
 
 

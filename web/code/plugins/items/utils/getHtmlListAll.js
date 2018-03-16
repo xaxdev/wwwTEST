@@ -157,7 +157,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                 let jewelsWeight = 0;
                                                                 let grossWeight = 0;
                                                                 let imgPath = env == 'production'
-                                                                                        ? 'file:///var/www/mol/web/code/plugins/http/public/images/'
+                                                                                        ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                                                                                         : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
                                                                 if(item.price != undefined){
                                                                     price = (item.price[currency] != undefined) ?
