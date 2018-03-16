@@ -10,6 +10,7 @@ CMD_AWS=$(which aws)
 CMD_DATE=$(which date)
 CMD_MKDIR=$(which mkdir)
 CMD_MONGODUMP=$(which mongodump)
+CMD_TAR=$(which tar)
 
 FOLDER=$(${CMD_DATE}  +"%Y/%m")
 PATH=${ROOT}/${FOLDER}
@@ -17,7 +18,8 @@ FILE=${PATH}/$(${CMD_DATE} +"%Y%m%d_%H%M%S")${EXTENSION}
 
 ${CMD_MKDIR} ${PATH} -p
 
-${CMD_MONGODUMP} -h 10.128.133.78:27017 -d mol_development --archive=${FILE} --gzip
+${CMD_MONGODUMP} -h 10.128.133.78:27017 -d mol -o ${ROOT}
 #${CMD_MONGODUMP} -h 192.168.1.93:27017 -d mol_development --archive=${FILE} --gzip
+${CMD_TAR} -czvf ${FILE} ${ROOT}/mol/
 
 ${CMD_AWS} s3 cp ${FILE} s3://mouawad/mol/backup/mongodb/data/${FOLDER}/
