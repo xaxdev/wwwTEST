@@ -10,7 +10,7 @@ CMD_AWS=$(which aws)
 CMD_DATE=$(which date)
 CMD_MKDIR=$(which mkdir)
 CMD_MONGODUMP=$(which mongodump)
-CMD_TAR=$(which tar)
+CMD_TAR=$(which sudo tar)
 
 FOLDER=$(${CMD_DATE}  +"%Y/%m")
 PATH=${ROOT}/${FOLDER}
