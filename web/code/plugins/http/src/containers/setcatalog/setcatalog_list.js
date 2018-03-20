@@ -188,7 +188,7 @@ class SetCatalog extends Component {
         const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
 
         let htmlTemplate = '';
-        htmlTemplate = GenTemplateWordHtml(this, dataSet);
+        htmlTemplate = GenTemplateWordHtml(this, dataSet,ROOT_URL);
         let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
                         'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'word'};
         this.props.writeHtml(params).then((value) => {
