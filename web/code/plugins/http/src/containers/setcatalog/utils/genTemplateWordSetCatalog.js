@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import numberFormat from '../../../utils/convertNumberformat';
 
-export default function GenTemplateHtml(that, dataSet, ROOT_URL='', imagesReplace='', dv={}){
+export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='', dv={}){
     const items = dv.items;
     const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -86,9 +86,12 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL='', imagesReplac
                                     ? item.image[0].original
                                     : '/images/blank.gif'
                                 : '/images/blank.gif';
+        // const imgPath = env == 'production'
+        //                         ? `file:///var/www/mol/web/code/plugins/http/public${imagesProduct}`
+        //                         : `file:///home/dev/www/mol/web/code/plugins/http/public${imagesProduct}`;
         const imgPath = env == 'production'
-                                ? `file:///var/www/mol/web/code/plugins/http/public${imagesProduct}`
-                                : `file:///home/dev/www/mol/web/code/plugins/http/public${imagesProduct}`;
+                                ? `${ROOT_URL}${imagesProduct}`
+                                : `${ROOT_URL}${imagesProduct}`;
         htmlTemplate = htmlTemplate + `<div style="padding: 15px;position: relative;">
                                         <table id="listView" style="${tableStyle}" >
                                             <thead id="listView" style="${thead}">
