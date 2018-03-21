@@ -143,9 +143,9 @@ module.exports = {
               });
 
               if (isViewAsSet) {
-                  return reply(GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+                  return reply(GetAllData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
               }else {
-                  return reply(GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+                  return reply(GetAllData(allItemsResult, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
               }
           })
           .catch(function(err) {
