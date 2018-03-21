@@ -1,7 +1,7 @@
 import {FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE,
     SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, WRITE_HTML, POST_SAVESEARCH,
     SET_ISSAVESEARCH, SET_CLOSEALERTMSG, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH, GET_SAVECRITERIA,
-    DELETE_SAVESEARCH, SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH,FETCH_ALLPDF
+    DELETE_SAVESEARCH, SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH,FETCH_ALLPDF,FETCH_EXPORTITEMS
 } from '../../constants/itemconstants';
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE,
     SET_CLARITY, SET_CERTIFICATELAB, SET_POLISH, SET_SYMMETRY, SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN,
@@ -286,6 +286,9 @@ export default function(state = INITIAL_STATE, action){
                 maxPrice: action.data.summary.maxPrice,minPrice: action.data.summary.minPrice,
                 avrgPrice: action.data.summary.avrgPrice,listFileName: action.data.listFileName
             };
+            break;
+        case FETCH_EXPORTITEMS:
+            return {...state, currentPage:action.currPage };
             break;
         case FETCH_SORTING:
             switch(action.sortDirections){
