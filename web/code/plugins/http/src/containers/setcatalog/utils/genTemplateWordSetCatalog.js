@@ -10,7 +10,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
 
     const listView = 'width: 100%;border-radius: 0;margin-bottom: 0 !important;border: 0;box-shadow: none;';
     const tableStyle = 'width: 100%;max-width: 100%;margin-bottom: 20px;border: 1px solid #ddd;background-color: transparent;border-spacing: 0;border-collapse: collapse;';
-    const imgCenter = 'margin: 0 auto;text-align: center;';
+    const imgCenter = 'margin: 0 auto;text-align: center;width: 500px;';
     const divTotal = `background-color: #dddddd;float: left;width: 100%;padding: 10px 10px;text-align: center;font-family: '${'Open Sans'}', sans-serif;font-size: 14px;`
     const fontbfc000  = `font-weight: bold;font-family: '${'Open Sans'}';color: #000;margin: 0 0 10px;`;
     const fontw9 = `font-weight: 900;text-align: center;color: #383735;font-family: '${'Open Sans'}', sans-serif;font-size: 14px;`
@@ -81,9 +81,10 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
         const totalActualCost = (item.totalActualCost) != undefined ? numberFormat(item.totalActualCost['USD']) : '-'
         const totalUpdatedCost = (item.totalUpdatedCost) != undefined ? numberFormat(item.totalUpdatedCost['USD']) : '-'
         const totalPrice = (item.totalPrice) != undefined ? numberFormat(item.totalPrice['USD']) : '-'
+
         const imagesProduct = (item.image) != undefined
                                 ? item.image.length != 0
-                                    ? item.image[0].original
+                                    ? item.image[0].thumbnail
                                     : '/images/blank.gif'
                                 : '/images/blank.gif';
         // const imgPath = env == 'production'
@@ -154,7 +155,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
                                             </tbody>
                                         </table>
                                         <div id="imgset" style="${imgCenter}">
-                                            <img src="${imgPath}" name="${item.setReference}" id="${item.setReference}">
+                                            <img src="${imgPath}" name="${item.setReference}" id="${item.setReference}" style="${imgCenter}">
                                         </div>
                                     </div>`
     })
