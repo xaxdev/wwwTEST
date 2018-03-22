@@ -3,7 +3,7 @@
     "name": "data-migration",
     "script"      : "./release/job.js",
     "watch"       : false,
-    "env": {
+    "env_production": {
       "NODE_ENV": "production",
     },
     "merge_logs": true,
