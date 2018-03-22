@@ -84,7 +84,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
 
         const imagesProduct = (item.image) != undefined
                                 ? item.image.length != 0
-                                    ? item.image[0].thumbnail
+                                    ? item.image[0].original
                                     : '/images/blank.gif'
                                 : '/images/blank.gif';
         // const imgPath = env == 'production'
