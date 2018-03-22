@@ -19,14 +19,14 @@ class RenderClassTotals extends Component {
                         <span className="font-w9">{ numberFormat(!!listSetCatalogItems?listSetCatalogItems.total_setitems:0) } Sets </span>
                         <span className="padding-lf15">|</span>
                     </span>
-                    <span className={`spSetItemsPublicPrice ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                    <span className={`spSetItemsPublicPrice${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                             || userLogin.permission.price == 'All') ?
-                            '' : 'hidden'}`}>
+                            '' : ' hidden'}`}>
                         <span className="font-b fc-000">Total Public Price(Set) :</span>
                         <span className="font-w9">{ _totalPublicPriceSet } USD</span>
                     </span>
-                    <span className={`spSetItemsUpdated ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
-                        '' : 'hidden'}`}>
+                    <span className={`spSetItemsUpdated${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                        '' : ' hidden'}`}>
                         <span className="padding-lf15"> | </span>
                         <span className="font-b fc-000">Total Updated Cost(Set) :</span>
                         <span className="font-w9">{ _totalUpdatedCostSet } USD

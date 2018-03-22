@@ -15,18 +15,21 @@ module.exports = {
       maxBytes: 94371840
   },
   handler: (request, reply) => {
+      const channel = request.payload.channel;
       const amqpHost = request.server.plugins.amqp.host;
-      const amqpChannel = request.server.plugins.amqp.channelPdf;
+      const amqpChannel = channel == 'pdf'? request.server.plugins.amqp.channelPdf: request.server.plugins.amqp.channelWord;
 
       try {
           (async _ => {
 
-              console.log('writing html...');
+              console.log('writing...');
               let temp = request.payload.temp;
               let userName =  request.payload.userName;
               console.log('userName-->',userName);
 
-              const destination = Path.resolve(__dirname, '../../../../../pdf/import_html')
+              const destination = channel == 'pdf'
+                                    ? Path.resolve(__dirname, '../../../../../pdf/import_html')
+                                    : Path.resolve(__dirname, '../../../../../word-export/import_html')
 
               await file.write(`${destination}/${userName}.html`, temp);
               console.log('writing done!');
@@ -36,7 +39,6 @@ module.exports = {
 
                   ch.assertQueue(q);
                   // Note: on Node 6 Buffer.from(msg) should be used
-                //   console.log('request.payload.ROOT_URL-->',request.payload.ROOT_URL);
                   let params = {
                                 'userName': userName,
                                 'userEmail': request.payload.userEmail,
