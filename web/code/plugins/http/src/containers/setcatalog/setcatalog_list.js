@@ -180,7 +180,13 @@ class SetCatalog extends Component {
     confirmExport = _ =>{
         const { items, allItems } = this.props.listSetCatalogItems;
         // console.log(this.props.listSetCatalogItems);
-        const { setCatalogId,fields: {printPageWord}  } = this.props;
+        const { setCatalogId, fields: {printPageWord}, listSetCatalogItems  } = this.props;
+        const { setItemPrice, setItemUpdatedCost } = listSetCatalogItems;
+        const _totalPages = numberFormat(!!listSetCatalogItems?listSetCatalogItems.total_pages:0)
+        const _totalSetItems = numberFormat(!!listSetCatalogItems?listSetCatalogItems.total_setitems:0)
+        const _totalPublicPriceSet = (setItemPrice!=null) ? numberFormat(setItemPrice) : 0;
+        const _totalUpdatedCostSet = (setItemUpdatedCost!=null) ? numberFormat(setItemUpdatedCost) : 0;
+
         const host = HOSTNAME || 'localhost';
         const dataSet = printPageWord == 'all' ? allItems : items;
         const userLogin = JSON.parse(sessionStorage.logindata);
@@ -188,7 +194,7 @@ class SetCatalog extends Component {
         const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
 
         let htmlTemplate = '';
-        htmlTemplate = GenTemplateWordHtml(this, dataSet,ROOT_URL);
+        htmlTemplate = GenTemplateWordHtml(this, dataSet, ROOT_URL, _totalPublicPriceSet, _totalUpdatedCostSet, _totalSetItems, _totalPages);
         let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
                         'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'word'};
         this.props.writeHtml(params).then((value) => {

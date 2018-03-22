@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import numberFormat from '../../../utils/convertNumberformat';
 
-export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='', dv={}){
-    const items = dv.items;
+export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPriceSet, _totalUpdatedCostSet, _totalSetItems, _totalPages){
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     const printPrice = 'public';
@@ -41,7 +40,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
                                                 <span>
                                                     <span style="${fontbfc000}">All Pages :</span>
                                                     <span style="${fontw9}">
-                                                        <span>2</span>
+                                                        <span>${_totalPages}</span>
                                                         <span> Pages </span>
                                                     </span>
                                                     <span style="${paddinglf15}">|</span>
@@ -49,36 +48,34 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
                                                 <span>
                                                     <span style="${fontbfc000}">Total SetItems :</span>
                                                     <span style="${fontw9}">
-                                                        <span>22</span>
+                                                        <span>${_totalSetItems}</span>
                                                         <span> Sets </span>
                                                     </span>
-                                                </span>
-                                                <span style="${(userLogin.permission.price == 'Public'
-                                                    || userLogin.permission.price == 'Updated'
-                                                    || userLogin.permission.price == 'All') ?
-                                                    that.state.sellingCost? '': hidden : hidden}">
-                                                    <span style="${paddinglf15}">|</span>
-                                                    <span style="${fontbfc000}">Total Public Price(Set) :</span>
-                                                    <span style="${fontw9}">
-                                                        <span>24,689,956</span>
-                                                        <span> USD</span>
-                                                    </span>
-                                                </span>
-                                                <span style="${(userLogin.permission.price == 'Updated'
-                                                    || userLogin.permission.price == 'All' ) ?
-                                                    that.state.updatedCost? '': hidden : hidden}">
-                                                    <span style="${paddinglf15}"> | </span>
-                                                    <span style="${fontbfc000}">Total Updated Cost(Set) :</span>
-                                                    <span style="${fontw9}">
-                                                        <span>6,165,545</span>
-                                                        <span> USD</span>
-                                                    </span>
-                                                </span>
-                                            </div>
+                                                </span>`
+                                                if (chkSellingCost) {
+                                                    htmlTemplate = htmlTemplate + `<span>
+                                                                                        <span style="${paddinglf15}">|</span>
+                                                                                        <span style="${fontbfc000}">Total Public Price(Set) :</span>
+                                                                                        <span style="${fontw9}">
+                                                                                            <span>${_totalPublicPriceSet}</span>
+                                                                                            <span> USD</span>
+                                                                                        </span>
+                                                                                    </span>`
+                                                }
+                                                if (chkUpdateCost) {
+                                                    htmlTemplate = htmlTemplate + `<span>
+                                                                                        <span style="${paddinglf15}"> | </span>
+                                                                                        <span style="${fontbfc000}">Total Updated Cost(Set) :</span>
+                                                                                        <span style="${fontw9}">
+                                                                                            <span>${_totalUpdatedCostSet}</span>
+                                                                                            <span> USD</span>
+                                                                                        </span>
+                                                                                    </span>`
+                                                }
+            htmlTemplate = htmlTemplate + `</div>
                                         </div>
                                     </div>`
     dataSet.map((item) => {
-        console.log('that.state.sellingCost-->',that.state.sellingCost);
         const totalActualCost = (item.totalActualCost) != undefined ? numberFormat(item.totalActualCost['USD']) : '-';
         const totalUpdatedCost = (item.totalUpdatedCost) != undefined ? numberFormat(item.totalUpdatedCost['USD']) : '-';
         const totalPrice = (item.totalPrice) != undefined ? numberFormat(item.totalPrice['USD']) : '-';
@@ -89,7 +86,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
                                 ? that.state.updatedCost? true: false
                                 : false;
         const chkSellingCost = userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'
-                                ? that.state.updatedCost? true: false
+                                ? that.state.sellingCost? true: false
                                 : false;
 
         const imagesProduct = (item.image) != undefined
