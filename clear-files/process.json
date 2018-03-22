@@ -4,7 +4,7 @@
     "script": "./bootstrap.js",
     "node_args": "--max_old_space_size=2048",
     "watch": false,
-    "env": {
+    "env_production": {
       "NODE_ENV": "production",
     },
     "merge_logs": true,
