@@ -24,6 +24,15 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
     const bgebtdtextRight = `border: 1px solid #5c5954;vertical-align: middle;padding: 5px;line-height: 1.42857143;word-break: initial !important;font-weight: bold;font-family: '${'Open Sans'}';color: #000;background-color: #ebd79a;text-align: right;`
     const hidden = 'display: none !important;visibility: hidden !important;'
 
+    const chkGroupCost = userLogin.permission.price == 'All'
+                            ? that.state.groupCost? true: false
+                            : false;
+    const chkUpdateCost = userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'
+                            ? that.state.updatedCost? true: false
+                            : false;
+    const chkSellingCost = userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'
+                            ? that.state.sellingCost? true: false
+                            : false;
     let htmlTemplate = '';
 
     htmlTemplate = `<html>
@@ -79,15 +88,6 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
         const totalActualCost = (item.totalActualCost) != undefined ? numberFormat(item.totalActualCost['USD']) : '-';
         const totalUpdatedCost = (item.totalUpdatedCost) != undefined ? numberFormat(item.totalUpdatedCost['USD']) : '-';
         const totalPrice = (item.totalPrice) != undefined ? numberFormat(item.totalPrice['USD']) : '-';
-        const chkGroupCost = userLogin.permission.price == 'All'
-                                ? that.state.groupCost? true: false
-                                : false;
-        const chkUpdateCost = userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'
-                                ? that.state.updatedCost? true: false
-                                : false;
-        const chkSellingCost = userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'
-                                ? that.state.sellingCost? true: false
-                                : false;
 
         const imagesProduct = (item.image) != undefined
                                 ? item.image.length != 0
