@@ -78,9 +78,19 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
                                         </div>
                                     </div>`
     dataSet.map((item) => {
-        const totalActualCost = (item.totalActualCost) != undefined ? numberFormat(item.totalActualCost['USD']) : '-'
-        const totalUpdatedCost = (item.totalUpdatedCost) != undefined ? numberFormat(item.totalUpdatedCost['USD']) : '-'
-        const totalPrice = (item.totalPrice) != undefined ? numberFormat(item.totalPrice['USD']) : '-'
+        console.log('that.state.sellingCost-->',that.state.sellingCost);
+        const totalActualCost = (item.totalActualCost) != undefined ? numberFormat(item.totalActualCost['USD']) : '-';
+        const totalUpdatedCost = (item.totalUpdatedCost) != undefined ? numberFormat(item.totalUpdatedCost['USD']) : '-';
+        const totalPrice = (item.totalPrice) != undefined ? numberFormat(item.totalPrice['USD']) : '-';
+        const chkGroupCost = userLogin.permission.price == 'All'
+                                ? that.state.groupCost? true: false
+                                : false;
+        const chkUpdateCost = userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'
+                                ? that.state.updatedCost? true: false
+                                : false;
+        const chkSellingCost = userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'
+                                ? that.state.updatedCost? true: false
+                                : false;
 
         const imagesProduct = (item.image) != undefined
                                 ? item.image.length != 0
@@ -100,20 +110,20 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
                                                     <th style="${th}"><span>Item Reference</span></th>
                                                     <th style="${th}"><span>Warehouse</span></th>
                                                     <th style="${th}"><span>Description</span></th>
-                                                    <th style="${th}"><span>Stone Detail</span></th>
-                                                    <th style="${th} ${(userLogin.permission.price == 'All') ?
-                                                        that.state.groupCost? '': hidden : hidden}">
-                                                        <span>Group Cost Price (USD)</span></th>
-                                                    <th style="${th} ${(userLogin.permission.price == 'Updated'
-                                                        || userLogin.permission.price == 'All') ?
-                                                        that.state.updatedCost? '': hidden : hidden}">
-                                                        <span>Updated Cost Price (USD)</span></th>
-                                                    <th style="${th} ${(userLogin.permission.price == 'Public'
-                                                        || userLogin.permission.price == 'Updated'
-                                                        || userLogin.permission.price == 'All') ?
-                                                        that.state.sellingCost? '': hidden : hidden}">
-                                                        <span>Selling Cost Price (USD)</span></th>
-                                                </tr>
+                                                    <th style="${th}"><span>Stone Detail</span></th>`
+                                                    if (chkGroupCost) {
+                                                        htmlTemplate = htmlTemplate + `<th style="${th}">
+                                                                                            <span>Group Cost Price (USD)</span></th>`
+                                                    }
+                                                    if (chkUpdateCost) {
+                                                        htmlTemplate = htmlTemplate + `<th style="${th}">
+                                                                                            <span>Updated Cost Price (USD)</span></th>`
+                                                    }
+                                                    if (chkSellingCost) {
+                                                        htmlTemplate = htmlTemplate + `<th style="${th}">
+                                                                                            <span>Selling Cost Price (USD)</span></th>`
+                                                    }
+                htmlTemplate = htmlTemplate + `</tr>
                                             </thead>
                                             <tbody id="${item.setReference}">`
                                             if (item.items != undefined) {
@@ -126,32 +136,33 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
                                                         <td style="${td}">${subitem.reference}</td>
                                                         <td style="${td}">${subitem.warehouse}</td>
                                                         <td style="${td}">${subitem.description}</td>
-                                                        <td style="${tdLeft}">${subitem.stoneDetail}</td>
-                                                        <td style="${tdRight} ${(userLogin.permission.price == 'All') ?
-                                                            that.state.groupCost? '': hidden : hidden}">${actualCost}</td>
-                                                        <td style="${tdRight} ${(userLogin.permission.price == 'Updated'
-                                                            || userLogin.permission.price == 'All') ?
-                                                            that.state.updatedCost? '': hidden : hidden}">${updatedCost}</td>
-                                                        <td style="${tdRight} ${(userLogin.permission.price == 'Public'
-                                                            || userLogin.permission.price == 'Updated'
-                                                            || userLogin.permission.price == 'All') ?
-                                                            that.state.sellingCost? '': hidden : hidden}">${price}</td>
-                                                    </tr>`
+                                                        <td style="${tdLeft}">${subitem.stoneDetail}</td>`
+                                                        if (chkGroupCost) {
+                                                            htmlTemplate = htmlTemplate + `<td style="${tdRight}">${actualCost}</td>`
+                                                        }
+                                                        if (chkUpdateCost) {
+                                                            htmlTemplate = htmlTemplate + `<td style="${tdRight}">${updatedCost}</td>`
+                                                        }
+                                                        if (chkSellingCost) {
+                                                            htmlTemplate = htmlTemplate + `<td style="${tdRight}">${price}</td>`
+                                                        }
+
+                    htmlTemplate = htmlTemplate + `</tr>`
                                                 })
                                             }
                 htmlTemplate = htmlTemplate +  `<tr>
                                                     <td colspan="3" style="${bdlbwhite}"></td>
-                                                    <td style="${bgebtdtextCenter}">Total</td>
-                                                    <td style="${bgebtdtextRight} ${(userLogin.permission.price == 'All') ?
-                                                        that.state.groupCost? '': hidden : hidden}">${totalActualCost}</td>
-                                                    <td style="${bgebtdtextRight} ${(userLogin.permission.price == 'Updated'
-                                                        || userLogin.permission.price == 'All') ?
-                                                        that.state.updatedCost? '': hidden : hidden}">${totalUpdatedCost}</td>
-                                                    <td style="${bgebtdtextRight} ${(userLogin.permission.price == 'Public'
-                                                        || userLogin.permission.price == 'Updated'
-                                                        || userLogin.permission.price == 'All') ?
-                                                        that.state.sellingCost? '': hidden : hidden}">${totalPrice}</td>
-                                                </tr>
+                                                    <td style="${bgebtdtextCenter}">Total</td>`
+                                                    if (chkGroupCost) {
+                                                        htmlTemplate = htmlTemplate + `<td style="${bgebtdtextRight}">${totalActualCost}</td>`
+                                                    }
+                                                    if (chkUpdateCost) {
+                                                        htmlTemplate = htmlTemplate + `<td style="${bgebtdtextRight}">${totalUpdatedCost}</td>`
+                                                    }
+                                                    if (chkSellingCost) {
+                                                        htmlTemplate = htmlTemplate + `<td style="${bgebtdtextRight}">${totalPrice}</td>`
+                                                    }
+                htmlTemplate = htmlTemplate + `</tr>
                                             </tbody>
                                         </table>
                                         <div id="imgset" style="${imgCenter}">
@@ -159,8 +170,6 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, imagesReplace='
                                         </div>
                                     </div>`
     })
-
-
     htmlTemplate = htmlTemplate + `</div>
                             </form>
                         </body>
