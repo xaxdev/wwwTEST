@@ -55,7 +55,7 @@ class ModalPrintOptions extends Component {
                                         }
                                     }
                                 }/>
-                                <label className="control-label checkbox1">Select All</label>
+                                <label className="control-label-word checkbox1">Select All</label>
                             </div>
                             <div className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
                                 '' : 'hidden'}`}>
@@ -66,7 +66,7 @@ class ModalPrintOptions extends Component {
                                         }
                                     }
                                 }/>
-                                <label className="control-label checkbox1">Total Updated Cost Price (USD)</label>
+                                <label className="control-label-word checkbox1">Total Updated Cost Price (USD)</label>
                             </div>
                         </div>
                         <div className="col-sm-6 checkbox checkbox-warning popexport">
@@ -78,7 +78,7 @@ class ModalPrintOptions extends Component {
                                         }
                                     }
                                 }/>
-                                <label className="control-label checkbox1">Total Group Cost Price (USD)</label>
+                                <label className="control-label-word checkbox1">Total Group Cost Price (USD)</label>
                             </div>
                             <div className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
@@ -89,15 +89,15 @@ class ModalPrintOptions extends Component {
                                         }
                                     }
                                 }/>
-                                <label className="control-label checkbox1">Total Selling Cost Price (USD)</label>
+                                <label className="control-label-word checkbox1">Total Selling Cost Price (USD)</label>
                             </div>
                         </div>
                     </div>
-                    <div className="modal-body bg-gray">
-                        <div className="col-md-6 col-sm-6 col-xs-6 maring-b10 nopadding">
+                    <div className="modal-body ">
+                        <div className="col-md-6 col-sm-6 col-xs-6 maring-b10 nopadding bg-gray">
                             <b>Please select a print choices.</b>
                         </div>
-                        <div className="col-md-6 col-sm-6 col-xs-6 pull-right maring-b10 text-right">
+                        <div className="col-md-6 col-sm-6 col-xs-6 pull-right maring-b10 text-right bg-gray">
                             <b>{`Total: ${totalPages}`}</b>
                         </div>
                     </div>
