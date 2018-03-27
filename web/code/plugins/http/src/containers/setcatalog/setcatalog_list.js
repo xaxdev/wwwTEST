@@ -766,7 +766,7 @@ class SetCatalog extends Component {
                 <form role="form">
                   {/* Header Search */}
                   <div className="col-sm-12 col-xs-12 padding-b10 bg-hearder-mycatalog">
-                      <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
+                      <div className="cat-title"><h1 className="text-center">SET CATALOG</h1></div>
                       <div className="col-md-12 col-sm-12 col-xs-12">
                             <div className="col-lg-7 col-md-6 col-sm-12 col-xs-12 nopadding">
                                 <div className="col-lg-7 col-md-7 col-sm-6 col-xs-12 nopadding">
