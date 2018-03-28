@@ -618,23 +618,23 @@ class productdetail extends Component {
 
         } else {
             if(!gemstoneAttr){
-              return(
-                <div>
-                    <center>
-                        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                        <Loading type="spin" color="#202020" width="10%"/>
-                    </center>
-                </div>
-              );
+                return(
+                    <div>
+                        <center>
+                            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                            <Loading type="spin" color="#202020" width="10%"/>
+                        </center>
+                    </div>
+                );
             }
             if(gemstoneAttr.length > 0){
                 if(checkInarrayObject('type','Loose Diamond',gemstoneAttr)){
-                  return(
-                      <div>
-                        <h2>DIAMONDS ATTRIBUTES</h2>
-                        <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} onClick={this.downloadCer} />
-                      </div>
-                  );
+                    return(
+                        <div>
+                            <h2>DIAMONDS ATTRIBUTES</h2>
+                            <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} onClick={this.downloadCer} />
+                        </div>
+                    );
                 }
             } else {
 
