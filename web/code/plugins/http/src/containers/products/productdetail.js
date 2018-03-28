@@ -70,7 +70,6 @@ class productdetail extends Component {
         this.setState({ productdetailLoading: true });
 
         this.props.getProductDetail(productId,productlist).then(()=>{
-            // console.log(this.props);
             const  Detail  = this.props.productdetail;
             const { lotNumbers } = this.props.productdetail;
             const { stonePageSize } = this.props;
@@ -80,7 +79,6 @@ class productdetail extends Component {
                 size: !!stonePageSize ? stonePageSize : 20
             };
             this.props.getLotNaumberPerPage(params);
-            //   console.log(Detail);
             if(Detail.type != 'STO' || Detail.type != 'CER'){
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
                 const currency = logindata.currency;
@@ -423,8 +421,8 @@ class productdetail extends Component {
                       </div>
                     );
             case 'STO':
-                   Attrtitle='STONE ATTRIBUTES';
-                 //   const totalpage = Math.ceil(Detail.lotNumber.length/this.state.stonePageSize);
+
+                 Attrtitle='STONE ATTRIBUTES';
                  if (lotNumbers.length > 0) {
                      return(
                          <div>
@@ -724,7 +722,6 @@ class productdetail extends Component {
 
     renderReleteproduct = _ => {
         const { totalpage,products,page } = this.props.productrelete;
-        //const reletepage = this.props.productreletepage;
         const productId = this.props.params.id;
         const { type,collection,subType,price,dominant } = this.props.productdetail;
         const { fields: { reletepage },handleSubmit} = this.props;
@@ -1053,7 +1050,6 @@ class productdetail extends Component {
                 }
             })
         }
-      //   console.log(allCer);
         let params = {
             'allCer': allCer,
             'userName': `${userLogin.username}`,
@@ -1298,8 +1294,6 @@ function mapStateToProps(state) {
         productrelete: state.productdetail.relete,
         listCatalogName: state.productdetail.ListCatalogName,
         message: state.productdetail.message,
-        //setreference:state.productdetail.setreference,
-        //productreletepage: state.productdetail.reletepage,
         productlist: state.productdetail.productlist,
         lotNumbers: state.productdetail.lotNumbers,
         stonActivePage: state.productdetail.stonActivePage,
@@ -1312,7 +1306,7 @@ function mapStateToProps(state) {
     }
 }
 
-module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
+module.exports = reduxForm({
     form: 'Pageform',
     fields: ['pagego','reletepage','oldCatalogName','newCatalogName','validateCatalogName','stonepage'],
     validate:validateCatalog
