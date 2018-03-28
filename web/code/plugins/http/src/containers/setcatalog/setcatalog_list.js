@@ -808,7 +808,7 @@ class SetCatalog extends Component {
                                         onClick={ this.showDialogPrintOptions }></div></a>
                                     <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`}
                                         onClick={ this.shareMySetCatalog }></div></a>
-                                    <a><div className={`${items.length == 0 ? 'hidden' : 'icon-print'}`} id="wordexport"
+                                    <a><div className={`${items.length == 0 ? 'hidden' : 'icon-word'}`} id="wordexport"
                                         onClick={ this.showDialogWordOptions }></div></a>
                                 </div>
                               </div>

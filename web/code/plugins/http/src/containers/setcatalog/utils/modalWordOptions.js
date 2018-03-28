@@ -27,20 +27,21 @@ class ModalPrintOptions extends Component {
         const totalPages = numberFormat(!!listSetCatalogItems?listSetCatalogItems.total_pages:0);
         const userLogin = JSON.parse(sessionStorage.logindata);
         return(
-            <div  className="addMyCatalog">
+            <div className="addMyCatalog popupword">
                 <Modal isOpen={isOpen} >
                     <div className="modal-header">
                         <ModalClose onClick={isClose}/>
                         <h1 className="modal-title">EXPORT SET CATALOG</h1>
                     </div>
-                    <div className="modal-body bg-gray">
+                    <div className="modal-body bg-gray text-center">
                         <div className="col-md-12 col-sm-12 col-xs-12 maring-b10 nopadding">
                             <b>Please choose additional fields for export.</b>
                         </div>
                     </div>
-                    <div className="modal-body">
-                        <div className="col-sm-6 checkbox checkbox-warning popexport">
-                            <div>
+                    <div className="modal-body col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-sm-1"></div>
+                        <div className="col-sm-6 checkbox checkbox-warning">
+                            <div className="maring-b10">
                                 <input type="checkbox" disabled={userLogin.permission.price != 'All'? true : false}
                                     checked={that.state.allFields} onChange={event => {
                                         that.setState({ allFields: event.target.checked });
@@ -69,7 +70,8 @@ class ModalPrintOptions extends Component {
                                 <label className="control-label-word checkbox1">Total Updated Cost Price (USD)</label>
                             </div>
                         </div>
-                        <div className="col-sm-6 checkbox checkbox-warning popexport">
+                        <div className="col-sm-5 checkbox checkbox-warning">
+                            <div className="maring-b10">
                             <div className={`${(userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
                                 <input type="checkbox" checked={that.state.groupCost} onChange={event => {
                                         that.setState({ groupCost: event.target.checked });
@@ -80,6 +82,8 @@ class ModalPrintOptions extends Component {
                                 }/>
                                 <label className="control-label-word checkbox1">Total Group Cost Price (USD)</label>
                             </div>
+                            </div>
+                            <div className="maring-b10">
                             <div className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                                 || userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
                                 <input type="checkbox" checked={that.state.sellingCost} onChange={event => {
@@ -91,21 +95,22 @@ class ModalPrintOptions extends Component {
                                 }/>
                                 <label className="control-label-word checkbox1">Total Selling Cost Price (USD)</label>
                             </div>
+                            </div>
                         </div>
                     </div>
-                    <div className="modal-body ">
-                        <div className="col-md-6 col-sm-6 col-xs-6 maring-b10 nopadding bg-gray">
+                    <div className="modal-body col-md-12 col-sm-12 col-xs-12 bg-gray">
+                        <div className="col-md-6 col-sm-6 col-xs-6 maring-b10 nopadding">
                             <b>Please select a print choices.</b>
                         </div>
-                        <div className="col-md-6 col-sm-6 col-xs-6 pull-right maring-b10 text-right bg-gray">
+                        <div className="col-md-6 col-sm-6 col-xs-6 pull-right maring-b10 text-right">
                             <b>{`Total: ${totalPages}`}</b>
                         </div>
                     </div>
-                    <div className="modal-body">
-                        <div className="col-md-12 maring-b10 nopadding">
-                            <div className="col-sm-12 col-xs-12 nopadding">
-                                <div className="col-sm-2 col-xs-2 nopadding"><b>Page</b></div>
-                                <div className="col-sm-8 col-xs-8 nopadding">
+                    <div className="modal-body col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-md-12 col-sm-12 col-xs-12 maring-b10 nopadding">
+                            <div className="col-md-12 col-sm-12 col-xs-12 nopadding">
+                                <div className="col-md-5 col-sm-5 col-xs-5 text-right"><b>Page</b></div>
+                                <div className="col-sm-7 col-xs-7">
                                     <div className="radio">
                                         <input type="radio" {...printPageWord} value="all"
                                             checked={printPageWord.value === 'all'}

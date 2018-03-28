@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [6,5,4,3,2,1];
+            const roundData = [7,6,5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -321,6 +321,21 @@ class WhatNewNotification extends Component {
                                                   <p>1. User search by condition 'Set Reference Number</p>
                                                   <p>2. At Search Result page,user can select sort by 'Set Item Reference' to get the result as Necklace, Bracelet, Earring and Ring.</p>
                                                       <div style="margin:15px 0px; text-align:center;"><img src="/images/set-item.gif"/></div>
+                                                  </div>`
+                                              }
+                                            ]
+                                },
+                                {
+                                    'id': 7,
+                                    'round': 'March 2018',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'To Remove Code in Search Criteria and Show only Description',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 28, 2018</p>
+                                                  <p style="padding:17px 0px 0px 0px">Show only 'Description' when user click at (Dominant Stone, Jewelry Category, Watch Category, Accessory Type, Spare Part Type, Collection, Brand, Metal Type, Stone Type) fields.</p>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/to-remove-code.gif"/></div>
                                                   </div>`
                                               }
                                             ]
