@@ -15,10 +15,19 @@ import ModalShareMyCatalog from '../../utils/modalShareMyCatalog';
 import validateEmail from '../../utils/validateemail';
 import RenderClassTotals from './utils/render_total';
 import ModalPrintOptions from './utils/modalPrintOptions';
+import ModalWordOptions from './utils/modalWordOptions';
+import GenTemplateWordHtml from './utils/genTemplateWordSetCatalog';
 
 import { LASTMODIFIED, REFERENCE, DESCRIPTION, DESCENDING, ASCENDING } from '../../constants/itemconstants';
 
 const Loading = require('react-loading');
+
+const checkFields = ['all','groupCost','updatedCost', 'sellingCost'];
+
+const labels = {
+    all: 'Select All', groupCost: 'Total Group Cost Price (USD)', updatedCost: 'Total Updated Cost Price (USD)',
+    sellingCost: 'Total Selling Cost Price (USD)'
+}
 
 const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17',
       '18','19', '20', '21', '22', '23', '24','25','26','27', '28', '29', '30', '31','32','33','34','35',
@@ -55,12 +64,14 @@ class SetCatalog extends Component {
         this.shareMySetCatalog = this.shareMySetCatalog.bind(this);
         this.selectedPageSize = this.selectedPageSize.bind(this);
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
+        this.confirmExport = this.confirmExport.bind(this);
 
         this.state = {
           activePage: !!this.props.currentPage?this.props.currentPage:1, isOpenDeleteItem: false, isOpenAddMyCatalogmsg: false,
           isTooltipActive: false, isOpenDeleteCatalog: false, enabledMyCatalog: false, isOpenDeleteAllItem: false,
           isOpenZeroCatalog: true, isOpenPrintPdfmsg: false, isOpenShareMyCatalog: false, checkAllItems: false,
-          isOpenPrintOptions: false
+          isOpenPrintOptions: false, isOpenWordOptions: false, allFields: false, groupCost: false, updatedCost: false,
+          sellingCost: false
         }
     }
 
@@ -157,16 +168,42 @@ class SetCatalog extends Component {
         htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
 
         let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
-                        'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL};
-        this.props.writeHtml(params)
-            .then((value) => {
-                if (value) {
-                    this.setState({isOpenPrintPdfmsg: true});
-                }
-            });
-          this.setState({isOpenPrintOptions: false});
-    }
+                        'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'pdf'};
+        this.props.writeHtml(params).then((value) => {
+            if (value) {
+                this.setState({isOpenPrintPdfmsg: true});
+            }
+        });
 
+        this.setState({isOpenPrintOptions: false});
+    }
+    confirmExport = _ =>{
+        const { items, allItems } = this.props.listSetCatalogItems;
+        // console.log(this.props.listSetCatalogItems);
+        const { setCatalogId, fields: {printPageWord}, listSetCatalogItems  } = this.props;
+        const { setItemPrice, setItemUpdatedCost } = listSetCatalogItems;
+        const _totalPages = numberFormat(!!listSetCatalogItems?listSetCatalogItems.total_pages:0)
+        const _totalSetItems = numberFormat(!!listSetCatalogItems?listSetCatalogItems.total_setitems:0)
+        const _totalPublicPriceSet = (setItemPrice!=null) ? numberFormat(setItemPrice) : 0;
+        const _totalUpdatedCostSet = (setItemUpdatedCost!=null) ? numberFormat(setItemUpdatedCost) : 0;
+
+        const host = HOSTNAME || 'localhost';
+        const dataSet = printPageWord == 'all' ? allItems : items;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+
+        let htmlTemplate = '';
+        htmlTemplate = GenTemplateWordHtml(this, dataSet, ROOT_URL, _totalPublicPriceSet, _totalUpdatedCostSet, _totalSetItems, _totalPages);
+        let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
+                        'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'word'};
+        this.props.writeHtml(params).then((value) => {
+            if (value) {
+                this.setState({isOpenPrintPdfmsg: true});
+            }
+        });
+        this.setState({isOpenWordOptions: false});
+    }
     showDialogPrintOptions = _ =>{
         this.setState({isOpenPrintOptions: true});
     }
@@ -183,6 +220,20 @@ class SetCatalog extends Component {
         }
         return(<ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions}
             isClose={this.handleClosePrintOptions} props={this.props} />);
+    }
+    showDialogWordOptions = _ =>{
+        this.setState({isOpenWordOptions: true});
+    }
+    handleCloseWordOptions = _ =>{
+        this.setState({isOpenWordOptions: false});
+    }
+    renderDialogWordOptions = _ =>{
+        const { fields: {printPageWord} } = this.props;
+        if (printPageWord.value == undefined) {
+            printPageWord.onChange('all');
+        }
+        return(<ModalWordOptions that={this} onSubmit={this.confirmExport} isOpen={this.state.isOpenWordOptions}
+            isClose={this.handleCloseWordOptions} props={this.props} checkFields={checkFields} labels={labels}/>);
     }
 
     handleSubmitDeleteAllItem = (e)=>{
@@ -600,7 +651,7 @@ class SetCatalog extends Component {
 
     renderAlertmsgPdf = _=> {
       const message = 'Please check your email for printing files.';
-      const title = 'MY CATALOG';
+      const title = 'SET CATALOG';
       return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
           props={this.props} message={message}  title={title}/>);
     }
@@ -715,7 +766,7 @@ class SetCatalog extends Component {
                 <form role="form">
                   {/* Header Search */}
                   <div className="col-sm-12 col-xs-12 padding-b10 bg-hearder-mycatalog">
-                      <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
+                      <div className="cat-title"><h1 className="text-center">SET CATALOG</h1></div>
                       <div className="col-md-12 col-sm-12 col-xs-12">
                             <div className="col-lg-7 col-md-6 col-sm-12 col-xs-12 nopadding">
                                 <div className="col-lg-7 col-md-7 col-sm-6 col-xs-12 nopadding">
@@ -755,8 +806,10 @@ class SetCatalog extends Component {
                                     <a><div className={`${isCatalogShared ? 'hidden' : 'icon-del'}`} onClick={this.deleteSetCatalog}></div></a>
                                     <a><div className={`${items.length == 0 ? 'hidden' : 'icon-print'}`} id="printproduct"
                                         onClick={ this.showDialogPrintOptions }></div></a>
-                                      <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`}
+                                    <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`}
                                         onClick={ this.shareMySetCatalog }></div></a>
+                                    <a><div className={`${items.length == 0 ? 'hidden' : 'icon-word'}`} id="wordexport"
+                                        onClick={ this.showDialogWordOptions }></div></a>
                                 </div>
                               </div>
                             <div className="col-lg-5 col-md-6 col-sm-12 col-xs-12 nopadding pull-right">
@@ -861,6 +914,7 @@ class SetCatalog extends Component {
                   {this.renderShareMySetCatalog()}
                   {this.renderAlertmsgShareSetCatalog()}
                   {this.renderDialogPrintOptions()}
+                  {this.renderDialogWordOptions()}
                 </form>
             );
     }
@@ -890,6 +944,6 @@ SetCatalog.contextTypes = {
 };
 module.exports = reduxForm({
   form: 'SetCatalog',
-  fields: ['currPage', 'setCatalog', 'shareTo', 'validateEmailTo', 'printPage', 'printPrice'],
+  fields: ['currPage', 'setCatalog', 'shareTo', 'validateEmailTo', 'printPage', 'printPrice', 'printPageWord'],
   validate: validateEmail
 },mapStateToProps,itemactions)(SetCatalog)

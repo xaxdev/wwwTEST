@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ROOT="./data/backup/mongodb"
-EXTENSION=".gz"
+EXTENSION=".tar.gz"
 
 # configure AWS CLI (e.g. use IAM role for S3 access)
 export AWS_CONFIG_FILE=/home/mol/.aws/config

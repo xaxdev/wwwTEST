@@ -364,17 +364,20 @@
 					"development": {
 						"host": "amqp://dev:P@ssw0rd@192.168.1.92:5672",
 						"channelExcel": "mol",
-						"channelPdf": "pdf"
+						"channelPdf": "pdf",
+						"channelWord": "word"
 					},
 					"test": {
 						"host": "amqp://dev:P@ssw0rd@192.168.1.92:5672",
 						"channelExcel": "mol",
-						"channelPdf": "pdf"
+						"channelPdf": "pdf",
+						"channelWord": "word"
 					},
 					"production": {
 						"host": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
 						"channelExcel": "mol",
-						"channelPdf": "pdf"
+						"channelPdf": "pdf",
+						"channelWord": "word"
 					}
 				}
 			}
