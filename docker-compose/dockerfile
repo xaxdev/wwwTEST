@@ -1,5 +1,5 @@
 FROM alpine
-MAINTAINER Korakod Chaisongkram (korakod.chaisongkram@itorama.com)
+MAINTAINER Korakod Chaisongkram (leointer@gmail.com)
 LABEL Description="Clear-Files Build Container" Version="1.0"
 RUN apk update && \
     apk add nodejs

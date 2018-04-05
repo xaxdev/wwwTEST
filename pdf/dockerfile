@@ -1,12 +1,12 @@
 FROM alpine
 MAINTAINER Korakod Chaisongkram (korakod.chaisongkram@itorama.com)
-LABEL Description="Clear-Files Build Container" Version="1.0"
+LABEL Description="PDF Build Container" Version="1.0"
 RUN apk update && \
     apk add nodejs
-RUN mkdir /clear-files
-RUN mkdir /clear-files/logs
-COPY ./ /clear-files/
-WORKDIR /clear-files
+RUN mkdir /pdf
+RUN mkdir /pdf/logs
+COPY ./ /pdf/
+WORKDIR /pdf
 RUN npm i
 RUN npm install pm2 -g
 CMD ["pm2-runtime","start","process.json","--env","production"]
