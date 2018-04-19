@@ -1,4 +1,4 @@
-version: '1.0'
+version: '3.3'
 services:
   mol-jobs:
     build:
@@ -7,6 +7,10 @@ services:
       cache_from:
         - alpine:latest
     container_name: nginx
+    depends_on:
+      - clear-files
+      - pdf
+      - mol
     networks:
       webpublic:
         aliases:
@@ -17,7 +21,41 @@ services:
     ports:
       - "80:8080"
 
-  
+  clear-files:
+    build:
+      context: ../clear-files
+      dockerfile: dockerfile          # optional for specific dockerfile
+      cache_from:
+        - alpine:latest
+    container_name: clear-files
+    networks:
+      webinternal:
+        aliases:
+        - clear-files
+
+  pdf:
+    build:
+      context: ../pdf
+      dockerfile: dockerfile          # optional for specific dockerfile
+      cache_from:
+        - alpine:latest
+    container_name: pdf
+    networks:
+      webinternal:
+        aliases:
+        - pdf
+
+  mol:
+    build:
+      context: ../web/code
+      dockerfile: dockerfile          # optional for specific dockerfile
+      cache_from:
+        - node:6
+    container_name: mol
+    networks:
+      webinternal:
+        aliases:
+        - mol
 
 networks:
     webpublic:
@@ -25,10 +63,10 @@ networks:
       ipam:
         driver: default
         config:
-        - subnet: 192.168.100.0/24
+        - subnet: 193.168.100.0/24
     webinternal:
       driver: bridge
       ipam:
         driver: default
         config:
-        - subnet: 192.168.101.0/24
+        - subnet: 193.168.101.0/24

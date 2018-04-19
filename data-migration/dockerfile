@@ -1,0 +1,12 @@
+FROM alpine
+MAINTAINER Korakod Chaisongkram (korakod.chaisongkram@itorama.com)
+LABEL Description="Migration Build Container" Version="1.0"
+RUN apk update && \
+    apk add nodejs
+RUN mkdir /data-migration
+RUN mkdir /data-migration/logs
+COPY ./ /data-migration/
+WORKDIR /data-migration
+RUN npm i
+RUN npm install pm2 -g
+CMD ["pm2-runtime","start","process.json","--env","test"]
