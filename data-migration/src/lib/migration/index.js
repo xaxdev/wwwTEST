@@ -20,6 +20,7 @@ const migrate = async index => {
         await item.getSpareParts(index, exchangeRates);
         await item.getMovementActivities(index);
         await item.getGOC(index);
+        await item.getSoldItems(index);
 
         await master.getCompany(index);
         await master.getLocation(index);

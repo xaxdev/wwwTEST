@@ -24,6 +24,22 @@ const settingsArray = async (index, type, path) => ({
     data: await require(path)
 });
 
+const settingsParallelize = async (index, type, path, table, field) => ({
+    ...config,
+    elasticsearch: {
+        index: index,
+        type: type,
+        ...config.elasticsearch
+    },
+    mapper: mapper.mapMaster,
+    parallelization: {
+        table: table,
+        field: field,
+        template: await file.read(path),
+        ...config.parallelization
+    }
+});
+
 const getCompany = async index => {
     try {
         console.log('Company!!!');
@@ -367,7 +383,7 @@ const getArticle = async index => {
 const getCustomer = async index => {
     try {
         console.log('Customer!!!');
-        const total = await core.get(await settings(index, 'customers', constant.CUSTOMER_QUERY));
+        const total = await core.parallelize(await settingsParallelize(index, 'customers', constant.CUSTOMER_QUERY, constant.CUSTOMER_TABLE, constant.CUSTOMER_ID));
         console.log(`${total} records were processed in total.`);
     } catch (err) {
         throw err;

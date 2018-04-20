@@ -5,6 +5,10 @@ export const MOVEMENT_TABLE = '[ITORAMA].[dbo].[MovementActivities]';
 export const MOVEMENT_ID = '[Id]';
 export const GOC_TABLE = '[ITORAMA].[dbo].[GOC]';
 export const GOC_ID = '[Id]';
+export const SOLDITEM_TABLE = '[ITORAMA].[dbo].[SoldItems]';
+export const SOLDITEM_ID = '[Id]';
+export const CUSTOMER_TABLE = '[ITORAMA].[dbo].[Customers]';
+export const CUSTOMER_ID = '[Id]';
 
 // Exchange Rates
 export const EXCHANGE_RATE_QUERY = './query/exchange_rate.sql';
@@ -16,6 +20,7 @@ export const WATCHES_QUERY = './query/watches.sql';
 export const OBA_QUERY = './query/oba.sql';
 export const ACCESSORY_QUERY = './query/accessory.sql';
 export const SPARE_PARTS_QUERY = './query/spare_parts.sql';
+export const SOLDITEM_QUERY = './query/sold_item.sql';
 
 // Master
 export const COMPANY_QUERY = './query/master/company.sql';
