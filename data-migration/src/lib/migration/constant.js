@@ -49,6 +49,7 @@ export const GEMSTONE_STONETYPE_QUERY = './query/master/gemstone-stoneType.sql';
 export const STONETYPE_QUERY = './query/master/stoneCategory.sql';
 export const HIERARCHY_QUERY = './query/master/hierarchy.sql';
 export const ARTICLE_QUERY = './query/master/article.sql';
+export const CUSTOMER_QUERY = './query/master/customer.sql';
 
 // from array
 export const CURRENCY_DATA = '../../../query/master/currency.js';

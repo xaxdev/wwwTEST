@@ -57,6 +57,7 @@ const migrate = async index => {
         await master.getStoneType(index);
         await master.getHierarchy(index);
         await master.getArticle(index);
+        await master.getCustomer(index);
 
     } catch (err) {
         throw err;
