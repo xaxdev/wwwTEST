@@ -1,6 +1,7 @@
 SELECT [Id] AS 'id'
       ,[Reference] AS 'reference'
       ,ISNULL([Description], '') AS 'description'
+      ,[Sku] AS 'sku'
       ,[SalesId] AS 'salesId'
       ,[Quantity] AS 'quantity'
       ,ISNULL([SalesPersonId], '') AS 'salesPerson'
@@ -32,7 +33,6 @@ SELECT [Id] AS 'id'
       ,ISNULL([BrandCode], '') AS 'brand'
       ,ISNULL([BrandDescription], '') AS 'brandName'
       ,[MustHave] AS 'mustHave'
-      ,ISNULL([ItemIdParent], '') AS 'itemIdParent'
       ,ISNULL([InventSizeId], '') AS 'inventSizeId'
       ,ISNULL([InventSiteId], '') AS 'inventSiteId'
       ,[MarkupPercentage] AS 'markupPercentage'
@@ -47,6 +47,7 @@ SELECT [Id] AS 'id'
       ,[PostedDate] AS 'postedDate'
       ,ISNULL([CatRecId], '') AS 'catRecId'
       ,ISNULL([Article_Grouping], '') AS 'articleGrouping'
+      ,ISNULL([StoneDetail], '') AS 'stoneDetail'
   FROM [ITORAMA].[dbo].[SoldItems]
   WHERE [Id] BETWEEN @from AND @to
   ORDER BY [Id]

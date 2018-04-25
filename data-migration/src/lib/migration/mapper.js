@@ -416,14 +416,17 @@ const mapMovement = (recordset) => {
     return movements;
 };
 
-const mapSoldItem = (recordset) => {
+const mapSoldItem = (recordset, exchangeRates) => {
     const soldItems = [];
+    let id = 0;
 
     for (let record of recordset) {
-        const soldItem = {...record};
-        soldItems.push(soldItem);
+        if (id != record.id) {
+            id = Number(record.id);
+            const soldItem = {...record};
+            soldItems.push(soldItem);
+        }
     }
-
     return soldItems;
 };
 

@@ -55,22 +55,6 @@ const settingsMovement = async (index, path, mapper, table, field) => ({
     }
 });
 
-const settingsSoldItem = async (index, path, mapper) => ({
-    ...config,
-    elasticsearch: {
-        index: index,
-        type: 'solditems',
-        ...config.elasticsearch
-    },
-    mapper,
-    parallelization: {
-        table: constant.SOLDITEM_TABLE,
-        field: constant.SOLDITEM_ID,
-        template: await file.read(path),
-        ...config.parallelization
-    }
-});
-
 const getExchangeRates = async _ => {
     try {
         console.log('Exchange Rate!!!');
@@ -193,14 +177,5 @@ const getGOC = async (index) => {
     }
 };
 
-const getSoldItems = async (index) => {
-    try {
-        console.log('SoldItems!!!');
-        const total = await core.parallelize(await settingsSoldItem(index, constant.SOLDITEM_QUERY, mapper.mapSoldItem));
-        console.log(`${total} items were processed in total.`);
-    } catch (err) {
-        throw err;
-    }
-};
 export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, getAccessory,
-        getSpareParts, getLotNumbers, getMovementActivities, getGOC, getSoldItems };
+        getSpareParts, getLotNumbers, getMovementActivities, getGOC };
