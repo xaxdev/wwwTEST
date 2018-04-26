@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [7,6,5,4,3,2,1];
+            const roundData = [8,7,6,5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -336,6 +336,56 @@ class WhatNewNotification extends Component {
                                                   <p style="padding:17px 0px 0px 0px">Show only 'Description' when user click at (Dominant Stone, Jewelry Category, Watch Category, Accessory Type, Spare Part Type, Collection, Brand, Metal Type, Stone Type) fields.</p>
                                                   <div style="padding:15px 20px 0 20px;">
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/to-remove-code.gif"/></div>
+                                                  </div>`
+                                              }
+                                            ]
+                                },
+                                {
+                                    'id': 8,
+                                    'round': 'April 2018',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Article Grouping',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">April 26, 2018</p>
+                                                  <p style="padding:17px 0px 0px 0px">When user select anything in ‘Article Grouping’ field the hierarchy and other fields in advance search should show only related values</p>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/Article-Grouping.gif"/></div>
+                                                  </div>`
+                                              },
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Option to View Total Stone & Diamond Weight in Item search detailed page',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">April 26, 2018</p>
+                                                  <p style="padding:17px 0px 0px 0px">show total of stone and diamond when user click to see the product detail</p>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/Option-to-View.gif"/></div>
+                                                  </div>`
+                                              },
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Set Catalog',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">April 26, 2018</p>
+                                                  <p>- User search from view as set</p>
+                                                  <p>- At search results page when user click icon add to catalog</p>
+                                                  <p>- get optional to create set catalog</p>
+                                                  <p>- At set catalog page should have all functions like my catalog.</p>
+                                                  <p>- Display of set item at set catalog will be grid view same as my catalog</p>
+                                                  <p>- when user click on set item, it will display like your format at ‘Set Detail’ page.</p>
+                                                  <p>- User can click next and back to see other set items at this page.</p>
+                                                  <p>- This format will show at Set Detail page only.</p>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/to-export-set-catalog.gif"/></div>
+                                                  </div>`
+                                              },
+                                              {
+                                                  'type':'new',
+                                                  'title': 'To export set Catalog to word file',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">April 26, 2018</p>
+                                                  <p>- When click word icon, it will show popup to make user can select price (price depend on user access right).</p>
+                                                  <p>- User can select full or current page to export set item.</p>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/Set-Catalog.gif"/></div>
                                                   </div>`
                                               }
                                             ]
