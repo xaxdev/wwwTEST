@@ -48,6 +48,8 @@ SELECT [Id] AS 'id'
       ,ISNULL([CatRecId], '') AS 'catRecId'
       ,ISNULL([Article_Grouping], '') AS 'articleGrouping'
       ,ISNULL([StoneDetail], '') AS 'stoneDetail'
+      ,ISNULL([DominantStone], '') AS 'dominantStone'
+	  ,ISNULL([CertificateNumber], '') AS 'certificateNumber'
   FROM [ITORAMA].[dbo].[SoldItems]
   WHERE [Id] BETWEEN @from AND @to
   ORDER BY [Id]

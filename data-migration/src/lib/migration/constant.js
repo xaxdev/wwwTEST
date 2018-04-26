@@ -55,6 +55,7 @@ export const STONETYPE_QUERY = './query/master/stoneCategory.sql';
 export const HIERARCHY_QUERY = './query/master/hierarchy.sql';
 export const ARTICLE_QUERY = './query/master/article.sql';
 export const CUSTOMER_QUERY = './query/master/customer.sql';
+export const SALECHANNEL_QUERY = './query/master/saleChannel.sql';
 
 // from array
 export const CURRENCY_DATA = '../../../query/master/currency.js';
