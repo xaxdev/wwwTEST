@@ -310,7 +310,7 @@ class WhatNewNotification extends Component {
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/COA1.gif"/></div>
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/DBC1.gif"/></div>
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/M1.gif"/></div>
-                                                  
+
                                                   </div>`
                                               },
                                               {
@@ -400,8 +400,6 @@ class WhatNewNotification extends Component {
                      <div className="accordion-item">
                         <Accordion activeItems={roundData.length}>
                             {roundData.map((item, index) => {
-                                // console.log(item);
-                                // console.log(msgData);
                                 let loop = item-1;
                                 return (
                                     <AccordionItem title={msgData[loop].round} slug={item} key={index}
