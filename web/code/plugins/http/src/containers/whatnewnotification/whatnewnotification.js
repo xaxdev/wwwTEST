@@ -375,7 +375,7 @@ class WhatNewNotification extends Component {
                                                   <p>- User can click next and back to see other set items at this page.</p>
                                                   <p>- This format will show at Set Detail page only.</p>
                                                   <div style="padding:15px 20px 0 20px;">
-                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/to-export-set-catalog.gif"/></div>
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/Set-Catalog.gif"/></div>
                                                   </div>`
                                               },
                                               {
@@ -385,7 +385,7 @@ class WhatNewNotification extends Component {
                                                   <p>- When click word icon, it will show popup to make user can select price (price depend on user access right).</p>
                                                   <p>- User can select full or current page to export set item.</p>
                                                   <div style="padding:15px 20px 0 20px;">
-                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/Set-Catalog.gif"/></div>
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/to-export-set-catalog.gif"/></div>
                                                   </div>`
                                               }
                                             ]
