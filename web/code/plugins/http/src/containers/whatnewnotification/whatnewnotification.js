@@ -419,7 +419,6 @@ class WhatNewNotification extends Component {
                                                         typeNews = 'New';
                                                         break;
                                                 }
-                                                // console.log(data.msg);
                                                 return (
                                                     <div className="accordion-detail">
                                                         <div className="accordion-detail-title">{data.title}</div>
