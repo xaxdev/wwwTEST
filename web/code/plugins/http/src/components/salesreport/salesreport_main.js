@@ -483,6 +483,37 @@ function mapStateToProps(state) {
         IsAdvance: state.searchResult.IsAdvance,
         ArticleValue: state.searchResult.ArticleValue,
         activeTabCategory: state.searchResult.activeTabCategory,
+        JewelryCategoryValue: state.searchResult.JewelryCategoryValue,
+        CollectionValue: state.searchResult.CollectionValue,
+        BrandValue: state.searchResult.BrandValue,
+        MustHaveValue: state.searchResult.MustHaveValue,
+        RingSizeValue: state.searchResult.RingSizeValue,
+        MetalTypeValue: state.searchResult.MetalTypeValue,
+        MetalColourValue: state.searchResult.MetalColourValue,
+        ViewAsSet: state.searchResult.viewAsSet,
+        WatchCategoryValue: state.searchResult.WatchCategoryValue,
+        LimitedEditionValue: state.searchResult.LimitedEditionValue,
+        MovementValue: state.searchResult.MovementValue,
+        ComplicationValue: state.searchResult.ComplicationValue,
+        DialMetalValue: state.searchResult.DialMetalValue,
+        DialColorValue: state.searchResult.DialColorValue,
+        DialIndexValue: state.searchResult.DialIndexValue,
+        StrapColorValue: state.searchResult.StrapColorValue,
+        StrapTypeValue: state.searchResult.StrapTypeValue,
+        BuckleTypeValue: state.searchResult.BuckleTypeValue,
+        ProductionDateFrom: state.searchResult.ProductionDateFrom,
+        ProductionDateTo: state.searchResult.ProductionDateTo,
+        StoneTypeValue: state.searchResult.StoneTypeValue,
+        CutValue: state.searchResult.CutValue,
+        CutGradeValue: state.searchResult.CutGradeValue,
+        ColorValue: state.searchResult.ColorValue,
+        ColorGradeValue: state.searchResult.ColorGradeValue,
+        ClarityValue: state.searchResult.ClarityValue,
+        CertificateAgencyValue: state.searchResult.CertificateAgencyValue,
+        StoneCertificateDateFrom: state.searchResult.StoneCertificateDateFrom,
+        StoneCertificateDateTo: state.searchResult.StoneCertificateDateTo,
+        AccessoryTypeValue: state.searchResult.AccessoryTypeValue,
+        SparePartTypeValue: state.searchResult.SparePartTypeValue,
     }
 }
 function mapDispatchToProps(dispatch) {
@@ -504,6 +535,7 @@ module.exports = reduxForm({
             , 'accessoryProductHierarchy','accessoryType', 'obaProductHierarchy','obaDimension', 'sparePartProductHierarchy','sparePartType','attachment'
             , 'setReference', 'searchName', 'jewelryProductHierarchy', 'markupFrom', 'markupTo','grossWeightFrom','grossWeightTo','watchProductHierarchy'
             , 'limitedEditionNumber','serialNumber','proDateFrom','proDateTo','caseDimensionFrom','caseDimensionTo','preciousMetalWeightFrom','preciousMetalWeightTo'
+            , 'article','viewAsSet','cerDateFrom','cerDateTo','totalCaratWeightFrom','totalCaratWeightTo'
             ]
 
 },mapStateToProps,mapDispatchToProps)(SalesReportMain);
