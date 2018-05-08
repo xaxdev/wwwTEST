@@ -1,18 +1,13 @@
 export default function ResetCategory(that){
     const {
         fields: {
-            reference,description,certificatedNumber,sku,location,warehouse,
-                              stoneType,cut,stoneProductHierarchy,lotNumber,cutGrade,color,colorGrade,clarity,lotQuantityFrom,
-                              lotQuantityTo,totalCaratWeightFrom,totalCaratWeightTo,totalCostFrom,totalCostTo,totalUpdatedCostFrom,
-                              totalUpdatedCostTo,retailPriceFrom,retailPriceTo,markupFrom,markupTo,
-                              jewelryProductHierarchy,jewelryCategory,collection,grossWeightFrom,grossWeightTo,setReference,
-                              brand,mustHave,ringSize,dominantStone,metalType,metalColour,
-                              cerDateFrom,cerDateTo,polish,symmetry,treatment,fluorescence,origin,
-                              certificateAgency,stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,
-                              watchProductHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,proDateFrom,
-                              proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,
-                              dialMetal,buckleType,strapType,strapColor,complication,accessoryProductHierarchy,accessoryType,obaProductHierarchy,
-                              obaDimension,sparePartProductHierarchy,sparePartType
+            reference,description,certificatedNumber,sku,location,warehouse,stoneType,cut,stoneProductHierarchy,lotNumber,cutGrade,color,colorGrade,clarity,
+            lotQuantityFrom,lotQuantityTo,totalCaratWeightFrom,totalCaratWeightTo,totalCostFrom,totalCostTo,totalUpdatedCostFrom,totalUpdatedCostTo,
+            retailPriceFrom,retailPriceTo,markupFrom,markupTo,jewelryProductHierarchy,jewelryCategory,collection,grossWeightFrom,grossWeightTo,setReference,
+            brand,mustHave,ringSize,dominantStone,metalType,metalColour,cerDateFrom,cerDateTo,polish,symmetry,treatment,fluorescence,origin,certificateAgency,
+            stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,watchProductHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,
+            proDateFrom,proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,dialMetal,buckleType,
+            strapType,strapColor,complication,accessoryProductHierarchy,accessoryType,obaProductHierarchy,obaDimension,sparePartProductHierarchy,sparePartType
         }, resetForm
     } = that.props;
 

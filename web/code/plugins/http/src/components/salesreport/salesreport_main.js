@@ -3,11 +3,14 @@ import { reduxForm, reset } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
+import { Wrapper,Button,Menu,MenuItem,openMenu,closeMenu } from 'react-aria-menubutton';
 import shallowCompare from 'react-addons-shallow-compare';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 import SalesReportHeader from './salesreport_header';
 import * as masterDataActions from '../../actions/masterdataaction';
 import * as inventoryActions from '../../actions/inventoryactions';
 import * as salesActions from '../../actions/salesaction';
+import * as itemactions from '../../actions/itemactions';
 import SalesJewelry from '../inventory/inventory_jewelry';
 import SalesWatch from '../inventory/inventory_watch';
 import SalesAcc from '../inventory/inventory_acc';
@@ -15,6 +18,7 @@ import SalesOBA from '../inventory/inventory_oba';
 import SalesSparePart from '../inventory/inventory_sparepart';
 import SalesStone from '../inventory/inventory_stone';
 import ResetSalesCategory from '../../utils/resetSalesCategory';
+import ResetFormSalesReport from '../../utils/resertFormSalesReport';
 import '../../../public/css/react-multi-select.css';
 import '../../../public/css/input-calendar.css';
 
@@ -24,6 +28,8 @@ let productGroupWAT=false;
 let productGroupACC=false;
 let productGroupOBA=false;
 let productGroupSPA=false;
+
+const fancyStuff = ['Save', 'Save As', 'Reset'];
 
 class SalesReportMain extends Component {
     constructor(props) {
@@ -36,6 +42,8 @@ class SalesReportMain extends Component {
         this.confirmModal = this.confirmModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.resetCategory = this.resetCategory.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.resetFormSalesReport = this.resetFormSalesReport.bind(this);
 
         this.state = {
             hideAdvanceSearch: true,
@@ -288,8 +296,103 @@ class SalesReportMain extends Component {
         this.refs.sparepart.treeOnUnClick();
     }
 
+    resetFormSalesReport() {
+        let fileName = jQuery('#fileName');
+        let fileNameSetReference = jQuery('#fileNameSetReference');
+
+        this.props.itemActions.newSearch();
+
+        fileName.html('');
+        fileNameSetReference.html('');
+        let { fields:{reference, setReference }} = this.props;
+        reference.value = '';
+        reference.onChange('');
+
+        setReference.value = '';
+        setReference.onChange('');
+
+        ResetFormSalesReport(this);
+        this.props.resetForm();
+        this.refs.jewelry.treeOnUnClick();
+        this.refs.watch.treeOnUnClick();
+        this.refs.stone.treeOnUnClick();
+        this.refs.accessory.treeOnUnClick();
+        this.refs.oba.treeOnUnClick();
+        this.refs.sparepart.treeOnUnClick();
+    }
+
+    handleSearch = _=> {
+        const { fields: { searchName } } = this.props;
+        searchName.onChange('search');
+        searchName.value = 'search';
+        (async _ => {
+            await this.props.salesActions.setSubmitAction('search');
+            this.props.handleSubmit();
+        })()
+    }
+
+    handleSelection = (data) =>{
+        switch (data.activity.toLowerCase()) {
+            case 'reset':
+                this.resetFormSalesReport();
+                break;
+            default:
+                this.renderDialogSaveSearch();
+                break;
+        }
+    }
+
     render() {
+        const { handleSubmit } = this.props;
         const { alert } = this.state;
+
+        let btnMenu = [];
+        if (this.props.searchResult.idEditSaveSearch != null) {
+            if (isNotOwnerSharedSearch) {
+                btnMenu = fancyStuff.filter(function(elem){
+                    return elem != 'Save';
+                });
+            } else {
+                btnMenu = fancyStuff.filter(function(elem){
+                    return elem != 'Save As';
+                });
+            }
+        }else{
+            btnMenu = fancyStuff.filter(function(elem){
+                return elem != 'Save';
+            });
+        }
+
+        const fancyMenuItems = btnMenu.map((activity, i) => (
+            <MenuItem
+                value={{
+                  activity,
+                  somethingArbitrary: 'arbitrary',
+                }}
+                text={activity}
+                key={i}
+                className="FancyMB-menuItem" >
+                <span className="FancyMB-keyword">
+                    {activity}
+                </span>
+            </MenuItem>
+        ));
+
+        const menuInnards = menuState => {
+            const menu = (!menuState.isOpen) ? false : (
+                <div className="FancyMB-menu" key="menu">
+                    {fancyMenuItems}
+                </div>
+            );
+            return (
+                <CSSTransitionGroup
+                    transitionName="is"
+                    transitionEnterTimeout={200}
+                    transitionLeaveTimeout={200} >
+                    {menu}
+                </CSSTransitionGroup>
+            );
+        };
 
         return (
             <form role="form">
@@ -300,7 +403,20 @@ class SalesReportMain extends Component {
                         </div>
                         <div className="col-sm-6 m-width-40 m-nopadding">
                             <div className="text-right maring-t15">
-                                <button type="button" className="btn btn-primary btn-radius" >Search</button>
+                                <button type="button" className="btn btn-primary btn-radius" onClick={this.handleSearch} >Search</button>
+                                <Wrapper onSelection={this.handleSelection.bind(this)}
+                                    className="FancyMB" id="foo" >
+                                    <Button className="FancyMB-trigger btn-radius">
+                                        <span className="FancyMB-triggerInnards">
+                                            <span className="FancyMB-triggerText">
+                                                ...
+                                            </span>
+                                        </span>
+                                    </Button>
+                                    <Menu>
+                                        {menuInnards}
+                                    </Menu>
+                                </Wrapper>
                             </div>
                         </div>
                     </div>
@@ -373,7 +489,8 @@ function mapDispatchToProps(dispatch) {
     return {
         masterDataActions: bindActionCreators(Object.assign({}, masterDataActions), dispatch),
         inventoryActions: bindActionCreators(Object.assign({}, inventoryActions), dispatch),
-        salesActions: bindActionCreators(Object.assign({}, salesActions), dispatch)
+        salesActions: bindActionCreators(Object.assign({}, salesActions), dispatch),
+        itemActions: bindActionCreators(Object.assign({}, itemactions), dispatch)
     }
 }
 module.exports = reduxForm({
@@ -383,9 +500,16 @@ module.exports = reduxForm({
             , 'retailPriceFrom', 'retailPriceTo', 'netSalesFrom', 'netSalesTo', 'marginFrom', 'marginTo', 'discountFrom', 'discountTo','stoneType','cut'
             , 'stoneProductHierarchy','lotNumber','cutGrade','color', 'colorGrade','clarity','lotQuantityFrom','lotQuantityTo','certificateAgency','polish'
             , 'symmetry','treatment','fluorescence','origin','jewelryCategory','brand','mustHave','ringSize','metalType','metalColour','collection'
-            , 'watchCategory','limitedEdition','movement','dialIndex','dialColor','dialMetal','buckleType','strapType', 'strapColor','complication'
-            , 'accessoryProductHierarchy','accessoryType','obaProductHierarchy','obaDimension', 'sparePartProductHierarchy','sparePartType','attachment'
-            , 'setReference'
+            , 'watchCategory','limitedEdition','movement', 'dialIndex','dialColor','dialMetal','buckleType','strapType', 'strapColor','complication'
+            , 'accessoryProductHierarchy','accessoryType', 'obaProductHierarchy','obaDimension', 'sparePartProductHierarchy','sparePartType','attachment'
+            , 'setReference', 'searchName', 'jewelryProductHierarchy', 'markupFrom', 'markupTo','grossWeightFrom','grossWeightTo','watchProductHierarchy'
+            , 'limitedEditionNumber','serialNumber','proDateFrom','proDateTo','caseDimensionFrom','caseDimensionTo','preciousMetalWeightFrom','preciousMetalWeightTo'
             ]
 
 },mapStateToProps,mapDispatchToProps)(SalesReportMain);
+
+// Pre-load the initially hidden SVGs
+fancyStuff.forEach(t => {
+    const x = new Image();
+    x.src = `images/${t}.svg`;
+});
