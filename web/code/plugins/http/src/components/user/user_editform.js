@@ -177,7 +177,7 @@ class UserDetailsFrom extends Component {
         let nameObj = el.name;
         let type = el.type;
         let stateChange = {};
-        let { fields: { onhandLocationValue,onhandWarehouseValue,onhand,onhandAll }} = this.props;
+        let { fields: { onhandLocationValue,onhandWarehouseValue,onhand,onhandAll,onhandLocation }} = this.props;
         let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
 
         if (objType == '[object RadioNodeList]' || objType == '[object NodeList]' || objType == '[object HTMLCollection]') {
@@ -211,6 +211,15 @@ class UserDetailsFrom extends Component {
                 checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
                 this.setState({selectedOnHandWarehouse: false});
                 this.setState({clickAllWarehouse: false});
+                if (onhandLocation) {
+                    let checkCompany = jQuery('input[name="checkbox-allCompany"]');
+                    let values = [].filter.call(checkCompany, function(o) {
+                        return o.checked;
+                    }).map(function(o) {
+                        return o.value;
+                    });
+                    onhandLocationValue.onChange(values)
+                }
             }
             stateChange[name] = checkedBoxes;
         }else {
