@@ -198,6 +198,14 @@ export default ({ dispatch,getState}) => {
                     }, 'setdetailsetcatalog');
                 }
             },{
+                onEnter: requireAuth,
+                path: 'salesreport',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/salesreport/sales_report'));
+                    }, 'salesreport');
+                }
+            },{
                 path: '*',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {

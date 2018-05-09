@@ -7,12 +7,13 @@ export default function ResetCategory(that){
             brand,mustHave,ringSize,dominantStone,metalType,metalColour,cerDateFrom,cerDateTo,polish,symmetry,treatment,fluorescence,origin,certificateAgency,
             stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,watchProductHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,
             proDateFrom,proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,dialMetal,buckleType,
-            strapType,strapColor,complication,accessoryProductHierarchy,accessoryType,obaProductHierarchy,obaDimension,sparePartProductHierarchy,sparePartType
+            strapType,strapColor,complication,accessoryProductHierarchy,accessoryType,obaProductHierarchy,obaDimension,sparePartProductHierarchy,sparePartType,
+            salesChannel
         }, resetForm
     } = that.props;
 
     resetForm();
-    that.props.inventoryActions.resetForm();
+    that.props.salesActions.resetForm();
     // console.log('fields->',header.location.value)
 
     certificatedNumber.onChange(certificatedNumber.value);
@@ -31,6 +32,7 @@ export default function ResetCategory(that){
     totalUpdatedCostTo.onChange(totalUpdatedCostTo.value);
     retailPriceFrom.onChange(retailPriceFrom.value);
     retailPriceTo.onChange(retailPriceTo.value);
+    salesChannel.onChange(salesChannel.value);
 
     stoneType.value = '';
     cut.value = '';

@@ -23,7 +23,7 @@ module.exports = {
         gemstoneStoneType,cut,cutShape,cutGrades,colors,colorGrades,clarities,certificateLabs,polishs,
         symmetries,treatments,fluorescences,origins,jewelryCategories,collections,brands,ringSizes,dominantStones,
         metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,
-        buckleTypes,strapTypes,strapColors,complications,hierarchy,accessoryTypes,sparePartTypes,articles`;
+        buckleTypes,strapTypes,strapColors,complications,hierarchy,accessoryTypes,sparePartTypes,articles,salechannels`;
 
         const alldata = elastic.search({
             index: 'mol',
@@ -158,6 +158,9 @@ module.exports = {
             const articlesTypesget = alldata.hits.hits.filter((element)=> {{
                 return element._type == 'articles';
             }})
+            const salechannelsTypesget = alldata.hits.hits.filter((element)=> {{
+                return element._type == 'salechannels';
+            }})
 
             const responsesata = {
                 roles: _.sortBy(rolesget.map((element)=> element._source),'name'),
@@ -201,7 +204,8 @@ module.exports = {
                 hierarchy: _.sortBy(hierarchyget.map((element)=> element._source),'path'),
                 accessoryType: _.sortBy(accessoryTypesget.map((element)=> element._source),'code'),
                 sparePartType: _.sortBy(sparePartTypesget.map((element)=> element._source),'code'),
-                articles: _.sortBy(articlesTypesget.map((element)=> element._source),'name')
+                articles: _.sortBy(articlesTypesget.map((element)=> element._source),'name'),
+                salesChannels: _.sortBy(salechannelsTypesget.map((element)=> element._source),'name')
             };
             elastic.close();
             return reply(JSON.stringify(responsesata,null,4));

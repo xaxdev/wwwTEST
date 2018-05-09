@@ -6,7 +6,8 @@ export default function ResetFormMain(that){
         brand,mustHave,ringSize,dominantStone,metalType,metalColour,polish,symmetry,treatment,fluorescence,origin,certificateAgency,
         stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,watchProductHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,
         proDateFrom,proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,dialMetal,buckleType,
-        strapType,strapColor,complication,accessoryProductHierarchy,accessoryType,obaProductHierarchy,obaDimension,sparePartProductHierarchy,sparePartType
+        strapType,strapColor,complication,accessoryProductHierarchy,accessoryType,obaProductHierarchy,obaDimension,sparePartProductHierarchy,sparePartType,
+        salesChannel
     }, resetForm } = that.props;
 
     // resetForm();
@@ -17,6 +18,7 @@ export default function ResetFormMain(that){
     sku.value = '';
     location.value = '';
     warehouse.value = '';
+    salesChannel.value = '';
 
     stoneProductHierarchy.value = '';
     stoneType.value = '';

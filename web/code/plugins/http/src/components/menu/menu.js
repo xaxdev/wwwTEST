@@ -7,6 +7,7 @@ class Menu extends Component {
         super(props, context);
         this.handleClickMyCatalog = this.handleClickMyCatalog.bind(this);
         this.handleClickSetCatalog = this.handleClickSetCatalog.bind(this);
+        this.handleClickSalesReport = this.handleClickSalesReport.bind(this);
     }
 
     handleClickMyCatalog(e){
@@ -17,6 +18,11 @@ class Menu extends Component {
     handleClickSetCatalog(e){
         e.preventDefault();
         this.context.router.push('/setcatalog');
+    }
+
+    handleClickSalesReport(e){
+        e.preventDefault();
+        this.context.router.push('/salesreport');
     }
 
     render(){
@@ -48,6 +54,8 @@ class Menu extends Component {
         const SaveSearch = <NavItem href="/savesearch" className={`${(props.currentLocation == '/savesearch')
                                                                     ? 'active': ''}`}>Save Searches</NavItem>;
 
+        const SalesReport = <button type="button" className="btn btn-primary btn-radius" onClick={this.handleClickSalesReport}>Sales Report</button>
+
         return(
           <Navbar inverse >
               <Navbar.Header>
@@ -65,7 +73,8 @@ class Menu extends Component {
                                                               props.currentLocation !== '/whatnewnotification' &&
                                                               props.currentLocation.indexOf('productmycatalog') == -1 &&
                                                               props.currentLocation.indexOf('setdetailmycatalog') == -1 &&
-                                                              props.currentLocation.indexOf('setdetailsetcatalog') == -1
+                                                              props.currentLocation.indexOf('setdetailsetcatalog') == -1 &&
+                                                              props.currentLocation.indexOf('salesreport') == -1
                                                            )?'active':''}`}>Inventory Report</NavItem>
                   {/*<NavItem href="#">My Catalog</NavItem>*/}
                   {/*<NavDropdown  title="Download" id="basic-nav-dropdown">
@@ -76,6 +85,7 @@ class Menu extends Component {
                   {MyCatalog}
                   {UserManagement}
                   {SaveSearch}
+                  {SalesReport}
                 </Nav>
               </Navbar.Collapse>
           </Navbar>
