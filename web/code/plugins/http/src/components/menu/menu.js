@@ -30,13 +30,14 @@ class Menu extends Component {
         const url = window.location.href;
         const countLastPath = url.split('/').length - 1;
         const lastPath = url.split('/')[countLastPath];
-        const { role } = JSON.parse(sessionStorage.logindata);
+        const { role, permission } = JSON.parse(sessionStorage.logindata);
         const UserManagement = role == 'Admin'? <NavItem href="/users" className={`${(props.currentLocation == '/users' ||
                                                                                     props.currentLocation == '/user' ||
                                                                                     props.currentLocation == '/user/new' ||
                                                                                     props.currentLocation.indexOf('user') != -1
-                                                                                )?'active':''}`}>User Management</NavItem> : '';
-        const MyCatalog = <NavDropdown id="catalog" title="Catalog">
+                                                                                )?'active':''}
+                                                                                ${(permission.userType != 'Sales')?'':'hidden'}`}>User Management</NavItem> : '';
+        const MyCatalog = <NavDropdown id="catalog" title="Catalog" className={`${(permission.userType != 'Sales')?'':'hidden'}`}>
                             <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog' ||
                                                                     props.currentLocation.indexOf('productmycatalog') != -1 ||
                                                                     props.currentLocation.indexOf('setdetailmycatalog') != -1
@@ -48,13 +49,11 @@ class Menu extends Component {
                                                                 )?'active': ''}`}
                                                         onClick={this.handleClickSetCatalog}>Set Catalog</NavItem>
                           </NavDropdown>;
-        // const MyCatalog = <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog' ||
-        //                                                             props.currentLocation.indexOf('productmycatalog') != -1
-        //                                                         )?'active': ''}`}>My Catalog</NavItem>;
+
         const SaveSearch = <NavItem href="/savesearch" className={`${(props.currentLocation == '/savesearch')
                                                                     ? 'active': ''}`}>Save Searches</NavItem>;
 
-        const SalesReport = <button type="button" className="btn btn-primary btn-radius" onClick={this.handleClickSalesReport}>Sales Report</button>
+        const SalesReport = <button type="button" className={`btn btn-primary btn-radius ${(permission.userType != 'OnHand')?'':'hidden'}`} onClick={this.handleClickSalesReport}>Sales Report</button>
 
         return(
           <Navbar inverse >
@@ -75,7 +74,7 @@ class Menu extends Component {
                                                               props.currentLocation.indexOf('setdetailmycatalog') == -1 &&
                                                               props.currentLocation.indexOf('setdetailsetcatalog') == -1 &&
                                                               props.currentLocation.indexOf('salesreport') == -1
-                                                           )?'active':''}`}>Inventory Report</NavItem>
+                                                          )?'active':''} ${(permission.userType != 'Sales')?'':'hidden'}`}>Inventory Report</NavItem>
                   {/*<NavItem href="#">My Catalog</NavItem>*/}
                   {/*<NavDropdown  title="Download" id="basic-nav-dropdown">
                     <MenuItem >Download</MenuItem>

@@ -114,6 +114,7 @@ class UserDetails extends Component {
             id: data.permissionId,
             onhandLocation: onhandLocation,
             onhandWarehouse: onhandWarehouse,
+            userType: data.userType,
             price: data.price,
             notUseHierarchy:JSON.stringify(data.notUseHierarchy)
         }

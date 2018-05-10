@@ -1,41 +1,70 @@
 import React from 'react';
-import {
-    Route,
-    IndexRoute
-} from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 if (typeof require.ensure !== 'function') require.ensure = function(d, c) {
     c(require);
 };
 
 export default ({ dispatch,getState}) => {
-
     const requireAuth = (nextState, replace) => {
-      const token = sessionStorage.token;
-      if (!token) {
-        replace({
-          pathname: '/',
-          state: { nextPathname: nextState.location.pathname }
-        })
-      }
-    };
-
-    const  requireAccess = (nextState, replace) => {
-      const token = sessionStorage.token;
-      if (!token) {
-        replace({
-          pathname: '/',
-          state: { nextPathname: nextState.location.pathname }
-        })
-      } else {
-        const { role } = JSON.parse(sessionStorage.logindata);
-        if( role != 'Admin'){
-          replace({
-            pathname: '/accessdenied',
-            state: { nextPathname: nextState.location.pathname }
-          })
+        const token = sessionStorage.token;
+        if (!token) {
+            replace({
+                pathname: '/',
+                state: { nextPathname: nextState.location.pathname }
+            })
         }
-      }
+    };
+    const  requireAccess = (nextState, replace) => {
+        const token = sessionStorage.token;
+        if (!token) {
+            replace({
+                pathname: '/',
+                state: { nextPathname: nextState.location.pathname }
+            })
+        } else {
+            const { role } = JSON.parse(sessionStorage.logindata);
+            if( role != 'Admin'){
+                replace({
+                    pathname: '/accessdenied',
+                    state: { nextPathname: nextState.location.pathname }
+                })
+            }
+        }
+    };
+    const  requirePermissionInventory = (nextState, replace) => {
+        const token = sessionStorage.token;
+        if (!token) {
+            replace({
+                pathname: '/',
+                state: { nextPathname: nextState.location.pathname }
+            })
+        } else {
+            const { permission } = JSON.parse(sessionStorage.logindata);
+            if( permission.userType != 'OnHand' && permission.userType != 'All' ){
+                replace({
+                    pathname: '/accessdenied',
+                    state: { nextPathname: nextState.location.pathname }
+                })
+            }
+        }
+    };
+    const  requirePermissionSalesReport = (nextState, replace) => {
+        const token = sessionStorage.token;
+        if (!token) {
+            replace({
+                pathname: '/',
+                state: { nextPathname: nextState.location.pathname }
+            })
+        } else {
+            const { permission } = JSON.parse(sessionStorage.logindata);
+            if( permission.userType != 'Sales' && permission.userType != 'All' ){
+                replace({
+                    pathname: '/accessdenied',
+                    state: { nextPathname: nextState.location.pathname }
+                })
+            }
+        }
     };
     return {
         component: 'div',
@@ -50,7 +79,7 @@ export default ({ dispatch,getState}) => {
                 }
             },
             childRoutes: [{
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'inventories',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -150,7 +179,7 @@ export default ({ dispatch,getState}) => {
                     }, 'accessdenied');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'mycatalog',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -182,7 +211,7 @@ export default ({ dispatch,getState}) => {
                     }, 'savesearch');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'setcatalog',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -198,7 +227,7 @@ export default ({ dispatch,getState}) => {
                     }, 'setdetailsetcatalog');
                 }
             },{
-                onEnter: requireAuth,
+                onEnter: requirePermissionSalesReport,
                 path: 'salesreport',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {

@@ -34,7 +34,7 @@ export const fields = ['id','firstName','lastName','username','email','password'
     'productGroupWAT','productGroupACC','productGroupOBA','productGroupSPA','onhandLocationValue','webOnly',
     'permissionId','onhandLocation','onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr',
     'movement','categoryJLY','categoryWAT','categorySTO','categoryACC','categoryOBA','categorySPP',
-    'notUseHierarchy'
+    'notUseHierarchy', 'userType'
 ];
 
 export let countFirst = 0;
@@ -700,7 +700,7 @@ class UserDetailsFrom extends Component {
                   productGroup,onhand,price,productGroupSTO,productGroupJLY,productGroupWAT,onhandLocation,onhandAll,
                   productGroupACC,productGroupOBA,productGroupSPA,onhandLocationValue,webOnly,permissionId,onhandWarehouse,
                   onhandWarehouseValue,productGroupErr,movement,categoryJLY,categoryWAT,categorySTO,categoryACC,
-                  categoryOBA,categorySPP,notUseHierarchy
+                  categoryOBA,categorySPP,notUseHierarchy,userType
               },handleSubmit,submitting, CanNotUseHierarchy } = this.props;
         let dataDropDowntLocations = [];
         let dataDropDowntWareHouse = [];
@@ -837,6 +837,27 @@ class UserDetailsFrom extends Component {
                                                         <option key={''} value={''}>{'Please select role'}</option>
                                                         {this.renderOption('role')}
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="col-sm-2 control-label">Type</label>
+                                                <div className="col-sm-4">
+                                                    <label>
+                                                        <input type="radio" {...userType} value="OnHand"
+                                                            checked={userType.value === 'OnHand'} /> On Hand Module
+                                                    </label>
+                                                </div>
+                                                <div className="col-sm-4">
+                                                    <label>
+                                                        <input type="radio" {...userType} value="Sales"
+                                                            checked={userType.value === 'Sales'} /> Sales Module
+                                                    </label>
+                                                </div>
+                                                <div className="col-sm-2">
+                                                    <label>
+                                                        <input type="radio" {...userType} value="All"
+                                                            checked={userType.value === 'All'} /> Both Module
+                                                    </label>
                                                 </div>
                                             </div>
                                             <div className="form-group">
