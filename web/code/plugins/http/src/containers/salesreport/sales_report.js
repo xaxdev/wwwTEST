@@ -11,8 +11,9 @@ class SalesReport extends Component {
 
     handleSubmit = (data) => {
         console.log('data-->', data);
-        // const that = this;
-        // let { filters, submitAction, IdEditSaveSearch } = this.props;
+        const that = this;
+        let { filters, submitAction, IdEditSaveSearch } = this.props;
+        console.log('submitAction-->',submitAction);
         // const isNotOwnerSharedSearch = this.props.searchResult.criteriaSaveSearch != null
         //                               ? this.props.searchResult.criteriaSaveSearch.shared
         //                               : false;
@@ -95,6 +96,8 @@ class SalesReport extends Component {
 }
 
 function mapStateToProps(state) {
-    return {}
+    return {
+        submitAction: state.searchResult.SubmitAction,
+    }
 }
 module.exports = connect(mapStateToProps,null)(SalesReport);

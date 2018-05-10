@@ -19,6 +19,8 @@ import SalesSparePart from '../inventory/inventory_sparepart';
 import SalesStone from '../inventory/inventory_stone';
 import ResetSalesCategory from '../../utils/resetSalesCategory';
 import ResetFormSalesReport from '../../utils/resertFormSalesReport';
+import ModalSaveSearch from './modalSaveSearch';
+import ValidateSaveSearch from './validatesavesearch';
 import '../../../public/css/react-multi-select.css';
 import '../../../public/css/input-calendar.css';
 
@@ -44,6 +46,9 @@ class SalesReportMain extends Component {
         this.resetCategory = this.resetCategory.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.resetFormSalesReport = this.resetFormSalesReport.bind(this);
+        this.renderDialogSaveSearch = this.renderDialogSaveSearch.bind(this);
+        this.renderSaveSearch = this.renderSaveSearch.bind(this);
+        this.handleSaveSearch = this.handleSaveSearch.bind(this);
 
         this.state = {
             hideAdvanceSearch: true,
@@ -321,6 +326,15 @@ class SalesReportMain extends Component {
         this.refs.sparepart.treeOnUnClick();
     }
 
+    handleSaveSearch = _=> {
+        const { fields: { searchName } } = this.props;
+        (async _ => {
+            await this.props.salesActions.setSubmitAction('save');
+            this.setState({showDialogSaveSearch: false});
+            this.props.handleSubmit();
+        })()
+    }
+
     handleSearch = _=> {
         const { fields: { searchName } } = this.props;
         searchName.onChange('search');
@@ -329,6 +343,21 @@ class SalesReportMain extends Component {
             await this.props.salesActions.setSubmitAction('search');
             this.props.handleSubmit();
         })()
+    }
+
+    renderSaveSearch = _=> {
+        const { submitting } = this.props;
+        return(<ModalSaveSearch onSubmit={this.handleSaveSearch}
+            isOpen={this.state.showDialogSaveSearch}
+            isClose={this.handleCloseDialogSaveSearch} props={this.props}/>);
+    }
+
+    renderDialogSaveSearch = _=> {
+        this.setState({showDialogSaveSearch: true});
+    }
+
+    handleCloseDialogSaveSearch = _=> {
+        this.setState({showDialogSaveSearch: false});
     }
 
     handleSelection = (data) =>{
@@ -467,6 +496,7 @@ class SalesReportMain extends Component {
                     {/* End Advance search*/}
                 </div>
                 {alert?this.renderAlertMessage():''}
+                {this.renderSaveSearch()}
             </form>
         )
     }
@@ -528,16 +558,16 @@ module.exports = reduxForm({
     form: 'SalesReport',
     fields: ['reference', 'description', 'certificatedNumber', 'sku', 'location', 'warehouse', 'dominantStone', 'customer', 'salesPersonName'
             , 'salesChannel', 'invoiceNo', 'invoiceDateFrom', 'invoiceDateTo', 'totalCostFrom', 'totalCostTo', 'totalUpdatedCostFrom', 'totalUpdatedCostTo'
-            , 'retailPriceFrom', 'retailPriceTo', 'netSalesFrom', 'netSalesTo', 'marginFrom', 'marginTo', 'discountFrom', 'discountTo','stoneType','cut'
-            , 'stoneProductHierarchy','lotNumber','cutGrade','color', 'colorGrade','clarity','lotQuantityFrom','lotQuantityTo','certificateAgency','polish'
-            , 'symmetry','treatment','fluorescence','origin','jewelryCategory','brand','mustHave','ringSize','metalType','metalColour','collection'
-            , 'watchCategory','limitedEdition','movement', 'dialIndex','dialColor','dialMetal','buckleType','strapType', 'strapColor','complication'
-            , 'accessoryProductHierarchy','accessoryType', 'obaProductHierarchy','obaDimension', 'sparePartProductHierarchy','sparePartType','attachment'
-            , 'setReference', 'searchName', 'jewelryProductHierarchy', 'markupFrom', 'markupTo','grossWeightFrom','grossWeightTo','watchProductHierarchy'
-            , 'limitedEditionNumber','serialNumber','proDateFrom','proDateTo','caseDimensionFrom','caseDimensionTo','preciousMetalWeightFrom','preciousMetalWeightTo'
-            , 'article','viewAsSet','cerDateFrom','cerDateTo','totalCaratWeightFrom','totalCaratWeightTo'
-            ]
-
+            , 'retailPriceFrom', 'retailPriceTo', 'netSalesFrom', 'netSalesTo', 'marginFrom', 'marginTo', 'discountFrom', 'discountTo', 'stoneType', 'cut'
+            , 'stoneProductHierarchy', 'lotNumber', 'cutGrade', 'color', 'colorGrade', 'clarity', 'lotQuantityFrom', 'lotQuantityTo', 'certificateAgency', 'polish'
+            , 'symmetry', 'treatment', 'fluorescence', 'origin', 'jewelryCategory', 'brand', 'mustHave', 'ringSize', 'metalType', 'metalColour', 'collection'
+            , 'watchCategory', 'limitedEdition', 'movement', 'dialIndex', 'dialColor', 'dialMetal', 'buckleType', 'strapType', 'strapColor', 'complication'
+            , 'accessoryProductHierarchy', 'accessoryType', 'obaProductHierarchy', 'obaDimension', 'sparePartProductHierarchy', 'sparePartType', 'attachment'
+            , 'setReference', 'searchName', 'jewelryProductHierarchy', 'markupFrom', 'markupTo', 'grossWeightFrom', 'grossWeightTo', 'watchProductHierarchy'
+            , 'limitedEditionNumber', 'serialNumber', 'proDateFrom', 'proDateTo', 'caseDimensionFrom', 'caseDimensionTo', 'preciousMetalWeightFrom'
+            , 'preciousMetalWeightTo', 'article', 'viewAsSet', 'cerDateFrom', 'cerDateTo', 'totalCaratWeightFrom', 'totalCaratWeightTo', 'validateSearchName'
+            ],
+            validate: ValidateSaveSearch
 },mapStateToProps,mapDispatchToProps)(SalesReportMain);
 
 // Pre-load the initially hidden SVGs
