@@ -2,9 +2,15 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {
-    ROOT_URL,FETCH_USERS,CREATE_USER,FETCH_USER,UPDATE_USER,DELETE_USER,DISABLE_USER,SET_SHAREEMAILTO,FETCH_SHAREUSERS,SET_NOTUSEHIERARCHY
+    ROOT_URL,FETCH_USERS,CREATE_USER,FETCH_USER,UPDATE_USER,DELETE_USER,DISABLE_USER,SET_SHAREEMAILTO,FETCH_SHAREUSERS,SET_NOTUSEHIERARCHY,SET_USERTYPE
 } from '../constants/userConstants';
 
+export function setUserType(value){
+    return {
+        type: SET_USERTYPE,
+        userType:value
+    }
+}
 export function fetchShareUsers(){
     const token = sessionStorage.token;
     return {

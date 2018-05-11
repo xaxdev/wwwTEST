@@ -23,7 +23,8 @@ module.exports = {
             location: Joi.string().required(),
             warehouse: Joi.string().allow(''),
             permission: Joi.object({
-                productGroup: Joi.number().integer().required(),
+                productGroup: Joi.number().integer(),
+                productGroupSales: Joi.number().integer(),
                 onhandLocation: Joi.object({
                     type: Joi.string(),
                     places: Joi.array().items(Joi.string())
@@ -32,7 +33,8 @@ module.exports = {
                     type: Joi.string(),
                     places: Joi.array().items(Joi.string())
                 }).allow(null),
-                price: Joi.string().required(),
+                price: Joi.string(),
+                priceSales: Joi.number().integer(),
                 notUseHierarchy: Joi.string(),
                 category: Joi.number().integer()
             }).required(),

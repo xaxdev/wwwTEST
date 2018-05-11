@@ -22,6 +22,7 @@ class UserDetails extends Component {
     }
 
     handleSubmit(data) {
+        console.log('data-->',data);
         let FLAG_ZERO = 0x0; // 000001
         let FLAG_JLY = 0x1; // 000001
         let FLAG_WAT = 0x2; // 000010
@@ -30,6 +31,8 @@ class UserDetails extends Component {
         let FLAG_OBA = 0x10; //010000
         let FLAG_SPA = 0x20; //100000
         let result = FLAG_ZERO;
+        let resultSales = FLAG_ZERO;
+        let resultPriceSales = FLAG_ZERO;
         let FLAG_CAT_ZERO = 0x0; // 000001
         let FLAG_CAT_JLY = 0x1; // 000001
         let FLAG_CAT_WAT = 0x2; // 000010
@@ -70,6 +73,54 @@ class UserDetails extends Component {
             data = {...data, permission:{productGroup:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPA} };
         }
 
+        if(data.productGroupSales){
+            if (data.productGroupSales == '1'){
+                data = {...data, permission:{...data.permission, productGroupSales:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPA}};
+            }else{
+                if(data.productGroupSalesJLY){
+                    resultSales = resultSales|FLAG_JLY;
+                }
+                if(data.productGroupSalesWAT){
+                    resultSales = resultSales|FLAG_WAT;
+                }
+                if(data.productGroupSalesSTO){
+                    resultSales = resultSales|FLAG_STO;
+                }
+                if(data.productGroupSalesACC){
+                    resultSales = resultSales|FLAG_ACC;
+                }
+                if(data.productGroupSalesOBA){
+                    resultSales = resultSales|FLAG_OBA;
+                }
+                if(data.productGroupSalesSPA){
+                    resultSales = resultSales|FLAG_SPA;
+                }
+                data = { ...data, permission:{...data.permission, productGroupSales:resultSales}};
+            }
+        }else{
+            data = {...data, permission:{...data.permission, productGroupSales:FLAG_ZERO|FLAG_JLY|FLAG_WAT|FLAG_STO|FLAG_ACC|FLAG_OBA|FLAG_SPA} };
+        }
+
+        if(data.priceSalesRTP){
+            resultPriceSales = resultPriceSales|FLAG_JLY;
+        }
+        if(data.priceSalesUCP){
+            resultPriceSales = resultPriceSales|FLAG_WAT;
+        }
+        if(data.priceSalesCTP){
+            resultPriceSales = resultPriceSales|FLAG_STO;
+        }
+        if(data.priceSalesNSP){
+            resultPriceSales = resultPriceSales|FLAG_ACC;
+        }
+        if(data.priceSalesMGP){
+            resultPriceSales = resultPriceSales|FLAG_OBA;
+        }
+        if(data.priceSalesDSP){
+            resultPriceSales = resultPriceSales|FLAG_SPA;
+        }
+        data = { ...data, permission:{...data.permission, priceSales:resultPriceSales}};
+
         if(data.categoryJLY){
             resultCAT = resultCAT|FLAG_CAT_JLY;
         }
@@ -109,7 +160,6 @@ class UserDetails extends Component {
                 places:[]
             };
         }
-        //   console.log('data-->',data);
         permission = {...data.permission,
             id: data.permissionId,
             onhandLocation: onhandLocation,
@@ -121,6 +171,16 @@ class UserDetails extends Component {
 
         data = Object.assign({}, data, { permission:permission });
 
+        if (data.userType != 'All') {
+            if (data.userType != 'OnHand') {  // Sales
+                data.permission.productGroup = FLAG_ZERO;
+                data.permission.price = 'NULL';
+            }else{
+                data.permission.productGroupSales = FLAG_ZERO;
+                data.permission.priceSales = FLAG_ZERO;
+            }
+        }
+
         delete data.productGroup;
         delete data.price;
         delete data.productGroupACC;
@@ -129,6 +189,12 @@ class UserDetails extends Component {
         delete data.productGroupSPA;
         delete data.productGroupSTO;
         delete data.productGroupWAT;
+        delete data.productGroupSalesACC;
+        delete data.productGroupSalesJLY;
+        delete data.productGroupSalesOBA;
+        delete data.productGroupSalesSPA;
+        delete data.productGroupSalesSTO;
+        delete data.productGroupSalesWAT;
         delete data.onhand;
         delete data.onhandLocationValue;
         delete data.onhandWarehouseValue;
@@ -142,6 +208,12 @@ class UserDetails extends Component {
         delete data.categorySTO;
         delete data.categoryWAT;
         delete data.notUseHierarchy;
+        delete data.priceSalesRTP;
+        delete data.priceSalesUCP;
+        delete data.priceSalesCTP;
+        delete data.priceSalesNSP;
+        delete data.priceSalesMGP;
+        delete data.priceSalesDSP;
 
         if(!data.password){
             delete data.password;

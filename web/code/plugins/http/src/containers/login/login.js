@@ -32,7 +32,7 @@ class Login extends Component {
                 showloading: false
             });
             if(this.props.logindata.loginstatus == true){
-                const { permission } = JSON.parse(sessionStorage.logindata);
+                const { role, permission } = JSON.parse(sessionStorage.logindata);
                 this.props.itemActions.newSearch();
                 if (permission.userType == 'Sales') {
                     this.context.router.push('/salesreport');

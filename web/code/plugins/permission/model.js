@@ -17,6 +17,10 @@ module.exports = {
             type: 'integer',
             required: true
         },
+        productGroupSales: {
+            type: 'integer',
+            required: true
+        },
         onhandLocation: {
             model: 'onhandLocation'
         },
@@ -25,7 +29,11 @@ module.exports = {
         },
         price: {
             type: 'string',
-            enum: ['Public', 'Updated', 'All'],
+            enum: ['Public', 'Updated', 'All','NULL'],
+            required: true
+        },
+        priceSales: {
+            type: 'integer',
             required: true
         },
         userType: {

@@ -40,12 +40,14 @@ export default ({ dispatch,getState}) => {
                 state: { nextPathname: nextState.location.pathname }
             })
         } else {
-            const { permission } = JSON.parse(sessionStorage.logindata);
-            if( permission.userType != 'OnHand' && permission.userType != 'All' ){
-                replace({
-                    pathname: '/accessdenied',
-                    state: { nextPathname: nextState.location.pathname }
-                })
+            const { role, permission } = JSON.parse(sessionStorage.logindata);
+            if (role != 'Admin') {
+                if( permission.userType != 'OnHand' && permission.userType != 'All' ){
+                    replace({
+                        pathname: '/accessdenied',
+                        state: { nextPathname: nextState.location.pathname }
+                    })
+                }
             }
         }
     };
@@ -57,12 +59,14 @@ export default ({ dispatch,getState}) => {
                 state: { nextPathname: nextState.location.pathname }
             })
         } else {
-            const { permission } = JSON.parse(sessionStorage.logindata);
-            if( permission.userType != 'Sales' && permission.userType != 'All' ){
-                replace({
-                    pathname: '/accessdenied',
-                    state: { nextPathname: nextState.location.pathname }
-                })
+            const { role, permission } = JSON.parse(sessionStorage.logindata);
+            if (role != 'Admin') {
+                if( permission.userType != 'Sales' && permission.userType != 'All' ){
+                    replace({
+                        pathname: '/accessdenied',
+                        state: { nextPathname: nextState.location.pathname }
+                    })
+                }
             }
         }
     };

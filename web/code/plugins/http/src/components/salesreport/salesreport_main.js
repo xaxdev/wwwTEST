@@ -24,12 +24,12 @@ import ValidateSaveSearch from './validatesavesearch';
 import '../../../public/css/react-multi-select.css';
 import '../../../public/css/input-calendar.css';
 
-let productGroupSTO=false;
-let productGroupJLY=false;
-let productGroupWAT=false;
-let productGroupACC=false;
-let productGroupOBA=false;
-let productGroupSPA=false;
+let productGroupSalesSTO=false;
+let productGroupSalesJLY=false;
+let productGroupSalesWAT=false;
+let productGroupSalesACC=false;
+let productGroupSalesOBA=false;
+let productGroupSalesSPA=false;
 
 const fancyStuff = ['Save', 'Save As', 'Reset'];
 
@@ -166,7 +166,7 @@ class SalesReportMain extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         let { activeTabCategory } = this.props;
         let permission = userLogin.permission;
-        let bitwise = Number(permission.productGroup).toString(2);
+        let bitwise = Number(permission.productGroupSales).toString(2);
         let checkbits = bitwise.split('')
         let numberDiit = checkbits.length;
         let setActiveTab = activeTabCategory;
@@ -174,61 +174,61 @@ class SalesReportMain extends Component {
         checkbits.map(function(value,key) {
             switch (numberDiit) {
                 case 1:
-                    productGroupJLY = (value == '1')?true:false;
+                    productGroupSalesJLY = (value == '1')?true:false;
                     break;
                 case 2:
                     if(key == 0){
                         productGroupWAT = (value == '1')?true:false;
                     }else if (key == 1) {
-                        productGroupJLY = (value == '1')?true:false;
+                        productGroupSalesJLY = (value == '1')?true:false;
                     }
                     break;
                 case 3:
                     if(key == 0){
-                        productGroupSTO = (value == '1')?true:false;
+                        productGroupSalesSTO = (value == '1')?true:false;
                     }else if (key == 1) {
-                        productGroupWAT = (value == '1')?true:false;
+                        productGroupSalesWAT = (value == '1')?true:false;
                     }else if (key == 2) {
-                        productGroupJLY = (value == '1')?true:false;
+                        productGroupSalesJLY = (value == '1')?true:false;
                     }
                     break;
                 case 4:
                     if(key == 0){
-                        productGroupACC = (value == '1')?true:false;
+                        productGroupSalesACC = (value == '1')?true:false;
                     }else if (key == 1) {
-                        productGroupSTO = (value == '1')?true:false;
+                        productGroupSalesSTO = (value == '1')?true:false;
                     }else if (key == 2) {
-                        productGroupWAT = (value == '1')?true:false;
+                        productGroupSalesWAT = (value == '1')?true:false;
                     }else if (key == 3) {
-                        productGroupJLY = (value == '1')?true:false;
+                        productGroupSalesJLY = (value == '1')?true:false;
                     }
                     break;
                 case 5:
                     if(key == 0){
-                        productGroupOBA = (value == '1')?true:false;
+                        productGroupSalesOBA = (value == '1')?true:false;
                     }else if (key == 1) {
-                        productGroupACC = (value == '1')?true:false;
+                        productGroupSalesACC = (value == '1')?true:false;
                     }else if (key == 2) {
-                        productGroupSTO = (value == '1')?true:false;
+                        productGroupSalesSTO = (value == '1')?true:false;
                     }else if (key == 3) {
-                        productGroupWAT = (value == '1')?true:false;
+                        productGroupSalesWAT = (value == '1')?true:false;
                     }else if (key == 4) {
-                        productGroupJLY = (value == '1')?true:false;
+                        productGroupSalesJLY = (value == '1')?true:false;
                     }
                     break;
                 case 6:
                     if(key == 0){
-                        productGroupSPA = (value == '1')?true:false;
+                        productGroupSalesSPA = (value == '1')?true:false;
                     }else if (key == 1) {
-                        productGroupOBA = (value == '1')?true:false;
+                        productGroupSalesOBA = (value == '1')?true:false;
                     }else if (key == 2) {
-                        productGroupACC = (value == '1')?true:false;
+                        productGroupSalesACC = (value == '1')?true:false;
                     }else if (key == 3) {
-                        productGroupSTO = (value == '1')?true:false;
+                        productGroupSalesSTO = (value == '1')?true:false;
                     }else if (key == 4) {
-                        productGroupWAT = (value == '1')?true:false;
+                        productGroupSalesWAT = (value == '1')?true:false;
                     }else if (key == 5) {
-                        productGroupJLY = (value == '1')?true:false;
+                        productGroupSalesJLY = (value == '1')?true:false;
                     }
                     break;
                 default:
@@ -236,20 +236,20 @@ class SalesReportMain extends Component {
             }
         });
 
-        if (productGroupJLY) {
+        if (productGroupSalesJLY) {
             setActiveTab = setActiveTab;
             this.setState({ beforeActiveTab: setActiveTab });
             this.props.inventoryActions.selectedTabCategory(setActiveTab);
         }else{
-            if(productGroupWAT){
+            if(productGroupSalesWAT){
                 setActiveTab = 2;
-            }else if (productGroupSTO) {
+            }else if (productGroupSalesSTO) {
                 setActiveTab = 3;
-            }else if (productGroupACC) {
+            }else if (productGroupSalesACC) {
                 setActiveTab = 4;
-            }else if (productGroupOBA) {
+            }else if (productGroupSalesOBA) {
                 setActiveTab = 5;
-            }else if (productGroupSPA) {
+            }else if (productGroupSalesSPA) {
                 setActiveTab = 6;
             }else{
                 this.props.inventoryActions.setAdvance(false);
@@ -469,22 +469,22 @@ class SalesReportMain extends Component {
                                             animation={false} id="uncontrolled-tab-example"
                                             activeKey={this.props.activeTabCategory}
                                             onSelect={this.tabsSelected}>
-                                            <Tab eventKey={1} title="Jewelry" disabled={!productGroupJLY}>
+                                            <Tab eventKey={1} title="Jewelry" disabled={!productGroupSalesJLY}>
                                                 <SalesJewelry props={this.props} ref="jewelry"/>
                                             </Tab>
-                                            <Tab eventKey={2} title="Watch" disabled={!productGroupWAT}>
+                                            <Tab eventKey={2} title="Watch" disabled={!productGroupSalesWAT}>
                                                 <SalesWatch props={this.props} ref="watch"/>
                                             </Tab>
-                                            <Tab eventKey={3} title="Stone" disabled={!productGroupSTO}>
+                                            <Tab eventKey={3} title="Stone" disabled={!productGroupSalesSTO}>
                                                 <SalesStone props={this.props} ref="stone"/>
                                             </Tab>
-                                            <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC}>
+                                            <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupSalesACC}>
                                                 <SalesAcc props={this.props} ref="accessory"/>
                                             </Tab>
-                                            <Tab eventKey={5} title="OBJECT OF ART" disabled={!productGroupOBA}>
+                                            <Tab eventKey={5} title="OBJECT OF ART" disabled={!productGroupSalesOBA}>
                                                 <SalesOBA props={this.props}  ref="oba"/>
                                             </Tab>
-                                            <Tab eventKey={6} title="SPARE PART" disabled={!productGroupSPA}>
+                                            <Tab eventKey={6} title="SPARE PART" disabled={!productGroupSalesSPA}>
                                                 <SalesSparePart props={this.props}  ref="sparepart"/>
                                             </Tab>
                                         </Tabs>

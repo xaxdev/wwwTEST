@@ -35,8 +35,7 @@ class Menu extends Component {
                                                                                     props.currentLocation == '/user' ||
                                                                                     props.currentLocation == '/user/new' ||
                                                                                     props.currentLocation.indexOf('user') != -1
-                                                                                )?'active':''}
-                                                                                ${(permission.userType != 'Sales')?'':'hidden'}`}>User Management</NavItem> : '';
+                                                                                )?'active':''}`}>User Management</NavItem> : '';
         const MyCatalog = <NavDropdown id="catalog" title="Catalog" className={`${(permission.userType != 'Sales')?'':'hidden'}`}>
                             <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog' ||
                                                                     props.currentLocation.indexOf('productmycatalog') != -1 ||
