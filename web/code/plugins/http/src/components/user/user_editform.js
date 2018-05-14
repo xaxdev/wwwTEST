@@ -38,7 +38,7 @@ export const fields = [
     'onhandLocation','onhandAll','onhandWarehouse','onhandWarehouseValue','productGroupErr','movement','categoryJLY','categoryWAT','categorySTO','categoryACC',
     'categoryOBA','categorySPP','notUseHierarchy', 'userType','productGroupSales','productGroupSalesSTO','productGroupSalesJLY','productGroupSalesWAT',
     'productGroupSalesACC','productGroupSalesOBA','productGroupSalesSPA','productGroupSalesErr','priceSalesRTP','priceSalesUCP','priceSalesCTP','priceSalesNSP',
-    'priceSalesMGP','priceSalesDSP'
+    'priceSalesMGP','priceSalesDSP','salesLocation','salesLocationValue','salesWarehouse','salesWarehouseValue','salesAll','sales'
 ];
 
 export let countFirst = 0;
@@ -53,7 +53,6 @@ class UserDetailsFrom extends Component {
         this.selectedProductGroup = this.selectedProductGroup.bind(this);
         this.selectedOnHandWarehouse = this.selectedOnHandWarehouse.bind(this);
         this.selectedOnHandLocation = this.selectedOnHandLocation.bind(this);
-        this.changedOnHandLocation = this.changedOnHandLocation.bind(this);
         this.selectedOnHandAll = this.selectedOnHandAll.bind(this);
         this.changedOnHandLocationChecked = this.changedOnHandLocationChecked.bind(this);
         this.changedOnHandWarehouseChecked = this.changedOnHandWarehouseChecked.bind(this);
@@ -69,6 +68,12 @@ class UserDetailsFrom extends Component {
         this.selectedProductGroupSales = this.selectedProductGroupSales.bind(this);
         this.handleInputChangeSales = this.handleInputChangeSales.bind(this);
         this.handleInputChangePriceSales = this.handleInputChangePriceSales.bind(this);
+
+        this.selectedSalesLocation = this.selectedSalesLocation.bind(this);
+        this.selectedSalesWarehouse = this.selectedSalesWarehouse.bind(this);
+        this.changedSalesLocationChecked = this.changedSalesLocationChecked.bind(this);
+        this.changedSalesWarehouseChecked = this.changedSalesWarehouseChecked.bind(this);
+        // this.selectedSalesAll = this.selectedSalesAll.bind(this);
 
         hierarchyDataJewelry.push(TreeDataJewelry);
         hierarchyDataWatch.push(TreeDataWatch);
@@ -102,7 +107,13 @@ class UserDetailsFrom extends Component {
             firstloading: true,
             userNotUseHierarchy: JSON.parse(this.props.user.permission.notUseHierarchy),
             value: this.props.user.productGroup,
-            valueSales: this.props.user.productGroupSales
+            valueSales: this.props.user.productGroupSales,
+            selectedSalesWarehouse: (this.props.user.permission.salesWarehouse != undefined)?(this.props.user.permission.salesWarehouse.type.indexOf('All') == -1) ? false : true : false,
+            selectedSalesLocation: (this.props.user.permission.salesLocation != undefined)?(this.props.user.permission.salesLocation.type.indexOf('All') == -1) ? false : true : false,
+            selectedSalesAll: (!this.props.user.salesLocation && !this.props.user.salesWarehouse)? true: false,
+            changedSalesLocation: false,
+            clickAllSalesLocarion: (this.props.user.salesLocationValue != null)?(this.props.user.salesLocationValue.length != 0) ? false : true:false,
+            clickAllSalesWarehouse: (this.props.user.permission.salesWarehouse != undefined)?(this.props.user.permission.salesWarehouse.type.indexOf('All') == -1) ? false : true : false
         };
     }
 
@@ -127,6 +138,8 @@ class UserDetailsFrom extends Component {
         this.setState({
             selectedOnHandWarehouse: (this.props.user.permission.onhandWarehouse != undefined)?(this.props.user.permission.onhandWarehouse.type.indexOf('All') == -1) ? false : true : false,
             selectedOnHandLocation: (this.props.user.permission.onhandLocation != undefined)?(this.props.user.permission.onhandLocation.type.indexOf('All') == -1) ? false : true : false,
+            selectedSalesWarehouse: (this.props.user.permission.salesWarehouse != undefined)?(this.props.user.permission.salesWarehouse.type.indexOf('All') == -1) ? false : true : false,
+            selectedSalesLocation: (this.props.user.permission.salesLocation != undefined)?(this.props.user.permission.salesLocation.type.indexOf('All') == -1) ? false : true : false,
         });
         this.props.optionsActions.setHierarchy(JSON.parse(this.props.user.permission.notUseHierarchy));
         this.props.optionsActions.setNotUseHierarchy(JSON.parse(this.props.user.permission.notUseHierarchy));
@@ -134,7 +147,7 @@ class UserDetailsFrom extends Component {
 
     componentWillReceiveProps = (nextProps)=> {
         const { props } = this;
-        const { fields: { onhandLocationValue, onhandWarehouseValue } } = nextProps;
+        const { fields: { onhandLocationValue, onhandWarehouseValue, salesLocationValue, salesWarehouseValue } } = nextProps;
 
         if(this.props.user.permission.onhandLocation != undefined){
             if (this.state.selectedOnHandLocation) {
@@ -149,6 +162,22 @@ class UserDetailsFrom extends Component {
 
             }else{
                 this.setState({chkWarehouse: onhandWarehouseValue.value});
+            }
+        }
+
+        if(this.props.user.permission.salesLocation != undefined){
+            if (this.state.selectedSalesLocation) {
+
+            }else{
+                this.setState({chkSalesLocation: salesLocationValue.value});
+            }
+        }
+
+        if(this.props.user.permission.salesWarehouse != undefined){
+            if (this.state.selectedSalesWarehouse) {
+
+            }else{
+                this.setState({chkSalesWarehouse: salesWarehouseValue.value});
             }
         }
 
@@ -242,6 +271,65 @@ class UserDetailsFrom extends Component {
         onhandWarehouseValue.onChange(stateChange.chkWarehouse);
     }
 
+    changedSalesWarehouseChecked = e => {
+        let el = e.target;
+        let name = 'chkSalesWarehouse';
+        let nameObj = el.name;
+        let type = el.type;
+        let stateChange = {};
+        let { fields: { salesLocationValue,salesWarehouseValue,sales,salesAll,salesLocation }} = this.props;
+        let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
+
+        if (objType == '[object RadioNodeList]' || objType == '[object NodeList]' || objType == '[object HTMLCollection]') {
+            let checkedBoxes = (Array.isArray(this.state[name]) ? this.state[name].slice() : []);
+            if (el.checked) {
+                checkedBoxes.push(el.value);
+                let checkWarehouse = jQuery('input[name="checkbox-allWarehouse"]');
+                let values = [].filter.call(checkWarehouse, function(o) {
+                    return o.checked || !o.checked;
+                }).map(function(o) {
+                    return o.value;
+                });
+                if (checkedBoxes.length == values.length) {
+                    this.setState({selectedSalesWarehouse: true});
+                    this.setState({clickAllWarehouse: true});
+                    sales.onChange('All');
+                    salesAll.onChange(true);
+                }
+            }else{
+                if (this.state.clickAllSalesWarehouse) {
+                    let checkSalesWarehouse = jQuery('input[name="checkbox-allSalesWarehouse"]');
+                    let values = [].filter.call(checkSalesWarehouse, function(o) {
+                        return o.checked || !o.checked;
+                    }).map(function(o) {
+                        return o.value;
+                    });
+                    checkedBoxes = values;
+                    sales.onChange('SalesWarehouse');
+                    salesAll.onChange(false);
+                }
+                checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
+                this.setState({selectedSalesWarehouse: false});
+                this.setState({clickAllSalesWarehouse: false});
+                if (salesLocation) {
+                    let checkSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
+                    let values = [].filter.call(checkSalesCompany, function(o) {
+                        return o.checked;
+                    }).map(function(o) {
+                        return o.value;
+                    });
+                    salesLocationValue.onChange(values)
+                }
+            }
+            stateChange[name] = checkedBoxes;
+        }else {
+            stateChange[name] = el.checked;
+        }
+        this.setState(stateChange);
+
+        salesWarehouseValue.onChange(stateChange.chkSalesWarehouse);
+    }
+
     changedOnHandLocationChecked  = e => {
         let el = e.target;
         let name = 'chkLocation';
@@ -307,6 +395,71 @@ class UserDetailsFrom extends Component {
         });
     }
 
+    changedSalesLocationChecked  = e => {
+        let el = e.target;
+        let name = 'chkSalesLocation';
+        let nameObj = el.name;
+        let type = el.type;
+        let stateChange = {};
+        let { fields: { salesLocationValue,salesWarehouseValue,sales,salesAll }} = this.props;
+        let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
+        let checkSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
+        let valuesAllSalesCompany = [].filter.call(checkSalesCompany, function(o) {
+            return o.checked || !o.checked;
+        }).map(function(o) {
+            return o.value;
+        });
+
+        if (objType == '[object RadioNodeList]' || objType == '[object NodeList]' || objType == '[object HTMLCollection]') {
+            let checkedBoxes = (Array.isArray(this.state[name]) ? this.state[name].slice() : []);
+            if (el.checked) {
+                checkedBoxes.push(el.value);
+
+                if (checkedBoxes.length == valuesAllSalesCompany.length) {
+                    this.setState({selectedSalesLocation: true});
+                    this.setState({clickAllLocarion: true});
+                    sales.onChange('All');
+                    salesAll.onChange(true);
+                }
+            }else {
+                if (this.state.clickAllSalesLocarion) {
+                    checkedBoxes = valuesAllSalesCompany;
+                    sales.onChange('SalesLocation');
+                    salesAll.onChange(false);
+                }
+                checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
+                this.setState({selectedSalesLocation: false});
+                this.setState({clickAllSalesLocarion: false});
+            }
+            stateChange[name] = checkedBoxes;
+        } else {
+            stateChange[name] = el.checked;
+        }
+        this.setState(stateChange);
+
+        salesLocationValue.onChange(stateChange.chkSalesLocation);
+
+        this.props.optionsActions.getSalesWarehouse(stateChange.chkSalesLocation).then((value) => {
+            let valuesSalesCompany = [].filter.call(checkSalesCompany, function(o) {
+                return o.checked;
+            }).map(function(o) {
+                return o.value;
+            });
+
+            if (valuesAllSalesCompany.length != valuesSalesCompany.length) {
+                let checkSalesWarehouse = jQuery('input[name="checkbox-allSalesWarehouse"]');
+                let valuesAllSalesWarehouse = [].filter.call(checkSalesWarehouse, function(o) {
+                    return o.checked;
+                }).map(function(o) {
+                    return o.value;
+                });
+                salesWarehouseValue.onChange(valuesAllSalesWarehouse);
+            } else {
+                salesWarehouseValue.onChange([]);
+            }
+        });
+    }
+
     selectedCompany(e){
         if(e.target.value == ''){
             this.setState({ selectedCompany:false, selectedSite: false });
@@ -364,7 +517,6 @@ class UserDetailsFrom extends Component {
     }
 
     selectedProductGroupSales = e => {
-        console.log('selectedProductGroupSales-->',e.target.value);
         if(e.target.value == 2) { //select some productGroups
             this.setState({
                 hideProductGroupsSales: false,
@@ -486,6 +638,103 @@ class UserDetailsFrom extends Component {
         }
     }
 
+    selectedSalesWarehouse = e => {
+        countFirst++;
+        let { fields: { sales, salesAll, salesWarehouseValue, salesLocationValue }} = this.props;
+        if (countFirst != 1) {
+            this.setState({ firstloading: false });
+        }
+        if (e.target.checked) {
+            this.setState({ selectedSalesWarehouse: true, selectedSalesAll: true, clickAllSalesWarehouse: true });
+            let checkSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
+            let values = [].filter.call(checkSalesCompany, function(o) {
+                return o.checked;
+            }).map(function(o) {
+                return o.value;
+            });
+
+            this.setState({chkSalesLocation: values});
+
+            if (values.length != 0) {
+                let checkSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
+
+                let valuesAll = [].filter.call(checkSalesCompany, function(o) {
+                    return o.checked || !o.checked;
+                }).map(function(o) {
+                    return o.value;
+                });
+
+                if(values.length == valuesAll.length){
+                    this.setState({ selectedSalesLocation: true });
+                    this.props.optionsActions.getSalesWarehouse(valuesAll);
+                }else{
+                    this.setState({ selectedSalesLocation: false });
+                }
+
+                let checkSalesWarehouse= jQuery('input[name="checkbox-allSalesWarehouse"]');
+                let valuesSalesWarehouse = [].filter.call(checkSalesWarehouse, function(o) {
+                    return !o.checked;
+                }).map(function(o) {
+                    return o.value;
+                });
+
+                if(valuesSalesWarehouse.length == 0){
+                    valuesSalesWarehouse = [].filter.call(this.props.warehouseSales, function(o) { return o.code; });
+                }
+                salesWarehouseValue.onChange(valuesSalesWarehouse);
+                sales.onChange('AllSalesWarehouse');
+                salesAll.onChange(false);
+            }else{
+                this.setState({ selectedSalesLocation: true });
+                sales.onChange('All');
+                salesAll.onChange(true);
+                let checkAllSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
+                let valuesAllSalesCompany = [].filter.call(checkAllSalesCompany, function(o) {
+                    return o.checked || !o.checked;
+                }).map(function(o) {
+                    return o.value;
+                });
+                this.props.optionsActions.getSalesWarehouse(valuesAllCompany);
+            }
+        } else {
+            this.setState({
+                selectedSalesWarehouse: false,
+                selectedSalesLocation: false,
+                selectedSalesAll: false,
+                clickAllSalesWarehouse: false
+            });
+
+            let checkSalesWarehouse= jQuery('input[name="checkbox-allSalesWarehouse"]');
+            _.each(checkSalesWarehouse,function (o) {
+                o.checked = false;
+            });
+            let checkAllSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
+            let valuesAllSalesCompany = [].filter.call(checkAllSalesCompany, function(o) {
+                return o.checked || !o.checked;
+            }).map(function(o) {
+                return o.value;
+            });
+
+            let valuesSalesCompany = [].filter.call(checkAllSalesCompany, function(o) {
+                return o.checked;
+            }).map(function(o) {
+                return o.value;
+            });
+
+            salesLocationValue.onChange(valuesSalesCompany);
+            salesWarehouseValue.onChange([]);
+            salesWarehouseValue.value = [];
+            sales.onChange('SalesWarehouse');
+            salesAll.onChange(false);
+
+            if (valuesSalesCompany.length != 0) {
+                this.props.optionsActions.getSalesWarehouse(valuesSalesCompany);
+            }else{
+                this.props.optionsActions.getSalesWarehouse(valuesAllSalesCompany);
+            }
+        }
+    }
+
     selectedOnHandLocation(e){
         let { fields: { onhand, onhandAll, onhandWarehouseValue, onhandLocationValue }} = this.props;
         if (e.target.checked) {
@@ -550,6 +799,70 @@ class UserDetailsFrom extends Component {
         }
     }
 
+    selectedSalesLocation = e =>{
+        let { fields: { sales, salesAll, salesWarehouseValue, salesLocationValue }} = this.props;
+        if (e.target.checked) {
+            this.setState({
+                selectedSalesWarehouse: true,
+                selectedSalesLocation: true,
+                selectedSalesAll: true,
+                changedOnHandLocation: true,
+                clickAllSalesLocarion: true,
+                firstloading: false
+            });
+
+            let checkSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
+            let values = [].filter.call(checkSalesCompany, function(o) {
+                return o.checked || !o.checked;
+            }).map(function(o) {
+                return o.value;
+            });
+            this.setState({chkSalesLocation: values});
+
+            _.each(checkSalesCompany,function (o) {
+                o.checked = false;
+            });
+
+            let checkSalesWarehouse = jQuery('input[name="checkbox-allSalesWarehouse"]');
+            let valuesSalesWarehouse = [].filter.call(checkSalesWarehouse, function(o) {
+                return o.checked || !o.checked;
+            }).map(function(o) {
+                return o.value;
+            });
+
+            _.each(checkSalesWarehouse,function (o) {
+                o.checked = true;
+            });
+
+            sales.onChange('All');
+            salesAll.onChange(true);
+            this.props.optionsActions.get();
+        } else {
+            this.setState({
+                selectedSalesWarehouse: false,
+                selectedSalesLocation: false,
+                selectedSalesAll: false,
+                changedSalesLocation: false,
+                clickAllSalesLocarion: false,
+                firstloading: false,
+                chkSalesLocation: []
+            });
+
+            let checkSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
+            let values = [].filter.call(checkSalesCompany, function(o) {
+                return o.checked || !o.checked;
+            }).map(function(o) {
+                return o.value;
+            });
+
+            salesLocationValue.onChange([]);
+            salesWarehouseValue.onChange([]);
+            sales.onChange('SalesLocation');
+            salesAll.onChange(false);
+            this.props.optionsActions.getSalesWarehouse(values);
+        }
+    }
+
     selectedOnHandAll(e){
         let {fields: { onhand, onhandAll }} = this.props;
         if(e.target.checked){
@@ -563,37 +876,6 @@ class UserDetailsFrom extends Component {
             });
             onhand.onChange('notAll');
         }
-    }
-
-    changedOnHandLocation(e) {
-        let { fields: { onhandLocationValue,onhandWarehouseValue }} = this.props;
-        let select = ReactDOM.findDOMNode(this.refs.selectMultiLocation);
-        let values = [].filter.call(select.options, function(o) {
-            return o.selected;
-        }).map(function(o) {
-            return o.value;
-        });
-
-        if (values.length != 0) {
-            this.setState({
-                changedOnHandLocation: true,
-                selectedOnHandLocation: false,
-                selectedOnHandWarehouse: false,
-                firstloading: false
-            });
-
-            let selectWarehouse = ReactDOM.findDOMNode(this.refs.selectMultiWarehouse);
-
-            _.each(selectWarehouse.options,function (o) {
-                o.selected = false;
-            });
-        }else{
-            this.setState({ changedOnHandLocation: false, firstloading: false });
-        }
-
-        onhandWarehouseValue.onChange([]);
-        onhandLocationValue.onChange(values);
-        this.props.optionsActions.getOnHandWarehouse(values);
     }
 
     generatePassword(){
@@ -766,15 +1048,22 @@ class UserDetailsFrom extends Component {
                   permissionId,onhandWarehouse,onhandWarehouseValue,productGroupErr,movement,categoryJLY,categoryWAT,categorySTO,categoryACC,categoryOBA,
                   categorySPP,notUseHierarchy,userType,productGroupSales,productGroupSalesSTO,productGroupSalesJLY,productGroupSalesWAT,productGroupSalesACC,
                   productGroupSalesOBA,productGroupSalesSPA,productGroupSalesErr,priceSalesRTP,priceSalesUCP,priceSalesCTP,priceSalesNSP,priceSalesMGP,
-                  priceSalesDSP
+                  priceSalesDSP,salesLocation,salesLocationValue,salesWarehouse,salesWarehouseValue,salesAll
               },handleSubmit,submitting, CanNotUseHierarchy,userTypeValue } = this.props;
         let dataDropDowntLocations = [];
         let dataDropDowntWareHouse = [];
         let objWareHouseLocation = {};
 
+        let dataDropDowntSalesLocations = [];
+        let dataDropDowntSalesWareHouse = [];
+
         objWareHouseLocation = FindLocationWareHouse(this);
         dataDropDowntLocations = objWareHouseLocation.location;
         dataDropDowntWareHouse = objWareHouseLocation.warehouse;
+        dataDropDowntSalesLocations = objWareHouseLocation.salesLocation;
+        dataDropDowntSalesWareHouse = objWareHouseLocation.salesWarehouse;
+        console.log('dataDropDowntWareHouse-->',dataDropDowntWareHouse.length);
+        console.log('dataDropDowntSalesWareHouse-->',dataDropDowntSalesWareHouse.length);
 
         return (
             <form onSubmit={handleSubmit}>
@@ -1125,7 +1414,7 @@ class UserDetailsFrom extends Component {
                                                     <input type="checkbox" {...movement}/>
                                                 </div>
                                             </div>
-                                            <div className="form-group">
+                                            <div className={`form-group ${userTypeValue != 'Sales'?'':'hidden'}`}>
                                                 <label className="col-md-2 col-sm-2 control-label">View On-hand</label>
                                                 <div className="col-md-4 col-sm-12 col-xs-12">
                                                     <div className="col-sm-12 col-xs-12 nopadding">
@@ -1163,6 +1452,47 @@ class UserDetailsFrom extends Component {
                                                             checked={this.state.selectedOnHandAll}
                                                             onChange={this.selectedOnHandAll}
                                                             ref="allLocation" /> All Locations
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div className={`form-group ${userTypeValue != 'OnHand'?'':'hidden'}`}>
+                                                <label className="col-md-2 col-sm-2 control-label">View Sales</label>
+                                                <div className="col-md-4 col-sm-12 col-xs-12">
+                                                    <div className="col-sm-12 col-xs-12 nopadding">
+                                                        <input type="checkbox" value="Location" {...salesLocation}
+                                                            checked={this.state.selectedSalesLocation}
+                                                            onChange={this.selectedSalesLocation}
+                                                            ref="location" /> All Company
+                                                    </div>
+                                                    <div className="user-edit user-per-height">
+                                                        <MultipleCheckBoxs datas={dataDropDowntSalesLocations} name={'checkbox-allSalesCompany'}
+                                                            checkedAll={this.state.selectedSalesLocation}
+                                                            chekedValue={this.state.chkSalesLocation}
+                                                            onChange={this.changedSalesLocationChecked}
+                                                            salesLocationValue={salesLocationValue.value}/>
+                                                    </div>
+                                                </div>
+                                                <div className="col-md-4 col-sm-12 col-xs-12">
+                                                    <div className="col-sm-12 col-xs-12 nopadding">
+                                                        <input type="checkbox" value="Warehouse" {...salesWarehouse}
+                                                            checked={this.state.selectedSalesWarehouse}
+                                                            onChange={this.selectedSalesWarehouse}
+                                                            ref="warehouse" /> All Warehouse
+                                                    </div>
+                                                    <div className="user-edit user-per-height">
+                                                        <MultipleCheckBoxs datas={dataDropDowntSalesWareHouse} name={'checkbox-allSalesWarehouse'}
+                                                          checkedAll={this.state.selectedSalesWarehouse}
+                                                          chekedValue={this.state.chkSalesWarehouse}
+                                                          onChange={this.changedSalesWarehouseChecked}
+                                                          salesWarehouseValue={salesWarehouseValue.value}/>
+                                                    </div>
+                                                </div>
+                                                <div className="col-sm-2 hidden">
+                                                    <label>
+                                                        <input type="checkbox" value="All" {...salesAll}
+                                                            checked={this.state.selectedSalesAll}
+                                                            onChange={this.selectedSalesAll}
+                                                            ref="allSalesLocation" /> All Locations
                                                     </label>
                                                 </div>
                                             </div>
@@ -1329,7 +1659,9 @@ function mapStateToProps(state){
         selectedWarehouses:state.users.selectedWarehouses,
         HierarchyValue: state.searchResult.HierarchyValue,
         CanNotUseHierarchy: state.users.canNotUseHierarchy,
-        userTypeValue: state.users.userTypeValue
+        userTypeValue: state.users.userTypeValue,
+        locationSales: state.users.locationSales,
+        warehouseSales: state.users.warehouseSales,
     }
 }
 

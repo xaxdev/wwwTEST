@@ -2,96 +2,105 @@
 import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
-import { FETCH_OPTIONS, SELECTED_COMPANY, SELECTED_WAREHOUSES, ROOT_URL,
-        GED_ONHANDWAREHOUSES, SET_HIERARCHY,SET_NOTUSEHIERARCHY } from '../constants/masterDataConstants.js';
+import {
+    FETCH_OPTIONS, SELECTED_COMPANY, SELECTED_WAREHOUSES, ROOT_URL,GED_ONHANDWAREHOUSES, SET_HIERARCHY,SET_NOTUSEHIERARCHY,GED_SALESWAREHOUSES
+} from '../constants/masterDataConstants.js';
 
 export function get(){
-  // console.log('action get data-->',OPTIONS_DATA);
-  const token = sessionStorage.token;
-  var url = `${ROOT_URL}/api/masterdata`;
+    const token = sessionStorage.token;
+    const url = `${ROOT_URL}/api/masterdata`;
 
-  return {
-          type: FETCH_OPTIONS,
-    		  promise: fetch(url,{
+    return {
+        type: FETCH_OPTIONS,
+        promise: fetch(url,{
             method: 'GET',
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': token
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
             },
-          })
-  }
+        })
+    }
 }
 export function setNotUseHierarchy(value){
-  return {
-          type: SET_NOTUSEHIERARCHY,
-          notUseHierarchy:value
-  }
+    return {
+        type: SET_NOTUSEHIERARCHY,
+        notUseHierarchy:value
+    }
 }
 export function setHierarchy(value){
-  return {
-          type: SET_HIERARCHY,
-          hierarchy:value
-  }
+    return {
+        type: SET_HIERARCHY,
+        hierarchy:value
+    }
 }
 export function getSite(compid){
-  // console.log('compid-->',compid);
-  const token = sessionStorage.token;
-  var url = `${ROOT_URL}/api/masterdata`;
+    const token = sessionStorage.token;
+    const url = `${ROOT_URL}/api/masterdata`;
 
-  return {
-          type: SELECTED_COMPANY,
-    		  promise: fetch(url,{
+    return {
+        type: SELECTED_COMPANY,
+        promise: fetch(url,{
             method: 'GET',
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': token
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
             },
-          }),
-          selected: compid
-  }
+        }),
+        selected: compid
+    }
 }
 
 export function getWarehouse(props){
-
-  const { siteid, comid, options } = props;
-
-  // console.log('siteid-->',siteid);
-  // console.log('comid-->',comid);
-
-  const token = sessionStorage.token;
-  var url = `${ROOT_URL}/api/masterdata`;
-
-  return {
-          type: SELECTED_WAREHOUSES,
-    		  promise: fetch(url,{
+    const { siteid, comid, options } = props;
+    const token = sessionStorage.token;
+    const url = `${ROOT_URL}/api/masterdata`;
+    return {
+        type: SELECTED_WAREHOUSES,
+        promise: fetch(url,{
             method: 'GET',
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': token
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
             },
-          }),
-          selected: siteid,
-          comid: comid
-  }
+        }),
+        selected: siteid,
+        comid: comid
+    }
 }
 
 export function getOnHandWarehouse(locations) {
-  const token = sessionStorage.token;
-  var url = `${ROOT_URL}/api/masterdata`;
-
-  return {
-          type: GED_ONHANDWAREHOUSES,
-    		  promise: fetch(url,{
+    const token = sessionStorage.token;
+    const url = `${ROOT_URL}/api/masterdata`;
+    return {
+        type: GED_ONHANDWAREHOUSES,
+        promise: fetch(url,{
             method: 'GET',
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': token
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
             },
-          }),
-          location: locations
-  }
+        }),
+        location: locations
+    }
+}
+
+export function getSalesWarehouse(locations) {
+    const token = sessionStorage.token;
+    const url = `${ROOT_URL}/api/masterdata`;
+    return {
+        type: GED_SALESWAREHOUSES,
+        promise: fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        location: locations
+    }
 }

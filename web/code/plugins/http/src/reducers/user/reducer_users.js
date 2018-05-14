@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     datas:[], user: null, options:[], errors: null, statuscode: null, selectedCompany:null, selectedWarehouses:null, statusCode:null, message:null,
-    locationOnHand:[],warehouseOnHand:[],onhandLocationSelected:null,ShareEmailToValue:[],canNotUseHierarchy:null,userTypeValue:null
+    locationOnHand:[],warehouseOnHand:[],onhandLocationSelected:null,ShareEmailToValue:[],canNotUseHierarchy:null,userTypeValue:null, locationSales:[],
+    warehouseSales:[],salesLocationSelected:null
 };
 
 export default function(state = INITIAL_STATE, action){
@@ -24,13 +25,16 @@ export default function(state = INITIAL_STATE, action){
         case 'FETCH_USERS':
             return { ...state, datas: action.data.data };
         case 'FETCH_OPTIONS':
-            return { ...state, options: action.data, locationOnHand: action.data.companies, warehouseOnHand: action.data.warehouses };
+            return { ...state, options: action.data, locationOnHand: action.data.companies, warehouseOnHand: action.data.warehouses,
+                    locationSales: action.data.companies, warehouseSales: action.data.warehouses };
         case 'SELECTED_COMPANY':
             return { ...state, options: action.data, selectedCompany: action.selected, selectedWarehouses: ''};
         case 'SELECTED_WAREHOUSES':
             return { ...state, options: action.data, selectedCompany: action.comid, selectedWarehouses: action.selected};
         case 'GED_ONHANDWAREHOUSES':
-            return { ...state, options: action.data, locationOnHand: action.data.companies, warehouseOnHand: action.data.warehouses};
+            return { ...state, options: action.data, locationOnHand: action.data.companies, warehouseOnHand: action.data.warehouses };
+        case 'GED_SALESWAREHOUSES':
+            return { ...state, options: action.data, locationSales: action.data.companies, warehouseSales: action.data.warehouses };
         case 'CREATE_USER':
             return { ...state, options: action.datas, selectedWarehouses: action.selected, statusCode: action.data.statusCode,
                 message: action.data.message};
@@ -72,6 +76,7 @@ const setnewprops = (data) => {
     let priceSalesMGP=false;
     let priceSalesDSP=false;
     let onhandLocationValue = [];
+    let salesLocationValue = [];
     let categorySTO=false;
     let categoryJLY=false;
     let categoryWAT=false;
@@ -372,6 +377,11 @@ const setnewprops = (data) => {
         permissionId: permission.id,
         onhandLocationValue: (permission.onhandLocation != null) ? permission.onhandLocation.places : null,
         onhandWarehouseValue: (permission.onhandWarehouse != null) ? permission.onhandWarehouse.places : null,
+        salesLocation: (permission.salesLocation != null) ? (permission.salesLocation.type.indexOf('All') != -1) ? true : false : false,
+        salesWarehouse: (permission.salesWarehouse != null) ? (permission.salesWarehouse != null && permission.salesWarehouse.type.indexOf('AllSalesWarehouse') != -1) ? true : false : false,
+        salesAll: (permission.salesLocation != null) ? (permission.salesLocation.type.indexOf('All') != -1) ? true : false : false,
+        salesLocationValue: (permission.salesLocation != null) ? permission.salesLocation.places : null,
+        salesWarehouseValue: (permission.salesWarehouse != null) ? permission.salesWarehouse.places : null,
         notUseHierarchy: JSON.parse(permission.notUseHierarchy)
     }
     return user

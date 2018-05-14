@@ -82,6 +82,8 @@ module.exports = {
             .findOne({ id: user.permission })
             .populate('onhandLocation')
             .populate('onhandWarehouse')
+            .populate('salesLocation')
+            .populate('salesWarehouse')
             .then(function (permission) {
                 user.permission = permission.toJSON();
                 return reply({ data: user });

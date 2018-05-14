@@ -44,6 +44,8 @@ class UserDetails extends Component {
         let permission = null;
         let onhandLocation = null;
         let onhandWarehouse = null;
+        let salesLocation = null;
+        let salesWarehouse = null;
 
         if(data.productGroup){
             if (data.productGroup == '1'){
@@ -150,6 +152,15 @@ class UserDetails extends Component {
             places:(!data.onhandWarehouseValue)?[]:data.onhandWarehouseValue
         };
 
+        salesLocation = {
+            type: 'SalesLocation',
+            places: (!data.salesLocationValue) ? [] : data.salesLocationValue
+        };
+        salesWarehouse = {
+            type:(data.sales != undefined) ? (data.sales.indexOf('All') != -1) ? 'AllSalesWarehouse': 'SalesWarehouse' : 'SalesWarehouse',
+            places:(!data.salesWarehouseValue)?[]:data.salesWarehouseValue
+        };
+
         if(data.onhandAll){
             onhandLocation = {
                 type:'All',
@@ -160,10 +171,22 @@ class UserDetails extends Component {
                 places:[]
             };
         }
+        if(data.salesAll){
+            salesLocation = {
+                type:'All',
+                places:[]
+            };
+            salesWarehouse = {
+                type:'All',
+                places:[]
+            };
+        }
         permission = {...data.permission,
             id: data.permissionId,
             onhandLocation: onhandLocation,
             onhandWarehouse: onhandWarehouse,
+            salesLocation: salesLocation,
+            salesWarehouse: salesWarehouse,
             userType: data.userType,
             price: data.price,
             notUseHierarchy:JSON.stringify(data.notUseHierarchy)
@@ -201,6 +224,12 @@ class UserDetails extends Component {
         delete data.onhandAll;
         delete data.onhandLocation;
         delete data.onhandWarehouse;
+        delete data.sales;
+        delete data.salesLocationValue;
+        delete data.salesWarehouseValue;
+        delete data.salesAll;
+        delete data.salesLocation;
+        delete data.salesWarehouse;
         delete data.categoryACC;
         delete data.categoryJLY;
         delete data.categoryOBA;

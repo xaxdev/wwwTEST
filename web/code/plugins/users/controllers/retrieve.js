@@ -47,6 +47,8 @@ exports.one = {
               .findOne({ id: user.permission })
               .populate('onhandLocation')
               .populate('onhandWarehouse')
+              .populate('salesLocation')
+              .populate('salesWarehouse')
               .then(function (permission) {
                   user.permission = permission.toJSON();
                   return reply({ data: user.toJSON() });
@@ -61,7 +63,7 @@ exports.one = {
 
 exports.shareuser = {
     auth: {
-      strategy: 'authentication'
+        strategy: 'authentication'
     },
     handler: (request, reply) => {
         const Users = request.collections.user;

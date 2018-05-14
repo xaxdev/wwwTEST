@@ -544,6 +544,8 @@ function mapStateToProps(state) {
         StoneCertificateDateTo: state.searchResult.StoneCertificateDateTo,
         AccessoryTypeValue: state.searchResult.AccessoryTypeValue,
         SparePartTypeValue: state.searchResult.SparePartTypeValue,
+        locationSales: state.users.locationSales,
+        warehouseSales: state.users.warehouseSales,
     }
 }
 function mapDispatchToProps(dispatch) {

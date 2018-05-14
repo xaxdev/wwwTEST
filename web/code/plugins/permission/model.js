@@ -27,6 +27,12 @@ module.exports = {
         onhandWarehouse: {
             model: 'onhandWarehouse'
         },
+        salesLocation: {
+            model: 'salesLocation'
+        },
+        salesWarehouse: {
+            model: 'salesWarehouse'
+        },
         price: {
             type: 'string',
             enum: ['Public', 'Updated', 'All','NULL'],

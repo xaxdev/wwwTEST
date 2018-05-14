@@ -70,7 +70,9 @@ module.exports = {
 
             user.permission = await Permissions.findOne({ id: user.permission })
                 .populate('onhandLocation')
-                .populate('onhandWarehouse');
+                .populate('onhandWarehouse')
+                .populate('salesLocation')
+                .populate('salesWarehouse');
 
             return reply(user).header('Authorization', token);
         } catch (err) {

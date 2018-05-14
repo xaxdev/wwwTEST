@@ -46,7 +46,7 @@ class SalesReportHeader extends Component {
         location.value = LocationSelectValue;
         props.inventoryActions.setDataLocation(LocationSelectValue);
         let vlues = LocationSelectValue.split(',');
-        props.masterDataActions.getOnHandWarehouse(vlues);
+        props.masterDataActions.getSalesWarehouse(vlues);
     }
 
     handleWarehouseSelectChange = WarehouseSelectValue => {
@@ -142,8 +142,8 @@ class SalesReportHeader extends Component {
         let dataDropDowntSalesChannel = [];
         let that = this;
 
-        if(userLogin.permission.onhandLocation != undefined){
-            if(userLogin.permission.onhandLocation.type == 'Location' || userLogin.permission.onhandLocation.type == 'All'){
+        if(userLogin.permission.salesLocation != undefined){
+            if(userLogin.permission.salesLocation.type == 'SalesLocation' || userLogin.permission.salesLocation.type == 'All'){
                 if (props.options != undefined){
                     if (props.options.companies) {
                         dataDropDowntLocations = InitDataCompany(props.options.companies, userLogin);
@@ -165,13 +165,13 @@ class SalesReportHeader extends Component {
                 }))
                 dataDropDowntDominantStone = dataDropDowntDominantStone[0];
             }
-            if (props.options.warehouses) {
+            if (props.warehouseSales) {
                 let newDate = [];
                 let data = [];
-                if(userLogin.permission.onhandWarehouse != undefined){
-                    if (userLogin.permission.onhandWarehouse.type == 'Warehouse'){
-                        userLogin.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
-                            newDate.push(_.filter(that.props.props.options.warehouses,
+                if(userLogin.permission.salesWarehouse != undefined){
+                    if (userLogin.permission.salesWarehouse.type == 'SalesWarehouse'){
+                        userLogin.permission.salesWarehouse.places.forEach(function(settingWarehouse){
+                            newDate.push(_.filter(that.props.props.warehouseSales,
                                 function(warehouse){
                                     if(warehouse.code != undefined){
                                       return warehouse.code.toString() == settingWarehouse;
@@ -180,9 +180,9 @@ class SalesReportHeader extends Component {
                             ));
                         });
                     }
-                    if (userLogin.permission.onhandWarehouse.type == 'All'){
+                    if (userLogin.permission.salesWarehouse.type == 'All'){
                         dataDropDowntLocations.forEach(function(location){
-                            newDate.push(_.filter(that.props.props.options.warehouses,
+                            newDate.push(_.filter(that.props.props.warehouseSales,
                               function(warehouse)
                               { return warehouse.comid == location.value})
                             );
@@ -240,7 +240,7 @@ class SalesReportHeader extends Component {
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
-                                        <div className={`form-group ${(userLogin.permission.onhandLocation != undefined) ? '' :
+                                        <div className={`form-group ${(userLogin.permission.salesLocation != undefined) ? '' :
                                                           'hidden'}` }>
                                             <label className="col-sm-4 control-label">Company</label>
                                             <div className= "col-sm-7">
@@ -249,11 +249,11 @@ class SalesReportHeader extends Component {
                                                     placeholder="Select your Company"
                                                     options={dataDropDowntLocations}
                                                     onChange={this.handleLocationSelectChange}
-                                                    disabled={(userLogin.permission.onhandLocation != undefined) ? false : true}
+                                                    disabled={(userLogin.permission.salesLocation != undefined) ? false : true}
                                                     ref="location"/>
                                             </div>
                                         </div>
-                                        <div className={`form-group ${(userLogin.permission.onhandWarehouse != undefined) ?'' :
+                                        <div className={`form-group ${(userLogin.permission.salesWarehouse != undefined) ?'' :
                                                           'hidden'}` }>
                                             <label className="col-sm-4 control-label">Location</label>
                                             <div className="col-sm-7">
@@ -262,7 +262,7 @@ class SalesReportHeader extends Component {
                                                   placeholder="Select your Location"
                                                   options={dataDropDowntWareHouse}
                                                   onChange={this.handleWarehouseSelectChange}
-                                                  disabled={(userLogin.permission.onhandWarehouse != undefined) ? false : true}/>
+                                                  disabled={(userLogin.permission.salesWarehouse != undefined) ? false : true}/>
                                             </div>
                                         </div>
                                         <div className="form-group">

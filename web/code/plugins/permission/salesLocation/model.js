@@ -3,10 +3,10 @@
 module.exports = {
     schema: true,
     autoPK: false,
-    identity: 'onhandWarehouse',
+    identity: 'salesLocation',
     connection: 'mysql',
     migrate: 'safe',
-    tableName: 'PermissionOnhandWarehouse',
+    tableName: 'PermissionSalesLocation',
     attributes: {
         id: {
             type: 'integer',

@@ -13,11 +13,8 @@ module.exports = {
         }
     },
     handler: (request, reply) => {
-
         (async _ => {
-
             try {
-
                 const name = request.params.name;
                 const Users = request.collections.user;
 
@@ -32,7 +29,6 @@ module.exports = {
                     'status': true
                 })
                 .then((data) => {
-
                     return data.map((item) => {
                         if (item.id !== request.auth.credentials.id) {
                             return {
@@ -46,19 +42,15 @@ module.exports = {
                     })
                 })
                 .then((data) => {
-
                     return reply({
                         data: data
                     })
                 })
                 .catch((err) => {
-
                     return reply(Boom.badImplementation(err));
                 })
                 .done();
-
             } catch (err) {
-
                 return reply(Boom.badImplementation('', err));
             }
         })()
