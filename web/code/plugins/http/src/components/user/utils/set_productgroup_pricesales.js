@@ -6,8 +6,6 @@ export default function SetProductGroupSales(
         categorySPP,notUseHierarchy
     } } = that.props;
 
-    console.log('name-->',name);
-
     switch (name) {
         case 'priceSalesRTP':
             if (value) {

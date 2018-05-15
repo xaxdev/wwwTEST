@@ -1,11 +1,14 @@
 const INITIAL_STATE = {
     datas:[], user: null, options:[], errors: null, statuscode: null, selectedCompany:null, selectedWarehouses:null, statusCode:null, message:null,
     locationOnHand:[],warehouseOnHand:[],onhandLocationSelected:null,ShareEmailToValue:[],canNotUseHierarchy:null,userTypeValue:null, locationSales:[],
-    warehouseSales:[],salesLocationSelected:null
+    warehouseSales:[],salesLocationSelected:null,canNotUseSalesHierarchy:null
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case 'SET_NOTUSESALESHIERARCHY':
+            return {...state,  canNotUseSalesHierarchy: action.notUseSalesHierarchy};
+            break;
         case 'SET_USERTYPE':
             return {...state,  userTypeValue: action.userType};
             break;
@@ -31,9 +34,9 @@ export default function(state = INITIAL_STATE, action){
             return { ...state, options: action.data, selectedCompany: action.selected, selectedWarehouses: ''};
         case 'SELECTED_WAREHOUSES':
             return { ...state, options: action.data, selectedCompany: action.comid, selectedWarehouses: action.selected};
-        case 'GED_ONHANDWAREHOUSES':
+        case 'GET_ONHANDWAREHOUSES':
             return { ...state, options: action.data, locationOnHand: action.data.companies, warehouseOnHand: action.data.warehouses };
-        case 'GED_SALESWAREHOUSES':
+        case 'GET_SALESWAREHOUSES':
             return { ...state, options: action.data, locationSales: action.data.companies, warehouseSales: action.data.warehouses };
         case 'CREATE_USER':
             return { ...state, options: action.datas, selectedWarehouses: action.selected, statusCode: action.data.statusCode,
@@ -49,14 +52,17 @@ const setnewprops = (data) => {
     let bitwiseSales = Number(permission.productGroupSales).toString(2);
     let bitwisePriceSales = Number(permission.priceSales).toString(2);
     let bitwiseCategory = Number(permission.category).toString(2);
+    let bitwiseSalesCategory = Number(permission.salesCategory).toString(2);
     let checkbits = bitwise.split('');
     let checkbitsSales = bitwiseSales.split('');
     let checkbitsPriceSales = bitwisePriceSales.split('');
     let checkbitsCategory = bitwiseCategory.split('');
+    let checkbitsSalesCategory = bitwiseSalesCategory.split('');
     let numberDiit = checkbits.length;
     let numberDiitSales = checkbitsSales.length;
     let numberDiitPriceSales = checkbitsPriceSales.length;
     let numberDiitCategory = checkbitsCategory.length;
+    let numberDiitSalesCategory = checkbitsSalesCategory.length;
     let productGroupSTO=false;
     let productGroupJLY=false;
     let productGroupWAT=false;
@@ -83,6 +89,12 @@ const setnewprops = (data) => {
     let categoryACC=false;
     let categoryOBA=false;
     let categorySPP=false;
+    let categorySalesSTO=false;
+    let categorySalesJLY=false;
+    let categorySalesWAT=false;
+    let categorySalesACC=false;
+    let categorySalesOBA=false;
+    let categorySalesSPP=false;
 
     checkbits.map(function(value,key){
         switch (numberDiit) {
@@ -212,7 +224,6 @@ const setnewprops = (data) => {
             break;
         }
     });
-
     checkbitsPriceSales.map(function(value,key){
         switch (numberDiitPriceSales) {
             case 1:
@@ -277,7 +288,6 @@ const setnewprops = (data) => {
             break;
         }
     });
-
     checkbitsCategory.map(function(value,key){
         switch (numberDiitCategory) {
             case 1:
@@ -342,6 +352,70 @@ const setnewprops = (data) => {
                 break;
         }
     });
+    checkbitsSalesCategory.map(function(value,key){
+        switch (numberDiitSalesCategory) {
+            case 1:
+                categorySalesJLY = (value == '1')?true:false;
+                break;
+            case 2:
+                if(key == 0){
+                    categorySalesWAT = (value == '1')?true:false;
+                }else if (key == 1) {
+                    categorySalesJLY = (value == '1')?true:false;
+                }
+                break;
+            case 3:
+                if(key == 0){
+                    categorySalesSTO = (value == '1')?true:false;
+                }else if (key == 1) {
+                    categorySalesWAT = (value == '1')?true:false;
+                }else if (key == 2) {
+                    categorySalesJLY = (value == '1')?true:false;
+                }
+                break;
+            case 4:
+                if(key == 0){
+                    categorySalesACC = (value == '1')?true:false;
+                }else if (key == 1) {
+                    categorySalesSTO = (value == '1')?true:false;
+                }else if (key == 2) {
+                    categorySalesWAT = (value == '1')?true:false;
+                }else if (key == 3) {
+                    categorySalesJLY = (value == '1')?true:false;
+                }
+                break;
+            case 5:
+                if(key == 0){
+                    categorySalesOBA = (value == '1')?true:false;
+                }else if (key == 1) {
+                    categorySalesACC = (value == '1')?true:false;
+                }else if (key == 2) {
+                    categorySalesSTO = (value == '1')?true:false;
+                }else if (key == 3) {
+                    categorySalesWAT = (value == '1')?true:false;
+                }else if (key == 4) {
+                    categorySalesJLY = (value == '1')?true:false;
+                }
+                break;
+            case 6:
+                if(key == 0){
+                    categorySalesSPP = (value == '1')?true:false;
+                }else if (key == 1) {
+                    categorySalesOBA = (value == '1')?true:false;
+                }else if (key == 2) {
+                    categorySalesACC = (value == '1')?true:false;
+                }else if (key == 3) {
+                    categorySalesSTO = (value == '1')?true:false;
+                }else if (key == 4) {
+                    categorySalesWAT = (value == '1')?true:false;
+                }else if (key == 5) {
+                    categorySalesJLY = (value == '1')?true:false;
+                }
+                break;
+            default:
+                break;
+        }
+    });
     user = {...user,
         price: permission.price,
         userType: permission.userType,
@@ -351,6 +425,12 @@ const setnewprops = (data) => {
         categoryACC: categoryACC,
         categoryOBA: categoryOBA,
         categorySPP: categorySPP,
+        categorySalesJLY: categorySalesJLY,
+        categorySalesWAT: categorySalesWAT,
+        categorySalesSTO: categorySalesSTO,
+        categorySalesACC: categorySalesACC,
+        categorySalesOBA: categorySalesOBA,
+        categorySalesSPP: categorySalesSPP,
         productGroup: (permission.productGroup == 63)?1:2,
         productGroupSTO: productGroupSTO,
         productGroupJLY: productGroupJLY,
@@ -382,7 +462,8 @@ const setnewprops = (data) => {
         salesAll: (permission.salesLocation != null) ? (permission.salesLocation.type.indexOf('All') != -1) ? true : false : false,
         salesLocationValue: (permission.salesLocation != null) ? permission.salesLocation.places : null,
         salesWarehouseValue: (permission.salesWarehouse != null) ? permission.salesWarehouse.places : null,
-        notUseHierarchy: JSON.parse(permission.notUseHierarchy)
+        notUseHierarchy: JSON.parse(permission.notUseHierarchy),
+        notUseSalesHierarchy: JSON.parse(permission.notUseSalesHierarchy)
     }
     return user
 }

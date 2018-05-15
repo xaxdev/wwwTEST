@@ -41,6 +41,7 @@ class UserDetails extends Component {
         let FLAG_CAT_OBA = 0x10; //010000
         let FLAG_CAT_SPP = 0x20; //100000
         let resultCAT = FLAG_ZERO;
+        let resultSalesCAT = FLAG_ZERO;
         let permission = null;
         let onhandLocation = null;
         let onhandWarehouse = null;
@@ -143,6 +144,26 @@ class UserDetails extends Component {
         }
         data = { ...data, permission:{ ...data.permission, category:resultCAT }};
 
+        if(data.categorySalesJLY){
+            resultSalesCAT = resultSalesCAT|FLAG_CAT_JLY;
+        }
+        if(data.categorySalesWAT){
+            resultSalesCAT = resultSalesCAT|FLAG_CAT_WAT;
+        }
+        if(data.categorySalesSTO){
+            resultSalesCAT = resultSalesCAT|FLAG_CAT_STO;
+        }
+        if(data.categorySalesACC){
+            resultSalesCAT = resultSalesCAT|FLAG_CAT_ACC;
+        }
+        if(data.categorySalesOBA){
+            resultSalesCAT = resultSalesCAT|FLAG_CAT_OBA;
+        }
+        if(data.categorySalesSPP){
+            resultSalesCAT = resultSalesCAT|FLAG_CAT_SPP;
+        }
+        data = { ...data, permission:{ ...data.permission, salesCategory:resultSalesCAT }};
+
         onhandLocation = {
             type: 'Location',
             places: (!data.onhandLocationValue) ? [] : data.onhandLocationValue
@@ -189,7 +210,8 @@ class UserDetails extends Component {
             salesWarehouse: salesWarehouse,
             userType: data.userType,
             price: data.price,
-            notUseHierarchy:JSON.stringify(data.notUseHierarchy)
+            notUseHierarchy:JSON.stringify(data.notUseHierarchy),
+            notUseSalesHierarchy:JSON.stringify(data.notUseSalesHierarchy)
         }
 
         data = Object.assign({}, data, { permission:permission });
@@ -237,12 +259,19 @@ class UserDetails extends Component {
         delete data.categorySTO;
         delete data.categoryWAT;
         delete data.notUseHierarchy;
+        delete data.notUseSalesHierarchy;
         delete data.priceSalesRTP;
         delete data.priceSalesUCP;
         delete data.priceSalesCTP;
         delete data.priceSalesNSP;
         delete data.priceSalesMGP;
         delete data.priceSalesDSP;
+        delete data.categorySalesACC;
+        delete data.categorySalesJLY;
+        delete data.categorySalesOBA;
+        delete data.categorySalesSPP;
+        delete data.categorySalesSTO;
+        delete data.categorySalesWAT;
 
         if(!data.password){
             delete data.password;
@@ -254,6 +283,7 @@ class UserDetails extends Component {
             // We navigate by calling this.context.router.push with the
             // new path to navigate to.
             this.props.setNotUseHierarchy(null);
+            this.props.setNotUseSalesHierarchy(null);
             this.context.router.push('/users');
         });
     }

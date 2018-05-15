@@ -50,10 +50,16 @@ module.exports = {
         category:{
             type: 'integer'
         },
+        salesCategory:{
+            type: 'integer'
+        },
         user: {
             model: 'user'
         },
         notUseHierarchy:{
+            type: 'string'
+        },
+        notUseSalesHierarchy:{
             type: 'string'
         },
         toJSON: function () {

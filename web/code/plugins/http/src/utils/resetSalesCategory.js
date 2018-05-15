@@ -1,4 +1,4 @@
-export default function ResetCategory(that){
+export default function ResetSalesCategory(that){
     const {
         fields: {
             reference,description,certificatedNumber,sku,location,warehouse,stoneType,cut,stoneProductHierarchy,lotNumber,cutGrade,color,colorGrade,clarity,
@@ -7,7 +7,7 @@ export default function ResetCategory(that){
             brand,mustHave,ringSize,dominantStone,metalType,metalColour,cerDateFrom,cerDateTo,polish,symmetry,treatment,fluorescence,origin,certificateAgency,
             stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,watchProductHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,
             proDateFrom,proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,dialMetal,buckleType,
-            strapType,strapColor,complication,accessoryProductHierarchy,accessoryType,obaProductHierarchy,obaDimension,sparePartProductHierarchy,sparePartType,
+            strapType,strapColor,complication,accessoryProductSalesHierarchy,accessoryType,obaProductSalesHierarchy,obaDimension,sparePartProductSalesHierarchy,sparePartType,
             salesChannel
         }, resetForm
     } = that.props;
@@ -73,12 +73,12 @@ export default function ResetCategory(that){
     strapColor.value = '';
     complication.value = '';
 
-    accessoryProductHierarchy.value = '';
+    accessoryProductSalesHierarchy.value = '';
     accessoryType.value = '';
 
-    obaProductHierarchy.value = '';
+    obaProductSalesHierarchy.value = '';
     obaDimension.value = '';
 
-    sparePartProductHierarchy.value = '';
+    sparePartProductSalesHierarchy.value = '';
     sparePartType.value = '';
 }

@@ -1,9 +1,8 @@
-export default function SetProductGroupSales(that, value, name, ClearHierarchy, hierarchyDataJewelry,
-                    hierarchyDataWatch,hierarchyDataStone, hierarchyDataAccessory, hierarchyDataOBA,
-                    hierarchyDataSpare){
+export default function SetProductGroupSales(that, value, name, ClearHierarchy, hierarchyDataJewelrySales, hierarchyDataWatchSales,hierarchyDataStoneSales,
+    hierarchyDataAccessorySales, hierarchyDataOBASales, hierarchyDataSpareSales){
     const { fields: {
                 productGroupSalesSTO,productGroupSalesJLY,productGroupSalesWAT,productGroupSalesACC,productGroupSalesOBA,
-                productGroupSalesSPA,categoryJLY,categoryWAT,categorySTO,categoryACC,categoryOBA,categorySPP,
+                productGroupSalesSPA,categorySalesJLY,categorySalesWAT,categorySalesSTO,categorySalesACC,categorySalesOBA,categorySalesSPP,
                 notUseHierarchy
           } } = that.props;
 
@@ -13,8 +12,8 @@ export default function SetProductGroupSales(that, value, name, ClearHierarchy, 
                   productGroupSalesSPA.onChange(true);
               }else{
                   productGroupSalesSPA.onChange(false);
-                  categorySPP.onChange(false);
-                  ClearHierarchy(hierarchyDataSpare);
+                  categorySalesSPP.onChange(false);
+                  ClearHierarchy(hierarchyDataSpareSales);
               }
               break;
           case 'productGroupSalesOBA':
@@ -22,8 +21,8 @@ export default function SetProductGroupSales(that, value, name, ClearHierarchy, 
                   productGroupSalesOBA.onChange(true);
               }else{
                   productGroupSalesOBA.onChange(false);
-                  categoryOBA.onChange(false);
-                  ClearHierarchy(hierarchyDataOBA);
+                  categorySalesOBA.onChange(false);
+                  ClearHierarchy(hierarchyDataOBASales);
               }
               break;
           case 'productGroupSalesACC':
@@ -31,8 +30,8 @@ export default function SetProductGroupSales(that, value, name, ClearHierarchy, 
                   productGroupSalesACC.onChange(true);
               }else{
                   productGroupSalesACC.onChange(false);
-                  categoryACC.onChange(false);
-                  ClearHierarchy(hierarchyDataAccessory);
+                  categorySalesACC.onChange(false);
+                  ClearHierarchy(hierarchyDataAccessorySales);
               }
               break;
           case 'productGroupSalesSTO':
@@ -40,8 +39,8 @@ export default function SetProductGroupSales(that, value, name, ClearHierarchy, 
                   productGroupSalesSTO.onChange(true);
               }else{
                   productGroupSalesSTO.onChange(false);
-                  categorySTO.onChange(false);
-                  ClearHierarchy(hierarchyDataStone);
+                  categorySalesSTO.onChange(false);
+                  ClearHierarchy(hierarchyDataStoneSales);
               }
               break;
           case 'productGroupSalesWAT':
@@ -49,8 +48,8 @@ export default function SetProductGroupSales(that, value, name, ClearHierarchy, 
                   productGroupSalesWAT.onChange(true);
               }else{
                   productGroupSalesWAT.onChange(false);
-                  categoryWAT.onChange(false);
-                  ClearHierarchy(hierarchyDataWatch);
+                  categorySalesWAT.onChange(false);
+                  ClearHierarchy(hierarchyDataWatchSales);
               }
               break;
           case 'productGroupSalesJLY':
@@ -58,8 +57,8 @@ export default function SetProductGroupSales(that, value, name, ClearHierarchy, 
                   productGroupSalesJLY.onChange(true);
               }else{
                   productGroupSalesJLY.onChange(false);
-                  categoryJLY.onChange(false);
-                  ClearHierarchy(hierarchyDataJewelry);
+                  categorySalesJLY.onChange(false);
+                  ClearHierarchy(hierarchyDataJewelrySales);
               }
               break;
           default:

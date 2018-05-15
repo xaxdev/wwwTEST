@@ -3,33 +3,42 @@ import {FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET
     SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH,FETCH_ALLPDF,FETCH_EXPORTITEMS
 } from '../../constants/itemconstants';
 
-import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY, SET_CERTIFICATELAB, SET_POLISH,
-    SET_SYMMETRY, SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN, SET_JEWELRYCATEGORY, SET_COLLECTION, SET_BRAND, SET_MUSTHAVE, SET_RINGSIZE, SET_DOMINANTSTONE,
-    SET_METALTYPE, SET_METALCOLOUR, SET_CERTIFICATEAGENCY, SET_WATCHCATEORY, SET_LIMITEDEDITION, SET_MOVEMENT, SET_DIALINDEX, SET_DIALCOLOR, SET_DIALMETAL,
-    SET_BUCKLETYPE, SET_STRAPTYPE, SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE, SET_HIERARCHY,
-    SET_GEMS_CERTIFICATE_DATE_FROM, SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM, SET_STONE_CERTIFICATE_DATE_TO, SET_PRODUCTION_DATE_FROM,
-    SET_PRODUCTION_DATE_TO,SET_SUBMITACTION, SET_SAVESEARCHHIERARCHY, SET_VIEWASSET, SET_ITEMSORDER,SET_SETREFERENCEORDER, SET_ARTICLE, SET_SALESCHANNEL,
-    SET_GEMS_STONE_TYPE
+import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE,
+    SET_CLARITY, SET_CERTIFICATELAB, SET_POLISH, SET_SYMMETRY, SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN,
+    SET_JEWELRYCATEGORY, SET_COLLECTION, SET_BRAND, SET_MUSTHAVE, SET_RINGSIZE, SET_DOMINANTSTONE, SET_METALTYPE,
+    SET_METALCOLOUR, SET_CERTIFICATEAGENCY, SET_WATCHCATEORY, SET_LIMITEDEDITION, SET_MOVEMENT, SET_DIALINDEX,
+    SET_DIALCOLOR, SET_DIALMETAL, SET_BUCKLETYPE, SET_STRAPTYPE, SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY,
+    SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE, SET_HIERARCHY,SET_GEMS_CERTIFICATE_DATE_FROM,
+    SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM, SET_STONE_CERTIFICATE_DATE_TO,
+    SET_PRODUCTION_DATE_FROM,SET_PRODUCTION_DATE_TO,SET_SUBMITACTION, SET_SAVESEARCHHIERARCHY, SET_VIEWASSET,
+    SET_ITEMSORDER,SET_SETREFERENCEORDER, SET_ARTICLE, SET_SALESCHANNEL,SET_SALESHIERARCHY,SET_GEMS_STONE_TYPE
 } from '../../constants/inventoryConstants';
 
-const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, currentPage:1, totalpage:null, totalpublicprice:null, totalupdatedcost:null, allItems:null,
-    WarehouseValue:[], LocationValue:[], StoneTypeValue:[], CutValue:[], CutGradeValue:[], ColorValue:[], ColorGradeValue:[], ClarityValue:[], CertificateLabValue:[],
-    PolishValue:[], SymmetryValue:[], TreatmentValue:[], FluorescenceValue:[], OriginValue:[], JewelryCategoryValue:[], CollectionValue:[], BrandValue:[],
-    MustHaveValue:[], RingSizeValue:[], DominantStoneValue:[], MetalTypeValue:[], MetalColourValue:[], CutValue:[], CertificateAgencyValue:[], ComplicationValue:[],
-    StrapColorValue:[], StrapTypeValue:[], BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[], DialIndexValue:[], MovementValue:[], LimitedEditionValue:[],
-    WatchCategoryValue:[], activeTabCategory:1, allItems:[], filters:[], AccessoryTypeValue:[], SparePartTypeValue:[], paramsSearch:null, IsAdvance:false,
-    HierarchyValue:null, SearchAction:'New', exportItems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null, GemCertificateDateTo:null,
-    StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16, SortingBy:'itemCreatedDate',
-    SortDirection:'desc', ShowGridView: true, ShowListView: false, SubmitAction: null, saveSearchStatus: false, msg: '',saveSearchStatusCode: 100, isSAveSearch: false,
-    listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null, idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null,
-    viewAsSet: false, itemsOrder:null,setReferenceOrder:null,tempPDF:null, ArticleValue:[], SalesChannelValue:[], GemStoneTypeValue:[]
-
+const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, currentPage:1, totalpage:null,
+    totalpublicprice:null, totalupdatedcost:null, allItems:null, WarehouseValue:[], LocationValue:[], StoneTypeValue:[],
+    CutValue:[], CutGradeValue:[], ColorValue:[], ColorGradeValue:[], ClarityValue:[], CertificateLabValue:[],
+    PolishValue:[], SymmetryValue:[], TreatmentValue:[], FluorescenceValue:[], OriginValue:[],
+    JewelryCategoryValue:[], CollectionValue:[], BrandValue:[], MustHaveValue:[], RingSizeValue:[],
+    DominantStoneValue:[], MetalTypeValue:[], MetalColourValue:[], CutValue:[], CertificateAgencyValue:[],
+    ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[], BuckleTypeValue:[], DialMetalValue:[],
+    DialColorValue:[], DialIndexValue:[], MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[],
+    activeTabCategory:1, allItems:[], filters:[], AccessoryTypeValue:[], SparePartTypeValue:[], paramsSearch:null,
+    IsAdvance:false, HierarchyValue:null, SearchAction:'New', exportItems:[], maxPrice:null, minPrice:null,
+    avrgPrice:null, GemCertificateDateFrom:null, GemCertificateDateTo:null, StoneCertificateDateFrom:null,
+    StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16, SortingBy:'itemCreatedDate',
+    SortDirection:'desc', ShowGridView: true, ShowListView: false, SubmitAction: null, saveSearchStatus: false,
+    msg: '',saveSearchStatusCode: 100, isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null,
+    saveSearchHierarchy: null, idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null,
+    viewAsSet: false, itemsOrder:null,setReferenceOrder:null,tempPDF:null, ArticleValue:[], SalesChannelValue:[], SalesHierarchyValue:null, GemStoneTypeValue:[]
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
         case SET_GEMS_STONE_TYPE:
             return {...state, GemStoneTypeValue: action.gemstoneStoneType};
+        case SET_SALESHIERARCHY :
+            return {...state, SalesHierarchyValue: action.salesHierarchy };
+            break;
         case SET_SALESCHANNEL:
             return {...state, SalesChannelValue: action.salesChannel};
             break;

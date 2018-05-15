@@ -11,7 +11,7 @@ import * as masterDataActions from '../../actions/masterdataaction';
 import * as inventoryActions from '../../actions/inventoryactions';
 import * as salesActions from '../../actions/salesaction';
 import * as itemactions from '../../actions/itemactions';
-import SalesJewelry from '../inventory/inventory_jewelry';
+import SalesJewelry from './salesreport_jewelry';
 import SalesWatch from '../inventory/inventory_watch';
 import SalesAcc from '../inventory/inventory_acc';
 import SalesOBA from '../inventory/inventory_oba';
@@ -561,11 +561,11 @@ module.exports = reduxForm({
     fields: ['reference', 'description', 'certificatedNumber', 'sku', 'location', 'warehouse', 'dominantStone', 'customer', 'salesPersonName'
             , 'salesChannel', 'invoiceNo', 'invoiceDateFrom', 'invoiceDateTo', 'totalCostFrom', 'totalCostTo', 'totalUpdatedCostFrom', 'totalUpdatedCostTo'
             , 'retailPriceFrom', 'retailPriceTo', 'netSalesFrom', 'netSalesTo', 'marginFrom', 'marginTo', 'discountFrom', 'discountTo', 'stoneType', 'cut'
-            , 'stoneProductHierarchy', 'lotNumber', 'cutGrade', 'color', 'colorGrade', 'clarity', 'lotQuantityFrom', 'lotQuantityTo', 'certificateAgency', 'polish'
+            , 'stoneProductSalesHierarchy', 'lotNumber', 'cutGrade', 'color', 'colorGrade', 'clarity', 'lotQuantityFrom', 'lotQuantityTo', 'certificateAgency', 'polish'
             , 'symmetry', 'treatment', 'fluorescence', 'origin', 'jewelryCategory', 'brand', 'mustHave', 'ringSize', 'metalType', 'metalColour', 'collection'
             , 'watchCategory', 'limitedEdition', 'movement', 'dialIndex', 'dialColor', 'dialMetal', 'buckleType', 'strapType', 'strapColor', 'complication'
-            , 'accessoryProductHierarchy', 'accessoryType', 'obaProductHierarchy', 'obaDimension', 'sparePartProductHierarchy', 'sparePartType', 'attachment'
-            , 'setReference', 'searchName', 'jewelryProductHierarchy', 'markupFrom', 'markupTo', 'grossWeightFrom', 'grossWeightTo', 'watchProductHierarchy'
+            , 'accessoryProductSalesHierarchy', 'accessoryType', 'obaProductSalesHierarchy', 'obaDimension', 'sparePartProductSalesHierarchy', 'sparePartType', 'attachment'
+            , 'setReference', 'searchName', 'jewelryProductSalesHierarchy', 'markupFrom', 'markupTo', 'grossWeightFrom', 'grossWeightTo', 'watchProductSalesHierarchy'
             , 'limitedEditionNumber', 'serialNumber', 'proDateFrom', 'proDateTo', 'caseDimensionFrom', 'caseDimensionTo', 'preciousMetalWeightFrom'
             , 'preciousMetalWeightTo', 'article', 'viewAsSet', 'cerDateFrom', 'cerDateTo', 'totalCaratWeightFrom', 'totalCaratWeightTo', 'validateSearchName'
             ],

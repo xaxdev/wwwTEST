@@ -2,7 +2,8 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {
-    ROOT_URL,FETCH_USERS,CREATE_USER,FETCH_USER,UPDATE_USER,DELETE_USER,DISABLE_USER,SET_SHAREEMAILTO,FETCH_SHAREUSERS,SET_NOTUSEHIERARCHY,SET_USERTYPE
+    ROOT_URL,FETCH_USERS,CREATE_USER,FETCH_USER,UPDATE_USER,DELETE_USER,DISABLE_USER,SET_SHAREEMAILTO,FETCH_SHAREUSERS,SET_NOTUSEHIERARCHY,SET_USERTYPE,
+    SET_NOTUSESALESHIERARCHY
 } from '../constants/userConstants';
 
 export function setUserType(value){
@@ -29,6 +30,12 @@ export function setNotUseHierarchy(value){
     return {
         type: SET_NOTUSEHIERARCHY,
         notUseHierarchy:value
+    }
+}
+export function setNotUseSalesHierarchy(value){
+    return {
+        type: SET_NOTUSESALESHIERARCHY,
+        notUseSalesHierarchy:value
     }
 }
 export function setDataSendEmailTo(value){

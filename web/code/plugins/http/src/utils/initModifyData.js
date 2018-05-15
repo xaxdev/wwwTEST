@@ -215,6 +215,7 @@ export default function InitModifyData(props) {
     //
     // Jewelry Search
     //
+    // console.log('jewelryProductHierarchy-->',jewelryProductHierarchy);
 
     if(jewelryProductHierarchy != undefined){
         jewelryProductHierarchy.value = InitData(paramsSearch,jewelryProductHierarchy.value,'jewelryProductHierarchy');

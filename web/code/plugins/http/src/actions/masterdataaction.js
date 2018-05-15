@@ -3,7 +3,8 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {
-    FETCH_OPTIONS, SELECTED_COMPANY, SELECTED_WAREHOUSES, ROOT_URL,GED_ONHANDWAREHOUSES, SET_HIERARCHY,SET_NOTUSEHIERARCHY,GED_SALESWAREHOUSES
+    FETCH_OPTIONS, SELECTED_COMPANY, SELECTED_WAREHOUSES, ROOT_URL,GET_ONHANDWAREHOUSES, SET_HIERARCHY, SET_NOTUSEHIERARCHY, GET_SALESWAREHOUSES,
+    SET_SALESHIERARCHY, SET_NOTUSESALESHIERARCHY
 } from '../constants/masterDataConstants.js';
 
 export function get(){
@@ -32,6 +33,18 @@ export function setHierarchy(value){
     return {
         type: SET_HIERARCHY,
         hierarchy:value
+    }
+}
+export function setNotUseSalesHierarchy(value){
+    return {
+        type: SET_NOTUSESALESHIERARCHY,
+        notUseSalesHierarchy:value
+    }
+}
+export function setSalesHierarchy(value){
+    return {
+        type: SET_SALESHIERARCHY,
+        salesHierarchy:value
     }
 }
 export function getSite(compid){
@@ -75,7 +88,7 @@ export function getOnHandWarehouse(locations) {
     const token = sessionStorage.token;
     const url = `${ROOT_URL}/api/masterdata`;
     return {
-        type: GED_ONHANDWAREHOUSES,
+        type: GET_ONHANDWAREHOUSES,
         promise: fetch(url,{
             method: 'GET',
             headers: {
@@ -92,7 +105,7 @@ export function getSalesWarehouse(locations) {
     const token = sessionStorage.token;
     const url = `${ROOT_URL}/api/masterdata`;
     return {
-        type: GED_SALESWAREHOUSES,
+        type: GET_SALESWAREHOUSES,
         promise: fetch(url,{
             method: 'GET',
             headers: {
