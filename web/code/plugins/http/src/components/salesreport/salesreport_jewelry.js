@@ -4,7 +4,7 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Select from 'react-select';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/TreeArticle';
-import TreeData from '../../utils/treeview/jewelry.json';
+import TreeData from '../../utils/treeview/salesjewelry.json';
 import ClearSalesHierarchy from './utils/clear_hierarchy';
 import RemoveSalesHierarchy from './utils/remove_hierarchy';
 import DeleteSalesHierarchy from './utils/delete_hierarchy_attr';

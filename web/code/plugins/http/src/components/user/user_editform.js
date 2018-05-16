@@ -16,12 +16,12 @@ import TreeDataStone from '../../utils/treeview/stone.json';
 import TreeDataAccessory from '../../utils/treeview/accessory.json';
 import TreeDataOBA from '../../utils/treeview/oba.json';
 import TreeDataSpare from '../../utils/treeview/spare.json';
-import TreeDataSalesJewelry from '../../utils/treeview/jewelry.json';
-import TreeDataSalesWatch from '../../utils/treeview/watch.json';
-import TreeDataSalesStone from '../../utils/treeview/stone.json';
-import TreeDataSalesAccessory from '../../utils/treeview/accessory.json';
-import TreeDataSalesOBA from '../../utils/treeview/oba.json';
-import TreeDataSalesSpare from '../../utils/treeview/spare.json';
+import TreeDataSalesJewelry from '../../utils/treeview/salesjewelry.json';
+import TreeDataSalesWatch from '../../utils/treeview/saleswatch.json';
+import TreeDataSalesStone from '../../utils/treeview/salesstone.json';
+import TreeDataSalesAccessory from '../../utils/treeview/salesaccessory.json';
+import TreeDataSalesOBA from '../../utils/treeview/salesoba.json';
+import TreeDataSalesSpare from '../../utils/treeview/salesspare.json';
 import ClearHierarchy from './utils/clear_hierarchy';
 import SelectedHierarchy from './utils/selected_hierarchy';
 import FindLocationWareHouse from './utils/find_location_warehouse_edit';
@@ -32,6 +32,16 @@ import SetProductGroupSales from './utils/set_productgroup_sales';
 import SetProductGroupPriceSales from './utils/set_productgroup_pricesales';
 import SelectedSalesHierarchy from './utils/selected_hierarchy_sales';
 import InitWillReceiveProps from './utils/initwillreceiveprops';
+import RenderHeaderUserEdit from './render_header_user_edit';
+import RenderUserProfileEdit from './render_user_profile_edit';
+import RenderTypeUser from './render_type_user';
+import RenderViewOnHandProductGroup from './render_view_onhand_product_group';
+import RenderViewSalesProductGroup from './render_view_sales_product_group';
+import RenderViewPriceOnHand from './render_view_price_onhand';
+import RenderViewPriceSales from  './render_view_price_sales';
+import RenderViewOnHand  from  './render_view_onhand';
+import RenderViewSales  from  './render_view_sales';
+import FindProductHierarchy from './utils/find_product_hierarchy';
 
 let _ = require('lodash');
 let hierarchyDataJewelry = [];
@@ -104,6 +114,7 @@ class UserDetailsFrom extends Component {
         hierarchyDataAccessory.push(TreeDataAccessory);
         hierarchyDataOBA.push(TreeDataOBA);
         hierarchyDataSpare.push(TreeDataSpare);
+
         hierarchyDataJewelrySales.push(TreeDataSalesJewelry);
         hierarchyDataWatchSales.push(TreeDataSalesWatch);
         hierarchyDataStoneSales.push(TreeDataSalesStone);
@@ -379,6 +390,7 @@ class UserDetailsFrom extends Component {
         let { fields: { salesLocationValue,salesWarehouseValue,sales,salesAll }} = this.props;
         let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
         let checkSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
+        console.log('changedSalesLocationChecked-->');
         let valuesAllSalesCompany = [].filter.call(checkSalesCompany, function(o) {
             return o.checked || !o.checked;
         }).map(function(o) {
@@ -857,7 +869,6 @@ class UserDetailsFrom extends Component {
         let pass = GenPassword();
         this.setState({genPass: pass});
         this.props.fields.password.onChange(pass);
-        ReactDOM.findDOMNode(this.refs.password).focus();
     }
 
     renderOption(type){
@@ -1009,7 +1020,6 @@ class UserDetailsFrom extends Component {
     }
 
     treeOnClickSalesJLY(vals){
-        console.log('treeOnClickSalesJLY-->',vals);
         let { fields: { notUseSalesHierarchy } } = this.props;
         this.props.optionsActions.setSalesHierarchy(vals);
         let objSalesHeirarchy = SelectedSalesHierarchy(this, vals, 'JLY');
@@ -1051,8 +1061,6 @@ class UserDetailsFrom extends Component {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        console.log('CategoryChange name-->',name);
-        console.log('CategoryChange value-->',value);
 
         SetCategoryHierarchy(this, value, name, ClearHierarchy, hierarchyDataJewelry, hierarchyDataWatch, hierarchyDataStone, hierarchyDataAccessory,
             hierarchyDataOBA, hierarchyDataSpare
@@ -1063,8 +1071,6 @@ class UserDetailsFrom extends Component {
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-        console.log('SalesCategoryChange name-->',name);
-        console.log('SalesCategoryChange value-->',value);
 
         SetSalesCategoryHierarchy(this, value, name, ClearHierarchy, hierarchyDataJewelrySales, hierarchyDataWatchSales, hierarchyDataStoneSales,
             hierarchyDataAccessorySales, hierarchyDataOBASales, hierarchyDataSpareSales
@@ -1088,7 +1094,7 @@ class UserDetailsFrom extends Component {
                   productGroupSalesOBA,productGroupSalesSPA,productGroupSalesErr,priceSalesRTP,priceSalesUCP,priceSalesCTP,priceSalesNSP,priceSalesMGP,
                   priceSalesDSP,salesLocation,salesLocationValue,salesWarehouse,salesWarehouseValue,salesAll,categorySalesJLY,categorySalesWAT,
                   categorySalesSTO,categorySalesACC,categorySalesOBA,categorySalesSPP,notUseSalesHierarchy
-              },handleSubmit,submitting, CanNotUseHierarchy, userTypeValue, CanNotUseSalesHierarchy } = this.props;
+              },handleSubmit,submitting, CanNotUseHierarchy, userTypeValue, CanNotUseSalesHierarchy, HierarchyValue, SalesHierarchyValue } = this.props;
         let dataDropDowntLocations = [];
         let dataDropDowntWareHouse = [];
         let objWareHouseLocation = {};
@@ -1096,74 +1102,82 @@ class UserDetailsFrom extends Component {
         let dataDropDowntSalesLocations = [];
         let dataDropDowntSalesWareHouse = [];
 
+
+
         objWareHouseLocation = FindLocationWareHouse(this);
         dataDropDowntLocations = objWareHouseLocation.location;
         dataDropDowntWareHouse = objWareHouseLocation.warehouse;
         dataDropDowntSalesLocations = objWareHouseLocation.salesLocation;
         dataDropDowntSalesWareHouse = objWareHouseLocation.salesWarehouse;
-        // console.log('dataDropDowntWareHouse-->',dataDropDowntWareHouse.length);
-        // console.log('dataDropDowntSalesWareHouse-->',dataDropDowntSalesWareHouse.length);
-        console.log('hierarchyDataJewelry-->',hierarchyDataJewelry);
-        console.log('hierarchyDataJewelrySales-->',hierarchyDataJewelrySales);
+
+        console.log('HierarchyValue-->',HierarchyValue);
+
+        // switch (FindProductHierarchy(HierarchyValue)) {
+        //     case 'Spare':
+        //         hierarchyDataSpare = [];
+        //         hierarchyDataSpare.push(...HierarchyValue)
+        //         break;
+        //     case 'Stone':
+        //         hierarchyDataStone = [];
+        //         hierarchyDataStone.push(...HierarchyValue)
+        //         break;
+        //     case 'OBA':
+        //         hierarchyDataOBA = [];
+        //         hierarchyDataOBA.push(...HierarchyValue)
+        //         break;
+        //     case 'Accessory':
+        //         hierarchyDataAccessory = [];
+        //         hierarchyDataAccessory.push(...HierarchyValue)
+        //         break;
+        //     case 'Watch':
+        //         hierarchyDataWatch = [];
+        //         hierarchyDataWatch.push(...HierarchyValue)
+        //         break;
+        //     case 'Jewelry':
+        //         hierarchyDataJewelry = [];
+        //         hierarchyDataJewelry.push(...HierarchyValue)
+        //         break;
+        //     default:
+        //         break;
+        // }
+        // switch (FindProductHierarchy(SalesHierarchyValue)) {
+        //     case 'Spare':
+        //         hierarchyDataSpareSales = [];
+        //         hierarchyDataSpareSales.push(...SalesHierarchyValue)
+        //         break;
+        //     case 'Stone':
+        //         hierarchyDataStoneSales = [];
+        //         hierarchyDataStoneSales.push(...SalesHierarchyValue)
+        //         break;
+        //     case 'OBA':
+        //         hierarchyDataOBASales = [];
+        //         hierarchyDataOBASales.push(...SalesHierarchyValue)
+        //         break;
+        //     case 'Accessory':
+        //         hierarchyDataAccessorySales = [];
+        //         hierarchyDataAccessorySales.push(...SalesHierarchyValue)
+        //         break;
+        //     case 'Watch':
+        //         hierarchyDataWatchSales = [];
+        //         hierarchyDataWatchSales.push(...SalesHierarchyValue)
+        //         break;
+        //     case 'Jewelry':
+        //         hierarchyDataJewelrySales = [];
+        //         hierarchyDataJewelrySales.push(...SalesHierarchyValue)
+        //         break;
+        //     default:
+        //         break;
+        // }
 
         return (
             <form onSubmit={handleSubmit}>
                 <div id="page-wrapper">
-                    <div id="scroller" className="col-sm-12 bg-hearder bg-header-inventories">
-                        <div className="col-xs-6 m-width-60 ft-white m-nopadding">
-                            <h1>User Details</h1>
-                        </div>
-                        <div className="col-sm-6 m-width-40 m-nopadding text-right maring-t15">
-                            <Link to="/users" className="btn btn-primary btn-radius">Back to User List</Link>
-                            <button type="submit" className="btn btn-primary btn-radius" disabled={submitting}>Update User</button>
-                        </div>
-                    </div>
+                    <RenderHeaderUserEdit submitting={submitting}/>
                     <div className="col-sm-12 nopadding">
                         <div className="panel panel-default">
                             <div className="panel-body">
                                 <div className="row margin-ft">
-                                    <div className="col-sm-12">
-                                        <h2>User Profile</h2>
-                                    </div>
-                                    <div className="form-group hidden" >
-                                        <label>Id</label>
-                                        <input type="text" className="form-control" {...id}/>
-                                    </div>
-                                    <div className="col-sm-6 form-horizontal">
-                                        <div className="form-group">
-                                            <label className="col-sm-4 control-label">First Name</label>
-                                            <div className="col-sm-7">
-                                                <input type="text" className="form-control" {...firstName} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <label className="col-sm-4 control-label">Last Name</label>
-                                            <div className="col-sm-7">
-                                                <input type="text" className="form-control" {...lastName} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <label className="col-sm-4 control-label">Email</label>
-                                            <div className="col-sm-7">
-                                                <input type="text" className="form-control" {...email} />
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <label className="col-sm-4 control-label">User Name</label>
-                                            <div className="col-sm-7">
-                                                <input type="text" className="form-control" {...username} disabled="disabled"/>
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <label className="col-sm-4 control-label">Password</label>
-                                            <div className="col-sm-7">
-                                                <input type="text" className="form-control" value={this.state.genPass} ref="password" {...password}/>
-                                                <div className="gen-passord">
-                                                    <input type="button" className="btn btn-primary pull-xs-right btn-radius" value="Generate" onClick={this.generatePassword}/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <RenderUserProfileEdit props={this.props} state={this.state} onClickSubmitGenPass={this.generatePassword}/>
                                     <div className="col-sm-6 form-horizontal">
                                         <div className="form-group">
                                             <label className="col-sm-4 control-label">Status</label>
@@ -1235,308 +1249,41 @@ class UserDetailsFrom extends Component {
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div className="form-group">
-                                                <label className="col-sm-2 control-label">Type</label>
-                                                <div className="col-sm-4">
-                                                    <label>
-                                                        <input type="radio" {...userType} value="OnHand"
-                                                            checked={userType.value === 'OnHand'} onClick={this.changedUserType}/> On Hand Module
-                                                    </label>
-                                                </div>
-                                                <div className="col-sm-4">
-                                                    <label>
-                                                        <input type="radio" {...userType} value="Sales"
-                                                            checked={userType.value === 'Sales'} onClick={this.changedUserType}/> Sales Module
-                                                    </label>
-                                                </div>
-                                                <div className="col-sm-2">
-                                                    <label>
-                                                        <input type="radio" {...userType} value="All"
-                                                            checked={userType.value === 'All'} onClick={this.changedUserType}/> Both Module
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div className={`form-group ${userTypeValue != 'Sales'?'':'hidden'}`}>
-                                                <label className="col-sm-2 control-label">View On Hand Product Group</label>
-                                                <div className="col-sm-5">
-                                                    <select className="form-control" {...productGroup}
-                                                        value={this.state.value} onChange={this.selectedProductGroup}>
-                                                        <option key={0} value={0}>{'Please select Product Group'}</option>
-                                                        <option key={1} value={1}>{'All Product Group'}</option>
-                                                        <option key={2} value={2}>{'Some Product Group'}</option>
-                                                    </select>
-                                                    <div id="checkboxlistProduct" className={`${this.state.hideProductGroups ? 'hiddenViewProductGroup' : ''}` }>
-                                                        <div>
-                                                            <input type="checkbox"  value="JLY"
-                                                                checked={productGroupJLY.value === 'JLY'}
-                                                                {...productGroupJLY}
-                                                                onChange={this.handleInputChange}/>
-                                                            <span>Jewelry</span>
-                                                        </div>
-                                                        <div>
-                                                            <input type="checkbox"  value="WAT"
-                                                                checked={productGroupWAT.value === 'WAT'}
-                                                                {...productGroupWAT}
-                                                                onChange={this.handleInputChange}/>
-                                                            <span>Watch</span>
-                                                        </div>
-                                                        <div>
-                                                            <input type="checkbox" value="STO"
-                                                                checked={productGroupSTO.value === 'STO'}
-                                                                {...productGroupSTO}
-                                                                onChange={this.handleInputChange}/>
-                                                            <span>Stone</span>
-                                                        </div>
-                                                        <div>
-                                                            <input type="checkbox"  value="ACC"
-                                                                checked={productGroupACC.value === 'ACC'}
-                                                                {...productGroupACC}
-                                                                onChange={this.handleInputChange}/>
-                                                            <span>Accessory</span>
-                                                        </div>
-                                                        <div>
-                                                            <input type="checkbox"  value="OBA"
-                                                                checked={productGroupOBA.value === 'OBA'}
-                                                                {...productGroupOBA}
-                                                                onChange={this.handleInputChange}/>
-                                                            <span>Object Of Art</span>
-                                                        </div>
-                                                        <div>
-                                                            <input type="checkbox"  value="SPA"
-                                                                checked={productGroupSPA.value === 'SPA'}
-                                                                {...productGroupSPA}
-                                                                onChange={this.handleInputChange}/>
-                                                            <span>Spare Parts</span>
-                                                        </div>
-                                                    </div>
-                                                    {/*<div className="text-help">
-                                                        { productGroupErr.touched ? productGroupErr.error : ''}
-                                                    </div>*/}
-                                                </div>
-                                            </div>
-                                            <div className={`form-group ${userTypeValue != 'OnHand'?'':'hidden'}`}>
-                                                <label className="col-sm-2 control-label">View Sales Product Group</label>
-                                                <div className="col-sm-5">
-                                                    <select className="form-control" {...productGroupSales}
-                                                        value={this.state.valueSales} onChange={this.selectedProductGroupSales}>
-                                                        <option key={0} value={0}>{'Please select Product Group'}</option>
-                                                        <option key={1} value={1}>{'All Product Group'}</option>
-                                                        <option key={2} value={2}>{'Some Product Group'}</option>
-                                                    </select>
-                                                    <div id="checkboxlistProduct" className={`${this.state.hideProductGroupsSales ? 'hiddenViewProductGroup' : ''}` }>
-                                                        <div>
-                                                            <input type="checkbox"  value="JLY"
-                                                                checked={productGroupSalesJLY.value === 'JLY'}
-                                                                {...productGroupSalesJLY}
-                                                                onChange={this.handleInputChangeSales}/>
-                                                            <span>Jewelry</span>
-                                                        </div>
-                                                        <div>
-                                                            <input type="checkbox"  value="WAT"
-                                                                checked={productGroupSalesWAT.value === 'WAT'}
-                                                                {...productGroupSalesWAT}
-                                                                onChange={this.handleInputChangeSales}/>
-                                                            <span>Watch</span>
-                                                        </div>
-                                                        <div>
-                                                            <input type="checkbox" value="STO"
-                                                                checked={productGroupSalesSTO.value === 'STO'}
-                                                                {...productGroupSalesSTO}
-                                                                onChange={this.handleInputChangeSales}/>
-                                                            <span>Stone</span>
-                                                        </div>
-                                                        <div>
-                                                            <input type="checkbox"  value="ACC"
-                                                                checked={productGroupSalesACC.value === 'ACC'}
-                                                                {...productGroupSalesACC}
-                                                                onChange={this.handleInputChangeSales}/>
-                                                            <span>Accessory</span>
-                                                        </div>
-                                                        <div>
-                                                            <input type="checkbox"  value="OBA"
-                                                                checked={productGroupSalesOBA.value === 'OBA'}
-                                                                {...productGroupSalesOBA}
-                                                                onChange={this.handleInputChangeSales}/>
-                                                            <span>Object Of Art</span>
-                                                        </div>
-                                                        <div>
-                                                            <input type="checkbox"  value="SPA"
-                                                                checked={productGroupSalesSPA.value === 'SPA'}
-                                                                {...productGroupSalesSPA}
-                                                                onChange={this.handleInputChangeSales}/>
-                                                            <span>Spare Parts</span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="text-help">
-                                                        { productGroupSalesErr.touched ? productGroupSalesErr.error : ''}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className={`form-group ${userTypeValue != 'Sales'?'':'hidden'}`}>
-                                                <label className="col-sm-2 control-label">View Price On Hand</label>
-                                                <div className="col-sm-4">
-                                                    <label>
-                                                        <input type="radio" {...price} value="Public"
-                                                            checked={price.value === 'Public'} /> Only Price
-                                                    </label>
-                                                </div>
-                                                <div className="col-sm-4">
-                                                    <label>
-                                                        <input type="radio" {...price} value="Updated"
-                                                            checked={price.value === 'Updated'} /> View Updated Cost and Price
-                                                    </label>
-                                                </div>
-                                                <div className="col-sm-2">
-                                                    <label>
-                                                        <input type="radio" {...price} value="All"
-                                                            checked={price.value === 'All'} /> View All Price
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div className={`form-group ${userTypeValue != 'OnHand'?'':'hidden'}`}>
-                                                <label className="col-sm-2 control-label">View Price Sales</label>
-                                                <div>
-                                                    <div className="col-sm-4">
-                                                        <input type="checkbox"  value="RTP"
-                                                            checked={priceSalesRTP.value === 'RTP'}
-                                                            {...priceSalesRTP}
-                                                            onChange={this.handleInputChangePriceSales}/>
-                                                        <span>Retail Price</span>
-                                                    </div>
-                                                    <div className="col-sm-4">
-                                                        <input type="checkbox"  value="UCP"
-                                                            checked={priceSalesUCP.value === 'UCP'}
-                                                            {...priceSalesUCP}
-                                                            onChange={this.handleInputChangePriceSales}/>
-                                                        <span>Updated Cost</span>
-                                                    </div>
-                                                    <div className="col-sm-2">
-                                                        <input type="checkbox" value="CTP"
-                                                            checked={priceSalesCTP.value === 'CTP'}
-                                                            {...priceSalesCTP}
-                                                            onChange={this.handleInputChangePriceSales}/>
-                                                        <span>Cost Price</span>
-                                                    </div>
-                                                </div>
-                                                <label className="col-sm-2 control-label"> </label>
-                                                <div>
-                                                    <div className="col-sm-4">
-                                                        <input type="checkbox"  value="NSP"
-                                                            checked={priceSalesNSP.value === 'NSP'}
-                                                            {...priceSalesNSP}
-                                                            onChange={this.handleInputChangePriceSales}/>
-                                                        <span>Net Sales</span>
-                                                    </div>
-                                                    <div className="col-sm-4">
-                                                        <input type="checkbox"  value="MGP"
-                                                            checked={priceSalesMGP.value === 'MGP'}
-                                                            {...priceSalesMGP}
-                                                            onChange={this.handleInputChangePriceSales}/>
-                                                        <span>Margin % and Amount</span>
-                                                    </div>
-                                                    <div className="col-sm-2">
-                                                        <input type="checkbox"  value="DSP"
-                                                            checked={priceSalesDSP.value === 'DSP'}
-                                                            {...priceSalesDSP}
-                                                            onChange={this.handleInputChangePriceSales}/>
-                                                        <span>Discount % and Amount</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <label className="col-sm-2 control-label">Web Only</label>
-                                                <div className="col-sm-7">
-                                                    <input type="checkbox" {...webOnly}/>
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <label className="col-sm-2 control-label">Movement Activity</label>
-                                                <div className="col-sm-7">
-                                                    <input type="checkbox" {...movement}/>
-                                                </div>
-                                            </div>
-                                            <div className={`form-group ${userTypeValue != 'Sales'?'':'hidden'}`}>
-                                                <label className="col-md-2 col-sm-2 control-label">View On-hand</label>
-                                                <div className="col-md-4 col-sm-12 col-xs-12">
-                                                    <div className="col-sm-12 col-xs-12 nopadding">
-                                                        <input type="checkbox" value="Location" {...onhandLocation}
-                                                            checked={this.state.selectedOnHandLocation}
-                                                            onChange={this.selectedOnHandLocation}
-                                                            ref="location" /> All Company
-                                                    </div>
-                                                    <div className="user-edit user-per-height">
-                                                        <MultipleCheckBoxs datas={dataDropDowntLocations} name={'checkbox-allCompany'}
-                                                            checkedAll={this.state.selectedOnHandLocation}
-                                                            chekedValue={this.state.chkLocation}
-                                                            onChange={this.changedOnHandLocationChecked}
-                                                            onhandLocationValue={onhandLocationValue.value}/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-4 col-sm-12 col-xs-12">
-                                                    <div className="col-sm-12 col-xs-12 nopadding">
-                                                        <input type="checkbox" value="Warehouse" {...onhandWarehouse}
-                                                            checked={this.state.selectedOnHandWarehouse}
-                                                            onChange={this.selectedOnHandWarehouse}
-                                                            ref="warehouse" /> All Warehouse
-                                                    </div>
-                                                    <div className="user-edit user-per-height">
-                                                        <MultipleCheckBoxs datas={dataDropDowntWareHouse} name={'checkbox-allWarehouse'}
-                                                          checkedAll={this.state.selectedOnHandWarehouse}
-                                                          chekedValue={this.state.chkWarehouse}
-                                                          onChange={this.changedOnHandWarehouseChecked}
-                                                          onhandWarehouseValue={onhandWarehouseValue.value}/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-2 hidden">
-                                                    <label>
-                                                        <input type="checkbox" value="All" {...onhandAll}
-                                                            checked={this.state.selectedOnHandAll}
-                                                            onChange={this.selectedOnHandAll}
-                                                            ref="allLocation" /> All Locations
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div className={`form-group ${userTypeValue != 'OnHand'?'':'hidden'}`}>
-                                                <label className="col-md-2 col-sm-2 control-label">View Sales</label>
-                                                <div className="col-md-4 col-sm-12 col-xs-12">
-                                                    <div className="col-sm-12 col-xs-12 nopadding">
-                                                        <input type="checkbox" value="Location" {...salesLocation}
-                                                            checked={this.state.selectedSalesLocation}
-                                                            onChange={this.selectedSalesLocation}
-                                                            ref="location" /> All Company
-                                                    </div>
-                                                    <div className="user-edit user-per-height">
-                                                        <MultipleCheckBoxs datas={dataDropDowntSalesLocations} name={'checkbox-allSalesCompany'}
-                                                            checkedAll={this.state.selectedSalesLocation}
-                                                            chekedValue={this.state.chkSalesLocation}
-                                                            onChange={this.changedSalesLocationChecked}
-                                                            salesLocationValue={salesLocationValue.value}/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-4 col-sm-12 col-xs-12">
-                                                    <div className="col-sm-12 col-xs-12 nopadding">
-                                                        <input type="checkbox" value="Warehouse" {...salesWarehouse}
-                                                            checked={this.state.selectedSalesWarehouse}
-                                                            onChange={this.selectedSalesWarehouse}
-                                                            ref="warehouse" /> All Warehouse
-                                                    </div>
-                                                    <div className="user-edit user-per-height">
-                                                        <MultipleCheckBoxs datas={dataDropDowntSalesWareHouse} name={'checkbox-allSalesWarehouse'}
-                                                          checkedAll={this.state.selectedSalesWarehouse}
-                                                          chekedValue={this.state.chkSalesWarehouse}
-                                                          onChange={this.changedSalesWarehouseChecked}
-                                                          salesWarehouseValue={salesWarehouseValue.value}/>
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-2 hidden">
-                                                    <label>
-                                                        <input type="checkbox" value="All" {...salesAll}
-                                                            checked={this.state.selectedSalesAll}
-                                                            onChange={this.selectedSalesAll}
-                                                            ref="allSalesLocation" /> All Locations
-                                                    </label>
-                                                </div>
-                                            </div>
+
+                                            <RenderTypeUser props={this.props} onClickChangedUserType={this.changedUserType}/>
+
+                                            <RenderViewOnHandProductGroup props={this.props} state={this.state}
+                                                onChangedSelectedProductGroup={this.selectedProductGroup}
+                                                onChangedHandleInputChange={this.handleInputChange}/>
+
+                                            <RenderViewSalesProductGroup props={this.props} state={this.state}
+                                                onChangedSelectedProductGroupSales={this.selectedProductGroupSales}
+                                                onChangedHandleInputChangeSales={this.handleInputChangeSales}/>
+
+                                            <RenderViewPriceOnHand props={this.props} state={this.state}/>
+
+                                            <RenderViewPriceSales props={this.props} state={this.state}
+                                                onChangedPriceSales={this.handleInputChangePriceSales}/>
+
+                                            <RenderViewOnHand props={this.props} state={this.state}
+                                                onChangedOnHandLocation={this.selectedOnHandLocation}
+                                                onChangedOnHandLocationChecked={this.changedOnHandLocationChecked}
+                                                onChangedOnHandWarehouse={this.selectedOnHandWarehouse}
+                                                onChangedOnHandWarehouseChecked={this.changedOnHandWarehouseChecked}
+                                                onChangedOnHandAll={this.selectedOnHandAll}
+                                                dataDropDowntLocations={dataDropDowntLocations}
+                                                dataDropDowntWareHouse={dataDropDowntWareHouse}/>
+
+                                            <RenderViewSales props={this.props} state={this.state}
+                                                onChangedSalesLocation={this.selectedSalesLocation}
+                                                onChangedSalesLocationChecked={this.changedSalesLocationChecked}
+                                                onChangedSalesWarehouse={this.selectedSalesWarehouse}
+                                                onChangedSalesWarehouseChecked={this.changedSalesWarehouseChecked}
+                                                onChangedSalesAll={this.selectedSalesAll}
+                                                dataDropDowntSalesLocations={dataDropDowntSalesLocations}
+                                                dataDropDowntSalesWareHouse={dataDropDowntSalesWareHouse}/>
+
+
                                             <div className={`form-group maring-t30 ${userTypeValue != 'Sales'?'':'hidden'}`}>
                                                 <label className="col-md-2 control-label">On Hand Product Hierarchy</label>
                                                 <div className="col-md-8">
@@ -1674,6 +1421,7 @@ class UserDetailsFrom extends Component {
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div className={`form-group maring-t30 ${userTypeValue != 'OnHand'?'':'hidden'}`}>
                                                 <label className="col-md-2 control-label">Sales Product Hierarchy</label>
                                                 <div className="col-md-8">

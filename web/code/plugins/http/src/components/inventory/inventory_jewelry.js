@@ -535,7 +535,7 @@ class InventoryJewelry extends Component {
         }
 
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
-        console.log('Inven TreeData-->',TreeData);
+        // console.log('Inven TreeData-->',TreeData);
         // delete hierarchy
         let hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'JLY');
         if (props.ArticleValue.length != 0) {

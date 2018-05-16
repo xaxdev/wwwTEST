@@ -1,0 +1,46 @@
+{
+    "id": "248",
+    "label": "Spare",
+    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare",
+    "children": [
+        {
+            "id": "249",
+            "label": "OBA Spare",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\OBA Spare"
+        },
+        {
+            "id": "250",
+            "label": "Other Spare Parts",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Other Spare Parts",
+            "children": [
+                {
+                    "id": "251",
+                    "label": "Mouawad SpareParts",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Other Spare Parts\\\\\\\\Mouawad SpareParts"
+                },
+                {
+                    "id": "252",
+                    "label": "Other Brands SpareParts",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Other Spare Parts\\\\\\\\Other Brands SpareParts"
+                }
+            ]
+        },
+        {
+            "id": "253",
+            "label": "Watch Strap",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Watch Strap",
+            "children": [
+                {
+                    "id": "254",
+                    "label": "Mouawad Strap",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Watch Strap\\\\\\\\Mouawad Strap"
+                },
+                {
+                    "id": "255",
+                    "label": "Other Brands Strap",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Spare\\\\\\\\Watch Strap\\\\\\\\Other Brands Strap"
+                }
+            ]
+        }
+    ]
+}
