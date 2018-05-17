@@ -12,11 +12,11 @@ import * as inventoryActions from '../../actions/inventoryactions';
 import * as salesActions from '../../actions/salesaction';
 import * as itemactions from '../../actions/itemactions';
 import SalesJewelry from './salesreport_jewelry';
-import SalesWatch from '../inventory/inventory_watch';
-import SalesAcc from '../inventory/inventory_acc';
-import SalesOBA from '../inventory/inventory_oba';
-import SalesSparePart from '../inventory/inventory_sparepart';
-import SalesStone from '../inventory/inventory_stone';
+import SalesWatch from './salesreport_watch';
+import SalesAcc from './salesreport_acc';
+import SalesOBA from './salesreport_oba';
+import SalesSparePart from './salesreport_sparepart';
+import SalesStone from './salesreport_stone';
 import ResetSalesCategory from '../../utils/resetSalesCategory';
 import ResetFormSalesReport from '../../utils/resertFormSalesReport';
 import ModalSaveSearch from './modalSaveSearch';
@@ -143,7 +143,7 @@ class SalesReportMain extends Component {
     }
 
     tabsSelected(activeKey) {
-        if(activeKey != this.props.activeTabCategory){
+        if(activeKey != this.props.activeTabSalesCategory){
             this.setState({
                 alert:true,
                 isOpen: true,
@@ -156,20 +156,20 @@ class SalesReportMain extends Component {
         e.preventDefault();
         let btnadvance = document.querySelector('.btn-advance') // Using a class instead, see note below.
         btnadvance.classList.toggle('btn-activebtn');
-        if (this.props.IsAdvance) { // Hide
+        if (this.props.SalesIsAdvance) { // Hide
             this.setState({ hideAdvanceSearch: false });
-            this.props.inventoryActions.setAdvance(false);
+            this.props.inventoryActions.setSalesAdvance(false);
         } else { // Show
             this.setState({ hideAdvanceSearch: true });
-            this.props.inventoryActions.setAdvance(true);
+            this.props.inventoryActions.setSalesAdvance(true);
         }
         const userLogin = JSON.parse(sessionStorage.logindata);
-        let { activeTabCategory } = this.props;
+        let { activeTabSalesCategory } = this.props;
         let permission = userLogin.permission;
         let bitwise = Number(permission.productGroupSales).toString(2);
         let checkbits = bitwise.split('')
         let numberDiit = checkbits.length;
-        let setActiveTab = activeTabCategory;
+        let setActiveTab = activeTabSalesCategory;
 
         checkbits.map(function(value,key) {
             switch (numberDiit) {
@@ -239,7 +239,7 @@ class SalesReportMain extends Component {
         if (productGroupSalesJLY) {
             setActiveTab = setActiveTab;
             this.setState({ beforeActiveTab: setActiveTab });
-            this.props.inventoryActions.selectedTabCategory(setActiveTab);
+            this.props.inventoryActions.selectedTabSalesCategory(setActiveTab);
         }else{
             if(productGroupSalesWAT){
                 setActiveTab = 2;
@@ -252,11 +252,11 @@ class SalesReportMain extends Component {
             }else if (productGroupSalesSPA) {
                 setActiveTab = 6;
             }else{
-                this.props.inventoryActions.setAdvance(false);
+                this.props.inventoryActions.setSalesAdvance(false);
             }
-            activeTabCategory = setActiveTab;
+            activeTabSalesCategory = setActiveTab;
             this.setState({ beforeActiveTab: setActiveTab });
-            this.props.inventoryActions.selectedTabCategory(setActiveTab);
+            this.props.inventoryActions.selectedTabSalesCategory(setActiveTab);
         }
     }
 
@@ -272,7 +272,7 @@ class SalesReportMain extends Component {
             beforeActiveTab: activeTab
         });
         this.resetCategory();
-        this.props.inventoryActions.selectedTabCategory(activeTab);
+        this.props.inventoryActions.selectedTabSalesCategory(activeTab);
         this.refs.jewelry.treeOnUnClick();
         this.refs.watch.treeOnUnClick();
         this.refs.stone.treeOnUnClick();
@@ -288,7 +288,7 @@ class SalesReportMain extends Component {
             isOpen: false,
             activeTab: beforeActiveTab
         });
-        this.props.inventoryActions.selectedTabCategory(beforeActiveTab);
+        this.props.inventoryActions.selectedTabSalesCategory(beforeActiveTab);
     }
 
     resetCategory(){
@@ -460,14 +460,14 @@ class SalesReportMain extends Component {
                             </button>
                         </div>
                     </div>
-                    <div className={`row ${this.props.IsAdvance ? '' : 'hidden'}` }>
+                    <div className={`row ${this.props.SalesIsAdvance ? '' : 'hidden'}` }>
                         <div className="col-sm-12">
                             <div className="panel">
                                 <div className="panel-body">
                                     <div className="row margin-t-17 ">
-                                        <Tabs defaultActiveKey={this.props.activeTabCategory}
+                                        <Tabs defaultActiveKey={this.props.activeTabSalesCategory}
                                             animation={false} id="uncontrolled-tab-example"
-                                            activeKey={this.props.activeTabCategory}
+                                            activeKey={this.props.activeTabSalesCategory}
                                             onSelect={this.tabsSelected}>
                                             <Tab eventKey={1} title="Jewelry" disabled={!productGroupSalesJLY}>
                                                 <SalesJewelry props={this.props} ref="jewelry"/>
@@ -510,9 +510,9 @@ function mapStateToProps(state) {
         LocationValue: state.searchResult.LocationValue,
         DominantStoneValue: state.searchResult.DominantStoneValue,
         SalesChannelValue: state.searchResult.SalesChannelValue,
-        IsAdvance: state.searchResult.IsAdvance,
+        SalesIsAdvance: state.searchResult.SalesIsAdvance,
         ArticleValue: state.searchResult.ArticleValue,
-        activeTabCategory: state.searchResult.activeTabCategory,
+        activeTabSalesCategory: state.searchResult.activeTabSalesCategory,
         JewelryCategoryValue: state.searchResult.JewelryCategoryValue,
         CollectionValue: state.searchResult.CollectionValue,
         BrandValue: state.searchResult.BrandValue,

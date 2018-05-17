@@ -1,54 +1,46 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Select from 'react-select';
+import Calendar from 'react-input-calendar';
+import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/TreeArticle';
-import TreeData from '../../utils/treeview/salesjewelry.json';
-import ClearSalesHierarchy from './utils/clear_hierarchy';
+import TreeData from '../../utils/treeview/salesaccessory.json';
 import RemoveSalesHierarchy from './utils/remove_hierarchy';
-import DeleteSalesHierarchy from './utils/delete_hierarchy_attr';
+import ClearSalesHierarchy from './utils/clear_hierarchy';
 import SearchSalesHierarchy from './utils/search_hierarchy';
-import * as xls from '../../utils/xlsSetReference';
-import * as inventoryActions from '../../actions/inventoryactions';
+import DeleteSalesHierarchy from './utils/delete_hierarchy_attr';
 
-let X = XLSX;
 let hiTreeData = TreeData;
 
-class SalesReportJewelry extends Component {
+class SalesReportAccessory extends Component {
     constructor(props) {
         super(props);
 
+        let dateToday = new Date();
+        let fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
+
         this.treeOnClick = this.treeOnClick.bind(this);
         this.treeOnUnClick = this.treeOnUnClick.bind(this);
-        this.handleJewelryCategorySelectChange = this.handleJewelryCategorySelectChange.bind(this);
+        this.handleAccessoryTypeSelectChange = this.handleAccessoryTypeSelectChange.bind(this);
         this.handleCollectionSelectChange = this.handleCollectionSelectChange.bind(this);
         this.handleBrandSelectChange = this.handleBrandSelectChange.bind(this);
         this.handleMustHaveSelectChange = this.handleMustHaveSelectChange.bind(this);
-        this.handleRingSizeSelectChange = this.handleRingSizeSelectChange.bind(this);
-        this.handleDominantStoneSelectChange = this.handleDominantStoneSelectChange.bind(this);
         this.handleMetalTypeSelectChange = this.handleMetalTypeSelectChange.bind(this);
         this.handleMetalColourSelectChange = this.handleMetalColourSelectChange.bind(this);
-        this.handleArticleSelectedChanged = this.handleArticleSelectedChanged.bind(this);
-        this.readFile = this.readFile.bind(this);
+        this.handleDominantStoneSelectChange = this.handleDominantStoneSelectChange.bind(this);
 
         this.state = {
+            startDate: null,
+            endDate: null,
             treeViewData:null
-        };
+        }
     }
 
-    componentDidMount = _ => {
-        jQuery('#fileSetReference').hide();
-        jQuery('#btn-browsefileSetReference').click(function(){
-            jQuery('#fileSetReference').click();
-        });
-        jQuery('#fileSetReference').change(function() {
-            let filename =jQuery('#fileSetReference')[0].files[0];
-            jQuery('#fileNameSetReference').text(filename.name);
-        });
-
+    componentDidMount = _ =>{
         (async () => {
             const { props } = this.props;
+            let { fields: { jewelryProductHierarchy }, searchResult } = props;
             if(props.SaveSearchSalesHierarchy != null){
                 await props.inventoryActions.setSalesHierarchy(props.SaveSearchSalesHierarchy);
                 this.refs.treeview.handleChange(props.SaveSearchSalesHierarchy);
@@ -80,16 +72,14 @@ class SalesReportJewelry extends Component {
             this.props.props.inventoryActions.setSalesHierarchy(this.state.treeViewData)
         }else{
             if(this.props.props.SalesHierarchyValue != null){
-              if(this.props.props.SearchAction == 'New'){
-                  if(this.props.props.SalesHierarchyValue.length != 0){
-                      this.props.props.SalesHierarchyValue[0].checked = false;
-                      this.props.props.SalesHierarchyValue[0].key = this.props.props.SalesHierarchyValue[0].code;
-                      this.refs.treeview.handleChange(this.props.props.SalesHierarchyValue[0]);
-                  }
-                  this.props.props.inventoryActions.setSalesHierarchy(null);
-              }else{
-              }
-            }else{
+                if(this.props.props.SearchAction == 'New'){
+                    if(this.props.props.SalesHierarchyValue.length != 0){
+                        this.props.props.SalesHierarchyValue[0].checked = false;
+                        this.props.props.SalesHierarchyValue[0].key = this.props.props.SalesHierarchyValue[0].code;
+                        this.refs.treeview.handleChange(this.props.props.SalesHierarchyValue[0]);
+                    }
+                    this.props.props.inventoryActions.setSalesHierarchy(null);
+                }
             }
         }
     }
@@ -116,140 +106,120 @@ class SalesReportJewelry extends Component {
         });
         const { props } = this.props;
 
-        let { fields: { jewelryProductSalesHierarchy }, searchResult } = props;
+        let { fields: { accessoryProductSalesHierarchy }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                            ? searchResult.paramsSearch
-                            : null;
-
+        let paramsSearch = (searchResult.paramsSearch != null)?
+                              searchResult.paramsSearch :
+                              null;
         if(paramsSearch != null)
-            paramsSearch.jewelryProductSalesHierarchy = treeSelected;
+            paramsSearch.accessoryProductSalesHierarchy = treeSelected;
 
-        jewelryProductSalesHierarchy.onChange(treeSelected);
+        accessoryProductSalesHierarchy.onChange(treeSelected);
     }
 
-    handleJewelryCategorySelectChange(JewelryCategorySelectValue){
+    handleAccessoryTypeSelectChange(accessoryTypeSelectValue){
         const { props } = this.props;
-        let { fields: { jewelryCategory }, searchResult } = props;
+        let { fields: { accessoryType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null)?
+                              searchResult.paramsSearch :
+                              null;
         if(paramsSearch != null)
-            paramsSearch.jewelryCategory = JewelryCategorySelectValue;
+            paramsSearch.accessoryType = accessoryTypeSelectValue;
 
-        jewelryCategory.onChange(JewelryCategorySelectValue);
-        props.inventoryActions.setDataJewelryCategory(JewelryCategorySelectValue);
+        accessoryType.onChange(accessoryTypeSelectValue);
+        props.inventoryActions.setDataAccessoryType(accessoryTypeSelectValue);
     }
 
-    handleCollectionSelectChange(CollectionSelectValue){
+    handleCollectionSelectChange(collectionSelectValue){
         const { props } = this.props;
         let { fields: { collection }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null)?
+                              searchResult.paramsSearch :
+                              null;
         if(paramsSearch != null)
-            paramsSearch.collection = CollectionSelectValue;
+            paramsSearch.collection = collectionSelectValue;
 
-        collection.onChange(CollectionSelectValue);
-        props.inventoryActions.setDataCollection(CollectionSelectValue);
+        collection.onChange(collectionSelectValue);
+        props.inventoryActions.setDataCollection(collectionSelectValue);
     }
 
-    handleBrandSelectChange(BrandSelectValue){
+    handleBrandSelectChange(brandSelectValue){
         const { props } = this.props;
         let { fields: { brand }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null)?
+                              searchResult.paramsSearch :
+                              null;
         if(paramsSearch != null)
-            paramsSearch.brand = BrandSelectValue;
+            paramsSearch.brand = brandSelectValue;
 
-        brand.onChange(BrandSelectValue);
-        props.inventoryActions.setDataBrand(BrandSelectValue);
+        brand.onChange(brandSelectValue);
+        props.inventoryActions.setDataBrand(brandSelectValue);
     }
 
-    handleMustHaveSelectChange(MustHaveSelectValue){
+    handleMustHaveSelectChange(mustHaveSelectValue){
         const { props } = this.props;
         let { fields: { mustHave }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
-
+        let paramsSearch = (searchResult.paramsSearch != null)?
+                              searchResult.paramsSearch :
+                              null;
         if(paramsSearch != null)
-            paramsSearch.mustHave = MustHaveSelectValue;
+            paramsSearch.mustHave = mustHaveSelectValue;
 
-        mustHave.onChange(MustHaveSelectValue);
-        props.inventoryActions.setDataMusthave(MustHaveSelectValue);
+        mustHave.onChange(mustHaveSelectValue);
+        props.inventoryActions.setDataMusthave(mustHaveSelectValue);
     }
 
-    handleRingSizeSelectChange(RingSizeSelectValue){
-        const { props } = this.props;
-        let { fields: { ringSize }, searchResult } = props;
-
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
-
-        if(paramsSearch != null)
-            paramsSearch.ringSize = RingSizeSelectValue;
-
-        ringSize.onChange(RingSizeSelectValue);
-        props.inventoryActions.setDataRingSize(RingSizeSelectValue);
-    }
-
-    handleDominantStoneSelectChange(DominantStoneSelectValue){
-        const { props } = this.props;
-        let { fields: { dominantStone }, searchResult } = props;
-
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
-
-        if(paramsSearch != null)
-            paramsSearch.dominantStone = DominantStoneSelectValue;
-
-        dominantStone.onChange(DominantStoneSelectValue);
-        props.inventoryActions.setDataDominantStone(DominantStoneSelectValue);
-    }
-
-    handleMetalTypeSelectChange(MetalTypeSelectValue){
+    handleMetalTypeSelectChange(metalTypeSelectValue){
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
-
+        let paramsSearch = (searchResult.paramsSearch != null)?
+                              searchResult.paramsSearch :
+                              null;
         if(paramsSearch != null)
-            paramsSearch.metalType = MetalTypeSelectValue;
+            paramsSearch.metalType = metalTypeSelectValue;
 
-        metalType.onChange(MetalTypeSelectValue);
-        props.inventoryActions.setDataMetalType(MetalTypeSelectValue);
+        metalType.onChange(metalTypeSelectValue);
+        props.inventoryActions.setDataMetalType(metalTypeSelectValue);
     }
 
-    handleMetalColourSelectChange(MetalColourSelectValue){
+    handleMetalColourSelectChange(metalColourSelectValue){
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
-
+        let paramsSearch = (searchResult.paramsSearch != null)?
+                              searchResult.paramsSearch :
+                              null;
         if(paramsSearch != null)
-            paramsSearch.metalColour = MetalColourSelectValue;
+            paramsSearch.metalColour = metalColourSelectValue;
 
-        metalColour.onChange(MetalColourSelectValue);
-        props.inventoryActions.setDataMetalColour(MetalColourSelectValue);
+        metalColour.onChange(metalColourSelectValue);
+        props.inventoryActions.setDataMetalColour(metalColourSelectValue);
+    }
+
+    handleDominantStoneSelectChange(dominantStoneSelectValue){
+        const { props } = this.props;
+        let { fields: { dominantStone }, searchResult } = props;
+
+        let paramsSearch = (searchResult.paramsSearch != null)?
+                              searchResult.paramsSearch :
+                              null;
+        if(paramsSearch != null)
+            paramsSearch.dominantStone = dominantStoneSelectValue;
+
+        dominantStone.onChange(dominantStoneSelectValue);
+        props.inventoryActions.setDataDominantStone(dominantStoneSelectValue);
     }
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
         const { props } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseSalesHierarchy = JSON.parse(userLogin.permission.notUseSalesHierarchy)
-        let { fields: { article, jewelryCategory, collection, brand, ringSize, dominantStone, metalType, metalColour
+        let { fields: { article, accessoryType, collection, brand, metalType, metalColour, dominantStone
         }, searchResult } = props;
         let findFieldName = [];
 
@@ -258,19 +228,19 @@ class SalesReportJewelry extends Component {
                                 : null;
 
         if(props.options != undefined){
-            if (props.options.jewelryCategories) {
+            if (props.options.accessoryType) {
                 findFieldName = []
-                findFieldName = props.options.jewelryCategories.filter((item) => {
+                findFieldName = props.options.accessoryType.filter((item) => {
                     if (item.name == ArticleSelectedValue) {
                         return item.name
                     }
                 }).map((item) => { return item.code });
 
                 if(paramsSearch != null)
-                    paramsSearch.jewelryCategory = findFieldName;
+                    paramsSearch.accessoryType = findFieldName;
 
-                jewelryCategory.onChange(findFieldName);
-                props.inventoryActions.setDataJewelryCategory(findFieldName);
+                accessoryType.onChange(findFieldName);
+                props.inventoryActions.setDataAccessoryType(findFieldName);
             }
             if (props.options.collections) {
                 findFieldName = []
@@ -300,34 +270,6 @@ class SalesReportJewelry extends Component {
                 brand.onChange(findFieldName);
                 props.inventoryActions.setDataBrand(findFieldName);
             }
-            if (props.options.ringSizes) {
-                findFieldName = []
-                findFieldName = props.options.ringSizes.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
-
-                if(paramsSearch != null)
-                    paramsSearch.ringSize = findFieldName;
-
-                ringSize.onChange(findFieldName);
-                props.inventoryActions.setDataRingSize(findFieldName);
-            }
-            if (props.options.dominantStones) {
-                findFieldName = []
-                findFieldName = props.options.dominantStones.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
-
-                if(paramsSearch != null)
-                    paramsSearch.dominantStone = findFieldName;
-
-                dominantStone.onChange(findFieldName);
-                props.inventoryActions.setDataDominantStone(findFieldName);
-            }
             if (props.options.metalTypes) {
                 findFieldName = []
                 findFieldName = props.options.metalTypes.filter((item) => {
@@ -356,91 +298,61 @@ class SalesReportJewelry extends Component {
                 metalColour.onChange(findFieldName);
                 props.inventoryActions.setDataMetalColour(findFieldName);
             }
+            if (props.options.dominantStones) {
+                findFieldName = []
+                findFieldName = props.options.dominantStones.filter((item) => {
+                    if (item.name == ArticleSelectedValue) {
+                        return item.name
+                    }
+                }).map((item) => { return item.code });
+
+                if(paramsSearch != null)
+                    paramsSearch.dominantStone = findFieldName;
+
+                dominantStone.onChange(findFieldName);
+                props.inventoryActions.setDataDominantStone(findFieldName);
+            }
         }
         if (ArticleSelectedValue == '') {
-            let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, hiTreeData, 'JLY');
+            let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, hiTreeData, 'ACC');
             DeleteSalesHierarchy(salesHierarchyData)
         }else{
-            let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, hiTreeData, 'JLY');
+            let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, hiTreeData, 'ACC');
             ClearSalesHierarchy(salesHierarchyData);
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
     }
 
-    selectedViewAsSet = e => {
-        const { props } = this.props;
-        let { fields: { viewAsSet }, searchResult } = props;
-
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
-
-        if(paramsSearch != null)
-            paramsSearch.viewAsSet = e.target.checked;
-
-        viewAsSet.onChange(e.target.checked);
-        props.inventoryActions.setViewAsSet(e.target.checked);
-    }
-
-    readFile(e){
-        e.preventDefault();
-        let { fields:{setReference }, inventoryActions} = this.props.props;
-        let X = XLSX;
-        let that = this;
-        let rABS = false;
-        let use_worker = false;
-        let files = e.target.files;
-
-        let f = files[0];
-        {
-      		let reader = new FileReader();
-      		let name = f.name;
-      		reader.onload = function(e) {
-                  let data = e.target.result;
-                  let arr = xls.fixdata(data);
-                  let wb = X.read(btoa(arr), {type: 'base64'});
-                  let items = xls.process_wb(wb);
-                  setReference.onChange(items.set);
-                  inventoryActions.setSetReferenceOrder(items.AllData);
-      		}
-            if(rABS) reader.readAsBinaryString(f);
-            else reader.readAsArrayBuffer(f);
-    	};
-    }
-
     render() {
         const { props } = this.props;
-        const musthaves = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
-        let {  fields: {
-                    collection, totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,
-                    publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo, setReference, brand, mustHave,
-                    ringSize, dominantStone, metalType, metalColour, viewAsSet
-                }
-        } = props;
+        const yesNo = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
+        let { fields: { totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo,publicPriceFrom,
+                  publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo
+            }, searchResult } = props;
 
-        let dataDropDowntJewelryCategory = [];
+        let paramsSearch = (searchResult.paramsSearch != null)?
+                              searchResult.paramsSearch:
+                              null;
+
+        let dataDropDowntAccessoryType = [];
         let dataDropDowntCollection = [];
         let dataDropDowntBrand = [];
-        let dataDropDowntRingSize = [];
-        let dataDropDowntDominantStone = [];
         let dataDropDowntMetalType = [];
         let dataDropDowntMetalColour = [];
+        let dataDropDowntDominantStone = [];
         let dataDropDowntArticle = [];
 
         const userLogin = JSON.parse(sessionStorage.logindata);
 
-        const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
-
         InitModifyData(props);
 
         if(props.options != undefined){
-            if (props.options.jewelryCategories) {
-                dataDropDowntJewelryCategory.push(props.options.jewelryCategories.map(jewelryCategory =>{
-                    return ({value: jewelryCategory.code,label:jewelryCategory.name});
+            if (props.options.accessoryType) {
+                dataDropDowntAccessoryType.push(props.options.accessoryType.map(accessoryType =>{
+                    return ({value: accessoryType.code,label:accessoryType.name});
                 }))
-                dataDropDowntJewelryCategory = dataDropDowntJewelryCategory[0];
+                dataDropDowntAccessoryType = dataDropDowntAccessoryType[0];
             }
             if (props.options.collections) {
                 dataDropDowntCollection.push(props.options.collections.map(collection =>{
@@ -454,18 +366,6 @@ class SalesReportJewelry extends Component {
                 }))
                 dataDropDowntBrand = dataDropDowntBrand[0];
             }
-            if (props.options.ringSizes) {
-                dataDropDowntRingSize.push(props.options.ringSizes.map(ringSize =>{
-                    return ({value: ringSize.code,label:ringSize.name});
-                }))
-                dataDropDowntRingSize = dataDropDowntRingSize[0];
-            }
-            if (props.options.dominantStones) {
-                dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
-                    return ({value: dominantStone.code,label:dominantStone.name});
-                }))
-                dataDropDowntDominantStone = dataDropDowntDominantStone[0];
-            }
             if (props.options.metalTypes) {
                 dataDropDowntMetalType.push(props.options.metalTypes.map(metalType =>{
                     return ({value: metalType.code,label:metalType.name});
@@ -478,9 +378,15 @@ class SalesReportJewelry extends Component {
                 }))
                 dataDropDowntMetalColour = dataDropDowntMetalColour[0];
             }
+            if (props.options.dominantStones) {
+                dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
+                    return ({value: dominantStone.code,label:dominantStone.name});
+                }))
+                dataDropDowntDominantStone = dataDropDowntDominantStone[0];
+            }
             if (props.options.articles) {
                 let articleFilter = props.options.articles.filter(article =>{
-                    return article.catalog == 'JLY'
+                    return article.catalog == 'ACC'
                 });
                 dataDropDowntArticle.push(articleFilter.map(article =>{
                     return ({value: article.name,label:article.name});
@@ -491,7 +397,7 @@ class SalesReportJewelry extends Component {
 
         const notUseSalesHierarchy = JSON.parse(userLogin.permission.notUseSalesHierarchy)
         // delete hierarchy
-        let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, TreeData, 'JLY');
+        let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, TreeData, 'ACC');
         if (props.ArticleValue.length != 0) {
             salesHierarchyData = SearchSalesHierarchy(salesHierarchyData, props.ArticleValue);
         }
@@ -515,36 +421,26 @@ class SalesReportJewelry extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-12 form-horizontal">
+                        <div className="col-lg-12  form-horizontal">
                             <div className="form-group">
-                                <label className="col-lg-2 col-md-4 col-sm-4 control-label tooltiop-span">Product Hierarchy
-                                    <OverlayTrigger placement="top" overlay={tooltipHierarchy}>
-                                        <img src="/images/alphanumeric.png" />
-                                    </OverlayTrigger>
-                                </label>
+                                <label className="col-lg-2 col-md-4 col-sm-4 control-label tooltiop-span">Product Hierarchy</label>
                                 <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
-                                    <Tree data={salesHierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
-                                    <div className="col-sm-7">
-                                        <input type="checkbox" value="ViewAsSet" {...viewAsSet}
-                                            checked={props.ViewAsSet}
-                                            onChange={this.selectedViewAsSet} />
-                                            <span className="control-label text-vertical-top">View as Set</span>
-                                    </div>
+                                    <Tree data={salesHierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview" />
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-6 form-horizontal">
+                        <div className="col-lg-6  form-horizontal">
                             <div className="form-group">
-                                <label className="col-sm-4 control-label tooltiop-span">Jewelry Category
-                                    <OverlayTrigger placement="top" overlay={tooltipJewelryCategory}>
+                                <label className="col-sm-4 control-label tooltiop-span">Accessory Type
+                                    <OverlayTrigger placement="top" overlay={tooltipAccessoryType}>
                                         <img src="/images/alphanumeric.png" />
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.JewelryCategoryValue}
-                                        placeholder="Select your Jewelry Category"
-                                        options={dataDropDowntJewelryCategory}
-                                        onChange={this.handleJewelryCategorySelectChange} />
+                                    <Select multi simpleValue value={props.AccessoryTypeValue}
+                                        placeholder="Select your Accessory Type"
+                                        options={dataDropDowntAccessoryType}
+                                        onChange={this.handleAccessoryTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -582,25 +478,15 @@ class SalesReportJewelry extends Component {
                                 <div className="col-sm-7">
                                     <Select multi simpleValue value={props.MustHaveValue}
                                         placeholder="Select your MustHave"
-                                        options={musthaves}
+                                        options={yesNo}
                                         onChange={this.handleMustHaveSelectChange} />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label className="col-sm-4 control-label tooltiop-span">Ring Size
-                                    <OverlayTrigger placement="top" overlay={tooltipRingSize}>
-                                        <img src="/images/alphanumeric.png" />
-                                    </OverlayTrigger>
-                                </label>
-                                <div className="col-sm-7">
-                                    <input type="text" className="form-control" {...ringSize}/>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-6 form-horizontal">
                             <div className={`form-group ${(userLogin.permission.price == 'All'
-                                || userLogin.permission.price == 'Updated') ? ''
-                                : 'hidden'}`}>
+                                || userLogin.permission.price == 'Updated') ?
+                                '' : 'hidden'}`}>
                                 <label className="col-sm-4 control-label">Markup (Times)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -614,11 +500,7 @@ class SalesReportJewelry extends Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label">Gross Weight (Grams)
-                                    <OverlayTrigger placement="top" overlay={tooltipGrossWeight}>
-                                        <img src="/images/alphanumeric.png" />
-                                    </OverlayTrigger>
-                                </label>
+                                <label className="col-sm-4 control-label">Gross Weight (Grams)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                     <div className="col-sm-4 nopadding">
@@ -656,29 +538,6 @@ class SalesReportJewelry extends Component {
                                         onChange={this.handleMetalColourSelectChange} />
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <label className="col-sm-4 control-label">Set Reference Number
-                                    <OverlayTrigger placement="top" overlay={tooltipSetReferenceNumber}>
-                                        <img src="/images/alphanumeric.png" />
-                                    </OverlayTrigger>
-                                </label>
-                                <div className="col-sm-7">
-                                    <input type="text" className="form-control"
-                                        placeholder="Enter Multiple Set Ref separated with comma" {...setReference}/>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label className="col-sm-4 control-label">Attachment</label>
-                                <div className="col-sm-7">
-                                    <input id="fileSetReference" type="file" field={setReference} onChange={this.readFile}/>
-                                    <span id="fileNameSetReference"></span>
-                                    <input type="button" id="btn-browsefileSetReference" value=" "/>
-                                    <div className="font-nor control-label">
-                                        The system able to import only excel file. Click here to download a format file
-                                        <a href={ROOT_URL+'/upload_file/Mol_upload_setreference.xlsx'} > Mol upload setreferences.xlsx</a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -687,50 +546,12 @@ class SalesReportJewelry extends Component {
     }
 }
 
-const tooltipArticle = (
-    <Tooltip id="tooltip"><strong>Article Grouping</strong></Tooltip>
-);
-const tooltipHierarchy = (
-    <Tooltip id="tooltip"><strong>Product Hierarchy</strong></Tooltip>
-);
-const tooltipJewelryCategory = (
-    <Tooltip id="tooltip"><strong>Search By Type of the Product (eg. Ring, Pendent, Necklace etc.)</strong></Tooltip>
-);
-const tooltipCollection = (
-    <Tooltip id="tooltip"><strong>Search By Collection (eg. Masterpiece, High Jewelry, Diamond Classics etc.) of the Product</strong></Tooltip>
-);
-const tooltipBrand = (
-    <Tooltip id="tooltip"><strong>Seacrh By Brand (eg. Mouawad, Chopard, Cartier etc.) of the Product</strong></Tooltip>
-);
-const tooltipMustHave = (
-    <Tooltip id="tooltip"><strong>Search By Must Have (yes/no)</strong></Tooltip>
-);
-const tooltipRingSize = (
-    <Tooltip id="tooltip"><strong>Search Product by Ring Size</strong></Tooltip>
-);
-const tooltipTotalCost = (
-    <Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>
-);
-const tooltipTotalUpdatedCost = (
-    <Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>
-);
-const tooltipPublicPrice = (
-    <Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>
-);
-const tooltipMarkup = (
-    <Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>
-);
-const tooltipGrossWeight = (
-    <Tooltip id="tooltip"><strong>Search By Total Weight of the Product</strong></Tooltip>
-);
-const tooltipSetReferenceNumber = (
-    <Tooltip id="tooltip"><strong>Search Sets By Set Reference Number</strong></Tooltip>
-);
-const tooltipMetalType = (
-    <Tooltip id="tooltip"><strong>Search By Metal Type of the Product</strong></Tooltip>
-);
-const tooltipMetalColour = (
-    <Tooltip id="tooltip"><strong>Search By Metal Color of the Product</strong></Tooltip>
-);
-module.exports = SalesReportJewelry;
-// module.exports = connect(null,inventoryActions)(SalesReportJewelry);
+const tooltipArticle = (<Tooltip id="tooltip"><strong>Article Grouping</strong></Tooltip>);
+const tooltipAccessoryType = (<Tooltip id="tooltip"><strong>Search By Type of Accessory (eg. Cufflinks, Bracelet, Key Chain etc.)</strong></Tooltip>);
+const tooltipCollection = (<Tooltip id="tooltip"><strong>Search By Collection (eg. GE Roller Ballpen) of the Watch</strong></Tooltip>);
+const tooltipBrand = (<Tooltip id="tooltip"><strong>Seacrh By Brand (eg. Mouawad, Chopard, Cartier etc.)</strong></Tooltip>);
+const tooltipMustHave = (<Tooltip id="tooltip"><strong>Search By Must Have (yes/no)</strong></Tooltip>);
+const tooltipMetalType = (<Tooltip id="tooltip"><strong>Search By Metal Type of the Product</strong></Tooltip>);
+const tooltipMetalColour = (<Tooltip id="tooltip"><strong>Search By Metal Color of the Product</strong></Tooltip>);
+
+module.exports = SalesReportAccessory;
