@@ -121,12 +121,14 @@ class UserDetailsFrom extends Component {
         hierarchyDataAccessorySales.push(TreeDataSalesAccessory);
         hierarchyDataOBASales.push(TreeDataSalesOBA);
         hierarchyDataSpareSales.push(TreeDataSalesSpare);
+
         ClearHierarchy(hierarchyDataJewelry);
         ClearHierarchy(hierarchyDataWatch);
         ClearHierarchy(hierarchyDataStone);
         ClearHierarchy(hierarchyDataAccessory);
         ClearHierarchy(hierarchyDataOBA);
         ClearHierarchy(hierarchyDataSpare);
+
         ClearHierarchy(hierarchyDataJewelrySales);
         ClearHierarchy(hierarchyDataWatchSales);
         ClearHierarchy(hierarchyDataStoneSales);
@@ -390,7 +392,6 @@ class UserDetailsFrom extends Component {
         let { fields: { salesLocationValue,salesWarehouseValue,sales,salesAll }} = this.props;
         let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
         let checkSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
-        console.log('changedSalesLocationChecked-->');
         let valuesAllSalesCompany = [].filter.call(checkSalesCompany, function(o) {
             return o.checked || !o.checked;
         }).map(function(o) {
@@ -508,21 +509,21 @@ class UserDetailsFrom extends Component {
             this.setState({
                 hideProductGroupsSales: false,
                 productGroupDatasSales: this.props.options.productGroupsSales,
-                hidecategorySales: false,
+                hideCategorySales: false,
                 valueSales: 2
             });
         } else if(e.target.value == 1) { //select All disbal all check box
             this.setState({
                 hideProductGroupsSales: true,
                 productGroupDatasSales: this.props.options.productGroupsSales,
-                hidecategorySales: false,
+                hideCategorySales: false,
                 valueSales: 1
             });
         } else {
             this.setState({
                 hideProductGroupsSales: true,
                 productGroupDatasSales: [],
-                hidecategorySales: true,
+                hideCategorySales: true,
                 valueSales: 0
             });
         }
@@ -1110,65 +1111,6 @@ class UserDetailsFrom extends Component {
         dataDropDowntSalesLocations = objWareHouseLocation.salesLocation;
         dataDropDowntSalesWareHouse = objWareHouseLocation.salesWarehouse;
 
-        console.log('HierarchyValue-->',HierarchyValue);
-
-        // switch (FindProductHierarchy(HierarchyValue)) {
-        //     case 'Spare':
-        //         hierarchyDataSpare = [];
-        //         hierarchyDataSpare.push(...HierarchyValue)
-        //         break;
-        //     case 'Stone':
-        //         hierarchyDataStone = [];
-        //         hierarchyDataStone.push(...HierarchyValue)
-        //         break;
-        //     case 'OBA':
-        //         hierarchyDataOBA = [];
-        //         hierarchyDataOBA.push(...HierarchyValue)
-        //         break;
-        //     case 'Accessory':
-        //         hierarchyDataAccessory = [];
-        //         hierarchyDataAccessory.push(...HierarchyValue)
-        //         break;
-        //     case 'Watch':
-        //         hierarchyDataWatch = [];
-        //         hierarchyDataWatch.push(...HierarchyValue)
-        //         break;
-        //     case 'Jewelry':
-        //         hierarchyDataJewelry = [];
-        //         hierarchyDataJewelry.push(...HierarchyValue)
-        //         break;
-        //     default:
-        //         break;
-        // }
-        // switch (FindProductHierarchy(SalesHierarchyValue)) {
-        //     case 'Spare':
-        //         hierarchyDataSpareSales = [];
-        //         hierarchyDataSpareSales.push(...SalesHierarchyValue)
-        //         break;
-        //     case 'Stone':
-        //         hierarchyDataStoneSales = [];
-        //         hierarchyDataStoneSales.push(...SalesHierarchyValue)
-        //         break;
-        //     case 'OBA':
-        //         hierarchyDataOBASales = [];
-        //         hierarchyDataOBASales.push(...SalesHierarchyValue)
-        //         break;
-        //     case 'Accessory':
-        //         hierarchyDataAccessorySales = [];
-        //         hierarchyDataAccessorySales.push(...SalesHierarchyValue)
-        //         break;
-        //     case 'Watch':
-        //         hierarchyDataWatchSales = [];
-        //         hierarchyDataWatchSales.push(...SalesHierarchyValue)
-        //         break;
-        //     case 'Jewelry':
-        //         hierarchyDataJewelrySales = [];
-        //         hierarchyDataJewelrySales.push(...SalesHierarchyValue)
-        //         break;
-        //     default:
-        //         break;
-        // }
-
         return (
             <form onSubmit={handleSubmit}>
                 <div id="page-wrapper">
@@ -1332,7 +1274,7 @@ class UserDetailsFrom extends Component {
                                                         <div className={`col-md-12 control-label bd-box
                                                             ${(categoryWAT.value) ? '':'disabledTreeView'}
                                                             ${(this.state.hidecategory) ? 'hidden':''}`}>
-                                                            <Tree data={hierarchyDataWatch} onClick={this.treeOnClickWAT} onUnClick={this.treeOnUnClick} ref="treeviewWAT"/>
+                                                            <Tree data={hierarchyDataWatch} onClick={this.treeOnClickWAT} ref="treeviewWAT"/>
                                                         </div>
                                                     </div>
                                                     <div>
@@ -1353,7 +1295,7 @@ class UserDetailsFrom extends Component {
                                                         <div className={`col-md-12 control-label bd-box
                                                             ${(categorySTO.value) ? '':'disabledTreeView'}
                                                             ${(this.state.hidecategory) ? 'hidden':''}`}>
-                                                            <Tree data={hierarchyDataStone} onClick={this.treeOnClickSTO} onUnClick={this.treeOnUnClick} ref="treeviewSTO"/>
+                                                            <Tree data={hierarchyDataStone} onClick={this.treeOnClickSTO} ref="treeviewSTO"/>
                                                         </div>
                                                     </div>
                                                     <div>
@@ -1374,7 +1316,7 @@ class UserDetailsFrom extends Component {
                                                         <div className={`col-md-12 control-label bd-box
                                                             ${(categoryACC.value) ? '':'disabledTreeView'}
                                                             ${(this.state.hidecategory) ? 'hidden':''}`}>
-                                                            <Tree data={hierarchyDataAccessory} onClick={this.treeOnClickACC} onUnClick={this.treeOnUnClick} ref="treeviewACC"/>
+                                                            <Tree data={hierarchyDataAccessory} onClick={this.treeOnClickACC} ref="treeviewACC"/>
                                                         </div>
                                                     </div>
                                                     <div>
@@ -1395,7 +1337,7 @@ class UserDetailsFrom extends Component {
                                                         <div className={`col-md-12 bd-box control-label
                                                             ${(categoryOBA.value) ? '':'disabledTreeView'}
                                                             ${(this.state.hidecategory) ? 'hidden':''}`}>
-                                                            <Tree data={hierarchyDataOBA} onClick={this.treeOnClickOBA} onUnClick={this.treeOnUnClick} ref="treeviewOBA"/>
+                                                            <Tree data={hierarchyDataOBA} onClick={this.treeOnClickOBA} ref="treeviewOBA"/>
                                                         </div>
                                                     </div>
                                                     <div>

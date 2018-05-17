@@ -13,7 +13,7 @@ class RenderViewSales extends Component {
         } = this.props;
         const { fields: { salesLocation, salesWarehouse, salesAll, salesLocationValue, salesWarehouseValue }, userTypeValue } = props;
         return(
-            <div className={`form-group ${userTypeValue != 'OnHand'?'':'hidden'}`}>
+            <div className={`form-group ${userTypeValue != 'OnHand' && userTypeValue != null ?'':'hidden'}`}>
                 <label className="col-md-2 col-sm-2 control-label">View Sales</label>
                 <div className="col-md-4 col-sm-12 col-xs-12">
                     <div className="col-sm-12 col-xs-12 nopadding">

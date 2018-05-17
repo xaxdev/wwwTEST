@@ -272,6 +272,8 @@ class UserDetails extends Component {
         delete data.categorySalesSPP;
         delete data.categorySalesSTO;
         delete data.categorySalesWAT;
+        delete data.productGroupSales;
+        delete data.userType;
 
         if(!data.password){
             delete data.password;

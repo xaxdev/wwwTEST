@@ -44,7 +44,9 @@ module.exports = {
                 price: Joi.string(),
                 priceSales: Joi.number().integer(),
                 notUseHierarchy: Joi.string(),
-                category: Joi.number().integer()
+                category: Joi.number().integer(),
+                salesCategory: Joi.number().integer(),
+                userType: Joi.string()
             }).required(),
             webOnly: Joi.boolean(),
             movement: Joi.boolean()

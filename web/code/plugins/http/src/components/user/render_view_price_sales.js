@@ -9,7 +9,7 @@ class RenderViewPriceSales extends Component {
         const { props, state, onChangedPriceSales } = this.props;
         const { fields: { priceSalesRTP, priceSalesUCP, priceSalesCTP, priceSalesNSP, priceSalesMGP, priceSalesDSP }, userTypeValue } = props;
         return(
-            <div className={`form-group ${userTypeValue != 'OnHand'?'':'hidden'}`}>
+            <div className={`form-group ${userTypeValue != 'OnHand' && userTypeValue != null ?'':'hidden'}`}>
                 <label className="col-sm-2 control-label">View Price Sales</label>
                 <div>
                     <div className="col-sm-4">
