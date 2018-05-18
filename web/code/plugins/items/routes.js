@@ -66,6 +66,11 @@ module.exports = [
         config: controllers.searchsave
     },
     {
+        method: 'POST',
+        path: '/salessearch/save',
+        config: controllers.salessearchsave
+    },
+    {
         method: 'GET',
         path: '/search/list',
         config: controllers.searchlist
@@ -76,14 +81,29 @@ module.exports = [
         config: controllers.searchdelete
     },
     {
+        method: 'DELETE',
+        path: '/salessearch/remove',
+        config: controllers.salessearchdelete
+    },
+    {
         method: 'POST',
         path: '/search/share',
         config: controllers.searchshare
     },
     {
+        method: 'POST',
+        path: '/salessearch/share',
+        config: controllers.salessearchshare
+    },
+    {
         method: 'GET',
         path: '/search/view/{id}',
         config: controllers.searchview
+    },
+    {
+        method: 'GET',
+        path: '/salessearch/view/{id}',
+        config: controllers.salessearchview
     },
     {
         method: 'GET',

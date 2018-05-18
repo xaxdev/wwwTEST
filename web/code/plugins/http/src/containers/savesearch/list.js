@@ -4,14 +4,32 @@ import { reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import * as saveSearchAction from '../../actions/savesearchaction';
 import * as inventoryActions from '../../actions/inventoryactions';
-import SaveSearchList  from '../../components/savesearch/savesearch_list';
+import OnHandSaveSearchList  from '../../components/savesearch/onhand_savesearch_list';
+import SalesSaveSearchList  from '../../components/savesearch/sales_savesearch_list';
 import Modalalertmsg from '../../utils/modalalertmsg';
 
 const Loading = require('react-loading');
 
+const fields = [
+    'reference','description','venderReference','vendorName','certificatedNumber','sku','location','warehouse','attachment','stoneType','cut','cutGrade','color',
+    'stoneProductHierarchy','lotNumber','colorGrade','clarity','lotQuantityFrom','lotQuantityTo','totalCaratWeightFrom','totalCaratWeightTo','totalCostFrom',
+    'totalCostTo','totalUpdatedCostFrom','totalUpdatedCostTo','publicPriceFrom','publicPriceTo','markupFrom','markupTo', 'certificatedNumber','certificateAgency',
+    'cerDateFrom','cerDateTo','polish','symmetry','treatment','fluorescence','origin','jewelryProductHierarchy','collection','totalCostFrom','totalCostTo',
+    'totalUpdatedCostFrom','totalUpdatedCostTo','publicPriceFrom','publicPriceTo','markupFrom','markupTo','grossWeightFrom','grossWeightTo','setReference',
+    'jewelryCategory','brand','mustHave','ringSize','dominantStone','metalType','metalColour','gemstone_stoneType','gemstone_cut','gemstone_cutGrade',
+    'gemstone_color','gemstone_clarity','gemstone_stoneCostFrom','gemstone_stoneCostTo','gemstone_totalCaratWeightFrom','gemstone_totalCaratWeightTo',
+    'gemstone_quantityFrom','gemstone_quantityTo','gemstone_certificatedNumber','gemstone_cerDateFrom','gemstone_cerDateTo','gemstone_polish','collection',
+    'gemstone_symmetry','gemstone_treatment','gemstone_fluorescence','gemstone_origin','gemstone_certificateAgency','watchProductHierarchy','watchCategory',
+    'brand','mustHave','metalType','dialColor','metalColour','dominantStone','limitedEdition','limitedEditionNumber','serialNumber','dialIndex','movement',
+    'totalCostFrom','totalCostTo','totalUpdatedCostFrom','totalUpdatedCostTo','complication','publicPriceFrom','publicPriceTo','markupFrom','markupFrom',
+    'markupTo','grossWeightFrom','grossWeightTo','proDateFrom','proDateTo','caseDimensionFrom','caseDimensionTo','dialMetal','preciousMetalWeightFrom',
+    'preciousMetalWeightTo','buckleType','strapType','strapColor','accessoryProductHierarchy','accessoryType','obaProductHierarchy','obaDimension',
+    'searchName','sparePartProductHierarchy','sparePartType','validateSearchName','viewAsSet'
+]
+
 class SaveSearch extends Component {
     componentDidMount(){
-      this.props.saveSearchAction.getListsSaveSearch();
+        this.props.saveSearchAction.getListsSaveSearch();
     }
 
     handleClosemsgSaveSearch = _=> {
@@ -29,6 +47,9 @@ class SaveSearch extends Component {
     }
 
     render(){
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const { permission } = userLogin;
+
         if (!this.props.listSaveSearch) {
           return (
               <div >
@@ -42,19 +63,36 @@ class SaveSearch extends Component {
          }else{
              return (
                  <div>
-                     <div className="col-sm-12 bg-hearder bg-header-inventories">
+                     <div className={`col-sm-12 bg-hearder bg-header-inventories ${permission.userType != 'Sales'?'':'hidden'}`}>
                          <div className="col-sm-6 m-width-60 ft-white m-nopadding">
-                            <h1>List of Saved Searches</h1>
+                            <h1>LIST OF INVENTORY SAVED SEARCHES</h1>
                          </div>
                      </div>
-                     <div className="col-sm-12  panel panel-default">
+                     <div className={`col-sm-12  panel panel-default ${permission.userType != 'Sales'?'':'hidden'}`}>
                          <div className="panel-body">
-                             <SaveSearchList saveSearches = {this.props.listSaveSearch}
+                             <OnHandSaveSearchList saveSearches = {this.props.listSaveSearch}
                                 criteriaSaveSearch = {this.props.criteriaSaveSearch}
                                 shareSaveSearch = {this.props.saveSearchAction.shareSaveSearch}
                                 getSaveCriteria = {this.props.saveSearchAction.getSaveCriteria}
                                 deleteSaveSearch = {this.props.saveSearchAction.deleteSaveSearch}
                                 setIdDeleteSaveSearch = {this.props.saveSearchAction.setIdDeleteSaveSearch}
+                                getListsSaveSearch = {this.props.saveSearchAction.getListsSaveSearch}
+                                props = {this.props}/>
+                         </div>
+                     </div>
+                     <div className={`col-sm-12 bg-hearder bg-header-inventories ${permission.userType != 'OnHand'?'':'hidden'}`}>
+                         <div className="col-sm-6 m-width-60 ft-white m-nopadding">
+                            <h1>LIST OF SALES SAVED SEARCHES</h1>
+                         </div>
+                     </div>
+                     <div className={`col-sm-12  panel panel-default ${permission.userType != 'OnHand'?'':'hidden'}`}>
+                         <div className="panel-body">
+                             <SalesSaveSearchList saveSearches = {this.props.listSaveSearch}
+                                criteriaSalesSaveSearch = {this.props.criteriaSalesSaveSearch}
+                                shareSalesSaveSearch = {this.props.saveSearchAction.shareSalesSaveSearch}
+                                getSalesSaveCriteria = {this.props.saveSearchAction.getSalesSaveCriteria}
+                                deleteSalesSaveSearch = {this.props.saveSearchAction.deleteSalesSaveSearch}
+                                setIdDeleteSalesSaveSearch = {this.props.saveSearchAction.setIdDeleteSalesSaveSearch}
                                 getListsSaveSearch = {this.props.saveSearchAction.getListsSaveSearch}
                                 props = {this.props}/>
                          </div>
@@ -81,6 +119,9 @@ function mapStateToProps(state) {
         IdDeleteSaveSearch: state.searchResult.idDeleteSaveSearch,
         IdEditSaveSearch: state.searchResult.idEditSaveSearch,
         NameEditSaveSearch: state.searchResult.nameEditSaveSearch,
+        criteriaSalesSaveSearch: state.searchResult.criteriaSalesSaveSearch,
+        IdDeleteSalesSaveSearch: state.searchResult.idDeleteSalesSaveSearch,
+        paramsSalesSearch: state.searchResult.paramsSalesSearch,
     };
 }
 
@@ -94,32 +135,6 @@ function mapDispatchToProps(dispatch) {
 module.exports = reduxForm(
     {
         form: 'SaveSearch',
-        fields: [
-            'reference','description','venderReference','vendorName',
-            'certificatedNumber','sku','location','warehouse','attachment',
-            'stoneType','cut','stoneProductHierarchy','lotNumber',
-            'cutGrade','color','colorGrade','clarity','lotQuantityFrom','lotQuantityTo',
-            'totalCaratWeightFrom','totalCaratWeightTo','totalCostFrom','totalCostTo',
-            'totalUpdatedCostFrom','totalUpdatedCostTo','publicPriceFrom','publicPriceTo',
-            'markupFrom','markupTo', 'certificatedNumber','certificateAgency','cerDateFrom',
-            'cerDateTo','polish','symmetry','treatment','fluorescence','origin',
-            'jewelryProductHierarchy','collection','totalCostFrom','totalCostTo',
-            'totalUpdatedCostFrom','totalUpdatedCostTo','publicPriceFrom','publicPriceTo',
-            'markupFrom','markupTo','grossWeightFrom','grossWeightTo','setReference',
-            'jewelryCategory','brand','mustHave','ringSize','dominantStone',
-            'metalType','metalColour',
-            'gemstone_stoneType','gemstone_cut','gemstone_cutGrade','gemstone_color','gemstone_clarity','gemstone_stoneCostFrom',
-            'gemstone_stoneCostTo','gemstone_totalCaratWeightFrom','gemstone_totalCaratWeightTo','gemstone_quantityFrom',
-            'gemstone_quantityTo','gemstone_certificatedNumber','gemstone_cerDateFrom','gemstone_cerDateTo','gemstone_polish',
-            'gemstone_symmetry','gemstone_treatment','gemstone_fluorescence','gemstone_origin','gemstone_certificateAgency',
-            'watchProductHierarchy','watchCategory','collection','brand','mustHave','metalType','dialColor',
-            'metalColour','dominantStone','limitedEdition','limitedEditionNumber','serialNumber','dialIndex',
-            'movement','totalCostFrom','totalCostTo','totalUpdatedCostFrom','totalUpdatedCostTo','complication',
-            'publicPriceFrom','publicPriceTo','markupFrom','markupFrom','markupTo','grossWeightFrom',
-            'grossWeightTo','proDateFrom','proDateTo','caseDimensionFrom','caseDimensionTo','dialMetal',
-            'preciousMetalWeightFrom','preciousMetalWeightTo','buckleType','strapType','strapColor',
-            'accessoryProductHierarchy','accessoryType','obaProductHierarchy','obaDimension','searchName',
-            'sparePartProductHierarchy','sparePartType','validateSearchName','viewAsSet'
-        ]
+        fields: fields
     }, mapStateToProps, mapDispatchToProps
 )(SaveSearch);

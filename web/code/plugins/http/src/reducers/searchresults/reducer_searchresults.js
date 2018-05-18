@@ -1,6 +1,7 @@
 import {FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION,
     SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, WRITE_HTML, POST_SAVESEARCH, SET_ISSAVESEARCH, SET_CLOSEALERTMSG, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH,
-    GET_SAVECRITERIA, DELETE_SAVESEARCH, SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH,FETCH_ALLPDF,FETCH_EXPORTITEMS
+    GET_SAVECRITERIA, DELETE_SAVESEARCH, SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH,FETCH_ALLPDF,FETCH_EXPORTITEMS,SET_IDEDITSALESSAVESEARCH,
+    GET_SAVESALESCRITERIA, SET_SALESPARAMS, MODIFY_SALESSEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH, GET_SALESSAVECRITERIA
 } from '../../constants/itemconstants';
 
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY, SET_CERTIFICATELAB, SET_POLISH,
@@ -9,7 +10,7 @@ import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CU
     SET_BUCKLETYPE, SET_STRAPTYPE, SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE, SET_HIERARCHY,
     SET_GEMS_CERTIFICATE_DATE_FROM, SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM, SET_STONE_CERTIFICATE_DATE_TO, SET_PRODUCTION_DATE_FROM,
     SET_PRODUCTION_DATE_TO,SET_SUBMITACTION, SET_SAVESEARCHHIERARCHY, SET_VIEWASSET, SET_ITEMSORDER,SET_SETREFERENCEORDER, SET_ARTICLE, SET_SALESCHANNEL,
-    SET_SALESHIERARCHY,SET_SALESADVANCE,SELECTED_TABSALESCATEGORY,SET_GEMS_STONE_TYPE
+    SET_SALESHIERARCHY, SET_SALESADVANCE, SELECTED_TABSALESCATEGORY, SET_GEMS_STONE_TYPE
 } from '../../constants/inventoryConstants';
 
 const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, currentPage:1, totalpage:null, totalpublicprice:null, totalupdatedcost:null,
@@ -23,13 +24,45 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
     ProductionDateTo:null, PageSize:16, SortingBy:'itemCreatedDate', SortDirection:'desc', ShowGridView: true, ShowListView: false, SubmitAction: null,
     saveSearchStatus: false, msg: '',saveSearchStatusCode: 100, isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null,
     idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null, viewAsSet: false, itemsOrder:null,setReferenceOrder:null,tempPDF:null,
-    ArticleValue:[], SalesChannelValue:[], SalesHierarchyValue:null,SalesIsAdvance:false, activeTabSalesCategory:1, GemStoneTypeValue:[]
+    ArticleValue:[], SalesChannelValue:[], SalesHierarchyValue:null,SalesIsAdvance:false, activeTabSalesCategory:1, idEditSalesSaveSearch: null,
+    nameEditSalesSaveSearch: null, criteriaSalesSaveSearch: null, paramsSalesSearch:null, saveSalesSearchStatus: false, msgSales: '',
+    saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, GemStoneTypeValue:[]
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
         case SET_GEMS_STONE_TYPE:
             return {...state, GemStoneTypeValue: action.gemstoneStoneType};
+        case GET_SALESSAVECRITERIA :
+            return {...state,  criteriaSalesSaveSearch: action.data };
+            break;
+        case DELETE_SALESSAVESEARCH :
+            return {...state, saveSalesSearchStatus: (action.data.statusCode >= 400) ? false : true, saveSalesSearchStatusCode : action.data.statusCode,
+                msgSales: action.data.message
+            };
+            break;
+        case SET_IDDELETESALESSAVESEARCH :
+            return {...state,  idDeleteSalesSaveSearch: action.id};
+            break;
+        case SET_SALESSHAREDSAVESEARCH :
+            return {...state,  saveSalesSearchStatus: (action.data.statusCode >= 400) ? false : true, saveSalesSearchStatusCode : action.data.statusCode,
+                msgSales: action.data.message
+            };
+            break;
+        case SET_SALESPARAMS:
+            return { ...state, paramsSalesSearch:action.params }
+            break;
+        case MODIFY_SALESSEARCH:
+            return {...state, paramsSalesSearch:action.params, datas:null,allItems:[], totalpage:null, totalpublicprice:null, totalupdatedcost:null,
+                SearchAction:'Modify',exportItems:[], maxPrice:null, minPrice:null,avrgPrice:null,listFileName:null
+            }
+            break;
+        case GET_SAVESALESCRITERIA :
+            return {...state,  criteriaSalesSaveSearch: action.data };
+            break;
+        case SET_IDEDITSALESSAVESEARCH :
+            return {...state,  idEditSalesSaveSearch: action.params.id, nameEditSalesSaveSearch: action.params.name};
+            break;
         case SELECTED_TABSALESCATEGORY :
             return {...state, activeTabSalesCategory: action.tab };
             break;
@@ -64,16 +97,16 @@ export default function(state = INITIAL_STATE, action){
             return {...state,  idDeleteSaveSearch: action.id};
             break;
         case DELETE_SAVESEARCH :
-            return {...state, saveSearchStatus: (action.data.statusCode >= 400) ? false : true,
-                saveSearchStatusCode : action.data.statusCode, msg: action.data.message
+            return {...state, saveSearchStatus: (action.data.statusCode >= 400) ? false : true, saveSearchStatusCode : action.data.statusCode,
+                msg: action.data.message
             };
             break;
         case GET_SAVECRITERIA :
             return {...state,  criteriaSaveSearch: action.data };
             break;
         case SET_SHAREDSAVESEARCH :
-            return {...state,  saveSearchStatus: (action.data.statusCode >= 400) ? false : true,
-                saveSearchStatusCode : action.data.statusCode, msg: action.data.message
+            return {...state,  saveSearchStatus: (action.data.statusCode >= 400) ? false : true, saveSearchStatusCode : action.data.statusCode,
+                msg: action.data.message
             };
             break;
         case GET_LISTSAVESEARCH :
@@ -83,23 +116,26 @@ export default function(state = INITIAL_STATE, action){
             return {...state,  saveSearchStatusCode: action.closeAlertMsg, saveSearchStatus: false, msg: ''}
             break;
         case POST_SAVESEARCH :
-            return {...state,  saveSearchStatus: (action.data.statusCode >= 400) ? false : true,
-              saveSearchStatusCode : action.data.statusCode, msg: action.data.message
+            return {...state,  saveSearchStatus: (action.data.statusCode >= 400) ? false : true, saveSearchStatusCode : action.data.statusCode,
+                msg: action.data.message
             };
             break;
         case SET_SUBMITACTION:
             return {...state, SubmitAction: action.submitActionValue };
             break;
         case RESET_FORM:
-            return {...state,WarehouseValue:[], LocationValue:[], StoneTypeValue:[], CutValue:[], CutGradeValue:[], ColorValue:[], ColorGradeValue:[], ClarityValue:[],
-                CertificateLabValue:[], PolishValue:[], SymmetryValue:[], TreatmentValue:[], FluorescenceValue:[], OriginValue:[], JewelryCategoryValue:[],
-                CollectionValue:[], BrandValue:[], MustHaveValue:[], RingSizeValue:[], DominantStoneValue:[], MetalTypeValue:[], MetalColourValue:[], CutValue:[],
-                CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[], BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],
-                DialIndexValue:[], MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[], filters:[], AccessoryTypeValue:[], paramsSearch:null,
-                SparePartTypeValue:[], SearchAction:'New', GemCertificateDateFrom:null, GemCertificateDateTo:null, StoneCertificateDateFrom:null,
-                StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, ListCatalogName: [],SubmitAction: null, saveSearchStatus: false, msg: '',
-                saveSearchStatusCode: 100, isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null, idDeleteSaveSearch: null,
-                idEditSaveSearch: null, nameEditSaveSearch: null,viewAsSet: false, ArticleValue:[],SalesChannelValue:[], GemStoneTypeValue:[]};
+            return {...state,WarehouseValue:[], LocationValue:[], StoneTypeValue:[], CutValue:[], CutGradeValue:[], ColorValue:[], ColorGradeValue:[],
+                ClarityValue:[], CertificateLabValue:[], PolishValue:[], SymmetryValue:[], TreatmentValue:[], FluorescenceValue:[], OriginValue:[],
+                JewelryCategoryValue:[], CollectionValue:[], BrandValue:[], MustHaveValue:[], RingSizeValue:[], DominantStoneValue:[], MetalTypeValue:[],
+                MetalColourValue:[], CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[], BuckleTypeValue:[],
+                DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[], filters:[],
+                AccessoryTypeValue:[], paramsSearch:null, SparePartTypeValue:[], SearchAction:'New', GemCertificateDateFrom:null, GemCertificateDateTo:null,
+                StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, ListCatalogName: [], msg: '',
+                SubmitAction: null, saveSearchStatus: false, saveSearchStatusCode: 100, isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null,
+                saveSearchHierarchy: null, idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null,viewAsSet: false, ArticleValue:[],
+                SalesChannelValue:[], idEditSalesSaveSearch: null, nameEditSalesSaveSearch: null, criteriaSalesSaveSearch: null, paramsSalesSearch:null,
+                saveSalesSearchStatus: false, msgSales: '', saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, GemStoneTypeValue:[]
+            };
             break;
         case SET_SHOWGRIDVIEW :
             return {...state, ShowGridView: action.showGridView };
@@ -259,14 +295,14 @@ export default function(state = INITIAL_STATE, action){
             break;
         case NEWSEARCH:
             return {...state, filters:[], paramsSearch:null,WarehouseValue:[], LocationValue:[], StoneTypeValue:[], CutValue:[], CutGradeValue:[], ColorValue:[],
-                ColorGradeValue:[], ClarityValue:[],CertificateLabValue:[], PolishValue:[], SymmetryValue:[], TreatmentValue:[], FluorescenceValue:[],OriginValue:[],
-                JewelryCategoryValue:[], CollectionValue:[], BrandValue:[], MustHaveValue:[],RingSizeValue:[], DominantStoneValue:[], MetalTypeValue:[],
-                MetalColourValue:[], CutValue:[],CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[],BuckleTypeValue:[],
-                DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[],LimitedEditionValue:[], WatchCategoryValue:[], currentPage:1,datas:null,
-                allItems:[], totalpage:null,totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[], SparePartTypeValue:[],SearchAction:'New',
-                exporttems:[],maxPrice:null, minPrice:null, avrgPrice:null,GemCertificateDateFrom:null, GemCertificateDateTo:null, StoneCertificateDateFrom:null,
-                StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16,ShowGridView: true, showListView: false, ListCatalogName: [],
-                viewAsSet: false, ArticleValue:[],SalesChannelValue:[], GemStoneTypeValue:[]
+                ColorGradeValue:[], ClarityValue:[], CertificateLabValue:[], PolishValue:[], SymmetryValue:[], TreatmentValue:[], FluorescenceValue:[],
+                OriginValue:[], JewelryCategoryValue:[], CollectionValue:[], BrandValue:[], MustHaveValue:[], RingSizeValue:[], DominantStoneValue:[],
+                MetalTypeValue:[], MetalColourValue:[], CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[],
+                BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[],
+                currentPage:1,datas:null,allItems:[], totalpage:null, totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[], SparePartTypeValue:[],
+                SearchAction:'New', exporttems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null, GemCertificateDateTo:null,
+                StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16, ShowGridView: true,
+                showListView: false, ListCatalogName: [], viewAsSet: false, ArticleValue:[], paramsSalesSearch:null, SalesChannelValue:[], GemStoneTypeValue:[]
             }
             break;
         case SET_PARAMS:

@@ -1,12 +1,12 @@
 export default function ResetFormMain(that){
     const { fields: {
-        reference,description,certificatedNumber,sku,location,warehouse,stoneType,cut,stoneProductHierarchy,lotNumber,cutGrade,color,colorGrade,clarity,
+        reference,description,certificatedNumber,sku,location,warehouse,stoneType,cut,stoneProductSalesHierarchy,lotNumber,cutGrade,color,colorGrade,clarity,
         lotQuantityFrom,lotQuantityTo,totalCaratWeightFrom,totalCaratWeightTo,totalCostFrom,totalCostTo,totalUpdatedCostFrom,totalUpdatedCostTo,
-        retailPriceFrom,retailPriceTo,markupFrom,markupTo,jewelryProductHierarchy,jewelryCategory,collection,grossWeightFrom,grossWeightTo,setReference,
+        retailPriceFrom,retailPriceTo,markupFrom,markupTo,jewelryProductSalesHierarchy,jewelryCategory,collection,grossWeightFrom,grossWeightTo,setReference,
         brand,mustHave,ringSize,dominantStone,metalType,metalColour,polish,symmetry,treatment,fluorescence,origin,certificateAgency,
-        stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,watchProductHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,
+        stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,watchProductSalesHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,
         proDateFrom,proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,dialMetal,buckleType,
-        strapType,strapColor,complication,accessoryProductHierarchy,accessoryType,obaProductHierarchy,obaDimension,sparePartProductHierarchy,sparePartType,
+        strapType,strapColor,complication,accessoryProductSalesHierarchy,accessoryType,obaProductSalesHierarchy,obaDimension,sparePartProductSalesHierarchy,sparePartType,
         salesChannel
     }, resetForm } = that.props;
 
@@ -20,7 +20,7 @@ export default function ResetFormMain(that){
     warehouse.value = '';
     salesChannel.value = '';
 
-    stoneProductHierarchy.value = '';
+    stoneProductSalesHierarchy.value = '';
     stoneType.value = '';
     cut.value = '';
     cutGrade.value = '';
@@ -44,7 +44,7 @@ export default function ResetFormMain(that){
     fluorescence.value = '';
     origin.value = '';
     //
-    jewelryProductHierarchy.value = '';
+    jewelryProductSalesHierarchy.value = '';
     jewelryCategory.value = '';
     collection.value = '';
     brand.value = '';
@@ -63,7 +63,7 @@ export default function ResetFormMain(that){
     metalType.value = '';
     metalColour.value = '';
     //
-    watchProductHierarchy.value = '';
+    watchProductSalesHierarchy.value = '';
     watchCategory.value = '';
     collection.value = '';
     brand.value = '';
@@ -93,13 +93,13 @@ export default function ResetFormMain(that){
     strapColor.value = '';
     complication.value = '';
 
-    accessoryProductHierarchy.value = '';
+    accessoryProductSalesHierarchy.value = '';
     accessoryType.value = '';
 
-    obaProductHierarchy.value = '';
+    obaProductSalesHierarchy.value = '';
     obaDimension.value = '';
 
-    sparePartProductHierarchy.value = '';
+    sparePartProductSalesHierarchy.value = '';
     sparePartType.value = '';
 
 }

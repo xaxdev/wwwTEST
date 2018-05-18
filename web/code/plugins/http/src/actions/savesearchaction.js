@@ -2,8 +2,8 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {
-    ROOT_URL, POST_SAVESEARCH, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH, SET_CLOSEALERTMSG, GET_SAVECRITERIA,
-    SET_PARAMS, DELETE_SAVESEARCH,SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH
+    ROOT_URL, POST_SAVESEARCH, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH, SET_CLOSEALERTMSG, GET_SAVECRITERIA, SET_PARAMS, DELETE_SAVESEARCH, SET_SALESPARAMS,
+    SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH, GET_SALESSAVECRITERIA
 } from '../constants/itemconstants';
 
 export function setIdEditSaveSearch(params) {
@@ -17,6 +17,13 @@ export function setIdDeleteSaveSearch(id) {
     const token = sessionStorage.token;
     return {
         type: SET_IDDELETESAVESEARCH,
+        id: id
+    }
+}
+export function setIdDeleteSalesSaveSearch(id) {
+    const token = sessionStorage.token;
+    return {
+        type: SET_IDDELETESALESSAVESEARCH,
         id: id
     }
 }
@@ -36,11 +43,33 @@ export function deleteSaveSearch(params) {
         })
     }
 }
-
+export function deleteSalesSaveSearch(params) {
+    const token = sessionStorage.token;
+    var url = `${ROOT_URL}/api/items/salessearch/remove`;
+    return {
+        type: DELETE_SALESSAVESEARCH,
+        promise: fetch(url,{
+            method: 'DELETE',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        })
+    }
+}
 export function setParams(params){
     const token = sessionStorage.token;
     return {
         type: SET_PARAMS,
+        params: params
+    }
+}
+export function setSalesParams(params){
+    const token = sessionStorage.token;
+    return {
+        type: SET_SALESPARAMS,
         params: params
     }
 }
@@ -59,12 +88,43 @@ export function getSaveCriteria(params) {
         })
     }
 }
-
+export function getSalesSaveCriteria(params) {
+    const token = sessionStorage.token;
+    var url = `${ROOT_URL}/api/items/salessearch/view/${params.id}`;
+    return {
+        type: GET_SALESSAVECRITERIA,
+        promise: fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        })
+    }
+}
 export function shareSaveSearch(params) {
     const token = sessionStorage.token;
     var url = `${ROOT_URL}/api/items/search/share`;
     return {
         type: SET_SHAREDSAVESEARCH,
+        promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        })
+    }
+}
+
+export function shareSalesSaveSearch(params) {
+    const token = sessionStorage.token;
+    var url = `${ROOT_URL}/api/items/salessearch/share`;
+    return {
+        type: SET_SALESSHAREDSAVESEARCH,
         promise: fetch(url,{
             method: 'POST',
             body: JSON.stringify(params),

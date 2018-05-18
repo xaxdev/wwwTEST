@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import { DataTable } from '../../utils/dataTableSaveSearch/index';
-import ShareModal from './share_model';
+import ShareModal from './share_modal';
 import * as setcriteria from './setstate';
 import ModalConfirmDelete from './modalConfirmDelete';
 let Loading = require('react-loading');
@@ -13,7 +13,7 @@ class SaveSearchList extends Component {
 
         this.state = {
             isOpen: false,
-            initialPageLength:20,
+            initialPageLength:10,
             userStatus:null,
             userData:[],
             currentPage: 0,
@@ -105,7 +105,7 @@ class SaveSearchList extends Component {
         this.setState({isOpenDeleteSaveSearch: false});
     }
     renderModalConfirmDelete = _=> {
-        const title = 'DELETE SAVED SEARCH';
+        const title = 'DELETE ONHAND SAVED SEARCH';
         const msg = 'Are you sure!';
         return(
             <div>
@@ -145,8 +145,8 @@ class SaveSearchList extends Component {
     render() {
         let lists = [];
         const { saveSearches } = this.props;
-        if (saveSearches.length != 0){
-            lists = saveSearches.map(function (col, idx) {
+        if (saveSearches.onhand.length != 0){
+            lists = saveSearches.onhand.map(function (col, idx) {
                 let id = idx + 1;
                 let status = !col.shared ? 'Owner' : 'Shared'
                 return {...col, id: id, status: status}
@@ -176,7 +176,7 @@ class SaveSearchList extends Component {
                         initialData={lists}
                         initialPageLength={this.state.initialPageLength}
                         initialSortBy={{ prop: 'id', order: 'ascending' }}
-                        pageLengthOptions={[ 5, 20, 50 ]} />
+                        pageLengthOptions={[ 5, 10, 20 ]} />
                     {this.renderModalConfirmDelete()}
                 </div>
             );
@@ -186,7 +186,7 @@ class SaveSearchList extends Component {
                     <Modal isOpen={this.state.isOpenAlertMessage} >
                         <div className="modal-header">
                             <ModalClose onClick={this.isCloseAlertMessage}/>
-                            <h1 className="modal-title">SAVED SEARCHES</h1>
+                            <h1 className="modal-title">ONHAND SAVED SEARCHES</h1>
                         </div>
                         <div className="modal-body">
                             <div className="text-center maring-t20 font-b">

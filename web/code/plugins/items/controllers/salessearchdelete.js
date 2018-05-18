@@ -17,7 +17,7 @@ module.exports = {
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
                 const searchId = request.payload.id
-                const searchCollection = await db.collection('SearchCriteria').deleteOne({ _id: new ObjectID(searchId) })
+                const searchCollection = await db.collection('SalesSearchCriteria').deleteOne({ _id: new ObjectID(searchId) })
 
                 return reply({
                     error: '',

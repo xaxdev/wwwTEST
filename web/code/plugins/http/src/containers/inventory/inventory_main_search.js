@@ -5,6 +5,7 @@ import * as itemactions from '../../actions/itemactions';
 import ProductGroup from '../../utils/userproductgroup';
 import Modalalertmsg from '../../utils/modalalertmsg';
 import GetFilterSearch from './utils/get_filter_search';
+import GetFilterSave from './utils/get_filter_save';
 
 const Loading = require('react-loading');
 
@@ -39,14 +40,15 @@ class InventorySearch extends Component {
 
         delete data.searchName;
 
-        filters = GetFilterSearch(this, data, userLogin, filters, jlyHierarchy, watHierarchy, stoHierarchy,
-            accHierarchy, obaHierarchy, sppHierarchy
-        );
+        console.log('filters-->',filters);
 
         this.props.setCurrentPage(1);
-        sessionStorage.setItem('filters', JSON.stringify(filters));
+
         switch (submitAction) {
             case 'save':
+                filters = GetFilterSave(this, data, userLogin, filters, jlyHierarchy, watHierarchy, stoHierarchy,
+                    accHierarchy, obaHierarchy, sppHierarchy
+                );
                 if(jlyHierarchy){
                     filters.push({'jewelryProductHierarchy':data.jewelryProductHierarchy})
                 }
@@ -87,6 +89,10 @@ class InventorySearch extends Component {
                 this.props.saveSearchCriteria(paramsSaveSearch);
                 break;
             case 'search':
+                filters = GetFilterSearch(this, data, userLogin, filters, jlyHierarchy, watHierarchy, stoHierarchy,
+                    accHierarchy, obaHierarchy, sppHierarchy
+                );
+                sessionStorage.setItem('filters', JSON.stringify(filters));
                 this.context.router.push('/searchresult');
                 break;
             default:
