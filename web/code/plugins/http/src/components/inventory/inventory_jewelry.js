@@ -51,6 +51,7 @@ class InventoryJewelry extends Component {
             const { props } = this.props;
             let { fields: { jewelryProductHierarchy }, searchResult } = props;
             if(props.SaveSearchHierarchy != null){
+                console.log('props.SaveSearchHierarchy-->',props.SaveSearchHierarchy);
                 await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
                 this.refs.treeview.handleChange(props.SaveSearchHierarchy);
             }
@@ -59,6 +60,7 @@ class InventoryJewelry extends Component {
 
     componentWillReceiveProps(nextProps) {
         const { props } = this.props;
+        console.log('nextProps.props.SearchAction-->',nextProps.props.SearchAction);
         if(nextProps.props.SearchAction != props.SearchAction){
             if(props.HierarchyValue != null){
                 if(nextProps.props.SearchAction == 'New'){

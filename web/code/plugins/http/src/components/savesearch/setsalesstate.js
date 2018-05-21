@@ -1,4 +1,4 @@
-const setstate = async (props,criterias) => {
+const setSalesState = async (props,criterias) => {
     const { fields: { gemstone_quantityFrom } } = props;
     let data = {};
     await criterias.map((criteria) => {
@@ -87,45 +87,23 @@ const setstate = async (props,criterias) => {
                 case 'viewAsSet':
                     props.inventoryActions.setViewAsSet(valueKeys);
                     break;
-                case 'sparePartProductHierarchy':
-                    props.inventoryActions.setSaveSearchHierarchy(valueKeys);
+                case 'sparePartProductSalesHierarchy':
+                    props.inventoryActions.setSaveSearchSalesHierarchy(valueKeys);
                     break;
-                case 'obaProductHierarchy':
-                    props.inventoryActions.setSaveSearchHierarchy(valueKeys);
+                case 'obaProductSalesHierarchy':
+                    props.inventoryActions.setSaveSearchSalesHierarchy(valueKeys);
                     break;
-                case 'accessoryProductHierarchy':
-                    props.inventoryActions.setSaveSearchHierarchy(valueKeys);
+                case 'accessoryProductSalesHierarchy':
+                    props.inventoryActions.setSaveSearchSalesHierarchy(valueKeys);
                     break;
-                case 'stoneProductHierarchy':
-                    props.inventoryActions.setSaveSearchHierarchy(valueKeys);
+                case 'stoneProductSalesHierarchy':
+                    props.inventoryActions.setSaveSearchSalesHierarchy(valueKeys);
                     break;
-                case 'watchProductHierarchy':
-                    props.inventoryActions.setSaveSearchHierarchy(valueKeys);
+                case 'watchProductSalesHierarchy':
+                    props.inventoryActions.setSaveSearchSalesHierarchy(valueKeys);
                     break;
-                case 'jewelryProductHierarchy':
-                    console.log('jewelryProductHierarchy-->', valueKeys);
-                    props.inventoryActions.setSaveSearchHierarchy(valueKeys);
-                    break;
-                case 'gemstones.certificateAgency':
-                    props.inventoryActions.setDataCertificateAgency(valueKeys);
-                    break;
-                case 'gemstones.origin':
-                    props.inventoryActions.setDataOrigin(valueKeys);
-                    break;
-                case 'gemstones.symmetry':
-                    props.inventoryActions.setDataSymmetry(valueKeys);
-                    break;
-                case 'gemstones.clarity':
-                    props.inventoryActions.setDataClarity(valueKeys);
-                    break;
-                case 'gemstones.color':
-                    props.inventoryActions.setDataColor(valueKeys);
-                    break;
-                case 'gemstones.cut':
-                    props.inventoryActions.setDataCut(valueKeys);
-                    break;
-                case 'gemstones.stoneType':
-                    props.inventoryActions.setDatastoneType(valueKeys);
+                case 'jewelryProductSalesHierarchy':
+                    props.inventoryActions.setSaveSearchSalesHierarchy(valueKeys);
                     break;
                 case 'metalColour':
                     props.inventoryActions.setDataMetalColour(valueKeys);
@@ -151,31 +129,31 @@ const setstate = async (props,criterias) => {
                 case 'type':
                     const types = valueKeys.split(' ');
                     if (types.length > 1) {
-                        props.inventoryActions.setAdvance(false);
+                        props.inventoryActions.setSalesAdvance(false);
                     }else{
                         switch (types[0]) {
                             case 'JLY':
-                                props.inventoryActions.selectedTabCategory(1);
+                                props.inventoryActions.selectedTabSalesCategory(1);
                                 break;
                             case 'WAT':
-                                props.inventoryActions.selectedTabCategory(2);
+                                props.inventoryActions.selectedTabSalesCategory(2);
                                 break;
                             case 'STO':
-                                props.inventoryActions.selectedTabCategory(3);
+                                props.inventoryActions.selectedTabSalesCategory(3);
                                 break;
                             case 'ACC':
-                                props.inventoryActions.selectedTabCategory(4);
+                                props.inventoryActions.selectedTabSalesCategory(4);
                                 break;
                             case 'OBA':
-                                props.inventoryActions.selectedTabCategory(5);
+                                props.inventoryActions.selectedTabSalesCategory(5);
                                 break;
                             case 'SPA':
-                                props.inventoryActions.selectedTabCategory(6);
+                                props.inventoryActions.selectedTabSalesCategory(6);
                                 break;
                             default:
 
                         }
-                        props.inventoryActions.setAdvance(true);
+                        props.inventoryActions.setSalesAdvance(true);
                     }
                     break;
                 case 'dominantStone':
@@ -190,15 +168,7 @@ const setstate = async (props,criterias) => {
                 default:
                     break;
             }
-            let casegem = keyscat[0].indexOf('gemstones.') != -1;
-            switch (casegem) {
-                case true :
-                    data[keyscat[0].replace('gemstones.','gemstone_')] = valueKeys;
-                    break;
-                default:
-                    data[keyscat[0]] = valueKeys;
-                    break;
-            }
+
             let caselot = keyscat[0].indexOf('lotNumbers.') != -1;
             switch (caselot) {
                 case true :
@@ -212,4 +182,4 @@ const setstate = async (props,criterias) => {
     })
     return data;
 }
-export { setstate }
+export { setSalesState }

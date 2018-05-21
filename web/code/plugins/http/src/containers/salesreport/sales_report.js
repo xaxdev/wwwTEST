@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import SalesReportMain  from '../../components/salesreport/salesreport_main';
 import * as itemactions from '../../actions/itemactions';
 import GetFilterSearch from './utils/get_filter_search';
-import GetFilterSave from './utils/get_filter_save';
+import GetFilterSalesSave from './utils/get_filter_save';
 
 class SalesReport extends Component {
     constructor(props) {
@@ -39,27 +39,36 @@ class SalesReport extends Component {
 
         switch (submitAction) {
             case 'save':
-                filters = GetFilterSave(this, data, userLogin, filters, jlySalesHierarchy, watSalesHierarchy, stoSalesHierarchy,
+                filters = GetFilterSalesSave(this, data, userLogin, filters, jlySalesHierarchy, watSalesHierarchy, stoSalesHierarchy,
                     accSalesHierarchy, obaSalesHierarchy, sppSalesHierarchy
                 );
-                if(jlySalesHierarchy){
-                    filters.push({'jewelrySalesProductHierarchy':data.jewelrySalesProductHierarchy})
+
+                const findjlySalesHierarchy = filters.find((item) => {return item.jlySalesHierarchy != undefined});
+                const findwatSalesHierarchy = filters.find((item) => {return item.watSalesHierarchy != undefined});
+                const findstoSalesHierarchy = filters.find((item) => {return item.stoSalesHierarchy != undefined});
+                const findaccSalesHierarchy = filters.find((item) => {return item.accSalesHierarchy != undefined});
+                const findobaSalesHierarchy = filters.find((item) => {return item.obaSalesHierarchy != undefined});
+                const findsppSalesHierarchy = filters.find((item) => {return item.sppSalesHierarchy != undefined});
+
+                if(findjlySalesHierarchy != undefined){
+                    filters.push({'jewelryProductSalesHierarchy':data.jewelryProductSalesHierarchy})
                 }
-                if(watSalesHierarchy){
-                    filters.push({'watchSalesProductHierarchy':data.watchSalesProductHierarchy})
+                if(findwatSalesHierarchy != undefined){
+                    filters.push({'watchProductSalesHierarchy':data.watchProductSalesHierarchy})
                 }
-                if(stoSalesHierarchy){
-                    filters.push({'stoneSalesProductHierarchy':data.stoneSalesProductHierarchy})
+                if(findstoSalesHierarchy != undefined){
+                    filters.push({'stoneProductSalesHierarchy':data.stoneProductSalesHierarchy})
                 }
-                if(accSalesHierarchy){
-                    filters.push({'accessorySalesProductHierarchy':data.accessorySalesProductHierarchy})
+                if(findaccSalesHierarchy != undefined){
+                    filters.push({'accessoryProductSalesHierarchy':data.accessoryProductSalesHierarchy})
                 }
-                if(obaSalesHierarchy){
-                    filters.push({'obaSalesProductHierarchy':data.obaSalesProductHierarchy})
+                if(findobaSalesHierarchy != undefined){
+                    filters.push({'obaProductSalesHierarchy':data.obaProductSalesHierarchy})
                 }
-                if(sppSalesHierarchy){
-                    filters.push({'sparePartSalesProductHierarchy':data.sparePartSalesProductHierarchy})
+                if(findsppSalesHierarchy != undefined){
+                    filters.push({'sparePartProductSalesHierarchy':data.sparePartProductSalesHierarchy})
                 }
+
                 let paramsSalesSaveSearch = {};
                 if (idEditSalesSaveSearch != null) {
                     if (isNotOwnerSharedSearch) {
@@ -86,7 +95,7 @@ class SalesReport extends Component {
                     accSalesHierarchy, obaSalesHierarchy, sppSalesHierarchy
                 );
                 sessionStorage.setItem('filters', JSON.stringify(filters));
-                this.context.router.push('/searchresult');
+                this.context.router.push('/salessearchresult');
                 break;
             default:
         }

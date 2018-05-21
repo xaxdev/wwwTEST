@@ -3,8 +3,9 @@ import GetLotNumber from './get_lotnumber';
 import GetCodeNotUseSalesHierarchy from './get_code_notusesaleshierarchy';
 import ProductGroupSales from '../../../utils/userproductgroupsales';
 
-export default function GetFilterSave(that, data, userLogin, filters, jlySalesHierarchy, watSalesHierarchy, stoSalesHierarchy,
-    accSalesHierarchy, obaSalesHierarchy, sppSalesHierarchy){
+export default function GetFilterSalesSave(
+    that, data, userLogin, filters, jlySalesHierarchy, watSalesHierarchy, stoSalesHierarchy, accSalesHierarchy, obaSalesHierarchy, sppSalesHierarchy
+) {
 
     let { paramsSalesSearch, activeTabSalesCategory, salesIsAdvance } = that.props;
 
@@ -40,13 +41,13 @@ export default function GetFilterSave(that, data, userLogin, filters, jlySalesHi
 
     (async () => {
         if(filters.length != 0){
-            that.props.setSalesParams(paramsSalesSearch)
+            await that.props.setSalesParams(paramsSalesSearch)
             sessionStorage.setItem('paramsSalesSearch', JSON.stringify(paramsSalesSearch));
             filters.splice(0, filters.length);
         }else{
             // if not have filters is mean new search
             // set params by new criterias
-            that.props.setSalesParams(data);
+            await that.props.setSalesParams(data);
             sessionStorage.setItem('paramsSalesSearch', JSON.stringify(data));
         }
     })()
@@ -59,27 +60,27 @@ export default function GetFilterSave(that, data, userLogin, filters, jlySalesHi
             switch(keycat){
                 case 'watchProductSalesHierarchy':
                     propname = {...GetSalesHierarchyCode(valueKeys)};
-                    watSalesHierarchy = true;
+                    filters.push({'watSalesHierarchy': true});
                     break;
                 case 'jewelryProductSalesHierarchy':
                     propname = {...GetSalesHierarchyCode(valueKeys)};
-                    jlySalesHierarchy = true;
+                    filters.push({'jlySalesHierarchy': true});
                     break;
                 case 'stoneProductSalesHierarchy':
                     propname = {...GetSalesHierarchyCode(valueKeys)};
-                    stoSalesHierarchy = true;
+                    filters.push({'stoSalesHierarchy': true});
                     break;
                 case 'accessoryProductSalesHierarchy':
                     propname = {...GetSalesHierarchyCode(valueKeys)};
-                    accSalesHierarchy = true;
+                    filters.push({'accSalesHierarchy': true});
                     break;
                 case 'obaProductSalesHierarchy':
                     propname = {...GetSalesHierarchyCode(valueKeys)};
-                    obaSalesHierarchy = true;
+                    filters.push({'obaSalesHierarchy': true});
                     break;
                 case 'sparePartProductSalesHierarchy':
                     propname = {...GetSalesHierarchyCode(valueKeys)};
-                    sppSalesHierarchy = true;
+                    filters.push({'sppSalesHierarchy': true});
                     break;
                 case 'color':
                     propname = {...GetLotNumber(valueKeys, keycat)};

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import InitDataLocation from '../../utils/initDataLocation';
 import InitDataCompany from '../../utils/initDataCompany';
-import InitModifyData from '../../utils/initModifyData';
+import InitModifySalesData from '../../utils/initModifySalesData';
 import jQuery from 'jquery';
 let _ = require('lodash');
 let X = XLSX;
@@ -135,6 +135,8 @@ class SalesReportHeader extends Component {
                 discountFrom, discountTo
             }
         } = props;
+
+        InitModifySalesData(this.props.props);
 
         let dataDropDowntLocations = [];
         let dataDropDowntWareHouse = [];

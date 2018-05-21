@@ -1,4 +1,4 @@
-export default function InitData(paramsHeader,value,key){
+export default function InitData(paramsHeader, value, key){
     if (paramsHeader == null || paramsHeader == undefined){ // first render
         //not input data
         if(value == null || value == undefined){
@@ -6,7 +6,7 @@ export default function InitData(paramsHeader,value,key){
         }else{
             return value;
         }
-    //     sku = paramsHeader.sku;
+      //     sku = paramsHeader.sku;
     }else{
         if(value != paramsHeader[key]){ //paramsHeader.reference
             if (value != undefined){

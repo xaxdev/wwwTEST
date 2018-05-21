@@ -3,13 +3,21 @@ import fetch from 'isomorphic-fetch';
 
 import {
     ROOT_URL, POST_SAVESEARCH, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH, SET_CLOSEALERTMSG, GET_SAVECRITERIA, SET_PARAMS, DELETE_SAVESEARCH, SET_SALESPARAMS,
-    SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH, GET_SALESSAVECRITERIA
+    SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH, GET_SALESSAVECRITERIA,
+    SET_IDEDITSALESSAVESEARCH
 } from '../constants/itemconstants';
 
 export function setIdEditSaveSearch(params) {
     const token = sessionStorage.token;
     return {
         type: SET_IDEDITSAVESEARCH,
+        params: params
+    }
+}
+export function setIdEditSalesSaveSearch(params) {
+    const token = sessionStorage.token;
+    return {
+        type: SET_IDEDITSALESSAVESEARCH,
         params: params
     }
 }

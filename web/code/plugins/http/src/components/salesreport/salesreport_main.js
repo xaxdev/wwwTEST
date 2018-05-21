@@ -621,6 +621,8 @@ function mapStateToProps(state) {
         SparePartTypeValue: state.searchResult.SparePartTypeValue,
         locationSales: state.users.locationSales,
         warehouseSales: state.users.warehouseSales,
+        SaveSearchSalesHierarchy: state.searchResult.saveSearchSalesHierarchy,
+        SearchAction: state.searchResult.SearchAction,
     }
 }
 function mapDispatchToProps(dispatch) {

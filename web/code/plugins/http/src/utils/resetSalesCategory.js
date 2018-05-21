@@ -7,8 +7,9 @@ export default function ResetSalesCategory(that){
             brand,mustHave,ringSize,dominantStone,metalType,metalColour,cerDateFrom,cerDateTo,polish,symmetry,treatment,fluorescence,origin,certificateAgency,
             stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,watchProductHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,
             proDateFrom,proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,dialMetal,buckleType,
-            strapType,strapColor,complication,accessoryProductSalesHierarchy,accessoryType,obaProductSalesHierarchy,obaDimension,sparePartProductSalesHierarchy,sparePartType,
-            salesChannel
+            strapType,strapColor,complication,accessoryProductSalesHierarchy,accessoryType,obaProductSalesHierarchy,obaDimension,sparePartProductSalesHierarchy,
+            sparePartType,salesChannel,customer, salesPersonName, invoiceNo, invoiceDateFrom, invoiceDateTo, attachment, netSalesFrom, netSalesTo, marginFrom,
+            marginTo, discountFrom, discountTo
         }, resetForm
     } = that.props;
 
@@ -26,6 +27,7 @@ export default function ResetSalesCategory(that){
     that.props.inventoryActions.setDataWarehouse(warehouse.value);
     dominantStone.onChange(dominantStone.value);
     that.props.inventoryActions.setDataDominantStone(dominantStone.value);
+    that.props.inventoryActions.setDataSalesChannel(salesChannel.value);
     totalCostFrom.onChange(totalCostFrom.value);
     totalCostTo.onChange(totalCostTo.value);
     totalUpdatedCostFrom.onChange(totalUpdatedCostFrom.value);
@@ -33,6 +35,18 @@ export default function ResetSalesCategory(that){
     retailPriceFrom.onChange(retailPriceFrom.value);
     retailPriceTo.onChange(retailPriceTo.value);
     salesChannel.onChange(salesChannel.value);
+    customer.onChange(customer.value);
+    salesPersonName.onChange(salesPersonName.value);
+    invoiceNo.onChange(invoiceNo.value);
+    invoiceDateFrom.onChange(invoiceDateFrom.value);
+    invoiceDateTo.onChange(invoiceDateTo.value);
+    netSalesFrom.onChange(netSalesFrom.value);
+    netSalesTo.onChange(netSalesTo.value);
+    marginFrom.onChange(marginFrom.value);
+    marginTo.onChange(marginTo.value);
+    discountFrom.onChange(discountFrom.value);
+    discountTo.onChange(discountTo.value);
+    attachment.onChange(attachment.value);
 
     stoneType.value = '';
     cut.value = '';

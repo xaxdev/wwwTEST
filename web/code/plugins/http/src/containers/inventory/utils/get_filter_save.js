@@ -3,8 +3,9 @@ import GetLotNumber from './get_lotnumber';
 import GetCodeNotUseHierarchy from './get_code_notusehierarchy';
 import ProductGroup from '../../../utils/userproductgroup';
 
-export default function GetFilterSave(that, data, userLogin, filters, jlyHierarchy, watHierarchy, stoHierarchy,
-    accHierarchy, obaHierarchy, sppHierarchy){
+export default function GetFilterSave(
+    that, data, userLogin, filters, jlyHierarchy, watHierarchy, stoHierarchy, accHierarchy, obaHierarchy, sppHierarchy
+){
 
     let { paramsSearch, activeTabCategory, isAdvance } = that.props;
 
@@ -40,13 +41,13 @@ export default function GetFilterSave(that, data, userLogin, filters, jlyHierarc
 
     (async () => {
         if(filters.length != 0){
-            that.props.setParams(paramsSearch)
+            await that.props.setParams(paramsSearch)
             sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
             filters.splice(0, filters.length);
         }else{
             // if not have filters is mean new search
             // set params by new criterias
-            that.props.setParams(data);
+            await that.props.setParams(data);
             sessionStorage.setItem('paramsSearch', JSON.stringify(data));
         }
     })()
@@ -59,27 +60,27 @@ export default function GetFilterSave(that, data, userLogin, filters, jlyHierarc
             switch(keycat){
                 case 'watchProductHierarchy':
                     propname = {...GetHierarchyCode(valueKeys)};
-                    watHierarchy = true;
+                    filters.push({'watHierarchy': true});
                     break;
                 case 'jewelryProductHierarchy':
                     propname = {...GetHierarchyCode(valueKeys)};
-                    jlyHierarchy = true;
+                    filters.push({'jlyHierarchy': true});
                     break;
                 case 'stoneProductHierarchy':
                     propname = {...GetHierarchyCode(valueKeys)};
-                    stoHierarchy = true;
+                    filters.push({'stoHierarchy': true});
                     break;
                 case 'accessoryProductHierarchy':
                     propname = {...GetHierarchyCode(valueKeys)};
-                    accHierarchy = true;
+                    filters.push({'accHierarchy': true});
                     break;
                 case 'obaProductHierarchy':
                     propname = {...GetHierarchyCode(valueKeys)};
-                    obaHierarchy = true;
+                    filters.push({'obaHierarchy': true});
                     break;
                 case 'sparePartProductHierarchy':
                     propname = {...GetHierarchyCode(valueKeys)};
-                    sppHierarchy = true;
+                    filters.push({'sppHierarchy': true});
                     break;
                 case 'color':
                     propname = {...GetLotNumber(valueKeys, keycat)};

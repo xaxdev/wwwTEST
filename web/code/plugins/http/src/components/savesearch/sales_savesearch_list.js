@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import { DataTable } from '../../utils/dataTableSaveSearch/index';
 import ShareModalSales from './share_modal_sales';
-import * as setcriteria from './setstate';
+import * as setcriteria from './setsalesstate';
 import ModalConfirmDelete from './modalConfirmDelete';
 let Loading = require('react-loading');
 
@@ -41,7 +41,7 @@ class SaveSearchList extends Component {
                     sessionStorage.setItem('filters', this.props.criteriaSalesSaveSearch.criteria);
                     const criterias = JSON.parse(this.props.criteriaSalesSaveSearch.criteria);
                     let data = null;
-                    data = await setcriteria.setstate(props,criterias);
+                    data = await setcriteria.setSalesState(props,criterias);
                     if(filters.length != 0){
                         await props.saveSearchAction.setSalesParams(paramsSalesSearch)
                         await sessionStorage.setItem('paramsSalesSearch', JSON.stringify(paramsSalesSearch));
@@ -72,7 +72,7 @@ class SaveSearchList extends Component {
                     sessionStorage.setItem('filters', this.props.criteriaSalesSaveSearch.criteria);
                     const criterias = JSON.parse(this.props.criteriaSalesSaveSearch.criteria);
                     let data = null;
-                    data = await setcriteria.setstate(props,criterias);
+                    data = await setcriteria.setSalesState(props,criterias);
                     if(filters.length != 0){
                         await props.saveSearchAction.setSalesParams(paramsSalesSearch)
                         await sessionStorage.setItem('paramsSalesSearch', JSON.stringify(paramsSalesSearch));
@@ -83,7 +83,7 @@ class SaveSearchList extends Component {
                         await sessionStorage.setItem('paramsSalesSearch', JSON.stringify(data));
                     }
                     let editParams = {id:id, name:this.props.criteriaSalesSaveSearch.name}
-                    await props.saveSearchAction.setIdEditSaveSearch(editParams);
+                    await props.saveSearchAction.setIdEditSalesSaveSearch(editParams);
                     that.context.router.push('/salesreport');
                 }
             })()

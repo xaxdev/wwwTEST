@@ -40,7 +40,6 @@ class SalesReportAccessory extends Component {
     componentDidMount = _ =>{
         (async () => {
             const { props } = this.props;
-            let { fields: { jewelryProductHierarchy }, searchResult } = props;
             if(props.SaveSearchSalesHierarchy != null){
                 await props.inventoryActions.setSalesHierarchy(props.SaveSearchSalesHierarchy);
                 this.refs.treeview.handleChange(props.SaveSearchSalesHierarchy);
