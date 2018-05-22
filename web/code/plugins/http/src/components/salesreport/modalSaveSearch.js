@@ -16,6 +16,7 @@ class ModalSalesSaveSearch extends Component {
                                         ? props.searchResult.criteriaSalesSaveSearch.shared
                                         : false ;
         const { fields: { searchName, validateSearchName } } = props;
+
         if (props.searchResult.idEditSalesSaveSearch != null) {
             if (isNotOwnerSharedSalesSearch) {
                 searchName.onChange('');
@@ -31,6 +32,7 @@ class ModalSalesSaveSearch extends Component {
                                         : false ;
         const { fields: { searchName, validateSearchName } } = props;
         const { isOpen, isClose, onSubmit } = this.props;
+
         return(
             <div  className="addMyCatalog">
                 <Modal isOpen={isOpen} >

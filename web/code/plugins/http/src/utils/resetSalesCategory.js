@@ -9,12 +9,15 @@ export default function ResetSalesCategory(that){
             proDateFrom,proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,dialMetal,buckleType,
             strapType,strapColor,complication,accessoryProductSalesHierarchy,accessoryType,obaProductSalesHierarchy,obaDimension,sparePartProductSalesHierarchy,
             sparePartType,salesChannel,customer, salesPersonName, invoiceNo, invoiceDateFrom, invoiceDateTo, attachment, netSalesFrom, netSalesTo, marginFrom,
-            marginTo, discountFrom, discountTo
+            marginTo, discountFrom, discountTo, searchName, validateSearchName
         }, resetForm
     } = that.props;
 
     resetForm();
     that.props.salesActions.resetForm();
+
+    let editParams = {id:that.props.searchResult.criteriaSalesSaveSearch.searchId, name:that.props.searchResult.criteriaSalesSaveSearch.name}
+    that.props.saveSearchAction.setIdEditSalesSaveSearch(editParams);
     // console.log('fields->',header.location.value)
 
     certificatedNumber.onChange(certificatedNumber.value);
@@ -28,6 +31,8 @@ export default function ResetSalesCategory(that){
     dominantStone.onChange(dominantStone.value);
     that.props.inventoryActions.setDataDominantStone(dominantStone.value);
     that.props.inventoryActions.setDataSalesChannel(salesChannel.value);
+    dominantStone.onChange(dominantStone.value);
+    that.props.inventoryActions.setDataDominantStone(dominantStone.value);
     totalCostFrom.onChange(totalCostFrom.value);
     totalCostTo.onChange(totalCostTo.value);
     totalUpdatedCostFrom.onChange(totalUpdatedCostFrom.value);
@@ -47,6 +52,8 @@ export default function ResetSalesCategory(that){
     discountFrom.onChange(discountFrom.value);
     discountTo.onChange(discountTo.value);
     attachment.onChange(attachment.value);
+    searchName.onChange(searchName.value);
+    validateSearchName.onChange(validateSearchName.value);
 
     stoneType.value = '';
     cut.value = '';

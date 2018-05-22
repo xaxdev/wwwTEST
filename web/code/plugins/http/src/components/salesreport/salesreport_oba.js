@@ -460,7 +460,7 @@ class SalesReportOBA extends Component {
                                   </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label">Gross Weight (Grams)</label>
+                                <label className="col-sm-4 control-label">Item Weight (Grams)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                     <div className="col-sm-4 nopadding">

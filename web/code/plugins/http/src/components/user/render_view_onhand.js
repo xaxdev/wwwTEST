@@ -48,7 +48,7 @@ class RenderViewOnHand extends Component {
                             <input type="checkbox" value="Warehouse" {...onhandWarehouse}
                                 checked={state.selectedOnHandWarehouse}
                                 onChange={onChangedOnHandWarehouse}
-                                ref="warehouse" /> All Warehouse
+                                ref="warehouse" /> All Location
                         </div>
                         <div className="user-edit user-per-height">
                             <MultipleCheckBoxs datas={dataDropDowntWareHouse} name={'checkbox-allWarehouse'}

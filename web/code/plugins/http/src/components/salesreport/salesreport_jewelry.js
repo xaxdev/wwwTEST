@@ -614,7 +614,7 @@ class SalesReportJewelry extends Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label">Gross Weight (Grams)
+                                <label className="col-sm-4 control-label">Item Weight (Grams)
                                     <OverlayTrigger placement="top" overlay={tooltipGrossWeight}>
                                         <img src="/images/alphanumeric.png" />
                                     </OverlayTrigger>
@@ -709,13 +709,13 @@ const tooltipRingSize = (
     <Tooltip id="tooltip"><strong>Search Product by Ring Size</strong></Tooltip>
 );
 const tooltipTotalCost = (
-    <Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>
+    <Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>
 );
 const tooltipTotalUpdatedCost = (
     <Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>
 );
 const tooltipPublicPrice = (
-    <Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>
+    <Tooltip id="tooltip"><strong>Retail Price (USD)!</strong></Tooltip>
 );
 const tooltipMarkup = (
     <Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>

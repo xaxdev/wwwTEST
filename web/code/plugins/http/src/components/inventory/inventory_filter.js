@@ -8,6 +8,7 @@ import { Modal, ModalClose } from 'react-modal-bootstrap';
 import * as inventoryActions from '../../actions/inventoryactions';
 import * as itemactions from '../../actions/itemactions';
 import * as masterDataActions from '../../actions/masterdataaction';
+import * as saveSearchAction from '../../actions/savesearchaction';
 import shallowCompare from 'react-addons-shallow-compare';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 import UserModal from '../user/user_modal';
@@ -831,7 +832,8 @@ function mapDispatchToProps(dispatch) {
     return {
         inventoryActions: bindActionCreators(Object.assign({}, inventoryActions), dispatch),
         itemActions: bindActionCreators(Object.assign({}, itemactions), dispatch),
-        masterDataActions: bindActionCreators(Object.assign({}, masterDataActions), dispatch)
+        masterDataActions: bindActionCreators(Object.assign({}, masterDataActions), dispatch),
+        saveSearchAction: bindActionCreators(Object.assign({}, saveSearchAction), dispatch)
     }
 }
 module.exports = reduxForm(

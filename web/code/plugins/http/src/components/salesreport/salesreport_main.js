@@ -11,6 +11,7 @@ import * as masterDataActions from '../../actions/masterdataaction';
 import * as inventoryActions from '../../actions/inventoryactions';
 import * as salesActions from '../../actions/salesaction';
 import * as itemactions from '../../actions/itemactions';
+import * as saveSearchAction from '../../actions/savesearchaction';
 import SalesJewelry from './salesreport_jewelry';
 import SalesWatch from './salesreport_watch';
 import SalesAcc from './salesreport_acc';
@@ -451,6 +452,7 @@ class SalesReportMain extends Component {
         });
 
         let btnMenu = [];
+        
         if (this.props.searchResult.idEditSalesSaveSearch != null) {
             if (isNotOwnerSharedSalesSearch) {
                 btnMenu = fancyStuff.filter(function(elem){
@@ -630,7 +632,8 @@ function mapDispatchToProps(dispatch) {
         masterDataActions: bindActionCreators(Object.assign({}, masterDataActions), dispatch),
         inventoryActions: bindActionCreators(Object.assign({}, inventoryActions), dispatch),
         salesActions: bindActionCreators(Object.assign({}, salesActions), dispatch),
-        itemActions: bindActionCreators(Object.assign({}, itemactions), dispatch)
+        itemActions: bindActionCreators(Object.assign({}, itemactions), dispatch),
+        saveSearchAction: bindActionCreators(Object.assign({}, saveSearchAction), dispatch)
     }
 }
 module.exports = reduxForm({

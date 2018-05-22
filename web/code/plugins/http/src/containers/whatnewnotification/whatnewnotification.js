@@ -225,10 +225,10 @@ class WhatNewNotification extends Component {
                                                     'type':'new',
                                                     'title': 'Movement Activity',
                                                     'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 3, 2017</p>
-                                                    <p>It presented the inventory movement history of both Sales Consignment and Intercompany/Warehouse Transfer</p>
+                                                    <p>It presented the inventory movement history of both Sales Consignment and Intercompany/Location Transfer</p>
                                                     <div style="margin-left: 20px;">
                                                     <p>• Customer Viewings displays the product sold to the external customers</p>
-                                                    <p>• Intercompany Transfer displays the all records of intercompany & warehouse in each product</p>
+                                                    <p>• Intercompany Transfer displays the all records of intercompany & Location in each product</p>
                                                     <p><span style="color:red;">*</span> We, IT team, will grant the right to some users who will be able to view the Movement Activity</p>
                                                     </div>
                                                     <h3 style="padding:17px 0px 0px 0px">How to use Movement Activity</h3>

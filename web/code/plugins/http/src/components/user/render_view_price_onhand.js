@@ -20,7 +20,7 @@ class RenderViewPriceOnHand extends Component {
                 <div className="col-sm-4">
                     <label>
                         <input type="radio" {...price} value="Updated"
-                            checked={price.value === 'Updated'} /> View Updated Cost and Public Price
+                            checked={price.value === 'Updated'} /> View Updated Cost and Retail Price
                     </label>
                 </div>
                 <div className="col-sm-2">

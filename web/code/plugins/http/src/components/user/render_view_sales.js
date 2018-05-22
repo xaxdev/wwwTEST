@@ -35,7 +35,7 @@ class RenderViewSales extends Component {
                         <input type="checkbox" value="Warehouse" {...salesWarehouse}
                             checked={state.selectedSalesWarehouse}
                             onChange={onChangedSalesWarehouse}
-                            ref="warehouse" /> All Warehouse
+                            ref="warehouse" /> All Location
                     </div>
                     <div className="user-edit user-per-height">
                         <MultipleCheckBoxs datas={dataDropDowntSalesWareHouse} name={'checkbox-allSalesWarehouse'}

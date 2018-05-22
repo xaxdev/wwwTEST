@@ -60,7 +60,6 @@ class InventoryJewelry extends Component {
 
     componentWillReceiveProps(nextProps) {
         const { props } = this.props;
-        console.log('nextProps.props.SearchAction-->',nextProps.props.SearchAction);
         if(nextProps.props.SearchAction != props.SearchAction){
             if(props.HierarchyValue != null){
                 if(nextProps.props.SearchAction == 'New'){

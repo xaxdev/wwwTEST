@@ -232,11 +232,11 @@ class InventoryHeader extends Component {
                             </div>
                             <div className={`form-group ${(userLogin.permission.onhandWarehouse != undefined) ?'' :
                                               'hidden'}` }>
-                              <label className="col-sm-4 control-label">Location</label>
+                              <label className="col-sm-4 control-label">Warehouse</label>
                               <div className="col-sm-7">
                                   <Select multi simpleValue
                                     value={this.props.props.WarehouseValue}
-                                    placeholder="Select your Location"
+                                    placeholder="Select your Warehouse"
                                     options={dataDropDowntWareHouse}
                                     onChange={this.handleWarehouseSelectChange}
                                     disabled={(userLogin.permission.onhandWarehouse != undefined) ? false : true}/>
@@ -262,7 +262,7 @@ class InventoryHeader extends Component {
                             </div>
                             <div className={`form-group ${(userLogin.permission.price == 'All') ?
                                 '' : 'hidden'}`}>
-                              <label className="col-sm-4 control-label">Cost Price ({userLogin.currency})</label>
+                              <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
                               <div className="col-sm-7">
                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                 <div className="col-sm-4 nopadding">
@@ -293,7 +293,7 @@ class InventoryHeader extends Component {
                                                           || userLogin.permission.price == 'Updated'
                                                           || userLogin.permission.price == 'All') ?
                                                         '' : 'hidden'}`}>
-                              <label className="col-sm-4 control-label">Retail Price ({userLogin.currency})</label>
+                              <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
                                <div className="col-sm-7">
                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                 <div className="col-sm-4 nopadding">

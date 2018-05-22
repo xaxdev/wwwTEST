@@ -40,24 +40,27 @@ const checkFields = ['ingredients','categoryName','category', 'article', 'collec
 const checkFieldsViewAsSet = ['totalActualCost','totalUpdatedCost','totalPrice', 'markup', 'companyName',
     'warehouseName','createdDate'
 ];
-const chkAllItems = [
-    '0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17','18','19', '20', '21', '22', '23', '24','25','26',
-    '27', '28', '29', '30', '31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54',
-    '55','56','57','58','59','60'
+const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17',
+    '18','19', '20', '21', '22', '23', '24','25','26','27', '28', '29', '30', '31','32','33','34','35','36','37',
+    '38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59',
+    '60'
 ];
 const labels = {
-    ingredients: 'Ingredients', categoryName: 'Category Name', category: 'Category', article: 'Article', collection: 'Collection',
-    setReferenceNumber: 'Set Reference Number', cut: 'Cut', color: 'Color',clarity: 'Clarity', caratWt: 'Carat Wt', unit: 'Unit', qty: 'Qty',
-    origin: 'Origin', symmetry: 'Symmetry',flourance: 'Flourance', batch: 'Batch', netWeight: 'Gold weight (Grams)', stoneQty: 'Stone Qty',
-    dominantStone: 'Dominant Stone',markup: 'Markup%', certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date',
-    vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalColor: 'Metal Colour', metalType: 'Metal Type',brand: 'Brand',
-    complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color',buckleType: 'Buckle Type', dialIndex: 'Dial Index',
-    dialColor: 'Dial Color', movement: 'Movement',serial: 'Serial #', limitedEdition: 'Limited Edition', limitedEditionNumber: 'Limited Edition #',
+    ingredients: 'Ingredients', categoryName: 'Category Name', category: 'Category', article: 'Article',
+    collection: 'Collection', setReferenceNumber: 'Set Reference Number', cut: 'Cut', color: 'Color',
+    clarity: 'Clarity', caratWt: 'Carat Wt', unit: 'Unit', qty: 'Qty', origin: 'Origin', symmetry: 'Symmetry',
+    flourance: 'Flourance', batch: 'Batch', netWeight: 'Gold weight (Grams)', stoneQty: 'Stone Qty', dominantStone: 'Dominant Stone',
+    markup: 'Markup%', certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date',
+    vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalColor: 'Metal Colour', metalType: 'Metal Type',
+    brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color',
+    buckleType: 'Buckle Type', dialIndex: 'Dial Index', dialColor: 'Dial Color', movement: 'Movement',
+    serial: 'Serial #', limitedEdition: 'Limited Edition', limitedEditionNumber: 'Limited Edition #',
     itemCreatedDate: 'Created Date'
 }
 const labelsViewAsSet = {
-    totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Price (USD)',
-    markup: 'Markup (Times)', companyName: 'Company',warehouseName: 'Location', createdDate: 'Created Date'
+    totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)',
+    totalPrice: 'Total Retail Price (USD)', markup: 'Markup (Times)', companyName: 'Company',
+    warehouseName: 'Location', createdDate: 'Created Date'
 }
 let listMyCatalog = []
 
@@ -86,6 +89,7 @@ class SearchResult extends Component {
         this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
         this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
+        // console.log('this.props.items-->',this.props.searchResult.datas);
         this.state = {
             activePage: this.props.currentPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false,
             isOpenNoResults: true, showImages: false, ingredients: false, categoryName: false, category: false,
@@ -109,11 +113,11 @@ class SearchResult extends Component {
         let sortingBy = '';
         switch (this.props.sortingBy) {
             case 'price':
-                sortingBy = 'price.' + userLogin.currency;
-                break;
+              sortingBy = 'price.' + userLogin.currency;
+              break;
             default:
-                sortingBy = this.props.sortingBy;
-                break;
+              sortingBy = this.props.sortingBy;
+              break;
         }
         let params = {
             'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': this.props.sortDirection,
@@ -198,12 +202,14 @@ class SearchResult extends Component {
         let dvListview = jQuery('#dvListview').html();
         let dvListviewAll = jQuery('#dvListviewAll').html();
         let dv = {
-            'dvTotal1': dvTotal1, 'dvTotal2': dvTotal2, 'dvGridview': dvGridview, 'dvListview': dvListview, 'printPage':printPage,
-            'items': exportItems, 'userLogin': userLogin, 'ViewAsSet': ViewAsSet,'dvListviewAll': dvListviewAll, 'env': env_web
+            'dvTotal1': dvTotal1, 'dvTotal2': dvTotal2, 'dvGridview': dvGridview, 'dvListview': dvListview,
+            'printPage':printPage, 'items': exportItems, 'userLogin': userLogin, 'ViewAsSet': ViewAsSet,
+            'dvListviewAll': dvListviewAll, 'env': env_web
         };
         let htmlTemplate = '';
         if (printPage.value != 'all') {
             htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
+          //   console.log('htmlTemplate-->',htmlTemplate);
             let params = {
                 'temp': htmlTemplate,
                 'userName': `${userLogin.username}_${exportDate}`,
@@ -222,11 +228,11 @@ class SearchResult extends Component {
             let sortingBy = '';
             switch (this.refs.sortingBy.value) {
                 case 'price':
-                    sortingBy = 'price.' + userLogin.currency;
-                    break;
+                  sortingBy = 'price.' + userLogin.currency;
+                  break;
                 default:
-                    sortingBy = this.refs.sortingBy.value;
-                    break;
+                  sortingBy = this.refs.sortingBy.value;
+                  break;
             }
             const sortingDirection = this.refs.sortingDirection.value;
             const pageSize = this.refs.pageSize.value;
@@ -265,8 +271,8 @@ class SearchResult extends Component {
 
     renderDialogPrintOptions = _ =>{
         return(
-            <ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions} isClose={this.handleClosePrintOptions}
-                props={this.props} />
+            <ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions}
+                isClose={this.handleClosePrintOptions} props={this.props} />
         );
     }
 
@@ -277,17 +283,17 @@ class SearchResult extends Component {
         let sortingBy = '';
         switch (this.refs.sortingBy.value) {
             case 'price':
-                sortingBy = 'price.' + userLogin.currency;
-                break;
+              sortingBy = 'price.' + userLogin.currency;
+              break;
             default:
-                sortingBy = this.refs.sortingBy.value;
-                break;
+              sortingBy = this.refs.sortingBy.value;
+              break;
         }
         const sortingDirection = this.refs.sortingDirection.value;
         const pageSize = this.refs.pageSize.value;
         let params = {
-            'page' : eventKey, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize, 'ItemsOrder': ItemsOrder,
-            'SetReferencdOrder': SetReferencdOrder
+            'page' : eventKey, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+            'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
         };
         const filters =  JSON.parse(sessionStorage.filters);
         params = GetGemstoneLotnumberFilter(filters, params);
@@ -321,18 +327,18 @@ class SearchResult extends Component {
             let sortingBy = '';
             switch (this.refs.sortingBy.value) {
                 case 'price':
-                    sortingBy = 'price.' + userLogin.currency;
-                    break;
+                  sortingBy = 'price.' + userLogin.currency;
+                  break;
                 default:
-                    sortingBy = this.refs.sortingBy.value;
-                    break;
+                  sortingBy = this.refs.sortingBy.value;
+                  break;
             }
             const sortingDirection = this.refs.sortingDirection.value;
             const pageSize = this.refs.pageSize.value;
             this.setState({activePage: getPage});
             let params = {
-                'page' : getPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize, 'ItemsOrder': ItemsOrder,
-                'SetReferencdOrder': SetReferencdOrder
+                'page' : getPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+                'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
             };
             const filters =  JSON.parse(sessionStorage.filters);
             params = GetGemstoneLotnumberFilter(filters, params);
@@ -383,8 +389,9 @@ class SearchResult extends Component {
         let _totalPublicPrice =  (totalPublicPrice!=null) ? numberFormat(totalPublicPrice) : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
         return(
-            <RenderClassTotals userLogin={userLogin} allItems={allItems} ViewAsSet={ViewAsSet} _totalPublicPrice = {_totalPublicPrice}
-                _totalUpdatedCost = {_totalUpdatedCost} maxPrice = {maxPrice} minPrice = {minPrice} avrgPrice = {avrgPrice} />
+            <RenderClassTotals userLogin={userLogin} allItems={allItems} ViewAsSet={ViewAsSet}
+                _totalPublicPrice = {_totalPublicPrice} _totalUpdatedCost = {_totalUpdatedCost}
+                maxPrice = {maxPrice} minPrice = {minPrice} avrgPrice = {avrgPrice} />
         );
     }
 
@@ -407,9 +414,14 @@ class SearchResult extends Component {
         allItems.map((item) => {
             let objItem = {};
             if (ViewAsSet) {
-                let itemName = (item.type != undefined) ? (item.type != 'CER') ? item.description : item.name :item.description;
+                let itemName = (item.type != undefined)
+                                ? (item.type != 'CER')
+                                    ? item.description
+                                    : item.name
+                                :item.description;
                 objItem = {...objItem, reference: item.reference, description: itemName, priceUSD: item.totalPrice['USD']};
             }else{
+                //   objItem = {...objItem, id: item.id, reference: item.reference, description: itemName, priceUSD: item.price['USD']};
                 objItem = {...objItem, id: item.id};
             }
             listMyCatalog.push(objItem);
@@ -442,7 +454,11 @@ class SearchResult extends Component {
         }
         itemAdded = itemAdded[0];
 
-        let itemName = (itemAdded.type != undefined) ? (itemAdded.type != 'CER') ? itemAdded.description : itemAdded.name :itemAdded.description;
+        let itemName = (itemAdded.type != undefined)
+                        ? (itemAdded.type != 'CER')
+                            ? itemAdded.description
+                            : itemAdded.name
+                        :itemAdded.description;
 
         let objItem = {};
         if (ViewAsSet) {
@@ -486,7 +502,11 @@ class SearchResult extends Component {
             itemAdded = items.filter(oneItem => oneItem.id === item.target.attributes[3].value);
         }
         itemAdded = itemAdded[0];
-        let itemName = (itemAdded.type != undefined) ? (itemAdded.type != 'CER') ? itemAdded.description : itemAdded.name :itemAdded.description;
+        let itemName = (itemAdded.type != undefined)
+                          ? (itemAdded.type != 'CER')
+                              ? itemAdded.description
+                              : itemAdded.name
+                          :itemAdded.description;
         let objItem = {};
         if (ViewAsSet) {
             objItem = {...objItem, reference: itemAdded.reference, description: itemName, priceUSD: itemAdded.priceUSD};
@@ -525,8 +545,8 @@ class SearchResult extends Component {
         const sortingDirection = this.refs.sortingDirection.value;
         const pageSize = this.refs.pageSize.value;
         let params = {
-            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize, 'ItemsOrder': null,
-            'SetReferencdOrder': null
+            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+            'ItemsOrder': null, 'SetReferencdOrder': null
         };
         const filters =  JSON.parse(sessionStorage.filters);
         params = GetGemstoneLotnumberFilter(filters, params);
@@ -571,8 +591,8 @@ class SearchResult extends Component {
         this.setState({activePage: 1});
         const pageSize = this.refs.pageSize.value;
         let params = {
-            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize, 'ItemsOrder': null,
-            'SetReferencdOrder': null
+            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+            'ItemsOrder': null, 'SetReferencdOrder': null
         };
 
         const filters =  JSON.parse(sessionStorage.filters);
@@ -621,8 +641,8 @@ class SearchResult extends Component {
 
         this.setState({activePage: 1});
         let params = {
-            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize, 'ItemsOrder': ItemsOrder,
-            'SetReferencdOrder': SetReferencdOrder
+            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+            'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
         };
 
         const filters =  JSON.parse(sessionStorage.filters);
@@ -774,16 +794,19 @@ class SearchResult extends Component {
         }
         const sortingDirection = this.refs.sortingDirection.value;
         let fields = {
-            allFields: this.state.allFields,showImages: this.state.showImages,ingredients: this.state.ingredients,article: this.state.article,
-            categoryName: this.state.categoryName, category: this.state.category, collection: this.state.collection, cut: this.state.cut,
-            setReferenceNumber: this.state.setReferenceNumber, color: this.state.color, clarity: this.state.clarity, caratWt: this.state.caratWt,
-            unit: this.state.unit,qty: this.state.qty, origin: this.state.origin, symmetry: this.state.symmetry, flourance: this.state.flourance,
-            batch: this.state.batch, netWeight: this.state.netWeight, stoneQty: this.state.stoneQty,markup: this.state.markup,brand: this.state.brand,
-            dominantStone: this.state.dominantStone,  certificatedNumber: this.state.certificatedNumber, certificateDate: this.state.certificateDate,
-            vendorCode: this.state.vendorCode, vendorName: this.state.vendorName, metalColor: this.state.metalColor, metalType: this.state.metalType,
-            complication: this.state.complication, strapType: this.state.strapType, strapColor: this.state.strapColor, buckleType: this.state.buckleType,
-            dialIndex: this.state.dialIndex, dialColor: this.state.dialColor,movement: this.state.movement, serial: this.state.serial,
-            limitedEdition: this.state.limitedEdition,limitedEditionNumber: this.state.limitedEditionNumber, itemCreatedDate: this.state.itemCreatedDate
+            allFields: this.state.allFields, showImages: this.state.showImages, ingredients: this.state.ingredients,
+            categoryName: this.state.categoryName, category: this.state.category, article: this.state.article,
+            collection: this.state.collection, setReferenceNumber: this.state.setReferenceNumber, cut: this.state.cut,
+            color: this.state.color, clarity: this.state.clarity, caratWt: this.state.caratWt, unit: this.state.unit,
+            qty: this.state.qty, origin: this.state.origin, symmetry: this.state.symmetry, flourance: this.state.flourance,
+            batch: this.state.batch, netWeight: this.state.netWeight, stoneQty: this.state.stoneQty,
+            dominantStone: this.state.dominantStone, markup: this.state.markup, certificatedNumber: this.state.certificatedNumber,
+            certificateDate: this.state.certificateDate, vendorCode: this.state.vendorCode, brand: this.state.brand,
+            vendorName: this.state.vendorName, metalColor: this.state.metalColor, metalType: this.state.metalType,
+            complication: this.state.complication, strapType: this.state.strapType, strapColor: this.state.strapColor,
+            buckleType: this.state.buckleType, dialIndex: this.state.dialIndex, dialColor: this.state.dialColor,
+            movement: this.state.movement, serial: this.state.serial, limitedEdition: this.state.limitedEdition,
+            limitedEditionNumber: this.state.limitedEditionNumber, itemCreatedDate: this.state.itemCreatedDate
         };
         let params = {
             'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection,
@@ -885,8 +908,8 @@ class SearchResult extends Component {
         let that = this;
         const userLogin = JSON.parse(sessionStorage.logindata);
         return(
-            <RenderExportExcelViewAsSetDialog that={this} userLogin={userLogin} checkFieldsViewAsSet ={checkFieldsViewAsSet }
-                labelsViewAsSet={labelsViewAsSet}/>
+            <RenderExportExcelViewAsSetDialog that={this} userLogin={userLogin}
+                checkFieldsViewAsSet ={checkFieldsViewAsSet } labelsViewAsSet={labelsViewAsSet}/>
         );
     }
 
@@ -1045,8 +1068,9 @@ class SearchResult extends Component {
     renderAddMyCatalog = _=> {
         const { listCatalogName, listSetCatalogName, submitting } = this.props;
         return(
-            <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
-                isClose={this.handleClose} props={this.props}listSetCatalogName = {listSetCatalogName}/>
+            <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName}
+                isOpen={this.state.isOpenAddMyCatalog} isClose={this.handleClose} props={this.props}
+                listSetCatalogName = {listSetCatalogName}/>
         );
     }
 
@@ -1054,8 +1078,8 @@ class SearchResult extends Component {
         const message = 'Add to catalog success';
         const title = 'SEARCH RESULTS';
         return(
-            <Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}
-                title={title}/>
+            <Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
+                props={this.props} message={message}  title={title}/>
         );
     }
 
@@ -1063,8 +1087,8 @@ class SearchResult extends Component {
         const message = 'Please check your email for printing files.';
         const title = 'SEARCH RESULTS';
         return(
-            <Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg} props={this.props} message={message}
-                title={title}/>
+            <Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
+                props={this.props} message={message}  title={title}/>
         );
     }
 
@@ -1090,8 +1114,8 @@ class SearchResult extends Component {
         const message = 'Page is invalid.';
         const title = 'SEARCH RESULTS';
         return(
-            <Modalalertmsg isOpen={this.state.isOpenMsgPageInvalid} isClose={this.handleCloseMsgPageInvalid} props={this.props} message={message}
-                title={title}/>
+            <Modalalertmsg isOpen={this.state.isOpenMsgPageInvalid} isClose={this.handleCloseMsgPageInvalid}
+                props={this.props} message={message}  title={title}/>
         );
     }
 
@@ -1100,11 +1124,10 @@ class SearchResult extends Component {
     }
 
     render() {
-        const {
-            fields: { oldCatalogName, newCatalogName, validateCatalogName }, totalPages, showGridView, showListView, ViewAsSet, currentPage,
-            allItems, pageSize,exportItems,totalPublicPrice, totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsOrder,sortingBy,
-            sortDirection
-        } = this.props;
+        const { fields: { oldCatalogName, newCatalogName, validateCatalogName },
+              totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize,exportItems,
+              totalPublicPrice, totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsOrder,
+              sortingBy, sortDirection } = this.props;
         const { isOpenMessage } = this.state;
         const userLogin = JSON.parse(sessionStorage.logindata);
         let { items } = this.props;
@@ -1114,13 +1137,13 @@ class SearchResult extends Component {
             if (numbers.hasOwnProperty(i)) {
                 numbers[i].onkeydown = function(e) {
                     if(!((e.keyCode > 95 && e.keyCode < 106)
-                        || (e.keyCode > 47 && e.keyCode < 58)
-                        || e.keyCode == 8
-                        || e.keyCode == 37
-                        || e.keyCode == 39
-                        || e.keyCode == 46
-                        || e.keyCode == 110
-                        || e.keyCode == 190 )) {
+                      || (e.keyCode > 47 && e.keyCode < 58)
+                      || e.keyCode == 8
+                      || e.keyCode == 37
+                      || e.keyCode == 39
+                      || e.keyCode == 46
+                      || e.keyCode == 110
+                      || e.keyCode == 190 )) {
                         return false;
                     }
                 }
@@ -1164,7 +1187,7 @@ class SearchResult extends Component {
                                         <div className="styled-select">
                                             <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy" >
                                                 <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                                <option key={'price'} value={'price'}>{'Price'}</option>
+                                                <option key={'price'} value={'price'}>{'Retail Price'}</option>
                                                 <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                                 <option key={'description'} value={'description'}>{'Description'}</option>
                                             </select>
@@ -1234,7 +1257,7 @@ class SearchResult extends Component {
                                             <select className="form-searchresult" onChange={this.sortingBy}
                                                 ref="sortingBy">
                                                 <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                                <option key={'price'} value={'price'}>{'Price'}</option>
+                                                <option key={'price'} value={'price'}>{'Retail Price'}</option>
                                                 <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                                 <option key={'description'} value={'description'}>{'Description'}</option>
                                                 <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>

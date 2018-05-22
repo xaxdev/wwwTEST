@@ -52,7 +52,7 @@ class SaveSearchList extends Component {
                         await sessionStorage.setItem('paramsSalesSearch', JSON.stringify(data));
                     }
                     let editParams = {id:id, name:this.props.criteriaSalesSaveSearch.name}
-                    await props.saveSearchAction.setIdEditSaveSearch(editParams);
+                    await props.saveSearchAction.setIdEditSalesSaveSearch(editParams);
                     that.context.router.push('/searchresult');
                 }
             })()
