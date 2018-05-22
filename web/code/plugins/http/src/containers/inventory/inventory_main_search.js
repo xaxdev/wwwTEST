@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import InventoryFilter  from '../../components/inventory/inventory_filter';
 import * as itemactions from '../../actions/itemactions';
-import ProductGroup from '../../utils/userproductgroup';
 import Modalalertmsg from '../../utils/modalalertmsg';
 import GetFilterSearch from './utils/get_filter_search';
 import GetFilterSave from './utils/get_filter_save';

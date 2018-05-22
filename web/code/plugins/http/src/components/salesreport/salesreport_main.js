@@ -452,7 +452,7 @@ class SalesReportMain extends Component {
         });
 
         let btnMenu = [];
-        
+
         if (this.props.searchResult.idEditSalesSaveSearch != null) {
             if (isNotOwnerSharedSalesSearch) {
                 btnMenu = fancyStuff.filter(function(elem){

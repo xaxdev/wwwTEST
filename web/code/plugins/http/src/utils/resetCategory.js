@@ -16,9 +16,10 @@ export default function ResetCategory(that){
     resetForm();
     that.props.inventoryActions.resetForm();
 
-    let editParams = {id:that.props.searchResult.criteriaSaveSearch.searchId, name:that.props.searchResult.criteriaSaveSearch.name}
-    that.props.saveSearchAction.setIdEditSaveSearch(editParams);
-    // console.log('fields->',header.location.value)
+    if (that.props.searchResult.idEditSaveSearch != null) {
+        let editParams = {id: that.props.searchResult.idEditSaveSearch, name: searchName.value}
+        that.props.saveSearchAction.setIdEditSaveSearch(editParams);
+    }
 
     certificatedNumber.onChange(certificatedNumber.value);
     description.onChange(description.value);

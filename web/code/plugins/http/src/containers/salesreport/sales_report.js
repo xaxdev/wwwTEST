@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SalesReportMain  from '../../components/salesreport/salesreport_main';
 import * as itemactions from '../../actions/itemactions';
+import Modalalertmsg from '../../utils/modalalertmsg';
 import GetFilterSearch from './utils/get_filter_search';
 import GetFilterSalesSave from './utils/get_filter_save';
 
@@ -101,10 +102,25 @@ class SalesReport extends Component {
         }
     }
 
+    handleClosemsgSalesSaveSearch = _=> {
+        this.props.setCloseAlertMsgSales(100);
+    }
+
+    renderAlertmsgSaveSearch = _=> {
+        const { saveSalesSearchStatus, saveSalesSearchStatusCode, saveSalesSearchMsgError} = this.props;
+
+        const title = 'SALES SAVED SEARCHES';
+        let isOpen = saveSalesSearchStatusCode >= 200 ? true : false;
+
+        return(<Modalalertmsg isOpen={isOpen} isClose={this.handleClosemsgSalesSaveSearch}
+            props={this.props} message={saveSalesSearchMsgError}  title={title}/>);
+    }
+
     render(){
         return (
             <div>
                 <SalesReportMain onSubmit={this.handleSubmit}/>
+                {this.renderAlertmsgSaveSearch()}
             </div>
         )
     }
@@ -118,9 +134,9 @@ function mapStateToProps(state) {
         filters: state.searchResult.filters,
         paramsSalesSearch: state.searchResult.paramsSalesSearch,
         submitAction: state.searchResult.SubmitAction,
-        saveSearchStatus: state.searchResult.saveSearchStatus,
-        saveSearchMsgError: state.searchResult.msg,
-        saveSearchStatusCode: state.searchResult.saveSearchStatusCode,
+        saveSalesSearchStatus: state.searchResult.saveSalesSearchStatus,
+        saveSalesSearchMsgError: state.searchResult.msgSales,
+        saveSalesSearchStatusCode: state.searchResult.saveSalesSearchStatusCode,
         idEditSalesSaveSearch: state.searchResult.idEditSalesSaveSearch,
         activeTabSalesCategory: state.searchResult.activeTabSalesCategory,
     }

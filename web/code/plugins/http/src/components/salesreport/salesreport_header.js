@@ -4,6 +4,8 @@ import Select from 'react-select';
 import InitDataLocation from '../../utils/initDataLocation';
 import InitDataCompany from '../../utils/initDataCompany';
 import InitModifySalesData from '../../utils/initModifySalesData';
+import * as xls from '../../utils/xls';
+import * as inventoryActions from '../../actions/inventoryactions';
 import jQuery from 'jquery';
 let _ = require('lodash');
 let X = XLSX;
@@ -456,4 +458,4 @@ class SalesReportHeader extends Component {
     }
 }
 
-module.exports = connect(null,null)(SalesReportHeader);
+module.exports = connect(null,inventoryActions)(SalesReportHeader);

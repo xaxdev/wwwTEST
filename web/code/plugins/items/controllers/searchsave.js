@@ -31,33 +31,42 @@ module.exports = {
                 }
 
                 const searchCollection = await db.collection('SearchCriteria').findOneAndUpdate(
-                    {
-                        _id: new ObjectID(searchId)
-                    },
-                    {
-                        $set: {
+                    { _id: new ObjectID(searchId) },
+                    { $set: {
                             'name': searchName,
                             'criteria': criteria,
                             'owner': request.auth.credentials.id
-                        }
-                    },
+                        } },
                     {
                         upsert: true,
                         returnOriginal: false
                     }
                 )
 
+                const findId = (!searchId)? searchCollection.value._id : searchId;
+
+                const findSearch = await db.collection('SalesSearchCriteria').findOne( { '_id': new ObjectID(findId) })
+                const isShared = findSearch !== null && findSearch.owner !== request.auth.credentials.id ? true : false
+
                 if (!searchId) {
                     return reply({
                         error: '',
                         message: 'Save success.',
-                        statusCode: 200
+                        statusCode: 200,
+                        id: searchCollection.value._id,
+                        criteria: findSearch !== null && findSearch.criteria !== null ? {
+                             'searchId': findSearch._id, 'shared': isShared, 'criteria':findSearch.criteria, 'name':findSearch.name
+                        } : {}
                     });
                 }else{
                     return reply({
                         error: '',
                         message: 'Update search success.',
-                        statusCode: 200
+                        statusCode: 200,
+                        id: searchId,
+                        criteria: findSearch !== null && findSearch.criteria !== null ? {
+                             'searchId': findSearch._id, 'shared': isShared, 'criteria':findSearch.criteria, 'name':findSearch.name
+                        } : {}
                     });
                 }
             } catch (e) {

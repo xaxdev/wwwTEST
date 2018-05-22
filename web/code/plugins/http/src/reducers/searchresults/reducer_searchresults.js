@@ -1,7 +1,8 @@
 import {FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION,
     SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, WRITE_HTML, POST_SAVESEARCH, SET_ISSAVESEARCH, SET_CLOSEALERTMSG, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH,
     GET_SAVECRITERIA, DELETE_SAVESEARCH, SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH,FETCH_ALLPDF,FETCH_EXPORTITEMS,SET_IDEDITSALESSAVESEARCH,
-    GET_SAVESALESCRITERIA, SET_SALESPARAMS, MODIFY_SALESSEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH, GET_SALESSAVECRITERIA
+    GET_SAVESALESCRITERIA, SET_SALESPARAMS, MODIFY_SALESSEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH,
+    GET_SALESSAVECRITERIA, POST_SALESSAVESEARCH, SET_CLOSEALERTMSGSALES
 } from '../../constants/itemconstants';
 
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY, SET_CERTIFICATELAB, SET_POLISH,
@@ -33,6 +34,14 @@ export default function(state = INITIAL_STATE, action){
     switch(action.type){
         case SET_GEMS_STONE_TYPE:
             return {...state, GemStoneTypeValue: action.gemstoneStoneType};
+            break;
+        case SET_CLOSEALERTMSGSALES :
+            return {...state,  saveSalesSearchStatusCode: action.closeAlertMsgSales, saveSalesSearchStatus: false, msgSales: ''}
+            break;
+        case POST_SALESSAVESEARCH :
+            return {...state,  saveSalesSearchStatus: (action.data.statusCode >= 400) ? false : true, saveSalesSearchStatusCode : action.data.statusCode,
+                msgSales: action.data.message, idEditSalesSaveSearch: action.data.id, criteriaSalesSaveSearch: action.data.criteria
+            };
             break;
         case SET_SAVESEARCHSALESHIERARCHY:
             return {...state, saveSearchSalesHierarchy: action.savesearchsaleshierarchy, SearchAction:'New' };
@@ -118,7 +127,7 @@ export default function(state = INITIAL_STATE, action){
             break;
         case POST_SAVESEARCH :
             return {...state,  saveSearchStatus: (action.data.statusCode >= 400) ? false : true, saveSearchStatusCode : action.data.statusCode,
-                msg: action.data.message
+                msg: action.data.message, idEditSaveSearch: action.data.id, criteriaSaveSearch: action.data.criteria
             };
             break;
         case SET_SUBMITACTION:
