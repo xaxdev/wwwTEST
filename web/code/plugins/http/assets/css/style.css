@@ -535,7 +535,7 @@ select.form-searchresult option{
 .btn-radius{
   border-radius: 5px;
   margin-left: 10px;
-  padding: 5px 30px;
+  padding: 6px 20px;
   color:#000;
 }
 .btn-login{
@@ -761,6 +761,7 @@ select.form-searchresult option{
    border-top: 10px solid #debe6b;
    margin:0 auto;
 }
+
 .gemstone-bar{
   border-top: 1px solid #eaeaea;
   margin: -15px 50px;
@@ -1753,6 +1754,8 @@ select.form-searchresult option{
 @media (min-width:1201px){
  .bd-box{width: 79%;}
 }
+
+
 @media (max-width:1200px){
   .ip-nopadding{padding:0;}
   .mg-right{margin-left:-15px;}
@@ -2359,4 +2362,14 @@ select.form-searchresult option{
     background: transparent;
     padding: 35px;
     border-bottom: 1px solid transparent;
+}
+.salesreport-input .form-control{width: 95%;}
+.salesreport-bar{
+  border-top: 1px solid #eaeaea;
+  margin: -15px 17px 30px 12px;
+  width: 93%;
+}
+@media screen and (max-width: 991px){
+  .salesreport-input .form-control{width: 100%;}
+  .btn-radius{padding: 7px 15px;}
 }

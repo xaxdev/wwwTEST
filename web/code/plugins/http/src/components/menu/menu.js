@@ -52,7 +52,7 @@ class Menu extends Component {
         const SaveSearch = <NavItem href="/savesearch" className={`${(props.currentLocation == '/savesearch')
                                                                     ? 'active': ''}`}>Save Searches</NavItem>;
 
-        const SalesReport = <button type="button" className={`btn btn-primary btn-radius ${(permission.userType != 'OnHand')?'':'hidden'}`} onClick={this.handleClickSalesReport}>Sales Report</button>
+        const SalesReport = <button type="button" className={`btn pull-right margin-t5 btn-radius ${(permission.userType != 'OnHand')?'':'hidden'}`} onClick={this.handleClickSalesReport}>Sales Report</button>
 
         return(
           <Navbar inverse >

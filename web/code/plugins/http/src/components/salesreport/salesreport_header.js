@@ -216,8 +216,8 @@ class SalesReportHeader extends Component {
                                 <div className="row margin-ft">
                                     <div className="col-md-12 col-sm-12 form-horizontal">
                                         <div className="form-group">
-                                            <label className="col-sm-2 control-label">Item Reference</label>
-                                            <div className="col-sm-10">
+                                            <label className="col-md-2 col-sm-4 control-label">Item Reference</label>
+                                            <div className="col-md-10 col-sm-7 salesreport-input">
                                                 <input type="text" className="form-control"
                                                    placeholder="Enter Multiple Item Ref separated with comma" {...reference}/>
                                             </div>
@@ -283,12 +283,12 @@ class SalesReportHeader extends Component {
                             </div>
                             <div className="panel-body">
                                 <div className="row margin-ft">
-                                    <div className="row gemstone-bar">
+                                    <div className="row salesreport-bar">
                                     </div>
                                     <div className="col-md-12 col-sm-12 form-horizontal">
                                         <div className="form-group">
-                                            <label className="col-sm-2 control-label">Customer Search</label>
-                                            <div className="col-sm-10">
+                                            <label className="col-md-2 col-sm-4 control-label">Customer Search</label>
+                                            <div className="col-md-10 col-sm-7 salesreport-input">
                                                 <input type="text" className="form-control"
                                                    placeholder="Customer Name, ID, Email, Phone Number" {...customer}/>
                                             </div>
@@ -317,12 +317,12 @@ class SalesReportHeader extends Component {
                             </div>
                             <div className="panel-body">
                                 <div className="row margin-ft">
-                                    <div className="row gemstone-bar">
+                                    <div className="row salesreport-bar">
                                     </div>
                                     <div className="col-md-12 col-sm-12 form-horizontal">
                                         <div className="form-group">
-                                            <label className="col-sm-2 control-label">Invoice No.</label>
-                                            <div className="col-sm-10">
+                                            <label className="col-md-2 col-sm-4 control-label">Invoice No.</label>
+                                            <div className="col-md-10 col-sm-7 salesreport-input">
                                                 <input type="text" className="form-control"
                                                    placeholder="" {...invoiceNo}/>
                                             </div>
@@ -394,7 +394,7 @@ class SalesReportHeader extends Component {
                             </div>
                             <div className="panel-body">
                                 <div className="row margin-ft">
-                                    <div className="row gemstone-bar">
+                                    <div className="row salesreport-bar">
                                     </div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
                                         <div className="form-group">
