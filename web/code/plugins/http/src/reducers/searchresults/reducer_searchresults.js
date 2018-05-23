@@ -2,7 +2,7 @@ import {FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET
     SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, WRITE_HTML, POST_SAVESEARCH, SET_ISSAVESEARCH, SET_CLOSEALERTMSG, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH,
     GET_SAVECRITERIA, DELETE_SAVESEARCH, SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH,FETCH_ALLPDF,FETCH_EXPORTITEMS,SET_IDEDITSALESSAVESEARCH,
     GET_SAVESALESCRITERIA, SET_SALESPARAMS, MODIFY_SALESSEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH,
-    GET_SALESSAVECRITERIA, POST_SALESSAVESEARCH, SET_CLOSEALERTMSGSALES
+    GET_SALESSAVECRITERIA, POST_SALESSAVESEARCH, SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS
 } from '../../constants/itemconstants';
 
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY, SET_CERTIFICATELAB, SET_POLISH,
@@ -27,13 +27,21 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
     idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null, viewAsSet: false, itemsOrder:null,setReferenceOrder:null,tempPDF:null,
     ArticleValue:[], SalesChannelValue:[], SalesHierarchyValue:null,SalesIsAdvance:false, activeTabSalesCategory:1, idEditSalesSaveSearch: null,
     nameEditSalesSaveSearch: null, criteriaSalesSaveSearch: null, paramsSalesSearch:null, saveSalesSearchStatus: false, msgSales: '',
-    saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, saveSearchSalesHierarchy: null, GemStoneTypeValue:[]
+    saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, saveSearchSalesHierarchy: null, SalesSortingBy:'postedDate', SalesSortDirection:'desc',
+    currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, GemStoneTypeValue:[]
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
         case SET_GEMS_STONE_TYPE:
             return {...state, GemStoneTypeValue: action.gemstoneStoneType};
+            break;
+        case FETCH_ALLSALESITEMS:
+            return {...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/action.data.pageSize),
+                totalpublicprice: action.data.summary.price, totalupdatedcost: action.data.summary.cost, currentPage: action.currentSalesPage,
+                allItems: action.data.allData, exportItems: action.data.exportData, maxPrice: action.data.summary.maxPrice,
+                minPrice: action.data.summary.minPrice, avrgPrice: action.data.summary.avrgPrice
+            };
             break;
         case SET_CLOSEALERTMSGSALES :
             return {...state,  saveSalesSearchStatusCode: action.closeAlertMsgSales, saveSalesSearchStatus: false, msgSales: ''}
@@ -313,7 +321,8 @@ export default function(state = INITIAL_STATE, action){
                 currentPage:1,datas:null,allItems:[], totalpage:null, totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[], SparePartTypeValue:[],
                 SearchAction:'New', exporttems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null, GemCertificateDateTo:null,
                 StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16, ShowGridView: true,
-                showListView: false, ListCatalogName: [], viewAsSet: false, ArticleValue:[], paramsSalesSearch:null, SalesChannelValue:[], GemStoneTypeValue:[]
+                showListView: false, ListCatalogName: [], viewAsSet: false, ArticleValue:[], paramsSalesSearch:null, SalesChannelValue:[], currentSalesPage: 1,
+                GemStoneTypeValue:[]
             }
             break;
         case SET_PARAMS:
@@ -327,14 +336,13 @@ export default function(state = INITIAL_STATE, action){
             break;
         case FETCH_ALLITEMS:
             return {...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/action.data.pageSize),
-                totalpublicprice: action.data.summary.price, totalupdatedcost: action.data.summary.cost,
-                currentPage:action.currPage, allItems: action.data.allData, exportItems: action.data.exportData,
-                maxPrice: action.data.summary.maxPrice,minPrice: action.data.summary.minPrice,
-                avrgPrice: action.data.summary.avrgPrice,listFileName: action.data.listFileName
+                totalpublicprice: action.data.summary.price, totalupdatedcost: action.data.summary.cost, currentPage: action.currPage,
+                allItems: action.data.allData, exportItems: action.data.exportData, maxPrice: action.data.summary.maxPrice,
+                minPrice: action.data.summary.minPrice, avrgPrice: action.data.summary.avrgPrice, listFileName: action.data.listFileName
             };
             break;
         case FETCH_EXPORTITEMS:
-            return {...state, currentPage:action.currPage };
+            return {...state, currentPage: action.currPage };
             break;
         case FETCH_SORTING:
             switch(action.sortDirections){

@@ -13,6 +13,10 @@ class SalesReport extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    static contextTypes = {
+        router: PropTypes.object
+    }
+
     handleSubmit = (data) => {
         console.log('data-->', data);
         const that = this;

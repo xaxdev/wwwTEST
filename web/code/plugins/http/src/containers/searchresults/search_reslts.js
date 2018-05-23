@@ -26,10 +26,12 @@ import RenderClassTotals from './utils/render_total';
 import RenderExportExcelDialog from './utils/render_export_excel_dialog';
 import RenderExportExcelViewAsSetDialog from './utils/render_export_excel_viewasset_dialog'
 import ModalPrintOptions from './utils/modalPrintOptions';
+import SearchResultLoader from './search_results_loader';
+import SearchResultOnItem from './search_results_noitem';
 
-let _ = require('lodash');
-let Loading = require('react-loading');
-let sortBy = require('lodash.sortby');
+const _ = require('lodash');
+const Loading = require('react-loading');
+const sortBy = require('lodash.sortby');
 
 const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
     'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
@@ -1130,8 +1132,8 @@ class SearchResult extends Component {
               sortingBy, sortDirection } = this.props;
         const { isOpenMessage } = this.state;
         const userLogin = JSON.parse(sessionStorage.logindata);
-        let { items } = this.props;
-        let numbers = document.querySelectorAll('input[type="number"]');
+        const { items } = this.props;
+        const numbers = document.querySelectorAll('input[type="number"]');
 
         for (var i in numbers) {
             if (numbers.hasOwnProperty(i)) {
@@ -1149,87 +1151,18 @@ class SearchResult extends Component {
                 }
             }
         }
+
         if(items == null){
             return (
-                <form role="form">
-                    <div >
-                        <center>
-                            <h3>Please wait....</h3>
-                            <br/><br/><br/><br/><br/><br/>
-                            <Loading type="spin" color="#202020" width="10%"/>
-                        </center>
-                    </div>
-                </form>
+                <SearchResultLoader/>
             );
         }else{
             if(allItems.length == 0){
                 return(
-                    <form role="form">
-                        {/* Header Search */}
-                        <div className="col-sm-12 bg-hearder bg-header-searchresult">
-                            <div className="col-md-4 col-sm-12 ft-white m-nopadding">
-                                <h1>SEARCH RESULTS</h1>
-                            </div>
-                            <div className="col-md-8 col-sm-12 nopadding">
-                                <div className="m-width-100 text-right maring-t15 float-r ip-font ipp-margin m-pt">
-                                    <div className="col-sm-4 col-xs-12 nopadding">
-                                        <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                            <button className="btn btn-searchresult" disabled={submitting} onClick={this.newSearch}>New Search</button>
-                                        </div>
-                                        <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                            <button className="btn btn-searchresult" disabled={submitting} onClick={this.modifySearch}>Modify Search</button>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-2 col-xs-12 ft-white margin-t5">
-                                        <ControlLabel> <span className="fc-ddbe6a m-none">|</span> Sort By: </ControlLabel>
-                                    </div>
-                                    <div className="col-sm-2 col-xs-12 nopadding">
-                                        <div className="styled-select">
-                                            <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy" >
-                                                <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                                <option key={'price'} value={'price'}>{'Retail Price'}</option>
-                                                <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
-                                                <option key={'description'} value={'description'}>{'Description'}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
-                                        <div className="styled-select">
-                                            <select className="form-searchresult" onChange={this.sortingDirection}
-                                                ref="sortingDirection">
-                                                <option key={'desc'} value={'desc'}>{'Descending'}</option>
-                                                <option key={'asc'} value={'asc'}>{'Ascending'}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-2 ft-white nopadding pd-10">
-                                        <div disabled={submitting} onClick={ this.gridViewResults }>
-                                            <div className="bd-white m-pt-mgl"></div>
-                                        </div>
-                                        <div disabled={submitting} onClick={ this.listViewResults } >
-                                            <div className="bd-white m-pt-mgl"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div >
-                            <Modal isOpen={this.state.isOpenNoResults} onRequestHide={this.hideModalNoResults}>
-                                <div className="modal-header">
-                                    <ModalClose onClick={this.hideModalNoResults}/>
-                                    <h1 className="modal-title">Message</h1>
-                                </div>
-                                <div className="modal-body">
-                                    <h3>No Results.</h3>
-                                </div>
-                                <div className="modal-footer">
-                                    <button className="btn btn-default btn-radius btn-width" onClick={this.hideModalNoResults}>
-                                      Ok
-                                    </button>
-                                </div>
-                            </Modal>
-                        </div>
-                    </form>
+                    <SearchResultOnItem props={this.props} onClickNewSearch={this.newSearch} onClickModifySearch={this.modifySearch}
+                        onChangedSortingBy={this.sortingBy} onChangedSortingDirection={this.sortingDirection} onClickGridViewResults={this.gridViewResults}
+                        onClickListViewResults={this.listViewResults} hideModalNoResults={this.hideModalNoResults}
+                        onClickHideModalNoResults={this.hideModalNoResults}/>
                 );
             }else{
                 return(

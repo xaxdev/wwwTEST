@@ -7,7 +7,7 @@ import {
     DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG,
     SET_ISCATALOGSHARED, POST_SAVESEARCH, SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER,FETCH_ALLPDF,ADD_NEWSETCATALOGITEM, GET_SETCATALOGNAME,
     GET_SETCATALOGITEMS, SET_RENAMESETCATALOG, SET_NEWSETCATALOGNAME, DELETE_SETCATALOG, SET_SHARESETCATALOG, SET_CLOSEALERTMSGSET, SET_SETCATALOGSORTBY,
-    SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG, FETCH_EXPORTITEMS,POST_SALESSAVESEARCH,SET_SALESPARAMS,SET_CLOSEALERTMSGSALES
+    SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG, FETCH_EXPORTITEMS,POST_SALESSAVESEARCH,SET_SALESPARAMS,SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
@@ -499,6 +499,25 @@ export function getItems(params){
 
     return {
         type: FETCH_ALLITEMS,
+        promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        currPage: params.page
+    }
+}
+
+export function getSalesItems(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/items/salessearch`;
+
+    return {
+        type: FETCH_ALLSALESITEMS,
         promise: fetch(url,{
             method: 'POST',
             body: JSON.stringify(params),

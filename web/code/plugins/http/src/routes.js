@@ -129,7 +129,7 @@ export default ({ dispatch,getState}) => {
                     }, 'resetpassword');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'searchresult',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -137,7 +137,7 @@ export default ({ dispatch,getState}) => {
                     }, 'searchresult');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'productdetail/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -145,7 +145,7 @@ export default ({ dispatch,getState}) => {
                     }, 'productdetail');
                 }
             },{
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'setdetail/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -153,7 +153,7 @@ export default ({ dispatch,getState}) => {
                     }, 'setdetail');
                 }
             },{
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'setdetailmycatalog/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -161,7 +161,7 @@ export default ({ dispatch,getState}) => {
                     }, 'setdetailmycatalog');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: '/productreletedetail/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -191,7 +191,7 @@ export default ({ dispatch,getState}) => {
                     }, 'mycatalog');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: '/productmycatalog/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -223,7 +223,7 @@ export default ({ dispatch,getState}) => {
                     }, 'mycatalog');
                 }
             },{
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'setdetailsetcatalog/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -237,6 +237,14 @@ export default ({ dispatch,getState}) => {
                     require.ensure([], (require) => {
                         cb(null, require('./containers/salesreport/sales_report'));
                     }, 'salesreport');
+                }
+            },{
+                onEnter: requirePermissionSalesReport,
+                path: 'salessearchresult',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/salessearchresult/sales_search_result'));
+                    }, 'salessearchresult');
                 }
             },{
                 path: '*',

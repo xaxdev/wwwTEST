@@ -26,6 +26,11 @@ module.exports = [
         config: controllers.search
     },
     {
+        method: 'POST',
+        path: '/salessearch',
+        config: controllers.salessearch
+    },
+    {
         method: 'GET',
         path: '/relateditems/{collection}/{page}/{productId}/{dominant}/{currency}/{price}',
         config: controllers.relateditems
