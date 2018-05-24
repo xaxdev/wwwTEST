@@ -53,12 +53,9 @@ class SalesSearchResult extends Component {
         const filters =  JSON.parse(sessionStorage.filters);
         params = GetGemstoneLotnumberFilter(filters, params);
         console.log('params-->',params);
-        // const paramsSalesSearchStorage =  JSON.parse(sessionStorage.paramsSalesSearch);
-        // this.props.setParams(paramsSalesSearchStorage)
-        this.props.getSalesItems(params).then(async (value) => {
-            // await this.props.getCatalogNameSetItem();
-            // await this.props.getSetCatalogName();
-        });
+        const paramsSalesSearchStorage =  JSON.parse(sessionStorage.paramsSalesSearch);
+        this.props.setSalesParams(paramsSalesSearchStorage)
+        this.props.getSalesItems(params);
     }
 
     newSalesSearch = e => {
@@ -135,8 +132,6 @@ class SalesSearchResult extends Component {
         this.setState({ showLoading: true });
         this.props.setSalesPageSize(salesPageSize);
         this.props.getSalesItems(params).then(async (value) => {
-            // await this.props.getCatalogNameSetItem();
-            // await this.props.getSetCatalogName();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setSalesShowGridView(true);
