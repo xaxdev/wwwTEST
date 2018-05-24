@@ -1,0 +1,170 @@
+{
+    "id": "11",
+    "label": "Accessories",
+    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories",
+    "children": [
+        {
+            "id": "12",
+            "label": "Accessories (Mouawad)",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)",
+            "children": [
+                {
+                    "id": "13",
+                    "label": "Mouawad Business Card Holder",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Business Card Holder"
+                },
+                {
+                    "id": "14",
+                    "label": "Mouawad Gents Card Holder",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Gents Card Holder"
+                },
+                {
+                    "id": "15",
+                    "label": "Mouawad Gents Wallet",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Gents Wallet"
+                },
+                {
+                    "id": "16",
+                    "label": "Mouawad Key Chain",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Key Chain"
+                },
+                {
+                    "id": "17",
+                    "label": "Mouawad Ladies Ziper Wallet",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Ladies Ziper Wallet"
+                },
+                {
+                    "id": "18",
+                    "label": "Mouawad Leather Goods",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Leather Goods"
+                },
+                {
+                    "id": "19",
+                    "label": "Mouawad Pen",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Pen",
+                    "children": [
+                        {
+                            "id": "20",
+                            "label": "GE Ball Point Pen",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Pen\\\\\\\\GE Ball Point Pen"
+                        },
+                        {
+                            "id": "21",
+                            "label": "GE Lady Ball Point Pen",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Pen\\\\\\\\GE Lady Ball Point Pen"
+                        },
+                        {
+                            "id": "22",
+                            "label": "GE Roller Ball Pen",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Pen\\\\\\\\GE Roller Ball Pen"
+                        },
+                        {
+                            "id": "23",
+                            "label": "GE Trigon Roller Pen",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Pen\\\\\\\\GE Trigon Roller Pen"
+                        },
+                        {
+                            "id": "24",
+                            "label": "High End Pen",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Pen\\\\\\\\High End Pen"
+                        }
+                    ]
+                },
+                {
+                    "id": "25",
+                    "label": "Mouawad Perfume",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Perfume",
+                    "children": [
+                        {
+                            "id": "26",
+                            "label": "Diamond Scent",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Perfume\\\\\\\\Diamond Scent"
+                        },
+                        {
+                            "id": "27",
+                            "label": "Diamond Scent 125th anniversary",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Perfume\\\\\\\\Diamond Scent 125th anniversary"
+                        },
+                        {
+                            "id": "28",
+                            "label": "Diamond Trigon",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Perfume\\\\\\\\Diamond Trigon"
+                        }
+                    ]
+                },
+                {
+                    "id": "29",
+                    "label": "Mouawad Shemagh",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Shemagh"
+                },
+                {
+                    "id": "30",
+                    "label": "Mouawad Ties",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Accessories (Mouawad)\\\\\\\\Mouawad Ties"
+                }
+            ]
+        },
+        {
+            "id": "31",
+            "label": "Business Card Holder",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Business Card Holder"
+        },
+        {
+            "id": "32",
+            "label": "Key Holder",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Key Holder"
+        },
+        {
+            "id": "33",
+            "label": "Leather Goods",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Leather Goods"
+        },
+        {
+            "id": "34",
+            "label": "Lighter",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Lighter"
+        },
+        {
+            "id": "35",
+            "label": "Neck Tie",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Neck Tie"
+        },
+        {
+            "id": "36",
+            "label": "Others",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Others",
+            "children": [
+                {
+                    "id": "37",
+                    "label": "Mouawad Wall Clock",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Others\\\\\\\\Mouawad Wall Clock"
+                }
+            ]
+        },
+        {
+            "id": "38",
+            "label": "Pen",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Pen"
+        },
+        {
+            "id": "39",
+            "label": "Perfume",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Perfume"
+        },
+        {
+            "id": "40",
+            "label": "Shemagh",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Shemagh"
+        },
+        {
+            "id": "41",
+            "label": "Sun Glasses",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Sun Glasses"
+        },
+        {
+            "id": "42",
+            "label": "Wall Clock",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Accessories\\\\\\\\Wall Clock"
+        }
+    ]
+}

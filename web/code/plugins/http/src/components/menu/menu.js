@@ -72,7 +72,8 @@ class Menu extends Component {
                                                               props.currentLocation.indexOf('productmycatalog') == -1 &&
                                                               props.currentLocation.indexOf('setdetailmycatalog') == -1 &&
                                                               props.currentLocation.indexOf('setdetailsetcatalog') == -1 &&
-                                                              props.currentLocation.indexOf('salesreport') == -1
+                                                              props.currentLocation.indexOf('salesreport') == -1 &&
+                                                              props.currentLocation.indexOf('salessearchresult') == -1
                                                           )?'active':''} ${(permission.userType != 'Sales')?'':'hidden'}`}>Inventory Report</NavItem>
                   {/*<NavItem href="#">My Catalog</NavItem>*/}
                   {/*<NavDropdown  title="Download" id="basic-nav-dropdown">

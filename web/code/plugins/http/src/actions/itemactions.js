@@ -7,7 +7,9 @@ import {
     DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG,
     SET_ISCATALOGSHARED, POST_SAVESEARCH, SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER,FETCH_ALLPDF,ADD_NEWSETCATALOGITEM, GET_SETCATALOGNAME,
     GET_SETCATALOGITEMS, SET_RENAMESETCATALOG, SET_NEWSETCATALOGNAME, DELETE_SETCATALOG, SET_SHARESETCATALOG, SET_CLOSEALERTMSGSET, SET_SETCATALOGSORTBY,
-    SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG, FETCH_EXPORTITEMS,POST_SALESSAVESEARCH,SET_SALESPARAMS,SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS
+    SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG, FETCH_EXPORTITEMS,POST_SALESSAVESEARCH,SET_SALESPARAMS,SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS,
+    SET_SALESSORTBY, SET_SALESSORTDIRECTION, SET_SALESPAGESIZE, SET_SALESSHOWGRIDVIEW, SET_SALESSHOWLISTVIEW, NEWSALESSEARCH, MODIFY_SALESSEARCH,
+    SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
@@ -37,10 +39,22 @@ export function setSetReferenceOrder(value){
         setReferenceOrder: value
     }
 }
+export function setSetReferenceSalesOrder(value){
+    return {
+        type: SET_SETREFERENCESALESORDER,
+        setReferenceSalesOrder: value
+    }
+}
 export function setItemsOrder(value){
     return {
         type: SET_ITEMSORDER,
         itemsOrder: value
+    }
+}
+export function setItemsSalesOrder(value){
+    return {
+        type: SET_ITEMSSALESORDER,
+        itemsSalesOrder: value
     }
 }
 
@@ -445,10 +459,22 @@ export function setShowGridView(value){
         showGridView: value
     }
 }
+export function setSalesShowGridView(value){
+    return {
+        type: SET_SALESSHOWGRIDVIEW,
+        salesShowGridView: value
+    }
+}
 export function setShowListView(value){
     return {
         type: SET_SHOWLISTVIEW,
         showListView: value
+    }
+}
+export function setSalesShowListView(value){
+    return {
+        type: SET_SALESSHOWLISTVIEW,
+        salesShowListView: value
     }
 }
 export function setCatalogCurrentPage(value){
@@ -487,10 +513,22 @@ export function setSortingBy(value){
         sortingBy: value
     }
 }
+export function setSalesSortingBy(value){
+    return {
+        type: SET_SALESSORTBY,
+        salesSortingBy: value
+    }
+}
 export function setSortDirection(value){
     return {
         type: SET_SORTDIRECTION,
         sortDirection: value
+    }
+}
+export function setSalesSortDirection(value){
+    return {
+        type: SET_SALESSORTDIRECTION,
+        salesSortDirection: value
     }
 }
 export function getItems(params){
@@ -566,11 +604,24 @@ export function newSearch(){
         type: NEWSEARCH
     }
 }
+export function newSalesSearch(){
+    const token = sessionStorage.token;
+    return {
+        type: NEWSALESSEARCH
+    }
+}
 export function modifySearch(paramsSearch){
     const token = sessionStorage.token;
     return {
         type: MODIFY_SEARCH,
         params: paramsSearch
+    }
+}
+export function modifySalesSearch(paramsSalesSearch){
+    const token = sessionStorage.token;
+    return {
+        type: MODIFY_SALESSEARCH,
+        params: paramsSalesSearch
     }
 }
 export function setParams(params){
@@ -597,5 +648,11 @@ export function setPageSize(value){
     return {
         type: SET_PAGESIZE,
         pageSize: value
+    }
+}
+export function setSalesPageSize(value){
+    return {
+        type: SET_SALESPAGESIZE,
+        salesPageSize: value
     }
 }

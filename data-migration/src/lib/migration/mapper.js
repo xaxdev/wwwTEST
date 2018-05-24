@@ -4,6 +4,64 @@ const sanitize = value => value.replace('(', '\\(').replace(')', '\\)').replace(
 
 const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_cutName', 'gemstone_color', 'gemstone_colorName', 'gemstone_clarity', 'gemstone_clarityName', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence', 'gemstone_stoneTypeId', 'gemstone_stoneTypeName', 'gemstone_type', 'gemstone_unit'];
 
+const mapSalesProperties = (item, record, exchangeRates) => {
+    // add image, if not existed
+    if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
+        if (record.imageTypeId == 'Image') {
+            const image = {
+                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`,
+                conpany: `${record.imageCompany}`
+            };
+
+            item.gallery.push(image);
+        }
+    }
+
+    // add COA, if not existed
+    if (!!record.imageName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
+        if (record.imageTypeId == 'COA') {
+            const image = {
+                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+            };
+
+            item.imagesCOA.push(image);
+        }
+    }
+
+    // add DBC, if not existed
+    if (!!record.imageName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
+        if (record.imageTypeId == 'DBC') {
+            const image = {
+                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+            };
+
+            item.imagesDBC.push(image);
+        }
+    }
+
+    // add Monograph, if not existed
+    if (!!record.imageName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
+        if (record.imageTypeId == 'Monograph') {
+            const image = {
+                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+            };
+
+            item.filesMonograph.push(image);
+        }
+    }
+
+    if (item.imageName !== undefined) {
+      delete item.imageName;
+    }
+
+    if (item.imageType !== undefined) {
+      delete item.imageType
+    }
+}
 const mapProperties = (item, record, exchangeRates) => {
     // add gemstone, if not existed
     if (!!record.gemstone_id && item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
@@ -284,6 +342,42 @@ const calculatePrices = (item, exchangeRates) => {
     item.price = price;
 };
 
+const calculateSalesPrices = (item, exchangeRates) => {
+    const actualCost = {};
+    const updatedCost = {};
+    const price = {};
+    const netAmount = {};
+    const exchangeRateFromUSDToHomeCurrency = exchangeRates.filter(exchangeRate => exchangeRate.from === 'USD' && exchangeRate.to === item.currency)[0];
+    const records = exchangeRates.filter(exchangeRate => exchangeRate.from === item.currency);
+
+    // costs & price in other currencies
+    for (let record of records) {
+        actualCost[record.to] = item.actualCost * record.exchangeRate / 100;
+        updatedCost[record.to] = item.updatedCost * record.exchangeRate / 100;
+        price[record.to] = item.price * record.exchangeRate / 100;
+        netAmount[record.to] = item.netAmount * record.exchangeRate / 100;
+    }
+
+    // costs & price in USD
+    if (!!exchangeRateFromUSDToHomeCurrency) {
+        actualCost.USD = item.actualCost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
+        updatedCost.USD = item.updatedCost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
+        price.USD = item.price * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
+        netAmount.USD = item.netAmount * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
+    }
+
+    // costs & price in home currency
+    actualCost[item.currency] = item.actualCost;
+    updatedCost[item.currency] = item.updatedCost;
+    price[item.currency] = item.price;
+    netAmount[item.currency] = item.netAmount;
+
+    item.actualCost = actualCost;
+    item.updatedCost = updatedCost;
+    item.price = price;
+    item.netAmount = netAmount;
+};
+
 const filterImages = (items) => {
     items.map((item) => {
 
@@ -424,9 +518,20 @@ const mapSoldItem = (recordset, exchangeRates) => {
         if (id != record.id) {
             id = Number(record.id);
             const soldItem = {...record};
+            soldItem.gallery = [];
+            soldItem.imagesCOA = [];
+            soldItem.imagesDBC = [];
+            soldItem.filesMonograph = [];
+            calculateSalesPrices(soldItem, exchangeRates);
             soldItems.push(soldItem);
         }
+
+        const latest = soldItems[soldItems.length - 1];
+        mapSalesProperties(latest, record, exchangeRates);
     }
+
+    filterImages(soldItems);
+
     return soldItems;
 };
 

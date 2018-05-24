@@ -4,6 +4,7 @@ import * as itemactions from '../../actions/itemactions';
 import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter';
 import SalesSearchResultLoader from './sales_search_results_loader';
 import SalesSearchResultOnItem from './sales_search_results_noitem';
+import SalesSearchResultItems from './sales_search_results_items';
 
 const _ = require('lodash');
 const Loading = require('react-loading');
@@ -15,6 +16,21 @@ class SalesSearchResult extends Component {
     constructor(props) {
         super(props);
 
+        this.newSalesSearch = this.newSalesSearch.bind(this);
+        this.modifySalesSearch = this.modifySalesSearch.bind(this);
+        this.selectedSalesPageSize = this.selectedSalesPageSize.bind(this);
+
+        this.state = {
+            activePage: this.props.currentSalesPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true,
+            showImages: false,ingredients: false, categoryName: false, category: false,article: false, collection: false, setReferenceNumber: false, cut: false,
+            color: false,clarity: false,caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false, netWeight: false,
+            stoneQty: false, dominantStone: false, markup: false, certificatedNumber: false, certificateDate: false, vendorCode: false, vendorName: false,
+            metalColor: false, metalType: false, brand: false, complication: false, strapType: false, strapColor: false, buckleType: false, dialIndex: false,
+            dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false, itemCreatedDate:false,showLoading: false,
+            isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, markup: false,
+            checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false, totalUpdatedCost: false,
+            totalPrice: false, companyName: false, warehouseName: false, createdDate: false, isOpenPrintOptions: false
+        };
     }
 
     componentWillMount() {
@@ -37,17 +53,102 @@ class SalesSearchResult extends Component {
         const filters =  JSON.parse(sessionStorage.filters);
         params = GetGemstoneLotnumberFilter(filters, params);
         console.log('params-->',params);
-        // const paramsSearchStorage =  JSON.parse(sessionStorage.paramsSearch);
-        // this.props.setParams(paramsSearchStorage)
+        // const paramsSalesSearchStorage =  JSON.parse(sessionStorage.paramsSalesSearch);
+        // this.props.setParams(paramsSalesSearchStorage)
         this.props.getSalesItems(params).then(async (value) => {
             // await this.props.getCatalogNameSetItem();
             // await this.props.getSetCatalogName();
         });
     }
 
+    newSalesSearch = e => {
+        e.preventDefault();
+        (async() => {
+            const token = sessionStorage.token;
+            await this.props.setSalesSortingBy('postedDate');
+            await this.props.setSalesSortDirection('desc');
+            await this.props.setSalesPageSize(16);
+            await this.props.setSalesShowGridView(true);
+            await this.props.setSalesShowListView(false);
+            let paramsSalesSearch = this.props.paramsSalesSearch;
+            let keys = Object.keys(paramsSalesSearch);
+            keys.forEach((key) => {
+                paramsSalesSearch[key] = '';
+            })
+            await this.props.newSalesSearch();
+            await this.props.setSalesParams(paramsSalesSearch);
+            await sessionStorage.setItem('paramsSalesSearch', JSON.stringify(paramsSalesSearch));
+            if(token){
+                this.context.router.push('/salesreport');
+            }
+        })()
+    }
+
+    modifySalesSearch = e => {
+        e.preventDefault();
+        (async() => {
+            const token = sessionStorage.token;
+            this.props.setSalesSortingBy('postedDate');
+            this.props.setSalesSortDirection('desc');
+            this.props.setSalesPageSize(16);
+            this.props.setSalesShowGridView(true);
+            this.props.setSalesShowListView(false);
+            this.setState({showLoading: false});
+            await this.props.modifySalesSearch(this.props.paramsSalesSearch);
+            if(token){
+                this.context.router.push('/salesreport');
+            }
+        })()
+    }
+
+    selectedSalesPageSize = e => {
+        e.preventDefault();
+        const salesPageSize = e.target.value;
+        const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const { salesShowGridView,salesShowListView,ItemsOrder,SetReferencdOrder } = this.props;
+        let salesSortingBy = '';
+
+        switch (this.refs.salesSortingBy.value) {
+            case 'price':
+                salesSortingBy = 'price.' + userLogin.currency;
+                break;
+            default:
+                salesSortingBy = this.refs.salesSortingBy.value;
+                break;
+        }
+
+        const salesSortingDirection = this.refs.salesSortingDirection.value;
+
+        this.setState({activePage: 1});
+        let params = {
+            'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection, 'pageSize' : salesPageSize,
+            'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
+        };
+
+        const filters =  JSON.parse(sessionStorage.filters);
+        params = GetGemstoneLotnumberFilter(filters, params);
+        let girdView = salesShowGridView;
+        let listView = salesShowListView;
+        this.props.setSalesShowGridView(false);
+        this.props.setSalesShowListView(false);
+        this.setState({ showLoading: true });
+        this.props.setSalesPageSize(salesPageSize);
+        this.props.getSalesItems(params).then(async (value) => {
+            // await this.props.getCatalogNameSetItem();
+            // await this.props.getSetCatalogName();
+            this.setState({showLoading: false});
+            if(girdView){
+                this.props.setSalesShowGridView(true);
+            }else if (listView) {
+                this.props.setSalesShowListView(true);
+            }
+        });
+    }
+
     render(){
-        const { totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize, exportItems, totalPublicPrice, totalUpdatedCost,
-                handleSubmit, resetForm, submitting, ItemsSalesOrder, sortingBy, sortDirection } = this.props;
+        const { totalPages, salesShowGridView, salesShowListView, ViewAsSet, currentPage, allItems, salesPageSize, exportItems, totalPublicPrice,
+            totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsSalesOrder, SetReferenceSalesOrder, salesSortingBy, sortDirection } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { items } = this.props;
         const numbers = document.querySelectorAll('input[type="number"]');
@@ -76,16 +177,18 @@ class SalesSearchResult extends Component {
         }else{
             if(allItems.length == 0){
                 return(
-                    <SearchResultOnItem props={this.props} onClickNewSearch={this.newSearch} onClickModifySearch={this.modifySearch}
-                        onChangedSortingBy={this.sortingBy} onChangedSortingDirection={this.sortingDirection} onClickGridViewResults={this.gridViewResults}
-                        onClickListViewResults={this.listViewResults} hideModalNoResults={this.hideModalNoResults}
-                        onClickHideModalNoResults={this.hideModalNoResults}/>
+                    <SalesSearchResultOnItem props={this.props} onClickNewSalesSearch={this.newSalesSearch} onClickModifySalesSearch={this.modifySalesSearch}
+                        state={this.state} onClickGridViewResults={this.gridViewResults} onClickListViewResults={this.listViewResults}
+                        hideModalNoResults={this.hideModalNoResults}
+                        onClickHideModalNoResults={this.hideModalNoResults} submitting={submitting}/>
                 );
             }else{
                 return(
-                    <div>
-                        SalesSearchResult
-                    </div>
+                    <SalesSearchResultItems props={this.props} onClickNewSalesSearch={this.newSalesSearch} onClickModifySalesSearch={this.modifySalesSearch}
+                        state={this.state} onClickGridViewResults={this.gridViewResults} onClickListViewResults={this.listViewResults}
+                        onClickHideModalNoResults={this.hideModalNoResults} hideModalNoResults={this.hideModalNoResults} submitting={submitting}
+                        ItemsSalesOrder={ItemsSalesOrder} SetReferenceSalesOrder={SetReferenceSalesOrder} salesShowGridView={salesShowGridView}
+                        salesShowListView={salesShowListView} ViewAsSet={ViewAsSet}/>
                 )
             }
         }
@@ -101,7 +204,17 @@ function mapStateToProps(state) {
         ItemsSalesOrder: state.searchResult.itemsSalesOrder,
         SetReferenceSalesOrder: state.searchResult.setReferenceSalesOrder,
         items: state.searchResult.datas,
-        allItems: state.searchResult.allItems
+        allItems: state.searchResult.allItems,
+        salesShowGridView: state.searchResult.SalesShowGridView,
+        salesShowListView: state.searchResult.SalesShowListView,
+        SetReferenceSalesOrder: state.searchResult.setReferenceSalesOrder,
+        paramsSalesSearch: state.searchResult.paramsSalesSearch,
+        totalPages: state.searchResult.totalpage,
+        totalPublicPrice: state.searchResult.totalpublicprice,
+        totalUpdatedCost: state.searchResult.totalupdatedcost,
+        maxPrice: state.searchResult.maxPrice,
+        minPrice: state.searchResult.minPrice,
+        avrgPrice: state.searchResult.avrgPrice
     }
 }
 SalesSearchResult.contextTypes = {

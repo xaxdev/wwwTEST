@@ -2,7 +2,8 @@ import {FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET
     SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, WRITE_HTML, POST_SAVESEARCH, SET_ISSAVESEARCH, SET_CLOSEALERTMSG, GET_LISTSAVESEARCH, SET_SHAREDSAVESEARCH,
     GET_SAVECRITERIA, DELETE_SAVESEARCH, SET_IDDELETESAVESEARCH, SET_IDEDITSAVESEARCH,FETCH_ALLPDF,FETCH_EXPORTITEMS,SET_IDEDITSALESSAVESEARCH,
     GET_SAVESALESCRITERIA, SET_SALESPARAMS, MODIFY_SALESSEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH,
-    GET_SALESSAVECRITERIA, POST_SALESSAVESEARCH, SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS
+    GET_SALESSAVECRITERIA, POST_SALESSAVESEARCH, SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS,SET_SALESSORTBY,SET_SALESSORTDIRECTION,SET_SALESPAGESIZE,
+    SET_SALESSHOWGRIDVIEW, SET_SALESSHOWLISTVIEW, NEWSALESSEARCH, SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER
 } from '../../constants/itemconstants';
 
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY, SET_CERTIFICATELAB, SET_POLISH,
@@ -25,16 +26,50 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
     ProductionDateTo:null, PageSize:16, SortingBy:'itemCreatedDate', SortDirection:'desc', ShowGridView: true, ShowListView: false, SubmitAction: null,
     saveSearchStatus: false, msg: '',saveSearchStatusCode: 100, isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null,
     idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null, viewAsSet: false, itemsOrder:null,setReferenceOrder:null,tempPDF:null,
-    ArticleValue:[], SalesChannelValue:[], SalesHierarchyValue:null,SalesIsAdvance:false, activeTabSalesCategory:1, idEditSalesSaveSearch: null,
+    ArticleValue:[],
+    SalesChannelValue:[], SalesHierarchyValue:null,SalesIsAdvance:false, activeTabSalesCategory:1, idEditSalesSaveSearch: null,
     nameEditSalesSaveSearch: null, criteriaSalesSaveSearch: null, paramsSalesSearch:null, saveSalesSearchStatus: false, msgSales: '',
     saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, saveSearchSalesHierarchy: null, SalesSortingBy:'postedDate', SalesSortDirection:'desc',
-    currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, GemStoneTypeValue:[]
+    currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, SalesShowGridView: true, SalesShowListView: false, GemStoneTypeValue:[]
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
         case SET_GEMS_STONE_TYPE:
             return {...state, GemStoneTypeValue: action.gemstoneStoneType};
+            break;
+        case SET_SETREFERENCESALESORDER:
+            return {...state,  setReferenceSalesOrder: action.setReferenceSalesOrder};
+            break;
+        case SET_ITEMSSALESORDER:
+            return {...state,  itemsSalesOrder: action.itemsSalesOrder};
+            break;
+        case NEWSALESSEARCH:
+            return {...state, filters:[], paramsSalesSearch:null,WarehouseValue:[], LocationValue:[], StoneTypeValue:[], CutValue:[], CutGradeValue:[],
+                ColorValue:[],ColorGradeValue:[], ClarityValue:[], CertificateLabValue:[], PolishValue:[], SymmetryValue:[], TreatmentValue:[], RingSizeValue:[],
+                FluorescenceValue:[],OriginValue:[], JewelryCategoryValue:[], CollectionValue:[], BrandValue:[], MustHaveValue:[], DominantStoneValue:[],
+                MetalTypeValue:[], MetalColourValue:[], CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[],
+                BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[],
+                currentSalesPage:1,datas:null,allItems:[], totalpage:null, totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[], SparePartTypeValue:[],
+                SearchAction:'New', exportItems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null, GemCertificateDateTo:null,
+                StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, SalesPageSize:16, viewAsSet: false,
+                SalesShowGridView: true, SalesShowListView: false, ListCatalogName: [], ArticleValue:[], SalesChannelValue:[]
+            }
+            break;
+        case SET_SALESSHOWLISTVIEW :
+            return {...state, SalesShowListView: action.salesShowListView };
+            break;
+        case SET_SALESSHOWGRIDVIEW :
+            return {...state, SalesShowGridView: action.salesShowGridView };
+            break;
+        case SET_PAGESIZE :
+            return {...state, SalesPageSize: action.salesPageSize };
+            break;
+        case SET_SALESSORTDIRECTION :
+            return {...state, SalesSortDirection: action.salesSortDirection };
+            break;
+        case SET_SORTBY :
+            return {...state, SalesSortingBy: action.salesSortingBy };
             break;
         case FETCH_ALLSALESITEMS:
             return {...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/action.data.pageSize),
@@ -319,7 +354,7 @@ export default function(state = INITIAL_STATE, action){
                 MetalTypeValue:[], MetalColourValue:[], CutValue:[], CertificateAgencyValue:[], ComplicationValue:[], StrapColorValue:[], StrapTypeValue:[],
                 BuckleTypeValue:[], DialMetalValue:[], DialColorValue:[],DialIndexValue:[], MovementValue:[], LimitedEditionValue:[], WatchCategoryValue:[],
                 currentPage:1,datas:null,allItems:[], totalpage:null, totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[], SparePartTypeValue:[],
-                SearchAction:'New', exporttems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null, GemCertificateDateTo:null,
+                SearchAction:'New', exportItems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null, GemCertificateDateTo:null,
                 StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16, ShowGridView: true,
                 showListView: false, ListCatalogName: [], viewAsSet: false, ArticleValue:[], paramsSalesSearch:null, SalesChannelValue:[], currentSalesPage: 1,
                 GemStoneTypeValue:[]

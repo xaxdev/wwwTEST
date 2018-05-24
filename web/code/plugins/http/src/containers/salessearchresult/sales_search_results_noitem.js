@@ -1,14 +1,128 @@
 import React, { Component, PropTypes } from 'react';
+import { Button,FormControl,Pagination, ControlLabel, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Modal, ModalClose } from 'react-modal-bootstrap';
 
 class SalesSearchResultOnItem extends Component {
     constructor(props) {
         super(props);
 
+        this.salesSortingBy = this.salesSortingBy.bind(this);
+        this.salesSortingDirection = this.salesSortingDirection.bind(this);
+
+        this.state = {
+            activePage: this.props.currentSalesPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true,
+            showImages: false,ingredients: false, categoryName: false, category: false,article: false, collection: false, setReferenceNumber: false, cut: false,
+            color: false,clarity: false,caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false, netWeight: false,
+            stoneQty: false, dominantStone: false, markup: false, certificatedNumber: false, certificateDate: false, vendorCode: false, vendorName: false,
+            metalColor: false, metalType: false, brand: false, complication: false, strapType: false, strapColor: false, buckleType: false, dialIndex: false,
+            dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false, itemCreatedDate:false,showLoading: false,
+            isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, markup: false,
+            checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false, totalUpdatedCost: false,
+            totalPrice: false, companyName: false, warehouseName: false, createdDate: false, isOpenPrintOptions: false
+        };
+
+    }
+    salesSortingBy = e => {
+        e.preventDefault();
+        const { props, state } = this.props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const { salesShowGridView, salesShowListView } = props;
+        let salesSortingBy = '';
+        switch (e.target.value) {
+            case 'price':
+                salesSortingBy = 'price.' + userLogin.currency;
+                break;
+            default:
+                salesSortingBy = e.target.value;
+                break;
+        }
+        this.setState({activePage: 1});
+        const { searchResult } = props;
+        const salesSortingDirection = this.refs.salesSortingDirection.value;
+        const salesPageSize = this.refs.salesPageSize.value;
+        let params = {
+            'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection, 'pageSize' : salesPageSize,
+            'ItemsSalesOrder': null, 'SetReferenceSalesOrder': null
+        };
+        const filters =  JSON.parse(sessionStorage.filters);
+        params = GetGemstoneLotnumberFilter(filters, params);
+        let girdView = salesShowGridView;
+        let listView = salesShowListView;
+        props.setSalesShowGridView(false);
+        props.setSalesShowListView(false);
+        this.setState({ showLoading: true });
+        props.setItemsSalesOrder(null);
+        props.setSetReferenceSalesOrder(null);
+        props.setSalesSortingBy(e.target.value);
+        props.getSalesItems(params).then(async (value) => {
+            // await props.getCatalogNameSetItem();
+            // await props.getSetCatalogName();
+            this.setState({showLoading: false});
+            if(girdView){
+                props.setSalesShowGridView(true);
+            }else if (listView) {
+                props.setSalesShowListView(true);
+            }
+        });
+        let { currPage } = props.fields;
+        currPage.onChange(1);
+        currPage.value = 1;
+    }
+    salesSortingDirection = e => {
+        e.preventDefault();
+        const { props, state, salesShowGridView, salesShowListView } = this.props;
+        const salesSortingDirection = e.target.value;
+        const { searchResult } = props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        let salesSortingBy = '';
+        switch (this.refs.salesSortingBy.value) {
+            case 'price':
+                salesSortingBy = 'price.' + userLogin.currency;
+                break;
+            default:
+                salesSortingBy = this.refs.salesSortingBy.value;
+                break;
+        }
+        this.setState({activePage: 1});
+        const salesPageSize = this.refs.salesPageSize.value;
+        let params = {
+            'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection, 'pageSize' : salesPageSize,
+            'ItemsSalesOrder': null, 'SetReferenceSalesOrder': null
+        };
+
+        const filters =  JSON.parse(sessionStorage.filters);
+        params = GetGemstoneLotnumberFilter(filters, params);
+        let girdView = salesShowGridView;
+        let listView = salesShowListView;
+        props.setSalesShowGridView(false);
+        props.setSalesShowListView(false);
+        this.setState({ showLoading: true });
+        props.setItemsSalesOrder(null);
+        props.setSetReferenceSalesOrder(null);
+        props.setSortDirection(e.target.value);
+        props.getSalesItems(params).then(async (value) => {
+            // await props.getCatalogNameSetItem();
+            // await props.getSetCatalogName();
+            this.setState({showLoading: false});
+            if(girdView){
+                props.setSalesShowGridView(true);
+            }else if (listView) {
+                props.setSalesShowListView(true);
+            }
+        });
+        let { currPage } = props.fields;
+        currPage.onChange(1);
+        currPage.value = 1;
+    }
+    gridViewResults(){
+        const { props } = this.props;
+        props.setShowGridView(true);
+        props.setShowListView(false);
     }
     render(){
         const {
-            props, state, onClickNewSearch, onClickModifySearch, onChangedSortingBy, onChangedSortingDirection, onClickGridViewResults, onClickListViewResults,
-            hideModalNoResults, onClickHideModalNoResults
+            props, state, onClickNewSalesSearch, onClickModifySalesSearch, onClickGridViewResults, onClickListViewResults, hideModalNoResults,
+            onClickHideModalNoResults, submitting
         } = this.props;
         return(
             <form role="form">
@@ -21,10 +135,10 @@ class SalesSearchResultOnItem extends Component {
                         <div className="m-width-100 text-right maring-t15 float-r ip-font ipp-margin m-pt">
                             <div className="col-sm-4 col-xs-12 nopadding">
                                 <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                    <button className="btn btn-searchresult" disabled={submitting} onClick={onClickNewSearch}>New Search</button>
+                                    <button className="btn btn-searchresult" disabled={submitting} onClick={onClickNewSalesSearch}>New Search</button>
                                 </div>
                                 <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                    <button className="btn btn-searchresult" disabled={submitting} onClick={onClickModifySearch}>Modify Search</button>
+                                    <button className="btn btn-searchresult" disabled={submitting} onClick={onClickModifySalesSearch}>Modify Search</button>
                                 </div>
                             </div>
                             <div className="col-sm-2 col-xs-12 ft-white margin-t5">
@@ -32,7 +146,7 @@ class SalesSearchResultOnItem extends Component {
                             </div>
                             <div className="col-sm-2 col-xs-12 nopadding">
                                 <div className="styled-select">
-                                    <select className="form-searchresult" onChange={onChangedSortingBy} ref="sortingBy" >
+                                    <select className="form-searchresult" onChange={this.salesSortingBy} ref="salesSortingBy" >
                                         <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
                                         <option key={'price'} value={'price'}>{'Retail Price'}</option>
                                         <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
@@ -42,8 +156,8 @@ class SalesSearchResultOnItem extends Component {
                             </div>
                             <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
                                 <div className="styled-select">
-                                    <select className="form-searchresult" onChange={onChangedSortingDirection}
-                                        ref="sortingDirection">
+                                    <select className="form-searchresult" onChange={this.salesSortingDirection}
+                                        ref="salesSortingDirection">
                                         <option key={'desc'} value={'desc'}>{'Descending'}</option>
                                         <option key={'asc'} value={'asc'}>{'Ascending'}</option>
                                     </select>

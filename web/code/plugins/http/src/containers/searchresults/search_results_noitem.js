@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { Button,FormControl,Pagination, ControlLabel, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Modal, ModalClose } from 'react-modal-bootstrap';
 
 class SearchResultOnItem extends Component {
     constructor(props) {

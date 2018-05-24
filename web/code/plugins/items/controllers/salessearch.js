@@ -24,13 +24,13 @@ module.exports = {
         let userCurrency = request.payload.userCurrency;
         let keys = Object.keys(obj);
         let size = request.payload.pageSize;
-        let itemsOrder = request.payload.ItemsOrder;
+        let itemsOrder = request.payload.SalesItemsOrder;
         let setReferencdOrder = request.payload.SetReferencdOrder;
         let isSetReference = !!request.payload.setReference? true: false;
         let ps=[];
 
         const getClarityItems =  (query) => {
-            console.log(JSON.stringify(query, null, 2));
+            // console.log(JSON.stringify(query, null, 2));
             return elastic.search({
                 index: 'mol_solditems',
                 type: 'solditems',
@@ -225,7 +225,7 @@ module.exports = {
                 //         request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult, isSetReference
                 //     ));
                 // }
-                console.log('allItems-->',getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+                // console.log('allItems-->',getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
                 return reply(getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
 
             })

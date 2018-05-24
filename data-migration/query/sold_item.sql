@@ -12,10 +12,10 @@ SELECT SOL.[Id] AS 'id'
       , SOL.[InvoiceDate] AS 'invoiceDate'
       , SOL.[SumLineDiscReporting] AS 'sumLineDiscReporting'
       , SOL.[NetAmount] AS 'netAmount'
-      , SOL.[GroupCost] AS 'groupCost'
+      , SOL.[GroupCost] AS 'actualCost'
       , SOL.[UpdatedCost] AS 'updatedCost'
       , SOL.[PublicPriceReporting] AS 'publicPriceReporting'
-      , SOL.[PP] AS 'publicPrice'
+      , SOL.[PP] AS 'price'
       , SOL.[CValueReporting] AS 'cValueReporting'
       , SOL.[Discount_amount_USD] AS 'discountAmountUSD'
       , SOL.[Margin] AS 'margin'
@@ -41,7 +41,7 @@ SELECT SOL.[Id] AS 'id'
       , ISNULL(SOL.[Site], '') AS 'site'
       , SOL.[NetAmount_Local] AS 'netAmountLocal'
       , SOL.[Tax_Local] AS 'taxLocal'
-      , ISNULL(SOL.[CurrencyCode], '') AS 'currencyCode'
+      , ISNULL(SOL.[CurrencyCode], '') AS 'currency'
       , UPPER(SOL.[DataAreaId]) AS 'company'
       , ISNULL(SOL.[Partition], '') AS 'partition'
       , SOL.[PostedDate] AS 'postedDate'
@@ -50,6 +50,10 @@ SELECT SOL.[Id] AS 'id'
       , ISNULL(SOL.[StoneDetail], '') AS 'stoneDetail'
       , ISNULL(SOL.[DominantStone], '') AS 'dominantStone'
 	  , ISNULL(SOL.[CertificateNumber], '') AS 'certificateNumber'
+      , ISNULL(img.[FILENAME], '') AS 'imageName'
+      , ISNULL(img.[FILETYPE], '') AS 'imageType'
+      , ISNULL(img.[TYPEID], '') AS 'imageTypeId'
+      , ISNULL(img.[Company], '') AS 'imageCompany'
       , type = CASE  WHEN JLY.ItemReference IS NOT  NULL THEN 'JLY'
 					 WHEN WAT.ItemReference IS NOT  NULL THEN 'WAT'
 					 WHEN STO.ItemReference IS NOT  NULL THEN 'STO'
@@ -73,5 +77,9 @@ SELECT SOL.[Id] AS 'id'
 			ON SPA.ItemReference = SOL.Reference
 		LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] AS CER
 			ON CER.Item = SOL.Reference
+        LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
+            ON SOL.[Reference] = img.[ITEMID]
+            --AND img.[Company] = item.[Company]
+            AND img.[TYPEID] in ('Image','COA','DBC','Monograph')
   WHERE SOL.[Id] BETWEEN @from AND @to
   ORDER BY SOL.[Id]
