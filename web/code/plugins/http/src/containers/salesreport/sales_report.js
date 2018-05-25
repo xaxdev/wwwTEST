@@ -96,8 +96,8 @@ class SalesReport extends Component {
                 this.props.saveSearchSalesCriteria(paramsSalesSaveSearch);
                 break;
             case 'search':
-                filters = GetFilterSearch(this, data, userLogin, filters, jlySalesHierarchy, watSalesHierarchy, stoSalesHierarchy,
-                    accSalesHierarchy, obaSalesHierarchy, sppSalesHierarchy
+                filters = GetFilterSearch(this, data, userLogin, filters, jlySalesHierarchy, watSalesHierarchy, stoSalesHierarchy, accSalesHierarchy,
+                    obaSalesHierarchy, sppSalesHierarchy
                 );
                 sessionStorage.setItem('filters', JSON.stringify(filters));
                 this.context.router.push('/salessearchresult');

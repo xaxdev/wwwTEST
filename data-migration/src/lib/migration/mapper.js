@@ -347,6 +347,7 @@ const calculateSalesPrices = (item, exchangeRates) => {
     const updatedCost = {};
     const price = {};
     const netAmount = {};
+    const margin = {};
     const exchangeRateFromUSDToHomeCurrency = exchangeRates.filter(exchangeRate => exchangeRate.from === 'USD' && exchangeRate.to === item.currency)[0];
     const records = exchangeRates.filter(exchangeRate => exchangeRate.from === item.currency);
 
@@ -356,6 +357,7 @@ const calculateSalesPrices = (item, exchangeRates) => {
         updatedCost[record.to] = item.updatedCost * record.exchangeRate / 100;
         price[record.to] = item.price * record.exchangeRate / 100;
         netAmount[record.to] = item.netAmount * record.exchangeRate / 100;
+        margin[record.to] = item.margin * record.exchangeRate / 100;
     }
 
     // costs & price in USD
@@ -364,6 +366,7 @@ const calculateSalesPrices = (item, exchangeRates) => {
         updatedCost.USD = item.updatedCost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
         price.USD = item.price * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
         netAmount.USD = item.netAmount * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
+        margin.USD = item.margin * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
     }
 
     // costs & price in home currency
@@ -371,11 +374,13 @@ const calculateSalesPrices = (item, exchangeRates) => {
     updatedCost[item.currency] = item.updatedCost;
     price[item.currency] = item.price;
     netAmount[item.currency] = item.netAmount;
+    margin[item.currency] = item.margin;
 
     item.actualCost = actualCost;
     item.updatedCost = updatedCost;
     item.price = price;
     item.netAmount = netAmount;
+    item.margin = margin;
 };
 
 const filterImages = (items) => {

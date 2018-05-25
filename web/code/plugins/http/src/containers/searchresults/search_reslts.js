@@ -33,36 +33,31 @@ const _ = require('lodash');
 const Loading = require('react-loading');
 const sortBy = require('lodash.sortby');
 
-const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
-    'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
-    'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName', 'metalColor',
-    'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex',
-    'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber','itemCreatedDate'
+const checkFields = ['ingredients', 'categoryName', 'category', 'article', 'collection', 'setReferenceNumber', 'cut', 'color','clarity', 'caratWt', 'unit',
+    'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight', 'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName',
+    'metalColor', 'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex', 'dialColor','movement','serial',
+    'limitedEdition','limitedEditionNumber','itemCreatedDate'
 ];
-const checkFieldsViewAsSet = ['totalActualCost','totalUpdatedCost','totalPrice', 'markup', 'companyName',
-    'warehouseName','createdDate'
-];
-const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17',
-    '18','19', '20', '21', '22', '23', '24','25','26','27', '28', '29', '30', '31','32','33','34','35','36','37',
-    '38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59',
-    '60'
+
+const checkFieldsViewAsSet = ['totalActualCost','totalUpdatedCost','totalPrice', 'markup', 'companyName', 'warehouseName', 'createdDate'];
+
+const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17', '18','19', '20', '21', '22', '23', '24','25',
+    '26','27', '28', '29', '30', '31','32','33','34','35','36','37', '38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54',
+    '55','56','57','58','59','60'
 ];
 const labels = {
-    ingredients: 'Ingredients', categoryName: 'Category Name', category: 'Category', article: 'Article',
-    collection: 'Collection', setReferenceNumber: 'Set Reference Number', cut: 'Cut', color: 'Color',
-    clarity: 'Clarity', caratWt: 'Carat Wt', unit: 'Unit', qty: 'Qty', origin: 'Origin', symmetry: 'Symmetry',
-    flourance: 'Flourance', batch: 'Batch', netWeight: 'Gold weight (Grams)', stoneQty: 'Stone Qty', dominantStone: 'Dominant Stone',
-    markup: 'Markup%', certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date',
-    vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalColor: 'Metal Colour', metalType: 'Metal Type',
-    brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color',
-    buckleType: 'Buckle Type', dialIndex: 'Dial Index', dialColor: 'Dial Color', movement: 'Movement',
-    serial: 'Serial #', limitedEdition: 'Limited Edition', limitedEditionNumber: 'Limited Edition #',
-    itemCreatedDate: 'Created Date'
+    ingredients: 'Ingredients', categoryName: 'Category Name', category: 'Category', article: 'Article', collection: 'Collection', cut: 'Cut', color: 'Color',
+    setReferenceNumber: 'Set Reference Number', clarity: 'Clarity', caratWt: 'Carat Wt', unit: 'Unit', qty: 'Qty', origin: 'Origin', symmetry: 'Symmetry',
+    flourance: 'Flourance', batch: 'Batch', netWeight: 'Gold weight (Grams)', stoneQty: 'Stone Qty', dominantStone: 'Dominant Stone', markup: 'Markup%',
+    certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date', vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalType: 'Metal Type',
+    metalColor: 'Metal Colour', brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color', buckleType: 'Buckle Type',
+    dialIndex: 'Dial Index', dialColor: 'Dial Color', movement: 'Movement', serial: 'Serial #', limitedEdition: 'Limited Edition', itemCreatedDate: 'Created Date',
+    limitedEditionNumber: 'Limited Edition #'
+    
 }
 const labelsViewAsSet = {
-    totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)',
-    totalPrice: 'Total Retail Price (USD)', markup: 'Markup (Times)', companyName: 'Company',
-    warehouseName: 'Location', createdDate: 'Created Date'
+    totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Retail Price (USD)', markup: 'Markup (Times)',
+    companyName: 'Company', warehouseName: 'Location', createdDate: 'Created Date'
 }
 let listMyCatalog = []
 

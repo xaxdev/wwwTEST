@@ -1065,6 +1065,20 @@ select.form-searchresult option{
   width:285px;
   height:418px;
 }
+.over-salessearchresult{
+  font-size:13px;
+  margin:0px auto;
+  position: absolute;
+  text-align: left;
+  background: #464646;
+  color:#fff;
+  top:0;
+  left: 285px;
+  padding: 10px 20px;
+  z-index: 9;
+  width:285px;
+  height:418px;
+}
 .over-searchresult-left {
   font-size:13px;
   margin:0px auto;
@@ -1082,6 +1096,23 @@ select.form-searchresult option{
 .over-searchresult:hover ,
 .over-searchresult-left:hover {display:block;}
 .over-searchresult span, .over-searchresult-left span{line-height: 22px;}
+.over-salessearchresult-left {
+  font-size:13px;
+  margin:0px auto;
+  position: absolute;
+  text-align: left;
+  background: #464646;
+  color:#fff;
+  top:0;
+  left: -265px;
+  padding: 10px 20px;
+  z-index: 9;
+  width:265px;
+  height:418px;
+}
+.over-salessearchresult:hover ,
+.over-salessearchresultsalessearchresult-left:hover {display:block;}
+.over-salessearchresult span, .over-salessearchresult-left span{line-height: 20px;}
 .print-search-results{
   height: 98%;
   margin: 0 auto;
@@ -1769,6 +1800,14 @@ select.form-searchresult option{
     width: 245px;
     left: -235px;
   }
+  .over-salessearchresult{
+    left: 225px;
+    width: 245px;
+  }
+  .over-salessearchresult-left{
+    width: 245px;
+    left: -235px;
+  }
   .form-searchresult, .btn, .bg-hearder label{font-size: 12px;}
   .btn-searchresult, .btn-searchresult:hover{padding: 4px 7px;}
   .bd-white, .bd-white:hover{padding: 4px 9px; margin-left: 5px;}
@@ -1841,6 +1880,15 @@ select.form-searchresult option{
   .over-searchresult-left {
     left: -180px!important;
   }
+  .over-salessearchresult {
+    left: 180px !important;
+  }
+  .over-product, .over-product:hover, .over-salessearchresult, .over-salessearchresult-left {
+    width: 180px !important;
+  }
+  .over-salessearchresult-left {
+    left: -180px!important;
+  }
   .productdetailpage input {
     width: 50px;
   }
@@ -1888,6 +1936,18 @@ select.form-searchresult option{
     padding: 10px 10px;
     height: 375px
   }
+  .over-salessearchresult {
+    left: 172px;
+    width: 186px;
+    padding: 10px 10px;
+    height: 375px;
+  }
+  .over-salessearchresult-left{
+    left: -186px;
+    width: 186px;
+    padding: 10px 10px;
+    height: 375px
+  }
   .searchresult-prodcut img{width:100%; height:100%;}
   .bd-white, .bd-white:hover {padding: 4px 7px;}
 }
@@ -1916,6 +1976,9 @@ select.form-searchresult option{
   .over-product, .over-product:hover,.over-searchresult, .over-searchresult-left{width:235px;}
   .over-searchresult{left: 230px;}
   .over-searchresult-left{left: -235px;}
+  .over-product, .over-product:hover,.over-salessearchresult, .over-salessearchresult-left{width:235px;}
+  .over-salessearchresult{left: 230px;}
+  .over-salessearchresult-left{left: -235px;}
   .bd-white,.bd-white:hover {
     padding: 5px 9px;
     margin-left: 5px;
@@ -1969,6 +2032,7 @@ select.form-searchresult option{
     width: 50px;
   }
   .over-searchresult{z-index: 9999;}
+  .over-salessearchresult{z-index: 9999;}
   .m-prodcutdetail{height:130px !important;}
   .m-prodcutdetail-item{float:right; margin-top:10px;}
   .bar-title-detail{width: 100%; text-align: center;}
@@ -2029,6 +2093,10 @@ select.form-searchresult option{
     left: 0;
     width: 60%;
   }
+  .over-salessearchresult, .over-salessearchresult-left {
+    left: 0;
+    width: 60%;
+  }
   .bg-header-searchresult{height:245px !important;}
   .bg-header-inventories{height: 100px !important;}
   .m-prodcutdetail {
@@ -2052,6 +2120,10 @@ select.form-searchresult option{
     margin-top: 20px;
   }
   .over-searchresult,.over-searchresult-left {
+      left: 0;
+      width: 35%;
+  }
+  .over-salessearchresult,.over-salessearchresult-left {
       left: 0;
       width: 35%;
   }

@@ -19,6 +19,8 @@ class SalesSearchResult extends Component {
         this.newSalesSearch = this.newSalesSearch.bind(this);
         this.modifySalesSearch = this.modifySalesSearch.bind(this);
         this.selectedSalesPageSize = this.selectedSalesPageSize.bind(this);
+        this.gridViewResults = this.gridViewResults.bind(this);
+        this.listViewResults = this.listViewResults.bind(this);
 
         this.state = {
             activePage: this.props.currentSalesPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true,
@@ -139,6 +141,16 @@ class SalesSearchResult extends Component {
                 this.props.setSalesShowListView(true);
             }
         });
+    }
+
+    gridViewResults(){
+        this.props.setSalesShowGridView(true);
+        this.props.setSalesShowListView(false);
+    }
+
+    listViewResults(){
+        this.props.setSalesShowGridView(false);
+        this.props.setSalesShowListView(true);
     }
 
     render(){

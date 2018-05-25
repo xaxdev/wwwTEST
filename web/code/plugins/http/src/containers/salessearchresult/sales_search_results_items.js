@@ -4,10 +4,8 @@ import { Modal, ModalClose } from 'react-modal-bootstrap';
 import RenderClassTotals from './utils/render_total';
 import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter';
 import numberFormat from '../../utils/convertNumberformat';
-import GridItemsView from '../../components/searchresults/griditemview';
-import GridItemsViewPrint from '../../components/searchresults/griditemviewPrint';
-import ListItemsView from '../../components/searchresults/listitemview';
-import ListItemsViewPrint from '../../components/searchresults/listitemviewPrint';
+import GridSalesItemsView from '../../components/salessearchresults/gridsalesitemview';
+import ListSalesItemsView from '../../components/salessearchresults/listsalesitemview';
 
 const Loading = require('react-loading');
 
@@ -20,6 +18,7 @@ class SalesSearchResultOnItem extends Component {
         this.selectedSalesPageSize = this.selectedSalesPageSize.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
         this.handleGo = this.handleGo.bind(this);
+        this.onClickGrid = this.onClickGrid.bind(this);
 
         this.state = {
             activePage: this.props.currentSalesPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true,
@@ -278,11 +277,25 @@ class SalesSearchResultOnItem extends Component {
                 maxPrice = {maxPrice} minPrice = {minPrice} avrgPrice = {avrgPrice} />
         );
     }
+
+    onClickGrid(pageNumber) {
+        const { ViewAsSet } = this.props;
+        const token = sessionStorage.token;
+        if(token){
+            if (ViewAsSet) {
+                this.context.router.push(`/setdetail/${pageNumber.replace('/','-')}`);
+            }else{
+                this.context.router.push(`/productdetail/${pageNumber}`);
+            }
+        }
+    }
+
     render(){
         const {
             props, state, onClickNewSalesSearch, onClickModifySalesSearch, onChangedSalesSortingBy, onChangedSalesSortingDirection, onClickGridViewResults,
-            onClickListViewResults, hideModalNoResults, onClickHideModalNoResults, submitting, salesShowGridView, salesShowListView, ViewAsSet
+            onClickListViewResults, hideModalNoResults, onClickHideModalNoResults, submitting, salesShowGridView, salesShowListView, ViewAsSet, salesPageSize
         } = this.props;
+        const { items } = props;
         return(
             <form role="form">
                 {/* Header Search */}
@@ -384,6 +397,13 @@ class SalesSearchResultOnItem extends Component {
                                     </div>
                                 {/* End Total Data */}
                                 {/* Grid Product */}
+                                <div className={`search-product  ${salesShowGridView ? '' : 'hidden'}` }>
+                                    <GridSalesItemsView  items={items} onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={state} />
+                                </div>
+                                <div className={`col-sm-12 search-product list-search ${salesShowListView ? '' : 'hidden'}` }>
+                                    <ListSalesItemsView key={'listView'} id={'listView'} items={items} pageSize={salesPageSize} onClickGrid={this.onClickGrid}
+                                        onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog} ViewAsSet={ViewAsSet} stateItem={this.state} />
+                                </div>
                                 <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                                     <center>
                                         <br/><br/><br/><br/><br/><br/>
