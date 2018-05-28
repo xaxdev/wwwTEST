@@ -35,7 +35,7 @@ class SalesSearchResultOnItem extends Component {
     }
     salesSortingBy = e => {
         e.preventDefault();
-        const { props, state } = this.props;
+        const { props } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { salesShowGridView, salesShowListView } = props;
         let salesSortingBy = '';
@@ -79,7 +79,7 @@ class SalesSearchResultOnItem extends Component {
     }
     salesSortingDirection = e => {
         e.preventDefault();
-        const { props, state, salesShowGridView, salesShowListView } = this.props;
+        const { props, salesShowGridView, salesShowListView } = this.props;
         const salesSortingDirection = e.target.value;
         const { searchResult } = props;
         const userLogin = JSON.parse(sessionStorage.logindata);
@@ -123,9 +123,9 @@ class SalesSearchResultOnItem extends Component {
     }
     selectedSalesPageSize = e => {
         e.preventDefault();
-        const { props, state, salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder } = this.props;
-        const pageSize = e.target.value;
-        const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: state.activePage));
+        const { props, salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder } = this.props;
+        const salesPageSize = e.target.value;
+        const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
         const userLogin = JSON.parse(sessionStorage.logindata);
         let salesSortingBy = '';
 
@@ -142,7 +142,7 @@ class SalesSearchResultOnItem extends Component {
 
         this.setState({activePage: 1});
         let params = {
-            'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection, 'pageSize' : pageSize, 'ItemsSalesOrder': ItemsSalesOrder,
+            'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection, 'pageSize' : salesPageSize, 'ItemsSalesOrder': ItemsSalesOrder,
             'SetReferenceSalesOrder': SetReferenceSalesOrder
         };
 
@@ -153,7 +153,7 @@ class SalesSearchResultOnItem extends Component {
         props.setSalesShowGridView(false);
         props.setSalesShowListView(false);
         this.setState({ showLoading: true });
-        props.setSalesPageSize(pageSize);
+        props.setSalesPageSize(salesPageSize);
         props.getSalesItems(params).then(async (value) => {
             this.setState({showLoading: false});
             if(girdView){
@@ -164,7 +164,7 @@ class SalesSearchResultOnItem extends Component {
         });
     }
     handleSelect(eventKey) {
-        const { props, state, salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder } = this.props;
+        const { props, salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder } = this.props;
         this.setState({activePage: eventKey});
         const userLogin = JSON.parse(sessionStorage.logindata);
         let salesSortingBy = '';
@@ -203,8 +203,8 @@ class SalesSearchResultOnItem extends Component {
 
     handleGo(e){
         e.preventDefault();
-        const { props, state, salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder, totalPages } = this.props;
-        const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: state.activePage));
+        const { props, salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder, totalPages } = this.props;
+        const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
         const userLogin = JSON.parse(sessionStorage.logindata);
         if (Number(this.refs.reletego.value) > totalPages || Number(this.refs.reletego.value) < 1) {
             this.setState({isOpenMsgPageInvalid: true});
@@ -243,15 +243,15 @@ class SalesSearchResultOnItem extends Component {
         }
     }
     renderPagination(){
-        const { props, state } = this.props;
+        const { props } = this.props;
         const { fields: { currPage }, totalPages, currentSalesPage, items, handleSubmit, resetForm, submitting
         } = props;
-        const page = state.activePage;
+        const page = this.state.activePage;
         return(
             <div>
                 <Pagination prev next first last ellipsis boundaryLinks
                     items={totalPages} maxButtons={4}
-                    activePage={state.activePage}
+                    activePage={this.state.activePage}
                     onSelect={this.handleSelect} />
                 <div>
                     <span>Page</span>
@@ -264,7 +264,7 @@ class SalesSearchResultOnItem extends Component {
         );
     }
     renderTotals(){
-        const { props, state } = this.props;
+        const { props } = this.props;
         const { fields: { currPage }, totalPages, currentSalesPage,ViewAsSet, items, totalPublicPrice, totalUpdatedCost,
                 allItems, maxPrice, minPrice, avrgPrice, handleSubmit, resetForm, submitting
         } = props;
@@ -292,10 +292,10 @@ class SalesSearchResultOnItem extends Component {
 
     render(){
         const {
-            props, state, onClickNewSalesSearch, onClickModifySalesSearch, onChangedSalesSortingBy, onChangedSalesSortingDirection, onClickGridViewResults,
-            onClickListViewResults, hideModalNoResults, onClickHideModalNoResults, submitting, salesShowGridView, salesShowListView, ViewAsSet, salesPageSize
+            props, onClickNewSalesSearch, onClickModifySalesSearch, onChangedSalesSortingBy, onChangedSalesSortingDirection, onClickGridViewResults,
+            onClickListViewResults, hideModalNoResults, onClickHideModalNoResults, submitting, salesShowGridView, salesShowListView, ViewAsSet
         } = this.props;
-        const { items } = props;
+        const { items, salesPageSize } = props;
         return(
             <form role="form">
                 {/* Header Search */}
@@ -398,10 +398,10 @@ class SalesSearchResultOnItem extends Component {
                                 {/* End Total Data */}
                                 {/* Grid Product */}
                                 <div className={`search-product  ${salesShowGridView ? '' : 'hidden'}` }>
-                                    <GridSalesItemsView  items={items} onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={state} />
+                                    <GridSalesItemsView  items={items} onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state} />
                                 </div>
                                 <div className={`col-sm-12 search-product list-search ${salesShowListView ? '' : 'hidden'}` }>
-                                    <ListSalesItemsView key={'listView'} id={'listView'} items={items} pageSize={salesPageSize} onClickGrid={this.onClickGrid}
+                                    <ListSalesItemsView key={'listView'} id={'listView'} items={items} salesPageSize={salesPageSize} onClickGrid={this.onClickGrid}
                                         onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog} ViewAsSet={ViewAsSet} stateItem={this.state} />
                                 </div>
                                 <div className={`${this.state.showLoading ? '' : 'hidden'}` }>

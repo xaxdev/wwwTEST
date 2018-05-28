@@ -62,7 +62,7 @@ export default function(state = INITIAL_STATE, action){
         case SET_SALESSHOWGRIDVIEW :
             return {...state, SalesShowGridView: action.salesShowGridView };
             break;
-        case SET_PAGESIZE :
+        case SET_SALESPAGESIZE :
             return {...state, SalesPageSize: action.salesPageSize };
             break;
         case SET_SALESSORTDIRECTION :

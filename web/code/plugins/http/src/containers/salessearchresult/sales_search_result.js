@@ -18,21 +18,9 @@ class SalesSearchResult extends Component {
 
         this.newSalesSearch = this.newSalesSearch.bind(this);
         this.modifySalesSearch = this.modifySalesSearch.bind(this);
-        this.selectedSalesPageSize = this.selectedSalesPageSize.bind(this);
         this.gridViewResults = this.gridViewResults.bind(this);
         this.listViewResults = this.listViewResults.bind(this);
 
-        this.state = {
-            activePage: this.props.currentSalesPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true,
-            showImages: false,ingredients: false, categoryName: false, category: false,article: false, collection: false, setReferenceNumber: false, cut: false,
-            color: false,clarity: false,caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false, netWeight: false,
-            stoneQty: false, dominantStone: false, markup: false, certificatedNumber: false, certificateDate: false, vendorCode: false, vendorName: false,
-            metalColor: false, metalType: false, brand: false, complication: false, strapType: false, strapColor: false, buckleType: false, dialIndex: false,
-            dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false, itemCreatedDate:false,showLoading: false,
-            isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, markup: false,
-            checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false, totalUpdatedCost: false,
-            totalPrice: false, companyName: false, warehouseName: false, createdDate: false, isOpenPrintOptions: false
-        };
     }
 
     componentWillMount() {
@@ -100,49 +88,6 @@ class SalesSearchResult extends Component {
         })()
     }
 
-    selectedSalesPageSize = e => {
-        e.preventDefault();
-        const salesPageSize = e.target.value;
-        const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
-        const userLogin = JSON.parse(sessionStorage.logindata);
-        const { salesShowGridView,salesShowListView,ItemsOrder,SetReferencdOrder } = this.props;
-        let salesSortingBy = '';
-
-        switch (this.refs.salesSortingBy.value) {
-            case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
-                break;
-            default:
-                salesSortingBy = this.refs.salesSortingBy.value;
-                break;
-        }
-
-        const salesSortingDirection = this.refs.salesSortingDirection.value;
-
-        this.setState({activePage: 1});
-        let params = {
-            'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection, 'pageSize' : salesPageSize,
-            'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
-        };
-
-        const filters =  JSON.parse(sessionStorage.filters);
-        params = GetGemstoneLotnumberFilter(filters, params);
-        let girdView = salesShowGridView;
-        let listView = salesShowListView;
-        this.props.setSalesShowGridView(false);
-        this.props.setSalesShowListView(false);
-        this.setState({ showLoading: true });
-        this.props.setSalesPageSize(salesPageSize);
-        this.props.getSalesItems(params).then(async (value) => {
-            this.setState({showLoading: false});
-            if(girdView){
-                this.props.setSalesShowGridView(true);
-            }else if (listView) {
-                this.props.setSalesShowListView(true);
-            }
-        });
-    }
-
     gridViewResults(){
         this.props.setSalesShowGridView(true);
         this.props.setSalesShowListView(false);
@@ -185,17 +130,16 @@ class SalesSearchResult extends Component {
             if(allItems.length == 0){
                 return(
                     <SalesSearchResultOnItem props={this.props} onClickNewSalesSearch={this.newSalesSearch} onClickModifySalesSearch={this.modifySalesSearch}
-                        state={this.state} onClickGridViewResults={this.gridViewResults} onClickListViewResults={this.listViewResults}
-                        hideModalNoResults={this.hideModalNoResults}
+                        onClickGridViewResults={this.gridViewResults} onClickListViewResults={this.listViewResults} hideModalNoResults={this.hideModalNoResults}
                         onClickHideModalNoResults={this.hideModalNoResults} submitting={submitting}/>
                 );
             }else{
                 return(
                     <SalesSearchResultItems props={this.props} onClickNewSalesSearch={this.newSalesSearch} onClickModifySalesSearch={this.modifySalesSearch}
-                        state={this.state} onClickGridViewResults={this.gridViewResults} onClickListViewResults={this.listViewResults}
+                        onClickGridViewResults={this.gridViewResults} onClickListViewResults={this.listViewResults} salesShowListView={salesShowListView}
                         onClickHideModalNoResults={this.hideModalNoResults} hideModalNoResults={this.hideModalNoResults} submitting={submitting}
                         ItemsSalesOrder={ItemsSalesOrder} SetReferenceSalesOrder={SetReferenceSalesOrder} salesShowGridView={salesShowGridView}
-                        salesShowListView={salesShowListView} ViewAsSet={ViewAsSet}/>
+                        ViewAsSet={ViewAsSet}/>
                 )
             }
         }

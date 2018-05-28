@@ -25,7 +25,7 @@ class ListSalesItemsView extends Component {
     };
 
     componentWillReceiveProps = (nextProps) => {
-        this.setState({ initialPageLength: this.props.pageSize });
+        this.setState({ initialPageLength: this.props.salesPageSize });
     }
 
     renderAction = (val,row) => {
@@ -90,7 +90,6 @@ class ListSalesItemsView extends Component {
         const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const currency = userLogin.currency;
-
         if (this.props.items.length != 0){
             let isCompany = true;
             items = this.props.items.map(function (col, idx) {
