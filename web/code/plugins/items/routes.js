@@ -114,5 +114,15 @@ module.exports = [
         method: 'GET',
         path: '/search/edit/{id}',
         config: controllers.searchedit
+    },
+    {
+        method: 'GET',
+        path: '/salesitem/{id}',
+        config: controllers.salesitem
+    },
+    {
+        method: 'GET',
+        path: '/relatedsalesitems/{collection}/{page}/{productId}/{dominant}/{currency}/{price}',
+        config: controllers.relatedsalesitems
     }
 ];
