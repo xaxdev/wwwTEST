@@ -9,7 +9,6 @@ import numberFormat from '../../utils/convertNumberformat';
 import GenSalesTemplateHtml from '../../utils/genTemplatePdfSalesSearchResult';
 import GridSalesItemsView from '../../components/salessearchresults/gridsalesitemview';
 import ListSalesItemsView from '../../components/salessearchresults/listsalesitemview';
-import ListSalesItemsViewPrint from '../../components/salessearchresults/listsalesitemviewprint';
 import GridSalesItemsViewPrint from '../../components/salessearchresults/gridsalesitemviewprint';
 
 const Loading = require('react-loading');
@@ -39,7 +38,6 @@ class SalesSearchResultOnItem extends Component {
             totalPrice: false, companyName: false, warehouseName: false, createdDate: false, isOpenPrintOptions: false
         };
     }
-    
     componentDidMount() {
         const { props } = this.props;
         let that = this;
@@ -135,9 +133,10 @@ class SalesSearchResultOnItem extends Component {
                 viewType = 'list';
             }
             let params = {
-                'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection, 'pageSize' : salesPageSize, 'ItemsOrder': ItemsOrder,
-                'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email,'ROOT_URL': ROOT_URL,
-                'env': env_web, 'viewType': viewType, 'userPermissionPrice': userPermissionPrice
+                'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection, 'pageSize' : salesPageSize,
+                'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`,
+                'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web, 'viewType': viewType,
+                'userPermissionPrice': userPermissionPrice
             };
             const filters =  JSON.parse(sessionStorage.filters);
             params = GetGemstoneLotnumberFilter(filters, params);
@@ -375,7 +374,6 @@ class SalesSearchResultOnItem extends Component {
         const { props } = this.props;
         const { fields: { currPage }, totalPages, currentSalesPage, items, handleSubmit, resetForm, submitting
         } = props;
-        console.log('renderPagination-->',currPage);
         const page = this.state.activePage;
         return(
             <div>
@@ -425,7 +423,7 @@ class SalesSearchResultOnItem extends Component {
             props, onClickNewSalesSearch, onClickModifySalesSearch, onChangedSalesSortingBy, onChangedSalesSortingDirection, onClickGridViewResults,
             onClickListViewResults, hideModalNoResults, onClickHideModalNoResults, submitting, salesShowGridView, salesShowListView, ViewAsSet
         } = this.props;
-        const { items, salesPageSize, exportItems } = props;
+        const { items, salesPageSize } = props;
         return(
             <form role="form">
                 {/* Header Search */}
@@ -537,12 +535,16 @@ class SalesSearchResultOnItem extends Component {
                                     <ListSalesItemsView key={'listView'} id={'listView'} items={items} salesPageSize={salesPageSize} onClickGrid={this.onClickGrid}
                                         onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog} ViewAsSet={ViewAsSet} stateItem={this.state} />
                                 </div>
-                                <div id="dvListview" className="col-sm-12 search-product hidden">
-                                    <ListSalesItemsViewPrint items={items} salesPageSize={salesPageSize} ViewAsSet={ViewAsSet}  stateItem={this.state} />
+                                {/*<div id="dvListview" className="col-sm-12 search-product hidden">
+                                    <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
+                                        ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
+                                        listMyCatalog={listMyCatalog}/>
                                 </div>
                                 <div id="dvListviewAll" className="col-sm-12 search-product hidden">
-                                    <ListSalesItemsViewPrint items={items} salesPageSize={exportItems.length} ViewAsSet={ViewAsSet} stateItem={this.state} />
-                                </div>
+                                    <ListItemsViewPrint items={items} pageSize={exportItems.length}
+                                          onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
+                                          chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
+                                </div>*/}
                                 <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                                     <center>
                                         <br/><br/><br/><br/><br/><br/>

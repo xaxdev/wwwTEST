@@ -22,7 +22,16 @@ class SalesSearchResult extends Component {
         this.listViewResults = this.listViewResults.bind(this);
 
     }
-
+    componentWillReceiveProps(nextProps) {
+        let { fields:{currPage} } = this.props;
+        if(this.props.currentSalesPage != nextProps.currentSalesPage){
+            currPage.onChange(nextProps.currentSalesPage);
+        }else{
+            if (currPage.value == undefined) {
+                currPage.onChange(nextProps.currentSalesPage);
+            }
+        }
+    }
     componentWillMount() {
         const { ItemsSalesOrder, SetReferenceSalesOrder } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
@@ -99,10 +108,11 @@ class SalesSearchResult extends Component {
     }
 
     render(){
-        const { totalPages, salesShowGridView, salesShowListView, ViewAsSet, currentPage, allItems, salesPageSize, exportItems, totalPublicPrice,
-            totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsSalesOrder, SetReferenceSalesOrder, salesSortingBy, sortDirection } = this.props;
+        const {
+            totalPages, salesShowGridView, salesShowListView, ViewAsSet, currentPage, allItems, salesPageSize, exportItems, totalPublicPrice,
+            totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsSalesOrder, SetReferenceSalesOrder, salesSortingBy, sortDirection, items
+        } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
-        const { items } = this.props;
         const numbers = document.querySelectorAll('input[type="number"]');
 
         for (var i in numbers) {
@@ -139,7 +149,7 @@ class SalesSearchResult extends Component {
                         onClickGridViewResults={this.gridViewResults} onClickListViewResults={this.listViewResults} salesShowListView={salesShowListView}
                         onClickHideModalNoResults={this.hideModalNoResults} hideModalNoResults={this.hideModalNoResults} submitting={submitting}
                         ItemsSalesOrder={ItemsSalesOrder} SetReferenceSalesOrder={SetReferenceSalesOrder} salesShowGridView={salesShowGridView}
-                        ViewAsSet={ViewAsSet}/>
+                        ViewAsSet={ViewAsSet} context={this.context}/>
                 )
             }
         }
@@ -165,7 +175,9 @@ function mapStateToProps(state) {
         totalUpdatedCost: state.searchResult.totalupdatedcost,
         maxPrice: state.searchResult.maxPrice,
         minPrice: state.searchResult.minPrice,
-        avrgPrice: state.searchResult.avrgPrice
+        avrgPrice: state.searchResult.avrgPrice,
+        exportItems: state.searchResult.exportItems,
+        ViewAsSet: state.searchResult.viewAsSet
     }
 }
 SalesSearchResult.contextTypes = {

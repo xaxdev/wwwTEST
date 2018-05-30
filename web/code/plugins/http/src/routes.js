@@ -247,6 +247,22 @@ export default ({ dispatch,getState}) => {
                     }, 'salessearchresult');
                 }
             },{
+                onEnter: requirePermissionSalesReport,
+                path: 'salesproductdetail/:id',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/salesproducts/salesproductdetail'));
+                    }, 'salesproductdetail');
+                }
+            },{
+                onEnter: requirePermissionSalesReport,
+                path: 'setsalesdetail/:id',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/salesproducts/setsalesdetail'));
+                    }, 'setsalesdetail');
+                }
+            },{
                 path: '*',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {

@@ -1,62 +1,68 @@
 import React, { Component, PropTypes } from 'react';
+import { reduxForm, reset } from 'redux-form';
+import { responsive } from 'react-bootstrap';
+import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
 import ReactImageFallback from 'react-image-fallback';
 import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat from '../../utils/convertNumberformat';
-import convertDate from '../../utils/convertDate';
-import ListSalesItemsViewASSet from './listsalesitemview_view_as_set';
+import ListSalesItemsViewASSetPrint from './listsalesitemview_view_as_set_print';
 
-class ListSalesItemsView extends Component {
+class ListSalesItemsViewPrint extends Component {
     constructor(props) {
         super(props);
 
         this.renderImage = this.renderImage.bind(this);
+        this.renderCheckItem = this.renderCheckItem.bind(this);
         this.renderAction = this.renderAction.bind(this);
         this.onClickGrid = this.onClickGrid.bind(this);
-        this.onClickListSet = this.onClickListSet.bind(this);
 
         this.state = {
             initialPageLength:16
         };
     }
 
+    static propTypes = {
+        onClickGrid: PropTypes.func.isRequired
+    };
+
     componentWillReceiveProps = (nextProps) => {
-        this.setState({ initialPageLength: this.props.salesPageSize });
+        this.setState({initialPageLength: this.props.salesPageSize});
     }
 
     renderAction = (val,row) => {
         const { ViewAsSet } = this.props;
         if (ViewAsSet) {
             return(
-                <div className="searchresult-list-icon">
-                    <div className="hidden">
-                        <button type="button"
-                            onClick={
-                              (eventKey) => {
-                                // console.log('eventKey-->',item.id);
-                              }
-                            }
-                        > <img src="/images/icon-add.png" width="30"/></button>
-                        <br/>
-                    </div>
-                    <button type="button" name={row.reference} id={row.reference} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
-                </div>
+              <div className="searchresult-list-icon">
+              <div className="hidden">
+                <button type="button"
+                    onClick={
+                      (eventKey) => {
+                        // console.log('eventKey-->',item.id);
+                      }
+                    }
+                > <img src="/images/icon-add.png" width="30"/></button>
+                <br/>
+              </div>
+              <button type="button" name={row.reference} id={row.reference} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
+              </div>
             );
         }else{
             return(
-                <div className="searchresult-list-icon">
-                    <div className="hidden">
-                        <button type="button"
-                            onClick={
-                              (eventKey) => {
-                                // console.log('eventKey-->',item.id);
-                              }
-                            }
-                        > <img src="/images/icon-add.png" width="30"/></button>
-                        <br/>
-                    </div>
-                    <button type="button" name={row.id} id={row.id} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
-                </div>
+              <div className="searchresult-list-icon">
+              <div className="hidden">
+                <button type="button"
+                    onClick={
+                      (eventKey) => {
+                        // console.log('eventKey-->',item.id);
+                      }
+                    }
+                > <img src="/images/icon-add.png" width="30"/></button>
+                <br/>
+              </div>
+              <button type="button" name={row.id} id={row.id} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
+              </div>
             );
         }
     }
@@ -66,25 +72,31 @@ class ListSalesItemsView extends Component {
         this.props.onClickGrid(event.currentTarget.id);
     }
 
-    onClickListSet = (id) => {
-        this.props.onClickGrid(id);
-    }
-
     renderImage = (val,row) => {
         return (
             <ReactImageFallback
-                src={row.imageThumbnail}
-                fallbackImage="/images/blank.gif"
-                initialImage="/images/blank.gif"
-                width="60" />
+                   src={row.imageThumbnail}
+                   fallbackImage="/images/blank.gif"
+                   initialImage="/images/blank.gif"
+                   width="60"
+                   />
+        );
+    }
+
+    renderCheckItem = (val, row) => {
+        return(
+            <div>
+              <input type="checkbox" />
+            </div>
         );
     }
 
     render = _ => {
         let items = null;
-        const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog } = this.props;
+        const { ViewAsSet } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const currency = userLogin.currency;
+
         if (this.props.items.length != 0){
             let isCompany = true;
             items = this.props.items.map(function (col, idx) {
@@ -129,54 +141,49 @@ class ListSalesItemsView extends Component {
                                       : '/images/blank.gif';
 
                     switch (col.type) {
-                        case 'JLY':
-                            size = (col.size != undefined) ? col.size : '';
-                            break;
-                        case 'WAT':
-                            size = (col.caseDimension != undefined) ? col.caseDimension : '';
-                            break;
-                        case 'OBA':
-                            size = (col.dimension != undefined) ? col.dimension : '';
-                            break;
-                        default:
-                            break;
+                      case 'JLY':
+                        size = (col.size != undefined) ? col.size : '';
+                        break;
+                      case 'WAT':
+                        size = (col.caseDimension != undefined) ? col.caseDimension : '';
+                        break;
+                      case 'OBA':
+                        size = (col.dimension != undefined) ? col.dimension : '';
+                        break;
+                      default:
+                        break;
                     }
 
                     if(col.price != undefined){
-                        col.priceUSD = (col.price[currency] != undefined) ?
-                               numberFormat(col.price[currency]) :
-                               '- ';
+                      col.priceUSD = (col.price[currency] != undefined) ?
+                             numberFormat(col.price[currency]) :
+                             '- ';
                     }else{
-                        col.priceUSD = '- ';
-                    }
-
-                    if(col.netAmount != undefined){
-                        col.netAmountUSD = (col.netAmount[currency] != undefined) ?
-                               numberFormat(col.netAmount[currency]) :
-                               '- ';
-                    }else{
-                        col.netAmountUSD = '- ';
+                      col.priceUSD = '- ';
                     }
 
                     if (col.gemstones != undefined) {
-                        col.gemstones.forEach(function(gemstone) {
-                            if(gemstone.carat != undefined){
-                                jewelsWeight = jewelsWeight + gemstone.carat;
-                            }
-                        });
+                      col.gemstones.forEach(function(gemstone) {
+                        if(gemstone.carat != undefined){
+                          jewelsWeight = jewelsWeight + gemstone.carat;
+                        }
+                      });
                     } else {
-                        jewelsWeight = '';
+                      jewelsWeight = '';
                     }
 
                     col.jewelsWeight = numberFormat2digit(jewelsWeight);
                     col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 
                     itemName = (col.type != 'CER')
-                                ? (col.description != undefined) ? col.description: '-'
-                                : col.name ;
+                                      ?
+                                      (col.description != undefined) ? col.description: '-' :
+                                      col.name
+                                      ;
+
                 }
                 return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
-                    itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight),invoiceDate: convertDate(col.invoiceDate)}
+                    itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
             });
 
             let tableColumns = [];
@@ -186,14 +193,13 @@ class ListSalesItemsView extends Component {
                   { title: 'Item Reference', prop: 'reference' },
                   { title: 'Description', prop: 'itemName' },
                   { title: 'SKU', prop: 'sku' },
+                  { title: 'Company', prop: 'companyName' },
                   { title: 'Location', prop: 'warehouseName' },
-                  { title: 'Customer Name', prop: 'customerName' },
-                  { title: 'Net Amount', prop: 'netAmountUSD' },
-                  { title: 'Invoice Date', prop: 'invoiceDate' },
+                  { title: 'Size', prop: 'size' },
+                  { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                   { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                   { title: 'Stone Detail', prop: 'stoneDetail' },
                   { title: 'Retail Price', prop: 'priceUSD' },
-                  { title: '', render: this.renderAction, className: 'text-center' },
                 ];
             }else{
                 tableColumns = [
@@ -201,24 +207,22 @@ class ListSalesItemsView extends Component {
                   { title: 'Item Reference', prop: 'reference' },
                   { title: 'Description', prop: 'itemName' },
                   { title: 'SKU', prop: 'sku' },
-                  { title: 'Location', prop: 'warehouseName' },
-                  { title: 'Customer Name', prop: 'customerName' },
-                  { title: 'Net Amount', prop: 'netAmountUSD' },
-                  { title: 'Invoice Date', prop: 'invoiceDate' },
+                  { title: 'Company', prop: 'company' },
+                  { title: 'Location', prop: 'warehouse' },
+                  { title: 'Size', prop: 'size' },
+                  { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                   { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                   { title: 'Stone Detail', prop: 'stoneDetail' },
                   { title: 'Retail Price', prop: 'priceUSD' },
-                  { title: '', render: this.renderAction, className: 'text-center' },
                 ];
             }
             if (ViewAsSet) {
                 return (
-                    <div key={'listView'} id={'listView'}>
-                        <table key={'listView'} id={'listView'}
-                            className="table table-bordered table-searchresult table-searchset">
-                            <thead key={'listView'} id={'listView'}>
+                    <div key={'listViewPrint'} id={'listViewPrint'}>
+                        <table key={'listViewPrint'} id={'listViewPrint'}
+                              className="table table-bordered table-searchresult">
+                            <thead key={'listViewPrint'} id={'listViewPrint'}>
                                   <tr>
-                                      <th><span></span></th>
                                       <th><span>Images</span></th>
                                       <th><span>Set Product Number</span></th>
                                       <th><span>Item Reference</span></th>
@@ -242,29 +246,26 @@ class ListSalesItemsView extends Component {
                             </thead>
                             {items.map((item) => {
                                 return(
-                                    <ListSalesItemsViewASSet key={item.reference} id={item.reference}
-                                        item={item} ViewAsSet={ViewAsSet}
-                                        onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog}
-                                        listMyCatalog={listMyCatalog} onClickList={this.onClickListSet}/>
+                                    <ListSalesItemsViewASSetPrint key={item.reference} id={item.reference}
+                                          item={item} ViewAsSet={ViewAsSet}/>
                                 );
                             })}
                         </table>
                     </div>
-
                 );
             }else{
                 return (
-                    <div>
-                        <DataTable
-                          className="col-sm-12"
-                          keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight', 'stoneDetail','priceUSD','' ]}
-                          columns={tableColumns}
-                          initialData={items}
-                          initialPageLength={this.state.initialPageLength}
-                          initialSortBy={{ prop: 'reference', order: 'ascending' }}
-                          pageLengthOptions={[ 5, 20, 50 ]}
-                        />
-                    </div>
+                  <div>
+                    <DataTable
+                      className="col-sm-12"
+                      keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight', 'stoneDetail','priceUSD' ]}
+                      columns={tableColumns}
+                      initialData={items}
+                      initialPageLength={this.state.initialPageLength}
+                      initialSortBy={{ prop: 'reference', order: 'ascending' }}
+                      pageLengthOptions={[ 5, 20, 50 ]}
+                    />
+                  </div>
                 );
             }
         }else{
@@ -278,4 +279,4 @@ class ListSalesItemsView extends Component {
     }
 }
 
-module.exports = ListSalesItemsView
+module.exports = ListSalesItemsViewPrint

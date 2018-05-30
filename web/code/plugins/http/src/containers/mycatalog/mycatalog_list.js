@@ -160,8 +160,9 @@ class MyCatalog extends Component {
 
         // console.log('htmlTemplate-->',htmlTemplate);
 
-        let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`,
-                        'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL};
+        let params = {
+            'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'pdf'
+        };
         this.props.writeHtml(params)
             .then((value) => {
                 if (value) {

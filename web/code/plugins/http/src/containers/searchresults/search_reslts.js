@@ -53,7 +53,7 @@ const labels = {
     metalColor: 'Metal Colour', brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color', buckleType: 'Buckle Type',
     dialIndex: 'Dial Index', dialColor: 'Dial Color', movement: 'Movement', serial: 'Serial #', limitedEdition: 'Limited Edition', itemCreatedDate: 'Created Date',
     limitedEditionNumber: 'Limited Edition #'
-    
+
 }
 const labelsViewAsSet = {
     totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Retail Price (USD)', markup: 'Markup (Times)',
@@ -86,21 +86,17 @@ class SearchResult extends Component {
         this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
         this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
-        // console.log('this.props.items-->',this.props.searchResult.datas);
+
         this.state = {
-            activePage: this.props.currentPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false,
-            isOpenNoResults: true, showImages: false, ingredients: false, categoryName: false, category: false,
-            article: false, collection: false, setReferenceNumber: false, cut: false, color: false, clarity: false,
-            caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false,
-            netWeight: false,stoneQty: false, dominantStone: false, markup: false, certificatedNumber: false,
-            certificateDate: false, vendorCode: false, vendorName: false, metalColor: false, metalType: false,
-            brand: false, complication: false, strapType: false, strapColor: false, buckleType: false, dialIndex: false,
-            dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false,
-            itemCreatedDate:false,showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false,
-            isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, checkAllItems: false,
-            allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
-            totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false,
-            createdDate: false, isOpenPrintOptions: false
+            activePage: this.props.currentPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true, cut: false,
+            showImages: false, ingredients: false, categoryName: false, category: false, article: false, collection: false, setReferenceNumber: false,
+            color: false, clarity: false,caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false,
+            netWeight: false,stoneQty: false, dominantStone: false, markup: false, certificatedNumber: false, certificateDate: false, vendorCode: false,
+            vendorName: false, metalColor: false, metalType: false, brand: false, complication: false, strapType: false, strapColor: false, buckleType: false,
+            dialIndex: false,dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false, itemCreatedDate:false,
+            showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, createdDate: false,
+            isOpenMsgPageInvalid: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
+            totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false, isOpenPrintOptions: false
         };
     }
 
@@ -177,9 +173,13 @@ class SearchResult extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(this.props.currentPage != nextProps.currentPage){
-            let { currPage } = this.props.fields;
-            currPage.onChange(nextProps.currentPage);
+        let { fields:{currPage} } = this.props;
+        if(this.props.currentSalesPage != nextProps.currentSalesPage){
+            currPage.onChange(nextProps.currentSalesPage);
+        }else{
+            if (currPage.value == undefined) {
+                currPage.onChange(nextProps.currentSalesPage);
+            }
         }
     }
 
@@ -208,10 +208,7 @@ class SearchResult extends Component {
             htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
           //   console.log('htmlTemplate-->',htmlTemplate);
             let params = {
-                'temp': htmlTemplate,
-                'userName': `${userLogin.username}_${exportDate}`,
-                'userEmail': userLogin.email,
-                'ROOT_URL': ROOT_URL
+                'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'pdf'
             }
 
             this.props.writeHtml(params).then((value) => {
