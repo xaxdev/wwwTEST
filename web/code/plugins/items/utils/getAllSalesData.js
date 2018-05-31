@@ -16,6 +16,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
         let data = response;
         let clarityData = [];
+        let sumNetAmountData = [];
+        let sumDisconstData = [];
+        let sumMarginData = [];
 
         if (!!keys.find((key) => {return key == 'gemstones'})) {
             const valusObj = obj['gemstones'];
@@ -229,6 +232,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         let pageData = data.slice( (page - 1) * size, page * size );
         let sumPrice = 0;
         let sumCost = 0;
+        let sumNetAmount = 0;
+        let sumDisconst = 0;
+        let sumMargin = 0;
 
         if(pageData.length != 0){
             data.forEach(function(item){
@@ -255,6 +261,38 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             sumCostData.forEach(function(cost) {
                 sumCost = sumCost+Math.round(cost);
             });
+
+            data.forEach(function(item){
+                if (isViewAsSet) {
+                    sumNetAmountData.push(item.netAmount['USD']);
+                }else {
+                    sumNetAmountData.push(GetPriceCurrency(item,'netAmount',userCurrency));
+                }
+            });
+
+            sumNetAmountData.forEach(function(price) {
+                sumNetAmount = sumNetAmount+Math.round(price);
+            });
+
+            data.forEach(function(item){
+                sumDisconstData.push(item.discountAmountUSD);
+            });
+
+            sumDisconstData.forEach(function(price) {
+                sumDisconst = sumDisconst+Math.round(price);
+            });
+
+            data.forEach(function(item){
+                if (isViewAsSet) {
+                    sumMarginData.push(item.margin['USD']);
+                }else {
+                    sumMarginData.push(GetPriceCurrency(item,'margin',userCurrency));
+                }
+            });
+
+            sumMarginData.forEach(function(price) {
+                sumMargin = sumMargin+Math.round(price);
+            });
         }
 
         const sendData = {
@@ -268,7 +306,10 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 'cost': sumCost,
                 'maxPrice': maxPrice,
                 'minPrice': minPrice,
-                'avrgPrice': avrgPrice
+                'avrgPrice': avrgPrice,
+                'netAmount': sumNetAmount,
+                'disconst': sumDisconst,
+                'margin': sumMargin
             }
         };
         return sendData;

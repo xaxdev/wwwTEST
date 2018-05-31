@@ -4,8 +4,10 @@ import numberFormat from '../../../utils/convertNumberformat';
 
 class RenderClassTotals extends Component {
     render(){
-        const { userLogin, allItems, ViewAsSet, _totalPublicPrice, _totalUpdatedCost,
-                maxPrice, minPrice, avrgPrice } = this.props;
+        const {
+            userLogin, allItems, ViewAsSet, _totalPublicPrice, _totalUpdatedCost, maxPrice, minPrice, avrgPrice, _totalNetAmount, _totalDiscount, _totalMargin,
+            totalPublicPrice
+        } = this.props;
         return(
           <div>
             <div id="dvTotalsub1" className="bg-or text-center">
@@ -18,8 +20,8 @@ class RenderClassTotals extends Component {
                     || userLogin.permission.price == 'Updated'
                     || userLogin.permission.price == 'All') ?
                     '' : 'hidden'}`}>
-                    <span className="font-b fc-000">Total Retail Price :</span>
-                    <span className="font-w9">{ _totalPublicPrice } { ViewAsSet ? 'USD' : userLogin.currency }</span>
+                    <span className="font-b fc-000">Total Net Sales :</span>
+                    <span className="font-w9">{ numberFormat(_totalNetAmount) } { ViewAsSet ? 'USD' : userLogin.currency }</span>
                 </span>
                 <span className={`${(userLogin.permission.price == 'Updated'
                     || userLogin.permission.price == 'All') ?
@@ -41,8 +43,13 @@ class RenderClassTotals extends Component {
                     <span className="padding-lf15">|</span>
                 </span>
                 <span>
-                    <span className="font-b fc-000">Average Price :</span>
-                    <span className="font-w9">{ numberFormat(avrgPrice) } { ViewAsSet ? 'USD' : userLogin.currency } </span>
+                    <span className="font-b fc-000">Average Margin % : </span>
+                    <span className="font-w9">{ numberFormat((_totalMargin/_totalNetAmount)*100) } % </span>
+                    <span className="padding-lf15">|</span>
+                </span>
+                <span>
+                    <span className="font-b fc-000">Average Discount % : </span>
+                    <span className="font-w9">{ numberFormat((_totalDiscount/totalPublicPrice)*100) } % </span>
                 </span>
             </div>
           </div>

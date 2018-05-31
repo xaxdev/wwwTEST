@@ -58,6 +58,14 @@ const mapSalesProperties = (item, record, exchangeRates) => {
       delete item.imageName;
     }
 
+    if (item.imageTypeId !== undefined) {
+      delete item.imageTypeId
+    }
+
+    if (item.imageCompany !== undefined) {
+      delete item.imageCompany
+    }
+
     if (item.imageType !== undefined) {
       delete item.imageType
     }

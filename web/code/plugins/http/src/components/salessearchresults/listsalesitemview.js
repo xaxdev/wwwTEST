@@ -107,9 +107,7 @@ class ListSalesItemsView extends Component {
                                       : '/images/blank.gif';
 
                     if(col.totalPrice != undefined){
-                        col.priceUSD = (col.totalPrice['USD'] != undefined)
-                                      ? numberFormat(col.totalPrice['USD'])
-                                      : '- ';
+                        col.priceUSD = (col.totalPrice['USD'] != undefined) ? numberFormat(col.totalPrice['USD']) : '- ';
                     }else{
                         col.priceUSD = '- ';
                     }
@@ -122,11 +120,11 @@ class ListSalesItemsView extends Component {
 
                 }else{
                     imagesOriginal = (col.gallery) != undefined
-                                      ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif'
-                                       : '/images/blank.gif';
+                                        ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif'
+                                        : '/images/blank.gif';
                     imagesThumbnail = (col.gallery) != undefined
-                                      ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
-                                      : '/images/blank.gif';
+                                        ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
+                                        : '/images/blank.gif';
 
                     switch (col.type) {
                         case 'JLY':
@@ -143,17 +141,13 @@ class ListSalesItemsView extends Component {
                     }
 
                     if(col.price != undefined){
-                        col.priceUSD = (col.price[currency] != undefined) ?
-                               numberFormat(col.price[currency]) :
-                               '- ';
+                        col.priceUSD = (col.price[currency] != undefined) ? numberFormat(col.price[currency]) : '- ';
                     }else{
                         col.priceUSD = '- ';
                     }
 
                     if(col.netAmount != undefined){
-                        col.netAmountUSD = (col.netAmount[currency] != undefined) ?
-                               numberFormat(col.netAmount[currency]) :
-                               '- ';
+                        col.netAmountUSD = (col.netAmount[currency] != undefined) ? numberFormat(col.netAmount[currency]) : '- ';
                     }else{
                         col.netAmountUSD = '- ';
                     }
@@ -171,9 +165,7 @@ class ListSalesItemsView extends Component {
                     col.jewelsWeight = numberFormat2digit(jewelsWeight);
                     col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 
-                    itemName = (col.type != 'CER')
-                                ? (col.description != undefined) ? col.description: '-'
-                                : col.name ;
+                    itemName = (col.type != 'CER') ? (col.description != undefined) ? col.description: '-' : col.name ;
                 }
                 return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
                     itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight),invoiceDate: convertDate(col.invoiceDate)}
@@ -188,8 +180,8 @@ class ListSalesItemsView extends Component {
                   { title: 'SKU', prop: 'sku' },
                   { title: 'Location', prop: 'warehouseName' },
                   { title: 'Customer Name', prop: 'customerName' },
-                  { title: 'Net Amount', prop: 'netAmountUSD' },
                   { title: 'Invoice Date', prop: 'invoiceDate' },
+                  { title: 'Net Amount', prop: 'netAmountUSD' },
                   { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                   { title: 'Stone Detail', prop: 'stoneDetail' },
                   { title: 'Retail Price', prop: 'priceUSD' },
@@ -203,8 +195,8 @@ class ListSalesItemsView extends Component {
                   { title: 'SKU', prop: 'sku' },
                   { title: 'Location', prop: 'warehouseName' },
                   { title: 'Customer Name', prop: 'customerName' },
-                  { title: 'Net Amount', prop: 'netAmountUSD' },
                   { title: 'Invoice Date', prop: 'invoiceDate' },
+                  { title: 'Net Amount', prop: 'netAmountUSD' },
                   { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                   { title: 'Stone Detail', prop: 'stoneDetail' },
                   { title: 'Retail Price', prop: 'priceUSD' },
@@ -257,7 +249,7 @@ class ListSalesItemsView extends Component {
                     <div>
                         <DataTable
                           className="col-sm-12"
-                          keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight', 'stoneDetail','priceUSD','' ]}
+                          keys={['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight', 'stoneDetail','priceUSD','' ]}
                           columns={tableColumns}
                           initialData={items}
                           initialPageLength={this.state.initialPageLength}

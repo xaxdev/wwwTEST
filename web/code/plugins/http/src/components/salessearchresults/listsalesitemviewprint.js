@@ -141,79 +141,78 @@ class ListSalesItemsViewPrint extends Component {
                                       : '/images/blank.gif';
 
                     switch (col.type) {
-                      case 'JLY':
-                        size = (col.size != undefined) ? col.size : '';
-                        break;
-                      case 'WAT':
-                        size = (col.caseDimension != undefined) ? col.caseDimension : '';
-                        break;
-                      case 'OBA':
-                        size = (col.dimension != undefined) ? col.dimension : '';
-                        break;
-                      default:
-                        break;
+                        case 'JLY':
+                            size = (col.size != undefined) ? col.size : '';
+                            break;
+                        case 'WAT':
+                            size = (col.caseDimension != undefined) ? col.caseDimension : '';
+                            break;
+                        case 'OBA':
+                            size = (col.dimension != undefined) ? col.dimension : '';
+                            break;
+                        default:
+                            break;
                     }
 
                     if(col.price != undefined){
-                      col.priceUSD = (col.price[currency] != undefined) ?
-                             numberFormat(col.price[currency]) :
-                             '- ';
+                        col.priceUSD = (col.price[currency] != undefined) ? numberFormat(col.price[currency]) : '- ';
                     }else{
-                      col.priceUSD = '- ';
+                        col.priceUSD = '- ';
+                    }
+
+                    if(col.netAmount != undefined){
+                        col.netAmountUSD = (col.netAmount[currency] != undefined) ? numberFormat(col.netAmount[currency]) : '- ';
+                    }else{
+                        col.netAmountUSD = '- ';
                     }
 
                     if (col.gemstones != undefined) {
-                      col.gemstones.forEach(function(gemstone) {
-                        if(gemstone.carat != undefined){
-                          jewelsWeight = jewelsWeight + gemstone.carat;
-                        }
-                      });
+                        col.gemstones.forEach(function(gemstone) {
+                            if(gemstone.carat != undefined){
+                                jewelsWeight = jewelsWeight + gemstone.carat;
+                            }
+                        });
                     } else {
-                      jewelsWeight = '';
+                        jewelsWeight = '';
                     }
 
                     col.jewelsWeight = numberFormat2digit(jewelsWeight);
                     col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 
-                    itemName = (col.type != 'CER')
-                                      ?
-                                      (col.description != undefined) ? col.description: '-' :
-                                      col.name
-                                      ;
-
+                    itemName = (col.type != 'CER') ? (col.description != undefined) ? col.description: '-' : col.name ;
                 }
-                return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
-                    itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
+                return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size, itemName: itemName,
+                    grossWeight:numberFormat2digit(col.grossWeight)}
             });
 
             let tableColumns = [];
             if (isCompany) {
                 tableColumns = [
-                  { title: 'Images', render: this.renderImage },
-                  { title: 'Item Reference', prop: 'reference' },
-                  { title: 'Description', prop: 'itemName' },
-                  { title: 'SKU', prop: 'sku' },
-                  { title: 'Company', prop: 'companyName' },
-                  { title: 'Location', prop: 'warehouseName' },
-                  { title: 'Size', prop: 'size' },
-                  { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                  { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                  { title: 'Stone Detail', prop: 'stoneDetail' },
-                  { title: 'Retail Price', prop: 'priceUSD' },
+                    { title: 'Images', render: this.renderImage },
+                    { title: 'Item Reference', prop: 'reference' },
+                    { title: 'Description', prop: 'itemName' },
+                    { title: 'SKU', prop: 'sku' },
+                    { title: 'Location', prop: 'warehouseName' },
+                    { title: 'Customer Name', prop: 'customerName' },
+                    { title: 'Invoice Date', prop: 'invoiceDate' },
+                    { title: 'Net Amount', prop: 'netAmountUSD' },
+                    { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                    { title: 'Stone Detail', prop: 'stoneDetail' },
+                    { title: 'Retail Price', prop: 'priceUSD' },
                 ];
             }else{
                 tableColumns = [
-                  { title: 'Images', render: this.renderImage },
-                  { title: 'Item Reference', prop: 'reference' },
-                  { title: 'Description', prop: 'itemName' },
-                  { title: 'SKU', prop: 'sku' },
-                  { title: 'Company', prop: 'company' },
-                  { title: 'Location', prop: 'warehouse' },
-                  { title: 'Size', prop: 'size' },
-                  { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                  { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                  { title: 'Stone Detail', prop: 'stoneDetail' },
-                  { title: 'Retail Price', prop: 'priceUSD' },
+                    { title: 'Images', render: this.renderImage },
+                    { title: 'Item Reference', prop: 'reference' },
+                    { title: 'Description', prop: 'itemName' },
+                    { title: 'SKU', prop: 'sku' },
+                    { title: 'Location', prop: 'warehouseName' },
+                    { title: 'Customer Name', prop: 'customerName' },
+                    { title: 'Invoice Date', prop: 'invoiceDate' },
+                    { title: 'Net Amount', prop: 'netAmountUSD' },
+                    { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                    { title: 'Stone Detail', prop: 'stoneDetail' },
+                    { title: 'Retail Price', prop: 'priceUSD' },
                 ];
             }
             if (ViewAsSet) {

@@ -39,7 +39,7 @@ class SalesSearchResultOnItem extends Component {
             totalPrice: false, companyName: false, warehouseName: false, createdDate: false, isOpenPrintOptions: false
         };
     }
-    
+
     componentDidMount() {
         const { props } = this.props;
         let that = this;
@@ -375,7 +375,6 @@ class SalesSearchResultOnItem extends Component {
         const { props } = this.props;
         const { fields: { currPage }, totalPages, currentSalesPage, items, handleSubmit, resetForm, submitting
         } = props;
-        console.log('renderPagination-->',currPage);
         const page = this.state.activePage;
         return(
             <div>
@@ -395,16 +394,19 @@ class SalesSearchResultOnItem extends Component {
     }
     renderTotals(){
         const { props } = this.props;
-        const { fields: { currPage }, totalPages, currentSalesPage,ViewAsSet, items, totalPublicPrice, totalUpdatedCost,
-                allItems, maxPrice, minPrice, avrgPrice, handleSubmit, resetForm, submitting
+        const { fields: { currPage }, totalPages, currentSalesPage,ViewAsSet, items, totalPublicPrice, totalUpdatedCost, allItems, maxPrice, minPrice,
+                avrgPrice, handleSubmit, resetForm, submitting, totalNetAmount, totalDiscount, totalMargin
         } = props;
         let _totalUpdatedCost =  (totalUpdatedCost!=null) ? numberFormat(totalUpdatedCost) : 0;
         let _totalPublicPrice =  (totalPublicPrice!=null) ? numberFormat(totalPublicPrice) : 0;
+        let _totalNetAmount =  (totalNetAmount!=null) ? totalNetAmount : 0;
+        let _totalDiscount =  (totalDiscount!=null) ? totalDiscount : 0;
+        let _totalMargin =  (totalMargin!=null) ? totalMargin : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
         return(
-            <RenderClassTotals userLogin={userLogin} allItems={allItems} ViewAsSet={ViewAsSet}
-                _totalPublicPrice = {_totalPublicPrice} _totalUpdatedCost = {_totalUpdatedCost}
-                maxPrice = {maxPrice} minPrice = {minPrice} avrgPrice = {avrgPrice} />
+            <RenderClassTotals userLogin={userLogin} allItems={allItems} ViewAsSet={ViewAsSet} _totalPublicPrice = {_totalPublicPrice} maxPrice = {maxPrice}
+                _totalUpdatedCost = {_totalUpdatedCost} minPrice = {minPrice} avrgPrice = {avrgPrice} _totalNetAmount = {_totalNetAmount}
+                _totalDiscount = {_totalDiscount} _totalMargin = {_totalMargin} totalPublicPrice={totalPublicPrice} />
         );
     }
 

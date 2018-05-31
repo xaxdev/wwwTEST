@@ -177,7 +177,10 @@ function mapStateToProps(state) {
         minPrice: state.searchResult.minPrice,
         avrgPrice: state.searchResult.avrgPrice,
         exportItems: state.searchResult.exportItems,
-        ViewAsSet: state.searchResult.viewAsSet
+        ViewAsSet: state.searchResult.viewAsSet,
+        totalNetAmount: state.searchResult.totalnetamount,
+        totalDiscount: state.searchResult.totaldiscount,
+        totalMargin: state.searchResult.totalmargin,
     }
 }
 SalesSearchResult.contextTypes = {

@@ -5,6 +5,24 @@ export default (item, type)=> {
     const currency = userLogin.currency;
 
     switch(type){
+        case 'margin':
+            if(item.margin != undefined){
+                return (item.margin[currency] != undefined) ?
+                     numberFormat(item.margin[currency]) + ' ' + currency :
+                     '- ' + currency;
+            }else{
+                return '- ' + currency;
+            }
+            break;
+        case 'netAmount':
+            if(item.netAmount != undefined){
+                return (item.netAmount[currency] != undefined) ?
+                     numberFormat(item.netAmount[currency]) + ' ' + currency :
+                     '- ' + currency;
+            }else{
+                return '- ' + currency;
+            }
+            break;
         case 'discPercent':
             if(item.discPercent != undefined){
                 return item.discPercent + ' %';

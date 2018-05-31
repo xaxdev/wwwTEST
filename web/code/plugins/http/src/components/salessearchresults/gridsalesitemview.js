@@ -217,7 +217,7 @@ class GridSalesItemsView extends Component {
                                     </p>
                                     <p className="product-detail-h" name={ViewAsSet ? item.reference : item.id}
                                         id={ViewAsSet ? item.reference : item.id} onClick={btnEvent}>{itemName}</p>
-                                    <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{price}</span>
+                                    <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{netSales}</span>
                                     <span className="line"></span>
                                 </div>
                                 <div>

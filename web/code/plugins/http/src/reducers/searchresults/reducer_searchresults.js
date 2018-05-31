@@ -30,7 +30,8 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
     SalesChannelValue:[], SalesHierarchyValue:null,SalesIsAdvance:false, activeTabSalesCategory:1, idEditSalesSaveSearch: null,
     nameEditSalesSaveSearch: null, criteriaSalesSaveSearch: null, paramsSalesSearch:null, saveSalesSearchStatus: false, msgSales: '',
     saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, saveSearchSalesHierarchy: null, SalesSortingBy:'postedDate', SalesSortDirection:'desc',
-    currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, SalesShowGridView: true, SalesShowListView: false, GemStoneTypeValue:[]
+    currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, SalesShowGridView: true, SalesShowListView: false,
+    totalnetamount: null,totaldiscount: null,totalmargin:null, GemStoneTypeValue:[]
 };
 
 export default function(state = INITIAL_STATE, action){
@@ -53,7 +54,8 @@ export default function(state = INITIAL_STATE, action){
                 currentSalesPage:1,datas:null,allItems:[], totalpage:null, totalpublicprice:null, totalupdatedcost:null, AccessoryTypeValue:[], SparePartTypeValue:[],
                 SearchAction:'New', exportItems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null, GemCertificateDateTo:null,
                 StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, SalesPageSize:16, viewAsSet: false,
-                SalesShowGridView: true, SalesShowListView: false, ListCatalogName: [], ArticleValue:[], SalesChannelValue:[]
+                SalesShowGridView: true, SalesShowListView: false, ListCatalogName: [], ArticleValue:[], SalesChannelValue:[], totalnetamount: null,
+                totaldiscount: null,totalmargin:null
             }
             break;
         case SET_SALESSHOWLISTVIEW :
@@ -68,14 +70,15 @@ export default function(state = INITIAL_STATE, action){
         case SET_SALESSORTDIRECTION :
             return {...state, SalesSortDirection: action.salesSortDirection };
             break;
-        case SET_SORTBY :
+        case SET_SALESSORTBY :
             return {...state, SalesSortingBy: action.salesSortingBy };
             break;
         case FETCH_ALLSALESITEMS:
             return {...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/action.data.pageSize),
                 totalpublicprice: action.data.summary.price, totalupdatedcost: action.data.summary.cost, currentPage: action.currentSalesPage,
                 allItems: action.data.allData, exportItems: action.data.exportData, maxPrice: action.data.summary.maxPrice,
-                minPrice: action.data.summary.minPrice, avrgPrice: action.data.summary.avrgPrice
+                minPrice: action.data.summary.minPrice, avrgPrice: action.data.summary.avrgPrice, totalnetamount: action.data.summary.netAmount,
+                totaldiscount: action.data.summary.disconst,totalmargin: action.data.summary.margin
             };
             break;
         case SET_CLOSEALERTMSGSALES :
@@ -110,7 +113,8 @@ export default function(state = INITIAL_STATE, action){
             break;
         case MODIFY_SALESSEARCH:
             return {...state, paramsSalesSearch:action.params, datas:null,allItems:[], totalpage:null, totalpublicprice:null, totalupdatedcost:null,
-                SearchAction:'Modify',exportItems:[], maxPrice:null, minPrice:null,avrgPrice:null,listFileName:null
+                SearchAction:'Modify',exportItems:[], maxPrice:null, minPrice:null,avrgPrice:null,listFileName:null, totalnetamount:null,totaldiscount:null,
+                totalmargin:null
             }
             break;
         case SET_IDEDITSALESSAVESEARCH :
