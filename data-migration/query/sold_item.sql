@@ -63,6 +63,7 @@ SELECT SOL.[Id] AS 'id'
                      ELSE ''
 		END
 	  , ISNULL(SOL.[SetReference], '') AS 'setReference'
+      , ISNULL(JLYT.[Priority], '') AS 'priority'
   FROM [ITORAMA].[dbo].[SoldItems] AS SOL
         LEFT JOIN [ITORAMA].[dbo].[Jewelry] AS JLY
 			ON JLY.ItemReference = SOL.Reference
@@ -82,6 +83,8 @@ SELECT SOL.[Id] AS 'id'
             ON SOL.[Reference] = img.[ITEMID]
             --AND img.[Company] = item.[Company]
             AND img.[TYPEID] in ('Image','COA','DBC','Monograph')
+        LEFT JOIN [ITORAMA].[dbo].[JewelryType] AS JLYT
+			ON SOL.[ArticleCode] = JLYT.[Code]
   WHERE SOL.[InvoicedId] NOT LIKE '%SCN%' AND SOL.[Quantity] <> -1
 		AND SOL.[Id] BETWEEN @from AND @to
   ORDER BY SOL.[Id]

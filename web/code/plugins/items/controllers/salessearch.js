@@ -24,8 +24,8 @@ module.exports = {
         let userCurrency = request.payload.userCurrency;
         let keys = Object.keys(obj);
         let size = request.payload.pageSize;
-        let itemsOrder = request.payload.SalesItemsOrder;
-        let setReferencdOrder = request.payload.SetReferencdOrder;
+        let itemsOrder = request.payload.ItemsSalesOrder;
+        let setReferencdOrder = request.payload.SetReferenceSalesOrder;
         let isSetReference = !!request.payload.setReference? true: false;
         let ps=[];
 
@@ -49,10 +49,12 @@ module.exports = {
                 })
             }else{
                 internals.query = GetSalesSearch(request, 0, 100000,null);
+                console.log(JSON.stringify(internals.query, null, 2));
                 ps.push(getClarityItems(internals.query));
             }
         }else{
             internals.query = GetSalesSearch(request, 0, 100000,null);
+            console.log(JSON.stringify(internals.query, null, 2));
             ps.push(getClarityItems(internals.query));
         }
 
@@ -65,139 +67,139 @@ module.exports = {
             body: internals.query
         });
 
-        // const getSetReference = getAllItems.then((response) => {
-        //     const setReferenceResult = response.hits.hits.map((element) => element._source);
-        //     const setReferenceFilter = setReferenceResult.filter((item) => {
-        //         return item.setReference != undefined && item.setReference != '';
-        //     })
-        //     const setReferenceArray = setReferenceFilter.map((item) => {
-        //         return item.setReference;
-        //     })
-        //     const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
-        //         return !pos || item != ary[pos - 1];
-        //     })
-        //     let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-        //     if (sortBy.indexOf('price') != -1) {
-        //         sortBy = 'totalPrice.USD';
-        //     }else if (sortBy.indexOf('Date') != -1) {
-        //         sortBy = 'createdDate';
-        //     }else if (sortBy.indexOf('setReference') != -1) {
-        //         sortBy = 'reference';
-        //     }else{
-        //         sortBy = sortBy;
-        //     }
-        //
-        //     let missing = '';
-        //
-        //     switch (sortDirections) {
-        //         case 'asc':
-        //             missing = '"missing" : "_first"';
-        //             missing = `{"${sortBy}" : {${missing}}},`;
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        //
-        //     const query = JSON.parse(
-        //         `{
-        //             "timeout": "5s",
-        //             "from": 0,
-        //           "size": 10000,
-        //           "sort" : [
-        //               ${missing}
-        //               {"${sortBy}" : "${sortDirections}"}
-        //            ],
-        //           "query":{
-        //                "constant_score": {
-        //                  "filter": {
-        //                    "bool": {
-        //                      "must": [
-        //                        {
-        //                          "match": {
-        //                            "reference": "${setReferenceUniq.join(' ')}"
-        //                          }
-        //                        }
-        //                      ]
-        //                    }
-        //                  }
-        //                }
-        //             }
-        //           }`
-        //     );
-        //
-        //     return elastic.search({
-        //         index: 'mol',
-        //         type: 'setitems',
-        //         body: query
-        //     })
-        // });
+        const getSetReference = getAllItems.then((response) => {
+            const setReferenceResult = response.hits.hits.map((element) => element._source);
+            const setReferenceFilter = setReferenceResult.filter((item) => {
+                return item.setReference != undefined && item.setReference != '';
+            })
+            const setReferenceArray = setReferenceFilter.map((item) => {
+                return item.setReference;
+            })
+            const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
+                return !pos || item != ary[pos - 1];
+            })
+            let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
+            if (sortBy.indexOf('price') != -1) {
+                sortBy = 'totalPrice.USD';
+            }else if (sortBy.indexOf('Date') != -1) {
+                sortBy = 'postedDate';
+            }else if (sortBy.indexOf('setReference') != -1) {
+                sortBy = 'reference';
+            }else{
+                sortBy = sortBy;
+            }
 
-        // const getSetReferenceData = (data) => {
-        //     const setReferenceResult = data;
-        //     const setReferenceFilter = setReferenceResult.filter((item) => {
-        //         return item.setReference != undefined && item.setReference != '';
-        //     })
-        //     const setReferenceArray = setReferenceFilter.map((item) => {
-        //         return item.setReference;
-        //     })
-        //     const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
-        //         return !pos || item != ary[pos - 1];
-        //     })
-        //     let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-        //     if (sortBy.indexOf('price') != -1) {
-        //         sortBy = 'totalPrice.USD';
-        //     }else if (sortBy.indexOf('Date') != -1) {
-        //         sortBy = 'createdDate';
-        //     }else if (sortBy.indexOf('setReference') != -1) {
-        //         sortBy = 'reference';
-        //     }else{
-        //         sortBy = sortBy;
-        //     }
-        //
-        //     let missing = '';
-        //
-        //     switch (sortDirections) {
-        //         case 'asc':
-        //             missing = '"missing" : "_first"';
-        //             missing = `{"${sortBy}" : {${missing}}},`;
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        //
-        //     const query = JSON.parse(
-        //         `{
-        //             "timeout": "5s",
-        //             "from": 0,
-        //           "size": 10000,
-        //           "sort" : [
-        //               ${missing}
-        //               {"${sortBy}" : "${sortDirections}"}
-        //            ],
-        //           "query":{
-        //                "constant_score": {
-        //                  "filter": {
-        //                    "bool": {
-        //                      "must": [
-        //                        {
-        //                          "match": {
-        //                            "reference": "${setReferenceUniq.join(' ')}"
-        //                          }
-        //                        }
-        //                      ]
-        //                    }
-        //                  }
-        //                }
-        //             }
-        //           }`
-        //     );
-        //
-        //     return elastic.search({
-        //         index: 'mol',
-        //         type: 'setitems',
-        //         body: query
-        //     })
-        // };
+            let missing = '';
+
+            switch (sortDirections) {
+                case 'asc':
+                    missing = '"missing" : "_first"';
+                    missing = `{"${sortBy}" : {${missing}}},`;
+                    break;
+                default:
+                    break;
+            }
+
+            const query = JSON.parse(
+                `{
+                    "timeout": "5s",
+                    "from": 0,
+                    "size": 10000,
+                    "sort" : [
+                        ${missing}
+                        {"${sortBy}" : "${sortDirections}"}
+                     ],
+                     "query":{
+                          "constant_score": {
+                            "filter": {
+                              "bool": {
+                                "must": [
+                                  {
+                                    "match": {
+                                      "reference": "${setReferenceUniq.join(' ')}"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                       }
+                  }`
+            );
+
+            return elastic.search({
+                index: 'mol_solditems',
+                type: 'setitems',
+                body: query
+            })
+        });
+
+        const getSetReferenceData = (data) => {
+            const setReferenceResult = data;
+            const setReferenceFilter = setReferenceResult.filter((item) => {
+                return item.setReference != undefined && item.setReference != '';
+            })
+            const setReferenceArray = setReferenceFilter.map((item) => {
+                return item.setReference;
+            })
+            const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
+                return !pos || item != ary[pos - 1];
+            })
+            let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
+            if (sortBy.indexOf('price') != -1) {
+                sortBy = 'totalPrice.USD';
+            }else if (sortBy.indexOf('Date') != -1) {
+                sortBy = 'postedDate';
+            }else if (sortBy.indexOf('setReference') != -1) {
+                sortBy = 'reference';
+            }else{
+                sortBy = sortBy;
+            }
+
+            let missing = '';
+
+            switch (sortDirections) {
+                case 'asc':
+                    missing = '"missing" : "_first"';
+                    missing = `{"${sortBy}" : {${missing}}},`;
+                    break;
+                default:
+                    break;
+            }
+
+            const query = JSON.parse(
+                `{
+                    "timeout": "5s",
+                    "from": 0,
+                    "size": 10000,
+                    "sort" : [
+                        ${missing}
+                        {"${sortBy}" : "${sortDirections}"}
+                     ],
+                     "query":{
+                          "constant_score": {
+                            "filter": {
+                              "bool": {
+                                "must": [
+                                  {
+                                    "match": {
+                                      "reference": "${setReferenceUniq.join(' ')}"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                       }
+                  }`
+            );
+
+            return elastic.search({
+                index: 'mol_solditems',
+                type: 'setitems',
+                body: query
+            })
+        };
 
         try {
             Promise.all(ps).then(async (allItems) => {
@@ -205,28 +207,27 @@ module.exports = {
                 await allItems.map((all) => {
                     data.push(...all.hits.hits.map((element) => element._source))
                 })
-                // const setReferences = await getSetReferenceData(data);
-                // const setReferenceData = setReferences.hits.hits.map((element) => element._source);
-                //
-                // let itemsNotMMECONSResult =[{}];
-                // let itemsMMECONSResult =[{}];
-                //
-                // let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-                //
-                // elastic.close();
-                //
-                // if (isViewAsSet) {
-                //     return reply(GetAllData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys,
-                //         obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult,
-                //         isSetReference
-                //     ));
-                // }else {
-                //     return reply(GetAllData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj,
-                //         request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult, isSetReference
-                //     ));
-                // }
+                const setReferences = await getSetReferenceData(data);
+                const setReferenceData = setReferences.hits.hits.map((element) => element._source);
+
+                let itemsNotMMECONSResult =[{}];
+                let itemsMMECONSResult =[{}];
+
+                let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
+
+                elastic.close();
+
+                if (isViewAsSet) {
+                    return reply(getAllSalesData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys,
+                        obj, request, itemsOrder, setReferencdOrder,isSetReference
+                    ));
+                }else {
+                    return reply(getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj,
+                        request, itemsOrder, setReferencdOrder,isSetReference
+                    ));
+                }
                 // console.log('allItems-->',getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
-                return reply(getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+                // return reply(getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
 
             })
             .catch(function(err) {

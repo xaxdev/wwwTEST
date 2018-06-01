@@ -29,6 +29,9 @@ class SalesSearchResultOnItem extends Component {
         const { salesShowGridView, salesShowListView } = props;
         let salesSortingBy = '';
         switch (e.target.value) {
+            case 'netAmount':
+              salesSortingBy = 'netAmount.' + userLogin.currency;
+              break;
             case 'price':
                 salesSortingBy = 'price.' + userLogin.currency;
                 break;
@@ -76,6 +79,9 @@ class SalesSearchResultOnItem extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
+            case 'netAmount':
+              salesSortingBy = 'netAmount.' + userLogin.currency;
+              break;
             case 'price':
                 salesSortingBy = 'price.' + userLogin.currency;
                 break;
@@ -147,10 +153,11 @@ class SalesSearchResultOnItem extends Component {
                             <div className="col-sm-2 col-xs-12 nopadding">
                                 <div className="styled-select">
                                     <select className="form-searchresult" onChange={this.salesSortingBy} ref="salesSortingBy" >
-                                        <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                        <option key={'price'} value={'price'}>{'Retail Price'}</option>
+                                        <option key={'postedDate'} value={'postedDate'}>{'Updated Date'}</option>
+                                        <option key={'netAmount'} value={'netAmount'}>{'Net Sales'}</option>
                                         <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                         <option key={'description'} value={'description'}>{'Description'}</option>
+                                        <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>
                                     </select>
                                 </div>
                             </div>

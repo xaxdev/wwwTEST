@@ -118,6 +118,9 @@ class SalesSearchResultOnItem extends Component {
             const { salesShowGridView,salesShowListView,ItemsSalesOrder,SetReferenceSalesOrder,ViewAsSet } = this.props;
             let salesSortingBy = '';
             switch (this.refs.salesSortingBy.value) {
+                case 'netAmount':
+                  salesSortingBy = 'netAmount.' + userLogin.currency;
+                  break;
                 case 'price':
                   salesSortingBy = 'price.' + userLogin.currency;
                   break;
@@ -169,6 +172,9 @@ class SalesSearchResultOnItem extends Component {
         const { salesShowGridView, salesShowListView } = props;
         let salesSortingBy = '';
         switch (e.target.value) {
+            case 'netAmount':
+              salesSortingBy = 'netAmount.' + userLogin.currency;
+              break;
             case 'price':
                 salesSortingBy = 'price.' + userLogin.currency;
                 break;
@@ -176,6 +182,7 @@ class SalesSearchResultOnItem extends Component {
                 salesSortingBy = e.target.value;
                 break;
         }
+        console.log('salesSortingBy-->',salesSortingBy);
         this.setState({activePage: 1});
         const { searchResult } = props;
         const salesSortingDirection = this.refs.salesSortingDirection.value;
@@ -214,6 +221,9 @@ class SalesSearchResultOnItem extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
+            case 'netAmount':
+              salesSortingBy = 'netAmount.' + userLogin.currency;
+              break;
             case 'price':
                 salesSortingBy = 'price.' + userLogin.currency;
                 break;
@@ -259,6 +269,9 @@ class SalesSearchResultOnItem extends Component {
         let salesSortingBy = '';
 
         switch (this.refs.salesSortingBy.value) {
+            case 'netAmount':
+              salesSortingBy = 'netAmount.' + userLogin.currency;
+              break;
             case 'price':
                 salesSortingBy = 'price.' + userLogin.currency;
                 break;
@@ -298,6 +311,9 @@ class SalesSearchResultOnItem extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
+            case 'netAmount':
+              salesSortingBy = 'netAmount.' + userLogin.currency;
+              break;
             case 'price':
               salesSortingBy = 'price.' + userLogin.currency;
               break;
@@ -340,6 +356,9 @@ class SalesSearchResultOnItem extends Component {
         }else{
             let salesSortingBy = '';
             switch (this.refs.salesSortingBy.value) {
+                case 'netAmount':
+                  salesSortingBy = 'netAmount.' + userLogin.currency;
+                  break;
                 case 'price':
                   salesSortingBy = 'price.' + userLogin.currency;
                   break;
@@ -453,7 +472,7 @@ class SalesSearchResultOnItem extends Component {
                                     <select className="form-searchresult" onChange={this.salesSortingBy}
                                         ref="salesSortingBy">
                                         <option key={'postedDate'} value={'postedDate'}>{'Updated Date'}</option>
-                                        <option key={'price'} value={'price'}>{'Retail Price'}</option>
+                                        <option key={'netAmount'} value={'netAmount'}>{'Net Sales'}</option>
                                         <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                         <option key={'description'} value={'description'}>{'Description'}</option>
                                         <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>

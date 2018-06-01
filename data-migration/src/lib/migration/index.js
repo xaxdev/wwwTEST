@@ -6,6 +6,7 @@ import * as set from './set';
 import * as lot from './lot';
 import * as soldItem from './solditem';
 import * as constant from './constant';
+import * as setSold from './setSold';
 
 const migrate = async index => {
     try {
@@ -102,4 +103,13 @@ const soldItems= async index => {
     }
 }
 
-export { alias, migrate, productHierarchy, itemSets, soldItems };
+const soldItemsSets= async index => {
+    try {
+        const exchangeRates = await item.getExchangeRates()
+        await setSold.getSoldItemSets(index, exchangeRates)
+    } catch (err) {
+        throw err
+    }
+}
+
+export { alias, migrate, productHierarchy, itemSets, soldItems, soldItemsSets };

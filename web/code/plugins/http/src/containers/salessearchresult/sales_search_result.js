@@ -37,6 +37,9 @@ class SalesSearchResult extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         let salesSortingBy = '';
         switch (this.props.salesSortingBy) {
+            case 'netAmount':
+              salesSortingBy = 'netAmount.' + userLogin.currency;
+              break;
             case 'price':
               salesSortingBy = 'price.' + userLogin.currency;
               break;

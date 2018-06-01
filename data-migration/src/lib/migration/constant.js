@@ -68,6 +68,9 @@ export const HIERARCHY_TREE_QUERY = './query/hierarchy.sql';
 // set
 export const SET_QUERY = './query/set.sql';
 
+// set sold
+export const SET_SOLD_QUERY = './query/set_sold_item.sql';
+
 // CertificateWarehouse
 export const CERTIFICATE_QUERY = './query/certificate.sql';
 

@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const _ = require('lodash');
 const GetPriceCurrency = require('./getPriceCurrency');
 
-module.exports = async (response, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, cb) => {
+module.exports = async (response, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder, setReferencdOrder, isSetReference, cb) => {
     try {
         let allData = [];
         let setReferences = [];
@@ -40,13 +40,41 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             }
         }
 
+        if (itemsOrder != null) {
+            data.map((item) => {
+                let order = itemsOrder.find((val) => {
+                    return val.item_reference == item.reference;
+                })
+                item.order = parseInt(order.order)
+                return item;
+            });
+            data = data.sortBy('order','asc',userCurrency);
+        }
+        if (setReferencdOrder != null) {
+            data.map((item) => {
+                let order = null;
+                if (isViewAsSet) {
+                    order = setReferencdOrder.find((val) => {
+                        return val.set_reference == item.reference;
+                    });
+                }else{
+                    order = setReferencdOrder.find((val) => {
+                        return val.set_reference == item.setReference;
+                    });
+                }
+                item.order = parseInt(order.order)
+                return item;
+            });
+            data = data.sortBy('order','asc',userCurrency);
+        }
+
         if (isViewAsSet) {
             switch (sortBy) {
                 case 'setReference':
                     sortBy = 'reference';
                     break;
                 case 'itemCreatedDate':
-                    sortBy = 'createdDate';
+                    sortBy = 'postedDate';
                     break;
                 default:
                     sortBy = sortBy.toLowerCase().indexOf('price') != -1 ? 'totalPrice' : sortBy
@@ -55,6 +83,13 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             }
         }else{
             sortBy = sortBy.toLowerCase().indexOf('price') != -1 ? 'price' : sortBy
+        }
+
+        if (itemsOrder == null && setReferencdOrder == null) {
+            //   Not have SetReference criteria
+            if (!isSetReference) {
+                data = data.sortBy(sortBy,sortDirections,userCurrency);
+            }
         }
 
         if (isViewAsSet) {
@@ -156,12 +191,12 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         data.forEach(function(item){
             if (isViewAsSet) {
                 allData.push({
-                    'id': item.id,'reference':item.reference,'createdDate':item.createdDate,
+                    'id': item.id,'reference':item.reference,'postedDate':item.postedDate,
                     'totalPrice':item.totalPrice,'description':item.description,'setReference':item.reference
                 });
             }else{
                 allData.push({
-                    'id': item.id,'reference':item.reference,'itemCreatedDate':item.itemCreatedDate,
+                    'id': item.id,'reference':item.reference,'postedDate':item.postedDate,
                     'price':item.price,'description':item.description,'setReference':item.setReference
                 });
             }
@@ -222,6 +257,10 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 }
             }
         });
+
+        if (itemsOrder == null && setReferencdOrder == null) {
+            allData = allData.sortBy(sortBy,sortDirections,userCurrency);
+        }
 
         if (!isViewAsSet) {
             allData = allData.map((item) => {return {'id':item.id}})
