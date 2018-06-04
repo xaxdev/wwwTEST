@@ -5,14 +5,27 @@ import moment from 'moment-timezone';
 import RenderClassTotals from './utils/render_total';
 import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter';
 import ModalPrintOptions from './utils/modalPrintOptions';
+import RenderSalesExportExcelDialog from './utils/render_export_excel_dialog';
 import numberFormat from '../../utils/convertNumberformat';
 import GenSalesTemplateHtml from '../../utils/genTemplatePdfSalesSearchResult';
 import GridSalesItemsView from '../../components/salessearchresults/gridsalesitemview';
 import ListSalesItemsView from '../../components/salessearchresults/listsalesitemview';
 import ListSalesItemsViewPrint from '../../components/salessearchresults/listsalesitemviewprint';
 import GridSalesItemsViewPrint from '../../components/salessearchresults/gridsalesitemviewprint';
+import Modalalertmsg from '../../utils/modalalertmsg';
 
 const Loading = require('react-loading');
+
+const checkFields = ['categoryName', 'category', 'article', 'collection', 'setReferenceNumber', 'quantity','markup', 'certificatedNumber', 'dominantStone',
+    'brand', 'postedDate', 'salesId', 'salesPersonName', 'salesChannelType', 'customer', 'customerName', 'invoicedId', 'invoiceDate', 'inventSizeId'
+];
+
+const labels = {
+    categoryName: 'Category Name', category: 'Category', article: 'Article', collection: 'Collection', quantity: 'Quantity',
+    setReferenceNumber: 'Set Reference Number', dominantStone: 'Dominant Stone', markup: 'Markup%', certificatedNumber: 'Certificate Number',
+    brand: 'Brand', postedDate: 'Posted Date', salesId: 'Sales Id', salesPersonName: 'Sales Person Name', salesChannelType: 'Sales Channel Type',
+    customer: 'Customer', customerName: 'Customer Name', invoicedId: 'Invoiced Id', invoiceDate: 'Invoice Date', inventSizeId: 'Size'
+}
 
 class SalesSearchResultOnItem extends Component {
     constructor(props) {
@@ -26,17 +39,19 @@ class SalesSearchResultOnItem extends Component {
         this.onClickGrid = this.onClickGrid.bind(this);
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
         this.printResults = this.printResults.bind(this);
+        this.confirmExport = this.confirmExport.bind(this);
+        this.selectedAllFieldsExportExcel = this.selectedAllFieldsExportExcel.bind(this);
+        this.selectedShowImages = this.selectedShowImages.bind(this);
+        this.exportExcel = this.exportExcel.bind(this);
 
         this.state = {
             activePage: this.props.currentSalesPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true,
-            showImages: false,ingredients: false, categoryName: false, category: false,article: false, collection: false, setReferenceNumber: false, cut: false,
-            color: false,clarity: false,caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false, netWeight: false,
-            stoneQty: false, dominantStone: false, markup: false, certificatedNumber: false, certificateDate: false, vendorCode: false, vendorName: false,
-            metalColor: false, metalType: false, brand: false, complication: false, strapType: false, strapColor: false, buckleType: false, dialIndex: false,
-            dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false, itemCreatedDate:false,showLoading: false,
-            isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, markup: false,
-            checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false, totalUpdatedCost: false,
-            totalPrice: false, companyName: false, warehouseName: false, createdDate: false, isOpenPrintOptions: false
+            showImages: false, categoryName: false, category: false,article: false, collection: false, setReferenceNumber: false,showLoading: false,
+            quantity: false, dominantStone: false, markup: false, certificatedNumber: false, brand: false, postedDate:false, isOpenAddMyCatalog: false,
+            enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, markup: false, checkAllItems: false,
+            allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false, totalUpdatedCost: false, totalPrice: false,
+            companyName: false, warehouseName: false, createdDate: false, isOpenPrintOptions: false, salesId:false, salesPersonName:false, salesChannelType: false,
+            customer: false, customerName: false, invoicedId: false, invoiceDate: false, inventSizeId: false
         };
     }
 
@@ -81,6 +96,7 @@ class SalesSearchResultOnItem extends Component {
             });
         }
     }
+
     printResults = async(e) => {
         e.preventDefault();
         const { props } = this.props;
@@ -153,18 +169,22 @@ class SalesSearchResultOnItem extends Component {
             this.setState({isOpenPrintOptions: false});
         }
     }
+
     showDialogPrintOptions = _ =>{
         this.setState({isOpenPrintOptions: true});
     }
+
     handleClosePrintOptions = _ =>{
         this.setState({isOpenPrintOptions: false});
     }
+
     renderDialogPrintOptions = _ =>{
         const { props } = this.props;
         return(
             <ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions} isClose={this.handleClosePrintOptions} props={props} />
         );
     }
+
     salesSortingBy = e => {
         e.preventDefault();
         const { props } = this.props;
@@ -182,7 +202,6 @@ class SalesSearchResultOnItem extends Component {
                 salesSortingBy = e.target.value;
                 break;
         }
-        console.log('salesSortingBy-->',salesSortingBy);
         this.setState({activePage: 1});
         const { searchResult } = props;
         const salesSortingDirection = this.refs.salesSortingDirection.value;
@@ -213,9 +232,11 @@ class SalesSearchResultOnItem extends Component {
         currPage.onChange(1);
         currPage.value = 1;
     }
+
     salesSortingDirection = e => {
         e.preventDefault();
-        const { props, salesShowGridView, salesShowListView } = this.props;
+        const { props } = this.props;
+        const { salesShowGridView, salesShowListView } = props;
         const salesSortingDirection = e.target.value;
         const { searchResult } = props;
         const userLogin = JSON.parse(sessionStorage.logindata);
@@ -260,9 +281,11 @@ class SalesSearchResultOnItem extends Component {
         currPage.onChange(1);
         currPage.value = 1;
     }
+
     selectedSalesPageSize = e => {
         e.preventDefault();
-        const { props, salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder } = this.props;
+        const { props } = this.props;
+        const { salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder } = props;
         const salesPageSize = e.target.value;
         const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
         const userLogin = JSON.parse(sessionStorage.logindata);
@@ -305,8 +328,10 @@ class SalesSearchResultOnItem extends Component {
             }
         });
     }
+
     handleSelect(eventKey) {
-        const { props, salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder } = this.props;
+        const { props } = this.props;
+        const { salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder } = props;
         this.setState({activePage: eventKey});
         const userLogin = JSON.parse(sessionStorage.logindata);
         let salesSortingBy = '';
@@ -348,7 +373,8 @@ class SalesSearchResultOnItem extends Component {
 
     handleGo(e){
         e.preventDefault();
-        const { props, salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder, totalPages } = this.props;
+        const { props } = this.props;
+        const { salesShowGridView, salesShowListView, ItemsSalesOrder, SetReferenceSalesOrder, totalPages } = props;
         const getPage = parseInt((this.refs.reletego.value != ''? this.refs.reletego.value: this.state.activePage));
         const userLogin = JSON.parse(sessionStorage.logindata);
         if (Number(this.refs.reletego.value) > totalPages || Number(this.refs.reletego.value) < 1) {
@@ -390,6 +416,7 @@ class SalesSearchResultOnItem extends Component {
             });
         }
     }
+
     renderPagination(){
         const { props } = this.props;
         const { fields: { currPage }, totalPages, currentSalesPage, items, handleSubmit, resetForm, submitting
@@ -411,6 +438,7 @@ class SalesSearchResultOnItem extends Component {
             </div>
         );
     }
+
     renderTotals(){
         const { props } = this.props;
         const { fields: { currPage }, totalPages, currentSalesPage,ViewAsSet, items, totalPublicPrice, totalUpdatedCost, allItems, maxPrice, minPrice,
@@ -441,12 +469,144 @@ class SalesSearchResultOnItem extends Component {
         }
     }
 
+    renderAlertmsgPdf = _=> {
+        const message = 'Please check your email for printing files.';
+        const title = 'SALES SEARCH RESULTS';
+        return(
+            <Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg} props={this.props} message={message}  title={title}/>
+        );
+    }
+
+    handleClosePdfmsg = _=>{
+        this.setState({isOpenPrintPdfmsg: false});
+    }
+
+    renderAlertmsgPageInvalid = _=> {
+        const message = 'Page is invalid.';
+        const title = 'SALES SEARCH RESULTS';
+        return(
+            <Modalalertmsg isOpen={this.state.isOpenMsgPageInvalid} isClose={this.handleCloseMsgPageInvalid} props={this.props} message={message} title={title}/>
+        );
+    }
+
+    handleCloseMsgPageInvalid = _=>{
+        this.setState({isOpenMsgPageInvalid: false});
+    }
+
+    renderExportExcelDialog(){
+        let that = this;
+        // console.log('this-->',this);
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        return(
+            <RenderSalesExportExcelDialog that={this} state={this.state} userLogin={userLogin} checkFields={checkFields} labels={labels}
+                onClickHideModal={this.hideModal} onClickConfirmExport={this.confirmExport} onChangedShowImages={this.selectedShowImages}
+                onChangedSelectedAllFieldsExportExcel={this.selectedAllFieldsExportExcel} selectedAllFields={this.selectedAllFields}
+                selectedNoAllFields={this.selectedNoAllFields} />
+        );
+    }
+
+    exportExcel(){
+        const that = this;
+        checkFields.map(function(field, index){
+            that.setState({ [field]: false });
+        });
+        this.setState({ allFields: false });
+        this.setState({ showImages: false });
+        this.setState({ isOpen: true });
+    }
+
+    hideModal = (e) => {
+        e.preventDefault();
+        this.setState({ showImages: false })
+        this.setState({ isOpen: false });
+    }
+
+    confirmExport(e){
+        e.preventDefault();
+        const that = this;
+        const host = HOSTNAME || 'localhost';
+        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
+        const { props, salesShowGridView, salesShowListView } = this.props;
+        const { items, exportItems, paramsSalesSearch } = props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        let salesSortingBy = '';
+        switch (this.refs.salesSortingBy.value) {
+            case 'netAmount':
+              salesSortingBy = 'netAmount.' + userLogin.currency;
+              break;
+            case 'price':
+                salesSortingBy = 'price.' + userLogin.currency;
+                break;
+            default:
+                salesSortingBy = this.refs.salesSortingBy.value;
+                break;
+        }
+        const salesSortingDirection = this.refs.salesSortingDirection.value;
+        let fields = {
+            allFields: this.state.allFields, showImages: this.state.showImages, categoryName: this.state.categoryName, category: this.state.category,
+            article: this.state.article, collection: this.state.collection, setReferenceNumber: this.state.setReferenceNumber, quantity: this.state.quantity,
+            dominantStone: this.state.dominantStone, markup: this.state.markup, certificatedNumber: this.state.certificatedNumber, brand: this.state.brand,
+            postedDate: this.state.postedDate, salesId: this.state.salesId, salesPersonName: this.state.salesPersonName, salesChannelType: this.state.salesChannelType,
+            customer: this.state.customer, customerName: this.state.customerName, invoicedId: this.state.invoicedId, invoiceDate: this.state.invoiceDate,
+            inventSizeId: this.state.inventSizeId
+        };
+        let params = {
+            'page' : this.props.currentSalesPage, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection,'pageSize' : this.props.pageSize,
+            'fields': fields, 'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email
+        };
+        // default search params
+        const filters =  JSON.parse(sessionStorage.filters);
+
+        params = GetGemstoneLotnumberFilter(filters, params);
+
+        this.setState({ showLoading: true, isOpen: false });
+
+        let girdView = salesShowGridView;
+        let listView = salesShowListView;
+
+        props.setSalesShowGridView(false);
+        props.setSalesShowListView(false);
+
+        props.exportSalesDatas(params).then((value) => {
+            if(girdView){
+                props.setSalesShowGridView(true);
+            }else if (listView) {
+                props.setSalesShowListView(true);
+            }
+            that.setState({ showLoading: false, isOpenDownload: true });
+        });
+    }
+
+    selectedAllFieldsExportExcel = event => {
+        const that = this;
+        this.setState({ allFields: event.target.checked });
+        if (event.target.checked) {
+            checkFields.map(function(field, index){
+                that.setState({ [field]: true });
+            });
+        } else {
+            checkFields.map(function(field, index){
+                that.setState({ [field]: false });
+            });
+        }
+    }
+
+    selectedShowImages = event =>{
+        this.setState({ showImages: event.target.checked })
+    }
+    selectedAllFields = _ =>{
+        this.setState({ allFields:true });
+    }
+    selectedNoAllFields = _ =>{
+        this.setState({ allFields:false });
+    }
+
     render(){
         const {
             props, onClickNewSalesSearch, onClickModifySalesSearch, onChangedSalesSortingBy, onChangedSalesSortingDirection, onClickGridViewResults,
-            onClickListViewResults, hideModalNoResults, onClickHideModalNoResults, submitting, salesShowGridView, salesShowListView, ViewAsSet
+            onClickListViewResults, hideModalNoResults, onClickHideModalNoResults, submitting
         } = this.props;
-        const { items, salesPageSize, exportItems } = props;
+        const { items, salesPageSize, exportItems, salesShowGridView, salesShowListView, ViewAsSet } = props;
         return(
             <form role="form">
                 {/* Header Search */}
@@ -585,6 +745,9 @@ class SalesSearchResultOnItem extends Component {
                     </div>
                 </div>
                 {this.renderDialogPrintOptions()}
+                {this.renderAlertmsgPdf()}
+                {this.renderAlertmsgPageInvalid()}
+                {this.renderExportExcelDialog()}
             </form>
         )
     }

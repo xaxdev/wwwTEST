@@ -49,12 +49,12 @@ module.exports = {
                 })
             }else{
                 internals.query = GetSalesSearch(request, 0, 100000,null);
-                console.log(JSON.stringify(internals.query, null, 2));
+                // console.log(JSON.stringify(internals.query, null, 2));
                 ps.push(getClarityItems(internals.query));
             }
         }else{
             internals.query = GetSalesSearch(request, 0, 100000,null);
-            console.log(JSON.stringify(internals.query, null, 2));
+            // console.log(JSON.stringify(internals.query, null, 2));
             ps.push(getClarityItems(internals.query));
         }
 
@@ -67,7 +67,7 @@ module.exports = {
             body: internals.query
         });
 
-        const getSetReference = getAllItems.then((response) => {
+        const getSetReference = getAllSalesItems.then((response) => {
             const setReferenceResult = response.hits.hits.map((element) => element._source);
             const setReferenceFilter = setReferenceResult.filter((item) => {
                 return item.setReference != undefined && item.setReference != '';
@@ -210,20 +210,17 @@ module.exports = {
                 const setReferences = await getSetReferenceData(data);
                 const setReferenceData = setReferences.hits.hits.map((element) => element._source);
 
-                let itemsNotMMECONSResult =[{}];
-                let itemsMMECONSResult =[{}];
-
                 let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
                 elastic.close();
 
                 if (isViewAsSet) {
-                    return reply(getAllSalesData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys,
-                        obj, request, itemsOrder, setReferencdOrder,isSetReference
+                    return reply(getAllSalesData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
+                        setReferencdOrder,isSetReference
                     ));
                 }else {
-                    return reply(getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj,
-                        request, itemsOrder, setReferencdOrder,isSetReference
+                    return reply(getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder, setReferencdOrder,
+                        isSetReference
                     ));
                 }
                 // console.log('allItems-->',getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));

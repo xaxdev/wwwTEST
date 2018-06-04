@@ -234,10 +234,8 @@ class ListSalesItemsView extends Component {
                             </thead>
                             {items.map((item) => {
                                 return(
-                                    <ListSalesItemsViewASSet key={item.reference} id={item.reference}
-                                        item={item} ViewAsSet={ViewAsSet}
-                                        onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog}
-                                        listMyCatalog={listMyCatalog} onClickList={this.onClickListSet}/>
+                                    <ListSalesItemsViewASSet key={item.reference} id={item.reference} item={item} ViewAsSet={ViewAsSet}
+                                        onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog} listMyCatalog={listMyCatalog} onClickList={this.onClickListSet}/>
                                 );
                             })}
                         </table>
@@ -262,9 +260,9 @@ class ListSalesItemsView extends Component {
         }else{
             items = {...this.props.items};
             return (
-              <div>
-                Loading...
-              </div>
+                <div>
+                    Loading...
+                </div>
             );
         }
     }

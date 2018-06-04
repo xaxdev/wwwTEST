@@ -2,8 +2,8 @@ const Boom = require('boom');
 const Hoek = require('hoek');
 const Joi = require('joi');
 const Promise = require('bluebird');
-const GetSearch = require('../utils/getSearch');
-const GetAllData = require('../utils/getAllData');
+const GetSalesSearch = require('../utils/getSalesSearch');
+const getAllSalesData = require('../utils/getAllSalesData');
 // Require library export excel
 const xl = require('excel4node');
 const _ = require('lodash');
@@ -39,14 +39,16 @@ module.exports = {
         let ROOT_URL = request.payload.ROOT_URL;
         let listFileName = [];
         let userName = request.payload.userName;
-
         let size = request.payload.pageSize;
+        let itemsOrder = request.payload.ItemsSalesOrder;
+        let setReferencdOrder = request.payload.SetReferenceSalesOrder;
+        let isSetReference = !!request.payload.setReference? true: false;
 
-        internals.query = GetSearch(request, 0, 100000);
+        internals.query = GetSalesSearch(request, 0, 100000);
 
         const getAllItems =  elastic.search({
-            index: 'mol',
-            type: 'items',
+            index: 'mol_solditems',
+            type: 'solditems',
             body: internals.query
         });
 
@@ -83,6 +85,7 @@ module.exports = {
                   break;
                 default:
             }
+
             const query = JSON.parse(
                 `{
                     "timeout": "5s",
@@ -109,9 +112,11 @@ module.exports = {
                     }
                   }`
             );
+
             //   console.log(JSON.stringify(query, null, 2));
+
             return elastic.search({
-                index: 'mol',
+                index: 'mol_solditems',
                 type: 'setitems',
                 body: query
             })
@@ -130,7 +135,7 @@ module.exports = {
 
                 amqp.connect(amqpHost, function(err, conn) {
                     conn.createChannel(function(err, ch) {
-                        const q = amqpChannel;
+                        var q = amqpChannel;
 
                         ch.assertQueue(q);
                         // Note: on Node 6 Buffer.from(msg) should be used
@@ -140,9 +145,11 @@ module.exports = {
                 });
 
                 if (isViewAsSet) {
-                    return reply(GetAllData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+                    return reply(getAllSalesData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
+                        setReferencdOrder, isSetReference));
                 }else {
-                    return reply(GetAllData(allItemsResult, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
+                    return reply(getAllSalesData(allItemsResult, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
+                        setReferencdOrder, isSetReference));
                 }
             })
             .catch(function(err) {

@@ -204,15 +204,15 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             if (item.setReference !== undefined && item.setReference !== '') {
                 setReferences.push({'reference':item.setReference});
             }
-            if(item.price != undefined){
-                if(item.price[userCurrency] != undefined){
-                    if(item.price[userCurrency] != 0){
-                        maxPrice = Math.max(maxPrice, item.price[userCurrency]);
+            if(item.netAmount != undefined){
+                if(item.netAmount[userCurrency] != undefined){
+                    if(item.netAmount[userCurrency] != 0){
+                        maxPrice = Math.max(maxPrice, item.netAmount[userCurrency]);
                     }else{
                         maxPrice = Math.max(maxPrice, 0);
                     }
                 }else{
-                    item.price[userCurrency] = 0;
+                    item.netAmount[userCurrency] = 0;
                     maxPrice = Math.max(maxPrice, 0);
                 }
             }else{
@@ -239,9 +239,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
 
         let minPrice = maxPrice;
         data.forEach(function(item){
-            if(item.price != undefined){
-                if(item.price[userCurrency] != undefined){
-                    minPrice = Math.min(minPrice, item.price[userCurrency]);
+            if(item.netAmount != undefined){
+                if(item.netAmount[userCurrency] != undefined){
+                    minPrice = Math.min(minPrice, item.netAmount[userCurrency]);
                 }else{
                     minPrice = Math.min(minPrice, 0);
                 }

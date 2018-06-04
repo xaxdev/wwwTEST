@@ -13,7 +13,6 @@ class ListSalesItemsViewPrint extends Component {
         super(props);
 
         this.renderImage = this.renderImage.bind(this);
-        this.renderCheckItem = this.renderCheckItem.bind(this);
         this.renderAction = this.renderAction.bind(this);
         this.onClickGrid = this.onClickGrid.bind(this);
 
@@ -21,10 +20,6 @@ class ListSalesItemsViewPrint extends Component {
             initialPageLength:16
         };
     }
-
-    static propTypes = {
-        onClickGrid: PropTypes.func.isRequired
-    };
 
     componentWillReceiveProps = (nextProps) => {
         this.setState({initialPageLength: this.props.salesPageSize});
@@ -34,35 +29,31 @@ class ListSalesItemsViewPrint extends Component {
         const { ViewAsSet } = this.props;
         if (ViewAsSet) {
             return(
-              <div className="searchresult-list-icon">
-              <div className="hidden">
-                <button type="button"
-                    onClick={
-                      (eventKey) => {
-                        // console.log('eventKey-->',item.id);
-                      }
-                    }
-                > <img src="/images/icon-add.png" width="30"/></button>
-                <br/>
-              </div>
-              <button type="button" name={row.reference} id={row.reference} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
-              </div>
+                <div className="searchresult-list-icon">
+                    <div className="hidden">
+                        <button type="button">
+                            <img src="/images/icon-add.png" width="30"/>
+                        </button>
+                        <br/>
+                    </div>
+                    <button type="button" name={row.reference} id={row.reference} onClick={this.onClickGrid}>
+                        <img src="/images/icon-search-30.png" width="30" />
+                    </button>
+                </div>
             );
         }else{
             return(
-              <div className="searchresult-list-icon">
-              <div className="hidden">
-                <button type="button"
-                    onClick={
-                      (eventKey) => {
-                        // console.log('eventKey-->',item.id);
-                      }
-                    }
-                > <img src="/images/icon-add.png" width="30"/></button>
-                <br/>
-              </div>
-              <button type="button" name={row.id} id={row.id} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
-              </div>
+                <div className="searchresult-list-icon">
+                    <div className="hidden">
+                        <button type="button">
+                            <img src="/images/icon-add.png" width="30"/>
+                        </button>
+                        <br/>
+                    </div>
+                    <button type="button" name={row.id} id={row.id} onClick={this.onClickGrid}>
+                        <img src="/images/icon-search-30.png" width="30" />
+                    </button>
+                </div>
             );
         }
     }
@@ -74,20 +65,7 @@ class ListSalesItemsViewPrint extends Component {
 
     renderImage = (val,row) => {
         return (
-            <ReactImageFallback
-                   src={row.imageThumbnail}
-                   fallbackImage="/images/blank.gif"
-                   initialImage="/images/blank.gif"
-                   width="60"
-                   />
-        );
-    }
-
-    renderCheckItem = (val, row) => {
-        return(
-            <div>
-              <input type="checkbox" />
-            </div>
+            <ReactImageFallback src={row.imageThumbnail} fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width="60" />
         );
     }
 
@@ -218,8 +196,7 @@ class ListSalesItemsViewPrint extends Component {
             if (ViewAsSet) {
                 return (
                     <div key={'listViewPrint'} id={'listViewPrint'}>
-                        <table key={'listViewPrint'} id={'listViewPrint'}
-                              className="table table-bordered table-searchresult">
+                        <table key={'listViewPrint'} id={'listViewPrint'} className="table table-bordered table-searchresult">
                             <thead key={'listViewPrint'} id={'listViewPrint'}>
                                   <tr>
                                       <th><span>Images</span></th>
@@ -245,8 +222,7 @@ class ListSalesItemsViewPrint extends Component {
                             </thead>
                             {items.map((item) => {
                                 return(
-                                    <ListSalesItemsViewASSetPrint key={item.reference} id={item.reference}
-                                          item={item} ViewAsSet={ViewAsSet}/>
+                                    <ListSalesItemsViewASSetPrint key={item.reference} id={item.reference} item={item} ViewAsSet={ViewAsSet}/>
                                 );
                             })}
                         </table>
@@ -254,25 +230,20 @@ class ListSalesItemsViewPrint extends Component {
                 );
             }else{
                 return (
-                  <div>
-                    <DataTable
-                      className="col-sm-12"
-                      keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight', 'stoneDetail','priceUSD' ]}
-                      columns={tableColumns}
-                      initialData={items}
-                      initialPageLength={this.state.initialPageLength}
-                      initialSortBy={{ prop: 'reference', order: 'ascending' }}
-                      pageLengthOptions={[ 5, 20, 50 ]}
-                    />
-                  </div>
+                    <div>
+                        <DataTable className="col-sm-12" columns={tableColumns} initialData={items} initialPageLength={this.state.initialPageLength}
+                            keys={['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight',
+                            'stoneDetail','priceUSD','']}
+                            initialSortBy={{ prop: 'reference', order: 'ascending' }} pageLengthOptions={[ 5, 20, 50 ]} />
+                    </div>
                 );
             }
         }else{
             items = {...this.props.items};
             return (
-              <div>
-                Loading...
-              </div>
+                <div>
+                    Loading...
+                </div>
             );
         }
     }

@@ -124,5 +124,10 @@ module.exports = [
         method: 'GET',
         path: '/relatedsalesitems/{collection}/{page}/{productId}/{dominant}/{currency}/{price}',
         config: controllers.relatedsalesitems
+    },
+    {
+        method: 'POST',
+        path: '/export/sales',
+        config: controllers.salesexport
     }
 ];
