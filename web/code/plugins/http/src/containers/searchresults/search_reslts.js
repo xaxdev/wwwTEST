@@ -174,11 +174,11 @@ class SearchResult extends Component {
 
     componentWillReceiveProps(nextProps) {
         let { fields:{currPage} } = this.props;
-        if(this.props.currentSalesPage != nextProps.currentSalesPage){
-            currPage.onChange(nextProps.currentSalesPage);
+        if(this.props.currentPage != nextProps.currentPage){
+            currPage.onChange(nextProps.currentPage);
         }else{
             if (currPage.value == undefined) {
-                currPage.onChange(nextProps.currentSalesPage);
+                currPage.onChange(nextProps.currentPage);
             }
         }
     }
@@ -803,9 +803,8 @@ class SearchResult extends Component {
             limitedEditionNumber: this.state.limitedEditionNumber, itemCreatedDate: this.state.itemCreatedDate
         };
         let params = {
-            'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection,
-            'pageSize' : this.props.pageSize, 'fields': fields, 'price': userLogin.permission.price,
-            'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email
+            'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : this.props.pageSize, 'fields': fields,
+            'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'OnHand'
         };
         // default search params
         const filters =  JSON.parse(sessionStorage.filters);
@@ -859,9 +858,8 @@ class SearchResult extends Component {
         };
 
         let params = {
-            'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection,
-            'pageSize' : this.props.pageSize, 'fields': fields, 'price': userLogin.permission.price,
-            'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email
+            'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : this.props.pageSize,  'fields': fields,
+            'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'OnHand'
         };
 
         // default search params
@@ -891,85 +889,37 @@ class SearchResult extends Component {
     }
 
     renderExportExcelDialog(){
-        let that = this;
+        const that = this;
         const userLogin = JSON.parse(sessionStorage.logindata);
         return(
-            <RenderExportExcelDialog that={this} userLogin={userLogin} checkFields={checkFields} labels={labels}/>
+            <RenderExportExcelDialog that={this} userLogin={userLogin} checkFields={checkFields} labels={labels} selectedAllFields={this.selectedAllFields}
+                selectedNoAllFields={this.selectedNoAllFields}/>
         );
+    }
+
+    selectedAllFields = _ =>{
+        this.setState({ allFields:true });
+    }
+
+    selectedNoAllFields = _ =>{
+        this.setState({ allFields:false });
     }
 
     renderExportExcelViewAsSetDialog = _=>{
-        let that = this;
+        const that = this;
         const userLogin = JSON.parse(sessionStorage.logindata);
         return(
-            <RenderExportExcelViewAsSetDialog that={this} userLogin={userLogin}
-                checkFieldsViewAsSet ={checkFieldsViewAsSet } labelsViewAsSet={labelsViewAsSet}/>
+            <RenderExportExcelViewAsSetDialog that={this} userLogin={userLogin} checkFieldsViewAsSet ={checkFieldsViewAsSet } labelsViewAsSet={labelsViewAsSet}
+                selectedAllFieldsViewAsSet={this.selectedAllFieldsViewAsSet} selectedNoAllFieldsViewAsSet={this.selectedNoAllFieldsViewAsSet}/>
         );
     }
 
-    renderDownloadDialog(){
-        let that = this;
-        const { listFileName } = that.props;
-        const userLogin = JSON.parse(sessionStorage.logindata);
-        if(listFileName != null){
-            return(
-                <div>
-                    <div  className="popexport">
-                        <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
-                            <div className="modal-header">
-                                <ModalClose onClick={this.hideModalDownload}/>
-                                <h1 className="modal-title">Export</h1>
-                            </div>
-                            <div className="modal-body">
-                                <h3>Please check your email for download files.</h3>
-                                <a href={listFileName[0]} target="_blank" >{listFileName[0]}</a>
-                                <link></link>
-                                <br/>
-                                <div className="col-sm-12">
-                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
-                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
-                                </div>
-                                <div className="col-md-12">
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
-                                    Close
-                                </button>
-                            </div>
-                        </Modal>
-                    </div>
-                </div>
-            );
-        }else{
-            return(
-                <div>
-                    <div  className="popexport">
-                        <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
-                            <div className="modal-header">
-                                <ModalClose onClick={this.hideModalDownload}/>
-                                <h1 className="modal-title">Export</h1>
-                            </div>
-                            <div className="modal-body">
-                                <h3>Please check your email for download files.</h3>
-                                <br/>
-                                <div className="col-sm-12">
-                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
-                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
-                                </div>
-                                <div className="col-md-12">
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
-                                    Close
-                                </button>
-                            </div>
-                        </Modal>
-                    </div>
-                </div>
-            );
-        }
+    selectedAllFieldsViewAsSet = _ =>{
+        this.setState({ allFieldsViewAsSet:true });
+    }
+
+    selectedNoAllFieldsViewAsSet = _ =>{
+        this.setState({ allFieldsViewAsSet:false });
     }
 
     addMyCatalog = _=>{
@@ -1062,9 +1012,8 @@ class SearchResult extends Component {
     renderAddMyCatalog = _=> {
         const { listCatalogName, listSetCatalogName, submitting } = this.props;
         return(
-            <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName}
-                isOpen={this.state.isOpenAddMyCatalog} isClose={this.handleClose} props={this.props}
-                listSetCatalogName = {listSetCatalogName}/>
+            <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
+                isClose={this.handleClose} props={this.props} listSetCatalogName = {listSetCatalogName}/>
         );
     }
 
@@ -1322,12 +1271,11 @@ class SearchResult extends Component {
                             </div>
                         </div>
                         {this.renderExportExcelDialog()}
-                        {this.renderDownloadDialog()}
+                        {this.renderExportExcelViewAsSetDialog()}
                         {this.renderAddMyCatalog()}
                         {this.renderAlertmsg()}
                         {this.renderAlertmsgPdf()}
                         {this.renderAlertmsgPageInvalid()}
-                        {this.renderExportExcelViewAsSetDialog()}
                         {this.renderDialogPrintOptions()}
                     </form>
                 );

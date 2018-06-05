@@ -552,7 +552,8 @@ class SalesSearchResultOnItem extends Component {
         };
         let params = {
             'page' : this.props.currentSalesPage, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection,'pageSize' : this.props.pageSize,
-            'fields': fields, 'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email
+            'fields': fields, 'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email,
+            'typeFile': 'Sales'
         };
         // default search params
         const filters =  JSON.parse(sessionStorage.filters);
