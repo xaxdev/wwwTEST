@@ -108,23 +108,23 @@ module.exports = {
                     "sort" : [
                         ${missing}
                         {"${sortBy}" : "${sortDirections}"}
-                     ],
-                     "query":{
-                          "constant_score": {
+                    ],
+                    "query":{
+                        "constant_score": {
                             "filter": {
-                              "bool": {
-                                "must": [
-                                  {
-                                    "match": {
-                                      "reference": "${setReferenceUniq.join(' ')}"
-                                    }
-                                  }
-                                ]
-                              }
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "reference": "${setReferenceUniq.join(' ')}"
+                                            }
+                                        }
+                                    ]
+                                }
                             }
-                          }
-                       }
-                  }`
+                        }
+                    }
+                }`
             );
 
             return elastic.search({
@@ -175,23 +175,23 @@ module.exports = {
                     "sort" : [
                         ${missing}
                         {"${sortBy}" : "${sortDirections}"}
-                     ],
-                     "query":{
-                          "constant_score": {
+                    ],
+                    "query":{
+                        "constant_score": {
                             "filter": {
-                              "bool": {
-                                "must": [
-                                  {
-                                    "match": {
-                                      "reference": "${setReferenceUniq.join(' ')}"
-                                    }
-                                  }
-                                ]
-                              }
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "reference": "${setReferenceUniq.join(' ')}"
+                                            }
+                                        }
+                                    ]
+                                }
                             }
-                          }
-                       }
-                  }`
+                        }
+                    }
+                }`
             );
 
             return elastic.search({

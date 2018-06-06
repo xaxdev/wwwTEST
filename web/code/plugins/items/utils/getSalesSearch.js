@@ -76,7 +76,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
 
             if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' && key != 'pageSize'
                 && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' && key != 'viewAsSet' && key != 'ItemsSalesOrder' && key != 'SetReferenceSalesOrder'
-                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice' && key != 'article'
+                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice' && key != 'article' && key != 'typeFile'
             ){
                 if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency' || key == 'polish' || key == 'mustHave'
                     || key == 'symmetry' || key == 'treatment' || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
@@ -101,11 +101,11 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
 
                     filter =
                     `{
-                      "match": {
-                        "${key}": {
-                          "query": "${value}"
+                        "match": {
+                            "${key}": {
+                                "query": "${value}"
+                            }
                         }
-                      }
                     }`;
                 } else if(key == 'lotQuantityFrom' || key == 'lotQuantityTo'){
                     if(key == 'lotQuantityFrom'){
@@ -305,20 +305,20 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     let mapField =
                     `{
                         "match": {
-                          "description": {
-                            "query": "${vals.trim()}",
-                            "type": "phrase"
-                          }
+                            "description": {
+                                "query": "${vals.trim()}",
+                                "type": "phrase"
+                            }
                         }
                     }`;
                     filter =
-                      `{
-                          "bool": {
+                    `{
+                        "bool": {
                             "must": [
                                 ${mapField}
-                              ]
-                            }
-                      }`;
+                            ]
+                        }
+                    }`;
                 } else if(key == 'notUseHierarchy'){
                     let filterSplit = [];
                     let vals = value.split('|');
@@ -326,58 +326,57 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                         let mapField =
                         `{
                             "match": {
-                              "hierarchy": {
-                                "query": "${val.trim()}",
-                                "type": "phrase"
-                              }
+                                "hierarchy": {
+                                    "query": "${val.trim()}",
+                                    "type": "phrase"
+                                }
                             }
-                          }`;
-
-                          filterSplit.push(JSON.parse(mapField));
+                        }`;
+                        filterSplit.push(JSON.parse(mapField));
                     });
                     filter =
                     `{
-                      "bool": {
-                        "must_not": [
-                            ${JSON.stringify(filterSplit)}
-                          ]
+                        "bool": {
+                            "must_not": [
+                                ${JSON.stringify(filterSplit)}
+                            ]
                         }
-                      }`;
+                    }`;
                 } else if(key == 'hierarchy'){
                     let filterSplit = [];
                     let vals = value.split('|');
                     vals.forEach((val)=>{
                         let mapField =
-                            `{
-                                "match": {
-                                  "hierarchy": {
+                        `{
+                            "match": {
+                                "hierarchy": {
                                     "query": "${val.trim()}",
                                     "type": "phrase"
-                                  }
                                 }
-                              }`;
+                            }
+                        }`;
                         filterSplit.push(JSON.parse(mapField));
                     });
                     filter =
-                      `{
+                    `{
                         "bool": {
-                          "should": [
-                              ${JSON.stringify(filterSplit)}
+                            "should": [
+                                ${JSON.stringify(filterSplit)}
                             ]
-                          }
-                        }`;
+                        }
+                    }`;
                 } else if(key == 'gemstones'){
                     // filter = GetSearchGemstone(key, obj, userCurrency, clarity);
                 } else if(key == 'lotNumbers'){
                     // filter = GetSearchLotNumber(key, obj, userCurrency);
                 } else {
-                  filter =
+                    filter =
                     `{
-                      "match": {
-                        "${key}": {
-                          "query": "${value}"
+                        "match": {
+                            "${key}": {
+                                "query": "${value}"
+                            }
                         }
-                      }
                     }`;
                 }
                 if(filter != ''){
@@ -391,28 +390,28 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
             let keysObjRange = Object.keys(objRange);
             keysObjRange.forEach((key) => {
                 if(key != 'length'){
-                  if(objRange[key].to != 0){
-                      filter =
+                    if(objRange[key].to != 0){
+                        filter =
                         `{
-                          "range": {
-                            "${key}": {
-                              "gte": "${objRange[key].from}",
-                              "lte": "${objRange[key].to}"
+                            "range": {
+                                "${key}": {
+                                    "gte": "${objRange[key].from}",
+                                    "lte": "${objRange[key].to}"
+                                }
                             }
-                          }
                         }`;
-                  }else{
-                      filter =
+                    }else{
+                        filter =
                         `{
-                          "range": {
-                            "${key}": {
-                              "gte": "${objRange[key].from}"
+                            "range": {
+                                "${key}": {
+                                    "gte": "${objRange[key].from}"
+                                }
                             }
-                          }
                         }`;
-                  }
-                  internals.filters.push(JSON.parse(filter));
-                  filter = '';
+                    }
+                    internals.filters.push(JSON.parse(filter));
+                    filter = '';
                 }
             });
         }
@@ -437,6 +436,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
             sortEs = `${missing}
                       {"${sortBy}" : "${sortDirections}"}`;
         }
+
         if (!!keys.find((key) => {return key == 'warehouse'})) {
             let value = obj['warehouse'];
             //    have MME.CONS
@@ -525,16 +525,15 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
     } else {
         internals.query = JSON.parse(
             `{
-              "timeout": "5s",
-              "from": ${fromRecord},
-              "size": ${sizeRecord},
-              "sort" : [
-                  ${sortEs}
-               ],
-              "query":
-               {
-                "match_all": {}
-               }
+                "timeout": "5s",
+                "from": ${fromRecord},
+                "size": ${sizeRecord},
+                "sort" : [
+                    ${sortEs}
+                ],
+                "query": {
+                    "match_all": {}
+                }
             }`
         );
     }

@@ -267,7 +267,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         }
 
         exportData = data;
-
         let pageData = data.slice( (page - 1) * size, page * size );
         let sumPrice = 0;
         let sumCost = 0;

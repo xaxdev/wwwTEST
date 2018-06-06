@@ -527,7 +527,7 @@ class SalesSearchResultOnItem extends Component {
         const host = HOSTNAME || 'localhost';
         const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
         const { props, salesShowGridView, salesShowListView } = this.props;
-        const { items, exportItems, paramsSalesSearch } = props;
+        const { items, exportItems, paramsSalesSearch,ItemsSalesOrder, SetReferenceSalesOrder } = props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
@@ -551,9 +551,10 @@ class SalesSearchResultOnItem extends Component {
             inventSizeId: this.state.inventSizeId
         };
         let params = {
-            'page' : this.props.currentSalesPage, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection,'pageSize' : this.props.pageSize,
-            'fields': fields, 'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email,
-            'typeFile': 'Sales'
+            'page' : (props.currentSalesPage!=undefined?props.currentSalesPage:1), 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection,
+            'pageSize' : (props.salesPageSize!=undefined?props.salesPageSize:16), 'fields': fields, 'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 
+            'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'Sales','ItemsSalesOrder': ItemsSalesOrder,
+            'SetReferenceSalesOrder': SetReferenceSalesOrder
         };
         // default search params
         const filters =  JSON.parse(sessionStorage.filters);
@@ -567,7 +568,8 @@ class SalesSearchResultOnItem extends Component {
 
         props.setSalesShowGridView(false);
         props.setSalesShowListView(false);
-
+        
+        console.log('params-->',params);
         props.exportSalesDatas(params).then((value) => {
             if(girdView){
                 props.setSalesShowGridView(true);

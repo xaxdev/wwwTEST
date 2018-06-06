@@ -43,16 +43,44 @@ module.exports = {
         let itemsOrder = request.payload.ItemsSalesOrder;
         let setReferencdOrder = request.payload.SetReferenceSalesOrder;
         let isSetReference = !!request.payload.setReference? true: false;
+        let ps=[];
 
-        internals.query = GetSalesSearch(request, 0, 100000);
+        const getClarityItems =  (query) => {
+            // console.log(JSON.stringify(query, null, 2));
+            return elastic.search({
+                index: 'mol_solditems',
+                type: 'solditems',
+                body: query
+            })
+        };
 
-        const getAllItems =  elastic.search({
+        if (!!keys.find((key) => {return key == 'gemstones'})) {
+            const valusObj = obj['gemstones'];
+            const clarityFields = Object.keys(valusObj);
+            if (!!clarityFields.find((key) => {return key == 'clarity'})) {
+                const clarities = valusObj.clarity.split(',');
+                clarities.map((clar) => {
+                    internals.query = GetSalesSearch(request, 0, 100000,clar);
+                    ps.push(getClarityItems(internals.query));
+                })
+            }else{
+                internals.query = GetSalesSearch(request, 0, 100000,null);
+                // console.log(JSON.stringify(internals.query, null, 2));
+                ps.push(getClarityItems(internals.query));
+            }
+        }else{
+            internals.query = GetSalesSearch(request, 0, 100000,null);
+            // console.log(JSON.stringify(internals.query, null, 2));
+            ps.push(getClarityItems(internals.query));
+        }
+
+        const getAllSalesItems =  elastic.search({
             index: 'mol_solditems',
             type: 'solditems',
             body: internals.query
         });
 
-        const getSetReference = getAllItems.then((response) => {
+        const getSetReference = getAllSalesItems.then((response) => {
             const setReferenceResult = response.hits.hits.map((element) => element._source);
             const setReferenceFilter = setReferenceResult.filter((item) => {
                 return item.setReference != undefined && item.setReference != '';
@@ -67,9 +95,9 @@ module.exports = {
             if (sortBy.indexOf('price') != -1) {
                 sortBy = 'totalPrice.USD';
             }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'createdDate';
+                sortBy = 'postedDate';
             }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'createdDate';
+                sortBy = 'postedDate';
             }else if (sortBy.indexOf('setReference') != -1) {
                 sortBy = 'reference';
             }else{
@@ -80,9 +108,9 @@ module.exports = {
 
             switch (sortDirections) {
                 case 'asc':
-                  missing = '"missing" : "_first"';
-                  missing = `{"${sortBy}" : {${missing}}},`;
-                  break;
+                    missing = '"missing" : "_first"';
+                    missing = `{"${sortBy}" : {${missing}}},`;
+                    break;
                 default:
             }
 
@@ -90,30 +118,28 @@ module.exports = {
                 `{
                     "timeout": "5s",
                     "from": 0,
-                  "size": 10000,
-                  "sort" : [
-                      ${missing}
-                      {"${sortBy}" : "${sortDirections}"}
-                   ],
-                  "query":{
-                       "constant_score": {
-                         "filter": {
-                           "bool": {
-                             "must": [
-                               {
-                                 "match": {
-                                   "reference": "${setReferenceUniq.join(' ')}"
-                                 }
-                               }
-                             ]
-                           }
-                         }
-                       }
+                    "size": 10000,
+                    "sort" : [
+                        ${missing}
+                        {"${sortBy}" : "${sortDirections}"}
+                    ],
+                    "query":{
+                        "constant_score": {
+                            "filter": {
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "reference": "${setReferenceUniq.join(' ')}"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     }
-                  }`
+                }`
             );
-
-            //   console.log(JSON.stringify(query, null, 2));
 
             return elastic.search({
                 index: 'mol_solditems',
@@ -122,17 +148,85 @@ module.exports = {
             })
         });
 
-        try {
-            Promise.all([getAllItems, getSetReference]).spread((allItems, setReferences) => {
-                const allItemsResult = allItems.hits.hits.map((element) => element._source);
-                const totalRecord = allItems.hits.total;
+        const getSetReferenceData = (data) => {
+            const setReferenceResult = data;
+            const setReferenceFilter = setReferenceResult.filter((item) => {
+                return item.setReference != undefined && item.setReference != '';
+            })
+            const setReferenceArray = setReferenceFilter.map((item) => {
+                return item.setReference;
+            })
+            const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
+                return !pos || item != ary[pos - 1];
+            })
+            let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
+            if (sortBy.indexOf('price') != -1) {
+                sortBy = 'totalPrice.USD';
+            }else if (sortBy.indexOf('Date') != -1) {
+                sortBy = 'postedDate';
+            }else if (sortBy.indexOf('setReference') != -1) {
+                sortBy = 'reference';
+            }else{
+                sortBy = sortBy;
+            }
 
+            let missing = '';
+
+            switch (sortDirections) {
+                case 'asc':
+                    missing = '"missing" : "_first"';
+                    missing = `{"${sortBy}" : {${missing}}},`;
+                    break;
+                default:
+                    break;
+            }
+
+            const query = JSON.parse(
+                `{
+                    "timeout": "5s",
+                    "from": 0,
+                    "size": 10000,
+                    "sort" : [
+                        ${missing}
+                        {"${sortBy}" : "${sortDirections}"}
+                    ],
+                    "query":{
+                        "constant_score": {
+                            "filter": {
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "reference": "${setReferenceUniq.join(' ')}"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }`
+            );
+
+            return elastic.search({
+                index: 'mol_solditems',
+                type: 'setitems',
+                body: query
+            })
+        };
+
+        try {
+            Promise.all(ps).then(async (allItems) => {
+                let data = [];
+                await allItems.map((all) => {
+                    data.push(...all.hits.hits.map((element) => element._source))
+                })
+                const setReferences = await getSetReferenceData(data);
                 const setReferenceData = setReferences.hits.hits.map((element) => element._source);
 
                 let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
                 elastic.close();
-
                 amqp.connect(amqpHost, function(err, conn) {
                     conn.createChannel(function(err, ch) {
                         var q = amqpChannel;
@@ -143,13 +237,14 @@ module.exports = {
                         // console.log(' [x] Sent "Parameter!"');
                     });
                 });
-
                 if (isViewAsSet) {
                     return reply(getAllSalesData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
-                        setReferencdOrder, isSetReference));
+                        setReferencdOrder, isSetReference
+                    ));
                 }else {
-                    return reply(getAllSalesData(allItemsResult, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
-                        setReferencdOrder, isSetReference));
+                    return reply(getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder, setReferencdOrder,
+                        isSetReference
+                    ));
                 }
             })
             .catch(function(err) {

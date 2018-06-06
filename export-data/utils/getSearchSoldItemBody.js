@@ -1,9 +1,10 @@
 const GetSearchGemstone = require('./getSearchGemstone');
+const GetSearchLotNumber = require('./getSearchLotNaumber');
 
 const internals = {
     filters: []
 };
-module.exports = (obj, fromRecord, sizeRecord, cb) => {
+module.exports = (obj, fromRecord, sizeRecord) => {
     let page = obj.page;
     let sortBy = obj.sortBy;
     let sortDirections = obj.sortDirections;
@@ -58,22 +59,24 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
     if (keys.length != 3 ){
         keys.forEach((key) => {
             filter = '';
-            // console.log('keys-->',key);
             let value = obj[key];
             if(key == 'reference' || key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'polish' || key == 'symmetry'
                 || key == 'treatment' || key == 'location' || key == 'buckleType' || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection'
                 || key == 'brand' || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour'
                 || key == 'gemstones' || key == 'limitedEdition' || key == 'sku' || key == 'origin' || key == 'watchCategory' || key == 'movement'
-                || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse'
+                || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'strapType' || key == 'strapColor' || key == 'complication'
+                || key == 'color' || key == 'setReference' || key == 'warehouse'
             ){
                 value = `${value}`
                 value = value.replace(/,/gi, ' ');
             }
-            if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' && key != 'pageSize'
-                && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' && key != 'typeFile' ){
 
-                if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency' || key == 'polish' || key == 'symmetry'
-                    || key == 'treatment' || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'|| key == 'mustHave'
+            if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' && key != 'pageSize'
+                && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' && key != 'viewAsSet' && key != 'ItemsSalesOrder' && key != 'SetReferenceSalesOrder'
+                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice'  && key != 'article' && key != 'typeFile'
+            ){
+                if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency' || key == 'polish' || key == 'mustHave'
+                    || key == 'symmetry' || key == 'treatment' || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
                     || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour' || key == 'origin' || key == 'watchCategory'
                     || key == 'limitedEdition' || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'buckleType'
                     || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse' || key == 'location' || key=='certificatedNumber'
@@ -100,7 +103,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                             }
                         }
                     }`;
-                }else if(key == 'lotQuantityFrom' || key == 'lotQuantityTo'){
+                } else if(key == 'lotQuantityFrom' || key == 'lotQuantityTo'){
                     if(key == 'lotQuantityFrom'){
                         valFromLot = value;
                     }
@@ -109,7 +112,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                     }
                     let objLength = objRange.length +1;
                     objRange = {...objRange,'quantity':{'from':valFromLot,'to':valToLot},'length':objLength};
-                }else if(key == 'totalCaratWeightFrom' || key == 'totalCaratWeightTo'){
+                } else if(key == 'totalCaratWeightFrom' || key == 'totalCaratWeightTo'){
                     keyFromCarat = 'totalCaratWeight';
                     if(key == 'totalCaratWeightFrom'){
                         valFromCarat = value;
@@ -119,7 +122,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                     }
                     let objLength = objRange.length +1;
                     objRange = {...objRange,'carat':{'from':valFromCarat,'to':valToCarat},'length':objLength};
-                }else if(key == 'totalCostFrom' || key == 'totalCostTo'){
+                } else if(key == 'totalCostFrom' || key == 'totalCostTo'){
                     keyFromCost = 'costUSD';
                     if(key == 'totalCostFrom'){
                         valFromCost = value;
@@ -160,7 +163,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                             objRange = {...objRange,'actualCost.USD':{'from':valFromCost,'to':valToCost},'length':objLength};
                             break;
                     }
-                }else if(key == 'totalUpdatedCostFrom' || key == 'totalUpdatedCostTo'){
+                } else if(key == 'totalUpdatedCostFrom' || key == 'totalUpdatedCostTo'){
                     keyFromUpdatedCost = 'updatedCostUSD';
                     if(key == 'totalUpdatedCostFrom'){
                         valFromUpdatedCost = value;
@@ -201,7 +204,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                             objRange = {...objRange,'updatedCost.USD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
                             break;
                     }
-                }else if(key == 'publicPriceFrom' || key == 'publicPriceTo'){
+                } else if(key == 'publicPriceFrom' || key == 'publicPriceTo'){
                     keyFromPPP = 'priceUSD';
                     if(key == 'publicPriceFrom'){
                         valFromPPP = value;
@@ -242,7 +245,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                             objRange = {...objRange,'price.USD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
                             break;
                     }
-                }else if(key == 'markupFrom' || key == 'markupTo'){
+                } else if(key == 'markupFrom' || key == 'markupTo'){
                     keyFromMarkup = 'markup';
                     if(key == 'markupFrom'){
                         valFromMarkup = value;
@@ -252,7 +255,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                     }
                     let objLength = objRange.length +1;
                     objRange = {...objRange,'markup':{'from':valFromMarkup,'to':valToMarkup},'length':objLength};
-                }else if(key == 'grossWeightFrom' || key == 'grossWeightTo'){
+                } else if(key == 'grossWeightFrom' || key == 'grossWeightTo'){
                     if(key == 'grossWeightFrom'){
                         valFromGrossW = value;
                     }
@@ -261,7 +264,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                     }
                     let objLength = objRange.length +1;
                     objRange = {...objRange,'grossWeight':{'from':valFromGrossW,'to':valToGrossW},'length':objLength};
-                }else if(key == 'proDateFrom' || key == 'proDateTo'){
+                } else if(key == 'proDateFrom' || key == 'proDateTo'){
                     if(key == 'proDateFrom'){
                         // MM-dd-YYYY to YYYY-MM-dd
                         let d = value.split('-');
@@ -274,7 +277,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                     }
                     let objLength = objRange.length +1;
                     objRange = {...objRange,'productionDate':{'from':valFromProDate,'to':valToProDate},'length':objLength};
-                }else if(key == 'caseDimensionFrom' || key == 'caseDimensionTo'){
+                } else if(key == 'caseDimensionFrom' || key == 'caseDimensionTo'){
                     if(key == 'caseDimensionFrom'){
                         valDimensionFrom = value;
                     }
@@ -283,7 +286,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                     }
                     let objLength = objRange.length +1;
                     objRange = {...objRange,'caseDimension':{'from':valDimensionFrom,'to':valDimensionTo},'length':objLength};
-                }else if(key == 'preciousMetalWeightFrom' || key == 'preciousMetalWeightTo'){
+                } else if(key == 'preciousMetalWeightFrom' || key == 'preciousMetalWeightTo'){
                     if(key == 'preciousMetalWeightFrom'){
                         valMetalWeightFrom = value;
                     }
@@ -292,8 +295,9 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                     }
                     let objLength = objRange.length +1;
                     objRange = {...objRange,'preciousMetalWeight':{'from':valMetalWeightFrom,'to':valMetalWeightTo},'length':objLength};
-                }else if(key == 'description'){
+                } else if(key == 'description'){
                     let filterSplit = [];
+                    // let vals = value.split(',');
                     let vals = value.replace(',',' ');
                     let mapField =
                     `{
@@ -312,7 +316,30 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                             ]
                         }
                     }`;
-                }else if(key == 'hierarchy'){
+                } else if(key == 'notUseHierarchy'){
+                    let filterSplit = [];
+                    let vals = value.split('|');
+                    vals.forEach((val)=>{
+                        let mapField =
+                        `{
+                            "match": {
+                                "hierarchy": {
+                                    "query": "${val.trim()}",
+                                    "type": "phrase"
+                                }
+                            }
+                        }`;
+                        filterSplit.push(JSON.parse(mapField));
+                    });
+                    filter =
+                    `{
+                        "bool": {
+                            "must_not": [
+                                ${JSON.stringify(filterSplit)}
+                            ]
+                        }
+                    }`;
+                } else if(key == 'hierarchy'){
                     let filterSplit = [];
                     let vals = value.split('|');
                     vals.forEach((val)=>{
@@ -335,9 +362,11 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                             ]
                         }
                     }`;
-                }else if(key == 'gemstones'){
-                    filter = GetSearchGemstone(key, obj, userCurrency);
-                }else{
+                } else if(key == 'gemstones'){
+                    // filter = GetSearchGemstone(key, obj, userCurrency);
+                } else if(key == 'lotNumbers'){
+                    // filter = GetSearchLotNumber(key, obj, userCurrency);
+                } else {
                     filter =
                     `{
                         "match": {
@@ -353,6 +382,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                 }
             }
         });
+
         if(objRange.length != 0){
             let keysObjRange = Object.keys(objRange);
             keysObjRange.forEach((key) => {
@@ -382,35 +412,116 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                 }
             });
         }
+
         let missing = '';
+        let sortEs = '';
+
         switch (sortDirections) {
             case 'asc':
                 missing = '"missing" : "_first"';
                 missing = `{"${sortBy}" : {${missing}}},`;
                 break;
             default:
+                break;
         }
 
-        internals.query = JSON.parse(
-            `{
-                "timeout": "5s",
-                "from": ${fromRecord},
-                "size": ${sizeRecord},
-                "sort" : [
-                    ${missing}
-                    {"${sortBy}" : "${sortDirections}"}
-                 ],
-                "query": {
-                    "constant_score": {
+        if (sortBy == 'setReference') {
+            sortEs = `${missing}
+                      {"${sortBy}" : "${sortDirections}"},
+                      {"priority" : "${sortDirections}"}`;
+        }else{
+            sortEs = `${missing}
+                      {"${sortBy}" : "${sortDirections}"}`;
+        }
+
+        if (!!keys.find((key) => {return key == 'warehouse'})) {
+            let value = obj['warehouse'];
+            //    have MME.CONS
+            if (value.indexOf('MME.CONS') != -1) {
+                //   intersection first array
+                internals.query = JSON.parse(
+                    `{
+                        "timeout": "5s",
+                        "from": ${fromRecord},
+                        "size": ${sizeRecord},
+                        "sort" : [
+                            ${missing}
+                            {"${sortBy}" : "${sortDirections}"}
+                        ],
                         "query": {
-                            "bool": {
-                                "must": ${JSON.stringify(internals.filters)}
+                            "constant_score": {
+                                "query": {
+                                    "bool": {
+                                          "must": ${JSON.stringify(internals.filters)}
+                                    }
+                                }
+                            }
+                        }
+                    }`
+                );
+            }else{
+                //    not have MME.CONS
+                internals.query = JSON.parse(
+                    `{
+                        "timeout": "5s",
+                        "from": ${fromRecord},
+                        "size": ${sizeRecord},
+                        "sort" : [
+                            ${missing}
+                            {"${sortBy}" : "${sortDirections}"}
+                        ],
+                        "query": {
+                            "constant_score": {
+                                "query": {
+                                    "bool": {
+                                          "must": ${JSON.stringify(internals.filters)},
+                                          "must_not":[
+                                            {
+                                                  "match": {
+                                                      "warehouse": {
+                                                          "query": "MME.CONS"
+                                                      }
+                                                  }
+                                              }
+                                          ]
+                                    }
+                                }
+                            }
+                        }
+                    }`
+                );
+            }
+        }else{
+            internals.query = JSON.parse(
+                `{
+                    "timeout": "5s",
+                    "from": ${fromRecord},
+                    "size": ${sizeRecord},
+                    "sort" : [
+                        ${missing}
+                        {"${sortBy}" : "${sortDirections}"}
+                    ],
+                    "query": {
+                        "constant_score": {
+                            "query": {
+                                "bool": {
+                                      "must": ${JSON.stringify(internals.filters)},
+                                      "must_not":[
+                                        {
+                                              "match": {
+                                                  "warehouse": {
+                                                      "query": "MME.CONS"
+                                                  }
+                                              }
+                                          }
+                                      ]
+                                }
                             }
                         }
                     }
-                }
-            }`
-        );
+                }`
+            );
+        }
     } else {
         internals.query = JSON.parse(
             `{
@@ -420,7 +531,7 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                 "sort" : [
                     ${missing}
                     {"${sortBy}" : "${sortDirections}"}
-                 ],
+                ],
                 "query": {
                     "match_all": {}
                 }

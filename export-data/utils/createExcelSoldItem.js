@@ -43,8 +43,8 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
             let sortDirections = obj.sortDirections;
 
             const getAllItems = client.search({
-                "index": config.elasticsearch.index,
-                "type": config.elasticsearch.typeItems,
+                "index": config.elasticsearch.indexSoldItems,
+                "type": config.elasticsearch.typeSoldItems,
                 "from": 0,
                 "size": 100000,
                 "filter_path": "**._source",
@@ -65,9 +65,9 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                 if (obj.sortBy.indexOf('price') != -1) {
                     sortBy = 'totalPrice.USD';
                 }else if (obj.sortBy.indexOf('Date') != -1) {
-                    sortBy = 'createdDate';
+                    sortBy = 'postedDate';
                 }else if (obj.sortBy.indexOf('Date') != -1) {
-                    sortBy = 'createdDate';
+                    sortBy = 'postedDate';
                 }else if (obj.sortBy.indexOf('setReference') != -1) {
                     sortBy = 'reference';
                 }else{
@@ -89,30 +89,30 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                     `{
                         "timeout": "5s",
                         "from": 0,
-                      "size": 10000,
-                      "sort" : [
-                          ${missing}
-                          {"${sortBy}" : "${sortDirections}"}
-                       ],
-                      "query":{
-                           "constant_score": {
-                             "filter": {
-                               "bool": {
-                                 "must": [
-                                   {
-                                     "match": {
-                                       "reference": "${setReferenceUniq.join(' ')}"
-                                     }
-                                   }
-                                 ]
-                               }
-                             }
-                           }
+                        "size": 10000,
+                        "sort" : [
+                            ${missing}
+                            {"${sortBy}" : "${sortDirections}"}
+                        ],
+                        "query":{
+                            "constant_score": {
+                                "filter": {
+                                    "bool": {
+                                        "must": [
+                                            {
+                                                "match": {
+                                                    "reference": "${setReferenceUniq.join(' ')}"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
                         }
-                      }`
+                    }`
                 );
                 return client.search({
-                    index: config.elasticsearch.index,
+                    index: config.elasticsearch.indexSoldItems,
                     type: config.elasticsearch.typeSetItem,
                     body: query
                 })
@@ -135,96 +135,97 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                     const from = sizeWrite * i;
                     console.log(`round --> ${chkRounds}`);
 
-                    const titles = await utils.getTitles(setReferences, obj);
+                    const titles = await utils.getSoldItemTitles(setReferences, obj);
+                    console.log('titles-->',JSON.stringify(titles, null, 2));
 
-                    titles.forEach(function(title){
-                        cell++;
-                        if(title == 'Ingredients'){
-                            isIngredients = true;
-                            cellIngredients = cell;
-                        }
-                        ws.cell(1,cell).string(title).style(style);
-                    });
+                    // titles.forEach(function(title){
+                    //     cell++;
+                    //     if(title == 'Ingredients'){
+                    //         isIngredients = true;
+                    //         cellIngredients = cell;
+                    //     }
+                    //     ws.cell(1,cell).string(title).style(style);
+                    // });
 
-                    const data = await utils.getSetItems(setReferences, obj);
-                    console.log(`write rows --> ${data.length}`);
-                    totalRecord = totalRecord + data.length;
+                    // const data = await utils.getSetItems(setReferences, obj);
+                    // console.log(`write rows --> ${data.length}`);
+                    // totalRecord = totalRecord + data.length;
 
-                    data.map(function (item) {
-                        for (let j = 0; j < cell; j++) {
-                            let column = j+1;
-                            if (column != 1) {
-                                ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
-                            }else{
-                                if (obj.fields.showImagesViewAsSet){
-                                    if(column == 1){
-                                        let pathImage = '';
+                    // data.map(function (item) {
+                    //     for (let j = 0; j < cell; j++) {
+                    //         let column = j+1;
+                    //         if (column != 1) {
+                    //             ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+                    //         }else{
+                    //             if (obj.fields.showImagesViewAsSet){
+                    //                 if(column == 1){
+                    //                     let pathImage = '';
 
-                                        if (item[0] != '') {
-                                            let arrImages = item[0].split("/").slice(-1).pop();
-                                            // pathImage = '/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                            // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                            pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
-                                        }else{
-                                            pathImage = './images/blank.gif';
-                                        }
+                    //                     if (item[0] != '') {
+                    //                         let arrImages = item[0].split("/").slice(-1).pop();
+                    //                         // pathImage = '/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                    //                         // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                    //                         pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
+                    //                     }else{
+                    //                         pathImage = './images/blank.gif';
+                    //                     }
 
-                                        ws.column(1).setWidth(15);
-                                        ws.row(row).setHeight(150);
-                                        let isExist = utils.fileExists(pathImage);
-                                        if (!isExist) {
-                                            pathImage = './images/blank.gif';
-                                        }
-                                        ws.addImage({
-                                            path: pathImage,
-                                            type: 'picture',
-                                            position: {
-                                                type: 'oneCellAnchor',
-                                                from: {
-                                                    col: 1,
-                                                    colOff: '0.0in',
-                                                    row: row,
-                                                    rowOff: 0
-                                                }
-                                            }
-                                        });
-                                    }
-                                }else{
-                                    ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
-                                }
-                            }
-                        };
-                        row++
-                    });
-                    const maxRow = (config.excel.maxRow*file);
-                    const div = (row > maxRow);
-                    console.log(`check ${row} > ${config.excel.maxRow} -->`,div);
-                    console.log(`Total rows --> ${totalRecord}`);
+                    //                     ws.column(1).setWidth(15);
+                    //                     ws.row(row).setHeight(150);
+                    //                     let isExist = utils.fileExists(pathImage);
+                    //                     if (!isExist) {
+                    //                         pathImage = './images/blank.gif';
+                    //                     }
+                    //                     ws.addImage({
+                    //                         path: pathImage,
+                    //                         type: 'picture',
+                    //                         position: {
+                    //                             type: 'oneCellAnchor',
+                    //                             from: {
+                    //                                 col: 1,
+                    //                                 colOff: '0.0in',
+                    //                                 row: row,
+                    //                                 rowOff: 0
+                    //                             }
+                    //                         }
+                    //                     });
+                    //                 }
+                    //             }else{
+                    //                 ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+                    //             }
+                    //         }
+                    //     };
+                    //     row++
+                    // });
+                    // const maxRow = (config.excel.maxRow*file);
+                    // const div = (row > maxRow);
+                    // console.log(`check ${row} > ${config.excel.maxRow} -->`,div);
+                    // console.log(`Total rows --> ${totalRecord}`);
 
-                    console.log('file-->',file);
-                    await utils.saveFile(fileName, wb);
+                    // console.log('file-->',file);
+                    // await utils.saveFile(fileName, wb);
 
-                    if (div) {
-                        wb = new xl.Workbook();
-                        ws = wb.addWorksheet('Data');
-                        row = 2;
-                        file++;
-                        fileName = obj.userName + '_' + exportDate + '_' + file.toString() + '.xlsx';
-                        listFileName.push(fileName.replace('.xlsx','.zip'));
-                    }
+                    // if (div) {
+                    //     wb = new xl.Workbook();
+                    //     ws = wb.addWorksheet('Data');
+                    //     row = 2;
+                    //     file++;
+                    //     fileName = obj.userName + '_' + exportDate + '_' + file.toString() + '.xlsx';
+                    //     listFileName.push(fileName.replace('.xlsx','.zip'));
+                    // }
 
-                    if (rounds == chkRounds) {
-                        let number = 1;
-                        emailBody = '';
-                        listFileName.forEach(function (name) {
-                            emailBody = emailBody + `${number}. ${name} (http:${obj.ROOT_URL}/export_files/${name})\n`;
-                            number++;
-                        });
-                        emailBody = `Please download the files only by today from below link .\n` + emailBody;
-                        client.close();
-                        await utils.notifyFile('', userEmail, emailBody);
-                        channel.ack(msg)
-                    }
+                    // if (rounds == chkRounds) {
+                    //     let number = 1;
+                    //     emailBody = '';
+                    //     listFileName.forEach(function (name) {
+                    //         emailBody = emailBody + `${number}. ${name} (http:${obj.ROOT_URL}/export_files/${name})\n`;
+                    //         number++;
+                    //     });
+                    //     emailBody = `Please download the files only by today from below link .\n` + emailBody;
+                    //     client.close();
+                    //     await utils.notifyFile('', userEmail, emailBody);
+                    //     channel.ack(msg)
+                    // }
                 }
             })
             .catch(function(err) {
@@ -236,22 +237,23 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
             const sizeWrite = config.excel.maxRow;
             const from = 0;
             const result = await client.search({
-                "index": config.elasticsearch.index,
-                "type": config.elasticsearch.typeItems,
+                "index": config.elasticsearch.indexSoldItems,
+                "type": config.elasticsearch.typeSoldItems,
                 "sort": "id",
                 "from": from,
                 "size": count,
                 "filter_path": "**._source",
                 "body": body
             });
-            const data = await utils.getIngredients(result, obj);
+            const data = await utils.getSoldItemIngredients(result, obj);
+            // console.log('data 249-->',JSON.stringify(data, null, 2));
             const rounds = Math.ceil(data.length/sizeWrite);
             console.log(`User Name --> ${obj.userName}`);
             console.log(`Number of Item&Ingredients --> ${data.length}`);
             console.log(`Total rounds --> ${rounds}`);
             // Added Title to ws
-            const titles = await utils.getTitles(result, obj);
-
+            const titles = await utils.getSoldItemTitles(result, obj);
+            // console.log('titles 255-->',JSON.stringify(titles, null, 2));
             titles.forEach(function(title){
                 cell++;
                 if(title == 'Ingredients'){
@@ -384,7 +386,7 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                    ws = wb.addWorksheet('Data');
 
                    // Added Title to ws
-                   const titles = await utils.getTitles(result, obj);
+                   const titles = await utils.getSoldItemTitles(result, obj);
 
                    titles.forEach(function(title){
                        cell++;

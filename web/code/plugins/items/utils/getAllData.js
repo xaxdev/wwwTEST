@@ -32,7 +32,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                             }
                         }
                     })
-
                 })
                 data = clarityData;
             }

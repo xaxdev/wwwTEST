@@ -60,32 +60,27 @@ module.exports = (obj, fromRecord, sizeRecord) => {
         keys.forEach((key) => {
             filter = '';
             let value = obj[key];
-            if(key == 'reference' || key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity'
-                || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'location' || key == 'buckleType'
-                || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
-                || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType'
-                || key == 'metalColour' || key == 'gemstones' || key == 'limitedEdition' || key == 'sku'
-                || key == 'origin' || key == 'watchCategory' || key == 'movement' || key == 'dialIndex'
-                || key == 'dialColor' || key == 'dialMetal' || key == 'strapType' || key == 'strapColor'
-                || key == 'complication' || key == 'color' || key == 'setReference' || key == 'warehouse'
+            if(key == 'reference' || key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'polish' || key == 'symmetry'
+                || key == 'treatment' || key == 'location' || key == 'buckleType' || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection'
+                || key == 'brand' || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour'
+                || key == 'gemstones' || key == 'limitedEdition' || key == 'sku' || key == 'origin' || key == 'watchCategory' || key == 'movement'
+                || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'strapType' || key == 'strapColor' || key == 'complication'
+                || key == 'color' || key == 'setReference' || key == 'warehouse'
             ){
                 value = `${value}`
                 value = value.replace(/,/gi, ' ');
             }
 
-            if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields'
-                && key != 'price' && key != 'pageSize' && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail'
-                && key != 'viewAsSet' && key != 'ItemsOrder' && key != 'SetReferencdOrder' && key != 'env'
-                && key != 'viewType' && key != 'userPermissionPrice'  && key != 'article' && key != 'typeFile'
+            if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' && key != 'pageSize'
+                && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' && key != 'viewAsSet' && key != 'ItemsOrder' && key != 'SetReferencdOrder'
+                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice'  && key != 'article' && key != 'typeFile'
             ){
-                if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency'
-                    || key == 'polish' || key == 'symmetry' || key == 'treatment' || key == 'fluorescence'
-                    || key == 'jewelryCategory' || key == 'collection' || key == 'brand'|| key == 'mustHave'
-                    || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour'
-                    || key == 'origin' || key == 'watchCategory' || key == 'limitedEdition' || key == 'movement'
-                    || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'buckleType'
-                    || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse'
-                    || key == 'location' || key=='certificatedNumber'
+                if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency' || key == 'polish'
+                    || key == 'symmetry' || key == 'treatment' || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
+                    || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour' || key == 'origin'
+                    || key == 'watchCategory' || key == 'limitedEdition' || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal'
+                    || key == 'buckleType' || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse' || key == 'location'
+                    || key=='certificatedNumber'
                 ){
                     if(key == 'metalColour')
                         key = 'metalColor'
@@ -306,84 +301,82 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                     // let vals = value.split(',');
                     let vals = value.replace(',',' ');
                     let mapField =
-                          `{
-                              "match": {
-                                "description": {
-                                  "query": "${vals.trim()}",
-                                  "type": "phrase"
-                                }
-                              }
-                            }`;
+                    `{
+                        "match": {
+                            "description": {
+                                "query": "${vals.trim()}",
+                                "type": "phrase"
+                            }
+                        }
+                    }`;
                     filter =
-                      `{
+                    `{
                         "bool": {
-                          "must": [
-                              ${mapField}
+                            "must": [
+                                ${mapField}
                             ]
-                          }
-                        }`;
+                        }
+                    }`;
                 } else if(key == 'notUseHierarchy'){
                     let filterSplit = [];
                     let vals = value.split('|');
                     vals.forEach((val)=>{
                         let mapField =
-                            `{
-                                "match": {
-                                  "hierarchy": {
+                        `{
+                            "match": {
+                                "hierarchy": {
                                     "query": "${val.trim()}",
                                     "type": "phrase"
-                                  }
                                 }
-                              }`;
-                        // console.log('mapField-->',mapField);
+                            }
+                        }`;
                         filterSplit.push(JSON.parse(mapField));
                     });
                     filter =
-                      `{
+                    `{
                         "bool": {
-                          "must_not": [
-                              ${JSON.stringify(filterSplit)}
+                            "must_not": [
+                                ${JSON.stringify(filterSplit)}
                             ]
-                          }
-                        }`;
+                        }
+                    }`;
                 } else if(key == 'hierarchy'){
                     let filterSplit = [];
                     // console.log('hierarchy value-->', value)
                     let vals = value.split('|');
                     vals.forEach((val)=>{
                         let mapField =
-                            `{
-                                "match": {
-                                  "hierarchy": {
+                        `{
+                            "match": {
+                                "hierarchy": {
                                     "query": "${val.trim()}",
                                     "type": "phrase"
-                                  }
                                 }
-                              }`;
-                        // console.log('mapField-->',mapField);
+                            }
+                        }`;
                         filterSplit.push(JSON.parse(mapField));
                     });
                     filter =
-                      `{
+                    `{
                         "bool": {
-                          "should": [
-                              ${JSON.stringify(filterSplit)}
+                            "should": [
+                                ${JSON.stringify(filterSplit)}
                             ]
-                          }
-                        }`;
+                        }
+                    }`;
                 } else if(key == 'gemstones'){
                     filter = GetSearchGemstone(key, obj, userCurrency);
                 } else if(key == 'lotNumbers'){
                     filter = GetSearchLotNumber(key, obj, userCurrency);
                 } else {
                     filter =
-                      `{
+                    `{
                         "match": {
-                          "${key}": {
-                            "query": "${value}"
-                          }
+                            "${key}": {
+                                "query": "${value}"
+                            }
                         }
-                      }`;
+                    }`;
                 }
                 if(filter != ''){
                     internals.filters.push(JSON.parse(filter));
@@ -398,23 +391,23 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                 if(key != 'length'){
                     if(objRange[key].to != 0){
                         filter =
-                          `{
+                        `{
                             "range": {
-                              "${key}": {
-                                "gte": "${objRange[key].from}",
-                                "lte": "${objRange[key].to}"
-                              }
+                                "${key}": {
+                                    "gte": "${objRange[key].from}",
+                                    "lte": "${objRange[key].to}"
+                                }
                             }
-                          }`;
+                        }`;
                     }else{
                         filter =
-                          `{
+                        `{
                             "range": {
-                              "${key}": {
-                                "gte": "${objRange[key].from}"
-                              }
+                                "${key}": {
+                                    "gte": "${objRange[key].from}"
+                                }
                             }
-                          }`;
+                        }`;
                     }
                     internals.filters.push(JSON.parse(filter));
                     filter = '';
@@ -524,17 +517,16 @@ module.exports = (obj, fromRecord, sizeRecord) => {
     } else {
         internals.query = JSON.parse(
             `{
-              "timeout": "5s",
-              "from": ${fromRecord},
-              "size": ${sizeRecord},
-              "sort" : [
-                  ${missing}
-                  {"${sortBy}" : "${sortDirections}"}
-               ],
-              "query":
-               {
-                "match_all": {}
-               }
+                "timeout": "5s",
+                "from": ${fromRecord},
+                "size": ${sizeRecord},
+                "sort" : [
+                    ${missing}
+                    {"${sortBy}" : "${sortDirections}"}
+                 ],
+                "query": {
+                    "match_all": {}
+                }
             }`
         );
     }
