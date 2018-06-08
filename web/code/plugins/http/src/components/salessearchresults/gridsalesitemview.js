@@ -91,16 +91,22 @@ class GridSalesItemsView extends Component {
                             lblActualCost = 'Total Cost Price (USD)';
                             lblPrice = 'Total Retail Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
+                            lblNetSales = 'Total Net Sales (USD)';
+                            lblDiscount = 'Total Discount Amount (USD)';
+                            lblMarginAmount = 'Total Margin Amount (USD)';
                             imagesProduct = (item.image) != undefined
                                             ? item.image.length != 0
                                                 ?item.image[0].original
                                                 : '/images/blank.gif'
                                             : '/images/blank.gif';
-                            itemDate = convertDate(item.createdDate);
-                            lblDate = 'Created Date:';
+                            itemDate = convertDate(item.postedDate);
+                            lblDate = 'Posted Date:';
                             price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
                             actualCost = numberFormat(item.totalActualCost['USD']) + ' ' + 'USD';
                             updatedCost = numberFormat(item.totalUpdatedCost['USD']) + ' ' + 'USD';
+                            netSales = numberFormat(item.totalNetAmount['USD']) + ' ' + 'USD';
+                            discount = numberFormat(item.totalDiscountAmount['USD']) + ' ' + 'USD';
+                            marginAmount = numberFormat(item.totalMargin['USD']) + ' ' + 'USD';
 
                             itemName = (item.type != 'CER')?
                                               (item.description != undefined) ?
@@ -207,16 +213,14 @@ class GridSalesItemsView extends Component {
                                                name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id} onClick={btnEvent} />
                                     </div>
                                     <p className="font-b fc-000">
-                                        <span name={ViewAsSet ? item.reference : item.id}
-                                            id={ViewAsSet ? item.reference : item.id}
+                                        <span name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}
                                             onClick={btnEvent}>{item.reference}</span>
                                         <br/>
-                                        <span name={ViewAsSet ? item.reference : item.id}
-                                            id={ViewAsSet ? item.reference : item.id}
+                                        <span name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}
                                             onClick={btnEvent}>{item.sku}</span>
                                     </p>
-                                    <p className="product-detail-h" name={ViewAsSet ? item.reference : item.id}
-                                        id={ViewAsSet ? item.reference : item.id} onClick={btnEvent}>{itemName}</p>
+                                    <p className="product-detail-h" name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}
+                                        onClick={btnEvent}>{itemName}</p>
                                     <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{netSales}</span>
                                     <span className="line"></span>
                                 </div>
@@ -322,10 +326,10 @@ class GridSalesItemsView extends Component {
                                             '' : 'hidden'}`}>{marginAmount}</span>
                                         <span className="fc-ddbe6a width-f100 font-b">Location: </span>
                                         <span className="width-f100">{item.warehouseName != undefined ? item.warehouseName : item.warehouse}</span>
-                                        <span className="fc-ddbe6a width-f100 font-b">Customer ID: </span>
-                                        <span className="width-f100">{item.customer != undefined ? item.customer : item.customer}</span>
-                                        <span className="fc-ddbe6a width-f100 font-b">Customer Name: </span>
-                                        <span className="width-f100">{item.customerName != undefined ? item.customerName : item.customerName}</span>
+                                        <span className={`fc-ddbe6a width-f100 font-b ${ViewAsSet ?'hidden':''}`}>Customer ID: </span>
+                                        <span className={`width-f100 ${ViewAsSet ?'hidden':''}`}>{item.customer != undefined ? item.customer : item.customer}</span>
+                                        <span className={`fc-ddbe6a width-f100 font-b ${ViewAsSet ?'hidden':''}`}>Customer Name: </span>
+                                        <span className={`width-f100 ${ViewAsSet ?'hidden':''}`}>{item.customerName != undefined ? item.customerName : item.customerName}</span>
                                         <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
                                         <span className="width-f100">{itemDate}</span>
                                     </div>

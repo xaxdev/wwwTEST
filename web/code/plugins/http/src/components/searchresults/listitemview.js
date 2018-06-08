@@ -243,31 +243,30 @@ class ListItemsView extends Component {
             if (ViewAsSet) {
                 return (
                     <div key={'listView'} id={'listView'}>
-                        <table key={'listView'} id={'listView'}
-                            className="table table-bordered table-searchresult table-searchset">
+                        <table key={'listView'} id={'listView'} className="table table-bordered table-searchresult table-searchset">
                             <thead key={'listView'} id={'listView'}>
-                                  <tr>
-                                      <th><span></span></th>
-                                      <th><span>Images</span></th>
-                                      <th><span>Set Product Number</span></th>
-                                      <th><span>Item Reference</span></th>
-                                      <th><span>Description</span></th>
-                                      <th><span>SKU</span></th>
-                                      <th><span>Category Name</span></th>
-                                      <th><span>Company</span></th>
-                                      <th><span>Location</span></th>
-                                      <th><span>Item Weight (Grams)</span></th>
-                                      <th><span>Stone Detail</span></th>
-                                      <th className={`${(userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
-                                      <th className={`${(userLogin.permission.price == 'Updated'
-                                          || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
-                                      <th className={`${(userLogin.permission.price == 'Public'
-                                          || userLogin.permission.price == 'Updated'
-                                          || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
-                                  </tr>
+                                <tr>
+                                    <th><span></span></th>
+                                    <th><span>Images</span></th>
+                                    <th><span>Set Product Number</span></th>
+                                    <th><span>Item Reference</span></th>
+                                    <th><span>Description</span></th>
+                                    <th><span>SKU</span></th>
+                                    <th><span>Category Name</span></th>
+                                    <th><span>Company</span></th>
+                                    <th><span>Location</span></th>
+                                    <th><span>Item Weight (Grams)</span></th>
+                                    <th><span>Stone Detail</span></th>
+                                    <th className={`${(userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Public'
+                                        || userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
+                                </tr>
                             </thead>
                             {items.map((item) => {
                                 return(
@@ -284,25 +283,25 @@ class ListItemsView extends Component {
             }else{
                 return (
                     <div>
-                        <DataTable
-                          className="col-sm-12"
-                          keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight', 'stoneDetail','priceUSD','' ]}
-                          columns={tableColumns}
-                          initialData={items}
-                          initialPageLength={this.state.initialPageLength}
-                          initialSortBy={{ prop: 'reference', order: 'ascending' }}
-                          pageLengthOptions={[ 5, 20, 50 ]}
+                        <DataTable 
+                            className="col-sm-12"
+                            keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight', 
+                                    'stoneDetail','priceUSD','' ]}
+                            columns={tableColumns}
+                            initialData={items}
+                            initialPageLength={this.state.initialPageLength}
+                            initialSortBy={{ prop: 'reference', order: 'ascending' }}
+                            pageLengthOptions={[ 5, 20, 50 ]}
                         />
                     </div>
                 );
             }
         }else{
             items = {...this.props.items};
-            // console.log('items-->',items);
             return (
-              <div>
-                Loading...
-              </div>
+                <div>
+                    Loading...
+                </div>
             );
         }
     }

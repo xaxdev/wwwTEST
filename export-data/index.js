@@ -55,7 +55,6 @@ const Promise = require('bluebird');
                         type: config.elasticsearch.typeSoldItems,
                         body
                     };
-                    // console.log('body-->',JSON.stringify(parameter, null, 2));
                     utils.excelSoldItem(obj, config, parameter, body, utils, userEmail, channel, msg);
                 }
             }

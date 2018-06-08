@@ -38,8 +38,8 @@ class SalesReportHeader extends Component {
         const { props } = this.props;
         let {fields:{ location }, searchResult} = props;
 
-        let paramsLocation = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch.location:
+        let paramsLocation = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch.location:
                               null;
 
         paramsLocation = LocationSelectValue;
@@ -55,8 +55,8 @@ class SalesReportHeader extends Component {
         const { props } = this.props;
         let {fields:{ warehouse}, searchResult} = props;
 
-        let paramsHeader = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsHeader = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
 
 
@@ -72,11 +72,11 @@ class SalesReportHeader extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.dominantStone = DominantStoneSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.dominantStone = DominantStoneSelectValue;
 
         dominantStone.onChange(DominantStoneSelectValue);
         props.inventoryActions.setDataDominantStone(DominantStoneSelectValue);
@@ -86,11 +86,11 @@ class SalesReportHeader extends Component {
         const { props } = this.props;
         let { fields: { salesChannel }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.salesChannel = SalesChannelSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.salesChannel = SalesChannelSelectValue;
 
         salesChannel.onChange(SalesChannelSelectValue);
         props.salesActions.setDataSalesChannel(SalesChannelSelectValue);

@@ -36,6 +36,10 @@ const getSetItems = (result, obj) => {
     return addIngredients.setitems(result, obj)
 };
 
+const getSoldSetItems = (result, obj) => {
+    return addSoldItemIngredients.setitems(result, obj)
+};
+
 const saveFile = (files, wb) => {
     return file.save(files, wb)
 };
@@ -57,5 +61,5 @@ const excelSoldItem = (obj, config, parameter, body, utils, userEmail, channel, 
 };
 
 export { getBody, getSoldItemBody, getTitles, getSoldItemTitles, getIngredients, getSetItems, saveFile, notifyFile, fileExists, excelOnHand, excelSoldItem,
-    getSoldItemIngredients
+    getSoldItemIngredients, getSoldSetItems
 };

@@ -105,11 +105,11 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { sparePartProductSalesHierarchy }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.sparePartProductSalesHierarchy = treeSelected;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.sparePartProductSalesHierarchy = treeSelected;
 
         sparePartProductSalesHierarchy.onChange(treeSelected);
     }
@@ -118,11 +118,11 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { sparePartType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.sparePartType = sparePartTypeSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.sparePartType = sparePartTypeSelectValue;
 
         sparePartType.onChange(sparePartTypeSelectValue);
         props.inventoryActions.setDataSparePartType(sparePartTypeSelectValue);
@@ -132,11 +132,11 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { buckleType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.buckleType = buckleTypeSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.buckleType = buckleTypeSelectValue;
 
         buckleType.onChange(buckleTypeSelectValue);
         props.inventoryActions.setDataBuckleType(buckleTypeSelectValue);
@@ -146,11 +146,11 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.metalType = metalTypeSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.metalType = metalTypeSelectValue;
 
         metalType.onChange(metalTypeSelectValue);
         props.inventoryActions.setDataMetalType(metalTypeSelectValue);
@@ -160,11 +160,11 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.metalColour = metalColourSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.metalColour = metalColourSelectValue;
 
         metalColour.onChange(metalColourSelectValue);
         props.inventoryActions.setDataMetalColour(metalColourSelectValue);
@@ -174,11 +174,11 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.dominantStone = dominantStoneSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.dominantStone = dominantStoneSelectValue;
 
         dominantStone.onChange(dominantStoneSelectValue);
         props.inventoryActions.setDataDominantStone(dominantStoneSelectValue);
@@ -192,8 +192,8 @@ class SalesReportSparePart extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
 
         if(props.options != undefined){
@@ -205,8 +205,8 @@ class SalesReportSparePart extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.sparePartType = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.sparePartType = findFieldName;
 
                 sparePartType.onChange(findFieldName);
                 props.inventoryActions.setDataSparePartType(findFieldName);
@@ -219,8 +219,8 @@ class SalesReportSparePart extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.buckleType = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.buckleType = findFieldName;
 
                 buckleType.onChange(findFieldName);
                 props.inventoryActions.setDataBuckleType(findFieldName);
@@ -233,8 +233,8 @@ class SalesReportSparePart extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.metalType = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.metalType = findFieldName;
 
                 metalType.onChange(findFieldName);
                 props.inventoryActions.setDataMetalType(findFieldName);
@@ -247,8 +247,8 @@ class SalesReportSparePart extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.metalColour = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.metalColour = findFieldName;
 
                 metalColour.onChange(findFieldName);
                 props.inventoryActions.setDataMetalColour(findFieldName);
@@ -261,8 +261,8 @@ class SalesReportSparePart extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.dominantStone = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.dominantStone = findFieldName;
 
                 dominantStone.onChange(findFieldName);
                 props.inventoryActions.setDataDominantStone(findFieldName);
@@ -287,8 +287,8 @@ class SalesReportSparePart extends Component {
                   publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo
               }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
 
         let dataDropDownSparePartType = [];

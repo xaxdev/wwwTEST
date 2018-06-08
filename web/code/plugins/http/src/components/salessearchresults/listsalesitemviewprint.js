@@ -85,21 +85,11 @@ class ListSalesItemsViewPrint extends Component {
                 let itemName = '';
                 isCompany = col.companyName != undefined ? true : false;
                 if (ViewAsSet) {
-                    imagesOriginal = (col.image) != undefined
-                                      ? col.image.length != 0
-                                          ? col.image[0].original
-                                          : '/images/blank.gif'
-                                      : '/images/blank.gif';
-                    imagesThumbnail = (col.image) != undefined
-                                      ?  col.image.length != 0
-                                          ? col.image[0].thumbnail
-                                          : '/images/blank.gif'
-                                      : '/images/blank.gif';
+                    imagesOriginal = (col.image) != undefined ? col.image.length != 0 ? col.image[0].original : '/images/blank.gif' : '/images/blank.gif';
+                    imagesThumbnail = (col.image) != undefined ?  col.image.length != 0 ? col.image[0].thumbnail : '/images/blank.gif' : '/images/blank.gif';
 
                     if(col.totalPrice != undefined){
-                        col.priceUSD = (col.totalPrice['USD'] != undefined)
-                                      ? numberFormat(col.totalPrice['USD'])
-                                      : '- ';
+                        col.priceUSD = (col.totalPrice['USD'] != undefined) ? numberFormat(col.totalPrice['USD']) : '- ';
                     }else{
                         col.priceUSD = '- ';
                     }
@@ -111,12 +101,8 @@ class ListSalesItemsViewPrint extends Component {
                     col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 
                 }else{
-                    imagesOriginal = (col.gallery) != undefined
-                                      ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif'
-                                       : '/images/blank.gif';
-                    imagesThumbnail = (col.gallery) != undefined
-                                      ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
-                                      : '/images/blank.gif';
+                    imagesOriginal = (col.gallery) != undefined ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif' : '/images/blank.gif';
+                    imagesThumbnail = (col.gallery) != undefined ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif' : '/images/blank.gif';
 
                     switch (col.type) {
                         case 'JLY':
@@ -198,27 +184,26 @@ class ListSalesItemsViewPrint extends Component {
                     <div key={'listViewPrint'} id={'listViewPrint'}>
                         <table key={'listViewPrint'} id={'listViewPrint'} className="table table-bordered table-searchresult">
                             <thead key={'listViewPrint'} id={'listViewPrint'}>
-                                  <tr>
-                                      <th><span>Images</span></th>
-                                      <th><span>Set Product Number</span></th>
-                                      <th><span>Item Reference</span></th>
-                                      <th><span>Description</span></th>
-                                      <th><span>SKU</span></th>
-                                      <th><span>Category Name</span></th>
-                                      <th><span>Company</span></th>
-                                      <th><span>Location</span></th>
-                                      <th><span>Item Weight (Grams)</span></th>
-                                      <th><span>Stone Detail</span></th>
-                                      <th className={`${(userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
-                                      <th className={`${(userLogin.permission.price == 'Updated'
-                                          || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
-                                      <th className={`${(userLogin.permission.price == 'Public'
-                                          || userLogin.permission.price == 'Updated'
-                                          || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
-                                  </tr>
+                                <tr>
+                                    <th><span>Images</span></th>
+                                    <th><span>Set Product Number</span></th>
+                                    <th><span>Item Reference</span></th>
+                                    <th><span>Description</span></th>
+                                    <th><span>SKU</span></th>
+                                    <th><span>Category Name</span></th>
+                                    <th><span>Company</span></th>
+                                    <th><span>Location</span></th>
+                                    <th><span>Item Weight (Grams)</span></th>
+                                    <th><span>Stone Detail</span></th>
+                                    <th className={`${(userLogin.permission.price == 'All') ? '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Public'
+                                        || userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
+                                </tr>
                             </thead>
                             {items.map((item) => {
                                 return(
@@ -233,8 +218,7 @@ class ListSalesItemsViewPrint extends Component {
                     <div>
                         <DataTable className="col-sm-12" columns={tableColumns} initialData={items} initialPageLength={this.state.initialPageLength}
                             keys={['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight',
-                            'stoneDetail','priceUSD','']}
-                            initialSortBy={{ prop: 'reference', order: 'ascending' }} pageLengthOptions={[ 5, 20, 50 ]} />
+                            'stoneDetail','priceUSD','']} initialSortBy={{ prop: 'reference', order: 'ascending' }} pageLengthOptions={[ 5, 20, 50 ]} />
                     </div>
                 );
             }

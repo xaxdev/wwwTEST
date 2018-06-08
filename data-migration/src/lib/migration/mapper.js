@@ -1,4 +1,6 @@
 import config from '../../../config';
+import * as item from './item';
+import moment from 'moment-timezone';
 
 const sanitize = value => value.replace('(', '\\(').replace(')', '\\)').replace('.', '\\.');
 
@@ -526,9 +528,14 @@ const mapMovement = (recordset) => {
 const mapSoldItem = (recordset, exchangeRates) => {
     const soldItems = [];
     let id = 0;
-
-    for (let record of recordset) {
+    
+    for (let record of recordset)  {
         if (id != record.id) {
+            
+            exchangeRates = exchangeRates.filter((item) => {
+                return item.fromDate <= record.invoiceDate && item.toDate >= record.invoiceDate
+            });
+            
             id = Number(record.id);
             const soldItem = {...record};
             soldItem.gallery = [];

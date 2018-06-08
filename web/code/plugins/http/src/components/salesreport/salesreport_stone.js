@@ -115,11 +115,11 @@ class SalesReportStone extends Component {
 
         let { fields: { stoneProductSalesHierarchy }, searchResult} = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.stoneProductSalesHierarchy = treeSelected;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.stoneProductSalesHierarchy = treeSelected;
 
         stoneProductSalesHierarchy.onChange(treeSelected);
     }
@@ -128,11 +128,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { stoneType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.stoneType = stoneTypeSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.stoneType = stoneTypeSelectValue;
 
         stoneType.onChange(stoneTypeSelectValue);
         props.inventoryActions.setDatastoneType(stoneTypeSelectValue);
@@ -142,11 +142,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { cut, CutValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.cut = CutSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.cut = CutSelectValue;
 
         cut.onChange(CutSelectValue);
         props.inventoryActions.setDataCut(CutSelectValue);
@@ -156,11 +156,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { cutGrade, CutGradeValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.cutGrade = CutGradeSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.cutGrade = CutGradeSelectValue;
 
         cutGrade.onChange(CutGradeSelectValue);
         props.inventoryActions.setDataCutGrade(CutGradeSelectValue);
@@ -170,11 +170,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { color, ColorValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.color = ColorSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.color = ColorSelectValue;
 
         color.onChange(ColorSelectValue);
         props.inventoryActions.setDataColor(ColorSelectValue);
@@ -184,11 +184,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { colorGrade, ColorGradeValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.colorGrade = ColorGradeSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.colorGrade = ColorGradeSelectValue;
 
         colorGrade.onChange(ColorGradeSelectValue);
         props.inventoryActions.setDataColorGrade(ColorGradeSelectValue);
@@ -198,11 +198,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { clarity, ClarityValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.clarity = ClaritySelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.clarity = ClaritySelectValue;
 
         clarity.onChange(ClaritySelectValue);
         props.inventoryActions.setDataClarity(ClaritySelectValue);
@@ -212,11 +212,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { certificateAgency, CertificateAgencyValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.certificateAgency = CertificateLabSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.certificateAgency = CertificateLabSelectValue;
 
         certificateAgency.onChange(CertificateLabSelectValue);
         props.inventoryActions.setDataCertificateAgency(CertificateLabSelectValue);
@@ -250,11 +250,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { cerDateFrom }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.cerDateFrom = startDate;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.cerDateFrom = startDate;
 
         cerDateFrom.onChange(startDate);
         this.setState({startDate});
@@ -265,11 +265,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { cerDateTo }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.cerDateTo = endDate;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.cerDateTo = endDate;
 
         cerDateTo.onChange(endDate);
         this.setState({endDate});
@@ -280,11 +280,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { polish }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.polish = PolishSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.polish = PolishSelectValue;
 
         polish.onChange(PolishSelectValue);
         props.inventoryActions.setDataPolish(PolishSelectValue);
@@ -294,11 +294,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { symmetry }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.symmetry = SymmetrySelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.symmetry = SymmetrySelectValue;
 
         symmetry.onChange(SymmetrySelectValue);
         props.inventoryActions.setDataSymmetry(SymmetrySelectValue);
@@ -308,11 +308,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { treatment }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.treatment = TreatmentSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.treatment = TreatmentSelectValue;
 
         treatment.onChange(TreatmentSelectValue);
         props.inventoryActions.setDataTreatment(TreatmentSelectValue);
@@ -322,11 +322,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { fluorescence }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.fluorescence = FluorescenceSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.fluorescence = FluorescenceSelectValue;
 
         fluorescence.onChange(FluorescenceSelectValue);
         props.inventoryActions.setDataFluorescence(FluorescenceSelectValue);
@@ -336,11 +336,11 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { origin }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
-        if(paramsSearch != null)
-            paramsSearch.origin = OriginSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.origin = OriginSelectValue;
 
         origin.onChange(OriginSelectValue);
         props.inventoryActions.setDataOrigin(OriginSelectValue);
@@ -355,8 +355,8 @@ class SalesReportStone extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
 
         if(props.options != undefined){
@@ -368,8 +368,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.stoneType = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.stoneType = findFieldName;
 
                 stoneType.onChange(findFieldName);
                 props.inventoryActions.setDatastoneType(findFieldName);
@@ -382,8 +382,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.cut = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.cut = findFieldName;
 
                 cut.onChange(findFieldName);
                 props.inventoryActions.setDataCut(findFieldName);
@@ -396,8 +396,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.cutGrade = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.cutGrade = findFieldName;
 
                 cutGrade.onChange(findFieldName);
                 props.inventoryActions.setDataCutGrade(findFieldName);
@@ -410,8 +410,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.color = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.color = findFieldName;
 
                 color.onChange(findFieldName);
                 props.inventoryActions.setDataColor(findFieldName);
@@ -424,8 +424,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.colorGrade = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.colorGrade = findFieldName;
 
                 colorGrade.onChange(findFieldName);
                 props.inventoryActions.setDataColorGrade(findFieldName);
@@ -438,8 +438,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.clarity = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.clarity = findFieldName;
 
                 clarity.onChange(findFieldName);
                 props.inventoryActions.setDataClarity(findFieldName);
@@ -452,8 +452,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.certificateAgency = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.certificateAgency = findFieldName;
 
                 certificateAgency.onChange(findFieldName);
                 props.inventoryActions.setDataCertificateAgency(findFieldName);
@@ -466,8 +466,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.polish = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.polish = findFieldName;
 
                 polish.onChange(findFieldName);
                 props.inventoryActions.setDataPolish(findFieldName);
@@ -480,8 +480,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.symmetry = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.symmetry = findFieldName;
 
                 symmetry.onChange(findFieldName);
                 props.inventoryActions.setDataSymmetry(findFieldName);
@@ -494,8 +494,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.treatment = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.treatment = findFieldName;
 
                 treatment.onChange(findFieldName);
                 props.inventoryActions.setDataTreatment(findFieldName);
@@ -508,8 +508,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.fluorescence = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.fluorescence = findFieldName;
 
                 fluorescence.onChange(findFieldName);
                 props.inventoryActions.setDataFluorescence(findFieldName);
@@ -522,8 +522,8 @@ class SalesReportStone extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.origin = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.origin = findFieldName;
 
                 origin.onChange(findFieldName);
                 props.inventoryActions.setDataOrigin(findFieldName);
@@ -548,8 +548,8 @@ class SalesReportStone extends Component {
             fluorescence, origin
         }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                            searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                            searchResult.paramsSalesSearch:
                             null;
 
         let dataDropDowntstoneType = [];
@@ -847,7 +847,7 @@ class SalesReportStone extends Component {
                                     <div className="col-sm-10 nopadding">
                                         <Calendar
                                             format="MM-DD-YYYY"
-                                            date={(paramsSearch != null)?paramsSearch.cerDateFrom:props.StoneCertificateDateFrom}
+                                            date={(paramsSalesSearch != null)?paramsSalesSearch.cerDateFrom:props.StoneCertificateDateFrom}
                                             closeOnSelect = {true}
                                             onChange={this.handleChangeStart} />
                                     </div>
@@ -855,7 +855,7 @@ class SalesReportStone extends Component {
                                     <div className="col-sm-10 nopadding">
                                         <Calendar
                                             format="MM-DD-YYYY"
-                                            date={(paramsSearch != null)?paramsSearch.cerDateTo:props.StoneCertificateDateTo}
+                                            date={(paramsSalesSearch != null)?paramsSalesSearch.cerDateTo:props.StoneCertificateDateTo}
                                             closeOnSelect = {true}
                                             onChange={this.handleChangeEnd} />
                                     </div>

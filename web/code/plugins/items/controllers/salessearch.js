@@ -223,8 +223,6 @@ module.exports = {
                         isSetReference
                     ));
                 }
-                // console.log('allItems-->',getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
-                // return reply(getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request));
 
             })
             .catch(function(err) {

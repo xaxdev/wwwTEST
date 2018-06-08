@@ -47,7 +47,7 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
                     (item.markup != undefined) ? item.markup : '',
                     (item.companyName != undefined) ? item.companyName : '',
                     (item.warehouseName != undefined) ? item.warehouseName : '',
-                    (item.createdDate != undefined) ? convertDate(item.createdDate) : ''
+                    (item.postedDate != undefined) ? convertDate(item.postedDate) : ''
                 );
             }else{
                 if(fields.totalActualCost) arrayItems.push(numberFormat((item.totalActualCost != undefined)? item.totalActualCost['USD']: 0));
@@ -56,7 +56,7 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
                 if(fields.markup) arrayItems.push((item.markup != undefined) ? item.markup : '');
                 if(fields.companyName) arrayItems.push((item.companyName != undefined) ? item.companyName : '');
                 if(fields.warehouseName) arrayItems.push((item.warehouseName != undefined) ? item.warehouseName : '');
-                if(fields.createdDate) arrayItems.push((item.createdDate != undefined) ? convertDate(item.createdDate) : '');
+                if(fields.postedDate) arrayItems.push((item.postedDate != undefined) ? convertDate(item.postedDate) : '');
             }
             newdata.push(arrayItems);
         });

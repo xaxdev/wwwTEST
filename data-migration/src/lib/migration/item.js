@@ -4,6 +4,7 @@ import * as core from './core';
 import * as constant from './constant';
 import * as mapper from './mapper';
 import { db } from '../utils/db';
+import moment from 'moment-timezone';
 
 const settings = async (index, exchangeRates, path, mapper) => ({
     ...config,
@@ -60,6 +61,16 @@ const getExchangeRates = async _ => {
         console.log('Exchange Rate!!!');
         const query = await file.read(constant.EXCHANGE_RATE_QUERY);
         return await db.exec(query, config.db);
+    } catch (err) {
+        throw err;
+    }
+};
+
+const getAllExchangeRates = async _ => {
+    try {
+        console.log('All Exchange Rate!!!');
+        const query = await file.read(constant.ALL_EXCHANGE_RATE_QUERY);        
+        return await db.exec(query, config.db);;
     } catch (err) {
         throw err;
     }
@@ -178,4 +189,4 @@ const getGOC = async (index) => {
 };
 
 export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, getAccessory,
-        getSpareParts, getLotNumbers, getMovementActivities, getGOC };
+        getSpareParts, getLotNumbers, getMovementActivities, getGOC, getAllExchangeRates };

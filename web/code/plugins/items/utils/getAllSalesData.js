@@ -73,16 +73,16 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 case 'setReference':
                     sortBy = 'reference';
                     break;
-                case 'itemCreatedDate':
+                case 'postedDate':
                     sortBy = 'postedDate';
                     break;
                 default:
-                    sortBy = sortBy.toLowerCase().indexOf('price') != -1 ? 'totalPrice' : sortBy
-                    userCurrency = sortBy.toLowerCase().indexOf('price') != -1 ? 'USD' : userCurrency
+                    sortBy = sortBy.toLowerCase().indexOf('netAmount') != -1 ? 'totalNetAmount' : sortBy
+                    userCurrency = sortBy.toLowerCase().indexOf('netAmount') != -1 ? 'USD' : userCurrency
                     break;
             }
         }else{
-            sortBy = sortBy.toLowerCase().indexOf('price') != -1 ? 'price' : sortBy
+            sortBy = sortBy.toLowerCase().indexOf('netAmount') != -1 ? 'netAmount' : sortBy
         }
 
         if (itemsOrder == null && setReferencdOrder == null) {
@@ -191,13 +191,13 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         data.forEach(function(item){
             if (isViewAsSet) {
                 allData.push({
-                    'id': item.id,'reference':item.reference,'postedDate':item.postedDate,
-                    'totalPrice':item.totalPrice,'description':item.description,'setReference':item.reference
+                    'id': item.id, 'reference':item.reference, 'postedDate':item.postedDate, 'totalPrice':item.totalPrice, 'description':item.description,
+                    'setReference':item.reference, 'totalNetAmount':item.totalNetAmount, 'totalNetAmount':item.totalNetAmount
                 });
             }else{
                 allData.push({
-                    'id': item.id,'reference':item.reference,'postedDate':item.postedDate,
-                    'price':item.price,'description':item.description,'setReference':item.setReference
+                    'id': item.id,'reference':item.reference,'postedDate':item.postedDate, 'netAmount':item.netAmount,'description':item.description,
+                    'setReference':item.setReference
                 });
             }
 
@@ -217,14 +217,14 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 }
             }else{
                 if (isViewAsSet) {
-                    if(item.totalPrice['USD'] != undefined){
-                        if(item.totalPrice['USD'] != 0){
-                          maxPrice = Math.max(maxPrice, item.totalPrice['USD']);
+                    if(item.totalNetAmount['USD'] != undefined){
+                        if(item.totalNetAmount['USD'] != 0){
+                          maxPrice = Math.max(maxPrice, item.totalNetAmount['USD']);
                         }else{
                           maxPrice = Math.max(maxPrice, 0);
                         }
                     }else{
-                        item.totalPrice['USD'] = 0;
+                        item.totalNetAmount['USD'] = 0;
                         maxPrice = Math.max(maxPrice, 0);
                     }
                 }else {
@@ -247,8 +247,8 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 }
             }else{
                 if (isViewAsSet) {
-                    if(item.totalPrice['USD'] != undefined){
-                        minPrice = Math.min(minPrice, item.totalPrice['USD']);
+                    if(item.totalNetAmount['USD'] != undefined){
+                        minPrice = Math.min(minPrice, item.totalNetAmount['USD']);
                     }else{
                         minPrice = Math.min(minPrice, 0);
                     }
@@ -277,7 +277,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         if(pageData.length != 0){
             data.forEach(function(item){
                 if (isViewAsSet) {
-                    sumPriceData.push(item.totalPrice['USD']);
+                    sumPriceData.push(item.totalPrice!=undefined? item.totalPrice['USD']!=undefined? item.totalPrice['USD']: 0: 0);
                 }else {
                     sumPriceData.push(GetPriceCurrency(item,'price',userCurrency));
                 }
@@ -290,7 +290,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
 
             data.forEach(function(item){
                 if (isViewAsSet) {
-                    sumCostData.push(item.totalUpdatedCost['USD']);
+                    sumCostData.push(item.totalUpdatedCost!=undefined? item.totalUpdatedCost['USD']!=undefined? item.totalUpdatedCost['USD']: 0: 0);
                 }else {
                     sumCostData.push(GetPriceCurrency(item,'updatedCost',userCurrency));
                 }
@@ -302,7 +302,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
 
             data.forEach(function(item){
                 if (isViewAsSet) {
-                    sumNetAmountData.push(item.netAmount['USD']);
+                    sumNetAmountData.push(item.totalNetAmount!=undefined? item.totalNetAmount['USD']!=undefined? item.totalNetAmount['USD']: 0: 0);
                 }else {
                     sumNetAmountData.push(GetPriceCurrency(item,'netAmount',userCurrency));
                 }
@@ -313,7 +313,11 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             });
 
             data.forEach(function(item){
-                sumDisconstData.push(item.discountAmountUSD);
+                if (isViewAsSet) {
+                    sumNetAmountData.push(item.totalDiscountAmount!=undefined? item.totalDiscountAmount['USD']!=undefined? item.totalDiscountAmount['USD']: 0: 0);
+                }else {
+                    sumNetAmountData.push(item.discountAmountUSD);
+                }
             });
 
             sumDisconstData.forEach(function(price) {
@@ -322,7 +326,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
 
             data.forEach(function(item){
                 if (isViewAsSet) {
-                    sumMarginData.push(item.margin['USD']);
+                    sumMarginData.push(item.totalMargin != undefined? item.totalMargin['USD']!=undefined? item.totalMargin['USD']: 0: 0);
                 }else {
                     sumMarginData.push(GetPriceCurrency(item,'margin',userCurrency));
                 }

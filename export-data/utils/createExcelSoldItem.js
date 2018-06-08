@@ -36,7 +36,6 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
     let cellIngredients = 0;
 
     const client = new elasticsearch({ host: config.elasticsearch.host });
-
     try {
         if (!!obj.viewAsSet) {
             let sortBy = obj.sortBy;
@@ -138,94 +137,94 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                     const titles = await utils.getSoldItemTitles(setReferences, obj);
                     console.log('titles-->',JSON.stringify(titles, null, 2));
 
-                    // titles.forEach(function(title){
-                    //     cell++;
-                    //     if(title == 'Ingredients'){
-                    //         isIngredients = true;
-                    //         cellIngredients = cell;
-                    //     }
-                    //     ws.cell(1,cell).string(title).style(style);
-                    // });
+                    titles.forEach(function(title){
+                        cell++;
+                        if(title == 'Ingredients'){
+                            isIngredients = true;
+                            cellIngredients = cell;
+                        }
+                        ws.cell(1,cell).string(title).style(style);
+                    });
 
-                    // const data = await utils.getSetItems(setReferences, obj);
-                    // console.log(`write rows --> ${data.length}`);
-                    // totalRecord = totalRecord + data.length;
+                    const data = await utils.getSoldSetItems(setReferences, obj);
+                    console.log(`write rows --> ${data.length}`);
+                    totalRecord = totalRecord + data.length;
 
-                    // data.map(function (item) {
-                    //     for (let j = 0; j < cell; j++) {
-                    //         let column = j+1;
-                    //         if (column != 1) {
-                    //             ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
-                    //         }else{
-                    //             if (obj.fields.showImagesViewAsSet){
-                    //                 if(column == 1){
-                    //                     let pathImage = '';
+                    data.map(function (item) {
+                        for (let j = 0; j < cell; j++) {
+                            let column = j+1;
+                            if (column != 1) {
+                                ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+                            }else{
+                                if (obj.fields.showImagesViewAsSet){
+                                    if(column == 1){
+                                        let pathImage = '';
 
-                    //                     if (item[0] != '') {
-                    //                         let arrImages = item[0].split("/").slice(-1).pop();
-                    //                         // pathImage = '/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                    //                         // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                    //                         pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
-                    //                     }else{
-                    //                         pathImage = './images/blank.gif';
-                    //                     }
+                                        if (item[0] != '') {
+                                            let arrImages = item[0].split("/").slice(-1).pop();
+                                            // pathImage = '/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                            // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                            pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
+                                        }else{
+                                            pathImage = './images/blank.gif';
+                                        }
 
-                    //                     ws.column(1).setWidth(15);
-                    //                     ws.row(row).setHeight(150);
-                    //                     let isExist = utils.fileExists(pathImage);
-                    //                     if (!isExist) {
-                    //                         pathImage = './images/blank.gif';
-                    //                     }
-                    //                     ws.addImage({
-                    //                         path: pathImage,
-                    //                         type: 'picture',
-                    //                         position: {
-                    //                             type: 'oneCellAnchor',
-                    //                             from: {
-                    //                                 col: 1,
-                    //                                 colOff: '0.0in',
-                    //                                 row: row,
-                    //                                 rowOff: 0
-                    //                             }
-                    //                         }
-                    //                     });
-                    //                 }
-                    //             }else{
-                    //                 ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
-                    //             }
-                    //         }
-                    //     };
-                    //     row++
-                    // });
-                    // const maxRow = (config.excel.maxRow*file);
-                    // const div = (row > maxRow);
-                    // console.log(`check ${row} > ${config.excel.maxRow} -->`,div);
-                    // console.log(`Total rows --> ${totalRecord}`);
+                                        ws.column(1).setWidth(15);
+                                        ws.row(row).setHeight(150);
+                                        let isExist = utils.fileExists(pathImage);
+                                        if (!isExist) {
+                                            pathImage = './images/blank.gif';
+                                        }
+                                        ws.addImage({
+                                            path: pathImage,
+                                            type: 'picture',
+                                            position: {
+                                                type: 'oneCellAnchor',
+                                                from: {
+                                                    col: 1,
+                                                    colOff: '0.0in',
+                                                    row: row,
+                                                    rowOff: 0
+                                                }
+                                            }
+                                        });
+                                    }
+                                }else{
+                                    ws.cell(row,column).string((item[j] != undefined) ? item[j].toString() : '').style(style);
+                                }
+                            }
+                        };
+                        row++
+                    });
+                    const maxRow = (config.excel.maxRow*file);
+                    const div = (row > maxRow);
+                    console.log(`check ${row} > ${config.excel.maxRow} -->`,div);
+                    console.log(`Total rows --> ${totalRecord}`);
 
-                    // console.log('file-->',file);
-                    // await utils.saveFile(fileName, wb);
+                    console.log('file-->',file);
+                    await utils.saveFile(fileName, wb);
 
-                    // if (div) {
-                    //     wb = new xl.Workbook();
-                    //     ws = wb.addWorksheet('Data');
-                    //     row = 2;
-                    //     file++;
-                    //     fileName = obj.userName + '_' + exportDate + '_' + file.toString() + '.xlsx';
-                    //     listFileName.push(fileName.replace('.xlsx','.zip'));
-                    // }
+                    if (div) {
+                        wb = new xl.Workbook();
+                        ws = wb.addWorksheet('Data');
+                        row = 2;
+                        file++;
+                        fileName = obj.userName + '_' + exportDate + '_' + file.toString() + '.xlsx';
+                        listFileName.push(fileName.replace('.xlsx','.zip'));
+                    }
 
-                    // if (rounds == chkRounds) {
-                    //     let number = 1;
-                    //     emailBody = '';
-                    //     listFileName.forEach(function (name) {
-                    //         emailBody = emailBody + `${number}. ${name} (http:${obj.ROOT_URL}/export_files/${name})\n`;
-                    //         number++;
-                    //     });
-                    //     emailBody = `Please download the files only by today from below link .\n` + emailBody;
-                    //     client.close();
-                    //     await utils.notifyFile('', userEmail, emailBody);
-                    //     channel.ack(msg)
-                    // }
+                    if (rounds == chkRounds) {
+                        let number = 1;
+                        emailBody = '';
+                        listFileName.forEach(function (name) {
+                            emailBody = emailBody + `${number}. ${name} (http:${obj.ROOT_URL}/export_files/${name})\n`;
+                            number++;
+                        });
+                        emailBody = `Please download the files only by today from below link .\n` + emailBody;
+                        client.close();
+                        await utils.notifyFile('', userEmail, emailBody);
+                        channel.ack(msg)
+                    }
                 }
             })
             .catch(function(err) {
@@ -263,163 +262,163 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                 ws.cell(1,cell).string(title).style(style);
             });
 
-           //  data.map(async(item)=> {
-           for (let i = 0; i < data.length; i++) {
-               let column = 0;
-               for (let j = 0; j < cell; j++) {
-                   column = j+1;
-                   if (column != 1) {
-                       ws.cell(row,column).string((data[i][j] != undefined) ? data[i][j].toString() : '').style(style);
-                   }else{
-                       // console.log('showImages-->',obj.fields.showImages);
-                       if (obj.fields.showImages){
-                           if(isIngredients){
-                               if(data[i][j] != undefined){
-                                   let price = obj.price;
-                                   let columnMain = 0;
-                                   if (obj.userCurrency != 'USD') {
-                                       if (price == 'All') {
-                                           columnMain = 17;
-                                       }
-                                       if (price == 'Updated') {
-                                           columnMain = 15;
-                                       }
-                                       if (price == 'Public') {
-                                           columnMain = 13;
-                                       }
-                                   } else {
-                                       if (price == 'All') {
-                                           columnMain = 14;
-                                       }
-                                       if (price == 'Updated') {
-                                           columnMain = 13;
-                                       }
-                                       if (price == 'Public') {
-                                           columnMain = 12;
-                                       }
-                                   }
-                                   if(data[i][columnMain] == 'Main'){
-                                       let pathImage = '';
+            //  data.map(async(item)=> {
+            for (let i = 0; i < data.length; i++) {
+                let column = 0;
+                for (let j = 0; j < cell; j++) {
+                    column = j+1;
+                    if (column != 1) {
+                        ws.cell(row,column).string((data[i][j] != undefined) ? data[i][j].toString() : '').style(style);
+                    }else{
+                        // console.log('showImages-->',obj.fields.showImages);
+                        if (obj.fields.showImages){
+                            if(isIngredients){
+                                if(data[i][j] != undefined){
+                                    let price = obj.price;
+                                    let columnMain = 0;
+                                    if (obj.userCurrency != 'USD') {
+                                        if (price == 'All') {
+                                            columnMain = 17;
+                                        }
+                                        if (price == 'Updated') {
+                                            columnMain = 15;
+                                        }
+                                        if (price == 'Public') {
+                                            columnMain = 13;
+                                        }
+                                    } else {
+                                        if (price == 'All') {
+                                            columnMain = 14;
+                                        }
+                                        if (price == 'Updated') {
+                                            columnMain = 13;
+                                        }
+                                        if (price == 'Public') {
+                                            columnMain = 12;
+                                        }
+                                    }
+                                    if(data[i][columnMain] == 'Main'){
+                                        let pathImage = '';
 
-                                       if (data[i][0] != '') {
-                                           let arrImages = data[i][0].split("/").slice(-1).pop();
-                                           pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
-                                       }else{
-                                           pathImage = './images/blank.gif';
-                                       }
+                                        if (data[i][0] != '') {
+                                            let arrImages = data[i][0].split("/").slice(-1).pop();
+                                            pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
+                                        }else{
+                                            pathImage = './images/blank.gif';
+                                        }
 
-                                       ws.column(1).setWidth(15);
-                                       ws.row(row).setHeight(150);
-                                       let isExist = utils.fileExists(pathImage);
-                                       if (!isExist) {
-                                           pathImage = './images/blank.gif';
-                                       }
-                                       ws.addImage({
-                                           path: pathImage,
-                                           type: 'picture',
-                                           position: {
-                                               type: 'oneCellAnchor',
-                                               from: {
-                                                   col: 1,
-                                                   colOff: '0.0in',
-                                                   row: row,
-                                                   rowOff: 0
-                                               }
-                                           }
-                                       });
-                                   }
-                               }
-                           }else{
-                               if(column == 1){
-                                   let pathImage = '';
+                                        ws.column(1).setWidth(15);
+                                        ws.row(row).setHeight(150);
+                                        let isExist = utils.fileExists(pathImage);
+                                        if (!isExist) {
+                                            pathImage = './images/blank.gif';
+                                        }
+                                        ws.addImage({
+                                            path: pathImage,
+                                            type: 'picture',
+                                            position: {
+                                                type: 'oneCellAnchor',
+                                                from: {
+                                                    col: 1,
+                                                    colOff: '0.0in',
+                                                    row: row,
+                                                    rowOff: 0
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }else{
+                                if(column == 1){
+                                    let pathImage = '';
 
-                                   if (data[i][0] != '') {
-                                       let arrImages = data[i][0].split("/").slice(-1).pop();
-                                       //   pathImage = '/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                       // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                       pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
-                                   }else{
-                                       pathImage = './images/blank.gif';
-                                   }
+                                    if (data[i][0] != '') {
+                                        let arrImages = data[i][0].split("/").slice(-1).pop();
+                                        //   pathImage = '/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                        // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
+                                        pathImage = '../web/code/plugins/http/public/images/products/thumbnail/'+ arrImages;
+                                    }else{
+                                        pathImage = './images/blank.gif';
+                                    }
 
-                                   ws.column(1).setWidth(15);
-                                   ws.row(row).setHeight(150);
-                                   let isExist = utils.fileExists(pathImage);
-                                   if (!isExist) {
-                                       pathImage = './images/blank.gif';
-                                   }
-                                   ws.addImage({
-                                       path: pathImage,
-                                       type: 'picture',
-                                       position: {
-                                           type: 'oneCellAnchor',
-                                           from: {
-                                               col: 1,
-                                               colOff: '0.0in',
-                                               row: row,
-                                               rowOff: 0
-                                           }
-                                       }
-                                   });
-                               }
-                           }
-                       }else{
-                           ws.cell(row,column).string((data[i][j] != undefined) ? data[i][j].toString() : '').style(style);
-                       }
-                   }
-               };
-               row++;
-               totalRecord++;
-               const maxRow = (config.excel.maxRow);
-               const div = (row > maxRow);
-               if (div) {
-                   console.log('file-->',file);
-                   console.log('fileName-->',fileName);
-                   console.log('row-->',row);
-                   console.log('maxRow-->',maxRow);
-                   console.log(`Total rows --> ${row}`);
-                   await utils.saveFile(fileName, wb);
-                   file++;
-                   row = 2;
-                   cell = 0;
-                   wb = new xl.Workbook();
-                   ws = wb.addWorksheet('Data');
+                                    ws.column(1).setWidth(15);
+                                    ws.row(row).setHeight(150);
+                                    let isExist = utils.fileExists(pathImage);
+                                    if (!isExist) {
+                                        pathImage = './images/blank.gif';
+                                    }
+                                    ws.addImage({
+                                        path: pathImage,
+                                        type: 'picture',
+                                        position: {
+                                            type: 'oneCellAnchor',
+                                            from: {
+                                                col: 1,
+                                                colOff: '0.0in',
+                                                row: row,
+                                                rowOff: 0
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }else{
+                            ws.cell(row,column).string((data[i][j] != undefined) ? data[i][j].toString() : '').style(style);
+                        }
+                    }
+                };
+                row++;
+                totalRecord++;
+                const maxRow = (config.excel.maxRow);
+                const div = (row > maxRow);
+                if (div) {
+                    console.log('file-->',file);
+                    console.log('fileName-->',fileName);
+                    console.log('row-->',row);
+                    console.log('maxRow-->',maxRow);
+                    console.log(`Total rows --> ${row}`);
+                    await utils.saveFile(fileName, wb);
+                    file++;
+                    row = 2;
+                    cell = 0;
+                    wb = new xl.Workbook();
+                    ws = wb.addWorksheet('Data');
 
-                   // Added Title to ws
-                   const titles = await utils.getSoldItemTitles(result, obj);
+                    // Added Title to ws
+                    const titles = await utils.getSoldItemTitles(result, obj);
 
-                   titles.forEach(function(title){
-                       cell++;
-                       if(title == 'Ingredients'){
-                           isIngredients = true;
-                           cellIngredients = cell;
-                       }
-                       ws.cell(1,cell).string(title).style(style);
-                   });
-                   fileName = obj.userName + '_' + exportDate + '_' + file.toString() + '.xlsx';
-                   listFileName.push(fileName.replace('.xlsx','.zip'));
-               }else{
-                   if (data.length == totalRecord) {
-                       console.log('file-->',file);
-                       console.log('fileName-->',fileName);
-                       console.log('row-->',row);
-                       console.log('maxRow-->',maxRow);
-                       console.log(`Total rows --> ${row}`);
-                       console.log('End');
-                       await utils.saveFile(fileName, wb);
+                    titles.forEach(function(title){
+                        cell++;
+                        if(title == 'Ingredients'){
+                            isIngredients = true;
+                            cellIngredients = cell;
+                        }
+                        ws.cell(1,cell).string(title).style(style);
+                    });
+                    fileName = obj.userName + '_' + exportDate + '_' + file.toString() + '.xlsx';
+                    listFileName.push(fileName.replace('.xlsx','.zip'));
+                }else{
+                    if (data.length == totalRecord) {
+                        console.log('file-->',file);
+                        console.log('fileName-->',fileName);
+                        console.log('row-->',row);
+                        console.log('maxRow-->',maxRow);
+                        console.log(`Total rows --> ${row}`);
+                        console.log('End');
+                        await utils.saveFile(fileName, wb);
 
-                       let number = 1;
-                       emailBody = '';
-                       listFileName.forEach(function (name) {
-                           emailBody = emailBody + `${number}. ${name} (http:${obj.ROOT_URL}/export_files/${name})\n`;
-                           number++;
-                       });
-                       emailBody = `Please download the files only by today from below link .\n` + emailBody;
-                       client.close();
-                       await utils.notifyFile('', userEmail, emailBody);
-                       channel.ack(msg);
-                   }
-               }
+                        let number = 1;
+                        emailBody = '';
+                        listFileName.forEach(function (name) {
+                            emailBody = emailBody + `${number}. ${name} (http:${obj.ROOT_URL}/export_files/${name})\n`;
+                            number++;
+                        });
+                        emailBody = `Please download the files only by today from below link .\n` + emailBody;
+                        client.close();
+                        await utils.notifyFile('', userEmail, emailBody);
+                        channel.ack(msg);
+                    }
+                }
             }
         }
     } catch (e) {

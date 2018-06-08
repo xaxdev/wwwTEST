@@ -118,12 +118,12 @@ class SalesReportJewelry extends Component {
 
         let { fields: { jewelryProductSalesHierarchy }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                            ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                            ? searchResult.paramsSalesSearch
                             : null;
 
-        if(paramsSearch != null)
-            paramsSearch.jewelryProductSalesHierarchy = treeSelected;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.jewelryProductSalesHierarchy = treeSelected;
 
         jewelryProductSalesHierarchy.onChange(treeSelected);
     }
@@ -132,11 +132,11 @@ class SalesReportJewelry extends Component {
         const { props } = this.props;
         let { fields: { jewelryCategory }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
-        if(paramsSearch != null)
-            paramsSearch.jewelryCategory = JewelryCategorySelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.jewelryCategory = JewelryCategorySelectValue;
 
         jewelryCategory.onChange(JewelryCategorySelectValue);
         props.inventoryActions.setDataJewelryCategory(JewelryCategorySelectValue);
@@ -146,11 +146,11 @@ class SalesReportJewelry extends Component {
         const { props } = this.props;
         let { fields: { collection }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
-        if(paramsSearch != null)
-            paramsSearch.collection = CollectionSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.collection = CollectionSelectValue;
 
         collection.onChange(CollectionSelectValue);
         props.inventoryActions.setDataCollection(CollectionSelectValue);
@@ -160,11 +160,11 @@ class SalesReportJewelry extends Component {
         const { props } = this.props;
         let { fields: { brand }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
-        if(paramsSearch != null)
-            paramsSearch.brand = BrandSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.brand = BrandSelectValue;
 
         brand.onChange(BrandSelectValue);
         props.inventoryActions.setDataBrand(BrandSelectValue);
@@ -174,12 +174,12 @@ class SalesReportJewelry extends Component {
         const { props } = this.props;
         let { fields: { mustHave }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
 
-        if(paramsSearch != null)
-            paramsSearch.mustHave = MustHaveSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.mustHave = MustHaveSelectValue;
 
         mustHave.onChange(MustHaveSelectValue);
         props.inventoryActions.setDataMusthave(MustHaveSelectValue);
@@ -189,12 +189,12 @@ class SalesReportJewelry extends Component {
         const { props } = this.props;
         let { fields: { ringSize }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
 
-        if(paramsSearch != null)
-            paramsSearch.ringSize = RingSizeSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.ringSize = RingSizeSelectValue;
 
         ringSize.onChange(RingSizeSelectValue);
         props.inventoryActions.setDataRingSize(RingSizeSelectValue);
@@ -204,12 +204,12 @@ class SalesReportJewelry extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
 
-        if(paramsSearch != null)
-            paramsSearch.dominantStone = DominantStoneSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.dominantStone = DominantStoneSelectValue;
 
         dominantStone.onChange(DominantStoneSelectValue);
         props.inventoryActions.setDataDominantStone(DominantStoneSelectValue);
@@ -219,12 +219,12 @@ class SalesReportJewelry extends Component {
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
 
-        if(paramsSearch != null)
-            paramsSearch.metalType = MetalTypeSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.metalType = MetalTypeSelectValue;
 
         metalType.onChange(MetalTypeSelectValue);
         props.inventoryActions.setDataMetalType(MetalTypeSelectValue);
@@ -234,12 +234,12 @@ class SalesReportJewelry extends Component {
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
 
-        if(paramsSearch != null)
-            paramsSearch.metalColour = MetalColourSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.metalColour = MetalColourSelectValue;
 
         metalColour.onChange(MetalColourSelectValue);
         props.inventoryActions.setDataMetalColour(MetalColourSelectValue);
@@ -253,8 +253,8 @@ class SalesReportJewelry extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
 
         if(props.options != undefined){
@@ -266,8 +266,8 @@ class SalesReportJewelry extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.jewelryCategory = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.jewelryCategory = findFieldName;
 
                 jewelryCategory.onChange(findFieldName);
                 props.inventoryActions.setDataJewelryCategory(findFieldName);
@@ -280,8 +280,8 @@ class SalesReportJewelry extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.collection = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.collection = findFieldName;
 
                 collection.onChange(findFieldName);
                 props.inventoryActions.setDataCollection(findFieldName);
@@ -294,8 +294,8 @@ class SalesReportJewelry extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.brand = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.brand = findFieldName;
 
                 brand.onChange(findFieldName);
                 props.inventoryActions.setDataBrand(findFieldName);
@@ -308,8 +308,8 @@ class SalesReportJewelry extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.ringSize = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.ringSize = findFieldName;
 
                 ringSize.onChange(findFieldName);
                 props.inventoryActions.setDataRingSize(findFieldName);
@@ -322,8 +322,8 @@ class SalesReportJewelry extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.dominantStone = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.dominantStone = findFieldName;
 
                 dominantStone.onChange(findFieldName);
                 props.inventoryActions.setDataDominantStone(findFieldName);
@@ -336,8 +336,8 @@ class SalesReportJewelry extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.metalType = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.metalType = findFieldName;
 
                 metalType.onChange(findFieldName);
                 props.inventoryActions.setDataMetalType(findFieldName);
@@ -350,8 +350,8 @@ class SalesReportJewelry extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.metalColour = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.metalColour = findFieldName;
 
                 metalColour.onChange(findFieldName);
                 props.inventoryActions.setDataMetalColour(findFieldName);
@@ -368,16 +368,16 @@ class SalesReportJewelry extends Component {
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
     }
 
-    selectedViewAsSet = e => {
+    selectedViewAsSet = e => {       
         const { props } = this.props;
         let { fields: { viewAsSet }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
 
-        if(paramsSearch != null)
-            paramsSearch.viewAsSet = e.target.checked;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.viewAsSet = e.target.checked;
 
         viewAsSet.onChange(e.target.checked);
         props.inventoryActions.setViewAsSet(e.target.checked);

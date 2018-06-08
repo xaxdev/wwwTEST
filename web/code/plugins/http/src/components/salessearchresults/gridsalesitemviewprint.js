@@ -14,11 +14,6 @@ class GridSalesItemsViewPrint extends Component {
     constructor(props) {
         super(props);
 
-        this.renderShowDetails = this.renderShowDetails.bind(this);
-        this.onClickGrid = this.onClickGrid.bind(this);
-        this.onMouseOverGrid = this.onMouseOverGrid.bind(this);
-        this.onMouseOutGrid = this.onMouseOutGrid.bind(this);
-
         this.state = { isOpen0: false,isOpen1: false,isOpen2: false,isOpen3: false,isOpen4: false,isOpen5: false,isOpen6: false,isOpen7: false,isOpen8: false,
             isOpen9: false,isOpen10: false,isOpen11: false,isOpen12: false,isOpen13: false,isOpen14: false,isOpen15: false,isOpen16: false,isOpen17: false,
             isOpen18: false,isOpen19: false,isOpen20: false,isOpen21: false,isOpen22: false,isOpen23: false,isOpen24: false,isOpen25: false,isOpen26: false,
@@ -31,398 +26,9 @@ class GridSalesItemsViewPrint extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         return shallowCompare(this, nextProps, nextState);
     }
-    onClickGrid(event) {
-        event.preventDefault();
-        this.props.onClickGrid(event.currentTarget.id);
-    }
-    onMouseOverGrid(e){
-        switch(e.currentTarget.id){
-        case '0':
-          this.setState({isOpen0:true});
-          break;
-        case '1':
-          this.setState({isOpen1:true});
-          break;
-        case '2':
-          this.setState({isOpen2:true});
-          break;
-        case '3':
-          this.setState({isOpen3:true});
-          break;
-        case '4':
-          this.setState({isOpen4:true});
-          break;
-        case '5':
-          this.setState({isOpen5:true});
-          break;
-        case '6':
-          this.setState({isOpen6:true});
-          break;
-        case '7':
-          this.setState({isOpen7:true});
-          break;
-        case '8':
-          this.setState({isOpen8:true});
-          break;
-        case '9':
-          this.setState({isOpen9:true});
-          break;
-        case '10':
-          this.setState({isOpen10:true});
-          break;
-        case '11':
-          this.setState({isOpen11:true});
-          break;
-        case '12':
-          this.setState({isOpen12:true});
-          break;
-        case '13':
-          this.setState({isOpen13:true});
-          break;
-        case '14':
-          this.setState({isOpen14:true});
-          break;
-        case '15':
-          this.setState({isOpen15:true});
-          break;
-        case '16':
-          this.setState({isOpen16:true});
-          break;
-        case '17':
-          this.setState({isOpen17:true});
-          break;
-        case '18':
-          this.setState({isOpen18:true});
-          break;
-        case '19':
-          this.setState({isOpen19:true});
-          break;
-        case '20':
-          this.setState({isOpen20:true});
-          break;
-        case '21':
-          this.setState({isOpen21:true});
-          break;
-        case '22':
-          this.setState({isOpen22:true});
-          break;
-        case '23':
-          this.setState({isOpen23:true});
-          break;
-        case '24':
-          this.setState({isOpen24:true});
-          break;
-        case '25':
-          this.setState({isOpen25:true});
-          break;
-        case '26':
-          this.setState({isOpen26:true});
-          break;
-        case '27':
-          this.setState({isOpen27:true});
-          break;
-        case '28':
-          this.setState({isOpen28:true});
-          break;
-        case '29':
-          this.setState({isOpen29:true});
-          break;
-        case '30':
-          this.setState({isOpen30:true});
-          break;
-        case '31':
-          this.setState({isOpen31:true});
-          break;
-        case '32':
-          this.setState({isOpen32:true});
-          break;
-        case '33':
-          this.setState({isOpen33:true});
-          break;
-        case '34':
-          this.setState({isOpen34:true});
-          break;
-        case '35':
-          this.setState({isOpen35:true});
-          break;
-        case '36':
-          this.setState({isOpen36:true});
-          break;
-        case '37':
-          this.setState({isOpen37:true});
-          break;
-        case '38':
-          this.setState({isOpen38:true});
-          break;
-        case '39':
-          this.setState({isOpen39:true});
-          break;
-        case '40':
-          this.setState({isOpen40:true});
-          break;
-        case '41':
-          this.setState({isOpen41:true});
-          break;
-        case '42':
-          this.setState({isOpen42:true});
-          break;
-        case '43':
-          this.setState({isOpen43:true});
-          break;
-        case '44':
-          this.setState({isOpen44:true});
-          break;
-        case '45':
-          this.setState({isOpen45:true});
-          break;
-        case '46':
-          this.setState({isOpen46:true});
-          break;
-        case '47':
-          this.setState({isOpen47:true});
-          break;
-        case '48':
-          this.setState({isOpen48:true});
-          break;
-        case '49':
-          this.setState({isOpen49:true});
-          break;
-        case '50':
-          this.setState({isOpen50:true});
-          break;
-        case '51':
-          this.setState({isOpen51:true});
-          break;
-        case '52':
-          this.setState({isOpen52:true});
-          break;
-        case '53':
-          this.setState({isOpen53:true});
-          break;
-        case '54':
-          this.setState({isOpen54:true});
-          break;
-        case '55':
-          this.setState({isOpen55:true});
-          break;
-        case '56':
-          this.setState({isOpen56:true});
-          break;
-        case '57':
-          this.setState({isOpen57:true});
-          break;
-        case '58':
-          this.setState({isOpen58:true});
-          break;
-        case '59':
-          this.setState({isOpen59:true});
-          break;
-        case '60':
-          this.setState({isOpen60:true});
-          break;
-        default:
-          break;
-        }
-    }
-    onMouseOutGrid(e){
-        switch(e.currentTarget.id){
-        case '0':
-          this.setState({isOpen0:false});
-          break;
-        case '1':
-          this.setState({isOpen1:false});
-          break;
-        case '2':
-          this.setState({isOpen2:false});
-          break;
-        case '3':
-          this.setState({isOpen3:false});
-          break;
-        case '4':
-          this.setState({isOpen4:false});
-          break;
-        case '5':
-          this.setState({isOpen5:false});
-          break;
-        case '6':
-          this.setState({isOpen6:false});
-          break;
-        case '7':
-          this.setState({isOpen7:false});
-          break;
-        case '8':
-          this.setState({isOpen8:false});
-          break;
-        case '9':
-          this.setState({isOpen9:false});
-          break;
-        case '10':
-          this.setState({isOpen10:false});
-          break;
-        case '11':
-          this.setState({isOpen11:false});
-          break;
-        case '12':
-          this.setState({isOpen12:false});
-          break;
-        case '13':
-          this.setState({isOpen13:false});
-          break;
-        case '14':
-          this.setState({isOpen14:false});
-          break;
-        case '15':
-          this.setState({isOpen15:false});
-          break;
-        case '16':
-          this.setState({isOpen16:false});
-          break;
-        case '17':
-          this.setState({isOpen17:false});
-          break;
-        case '18':
-          this.setState({isOpen18:false});
-          break;
-        case '19':
-          this.setState({isOpen19:false});
-          break;
-        case '20':
-          this.setState({isOpen20:false});
-          break;
-        case '21':
-          this.setState({isOpen21:false});
-          break;
-        case '22':
-          this.setState({isOpen22:false});
-          break;
-        case '23':
-          this.setState({isOpen23:false});
-          break;
-        case '24':
-          this.setState({isOpen24:false});
-          break;
-        case '25':
-          this.setState({isOpen25:false});
-          break;
-        case '26':
-          this.setState({isOpen26:false});
-          break;
-        case '27':
-          this.setState({isOpen27:false});
-          break;
-        case '28':
-          this.setState({isOpen28:false});
-          break;
-        case '29':
-          this.setState({isOpen29:false});
-          break;
-        case '30':
-          this.setState({isOpen30:false});
-          break;
-        case '31':
-          this.setState({isOpen31:false});
-          break;
-        case '32':
-          this.setState({isOpen32:false});
-          break;
-        case '33':
-          this.setState({isOpen33:false});
-          break;
-        case '34':
-          this.setState({isOpen34:false});
-          break;
-        case '35':
-          this.setState({isOpen35:false});
-          break;
-        case '36':
-          this.setState({isOpen36:false});
-          break;
-        case '37':
-          this.setState({isOpen37:false});
-          break;
-        case '38':
-          this.setState({isOpen38:false});
-          break;
-        case '39':
-          this.setState({isOpen39:false});
-          break;
-        case '40':
-          this.setState({isOpen40:false});
-          break;
-        case '41':
-          this.setState({isOpen41:false});
-          break;
-        case '42':
-          this.setState({isOpen42:false});
-          break;
-        case '43':
-          this.setState({isOpen43:false});
-          break;
-        case '44':
-          this.setState({isOpen44:false});
-          break;
-        case '45':
-          this.setState({isOpen45:false});
-          break;
-        case '46':
-          this.setState({isOpen46:false});
-          break;
-        case '47':
-          this.setState({isOpen47:false});
-          break;
-        case '48':
-          this.setState({isOpen48:false});
-          break;
-        case '49':
-          this.setState({isOpen49:false});
-          break;
-        case '50':
-          this.setState({isOpen50:false});
-          break;
-        case '51':
-          this.setState({isOpen51:false});
-          break;
-        case '52':
-          this.setState({isOpen52:false});
-          break;
-        case '53':
-          this.setState({isOpen53:false});
-          break;
-        case '54':
-          this.setState({isOpen54:false});
-          break;
-        case '55':
-          this.setState({isOpen55:false});
-          break;
-        case '56':
-          this.setState({isOpen56:false});
-          break;
-        case '57':
-          this.setState({isOpen57:false});
-          break;
-        case '58':
-          this.setState({isOpen58:false});
-          break;
-        case '59':
-          this.setState({isOpen59:false});
-          break;
-        case '60':
-          this.setState({isOpen60:false});
-          break;
-        default:
-          break;
-        }
-    }
-    renderShowDetails(){
-        return(
-            <div style={{margin: '0 auto', textAlign: 'center'}} ><h1> pop up header </h1> <p> pop up content </p></div>
-        );
-    }
+
     render(){
         const { submitting, ViewAsSet } = this.props;
-        const btnEvent = this.onClickGrid;
-        const showDetails = this.onMouseOverGrid;
-        const hideDetails = this.onMouseOutGrid;
         const that = this;
         const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -452,23 +58,26 @@ class GridSalesItemsViewPrint extends Component {
                             lblActualCost = 'Total Cost Price (USD)';
                             lblPrice = 'Total Retail Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
+                            lblNetSales = 'Total Net Sales (USD)';
+                            lblDiscount = 'Total Discount Amount (USD)';
+                            lblMarginAmount = 'Total Margin Amount (USD)';
                             imagesProduct = (item.image) != undefined
-                                            ? item.image.length != 0
-                                                ?item.image[0].original
-                                                : '/images/blank.gif'
+                                            ? item.image.length != 0 ?item.image[0].original : '/images/blank.gif'
                                             : '/images/blank.gif';
-                            itemDate = convertDate(item.createdDate);
-                            lblDate = 'Created Date:';
+                            itemDate = convertDate(item.postedDate);
+                            lblDate = 'Posted Date:';
                             price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
                             actualCost = numberFormat(item.totalActualCost['USD']) + ' ' + 'USD';
                             updatedCost = numberFormat(item.totalUpdatedCost['USD']) + ' ' + 'USD';
+                            netSales = numberFormat(item.totalNetAmount['USD']) + ' ' + 'USD';
+                            discount = numberFormat(item.totalDiscountAmount['USD']) + ' ' + 'USD';
+                            marginAmount = numberFormat(item.totalMargin['USD']) + ' ' + 'USD';
 
-                            itemName = (item.type != 'CER')?
-                                              (item.description != undefined) ?
-                                                  (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
-                                              : '-' :
-                                              item.name
-                                              ;
+                            itemName = (item.type != 'CER')
+                                        ? (item.description != undefined)
+                                            ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                                            : '-'
+                                        : item.name ;
                         }else{
                             lblActualCost = `Cost Price (${userLogin.currency})`;
                             lblPrice = `Retail Price (${userLogin.currency})`;
@@ -476,9 +85,7 @@ class GridSalesItemsViewPrint extends Component {
                             lblNetSales = `Net Sales (${userLogin.currency})`;
                             lblDiscount = 'Discount %';
                             lblMarginAmount = 'Margin Amount';
-                            imagesProduct = (item.gallery) != undefined
-                                                ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
-                                                : '/images/blank.gif';
+                            imagesProduct = (item.gallery) != undefined ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif' : '/images/blank.gif';
                             itemDate = convertDate(item.invoiceDate);
                             lblDate = 'Invoice Date';
 
@@ -560,19 +167,16 @@ class GridSalesItemsViewPrint extends Component {
                                     (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`: '' }>
                                     <div className="thumbnaillgrid">
                                         <ReactImageFallback width="160" src={imagesProduct } fallbackImage="/images/blank.gif" initialImage="/images/blank.gif"
-                                            name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id} onClick={btnEvent} />
+                                            name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id} />
                                     </div>
                                     <p className="font-b fc-000">
-                                        <span name={ViewAsSet ? item.reference : item.id}
-                                            id={ViewAsSet ? item.reference : item.id}
-                                            onClick={btnEvent}>{item.reference}</span>
+                                        <span name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}>{item.reference}</span>
                                         <br/>
-                                        <span name={ViewAsSet ? item.reference : item.id}
-                                            id={ViewAsSet ? item.reference : item.id}
-                                            onClick={btnEvent}>{item.sku}</span>
+                                        <span name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}>{item.sku}</span>
                                     </p>
-                                    <p className="product-detail-h" name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}
-                                        onClick={btnEvent}>{itemName}</p>
+                                    <p className="product-detail-h" name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}>
+                                        {itemName}
+                                    </p>
                                     <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{netSales}</span>
                                     <span className="line"></span>
                                 </div>
@@ -642,7 +246,7 @@ class GridSalesItemsViewPrint extends Component {
                                     }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31||index==35||index==39||
                                         index==43||index==47||index==51||index==55||index==59)? 'over-searchresult-left': 'over-searchresult'
                                     }>
-                                        <img className="searchresult-close"  src="/images/icon-close.png" responsive name={ViewAsSet ? item.reference : item.id} id={index} onClick={hideDetails}/>
+                                        <img className="searchresult-close"  src="/images/icon-close.png" responsive name={ViewAsSet ? item.reference : item.id} id={index}/>
                                         <span className="fc-ddbe6a width-f100 font-b">Item Reference: </span>
                                         <span className="width-f100">{item.reference}</span>
                                         <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
@@ -681,10 +285,10 @@ class GridSalesItemsViewPrint extends Component {
                                             '' : 'hidden'}`}>{marginAmount}</span>
                                         <span className="fc-ddbe6a width-f100 font-b">Location: </span>
                                         <span className="width-f100">{item.warehouseName != undefined ? item.warehouseName : item.warehouse}</span>
-                                        <span className="fc-ddbe6a width-f100 font-b">Customer ID: </span>
-                                        <span className="width-f100">{item.customer != undefined ? item.customer : item.customer}</span>
-                                        <span className="fc-ddbe6a width-f100 font-b">Customer Name: </span>
-                                        <span className="width-f100">{item.customerName != undefined ? item.customerName : item.customerName}</span>
+                                        <span className={`fc-ddbe6a width-f100 font-b ${ViewAsSet ?'hidden':''}`}>Customer ID: </span>
+                                        <span className={`width-f100 ${ViewAsSet ?'hidden':''}`}>{item.customer != undefined ? item.customer : item.customer}</span>
+                                        <span className={`fc-ddbe6a width-f100 font-b ${ViewAsSet ?'hidden':''}`}>Customer Name: </span>
+                                        <span className={`width-f100 ${ViewAsSet ?'hidden':''}`}>{item.customerName != undefined ? item.customerName : item.customerName}</span>
                                         <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
                                         <span className="width-f100">{itemDate}</span>
                                     </div>

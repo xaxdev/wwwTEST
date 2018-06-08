@@ -6,6 +6,7 @@ import RenderClassTotals from './utils/render_total';
 import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter';
 import ModalPrintOptions from './utils/modalPrintOptions';
 import RenderSalesExportExcelDialog from './utils/render_export_excel_dialog';
+import RenderExportExcelViewAsSetDialog from './utils/render_export_excel_viewasset_dialog'
 import numberFormat from '../../utils/convertNumberformat';
 import GenSalesTemplateHtml from '../../utils/genTemplatePdfSalesSearchResult';
 import GridSalesItemsView from '../../components/salessearchresults/gridsalesitemview';
@@ -20,6 +21,8 @@ const checkFields = ['categoryName', 'category', 'article', 'collection', 'setRe
     'brand', 'postedDate', 'salesId', 'salesPersonName', 'salesChannelType', 'customer', 'customerName', 'invoicedId', 'invoiceDate', 'inventSizeId'
 ];
 
+const checkFieldsViewAsSet = ['totalActualCost','totalUpdatedCost','totalPrice', 'markup', 'companyName', 'warehouseName', 'postedDate'];
+
 const labels = {
     categoryName: 'Category Name', category: 'Category', article: 'Article', collection: 'Collection', quantity: 'Quantity',
     setReferenceNumber: 'Set Reference Number', dominantStone: 'Dominant Stone', markup: 'Markup%', certificatedNumber: 'Certificate Number',
@@ -27,6 +30,10 @@ const labels = {
     customer: 'Customer', customerName: 'Customer Name', invoicedId: 'Invoiced Id', invoiceDate: 'Invoice Date', inventSizeId: 'Size'
 }
 
+const labelsViewAsSet = {
+    totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Retail Price (USD)', markup: 'Markup (Times)',
+    companyName: 'Company', warehouseName: 'Location', postedDate: 'Posted Date'
+}
 class SalesSearchResultOnItem extends Component {
     constructor(props) {
         super(props);
@@ -43,6 +50,8 @@ class SalesSearchResultOnItem extends Component {
         this.selectedAllFieldsExportExcel = this.selectedAllFieldsExportExcel.bind(this);
         this.selectedShowImages = this.selectedShowImages.bind(this);
         this.exportExcel = this.exportExcel.bind(this);
+        this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
+        this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
 
         this.state = {
             activePage: this.props.currentSalesPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true,
@@ -552,7 +561,7 @@ class SalesSearchResultOnItem extends Component {
         };
         let params = {
             'page' : (props.currentSalesPage!=undefined?props.currentSalesPage:1), 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection,
-            'pageSize' : (props.salesPageSize!=undefined?props.salesPageSize:16), 'fields': fields, 'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 
+            'pageSize' : (props.salesPageSize!=undefined?props.salesPageSize:16), 'fields': fields, 'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL,
             'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'Sales','ItemsSalesOrder': ItemsSalesOrder,
             'SetReferenceSalesOrder': SetReferenceSalesOrder
         };
@@ -568,7 +577,7 @@ class SalesSearchResultOnItem extends Component {
 
         props.setSalesShowGridView(false);
         props.setSalesShowListView(false);
-        
+
         console.log('params-->',params);
         props.exportSalesDatas(params).then((value) => {
             if(girdView){
@@ -602,6 +611,98 @@ class SalesSearchResultOnItem extends Component {
     }
     selectedNoAllFields = _ =>{
         this.setState({ allFields:false });
+    }
+
+    exportExcelViewAsSet = _=> {
+        const that = this;
+        checkFieldsViewAsSet.map(function(field, index){
+            that.setState({ [field]: false });
+        });
+        this.setState({ allFieldsViewAsSet: false });
+        this.setState({ showImagesViewAsSet: false });
+        this.setState({ isOpenViewAsSet: true });
+    }
+
+    hideModalViewAsSet = (e) => {
+        e.preventDefault();
+        this.setState({ showImagesViewAsSet: false })
+        this.setState({isOpenViewAsSet: false});
+    }
+
+    confirmExportViewAsSet = e => {
+        e.preventDefault();
+        const that = this;
+        const host = HOSTNAME || 'localhost';
+        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
+        const { props, salesShowGridView, salesShowListView } = this.props;
+        const { items, exportItems, paramsSalesSearch,ItemsSalesOrder, SetReferenceSalesOrder } = props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+
+        let salesSortingBy = '';
+
+        switch (this.refs.salesSortingBy.value) {
+            case 'price':
+                salesSortingBy = 'price.' + userLogin.currency;
+                break;
+            default:
+                salesSortingBy = this.refs.salesSortingBy.value;
+                break;
+        }
+
+        const salesSortingDirection = this.refs.salesSortingDirection.value;
+
+        let fields = {
+            allFieldsViewAsSet: this.state.allFieldsViewAsSet, showImagesViewAsSet: this.state.showImagesViewAsSet,
+            totalActualCost: this.state.totalActualCost, totalUpdatedCost: this.state.totalUpdatedCost,
+            totalPrice: this.state.totalPrice, markup: this.state.markup, companyName: this.state.companyName,
+            warehouseName: this.state.warehouseName, postedDate: this.state.postedDate
+        };
+
+        let params = {
+            'page' : (props.currentSalesPage!=undefined)?props.currentSalesPage:1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection,
+            'pageSize' : (props.salesPageSize!=undefined)?props.salesPageSize:16, 'fields': fields, 'price': userLogin.permission.price,
+            'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'Sales'
+        };
+
+        // default search params
+
+        const filters =  JSON.parse(sessionStorage.filters);
+
+        params = GetGemstoneLotnumberFilter(filters, params);
+
+        this.setState({ showLoading: true, isOpenViewAsSet: false });
+
+        let girdView = salesShowGridView;
+        let listView = salesShowListView;
+
+        props.setSalesShowGridView(false);
+        props.setSalesShowListView(false);
+
+        props.exportSalesDatas(params).then(async (value) => {
+            if(girdView){
+                props.setSalesShowGridView(true);
+            }else if (listView) {
+                props.setSalesShowListView(true);
+            }
+            that.setState({ showLoading: false, isOpenDownload: true });
+        });
+    }
+
+    renderExportExcelViewAsSetDialog = _=>{
+        const that = this;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        return(
+            <RenderExportExcelViewAsSetDialog that={this} userLogin={userLogin} checkFieldsViewAsSet ={checkFieldsViewAsSet } labelsViewAsSet={labelsViewAsSet}
+                selectedAllFieldsViewAsSet={this.selectedAllFieldsViewAsSet} selectedNoAllFieldsViewAsSet={this.selectedNoAllFieldsViewAsSet}/>
+        );
+    }
+
+    selectedAllFieldsViewAsSet = _ =>{
+        this.setState({ allFieldsViewAsSet:true });
+    }
+
+    selectedNoAllFieldsViewAsSet = _ =>{
+        this.setState({ allFieldsViewAsSet:false });
     }
 
     render(){
@@ -751,6 +852,7 @@ class SalesSearchResultOnItem extends Component {
                 {this.renderAlertmsgPdf()}
                 {this.renderAlertmsgPageInvalid()}
                 {this.renderExportExcelDialog()}
+                {this.renderExportExcelViewAsSetDialog()}
             </form>
         )
     }

@@ -22,10 +22,10 @@ const settingsSoldItem = async (index, exchangeRates, path, mapper) => ({
     exchangeRates
 });
 
-const getSoldItems = async (index, exchangeRates) => {
+const getSoldItems = async (index, allExchangeRates) => {
     try {
         console.log('SoldItems!!!');
-        const total = await core.parallelize(await settingsSoldItem(index, exchangeRates, constant.SOLDITEM_QUERY, mapper.mapSoldItem));
+        const total = await core.parallelize(await settingsSoldItem(index, allExchangeRates, constant.SOLDITEM_QUERY, mapper.mapSoldItem));
         console.log(`${total} items were processed in total.`);
     } catch (err) {
         throw err;

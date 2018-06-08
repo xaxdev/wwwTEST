@@ -107,11 +107,11 @@ class SalesReportAccessory extends Component {
 
         let { fields: { accessoryProductSalesHierarchy }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.accessoryProductSalesHierarchy = treeSelected;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.accessoryProductSalesHierarchy = treeSelected;
 
         accessoryProductSalesHierarchy.onChange(treeSelected);
     }
@@ -120,11 +120,11 @@ class SalesReportAccessory extends Component {
         const { props } = this.props;
         let { fields: { accessoryType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.accessoryType = accessoryTypeSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.accessoryType = accessoryTypeSelectValue;
 
         accessoryType.onChange(accessoryTypeSelectValue);
         props.inventoryActions.setDataAccessoryType(accessoryTypeSelectValue);
@@ -134,11 +134,11 @@ class SalesReportAccessory extends Component {
         const { props } = this.props;
         let { fields: { collection }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.collection = collectionSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.collection = collectionSelectValue;
 
         collection.onChange(collectionSelectValue);
         props.inventoryActions.setDataCollection(collectionSelectValue);
@@ -148,11 +148,11 @@ class SalesReportAccessory extends Component {
         const { props } = this.props;
         let { fields: { brand }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.brand = brandSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.brand = brandSelectValue;
 
         brand.onChange(brandSelectValue);
         props.inventoryActions.setDataBrand(brandSelectValue);
@@ -162,11 +162,11 @@ class SalesReportAccessory extends Component {
         const { props } = this.props;
         let { fields: { mustHave }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.mustHave = mustHaveSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.mustHave = mustHaveSelectValue;
 
         mustHave.onChange(mustHaveSelectValue);
         props.inventoryActions.setDataMusthave(mustHaveSelectValue);
@@ -176,11 +176,11 @@ class SalesReportAccessory extends Component {
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.metalType = metalTypeSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.metalType = metalTypeSelectValue;
 
         metalType.onChange(metalTypeSelectValue);
         props.inventoryActions.setDataMetalType(metalTypeSelectValue);
@@ -190,11 +190,11 @@ class SalesReportAccessory extends Component {
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.metalColour = metalColourSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.metalColour = metalColourSelectValue;
 
         metalColour.onChange(metalColourSelectValue);
         props.inventoryActions.setDataMetalColour(metalColourSelectValue);
@@ -204,11 +204,11 @@ class SalesReportAccessory extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch :
                               null;
-        if(paramsSearch != null)
-            paramsSearch.dominantStone = dominantStoneSelectValue;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.dominantStone = dominantStoneSelectValue;
 
         dominantStone.onChange(dominantStoneSelectValue);
         props.inventoryActions.setDataDominantStone(dominantStoneSelectValue);
@@ -222,8 +222,8 @@ class SalesReportAccessory extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
+                                ? searchResult.paramsSalesSearch
                                 : null;
 
         if(props.options != undefined){
@@ -235,8 +235,8 @@ class SalesReportAccessory extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.accessoryType = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.accessoryType = findFieldName;
 
                 accessoryType.onChange(findFieldName);
                 props.inventoryActions.setDataAccessoryType(findFieldName);
@@ -249,8 +249,8 @@ class SalesReportAccessory extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.collection = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.collection = findFieldName;
 
                 collection.onChange(findFieldName);
                 props.inventoryActions.setDataCollection(findFieldName);
@@ -263,8 +263,8 @@ class SalesReportAccessory extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.brand = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.brand = findFieldName;
 
                 brand.onChange(findFieldName);
                 props.inventoryActions.setDataBrand(findFieldName);
@@ -277,8 +277,8 @@ class SalesReportAccessory extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.metalType = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.metalType = findFieldName;
 
                 metalType.onChange(findFieldName);
                 props.inventoryActions.setDataMetalType(findFieldName);
@@ -291,8 +291,8 @@ class SalesReportAccessory extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.metalColour = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.metalColour = findFieldName;
 
                 metalColour.onChange(findFieldName);
                 props.inventoryActions.setDataMetalColour(findFieldName);
@@ -305,8 +305,8 @@ class SalesReportAccessory extends Component {
                     }
                 }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.dominantStone = findFieldName;
+                if(paramsSalesSearch != null)
+                    paramsSalesSearch.dominantStone = findFieldName;
 
                 dominantStone.onChange(findFieldName);
                 props.inventoryActions.setDataDominantStone(findFieldName);
@@ -330,8 +330,8 @@ class SalesReportAccessory extends Component {
                   publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo
             }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
+                              searchResult.paramsSalesSearch:
                               null;
 
         let dataDropDowntAccessoryType = [];

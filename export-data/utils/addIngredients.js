@@ -88,16 +88,14 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
 
         data.forEach(function(item){
             items = items+1;
-            // console.log('item-->',item);
             let arrayItems = [];
             let itemReference = item.reference;
 
             if (fields.showImages){
-              arrayItems.push((item.gallery.length) != 0 ? item.gallery[0].thumbnail : '');
+                arrayItems.push((item.gallery.length) != 0 ? item.gallery[0].thumbnail : '');
             }
-            // console.log(`items: ${items}--> reference: ${item.reference}`);
-            arrayItems.push(item.reference,item.description,item.sku,item.venderReference);
 
+            arrayItems.push(item.reference,item.description,item.sku,item.venderReference);
             if (userCurrency != 'USD') {
                 if (price == 'All') {
                     arrayItems.push(numberFormat((item.actualCost != undefined)? item.actualCost[userCurrency]: 0 ));
@@ -108,6 +106,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
                     arrayItems.push(numberFormat((item.price != undefined)? item.price[userCurrency]: 0 ));
                 }
+
                 if (price == 'All') {
                     arrayItems.push(numberFormat((item.actualCost != undefined)? item.actualCost['USD']: 0));
                 }
@@ -246,6 +245,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 if(fields.limitedEditionNumber) arrayItems.push((item.limitedEditionNumber != undefined) ? item.limitedEditionNumber : '');
                 if(fields.itemCreatedDate) arrayItems.push((item.itemCreatedDate != undefined) ? convertDate(item.itemCreatedDate) : '');
             }
+
             if(item.gemstones != undefined){
                 if(item.gemstones.length == 0){
                     newdata.push(arrayItems);
@@ -271,7 +271,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                     arrayItems.push(''); // updated Price
                                 }
                                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                                    arrayItems.push('');// Price
+                                    arrayItems.push('');// Public Price
                                 }
 
                                 if (price == 'All') {
@@ -281,7 +281,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                     arrayItems.push(''); // updated Price (USD)
                                 }
                                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                                    arrayItems.push('');// Price (USD)
+                                    arrayItems.push('');// Public Price (USD)
                                 }
                             }else{
                                 if (price == 'All') {
@@ -291,18 +291,17 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                     arrayItems.push(''); // updated Price (USD)
                                 }
                                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                                    arrayItems.push('');// Price (USD)
+                                    arrayItems.push('');// Public Price (USD)
                                 }
                             }
-
                             arrayItems.push(
-                                '', // Item Weight(Grams)
+                                '', // Gross Weight
                                 '', // Ring Size
                                 '', // Jewels Weight
                                 '', // Site
                                 '', // Company
                                 ''
-                            ); // Location
+                            ); // Warehouse
                             arrayItems.push('Ingredient');
                             if(fields.categoryName || fields.allFields) arrayItems.push(''); // Category Name
                             if(fields.category || fields.allFields) arrayItems.push(''); // Category
@@ -319,7 +318,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                             if(fields.symmetry || fields.allFields) arrayItems.push((gemstone.symmetry != undefined) ? gemstone.symmetry : ''); // symmetry
                             if(fields.flourance || fields.allFields) arrayItems.push((gemstone.fluorescence != undefined) ? gemstone.fluorescence : ''); // Flourance
                             if(fields.batch || fields.allFields) arrayItems.push(''); // Batch lot number
-                            if(fields.netWeight || fields.allFields) arrayItems.push(''); // Gold weight (Grams)
+                            if(fields.netWeight || fields.allFields) arrayItems.push(''); // Net Weight
                             if(fields.stoneQty || fields.allFields) arrayItems.push(0); // Stone Qty
                             if(fields.dominantStone || fields.allFields) arrayItems.push(''); // Dominant Stone
                             if(fields.markup || fields.allFields) arrayItems.push(''); // Markup%

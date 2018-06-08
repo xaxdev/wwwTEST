@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 
-class RenderExportExcelViewAsSetDialog extends Component {
+class RenderSalesExportExcelViewAsSetDialog extends Component {
     render(){
-        const { that, userLogin, checkFieldsViewAsSet , labelsViewAsSet } = this.props;
+        const { that, userLogin, checkFieldsViewAsSet , labelsViewAsSet, selectedAllFieldsViewAsSet, selectedNoAllFieldsViewAsSet } = this.props;
         let checkAll = true;
         return(
             <div  className="popexport viewset">
@@ -69,9 +69,9 @@ class RenderExportExcelViewAsSetDialog extends Component {
                                                 break;
                                         }
                                         if (checkAll) {
-                                            that.setState({ allFieldsViewAsSet:true });
+                                            selectedAllFieldsViewAsSet
                                         }else{
-                                            that.setState({ allFieldsViewAsSet:false });
+                                            selectedNoAllFieldsViewAsSet
                                         }
                                         if (showField) {
                                             return(
@@ -105,4 +105,4 @@ class RenderExportExcelViewAsSetDialog extends Component {
     }
 }
 
-module.exports = RenderExportExcelViewAsSetDialog
+module.exports = RenderSalesExportExcelViewAsSetDialog
