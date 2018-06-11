@@ -1,6 +1,7 @@
 import numberFormat from './convertNumberformat';
 import convertDate from './convertDate';
 import moment from 'moment';
+import GetSalesPricePermission from './getSalesPricePermission';
 
 const setitems = (responseData, request) => new Promise((resolve, reject) => {
     try {
@@ -20,6 +21,13 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
 
         let items = 0;
 
+        const priceSalesRTP = GetSalesPricePermission(price).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(price).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(price).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(price).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(price).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(price).priceSalesDSP;
+
         data.forEach(function(item){
             items = items+1;
             // console.log('item-->',item);
@@ -32,13 +40,13 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
             // console.log(`items: ${items}--> reference: ${item.reference}`);
             arrayItems.push(item.reference,item.description);
 
-            if (price == 'All') {
+            if (priceSalesCTP) {
                 arrayItems.push(numberFormat((item.totalActualCost != undefined)? item.totalActualCost['USD']: 0));
             }
-            if (price == 'Updated' || price == 'All') {
+            if (priceSalesUCP) {
                 arrayItems.push(numberFormat((item.totalUpdatedCost != undefined)? item.totalUpdatedCost['USD']: 0));
             }
-            if (price == 'Public' || price == 'Updated' || price == 'All') {
+            if (priceSalesRTP) {
                 arrayItems.push(numberFormat((item.totalPrice != undefined)? item.totalPrice['USD']: 0));
             }
 
@@ -86,6 +94,13 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
 
         let items = 0;
 
+        const priceSalesRTP = GetSalesPricePermission(price).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(price).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(price).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(price).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(price).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(price).priceSalesDSP;
+
         data.forEach(function(item){
             items = items+1;
             // console.log('item-->',item);
@@ -98,47 +113,71 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
 
             arrayItems.push(item.reference,item.description,item.sku);
             if (userCurrency != 'USD') {
-                if (price == 'All') {
+                if (priceSalesCTP) {
                     arrayItems.push(numberFormat((item.actualCost != undefined)? item.actualCost[userCurrency]: 0 ));
                 }
-                if (price == 'Updated' || price == 'All') {
+                if (priceSalesUCP) {
                     arrayItems.push(numberFormat((item.updatedCost != undefined)? item.updatedCost[userCurrency]: 0 ));
                 }
-                if (price == 'Public' || price == 'Updated' || price == 'All') {
+                if (priceSalesRTP) {
                     arrayItems.push(numberFormat((item.price != undefined)? item.price[userCurrency]: 0 ));
                 }
 
-                if (price == 'All') {
+                if (priceSalesCTP) {
                     arrayItems.push(numberFormat((item.actualCost != undefined)? item.actualCost['USD']: 0));
                 }
-                if (price == 'Updated' || price == 'All') {
+                if (priceSalesUCP) {
                     arrayItems.push(numberFormat((item.updatedCost != undefined)? item.updatedCost['USD']: 0));
                 }
-                if (price == 'Public' || price == 'Updated' || price == 'All') {
+                if (priceSalesRTP) {
                     arrayItems.push(numberFormat((item.price != undefined)? item.price['USD']: 0));
                 }
-                arrayItems.push(numberFormat((item.netAmount != undefined)? item.netAmount[userCurrency]: 0));
-                arrayItems.push(numberFormat((item.netAmount != undefined)? item.netAmount['USD']: 0));
-                arrayItems.push(numberFormat((item.margin != undefined)? (item.margin[userCurrency]/item.netAmount[userCurrency])*100: 0));
-                arrayItems.push(numberFormat((item.margin != undefined)? item.margin[userCurrency]: 0));
-                arrayItems.push(numberFormat((item.discPercent != undefined)? item.discPercent: 0));
-                arrayItems.push(numberFormat((item.discountAmountUSD != undefined)? item.discountAmountUSD: 0));
+                if (priceSalesNSP) {
+                    arrayItems.push(numberFormat((item.netAmount != undefined)? item.netAmount[userCurrency]: 0));
+                }
+                if (priceSalesNSP) {
+                    arrayItems.push(numberFormat((item.netAmount != undefined)? item.netAmount['USD']: 0));
+                }
+                if (priceSalesMGP) {
+                    arrayItems.push(numberFormat((item.margin != undefined)? (item.margin[userCurrency]/item.netAmount[userCurrency])*100: 0));
+                }
+                if (priceSalesMGP) {
+                    arrayItems.push(numberFormat((item.margin != undefined)? item.margin[userCurrency]: 0));
+                }
+                if (priceSalesDSP) {
+                    arrayItems.push(numberFormat((item.discPercent != undefined)? item.discPercent: 0));
+                }
+                if (priceSalesDSP) {
+                    arrayItems.push(numberFormat((item.discountAmountUSD != undefined)? item.discountAmountUSD: 0));
+                }
             }else{
-                if (price == 'All') {
+                if (priceSalesCTP) {
                     arrayItems.push(numberFormat((item.actualCost != undefined)? item.actualCost['USD']: 0));
                 }
-                if (price == 'Updated' || price == 'All') {
+                if (priceSalesUCP) {
                     arrayItems.push(numberFormat((item.updatedCost != undefined)? item.updatedCost['USD']: 0));
                 }
-                if (price == 'Public' || price == 'Updated' || price == 'All') {
+                if (priceSalesRTP) {
                     arrayItems.push(numberFormat((item.price != undefined)? item.price['USD']: 0));
                 }
-                arrayItems.push(numberFormat((item.netAmount != undefined)? item.netAmount[userCurrency]: 0));
-                arrayItems.push(numberFormat((item.netAmount != undefined)? item.netAmount['USD']: 0));
-                arrayItems.push(numberFormat((item.margin != undefined)? (item.margin[userCurrency]/item.netAmount[userCurrency])*100: 0));
-                arrayItems.push(numberFormat((item.margin != undefined)? item.margin[userCurrency]: 0));
-                arrayItems.push(numberFormat((item.discPercent != undefined)? item.discPercent: 0));
-                arrayItems.push(numberFormat((item.discountAmountUSD != undefined)? item.discountAmountUSD: 0));
+                if (priceSalesNSP) {
+                    arrayItems.push(numberFormat((item.netAmount != undefined)? item.netAmount[userCurrency]: 0));
+                }
+                if (priceSalesNSP) {
+                    arrayItems.push(numberFormat((item.netAmount != undefined)? item.netAmount['USD']: 0));
+                }
+                if (priceSalesMGP) {
+                    arrayItems.push(numberFormat((item.margin != undefined)? (item.margin[userCurrency]/item.netAmount[userCurrency])*100: 0));
+                }
+                if (priceSalesMGP) {
+                    arrayItems.push(numberFormat((item.margin != undefined)? item.margin[userCurrency]: 0));
+                }
+                if (priceSalesDSP) {
+                    arrayItems.push(numberFormat((item.discPercent != undefined)? item.discPercent: 0));
+                }
+                if (priceSalesDSP) {
+                    arrayItems.push(numberFormat((item.discountAmountUSD != undefined)? item.discountAmountUSD: 0));
+                }
             }
 
             let jewelsWeight = 0;

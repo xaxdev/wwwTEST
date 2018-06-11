@@ -14,6 +14,7 @@ import ListSalesItemsView from '../../components/salessearchresults/listsalesite
 import ListSalesItemsViewPrint from '../../components/salessearchresults/listsalesitemviewprint';
 import GridSalesItemsViewPrint from '../../components/salessearchresults/gridsalesitemviewprint';
 import Modalalertmsg from '../../utils/modalalertmsg';
+import GetSalesPricePermission from '../../utils/getSalesPricePermission';
 
 const Loading = require('react-loading');
 
@@ -131,7 +132,7 @@ class SalesSearchResultOnItem extends Component {
             htmlTemplate = GenSalesTemplateHtml(salesShowGridView, salesShowListView, ROOT_URL, imagesReplace, dv);
             let params = {
                 'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'pdf'
-            }
+            }           
 
             props.writeHtml(params).then((value) => {
                 if (value) {
@@ -459,6 +460,7 @@ class SalesSearchResultOnItem extends Component {
         let _totalDiscount =  (totalDiscount!=null) ? totalDiscount : 0;
         let _totalMargin =  (totalMargin!=null) ? totalMargin : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        
         return(
             <RenderClassTotals userLogin={userLogin} allItems={allItems} ViewAsSet={ViewAsSet} _totalPublicPrice = {_totalPublicPrice} maxPrice = {maxPrice}
                 _totalUpdatedCost = {_totalUpdatedCost} minPrice = {minPrice} avrgPrice = {avrgPrice} _totalNetAmount = {_totalNetAmount}
@@ -538,6 +540,12 @@ class SalesSearchResultOnItem extends Component {
         const { props, salesShowGridView, salesShowListView } = this.props;
         const { items, exportItems, paramsSalesSearch,ItemsSalesOrder, SetReferenceSalesOrder } = props;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
             case 'netAmount':
@@ -561,7 +569,7 @@ class SalesSearchResultOnItem extends Component {
         };
         let params = {
             'page' : (props.currentSalesPage!=undefined?props.currentSalesPage:1), 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection,
-            'pageSize' : (props.salesPageSize!=undefined?props.salesPageSize:16), 'fields': fields, 'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL,
+            'pageSize' : (props.salesPageSize!=undefined?props.salesPageSize:16), 'fields': fields, 'price': userLogin.permission.priceSales, 'ROOT_URL': ROOT_URL,
             'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'Sales','ItemsSalesOrder': ItemsSalesOrder,
             'SetReferenceSalesOrder': SetReferenceSalesOrder
         };
@@ -637,6 +645,12 @@ class SalesSearchResultOnItem extends Component {
         const { props, salesShowGridView, salesShowListView } = this.props;
         const { items, exportItems, paramsSalesSearch,ItemsSalesOrder, SetReferenceSalesOrder } = props;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
 
         let salesSortingBy = '';
 
@@ -653,14 +667,14 @@ class SalesSearchResultOnItem extends Component {
 
         let fields = {
             allFieldsViewAsSet: this.state.allFieldsViewAsSet, showImagesViewAsSet: this.state.showImagesViewAsSet,
-            totalActualCost: this.state.totalActualCost, totalUpdatedCost: this.state.totalUpdatedCost,
-            totalPrice: this.state.totalPrice, markup: this.state.markup, companyName: this.state.companyName,
+            totalActualCost: priceSalesCTP? this.state.totalActualCost: false, totalUpdatedCost: priceSalesUCP? this.state.totalUpdatedCost: false,
+            totalPrice: priceSalesRTP? this.state.totalPrice: false, markup: this.state.markup, companyName: this.state.companyName,
             warehouseName: this.state.warehouseName, postedDate: this.state.postedDate
         };
 
         let params = {
             'page' : (props.currentSalesPage!=undefined)?props.currentSalesPage:1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection,
-            'pageSize' : (props.salesPageSize!=undefined)?props.salesPageSize:16, 'fields': fields, 'price': userLogin.permission.price,
+            'pageSize' : (props.salesPageSize!=undefined)?props.salesPageSize:16, 'fields': fields, 'price': userLogin.permission.priceSales,
             'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'Sales'
         };
 

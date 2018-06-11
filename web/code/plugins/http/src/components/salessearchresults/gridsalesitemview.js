@@ -6,8 +6,9 @@ import ReactImageFallback from 'react-image-fallback';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import convertDate from '../../utils/convertDate';
 import numberFormat from '../../utils/convertNumberformat';
-import OnMouseOverGrid from './onmouseovergrid'
-import OnMouseOutGrid from './onmouseoutgrid'
+import OnMouseOverGrid from './onmouseovergrid';
+import OnMouseOutGrid from './onmouseoutgrid';
+import GetSalesPricePermission from '../../utils/getSalesPricePermission';
 
 function showDiv() {
    document.getElementById('searchresult-border').style.display = 'block';
@@ -65,6 +66,13 @@ class GridSalesItemsView extends Component {
         const hideDetails = this.onMouseOutGrid;
         const that = this;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
+
         return (
             <div>
                 {
@@ -94,19 +102,15 @@ class GridSalesItemsView extends Component {
                             lblNetSales = 'Total Net Sales (USD)';
                             lblDiscount = 'Total Discount Amount (USD)';
                             lblMarginAmount = 'Total Margin Amount (USD)';
-                            imagesProduct = (item.image) != undefined
-                                            ? item.image.length != 0
-                                                ?item.image[0].original
-                                                : '/images/blank.gif'
-                                            : '/images/blank.gif';
+                            imagesProduct = (item.image) != undefined ? item.image.length != 0 ?item.image[0].original : '/images/blank.gif' : '/images/blank.gif';
                             itemDate = convertDate(item.postedDate);
                             lblDate = 'Posted Date:';
-                            price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
-                            actualCost = numberFormat(item.totalActualCost['USD']) + ' ' + 'USD';
-                            updatedCost = numberFormat(item.totalUpdatedCost['USD']) + ' ' + 'USD';
-                            netSales = numberFormat(item.totalNetAmount['USD']) + ' ' + 'USD';
-                            discount = numberFormat(item.totalDiscountAmount['USD']) + ' ' + 'USD';
-                            marginAmount = numberFormat(item.totalMargin['USD']) + ' ' + 'USD';
+                            price = numberFormat(item.totalPrice['USD']!=undefined?item.totalPrice['USD']:0) + ' ' + 'USD';
+                            actualCost = numberFormat(item.totalActualCost['USD']!=undefined?item.totalActualCost['USD']:0) + ' ' + 'USD';
+                            updatedCost = numberFormat(item.totalUpdatedCost['USD']!=undefined?item.totalUpdatedCost['USD']:0) + ' ' + 'USD';
+                            netSales = numberFormat(item.totalNetAmount['USD']!=undefined?item.totalNetAmount['USD']:0) + ' ' + 'USD';
+                            discount = numberFormat(item.totalDiscountAmount['USD']!=undefined?item.totalDiscountAmount['USD']:0) + ' ' + 'USD';
+                            marginAmount = numberFormat(item.totalMargin['USD']!=undefined?item.totalMargin['USD']:0) + ' ' + 'USD';
 
                             itemName = (item.type != 'CER')?
                                               (item.description != undefined) ?
@@ -121,9 +125,7 @@ class GridSalesItemsView extends Component {
                             lblNetSales = `Net Sales (${userLogin.currency})`;
                             lblDiscount = 'Discount %';
                             lblMarginAmount = 'Margin Amount';
-                            imagesProduct = (item.gallery) != undefined
-                                                ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
-                                                : '/images/blank.gif';
+                            imagesProduct = (item.gallery) != undefined ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif' : '/images/blank.gif';
                             itemDate = convertDate(item.invoiceDate);
                             lblDate = 'Invoice Date';
 
@@ -221,7 +223,7 @@ class GridSalesItemsView extends Component {
                                     </p>
                                     <p className="product-detail-h" name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}
                                         onClick={btnEvent}>{itemName}</p>
-                                    <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{netSales}</span>
+                                    <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? priceSalesNSP?'': 'hidden' : 'hidden'}`}>{netSales}</span>
                                     <span className="line"></span>
                                 </div>
                                 <div>
@@ -292,38 +294,18 @@ class GridSalesItemsView extends Component {
                                         index==39||index==43||index==47||index==51||index==55||index==59)?'over-salessearchresult-left':'over-salessearchresult' }>
                                         <img className="searchresult-close"  src="/images/icon-close.png" responsive name={ViewAsSet ? item.reference : item.id}
                                             id={index} onClick={hideDetails}/>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblActualCost}: </span>
-                                        <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
-                                            '' : 'hidden'}`}>{actualCost}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblUpdatedCost}: </span>
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{updatedCost}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblPrice}: </span>
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{price}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblNetSales}: </span>
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{netSales}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblDiscount}: </span>
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{discount}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblMarginAmount}: </span>
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{marginAmount}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesCTP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblActualCost}: </span>
+                                        <span className={`width-f100 ${(priceSalesCTP) && (item.type != 'CER') ? '' : 'hidden'}`}>{actualCost}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesUCP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblUpdatedCost}: </span>
+                                        <span className={`width-f100 ${(priceSalesUCP) && (item.type != 'CER') ? '' : 'hidden'}`}>{updatedCost}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesRTP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblPrice}: </span>
+                                        <span className={`width-f100 ${(priceSalesRTP) && (item.type != 'CER') ? '' : 'hidden'}`}>{price}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesNSP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblNetSales}: </span>
+                                        <span className={`width-f100 ${(priceSalesNSP) && (item.type != 'CER') ? '' : 'hidden'}`}>{netSales}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesDSP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblDiscount}: </span>
+                                        <span className={`width-f100 ${(priceSalesDSP) && (item.type != 'CER') ? '' : 'hidden'}`}>{discount}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesMGP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblMarginAmount}: </span>
+                                        <span className={`width-f100 ${(priceSalesMGP) && (item.type != 'CER') ? '' : 'hidden'}`}>{marginAmount}</span>
                                         <span className="fc-ddbe6a width-f100 font-b">Location: </span>
                                         <span className="width-f100">{item.warehouseName != undefined ? item.warehouseName : item.warehouse}</span>
                                         <span className={`fc-ddbe6a width-f100 font-b ${ViewAsSet ?'hidden':''}`}>Customer ID: </span>

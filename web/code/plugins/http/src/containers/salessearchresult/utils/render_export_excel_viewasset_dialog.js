@@ -1,11 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
+import GetSalesPricePermission from '../../../utils/getSalesPricePermission';
 
 class RenderSalesExportExcelViewAsSetDialog extends Component {
     render(){
         const { that, userLogin, checkFieldsViewAsSet , labelsViewAsSet, selectedAllFieldsViewAsSet, selectedNoAllFieldsViewAsSet } = this.props;
         let checkAll = true;
+        const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
         return(
             <div  className="popexport viewset">
                 <Modal isOpen={that.state.isOpenViewAsSet} onRequestHide={that.hideModalViewAsSet}>
@@ -48,20 +55,15 @@ class RenderSalesExportExcelViewAsSetDialog extends Component {
                                         switch (field) {
                                             case 'totalPrice':
                                                 checkAll = checkAll && that.state[field];
-                                                showField = (userLogin.permission.price == 'Public') ||
-                                                            (userLogin.permission.price == 'Updated') ||
-                                                            (userLogin.permission.price == 'All')
-                                                            ? true: false;
+                                                showField = priceSalesRTP ? true: false;
                                                 break;
                                             case 'totalUpdatedCost':
                                                 checkAll = checkAll && that.state[field];
-                                                showField = (userLogin.permission.price == 'Updated') ||
-                                                            (userLogin.permission.price == 'All')
-                                                            ? true: false;
+                                                showField = priceSalesUCP ? true: false;
                                                 break;
                                             case 'totalActualCost':
                                                 checkAll = checkAll && that.state[field];
-                                                showField = (userLogin.permission.price == 'All') ? true: false;
+                                                showField = (priceSalesCTP) ? true: false;
                                                 break;
                                             default:
                                                 checkAll = checkAll && that.state[field];

@@ -1,6 +1,7 @@
 import numberFormat from './convertNumberformat';
 import convertDate from './convertDate';
 import moment from 'moment';
+import GetSalesPricePermission from './getSalesPricePermission';
 
 const title = (responseData, request) => new Promise((resolve, reject) => {
     try {
@@ -21,19 +22,26 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
 
         let titles = [];
 
+        const priceSalesRTP = GetSalesPricePermission(price).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(price).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(price).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(price).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(price).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(price).priceSalesDSP;
+
         if (viewAsSet) {
             if (fields.showImagesViewAsSet)
                 titles.push('Images');
 
             titles.push('Item Reference', 'Description');
 
-            if (price == 'All') {
+            if (priceSalesCTP) {
                 titles.push('Total Actual Cost (USD)');
             }
-            if (price == 'Updated' || price == 'All') {
+            if (priceSalesUCP) {
                 titles.push('Total Updated Cost (USD)');
             }
-            if (price == 'Public' || price == 'Updated' || price == 'All') {
+            if (priceSalesRTP) {
                 titles.push('Total Public Price (USD)');
             }
 
@@ -54,47 +62,70 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
 
             titles.push('Item Reference', 'Item Description', 'SKU');
             if (userCurrency != 'USD') {
-                if (price == 'All') {
+                if (priceSalesCTP) {
                     titles.push('Actual Price (' + userCurrency + ')');
                 }
-                if (price == 'Updated' || price == 'All') {
+                if (priceSalesUCP) {
                     titles.push('Updated Price (' + userCurrency + ')');
                 }
-                if (price == 'Public' || price == 'Updated' || price == 'All') {
+                if (priceSalesRTP) {
                     titles.push('Public Price (' + userCurrency + ')');
                 }
-
-                if (price == 'All') {
+                if (priceSalesCTP) {
                     titles.push('Actual Price (USD)');
                 }
-                if (price == 'Updated' || price == 'All') {
+                if (priceSalesUCP) {
                     titles.push('Updated Price (USD)');
                 }
-                if (price == 'Public' || price == 'Updated' || price == 'All') {
+                if (priceSalesRTP) {
                     titles.push('Public Price (USD)');
                 }
-                titles.push('Net Sales');
-                titles.push('Net Sales (USD)');
-                titles.push('Margin %');
-                titles.push('Margin Amount');
-                titles.push('Discount %');
-                titles.push('Discount Amount');
+                if (priceSalesNSP) {
+                    titles.push('Net Sales');
+                }
+                if (priceSalesNSP) {
+                    titles.push('Net Sales (USD)');
+                }
+                if (priceSalesMGP) {
+                    titles.push('Margin %');
+                }
+                if (priceSalesMGP) {
+                    titles.push('Margin Amount');
+                }
+                if (priceSalesDSP) {
+                    titles.push('Discount %');
+                }
+                if (priceSalesDSP) {
+                    titles.push('Discount Amount');
+                }
             } else {
-                if (price == 'All') {
+                if (priceSalesCTP) {
                     titles.push('Actual Price (USD)');
                 }
-                if (price == 'Updated' || price == 'All') {
+                if (priceSalesUCP) {
                     titles.push('Updated Price (USD)');
                 }
-                if (price == 'Public' || price == 'Updated' || price == 'All') {
+                if (priceSalesRTP) {
                     titles.push('Public Price (USD)');
                 }
-                titles.push('Net Sales');
-                titles.push('Net Sales (USD)');
-                titles.push('Margin %');
-                titles.push('Margin Amount');
-                titles.push('Discount %');
-                titles.push('Discount Amount');
+                if (priceSalesNSP) {
+                    titles.push('Net Sales');
+                }
+                if (priceSalesNSP) {
+                    titles.push('Net Sales (USD)');
+                }
+                if (priceSalesMGP) {
+                    titles.push('Margin %');
+                }
+                if (priceSalesMGP) {
+                    titles.push('Margin Amount');
+                }
+                if (priceSalesDSP) {
+                    titles.push('Discount %');
+                }
+                if (priceSalesDSP) {
+                    titles.push('Discount Amount');
+                }
             }
             titles.push('Item Weight (Grams)','Ring Size', 'Jewels Weight (text)','Site','Company', 'Location');
             if(fields.allFields){

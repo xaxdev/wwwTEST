@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
+import GetSalesPricePermission from '../../../utils/getSalesPricePermission';
 
 class RenderSalesExportExcelDialog extends Component {
     render(){
@@ -8,6 +9,12 @@ class RenderSalesExportExcelDialog extends Component {
         const { that, state, userLogin, checkFields, labels, onClickHideModal, onClickConfirmExport, onChangedSelectedAllFieldsExportExcel,
                 onChangedShowImages, selectedAllFields, selectedNoAllFields } = this.props;
         let checkAll = true;
+        const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
         return(
             <div  className="popexport">
                 <Modal isOpen={state.isOpen} onRequestHide={onClickHideModal}>
@@ -18,13 +25,19 @@ class RenderSalesExportExcelDialog extends Component {
                     <div className="modal-body">
                         <h3>Please choose additional fields for export.</h3>
                         <h5>(Normal export field Item Reference, Description, SKU,
-                              {`${(userLogin.permission.price == 'All') ? 'Cost Price, ':''}`}
-                              {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price, ':''}`}
-                              {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Retail Price, ':''}`}
-                              {`${(userLogin.permission.price == 'All') ? 'Cost Price (USD), ':''}`}
-                              {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price (USD), ':''}`}
-                              {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Retail Price (USD), ':''}`}
-                              Net Sales,Net Sales (USD),Margin %,Margin Amount,Discount %,Discount Amount,Item Weight (Grams), Ring Size, Jewels Weight (text), Site, Company, Location)</h5>
+                              {`${(priceSalesCTP) ? 'Cost Price, ':''}`}
+                              {`${(priceSalesUCP) ? 'Updated Price, ':''}`}
+                              {`${(priceSalesRTP) ? 'Retail Price, ':''}`}
+                              {`${(priceSalesNSP) ? 'Net Sales, ':''}`}
+                              {`${(priceSalesCTP) ? 'Cost Price (USD), ':''}`}
+                              {`${(priceSalesUCP) ? 'Updated Price (USD), ':''}`}
+                              {`${(priceSalesRTP) ? 'Retail Price (USD), ':''}`}
+                              {`${(priceSalesNSP) ? 'Net Sales (USD), ':''}`}
+                              {`${(priceSalesMGP) ? 'Margin %, ':''}`}
+                              {`${(priceSalesMGP) ? 'Margin Amount, ':''}`}
+                              {`${(priceSalesDSP) ? 'Discount %, ':''}`}
+                              {`${(priceSalesDSP) ? 'Discount Amount, ':''}`}
+                              Item Weight (Grams), Ring Size, Jewels Weight (text), Site, Company, Location)</h5>
                         <br/>
                         <div className="col-sm-12">
                             <div className="col-sm-3 checkbox checkbox-warning popexport">

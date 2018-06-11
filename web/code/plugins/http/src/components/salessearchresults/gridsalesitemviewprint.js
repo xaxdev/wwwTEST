@@ -6,6 +6,7 @@ import ReactImageFallback from 'react-image-fallback';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import convertDate from '../../utils/convertDate';
 import numberFormat from '../../utils/convertNumberformat';
+import GetSalesPricePermission from '../../utils/getSalesPricePermission';
 
 // Used to cancel events.
 const preventDefault = e => e.preventDefault();
@@ -31,6 +32,12 @@ class GridSalesItemsViewPrint extends Component {
         const { submitting, ViewAsSet } = this.props;
         const that = this;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
 
         return (
             <div>
@@ -66,12 +73,12 @@ class GridSalesItemsViewPrint extends Component {
                                             : '/images/blank.gif';
                             itemDate = convertDate(item.postedDate);
                             lblDate = 'Posted Date:';
-                            price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
-                            actualCost = numberFormat(item.totalActualCost['USD']) + ' ' + 'USD';
-                            updatedCost = numberFormat(item.totalUpdatedCost['USD']) + ' ' + 'USD';
-                            netSales = numberFormat(item.totalNetAmount['USD']) + ' ' + 'USD';
-                            discount = numberFormat(item.totalDiscountAmount['USD']) + ' ' + 'USD';
-                            marginAmount = numberFormat(item.totalMargin['USD']) + ' ' + 'USD';
+                            price = numberFormat(item.totalPrice['USD']!=undefined?item.totalPrice['USD']:0) + ' ' + 'USD';
+                            actualCost = numberFormat(item.totalActualCost['USD']!=undefined?item.totalActualCost['USD']:0) + ' ' + 'USD';
+                            updatedCost = numberFormat(item.totalUpdatedCost['USD']!=undefined?item.totalUpdatedCost['USD']:0) + ' ' + 'USD';
+                            netSales = numberFormat(item.totalNetAmount['USD']!=undefined?item.totalNetAmount['USD']:0) + ' ' + 'USD';
+                            discount = numberFormat(item.totalDiscountAmount['USD']!=undefined?item.totalDiscountAmount['USD']:0) + ' ' + 'USD';
+                            marginAmount = numberFormat(item.totalMargin['USD']!=undefined?item.totalMargin['USD']:0) + ' ' + 'USD';
 
                             itemName = (item.type != 'CER')
                                         ? (item.description != undefined)
@@ -177,7 +184,7 @@ class GridSalesItemsViewPrint extends Component {
                                     <p className="product-detail-h" name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id}>
                                         {itemName}
                                     </p>
-                                    <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? '' : 'hidden'}`}>{netSales}</span>
+                                    <span className={`fc-ae8f3b font-b price ${(item.type != 'CER') ? priceSalesNSP?'': 'hidden' : 'hidden'}`}>{netSales}</span>
                                     <span className="line"></span>
                                 </div>
                                 <div>
@@ -208,41 +215,41 @@ class GridSalesItemsViewPrint extends Component {
                                             (index==23)?`${that.state.isOpen23 ? '' : 'none'}`:
                                             (index==24)?`${that.state.isOpen24 ? '' : 'none'}`:
                                             (index==25)?`${that.state.isOpen25 ? '' : 'none'}`:
-                                            (index==26)?`${that.state.isOpen26? '' : 'none'}`:
-                                            (index==27)?`${that.state.isOpen27? '' : 'none'}`:
-                                            (index==28)?`${that.state.isOpen28? '' : 'none'}`:
-                                            (index==29)?`${that.state.isOpen29? '' : 'none'}`:
-                                            (index==30)?`${that.state.isOpen30? '' : 'none'}`:
-                                            (index==31)?`${that.state.isOpen31? '' : 'none'}`:
-                                            (index==32)?`${that.state.isOpen32? '' : 'none'}`:
-                                            (index==33)?`${that.state.isOpen33? '' : 'none'}`:
-                                            (index==34)?`${that.state.isOpen34? '' : 'none'}`:
-                                            (index==35)?`${that.state.isOpen35? '' : 'none'}`:
-                                            (index==36)?`${that.state.isOpen36? '' : 'none'}`:
-                                            (index==37)?`${that.state.isOpen37? '' : 'none'}`:
-                                            (index==38)?`${that.state.isOpen38? '' : 'none'}`:
-                                            (index==39)?`${that.state.isOpen39? '' : 'none'}`:
-                                            (index==40)?`${that.state.isOpen40? '' : 'none'}`:
-                                            (index==41)?`${that.state.isOpen41? '' : 'none'}`:
-                                            (index==42)?`${that.state.isOpen42? '' : 'none'}`:
-                                            (index==43)?`${that.state.isOpen43? '' : 'none'}`:
-                                            (index==44)?`${that.state.isOpen44? '' : 'none'}`:
-                                            (index==45)?`${that.state.isOpen45? '' : 'none'}`:
-                                            (index==46)?`${that.state.isOpen46? '' : 'none'}`:
-                                            (index==47)?`${that.state.isOpen47? '' : 'none'}`:
-                                            (index==48)?`${that.state.isOpen48? '' : 'none'}`:
-                                            (index==49)?`${that.state.isOpen49? '' : 'none'}`:
-                                            (index==50)?`${that.state.isOpen50? '' : 'none'}`:
-                                            (index==51)?`${that.state.isOpen51? '' : 'none'}`:
-                                            (index==52)?`${that.state.isOpen52? '' : 'none'}`:
-                                            (index==53)?`${that.state.isOpen53? '' : 'none'}`:
-                                            (index==54)?`${that.state.isOpen54? '' : 'none'}`:
-                                            (index==55)?`${that.state.isOpen55? '' : 'none'}`:
-                                            (index==56)?`${that.state.isOpen56? '' : 'none'}`:
-                                            (index==57)?`${that.state.isOpen57? '' : 'none'}`:
-                                            (index==58)?`${that.state.isOpen58? '' : 'none'}`:
-                                            (index==59)?`${that.state.isOpen59? '' : 'none'}`:
-                                            (index==60)?`${that.state.isOpen60? '' : 'none'}`: '',
+                                            (index==26)?`${that.state.isOpen26 ? '' : 'none'}`:
+                                            (index==27)?`${that.state.isOpen27 ? '' : 'none'}`:
+                                            (index==28)?`${that.state.isOpen28 ? '' : 'none'}`:
+                                            (index==29)?`${that.state.isOpen29 ? '' : 'none'}`:
+                                            (index==30)?`${that.state.isOpen30 ? '' : 'none'}`:
+                                            (index==31)?`${that.state.isOpen31 ? '' : 'none'}`:
+                                            (index==32)?`${that.state.isOpen32 ? '' : 'none'}`:
+                                            (index==33)?`${that.state.isOpen33 ? '' : 'none'}`:
+                                            (index==34)?`${that.state.isOpen34 ? '' : 'none'}`:
+                                            (index==35)?`${that.state.isOpen35 ? '' : 'none'}`:
+                                            (index==36)?`${that.state.isOpen36 ? '' : 'none'}`:
+                                            (index==37)?`${that.state.isOpen37 ? '' : 'none'}`:
+                                            (index==38)?`${that.state.isOpen38 ? '' : 'none'}`:
+                                            (index==39)?`${that.state.isOpen39 ? '' : 'none'}`:
+                                            (index==40)?`${that.state.isOpen40 ? '' : 'none'}`:
+                                            (index==41)?`${that.state.isOpen41 ? '' : 'none'}`:
+                                            (index==42)?`${that.state.isOpen42 ? '' : 'none'}`:
+                                            (index==43)?`${that.state.isOpen43 ? '' : 'none'}`:
+                                            (index==44)?`${that.state.isOpen44 ? '' : 'none'}`:
+                                            (index==45)?`${that.state.isOpen45 ? '' : 'none'}`:
+                                            (index==46)?`${that.state.isOpen46 ? '' : 'none'}`:
+                                            (index==47)?`${that.state.isOpen47 ? '' : 'none'}`:
+                                            (index==48)?`${that.state.isOpen48 ? '' : 'none'}`:
+                                            (index==49)?`${that.state.isOpen49 ? '' : 'none'}`:
+                                            (index==50)?`${that.state.isOpen50 ? '' : 'none'}`:
+                                            (index==51)?`${that.state.isOpen51 ? '' : 'none'}`:
+                                            (index==52)?`${that.state.isOpen52 ? '' : 'none'}`:
+                                            (index==53)?`${that.state.isOpen53 ? '' : 'none'}`:
+                                            (index==54)?`${that.state.isOpen54 ? '' : 'none'}`:
+                                            (index==55)?`${that.state.isOpen55 ? '' : 'none'}`:
+                                            (index==56)?`${that.state.isOpen56 ? '' : 'none'}`:
+                                            (index==57)?`${that.state.isOpen57 ? '' : 'none'}`:
+                                            (index==58)?`${that.state.isOpen58 ? '' : 'none'}`:
+                                            (index==59)?`${that.state.isOpen59 ? '' : 'none'}`:
+                                            (index==60)?`${that.state.isOpen60 ? '' : 'none'}`: '',
                                     }} className={(index==3||index==7 || index==11||index==15||index==19||index==23||index==27||index==31||index==35||index==39||
                                         index==43||index==47||index==51||index==55||index==59)? 'over-searchresult-left': 'over-searchresult'
                                     }>
@@ -251,38 +258,18 @@ class GridSalesItemsViewPrint extends Component {
                                         <span className="width-f100">{item.reference}</span>
                                         <span className="fc-ddbe6a width-f100 font-b">Item Name: </span>
                                         <span className="width-f100 text-wrap text-overflowhidden">{itemName}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${(userLogin.permission.price == 'All') && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblActualCost}: </span>
-                                        <span className={`width-f100 ${(userLogin.permission.price == 'All') && (item.type != 'CER')  ?
-                                            '' : 'hidden'}`}>{actualCost}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'))  && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblUpdatedCost}: </span>
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{updatedCost}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblPrice}: </span>
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{price}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblNetSales}: </span>
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{netSales}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblDiscount}: </span>
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{discount}</span>
-                                        <span className={`width-f100 fc-ddbe6a font-b ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{lblMarginAmount}: </span>
-                                        <span className={`width-f100 ${((userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
-                                            || userLogin.permission.price == 'All')) && (item.type != 'CER') ?
-                                            '' : 'hidden'}`}>{marginAmount}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesCTP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblActualCost}: </span>
+                                        <span className={`width-f100 ${(priceSalesCTP) && (item.type != 'CER') ? '' : 'hidden'}`}>{actualCost}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesUCP)  && (item.type != 'CER') ? '' : 'hidden'}`}>{lblUpdatedCost}: </span>
+                                        <span className={`width-f100 ${(priceSalesUCP) && (item.type != 'CER') ? '' : 'hidden'}`}>{updatedCost}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesRTP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblPrice}: </span>
+                                        <span className={`width-f100 ${(priceSalesRTP) && (item.type != 'CER') ? '' : 'hidden'}`}>{price}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesNSP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblNetSales}: </span>
+                                        <span className={`width-f100 ${(priceSalesNSP) && (item.type != 'CER') ? '' : 'hidden'}`}>{netSales}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesDSP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblDiscount}: </span>
+                                        <span className={`width-f100 ${(priceSalesDSP) && (item.type != 'CER') ? '' : 'hidden'}`}>{discount}</span>
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(priceSalesMGP) && (item.type != 'CER') ? '' : 'hidden'}`}>{lblMarginAmount}: </span>
+                                        <span className={`width-f100 ${(priceSalesMGP) && (item.type != 'CER') ? '' : 'hidden'}`}>{marginAmount}</span>
                                         <span className="fc-ddbe6a width-f100 font-b">Location: </span>
                                         <span className="width-f100">{item.warehouseName != undefined ? item.warehouseName : item.warehouse}</span>
                                         <span className={`fc-ddbe6a width-f100 font-b ${ViewAsSet ?'hidden':''}`}>Customer ID: </span>

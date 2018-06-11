@@ -7,6 +7,7 @@ import ReactImageFallback from 'react-image-fallback';
 import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat from '../../utils/convertNumberformat';
 import ListSalesItemsViewASSetPrint from './listsalesitemview_view_as_set_print';
+import GetSalesPricePermission from '../../utils/getSalesPricePermission';
 
 class ListSalesItemsViewPrintAll extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class ListSalesItemsViewPrintAll extends Component {
         onClickGrid: PropTypes.func.isRequired
     };
     componentWillReceiveProps(nextProps) {
-        this.setState({initialPageLength: this.props.pageSize});
+        this.setState({initialPageLength: this.props.salesPageSize});
     }
     renderAction(val,row){
         const { ViewAsSet } = this.props;
@@ -87,6 +88,13 @@ class ListSalesItemsViewPrintAll extends Component {
         const { ViewAsSet } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const currency = userLogin.currency;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
 
         if (this.props.items.length != 0){
             let isCompany = true;
@@ -130,11 +138,21 @@ class ListSalesItemsViewPrintAll extends Component {
                         default:
                             break;
                     }
-                    if(col.price != undefined){
-                        col.priceUSD = (col.price[currency] != undefined) ? numberFormat(col.price[currency]) : '- ';
-                    }else{
-                        col.priceUSD = '- ';
+                    if (priceSalesRTP) {
+                        if(col.price != undefined){
+                            col.priceUSD = (col.price[currency] != undefined) ? numberFormat(col.price[currency]) : '- ';
+                        }else{
+                            col.priceUSD = '- ';
+                        }
                     }
+                    if (priceSalesNSP) {
+                        if(col.netAmount != undefined){
+                            col.netAmountUSD = (col.netAmount[currency] != undefined) ? numberFormat(col.netAmount[currency]) : '- ';
+                        }else{
+                            col.netAmountUSD = '- ';
+                        }
+                    }
+                    
                     if (col.gemstones != undefined) {
                         col.gemstones.forEach(function(gemstone) {
                             if(gemstone.carat != undefined){
@@ -153,36 +171,110 @@ class ListSalesItemsViewPrintAll extends Component {
             });
 
             let tableColumns = [];
+            let fieldKeys = [];
             if (isCompany) {
-                tableColumns = [
-                    { title: '', render: this.renderCheckItem, className: 'text-center' },
-                    { title: 'Images', render: this.renderImage },
-                    { title: 'Item Reference', prop: 'reference' },
-                    { title: 'Description', prop: 'itemName' },
-                    { title: 'SKU', prop: 'sku' },
-                    { title: 'Company', prop: 'companyName' },
-                    { title: 'Location', prop: 'warehouseName' },
-                    { title: 'Size', prop: 'size' },
-                    { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                    { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                    { title: 'Retail Price', prop: 'priceUSD' },
-                    { title: '', render: this.renderAction, className: 'text-center' },
-                ];
+                if (!priceSalesNSP) {
+                    tableColumns = [
+                        { title: 'Images', render: this.renderImage },
+                        { title: 'Item Reference', prop: 'reference' },
+                        { title: 'Description', prop: 'itemName' },
+                        { title: 'SKU', prop: 'sku' },
+                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Customer Name', prop: 'customerName' },
+                        { title: 'Invoice Date', prop: 'invoiceDate' },
+                        { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                        { title: 'Stone Detail', prop: 'stoneDetail' },
+                        { title: 'Retail Price', prop: 'priceUSD' },
+                        { title: '', render: this.renderAction, className: 'text-center' },
+                    ]; 
+                    fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate', 'grossWeight', 'stoneDetail',
+                    'priceUSD','' ]   
+                }else if (!priceSalesRTP) {
+                    tableColumns = [
+                        { title: 'Images', render: this.renderImage },
+                        { title: 'Item Reference', prop: 'reference' },
+                        { title: 'Description', prop: 'itemName' },
+                        { title: 'SKU', prop: 'sku' },
+                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Customer Name', prop: 'customerName' },
+                        { title: 'Invoice Date', prop: 'invoiceDate' },
+                        { title: 'Net Amount', prop: 'netAmountUSD' },
+                        { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                        { title: 'Stone Detail', prop: 'stoneDetail' },
+                        { title: '', render: this.renderAction, className: 'text-center' },
+                    ];
+                    fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight',
+                    'stoneDetail','' ]
+                } else {
+                    tableColumns = [
+                        { title: 'Images', render: this.renderImage },
+                        { title: 'Item Reference', prop: 'reference' },
+                        { title: 'Description', prop: 'itemName' },
+                        { title: 'SKU', prop: 'sku' },
+                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Customer Name', prop: 'customerName' },
+                        { title: 'Invoice Date', prop: 'invoiceDate' },
+                        { title: 'Net Amount', prop: 'netAmountUSD' },
+                        { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                        { title: 'Stone Detail', prop: 'stoneDetail' },
+                        { title: 'Retail Price', prop: 'priceUSD' },
+                        { title: '', render: this.renderAction, className: 'text-center' },
+                    ]; 
+                    fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight',
+                    'stoneDetail','priceUSD','' ]
+                }
             }else{
-                tableColumns = [
-                    { title: '', render: this.renderCheckItem, className: 'text-center' },
-                    { title: 'Images', render: this.renderImage },
-                    { title: 'Item Reference', prop: 'reference' },
-                    { title: 'Description', prop: 'itemName' },
-                    { title: 'SKU', prop: 'sku' },
-                    { title: 'Company', prop: 'company' },
-                    { title: 'Location', prop: 'warehouse' },
-                    { title: 'Size', prop: 'size' },
-                    { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                    { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                    { title: 'Retail Price', prop: 'priceUSD' },
-                    { title: '', render: this.renderAction, className: 'text-center' },
-                ];
+                if (!priceSalesNSP) {
+                    tableColumns = [
+                        { title: 'Images', render: this.renderImage },
+                        { title: 'Item Reference', prop: 'reference' },
+                        { title: 'Description', prop: 'itemName' },
+                        { title: 'SKU', prop: 'sku' },
+                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Customer Name', prop: 'customerName' },
+                        { title: 'Invoice Date', prop: 'invoiceDate' },
+                        { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                        { title: 'Stone Detail', prop: 'stoneDetail' },
+                        { title: 'Retail Price', prop: 'priceUSD' },
+                        { title: '', render: this.renderAction, className: 'text-center' },
+                    ];
+                    fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate', 'grossWeight', 'stoneDetail',
+                    'priceUSD','' ]
+                }else if (!priceSalesRTP) {
+                    tableColumns = [
+                        { title: 'Images', render: this.renderImage },
+                        { title: 'Item Reference', prop: 'reference' },
+                        { title: 'Description', prop: 'itemName' },
+                        { title: 'SKU', prop: 'sku' },
+                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Customer Name', prop: 'customerName' },
+                        { title: 'Invoice Date', prop: 'invoiceDate' },
+                        { title: 'Net Amount', prop: 'netAmountUSD' },
+                        { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                        { title: 'Stone Detail', prop: 'stoneDetail' },
+                        { title: '', render: this.renderAction, className: 'text-center' },
+                    ];
+                    fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight',
+                    'stoneDetail','' ]
+                } else {
+                    tableColumns = [
+                        { title: 'Images', render: this.renderImage },
+                        { title: 'Item Reference', prop: 'reference' },
+                        { title: 'Description', prop: 'itemName' },
+                        { title: 'SKU', prop: 'sku' },
+                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Customer Name', prop: 'customerName' },
+                        { title: 'Invoice Date', prop: 'invoiceDate' },
+                        { title: 'Net Amount', prop: 'netAmountUSD' },
+                        { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                        { title: 'Stone Detail', prop: 'stoneDetail' },
+                        { title: 'Retail Price', prop: 'priceUSD' },
+                        { title: '', render: this.renderAction, className: 'text-center' },
+                    ];
+
+                    fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight',
+                    'stoneDetail','priceUSD','' ]
+                }
             }
             if (ViewAsSet) {
                 return (
@@ -199,14 +291,9 @@ class ListSalesItemsViewPrintAll extends Component {
                                     <th><span>Company</span></th>
                                     <th><span>Location</span></th>
                                     <th><span>Item Weight (Grams)</span></th>
-                                    <th className={`${(userLogin.permission.price == 'All') ? '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
-                                    <th className={`${(userLogin.permission.price == 'Updated'
-                                        || userLogin.permission.price == 'All') ?
-                                        '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
-                                    <th className={`${(userLogin.permission.price == 'Public'
-                                        || userLogin.permission.price == 'Updated'
-                                        || userLogin.permission.price == 'All') ?
-                                        '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
+                                    <th className={`${(priceSalesCTP) ? '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                                    <th className={`${(priceSalesUCP) ? '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
+                                    <th className={`${(priceSalesRTP) ? '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
                                 </tr>
                             </thead>
                             {items.map((item) => {
@@ -221,11 +308,8 @@ class ListSalesItemsViewPrintAll extends Component {
             }else{
                 return (
                     <div>
-                        <DataTable className="col-sm-12"
-                            keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight', 'stoneDetail','priceUSD' ]}
-                            columns={tableColumns} initialData={items} initialPageLength={this.state.initialPageLength}
-                            initialSortBy={{ prop: 'reference', order: 'ascending' }} pageLengthOptions={[ 5, 20, 50 ]}
-                        />
+                        <DataTable className="col-sm-12" keys={fieldKeys} columns={tableColumns} initialData={items} pageLengthOptions={[ 5, 20, 50 ]}
+                            initialPageLength={this.state.initialPageLength} initialSortBy={{ prop: 'reference', order: 'ascending' }} />
                     </div>
                 );
             }

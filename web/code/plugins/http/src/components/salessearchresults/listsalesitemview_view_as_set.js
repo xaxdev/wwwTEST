@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactImageFallback from 'react-image-fallback';
 import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat from '../../utils/convertNumberformat';
+import GetSalesPricePermission from '../../utils/getSalesPricePermission';
 
 class ListSalesItemsViewASSet extends Component {
     constructor(props) {
@@ -41,6 +42,12 @@ class ListSalesItemsViewASSet extends Component {
         const isItems = item.items != undefined ? item.items.length > 0 ? true : false : false;
         let row = item.items != undefined ? item.items.length + 1 : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
 
         if (item.items != undefined && item.items.length == 1) {
             return (
@@ -59,32 +66,18 @@ class ListSalesItemsViewASSet extends Component {
                                 <td>{subitem.warehouse}</td>
                                 <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
                                 <td className="text-left">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
-                                <td className={`${(userLogin.permission.price == 'All') ? '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
-                                <td className={`${(userLogin.permission.price == 'Updated'
-                                    || userLogin.permission.price == 'All') ?
-                                    '' : ' hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
-                                <td className={`${(userLogin.permission.price == 'Public'
-                                    || userLogin.permission.price == 'Updated'
-                                    || userLogin.permission.price == 'All') ?
-                                    '' : ' hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
+                                <td className={`${(priceSalesCTP) ? '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
+                                <td className={`${(priceSalesUCP) ? '' : ' hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
+                                <td className={`${(priceSalesRTP) ? '' : ' hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
                             </tr>
                         );
                     })}
                     <tr>
                         <td  colSpan="10" className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
-                        <td className={`font-b fc-000 bg-eb td-text
-                            ${(userLogin.permission.price == 'All') ?
-                            '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
-                        <td className={`font-b fc-000 bg-eb td-text
-                            ${(userLogin.permission.price == 'Updated'
-                            || userLogin.permission.price == 'All') ?
-                            '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
-                        <td className={`font-b fc-000 bg-eb td-text
-                            ${(userLogin.permission.price == 'Public'
-                            || userLogin.permission.price == 'Updated'
-                            || userLogin.permission.price == 'All') ?
-                            '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesCTP) ? '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesUCP) ? '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesRTP) ? '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
                     </tr>
                     <tr>
                         <td colSpan="13" height="40px" className="bd-tblr-white"></td>
@@ -110,32 +103,18 @@ class ListSalesItemsViewASSet extends Component {
                                 <td>{subitem.warehouse}</td>
                                 <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
                                 <td className="text-left">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
-                                <td className={`${(userLogin.permission.price == 'All') ? '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
-                                <td className={`${(userLogin.permission.price == 'Updated'
-                                    || userLogin.permission.price == 'All') ?
-                                    '' : ' hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
-                                <td className={`${(userLogin.permission.price == 'Public'
-                                    || userLogin.permission.price == 'Updated'
-                                    || userLogin.permission.price == 'All') ?
-                                    '' : ' hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
+                                <td className={`${(priceSalesCTP) ? '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
+                                <td className={`${(priceSalesUCP) ? '' : ' hidden'}`}>{numberFormat(subitem.updatedCost['USD'])}</td>
+                                <td className={`${(priceSalesRTP) ? '' : ' hidden'}`}>{numberFormat(subitem.price['USD'])}</td>
                             </tr>
                         );
                     })}
                     <tr>
                         <td  colSpan="10" className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
-                        <td className={`font-b fc-000 text-right bg-eb td-text
-                            ${(userLogin.permission.price == 'All') ?
-                            '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
-                        <td className={`font-b fc-000 text-right bg-eb td-text
-                            ${(userLogin.permission.price == 'Updated'
-                            || userLogin.permission.price == 'All') ?
-                            '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
-                        <td className={`font-b fc-000 text-right bg-eb td-text
-                            ${(userLogin.permission.price == 'Public'
-                            || userLogin.permission.price == 'Updated'
-                            || userLogin.permission.price == 'All') ?
-                            '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
+                        <td className={`font-b fc-000 text-right bg-eb td-text ${(priceSalesCTP) ? '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
+                        <td className={`font-b fc-000 text-right bg-eb td-text ${(priceSalesUCP) ? '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
+                        <td className={`font-b fc-000 text-right bg-eb td-text ${(priceSalesRTP) ? '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
                     </tr>
                     <tr>
                         <td colSpan="13" height="40px" className="bd-tblr-white"></td>
@@ -153,18 +132,15 @@ class ListSalesItemsViewASSet extends Component {
                     <tr>
                         <td  colSpan="10" className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
-                        <td className={`font-b fc-000 text-right bg-eb td-text
-                            ${(userLogin.permission.price == 'All') ?
-                            '' : ' hidden'}`}>{numberFormat(!!item.totalActualCost?item.totalActualCost['USD']:0)}</td>
-                        <td className={`font-b fc-000 text-right bg-eb td-text
-                            ${(userLogin.permission.price == 'Updated'
-                            || userLogin.permission.price == 'All') ?
-                            '' : ' hidden'}`}>{numberFormat(!!item.totalUpdatedCost?item.totalUpdatedCost['USD']:0)}</td>
-                        <td className={`font-b fc-000 text-right bg-eb td-text
-                            ${(userLogin.permission.price == 'Public'
-                            || userLogin.permission.price == 'Updated'
-                            || userLogin.permission.price == 'All') ?
-                            '' : ' hidden'}`}>{numberFormat(!!item.totalPrice?item.totalPrice['USD']:0)}</td>
+                        <td className={`font-b fc-000 text-right bg-eb td-text ${(priceSalesCTP) ? '' : ' hidden'}`}>
+                            {numberFormat(!!item.totalActualCost?item.totalActualCost['USD']:0)}
+                        </td>
+                        <td className={`font-b fc-000 text-right bg-eb td-text ${(priceSalesUCP) ?'' : ' hidden'}`}>
+                            {numberFormat(!!item.totalUpdatedCost?item.totalUpdatedCost['USD']:0)}
+                        </td>
+                        <td className={`font-b fc-000 text-right bg-eb td-text ${(priceSalesRTP) ? '' : ' hidden'}`}>
+                            {numberFormat(!!item.totalPrice?item.totalPrice['USD']:0)}
+                        </td>
                     </tr>
                     <tr>
                         <td colSpan="13" height="40px" className="bd-tblr-white"></td>

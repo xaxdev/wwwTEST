@@ -45,6 +45,7 @@ export default function GenSalesTemplateHtml(showGridView, showListView, ROOT_UR
 
     dvTotal2 = dvTotal2.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotal2 = dvTotal2.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
+    dvTotal2 = dvTotal2.replace(/class="hidden"/g,'style="display: none !important;visibility: hidden !important;"');
 
     dvGridview = dvGridview.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     dvGridview = dvGridview.replace(/\/images\//g,imgPath);
