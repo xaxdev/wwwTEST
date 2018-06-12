@@ -73,11 +73,14 @@ class ListSalesItemsView extends Component {
 
     renderImage = (val,row) => {
         return (
+        <div className="list-tagbar-soldout">
+            <span className="tagbar-soldout"></span>
             <ReactImageFallback
                 src={row.imageThumbnail}
                 fallbackImage="/images/blank.gif"
                 initialImage="/images/blank.gif"
-                width="60" />
+                width="60"/>
+        </div>
         );
     }
 

@@ -173,6 +173,7 @@ class GridSalesItemsViewPrint extends Component {
                                     (index==59)? `searchresult-prodcut ${that.state.isOpen59? 'searchresult-border': ''}`:
                                     (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`: '' }>
                                     <div className="thumbnaillgrid">
+                                        <span className="tagbar-soldout"></span>
                                         <ReactImageFallback width="160" src={imagesProduct } fallbackImage="/images/blank.gif" initialImage="/images/blank.gif"
                                             name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id} />
                                     </div>

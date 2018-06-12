@@ -211,6 +211,7 @@ class GridSalesItemsView extends Component {
                                         </span>
                                     </div>
                                     <div className="thumbnaillgrid">
+                                        <span className="tagbar-soldout"></span>
                                         <ReactImageFallback src={imagesProduct } fallbackImage="/images/blank.gif" initialImage="/images/blank.gif"
                                                name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id} onClick={btnEvent} />
                                     </div>

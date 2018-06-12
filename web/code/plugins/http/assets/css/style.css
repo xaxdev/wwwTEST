@@ -776,7 +776,7 @@ select.form-searchresult option{
 }
 .footer {
     position: absolute;
-    bottom: 0;
+    bottom: -30px;
     width: 100%;
     height: 45px;
     margin-top: 20px;
@@ -1137,6 +1137,7 @@ select.form-searchresult option{
 .list-search td:nth-child(7),.list-search td:nth-child(8),.list-search td:nth-child(9),.list-search td:nth-child(10){text-align: right;}
 .list-search span{
   cursor: pointer;
+  position: relative;
 }
 .list-search img{
   cursor: pointer;
@@ -1249,6 +1250,37 @@ select.form-searchresult option{
 .image-gallery-thumbnail.active img {
   width: 100%;
   height: auto;
+}
+.tagbar-special{
+  background:url(../images/img_special_discount.png)left top no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 123px;
+  height: 119px;
+  background-size: 80%;
+}
+.tagbar-soldout{
+  background:url(../images/img_sold_out.png)right top no-repeat;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  width: 88px;
+  height: 93px;
+}
+.list-tagbar-soldout{
+  position: relative;
+}
+.list-tagbar-soldout .tagbar-soldout {
+    background: url(../images/img_sold_out_list.png)right top no-repeat;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    z-index: 9999;
+    width: 30px;
+    height: 32px;
 }
 .search-icon{
     background-color: #ddbe6a;
@@ -1560,7 +1592,7 @@ select.form-searchresult option{
       max-width: 100%;
       margin-bottom: 20px;
     }
-    .table-searchresult>tbody>tr>td{word-break: break-word;}
+    .table-searchresult>tbody>tr>td{word-break: break-word; line-height: 1;}
     .sort-icon:after{float:none !important;}
     .table.table-searchset>tbody+tbody{
       border-top: 1px solid #000;

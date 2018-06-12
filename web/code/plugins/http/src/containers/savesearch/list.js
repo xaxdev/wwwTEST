@@ -80,7 +80,7 @@ class SaveSearch extends Component {
                                 props = {this.props}/>
                          </div>
                      </div>
-                     <div className={`col-sm-12 bg-hearder bg-header-inventories ${permission.userType != 'OnHand'?'':'hidden'}`}>
+                     <div className={`col-sm-12 maring-t15 bg-hearder bg-header-inventories ${permission.userType != 'OnHand'?'':'hidden'}`}>
                          <div className="col-sm-6 m-width-60 ft-white m-nopadding">
                             <h1>LIST OF SALES SAVED SEARCHES</h1>
                          </div>
