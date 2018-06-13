@@ -43,9 +43,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_stoneType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_stoneType = stoneTypeSelectValue;
 
@@ -56,9 +54,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_cut }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_cut = CutSelectValue;
 
@@ -69,9 +65,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_cutGrade }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_cutGrade = CutGradeSelectValue;
 
@@ -82,9 +76,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_color }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_color = ColorSelectValue;
 
@@ -95,9 +87,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_clarity }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_clarity = ClaritySelectValue;
 
@@ -130,9 +120,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_cerDateFrom }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_cerDateFrom = startDate;
 
@@ -144,9 +132,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_cerDateTo }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_cerDateTo = endDate;
 
@@ -158,9 +144,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_polish }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_polish = PolishSelectValue;
 
@@ -171,9 +155,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_symmetry }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_symmetry = SymmetrySelectValue;
 
@@ -184,9 +166,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_treatment }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_treatment = TreatmentSelectValue;
 
@@ -197,9 +177,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_fluorescence }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_fluorescence = FluorescenceSelectValue;
 
@@ -210,9 +188,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_origin }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_origin = OriginSelectValue;
 
@@ -223,9 +199,7 @@ class InventoryGemStone extends Component {
         const { props } = this.props;
         let { fields: { gemstone_certificateAgency }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.gemstone_certificateAgency = CertificateAgencySelectValue;
 
@@ -243,9 +217,7 @@ class InventoryGemStone extends Component {
             },searchResult
         } = props;
 
-        let paramsSearch= (searchResult.paramsSearch != null)?
-                            searchResult.paramsSearch:
-                            null;
+        let paramsSearch= (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
 
         let dataDropDowntstoneType = [];
         let dataDropDowntGemstoneStoneType = [];
@@ -265,309 +237,249 @@ class InventoryGemStone extends Component {
         InitModifyData(props);
 
         if(props.options != undefined){
-          if (props.options.stoneType) {
-            dataDropDowntstoneType.push(props.options.stoneType.map(stoneType =>{
-                return ({value: stoneType.code,label:stoneType.name});
-              })
-            )
-            dataDropDowntstoneType = dataDropDowntstoneType[0];
-          }
-          if (props.options.gemstoneStoneType) {
-            dataDropDowntGemstoneStoneType.push(props.options.gemstoneStoneType.map(gemstoneStoneType =>{
-                return ({value: gemstoneStoneType.code,label:gemstoneStoneType.name});
-              })
-            )
-            dataDropDowntGemstoneStoneType = dataDropDowntGemstoneStoneType[0];
-          }
-          if (props.options.cut) {
-            dataDropDowntCut.push(props.options.cut.map(cut =>{
-                return ({value: cut.code,label:cut.code + ' [' + cut.name + ']'});
-              })
-            )
-            dataDropDowntCut = dataDropDowntCut[0];
-          }
-          if (props.options.cutGrades) {
-            dataDropDowntCutGrade.push(props.options.cutGrades.map(cutGrade =>{
-                return ({value: cutGrade.code,label:cutGrade.name});
-              })
-            )
-            dataDropDowntCutGrade = dataDropDowntCutGrade[0];
-          }
-          if (props.options.colors) {
-            dataDropDowntColor.push(props.options.colors.map(color =>{
-                return ({value: color.code,label:color.code + ' [' + color.name + ']'});
-              })
-            )
-            dataDropDowntColor = dataDropDowntColor[0];
-          }
+            if (props.options.stoneType) {
+                dataDropDowntstoneType.push(props.options.stoneType.map(stoneType =>{return ({value: stoneType.code,label:stoneType.name})}))
+                dataDropDowntstoneType = dataDropDowntstoneType[0];
+            }
+            if (props.options.gemstoneStoneType) {
+                dataDropDowntGemstoneStoneType.push(props.options.gemstoneStoneType.map(gemstoneStoneType =>{
+                    return ({value: gemstoneStoneType.code,label:gemstoneStoneType.name})
+                }))
+                dataDropDowntGemstoneStoneType = dataDropDowntGemstoneStoneType[0];
+            }
+            if (props.options.cut) {
+                dataDropDowntCut.push(props.options.cut.map(cut =>{return ({value: cut.code,label:cut.code + ' [' + cut.name + ']'})}))
+                dataDropDowntCut = dataDropDowntCut[0];
+            }
+            if (props.options.cutGrades) {
+                dataDropDowntCutGrade.push(props.options.cutGrades.map(cutGrade =>{return ({value: cutGrade.code,label:cutGrade.name})}))
+                dataDropDowntCutGrade = dataDropDowntCutGrade[0];
+            }
+            if (props.options.colors) {
+                dataDropDowntColor.push(props.options.colors.map(color =>{return ({value: color.code,label:color.code + ' [' + color.name + ']'})}))
+                dataDropDowntColor = dataDropDowntColor[0];
+            }
 
-          if (props.options.clarities) {
-            dataDropDowntClarity.push(props.options.clarities.map(clarity =>{
-                return ({value: clarity.code,label:clarity.name});
-              })
-            )
-            dataDropDowntClarity = dataDropDowntClarity[0];
-          }
+            if (props.options.clarities) {
+                dataDropDowntClarity.push(props.options.clarities.map(clarity =>{return ({value: clarity.code,label:clarity.name})}))
+                dataDropDowntClarity = dataDropDowntClarity[0];
+            }
 
-          if (props.options.polishs) {
-            dataDropDowntPolish.push(props.options.polishs.map(polish =>{
-                return ({value: polish.code,label:polish.name});
-              })
-            )
-            dataDropDowntPolish = dataDropDowntPolish[0];
-          }
-          if (props.options.symmetries) {
-            dataDropDowntSymmetry.push(props.options.symmetries.map(symmetry =>{
-                return ({value: symmetry.code,label:symmetry.name});
-              })
-            )
-            dataDropDowntSymmetry = dataDropDowntSymmetry[0];
-          }
-          if (props.options.treatments) {
-            dataDropDowntTreatment.push(props.options.treatments.map(treatment =>{
-                return ({value: treatment.code,label:treatment.name});
-              })
-            )
-            dataDropDowntTreatment = dataDropDowntTreatment[0];
-          }
-          if (props.options.fluorescences) {
-            dataDropDowntFluorescence.push(props.options.fluorescences.map(fluorescence =>{
-                return ({value: fluorescence.code,label:fluorescence.name});
-              })
-            )
-            dataDropDowntFluorescence = dataDropDowntFluorescence[0];
-          }
-          if (props.options.origins) {
-            dataDropDowntOrigin.push(props.options.origins.map(origin =>{
-                return ({value: origin.code,label:origin.name});
-              })
-            )
-            dataDropDowntOrigin = dataDropDowntOrigin[0];
-          }
-          if (props.options.certificateAgencys) {
-            dataDropDowntCertificateAgency.push(props.options.certificateAgencys.map(certificateAgency =>{
-                return ({value: certificateAgency.code,label:certificateAgency.code + ' [' + certificateAgency.name + ']'});
-              })
-            )
-            dataDropDowntCertificateAgency = dataDropDowntCertificateAgency[0];
-          }
+            if (props.options.polishs) {
+                dataDropDowntPolish.push(props.options.polishs.map(polish =>{return ({value: polish.code,label:polish.name})}))
+                dataDropDowntPolish = dataDropDowntPolish[0];
+            }
+            if (props.options.symmetries) {
+                dataDropDowntSymmetry.push(props.options.symmetries.map(symmetry =>{return ({value: symmetry.code,label:symmetry.name})}))
+                dataDropDowntSymmetry = dataDropDowntSymmetry[0];
+            }
+            if (props.options.treatments) {
+                dataDropDowntTreatment.push(props.options.treatments.map(treatment =>{return ({value: treatment.code,label:treatment.name})}))
+                dataDropDowntTreatment = dataDropDowntTreatment[0];
+            }
+            if (props.options.fluorescences) {
+                dataDropDowntFluorescence.push(props.options.fluorescences.map(fluorescence =>{
+                    return ({value: fluorescence.code,label:fluorescence.name})
+                }))
+                dataDropDowntFluorescence = dataDropDowntFluorescence[0];
+            }
+            if (props.options.origins) {
+                dataDropDowntOrigin.push(props.options.origins.map(origin =>{return ({value: origin.code,label:origin.name})}))
+                dataDropDowntOrigin = dataDropDowntOrigin[0];
+            }
+            if (props.options.certificateAgencys) {
+                dataDropDowntCertificateAgency.push(props.options.certificateAgencys.map(certificateAgency =>{
+                    return ({value: certificateAgency.code,label:certificateAgency.code + ' [' + certificateAgency.name + ']'});
+                }))
+                dataDropDowntCertificateAgency = dataDropDowntCertificateAgency[0];
+            }
         }
         return(
             <div className="maring-t30">
-                 <div className="row margin-ft">
-                   <div className="col-lg-6 form-horizontal">
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label tooltiop-span">Stone Type
-                         <OverlayTrigger placement="top" overlay={tooltipStoneType}>
-                           <img src="/images/alphanumeric.png" />
-                         </OverlayTrigger>
-                       </label>
-                       <div className="col-sm-7">
-                         <Select multi simpleValue value={props.StoneTypeValue}
-                           placeholder="Select your Stone Type"
-                           options={dataDropDowntGemstoneStoneType}
-                           onChange={this.handlestoneTypeSelectChange} />
-                       </div>
-                     </div>
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label tooltiop-span">Cut (Shape)
-                         <OverlayTrigger placement="top" overlay={tooltipCut}>
-                           <img src="/images/alphanumeric.png" />
-                         </OverlayTrigger>
-                       </label>
-                       <div className="col-sm-7">
-                         <Select multi simpleValue value={props.CutValue}
-                           placeholder="Select your Cut"
-                           options={dataDropDowntCut}
-                           onChange={this.handleCutSelectChange} />
+                <div className="row margin-ft">
+                    <div className="col-lg-6 form-horizontal">
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label tooltiop-span">Stone Type
+                                <OverlayTrigger placement="top" overlay={tooltipStoneType}>
+                                    <img src="/images/alphanumeric.png" />
+                                </OverlayTrigger>
+                            </label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.StoneTypeValue} placeholder="Select your Stone Type"
+                                    options={dataDropDowntGemstoneStoneType} onChange={this.handlestoneTypeSelectChange} />
+                            </div>
                         </div>
-                     </div>
-                     <div className="form-group hidden">
-                       <label className="col-sm-4 control-label tooltiop-span">Cut Grade
-                         <OverlayTrigger placement="top" overlay={tooltipCutGrade}>
-                           <img src="/images/alphanumeric.png" />
-                         </OverlayTrigger>
-                       </label>
-                       <div className="col-sm-7">
-                         <Select multi simpleValue value={props.CutGradeValue}
-                           placeholder="Select your Cut Grade"
-                           options={dataDropDowntCutGrade}
-                           onChange={this.handleCutGradeSelectChange} />
-                       </div>
-                     </div>
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label tooltiop-span">Color
-                         <OverlayTrigger placement="top" overlay={tooltipColor}>
-                           <img src="/images/alphanumeric.png" />
-                         </OverlayTrigger>
-                       </label>
-                       <div className="col-sm-7">
-                         <Select multi simpleValue value={props.ColorValue}
-                           placeholder="Select your Color"
-                           options={dataDropDowntColor}
-                           onChange={this.handleColorSelectChange} />
-                       </div>
-                     </div>
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label tooltiop-span">Clarity
-                         <OverlayTrigger placement="top" overlay={tooltipClarity}>
-                           <img src="/images/alphanumeric.png" />
-                         </OverlayTrigger>
-                       </label>
-                       <div className="col-sm-7">
-                         <Select multi simpleValue value={props.ClarityValue}
-                           placeholder="Select your Clarity"
-                           options={dataDropDowntClarity}
-                           onChange={this.handleClaritiesSelectChange}/>
-                       </div>
-                     </div>
-                     <div className="form-group">
-                      <label className="col-sm-4 control-label tooltiop-span">Symmetry
-                        <OverlayTrigger placement="top" overlay={tooltipSymmetry}>
-                          <img src="/images/alphanumeric.png" />
-                        </OverlayTrigger>
-                      </label>
-                      <div className="col-sm-7">
-                         <Select multi simpleValue value={props.SymmetryValue}
-                           placeholder="Select your Symmetry"
-                           options={dataDropDowntSymmetry}
-                           onChange={this.handleSymmetrySelectChange}/>
-                       </div>
-                     </div>
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label tooltiop-span">Origin
-                         <OverlayTrigger placement="top" overlay={tooltipOrigin}>
-                           <img src="/images/alphanumeric.png" />
-                         </OverlayTrigger>
-                       </label>
-                       <div className="col-sm-7">
-                         <Select multi simpleValue value={props.OriginValue}
-                           placeholder="Select your Origin"
-                           options={dataDropDowntOrigin}
-                           onChange={this.handleOriginSelectChange}/>
-                       </div>
-                     </div>
-                   </div>
-                   <div className="col-lg-6 form-horizontal">
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label">Stone Cost ({userLogin.currency})</label>
-                       <div className="col-sm-7">
-                         <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                         <div className="col-sm-4 nopadding">
-                           <input type="number" className="form-control" {...gemstone_stoneCostFrom}/>
-                         </div>
-                         <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                         <div className="col-sm-4 nopadding">
-                           <input type="number" className="form-control" {...gemstone_stoneCostTo}/>
-                         </div>
-                       </div>
-                     </div>
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label">Quantity of Stone(s)</label>
-                       <div className="col-sm-7">
-                         <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                         <div className="col-sm-4 nopadding">
-                           <input type="number" className="form-control" {...gemstone_quantityFrom}/>
-                         </div>
-                         <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                         <div className="col-sm-4 nopadding">
-                           <input type="number" className="form-control" {...gemstone_quantityTo}/>
-                         </div>
-                       </div>
-                     </div>
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label">Total Carat Weight</label>
-                       <div className="col-sm-7">
-                         <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                         <div className="col-sm-4 nopadding">
-                           <input type="number" className="form-control" {...gemstone_totalCaratWeightFrom}/>
-                         </div>
-                         <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                         <div className="col-sm-4 nopadding">
-                           <input type="number" className="form-control" {...gemstone_totalCaratWeightTo}/>
-                         </div>
-                       </div>
-                     </div>
-                     <div className="form-group hidden">
-                       <label className="col-sm-4 control-label tooltiop-span">Polish
-                         <OverlayTrigger placement="top" overlay={tooltipPolish}>
-                           <img src="/images/alphanumeric.png" />
-                         </OverlayTrigger>
-                       </label>
-                       <div className="col-sm-7">
-                         <Select multi simpleValue value={props.PolishValue}
-                           placeholder="Select your Polish"
-                           options={dataDropDowntPolish}
-                           onChange={this.handlePolishSelectChange}/>
-                       </div>
-                     </div>
-                     <div className="form-group hidden">
-                       <label className="col-sm-4 control-label tooltiop-span">Treatment
-                         <OverlayTrigger placement="top" overlay={tooltipTreatement}>
-                           <img src="/images/alphanumeric.png" />
-                         </OverlayTrigger>
-                       </label>
-                       <div className="col-sm-7">
-                         <Select multi simpleValue value={props.TreatmentValue}
-                           placeholder="Select your Treatment"
-                           options={dataDropDowntTreatment}
-                           onChange={this.handleTreatmentSelectChange}/>
-                       </div>
-                     </div>
-                     <div className="form-group hidden">
-                       <label className="col-sm-4 control-label tooltiop-span">Fluorescence
-                         <OverlayTrigger placement="top" overlay={tooltipFluorescence}>
-                           <img src="/images/alphanumeric.png" />
-                         </OverlayTrigger>
-                       </label>
-                       <div className="col-sm-7">
-                         <Select multi simpleValue value={props.FluorescenceValue}
-                           placeholder="Select your Fluorescence"
-                           options={dataDropDowntFluorescence}
-                           onChange={this.handleFluorescenceSelectChange}/>
-                       </div>
-                     </div>
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label">Certificate Number</label>
-                       <div className="col-sm-7">
-                         <input type="text" className="form-control" {...gemstone_certificatedNumber}/>
-                       </div>
-                     </div>
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label">Laboratory</label>
-                       <div className="col-sm-7">
-                         <Select multi simpleValue value={props.CertificateAgencyValue}
-                           placeholder="Select your Laboratory"
-                           options={dataDropDowntCertificateAgency}
-                           onChange={this.handleCertificateAgencySelectChange}/>
-                       </div>
-                     </div>
-                     <div className="form-group">
-                       <label className="col-sm-4 control-label">Certificate Date</label>
-                       <div className="col-sm-7">
-                         <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
-                         <div className="col-sm-10 nopadding">
-                           <Calendar
-                             format="MM-DD-YYYY"
-                             date={(paramsSearch != null)?paramsSearch.gemstone_cerDateFrom:props.GemCertificateDateFrom}
-                             closeOnSelect = {true}
-                             onChange={this.handleChangeStart}
-                           />
-                         </div>
-                         <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
-                         <div className="col-sm-10 nopadding">
-                           <Calendar
-                             format="MM-DD-YYYY"
-                             date={(paramsSearch != null)?paramsSearch.gemstone_cerDateTo:props.GemCertificateDateTo}
-                             closeOnSelect = {true}
-                             onChange={this.handleChangeEnd}
-                           />
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-             </div>
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label tooltiop-span">Cut (Shape)
+                                <OverlayTrigger placement="top" overlay={tooltipCut}>
+                                    <img src="/images/alphanumeric.png" />
+                                </OverlayTrigger>
+                            </label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.CutValue} placeholder="Select your Cut"
+                                    options={dataDropDowntCut} onChange={this.handleCutSelectChange} />
+                            </div>
+                        </div>
+                        <div className="form-group hidden">
+                            <label className="col-sm-4 control-label tooltiop-span">Cut Grade
+                                <OverlayTrigger placement="top" overlay={tooltipCutGrade}>
+                                    <img src="/images/alphanumeric.png" />
+                                </OverlayTrigger>
+                            </label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.CutGradeValue} placeholder="Select your Cut Grade"
+                                    options={dataDropDowntCutGrade} onChange={this.handleCutGradeSelectChange} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label tooltiop-span">Color
+                                <OverlayTrigger placement="top" overlay={tooltipColor}>
+                                    <img src="/images/alphanumeric.png" />
+                                </OverlayTrigger>
+                            </label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.ColorValue} placeholder="Select your Color"
+                                    options={dataDropDowntColor} onChange={this.handleColorSelectChange} />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label tooltiop-span">Clarity
+                                <OverlayTrigger placement="top" overlay={tooltipClarity}>
+                                    <img src="/images/alphanumeric.png" />
+                                </OverlayTrigger>
+                            </label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.ClarityValue} placeholder="Select your Clarity"
+                                    options={dataDropDowntClarity} onChange={this.handleClaritiesSelectChange}/>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label tooltiop-span">Symmetry
+                                <OverlayTrigger placement="top" overlay={tooltipSymmetry}>
+                                    <img src="/images/alphanumeric.png" />
+                                </OverlayTrigger>
+                            </label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.SymmetryValue} placeholder="Select your Symmetry"
+                                    options={dataDropDowntSymmetry} onChange={this.handleSymmetrySelectChange}/>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label tooltiop-span">Origin
+                                <OverlayTrigger placement="top" overlay={tooltipOrigin}>
+                                    <img src="/images/alphanumeric.png" />
+                                </OverlayTrigger>
+                            </label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.OriginValue} placeholder="Select your Origin"
+                                    options={dataDropDowntOrigin} onChange={this.handleOriginSelectChange}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-6 form-horizontal">
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label">Stone Cost ({userLogin.currency})</label>
+                            <div className="col-sm-7">
+                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                                <div className="col-sm-4 nopadding">
+                                    <input type="number" className="form-control" {...gemstone_stoneCostFrom}/>
+                                </div>
+                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                                <div className="col-sm-4 nopadding">
+                                    <input type="number" className="form-control" {...gemstone_stoneCostTo}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label">Quantity of Stone(s)</label>
+                            <div className="col-sm-7">
+                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                                <div className="col-sm-4 nopadding">
+                                    <input type="number" className="form-control" {...gemstone_quantityFrom}/>
+                                </div>
+                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                                <div className="col-sm-4 nopadding">
+                                    <input type="number" className="form-control" {...gemstone_quantityTo}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label">Total Carat Weight</label>
+                            <div className="col-sm-7">
+                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                                <div className="col-sm-4 nopadding">
+                                    <input type="number" className="form-control" {...gemstone_totalCaratWeightFrom}/>
+                                </div>
+                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                                <div className="col-sm-4 nopadding">
+                                    <input type="number" className="form-control" {...gemstone_totalCaratWeightTo}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form-group hidden">
+                            <label className="col-sm-4 control-label tooltiop-span">Polish
+                                <OverlayTrigger placement="top" overlay={tooltipPolish}>
+                                    <img src="/images/alphanumeric.png" />
+                                </OverlayTrigger>
+                            </label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.PolishValue} placeholder="Select your Polish"
+                                    options={dataDropDowntPolish} onChange={this.handlePolishSelectChange}/>
+                            </div>
+                        </div>
+                        <div className="form-group hidden">
+                            <label className="col-sm-4 control-label tooltiop-span">Treatment
+                                <OverlayTrigger placement="top" overlay={tooltipTreatement}>
+                                    <img src="/images/alphanumeric.png" />
+                                </OverlayTrigger>
+                            </label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.TreatmentValue} placeholder="Select your Treatment"
+                                  options={dataDropDowntTreatment} onChange={this.handleTreatmentSelectChange}/>
+                            </div>
+                        </div>
+                        <div className="form-group hidden">
+                            <label className="col-sm-4 control-label tooltiop-span">Fluorescence
+                                <OverlayTrigger placement="top" overlay={tooltipFluorescence}>
+                                    <img src="/images/alphanumeric.png" />
+                                </OverlayTrigger>
+                            </label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.FluorescenceValue} placeholder="Select your Fluorescence"
+                                    options={dataDropDowntFluorescence} onChange={this.handleFluorescenceSelectChange}/>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label">Certificate Number</label>
+                            <div className="col-sm-7">
+                                <input type="text" className="form-control" {...gemstone_certificatedNumber}/>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label">Laboratory</label>
+                            <div className="col-sm-7">
+                                <Select multi simpleValue value={props.CertificateAgencyValue} placeholder="Select your Laboratory"
+                                    options={dataDropDowntCertificateAgency} onChange={this.handleCertificateAgencySelectChange}/>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-sm-4 control-label">Certificate Date</label>
+                            <div className="col-sm-7">
+                                <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
+                                <div className="col-sm-10 nopadding">
+                                    <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeStart}
+                                        date={(paramsSearch != null)?paramsSearch.gemstone_cerDateFrom:props.GemCertificateDateFrom} />
+                                </div>
+                                <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
+                                <div className="col-sm-10 nopadding">
+                                    <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeEnd}
+                                        date={(paramsSearch != null)?paramsSearch.gemstone_cerDateTo:props.GemCertificateDateTo} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 }

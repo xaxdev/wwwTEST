@@ -64,7 +64,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                                 if (chkSellingCost) {
                                                     htmlTemplate = htmlTemplate + `<span>
                                                                                         <span style="${paddinglf15}">|</span>
-                                                                                        <span style="${fontbfc000}">Total Public Price(Set) :</span>
+                                                                                        <span style="${fontbfc000}">Total Retail Price(Set) :</span>
                                                                                         <span style="${fontw9}">
                                                                                             <span>${_totalPublicPriceSet}</span>
                                                                                             <span> USD</span>
@@ -105,7 +105,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                             <thead id="listView" style="${thead}">
                                                 <tr>
                                                     <th style="${th}"><span>Item Reference</span></th>
-                                                    <th style="${th}"><span>Warehouse</span></th>
+                                                    <th style="${th}"><span>Location</span></th>
                                                     <th style="${th}"><span>Description</span></th>
                                                     <th style="${th}"><span>Stone Detail</span></th>`
                                                     if (chkGroupCost) {

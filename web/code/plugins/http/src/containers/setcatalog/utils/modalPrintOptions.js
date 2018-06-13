@@ -86,7 +86,7 @@ class ModalPrintOptions extends Component {
                                     checked={printPrice.value === 'public'}
                                 />
                                 <label className="select"></label>
-                                <span className="margin-l10 text-vertical">Public Price</span>
+                                <span className="margin-l10 text-vertical">Retail Price</span>
                             </div>
                         </div>
                       </div>

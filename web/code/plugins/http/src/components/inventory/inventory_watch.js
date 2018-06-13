@@ -940,7 +940,7 @@ class InventoryWatch extends Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label">Gross Weight (Grams)</label>
+                                <label className="col-sm-4 control-label">Item Weight (Grams)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                     <div className="col-sm-4 nopadding">
@@ -1097,11 +1097,11 @@ const tooltipLimitedEdition = (<Tooltip id="tooltip"><strong>Search Limited Edit
 const tooltipLimitedEditionNumber = (<Tooltip id="tooltip"><strong>Limited Edition Number!</strong></Tooltip>);
 const tooltipSerialNumber = (<Tooltip id="tooltip"><strong>Serial Number!</strong></Tooltip>);
 const tooltipMovement = (<Tooltip id="tooltip"><strong>Search By Movement of the Watch (eg. Quartz, Automatic, Manual etc.) </strong></Tooltip>);
-const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>);
+const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>);
 const tooltipTotalUpdatedCost = (<Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>);
-const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>);
+const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Retail Price (USD)!</strong></Tooltip>);
 const tooltipMarkup = (<Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>);
-const tooltipGrossWeight = (<Tooltip id="tooltip"><strong>Gross Weight (Grams)!</strong></Tooltip>);
+const tooltipGrossWeight = (<Tooltip id="tooltip"><strong>Item Weight (Grams)!</strong></Tooltip>);
 const tooltipProductionDate = (<Tooltip id="tooltip"><strong>Production Date</strong></Tooltip>);
 const tooltipDialIndex = (<Tooltip id="tooltip"><strong>Search By Dial Index of the Watch (eg. Diamond on Index, Ruby on Index etc.)</strong></Tooltip>);
 const tooltipDialColor = (<Tooltip id="tooltip"><strong>Search By Dial Color of the Watch (eg. Black, Blue, Brown etc.)</strong></Tooltip>);

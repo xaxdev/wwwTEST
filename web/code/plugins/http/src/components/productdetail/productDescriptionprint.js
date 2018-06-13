@@ -41,7 +41,7 @@ const Detail = (props) =>{
         </div>
         <div style={(userLogin.permission.price == 'All') ?
             styles.colmd12  : styles.colmdhide}>
-          <div style={styles.colmd5}>Actual Cost ({ currency })</div>
+          <div style={styles.colmd5}>Cost Price ({ currency })</div>
           <div style={styles.colmd5}>{ actualCost }</div>
         </div>
         <div style={(userLogin.permission.price == 'Updated'
@@ -54,7 +54,7 @@ const Detail = (props) =>{
               || userLogin.permission.price == 'Updated'
               || userLogin.permission.price == 'All') ?
             styles.colmd12  : styles.colmdhide}>
-          <div style={styles.colmd5}>Public Price ({ currency })</div>
+          <div style={styles.colmd5}>Retail Price ({ currency })</div>
           <div style={styles.colmd5}>{ price }</div>
         </div>
         <div style={(userLogin.permission.price == 'Updated'
@@ -68,7 +68,7 @@ const Detail = (props) =>{
           <div style={styles.colmd5}>{convertBlanktodash(props.companyName)}</div>
         </div>
         <div style={styles.colmd12}>
-          <div style={styles.colmd5}>Warehouse</div>
+          <div style={styles.colmd5}>Location</div>
           <div style={styles.colmd5}>{convertBlanktodash(props.warehouseName)}</div>
         </div>
         <div style={styles.colmd12}>

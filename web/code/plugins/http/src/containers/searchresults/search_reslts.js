@@ -49,7 +49,7 @@ const labels = {
     ingredients: 'Ingredients', categoryName: 'Category Name', category: 'Category', article: 'Article',
     collection: 'Collection', setReferenceNumber: 'Set Reference Number', cut: 'Cut', color: 'Color',
     clarity: 'Clarity', caratWt: 'Carat Wt', unit: 'Unit', qty: 'Qty', origin: 'Origin', symmetry: 'Symmetry',
-    flourance: 'Flourance', batch: 'Batch', netWeight: 'Net Weight', stoneQty: 'Stone Qty', dominantStone: 'Dominant Stone',
+    flourance: 'Flourance', batch: 'Batch', netWeight: 'Gold weight (Grams)', stoneQty: 'Stone Qty', dominantStone: 'Dominant Stone',
     markup: 'Markup%', certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date',
     vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalColor: 'Metal Colour', metalType: 'Metal Type',
     brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color',
@@ -58,9 +58,9 @@ const labels = {
     itemCreatedDate: 'Created Date'
 }
 const labelsViewAsSet = {
-    totalActualCost: 'Total Actual Cost (USD)', totalUpdatedCost: 'Total Updated Cost (USD)',
-    totalPrice: 'Total Public Price (USD)', markup: 'Markup (Times)', companyName: 'Company',
-    warehouseName: 'Warehouse', createdDate: 'Created Date'
+    totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)',
+    totalPrice: 'Total Retail Price (USD)', markup: 'Markup (Times)', companyName: 'Company',
+    warehouseName: 'Location', createdDate: 'Created Date'
 }
 let listMyCatalog = []
 
@@ -1187,7 +1187,7 @@ class SearchResult extends Component {
                                         <div className="styled-select">
                                             <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy" >
                                                 <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                                <option key={'price'} value={'price'}>{'Public Price'}</option>
+                                                <option key={'price'} value={'price'}>{'Retail Price'}</option>
                                                 <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                                 <option key={'description'} value={'description'}>{'Description'}</option>
                                             </select>
@@ -1257,7 +1257,7 @@ class SearchResult extends Component {
                                             <select className="form-searchresult" onChange={this.sortingBy}
                                                 ref="sortingBy">
                                                 <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                                <option key={'price'} value={'price'}>{'Public Price'}</option>
+                                                <option key={'price'} value={'price'}>{'Retail Price'}</option>
                                                 <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                                 <option key={'description'} value={'description'}>{'Description'}</option>
                                                 <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>

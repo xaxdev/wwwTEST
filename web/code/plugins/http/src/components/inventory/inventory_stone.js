@@ -116,9 +116,7 @@ class InventoryStone extends Component {
 
         let { fields: { stoneProductHierarchy }, searchResult} = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.stoneProductHierarchy = treeSelected;
 
@@ -129,9 +127,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { stoneType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.stoneType = stoneTypeSelectValue;
 
@@ -143,9 +139,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { cut, CutValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.cut = CutSelectValue;
 
@@ -157,9 +151,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { cutGrade, CutGradeValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.cutGrade = CutGradeSelectValue;
 
@@ -171,9 +163,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { color, ColorValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.color = ColorSelectValue;
 
@@ -185,9 +175,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { colorGrade, ColorGradeValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.colorGrade = ColorGradeSelectValue;
 
@@ -199,9 +187,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { clarity, ClarityValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.clarity = ClaritySelectValue;
 
@@ -213,9 +199,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { certificateAgency, CertificateAgencyValue }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.certificateAgency = CertificateLabSelectValue;
 
@@ -251,9 +235,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { cerDateFrom }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.cerDateFrom = startDate;
 
@@ -266,9 +248,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { cerDateTo }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.cerDateTo = endDate;
 
@@ -281,9 +261,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { polish }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.polish = PolishSelectValue;
 
@@ -295,9 +273,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { symmetry }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.symmetry = SymmetrySelectValue;
 
@@ -309,9 +285,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { treatment }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.treatment = TreatmentSelectValue;
 
@@ -323,9 +297,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { fluorescence }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.fluorescence = FluorescenceSelectValue;
 
@@ -337,9 +309,7 @@ class InventoryStone extends Component {
         const { props } = this.props;
         let { fields: { origin }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
             paramsSearch.origin = OriginSelectValue;
 
@@ -356,9 +326,7 @@ class InventoryStone extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
 
         if(props.options != undefined){
             if (props.options.stoneType) {
@@ -549,9 +517,7 @@ class InventoryStone extends Component {
             fluorescence, origin
         }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                            searchResult.paramsSearch:
-                            null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
 
         let dataDropDowntstoneType = [];
         let dataDropDowntCut = [];
@@ -770,10 +736,8 @@ class InventoryStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.ClarityValue}
-                                        placeholder="Select your Clarity"
-                                        options={dataDropDowntClarity}
-                                        onChange={this.handleClaritiesSelectChange}/>
+                                    <Select multi simpleValue value={props.ClarityValue} placeholder="Select your Clarity"
+                                        options={dataDropDowntClarity} onChange={this.handleClaritiesSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group">
@@ -810,9 +774,7 @@ class InventoryStone extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={`form-group ${(userLogin.permission.price == 'All'
-                                || userLogin.permission.price == 'Updated') ?
-                                '' : 'hidden'}`}>
+                            <div className={`form-group ${(userLogin.permission.price == 'All' || userLogin.permission.price == 'Updated') ? '' : 'hidden'}`}>
                                 <label className="col-sm-4 control-label">Markup (Times)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -835,10 +797,8 @@ class InventoryStone extends Component {
                                 <label className="col-sm-4 control-label tooltiop-span">Laboratory
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.CertificateAgencyValue}
-                                        placeholder="Select your Laboratory"
-                                        options={dataDropDowntCertificateLab}
-                                        onChange={this.handleCertificateLabsSelectChange}/>
+                                    <Select multi simpleValue value={props.CertificateAgencyValue} placeholder="Select your Laboratory"
+                                        options={dataDropDowntCertificateLab} onChange={this.handleCertificateLabsSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group">
@@ -846,65 +806,51 @@ class InventoryStone extends Component {
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar
-                                            format="MM-DD-YYYY"
+                                        <Calendar format="MM-DD-YYYY"
                                             date={(paramsSearch != null)?paramsSearch.cerDateFrom:props.StoneCertificateDateFrom}
-                                            closeOnSelect = {true}
-                                            onChange={this.handleChangeStart} />
+                                            closeOnSelect = {true} onChange={this.handleChangeStart} />
                                     </div>
                                     <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar
-                                            format="MM-DD-YYYY"
+                                        <Calendar format="MM-DD-YYYY"
                                             date={(paramsSearch != null)?paramsSearch.cerDateTo:props.StoneCertificateDateTo}
-                                            closeOnSelect = {true}
-                                            onChange={this.handleChangeEnd} />
+                                            closeOnSelect = {true} onChange={this.handleChangeEnd} />
                                     </div>
                                 </div>
                             </div>
                             <div className="form-group hidden">
                                 <label className="col-sm-4 control-label">Polish</label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.PolishValue}
-                                        placeholder="Select your Polish"
-                                        options={dataDropDowntPolish}
-                                        onChange={this.handlePolishSelectChange}/>
+                                    <Select multi simpleValue value={props.PolishValue} placeholder="Select your Polish"
+                                        options={dataDropDowntPolish} onChange={this.handlePolishSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group hidden">
                                 <label className="col-sm-4 control-label">Symmetry</label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.SymmetryValue}
-                                        placeholder="Select your Symmetry"
-                                        options={dataDropDowntSymmetry}
-                                        onChange={this.handleSymmetrySelectChange}/>
+                                    <Select multi simpleValue value={props.SymmetryValue} placeholder="Select your Symmetry"
+                                        options={dataDropDowntSymmetry} onChange={this.handleSymmetrySelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group hidden">
                                 <label className="col-sm-4 control-label">Treatment</label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.TreatmentValue}
-                                        placeholder="Select your Treatment"
-                                        options={dataDropDowntTreatment}
-                                        onChange={this.handleTreatmentSelectChange}/>
+                                    <Select multi simpleValue value={props.TreatmentValue} placeholder="Select your Treatment"
+                                        options={dataDropDowntTreatment} onChange={this.handleTreatmentSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group hidden">
                                 <label className="col-sm-4 control-label">Fluorescence</label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.FluorescenceValue}
-                                        placeholder="Select your Fluorescence"
-                                        options={dataDropDowntFluorescence}
-                                        onChange={this.handleFluorescenceSelectChange}/>
+                                    <Select multi simpleValue value={props.FluorescenceValue} placeholder="Select your Fluorescence"
+                                        options={dataDropDowntFluorescence} onChange={this.handleFluorescenceSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group hidden">
                                 <label className="col-sm-4 control-label">Origin</label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.OriginValue}
-                                        placeholder="Select your Origin"
-                                        options={dataDropDowntOrigin}
-                                        onChange={this.handleOriginSelectChange}/>
+                                    <Select multi simpleValue value={props.OriginValue} placeholder="Select your Origin"
+                                        options={dataDropDowntOrigin} onChange={this.handleOriginSelectChange}/>
                                 </div>
                             </div>
                         </div>
@@ -929,9 +875,9 @@ const tooltipTotalCaratWeight = (<Tooltip id="tooltip"><strong>Total Carat Weigh
 const tooltipCertificateNumber = (<Tooltip id="tooltip"><strong>Certificate Number!</strong></Tooltip>);
 const tooltipCertificateAgency = (<Tooltip id="tooltip"><strong>Certificate Agency!</strong></Tooltip>);
 const tooltipCertificateDate = (<Tooltip id="tooltip"><strong>Certificate Date!</strong></Tooltip>);
-const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>);
+const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>);
 const tooltipTotalUpdatedCost = (<Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>);
-const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>);
+const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Retail Price (USD)!</strong></Tooltip>);
 const tooltipMarkup = (<Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>);
 
 module.exports = InventoryStone;

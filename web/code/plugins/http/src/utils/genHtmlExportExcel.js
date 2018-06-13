@@ -16,7 +16,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }
     if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
         || userLogin.permission.price == 'All') {
-      titles.push('Public Price (' + userLogin.currency + ')');
+      titles.push('Retail Price (' + userLogin.currency + ')');
     }
 
     if (userLogin.permission.price == 'All') {
@@ -27,7 +27,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }
     if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
         || userLogin.permission.price == 'All') {
-      titles.push('Public Price (USD)');
+      titles.push('Retail Price (USD)');
     }
   } else {
     if (userLogin.permission.price == 'All') {
@@ -38,14 +38,14 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }
     if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
         || userLogin.permission.price == 'All') {
-      titles.push('Public Price (USD)');
+      titles.push('Retail Price (USD)');
     }
   }
 
-  titles.push('Gross Weight','Ring Size', 'Jewels Weight (text)','Site','company', 'Warehouse');
+  titles.push('Item Weight (Grams)','Ring Size', 'Jewels Weight (text)','Site','company', 'Location');
   if(that.state.allFields){
     titles.push('Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color',
-                'Clarity','Carat Wt', 'Unit', 'Qty','Origin','Symmetry','Flourance','Batch','Net Weight',
+                'Clarity','Carat Wt', 'Unit', 'Qty','Origin','Symmetry','Flourance','Batch','Gold weight (Grams)',
                 'Stone Qty','Dominant Stone', 'Markup%','Certificate Number','Certificate Date', 'Vendor Code',
                 'Vendor Name', 'Metal Colour', 'Metal','Brand','Complication','Strap Type','Strap Color',
                 'Buckle Type','Dial Index','Dial Color','Movement','Serial #','Limited Edition',
@@ -68,7 +68,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     if(that.state.symmetry) titles.push('Symmetry');
     if(that.state.flourance) titles.push('Flourance');
     if(that.state.batch) titles.push('Batch');
-    if(that.state.netWeight) titles.push('Net Weight');
+    if(that.state.netWeight) titles.push('Gold weight (Grams)');
     if(that.state.stoneQty) titles.push('Stone Qty');
     if(that.state.dominantStone) titles.push('Dominant Stone');
     if(that.state.markup) titles.push('Markup%');
@@ -271,7 +271,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             }
             if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
               || userLogin.permission.price == 'All') {
-              arrayItems.push('');// Public Price
+              arrayItems.push('');// Retail Price
             }
 
             if (userLogin.permission.price == 'All') {
@@ -282,7 +282,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             }
             if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                 || userLogin.permission.price == 'All') {
-                arrayItems.push('');// Public Price (USD)
+                arrayItems.push('');// Retail Price (USD)
             }
           }else{
             if (userLogin.permission.price == 'All') {
@@ -293,16 +293,16 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             }
             if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                 || userLogin.permission.price == 'All') {
-              arrayItems.push('');// Public Price (USD)
+              arrayItems.push('');// Retail Price (USD)
             }
           }
 
-          arrayItems.push('', // Gross Weight
+          arrayItems.push('', // Item Weight (Grams)
                           '', // Ring Size
                           '', // Jewels Weight
                           '', // Site
                           '', // Company
-                          ''); // Warehouse
+                          ''); // Location
 
           arrayItems.push('Ingredient');
             if(that.state.categoryName || that.state.allFields) arrayItems.push(''); // Category Name
@@ -320,7 +320,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             if(that.state.symmetry || that.state.allFields) arrayItems.push((gemstone.symmetry != undefined) ? gemstone.symmetry : ''); // symmetry
             if(that.state.flourance || that.state.allFields) arrayItems.push((gemstone.fluorescence != undefined) ? gemstone.fluorescence : ''); // Flourance
             if(that.state.batch || that.state.allFields) arrayItems.push(''); // Batch lot number
-            if(that.state.netWeight || that.state.allFields) arrayItems.push(''); // Net Weight
+            if(that.state.netWeight || that.state.allFields) arrayItems.push(''); // Gold weight (Grams)
             if(that.state.stoneQty || that.state.allFields) arrayItems.push(0); // Stone Qty
             if(that.state.dominantStone || that.state.allFields) arrayItems.push(''); // Dominant Stone
             if(that.state.markup || that.state.allFields) arrayItems.push(''); // Markup%

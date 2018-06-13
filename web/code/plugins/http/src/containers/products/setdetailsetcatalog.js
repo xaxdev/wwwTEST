@@ -547,7 +547,7 @@ class productdetail extends Component {
                         <thead key={'listView'} id={'listView'}>
                               <tr>
                                   <th><span>Item Reference</span></th>
-                                  <th><span>Warehouse</span></th>
+                                  <th><span>Location</span></th>
                                   <th><span>Description</span></th>
                                   <th><span>Stone Detail</span></th>
                                   <th className={`${(userLogin.permission.price == 'All') ?

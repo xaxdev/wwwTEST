@@ -34,7 +34,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                             || userPermissionPrice == 'Updated'
                                             || userPermissionPrice == 'All') ?
                                             '' : 'hidden'}">
-                                            <span style="font-weight: bold; color: #000;">Total Public Price :</span>
+                                            <span style="font-weight: bold; color: #000;">Total Retail Price :</span>
                                             <span class="font-w9">
                                                 <span>${numberFormat(datas.summary.price)}</span>
                                                 <span> </span>
@@ -99,8 +99,8 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                 <th><span>SKU</span></th>
                                                                 <th><span>Category Name</span></th>
                                                                 <th><span>Company</span></th>
-                                                                <th><span>Warehouse</span></th>
-                                                                <th><span>Gross Weight</span></th>
+                                                                <th><span>Location</span></th>
+                                                                <th><span>Item Weight (Grams)</span></th>
                                                                 <th><span>Stone Detail</span></th>
                                                                 <th><span style="${(userPermissionPrice == 'All') ?
                                                                     '' : 'hidden'}">Group Cost Price (USD)</span></th>

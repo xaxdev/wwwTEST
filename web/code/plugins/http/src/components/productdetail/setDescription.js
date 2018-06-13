@@ -31,7 +31,7 @@ const Detail = (props) =>{
         </div>
         <div className={`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'All') ?
             '' : 'hidden'}`}>
-          <div className="col-md-4 col-sm-4 nopadding font-b">Total Actual Cost (USD)</div>
+          <div className="col-md-4 col-sm-4 nopadding font-b">Total Cost Price (USD)</div>
           <div className="col-md-8 col-sm-8">{ actualCost }</div>
         </div>
         <div className={`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'Updated'
@@ -44,7 +44,7 @@ const Detail = (props) =>{
               || userLogin.permission.price == 'Updated'
               || userLogin.permission.price == 'All') ?
             '' : 'hidden'}`}>
-          <div className="col-md-4 col-sm-4 nopadding font-b">Total Public Price (USD)</div>
+          <div className="col-md-4 col-sm-4 nopadding font-b">Total Retail Price (USD)</div>
           <div className="col-md-8 col-sm-8">{ price }</div>
         </div>
         <div className={`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'Updated'
@@ -58,7 +58,7 @@ const Detail = (props) =>{
           <div className="col-md-8 col-sm-8">{props.companyName != undefined ? props.companyName: '-'}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">
-          <div className="col-md-4 col-sm-4 nopadding font-b">Warehouse</div>
+          <div className="col-md-4 col-sm-4 nopadding font-b">Location</div>
           <div className="col-md-8 col-sm-8">{props.warehouseName != undefined ? props.warehouseName: '-'}</div>
         </div>
         <div className="col-md-12 col-sm-12 nopadding">

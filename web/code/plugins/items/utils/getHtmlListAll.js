@@ -33,7 +33,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                             || userPermissionPrice == 'Updated'
                                             || userPermissionPrice == 'All') ?
                                             '' : 'hidden'}">
-                                            <span style="font-weight: bold; color: #000;">Total Public Price :</span>
+                                            <span style="font-weight: bold; color: #000;">Total Retail Price :</span>
                                             <span class="font-w9">
                                                 <span>${numberFormat(datas.summary.price)}</span>
                                                 <span> </span>
@@ -117,8 +117,8 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                                 <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col" tabindex="0"
-                                                                    aria-sort="none" aria-label="Warehouse: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Warehouse</span>
+                                                                    aria-sort="none" aria-label="Location: activate to sort column ascending" style="width: 0px;">
+                                                                    <span>Location</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                                 <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
@@ -132,18 +132,18 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                                 <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
-                                                                    tabindex="0" aria-sort="none" aria-label="Gross Weight: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Gross Weight</span>
+                                                                    tabindex="0" aria-sort="none" aria-label="Item Weight (Grams): activate to sort column ascending" style="width: 0px;">
+                                                                    <span>Item Weight (Grams)</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                                 <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
-                                                                    tabindex="0" aria-sort="none" aria-label="Gross Weight: activate to sort column ascending" style="width: 0px;">
+                                                                    tabindex="0" aria-sort="none" aria-label="Item Weight (Grams): activate to sort column ascending" style="width: 0px;">
                                                                     <span>Stone Detail</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                                 <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader"
-                                                                    scope="col" tabindex="0" aria-sort="none" aria-label="Public Price: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Public Price</span>
+                                                                    scope="col" tabindex="0" aria-sort="none" aria-label="Retail Price: activate to sort column ascending" style="width: 0px;">
+                                                                    <span>Retail Price</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                             </tr>

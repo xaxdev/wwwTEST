@@ -32,7 +32,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                             || userPermissionPrice == 'Updated'
                                             || userPermissionPrice == 'All') ?
                                             '' : 'hidden'}">
-                                            <span style="font-weight: bold; color: #000;">Total Public Price :</span>
+                                            <span style="font-weight: bold; color: #000;">Total Retail Price :</span>
                                             <span class="font-w9" >
                                                 <span>${numberFormat(datas.summary.price)}</span>
                                                 <span> </span>

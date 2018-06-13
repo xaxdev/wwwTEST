@@ -52,7 +52,7 @@ const GemstoneReleteJewelry =  (props) =>{
                <th style={styles.border}>Metal Type</th>
                <th style={styles.border}>Metal Color</th>
                <th style={styles.border}>Location</th>
-               <th style={styles.border}>Public Price</th>
+               <th style={styles.border}>Retail Price</th>
                <th style={styles.border}></th>
              </tr>
            </thead>
@@ -65,7 +65,7 @@ const GemstoneReleteJewelry =  (props) =>{
                  <td title="Metal Type" style={styles.textcenter}>{data.metalType}</td>
                  <td title="Metal Color" style={styles.textcenter}>{data.metalColor}</td>
                  <td title="Location" style={styles.textcenter}>{data.location}</td>
-                 <td title="Public Price" style={styles.textcenter}>{currency == 'USD'? data.priceUSD:data.priceNonUSD}</td>
+                 <td title="Retail Price" style={styles.textcenter}>{currency == 'USD'? data.priceUSD:data.priceNonUSD}</td>
                  <td title="View" style={styles.textcenter}><Link to={{pathname: `${pructdetailurl}${data.id}`}}><span className="icon-search search-icon"></span></Link></td>
                </tr>
             )

@@ -56,7 +56,6 @@ module.exports = {
             ps.push(getClarityItems(internals.query));
         }
 
-
         // console.log(JSON.stringify(internals.query, null, 2));
 
         const getAllItems =  elastic.search({

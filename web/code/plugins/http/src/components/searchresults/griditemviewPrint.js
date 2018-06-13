@@ -507,8 +507,8 @@ class GridItemsView extends Component {
             let lblUpdatedCost = '';
 
             if (ViewAsSet) {
-                lblActualCost = 'Total Actual Cost (USD)';
-                lblPrice = 'Total Public Price (USD)';
+                lblActualCost = 'Total Cost Price (USD)';
+                lblPrice = 'Total Retail Price (USD)';
                 lblUpdatedCost = 'Total Update Cost (USD)';
                 imagesProduct = (item.image) != undefined
                                 ? item.image.length != 0
@@ -529,8 +529,8 @@ class GridItemsView extends Component {
                                   item.name
                                   ;
             }else{
-                lblActualCost = `Actual Cost (${userLogin.currency})`;
-                lblPrice = `Public Price (${userLogin.currency})`;
+                lblActualCost = `Cost Price (${userLogin.currency})`;
+                lblPrice = `Retail Price (${userLogin.currency})`;
                 lblUpdatedCost = `Update Cost (${userLogin.currency})`;
                 imagesProduct = (item.gallery) != undefined
                                     ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
@@ -733,7 +733,7 @@ class GridItemsView extends Component {
                                   '' : 'hidden'}`}>{price}</span>
                               <span className="width-f100 fc-ddbe6a font-b">Company : </span>
                               <span className="width-f100">{item.companyName != undefined ? item.companyName : item.company}</span>
-                              <span className="fc-ddbe6a width-f100 font-b">Warehouse: </span>
+                              <span className="fc-ddbe6a width-f100 font-b">Location: </span>
                               <span className="width-f100">{item.warehouseName != undefined ? item.warehouseName : item.warehouse}</span>
                               <span className="fc-ddbe6a width-f100 font-b">{lblDate}</span>
                               <span className="width-f100">{itemDate}</span>

@@ -18,11 +18,11 @@ class RenderExportExcelDialog extends Component {
                     <h5>(Normal export field Item Reference, Item Description, SKU, Item Vendor Reference,
                           {`${(userLogin.permission.price == 'All') ? 'Actual Price, ':''}`}
                           {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price, ':''}`}
-                          {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Public Price, ':''}`}
+                          {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Retail Price, ':''}`}
                           {`${(userLogin.permission.price == 'All') ? 'Actual Price (USD), ':''}`}
                           {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price (USD), ':''}`}
-                          {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Public Price (USD), ':''}`}
-                          Gross Weight, Ring Size, Jewels Weight (text), Site, Company, Warehouse)</h5>
+                          {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Retails Price (USD), ':''}`}
+                          Item Weight (Grams), Ring Size, Jewels Weight (text), Site, Company, Location)</h5>
                     <br/>
                     <div className="col-sm-12">
                       <div className="col-sm-3 checkbox checkbox-warning popexport">

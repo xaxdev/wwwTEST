@@ -23,10 +23,7 @@ class InventoryHeader extends Component {
     handleWarehouseSelectChange (WarehouseSelectValue) {
         let {fields:{ warehouse}, searchResult} = this.props.props;
 
-        let paramsHeader = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
-
+        let paramsHeader = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
 
         if(paramsHeader != null)
             paramsHeader.warehouse = WarehouseSelectValue;
@@ -39,9 +36,7 @@ class InventoryHeader extends Component {
     handleLocationSelectChange(LocationSelectValue){
         let {fields:{ location },searchResult} = this.props.props;
 
-        let paramsLocation = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch.location:
-                              null;
+        let paramsLocation = (searchResult.paramsSearch != null)? searchResult.paramsSearch.location: null;
 
         paramsLocation = LocationSelectValue;
 
@@ -56,9 +51,7 @@ class InventoryHeader extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
           paramsSearch.dominantStone = DominantStoneSelectValue;
 
@@ -70,9 +63,8 @@ class InventoryHeader extends Component {
         jQuery('#file').hide();
         jQuery('#btn-browsefile').click(function(){
             jQuery('#file').click();
-              });
+        });
         jQuery('#file').change(function() {
-
             let filename =jQuery('#file')[0].files[0];
             //alert(filename.name);
             jQuery('#fileName').text(filename.name);
@@ -94,12 +86,12 @@ class InventoryHeader extends Component {
       		let reader = new FileReader();
       		let name = f.name;
       		reader.onload = function(e) {
-                  let data = e.target.result;
-                  let arr = xls.fixdata(data);
-                  let wb = X.read(btoa(arr), {type: 'base64'});
-                  let items = xls.process_wb(wb);
-                  reference.onChange(items.item);
-                  that.props.setItemsOrder(items.AllData);
+                let data = e.target.result;
+                let arr = xls.fixdata(data);
+                let wb = X.read(btoa(arr), {type: 'base64'});
+                let items = xls.process_wb(wb);
+                reference.onChange(items.item);
+                that.props.setItemsOrder(items.AllData);
       		}
             if(rABS) reader.readAsBinaryString(f);
             else reader.readAsArrayBuffer(f);
@@ -137,7 +129,7 @@ class InventoryHeader extends Component {
             if (this.props.props.options.dominantStones) {
                 dataDropDowntDominantStone.push(this.props.props.options.dominantStones.map(dominantStone =>{
                     return ({value: dominantStone.code,label:dominantStone.name});
-                  }))
+                }))
                 dataDropDowntDominantStone = dataDropDowntDominantStone[0];
             }
 
@@ -150,7 +142,7 @@ class InventoryHeader extends Component {
                             newDate.push(_.filter(that.props.props.options.warehouses,
                                 function(warehouse){
                                     if(warehouse.code != undefined){
-                                      return warehouse.code.toString() == settingWarehouse;
+                                        return warehouse.code.toString() == settingWarehouse;
                                     }
                                 }
                             ));
@@ -158,17 +150,14 @@ class InventoryHeader extends Component {
                     }
                     if (userLogin.permission.onhandWarehouse.type == 'All'){
                         dataDropDowntLocations.forEach(function(location){
-                            newDate.push(_.filter(that.props.props.options.warehouses,
-                              function(warehouse)
-                              { return warehouse.comid == location.value})
-                            );
+                            newDate.push(_.filter(that.props.props.options.warehouses, function(warehouse){return warehouse.comid == location.value}));
                         });
                     }
                 }
                 let subdata = [];
                 newDate.forEach(newdata =>{
                     newdata.forEach(subdata =>{
-                      data.push(subdata);
+                        data.push(subdata);
                     })
                 });
 
@@ -232,11 +221,11 @@ class InventoryHeader extends Component {
                             </div>
                             <div className={`form-group ${(userLogin.permission.onhandWarehouse != undefined) ?'' :
                                               'hidden'}` }>
-                              <label className="col-sm-4 control-label">Warehouse</label>
+                              <label className="col-sm-4 control-label">Location</label>
                               <div className="col-sm-7">
                                   <Select multi simpleValue
                                     value={this.props.props.WarehouseValue}
-                                    placeholder="Select your Warehouse"
+                                    placeholder="Select your Location"
                                     options={dataDropDowntWareHouse}
                                     onChange={this.handleWarehouseSelectChange}
                                     disabled={(userLogin.permission.onhandWarehouse != undefined) ? false : true}/>
@@ -262,7 +251,7 @@ class InventoryHeader extends Component {
                             </div>
                             <div className={`form-group ${(userLogin.permission.price == 'All') ?
                                 '' : 'hidden'}`}>
-                              <label className="col-sm-4 control-label">Actual Cost ({userLogin.currency})</label>
+                              <label className="col-sm-4 control-label">Cost Price ({userLogin.currency})</label>
                               <div className="col-sm-7">
                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                 <div className="col-sm-4 nopadding">
@@ -293,7 +282,7 @@ class InventoryHeader extends Component {
                                                           || userLogin.permission.price == 'Updated'
                                                           || userLogin.permission.price == 'All') ?
                                                         '' : 'hidden'}`}>
-                              <label className="col-sm-4 control-label">Public Price ({userLogin.currency})</label>
+                              <label className="col-sm-4 control-label">Retail Price ({userLogin.currency})</label>
                                <div className="col-sm-7">
                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                 <div className="col-sm-4 nopadding">

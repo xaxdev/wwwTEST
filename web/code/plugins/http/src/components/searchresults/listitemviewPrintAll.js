@@ -190,11 +190,11 @@ class ListItemsViewPrintAll extends Component {
                 { title: 'Description', prop: 'itemName' },
                 { title: 'SKU', prop: 'sku' },
                 { title: 'Company', prop: 'companyName' },
-                { title: 'Warehouse', prop: 'warehouseName' },
+                { title: 'Location', prop: 'warehouseName' },
                 { title: 'Size', prop: 'size' },
                 { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                { title: 'Gross Weight', prop: 'grossWeight' },
-                { title: 'Public Price', prop: 'priceUSD' },
+                { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                { title: 'Retail Price', prop: 'priceUSD' },
                 { title: '', render: this.renderAction, className: 'text-center' },
               ];
           }else{
@@ -205,11 +205,11 @@ class ListItemsViewPrintAll extends Component {
                 { title: 'Description', prop: 'itemName' },
                 { title: 'SKU', prop: 'sku' },
                 { title: 'Company', prop: 'company' },
-                { title: 'Warehouse', prop: 'warehouse' },
+                { title: 'Location', prop: 'warehouse' },
                 { title: 'Size', prop: 'size' },
                 { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                { title: 'Gross Weight', prop: 'grossWeight' },
-                { title: 'Public Price', prop: 'priceUSD' },
+                { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                { title: 'Retail Price', prop: 'priceUSD' },
                 { title: '', render: this.renderAction, className: 'text-center' },
               ];
           }
@@ -226,8 +226,8 @@ class ListItemsViewPrintAll extends Component {
                                     <th><span>SKU</span></th>
                                     <th><span>Category Name</span></th>
                                     <th><span>Company</span></th>
-                                    <th><span>Warehouse</span></th>
-                                    <th><span>Gross Weight</span></th>
+                                    <th><span>Location</span></th>
+                                    <th><span>Item Weight (Grams)</span></th>
                                     <th className={`${(userLogin.permission.price == 'All') ?
                                         '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
                                     <th className={`${(userLogin.permission.price == 'Updated'
