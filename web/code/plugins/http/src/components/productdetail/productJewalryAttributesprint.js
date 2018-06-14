@@ -8,7 +8,7 @@ import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 const allowDiamond = ['Loose Diamond','Diamond'];
 const allowGemstone = ["Stone"];
 
-let styles ={
+const styles ={
     colmd12:{
         width:'100%',
         float:'left'
@@ -70,7 +70,7 @@ const Jewelryattr = (props) =>{
                 <div style={styles.colmd5}>{convertBlanktodash(props.metalColorName)}</div>
             </div>
             <div style={styles.colmd12}>
-                <div style={styles.colmd5}>Gross Weight</div>
+                <div style={styles.colmd5}>Item Weight (Grams)</div>
                 <div style={styles.colmd5}>{grossWeight}</div>
             </div>
             <div style={styles.colmd12}>

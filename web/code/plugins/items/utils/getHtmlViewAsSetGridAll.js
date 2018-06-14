@@ -28,20 +28,16 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                             </span>
                                             <span style="padding: 0 15px;">|</span>
                                         </span>
-                                        <span class="${(userPermissionPrice == 'Public'
-                                            || userPermissionPrice == 'Updated'
-                                            || userPermissionPrice == 'All') ?
+                                        <span class="${(userPermissionPrice == 'Public' || userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ?
                                             '' : 'hidden'}">
-                                            <span style="font-weight: bold; color: #000;">Total Public Price :</span>
+                                            <span style="font-weight: bold; color: #000;">Total Retail Price :</span>
                                             <span class="font-w9" >
                                                 <span>${numberFormat(datas.summary.price)}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
                                             </span>
                                         </span>
-                                        <span class="${(userPermissionPrice == 'Updated'
-                                            || userPermissionPrice == 'All') ?
-                                            '' : 'hidden'}">
+                                        <span class="${(userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ? '' : 'hidden'}">
                                             <span style="padding: 0 15px;">|</span>
                                             <span style="font-weight: bold; color: #000;">Total Updated Cost :</span>
                                             <span class="font-w9">
@@ -89,29 +85,28 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                 let itemName = '';
                                                 let price = '';
                                                 let imgPath = env == 'production'
-                                                                        ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
-                                                                        : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                                    ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
+                                                    : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
                                                 if(isViewAsSet){
                                                     price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
-                                                    itemName = (item.type != 'CER')?
-                                                                      (item.description != undefined) ?
-                                                                          (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
-                                                                      : '-' :
-                                                                      item.name
-                                                                      ;
+                                                    itemName = (item.type != 'CER')
+                                                        ? (item.description != undefined) ?
+                                                            (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                                                        : '-' :
+                                                        item.name;
                                                     imagesProduct = (item.image) != undefined
-                                                                    ? item.image.length != 0
-                                                                        ? item.image[0].original
-                                                                        : '/images/blank.gif'
-                                                                    : '/images/blank.gif';
+                                                        ? item.image.length != 0
+                                                            ? item.image[0].original
+                                                            : '/images/blank.gif'
+                                                        : '/images/blank.gif';
                                                 }else{
                                                     price = GetPriceWithCurrency(item,'price',currency);
                                                     itemName = (item.description != undefined)
-                                                                ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
-                                                                : '-';
+                                                        ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                                                        : '-';
                                                     imagesProduct = (item.gallery) != undefined
-                                                                        ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
-                                                                        : '/images/blank.gif';
+                                                        ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                                        : '/images/blank.gif';
                                                 }
                                                 imagesProduct = imagesProduct.replace(/\/images\//g,imgPath);
                                                 return (`<div name="${item.id}" id="${index}" style="width: 135px; padding: 0;float: left;height: 380px; margin: 0 auto;">

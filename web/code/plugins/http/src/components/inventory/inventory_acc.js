@@ -108,9 +108,7 @@ class InventoryAccessory extends Component {
 
         let { fields: { accessoryProductHierarchy }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.accessoryProductHierarchy = treeSelected;
 
@@ -121,9 +119,7 @@ class InventoryAccessory extends Component {
         const { props } = this.props;
         let { fields: { accessoryType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch :null;
         if(paramsSearch != null)
             paramsSearch.accessoryType = accessoryTypeSelectValue;
 
@@ -135,9 +131,7 @@ class InventoryAccessory extends Component {
         const { props } = this.props;
         let { fields: { collection }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch :null;
         if(paramsSearch != null)
             paramsSearch.collection = collectionSelectValue;
 
@@ -149,9 +143,7 @@ class InventoryAccessory extends Component {
         const { props } = this.props;
         let { fields: { brand }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch :null;
         if(paramsSearch != null)
             paramsSearch.brand = brandSelectValue;
 
@@ -163,9 +155,7 @@ class InventoryAccessory extends Component {
         const { props } = this.props;
         let { fields: { mustHave }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch :null;
         if(paramsSearch != null)
             paramsSearch.mustHave = mustHaveSelectValue;
 
@@ -177,9 +167,7 @@ class InventoryAccessory extends Component {
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch :null;
         if(paramsSearch != null)
             paramsSearch.metalType = metalTypeSelectValue;
 
@@ -191,9 +179,7 @@ class InventoryAccessory extends Component {
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch :null;
         if(paramsSearch != null)
             paramsSearch.metalColour = metalColourSelectValue;
 
@@ -205,9 +191,7 @@ class InventoryAccessory extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch :null;
         if(paramsSearch != null)
             paramsSearch.dominantStone = dominantStoneSelectValue;
 
@@ -223,9 +207,7 @@ class InventoryAccessory extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch :null;
 
         if(props.options != undefined){
             if (props.options.accessoryType) {
@@ -500,7 +482,7 @@ class InventoryAccessory extends Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label">Gross Weight (Grams)</label>
+                                <label className="col-sm-4 control-label">Item Weight (Grams)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                     <div className="col-sm-4 nopadding">
