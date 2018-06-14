@@ -24,15 +24,11 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
     const bgebtdtextRight = `border: 1px solid #5c5954;vertical-align: middle;padding: 5px;line-height: 1.42857143;word-break: initial !important;font-weight: bold;font-family: '${'Open Sans'}';color: #000;background-color: #ebd79a;text-align: right;`
     const hidden = 'display: none !important;visibility: hidden !important;'
 
-    const chkGroupCost = userLogin.permission.price == 'All'
-                            ? that.state.groupCost? true: false
-                            : false;
-    const chkUpdateCost = userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'
-                            ? that.state.updatedCost? true: false
-                            : false;
+    const chkGroupCost = userLogin.permission.price == 'All' ? that.state.groupCost? true: false : false;
+    const chkUpdateCost = userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All' ? that.state.updatedCost? true: false : false;
     const chkSellingCost = userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All'
-                            ? that.state.sellingCost? true: false
-                            : false;
+        ? that.state.sellingCost? true: false
+        : false;
     let htmlTemplate = '';
 
     htmlTemplate = `<html>
@@ -62,7 +58,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                                     </span>
                                                 </span>`
                                                 if (chkSellingCost) {
-                                                    htmlTemplate = htmlTemplate + `<span>
+                                                    htmlTemplate = htmlTemplate +   `<span>
                                                                                         <span style="${paddinglf15}">|</span>
                                                                                         <span style="${fontbfc000}">Total Retail Price(Set) :</span>
                                                                                         <span style="${fontw9}">
@@ -72,7 +68,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                                                                     </span>`
                                                 }
                                                 if (chkUpdateCost) {
-                                                    htmlTemplate = htmlTemplate + `<span>
+                                                    htmlTemplate = htmlTemplate +   `<span>
                                                                                         <span style="${paddinglf15}"> | </span>
                                                                                         <span style="${fontbfc000}">Total Updated Cost(Set) :</span>
                                                                                         <span style="${fontw9}">
@@ -81,7 +77,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                                                                         </span>
                                                                                     </span>`
                                                 }
-            htmlTemplate = htmlTemplate + `</div>
+            htmlTemplate = htmlTemplate +   `</div>
                                         </div>
                                     </div>`
     dataSet.map((item) => {
@@ -89,39 +85,30 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
         const totalUpdatedCost = (item.totalUpdatedCost) != undefined ? numberFormat(item.totalUpdatedCost['USD']) : '-';
         const totalPrice = (item.totalPrice) != undefined ? numberFormat(item.totalPrice['USD']) : '-';
 
-        const imagesProduct = (item.image) != undefined
-                                ? item.image.length != 0
-                                    ? item.image[0].original
-                                    : '/images/blank.gif'
-                                : '/images/blank.gif';
-        // const imgPath = env == 'production'
-        //                         ? `file:///var/www/mol/web/code/plugins/http/public${imagesProduct}`
-        //                         : `file:///home/dev/www/mol/web/code/plugins/http/public${imagesProduct}`;
-        const imgPath = env == 'production'
-                                ? `${ROOT_URL}${imagesProduct}`
-                                : `${ROOT_URL}${imagesProduct}`;
-        htmlTemplate = htmlTemplate + `<div style="padding: 15px;position: relative;">
-                                        <table id="listView" style="${tableStyle}" >
-                                            <thead id="listView" style="${thead}">
-                                                <tr>
-                                                    <th style="${th}"><span>Item Reference</span></th>
-                                                    <th style="${th}"><span>Location</span></th>
-                                                    <th style="${th}"><span>Description</span></th>
-                                                    <th style="${th}"><span>Stone Detail</span></th>`
-                                                    if (chkGroupCost) {
-                                                        htmlTemplate = htmlTemplate + `<th style="${th}">
-                                                                                            <span>Group Cost Price (USD)</span></th>`
-                                                    }
-                                                    if (chkUpdateCost) {
-                                                        htmlTemplate = htmlTemplate + `<th style="${th}">
-                                                                                            <span>Updated Cost Price (USD)</span></th>`
-                                                    }
-                                                    if (chkSellingCost) {
-                                                        htmlTemplate = htmlTemplate + `<th style="${th}">
-                                                                                            <span>Selling Cost Price (USD)</span></th>`
-                                                    }
-                htmlTemplate = htmlTemplate + `</tr>
-                                            </thead>
+        const imagesProduct = (item.image) != undefined ? item.image.length != 0 ? item.image[0].original : '/images/blank.gif' : '/images/blank.gif';
+        const imgPath = env == 'production' ? `${ROOT_URL}${imagesProduct}` : `${ROOT_URL}${imagesProduct}`;
+        htmlTemplate = htmlTemplate +   `<div style="padding: 15px;position: relative;">
+                                            <table id="listView" style="${tableStyle}" >
+                                                <thead id="listView" style="${thead}">
+                                                    <tr>
+                                                        <th style="${th}"><span>Item Reference</span></th>
+                                                        <th style="${th}"><span>Location</span></th>
+                                                        <th style="${th}"><span>Description</span></th>
+                                                        <th style="${th}"><span>Stone Detail</span></th>`
+                                                        if (chkGroupCost) {
+                                                            htmlTemplate = htmlTemplate +   `<th style="${th}">
+                                                                                                <span>Group Cost Price (USD)</span></th>`
+                                                        }
+                                                        if (chkUpdateCost) {
+                                                            htmlTemplate = htmlTemplate +   `<th style="${th}">
+                                                                                                <span>Updated Cost Price (USD)</span></th>`
+                                                        }
+                                                        if (chkSellingCost) {
+                                                            htmlTemplate = htmlTemplate +   `<th style="${th}">
+                                                                                                <span>Selling Cost Price (USD)</span></th>`
+                                                        }
+                htmlTemplate = htmlTemplate +       `</tr>
+                                                </thead>
                                             <tbody id="${item.setReference}">`
                                             if (item.items != undefined) {
                                                 item.items.map((subitem) => {
@@ -144,7 +131,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                                             htmlTemplate = htmlTemplate + `<td style="${tdRight}">${price}</td>`
                                                         }
 
-                    htmlTemplate = htmlTemplate + `</tr>`
+                    htmlTemplate = htmlTemplate +   `</tr>`
                                                 })
                                             }
                 htmlTemplate = htmlTemplate +  `<tr>
@@ -159,7 +146,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                                     if (chkSellingCost) {
                                                         htmlTemplate = htmlTemplate + `<td style="${bgebtdtextRight}">${totalPrice}</td>`
                                                     }
-                htmlTemplate = htmlTemplate + `</tr>
+                htmlTemplate = htmlTemplate +   `</tr>
                                             </tbody>
                                         </table>
                                         <div id="imgset" style="${imgCenter}">
@@ -167,11 +154,10 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                         </div>
                                     </div>`
     })
-    htmlTemplate = htmlTemplate + `</div>
+    htmlTemplate = htmlTemplate +   `</div>
                             </form>
                         </body>
                     </html>`;
-
     return htmlTemplate;
 
 }

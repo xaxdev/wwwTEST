@@ -50,8 +50,8 @@ class InventoryStone extends Component {
             const { props } = this.props;
             let { fields: { jewelryProductHierarchy }, searchResult } = props;
             if(props.SaveSearchHierarchy != null){
-                  await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
-                  this.refs.treeview.handleChange(props.SaveSearchHierarchy);
+                await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
+                this.refs.treeview.handleChange(props.SaveSearchHierarchy);
             }
         })()
     }
@@ -321,8 +321,8 @@ class InventoryStone extends Component {
         const { props } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
-        let { fields: { article, stoneType, cut, cutGrade, color, colorGrade, clarity, certificateAgency,
-            polish, symmetry, treatment, fluorescence, origin
+        let { fields: { article, stoneType, cut, cutGrade, color, colorGrade, clarity, certificateAgency, polish, symmetry, treatment, fluorescence,
+            origin
         }, searchResult } = props;
         let findFieldName = [];
 
@@ -644,10 +644,8 @@ class InventoryStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select simpleValue value={props.ArticleValue}
-                                        placeholder="Select your Article Grouping"
-                                        options={dataDropDowntArticle}
-                                        onChange={this.handleArticleSelectedChanged} />
+                                    <Select simpleValue value={props.ArticleValue} placeholder="Select your Article Grouping"
+                                        options={dataDropDowntArticle} onChange={this.handleArticleSelectedChanged} />
                                 </div>
                             </div>
                         </div>
@@ -671,10 +669,8 @@ class InventoryStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.StoneTypeValue}
-                                        placeholder="Select your Stone Type"
-                                        options={dataDropDowntstoneType}
-                                        onChange={this.handlestoneTypeSelectChange} />
+                                    <Select multi simpleValue value={props.StoneTypeValue} placeholder="Select your Stone Type"
+                                        options={dataDropDowntstoneType} onChange={this.handlestoneTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -684,10 +680,8 @@ class InventoryStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.CutValue}
-                                        placeholder="Select your Cut (Shape)"
-                                        options={dataDropDowntCut}
-                                        onChange={this.handleCutSelectChange} />
+                                    <Select multi simpleValue value={props.CutValue} placeholder="Select your Cut (Shape)"
+                                        options={dataDropDowntCut} onChange={this.handleCutSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group hidden" >
@@ -697,10 +691,8 @@ class InventoryStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.CutGradeValue}
-                                        placeholder="Select your Cut Grade"
-                                        options={dataDropDowntCutGrade}
-                                        onChange={this.handleCutGradeSelectChange} />
+                                    <Select multi simpleValue value={props.CutGradeValue} placeholder="Select your Cut Grade"
+                                        options={dataDropDowntCutGrade} onChange={this.handleCutGradeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -710,10 +702,8 @@ class InventoryStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.ColorValue}
-                                        placeholder="Select your Color"
-                                        options={dataDropDowntColor}
-                                        onChange={this.handleColorSelectChange} />
+                                    <Select multi simpleValue value={props.ColorValue} placeholder="Select your Color"
+                                        options={dataDropDowntColor} onChange={this.handleColorSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group hidden">
@@ -723,10 +713,8 @@ class InventoryStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.ColorGradeValue}
-                                        placeholder="Select your Color Grade"
-                                        options={dataDropDowntColorGrade}
-                                        onChange={this.handleColorGradeSelectChange}/>
+                                    <Select multi simpleValue value={props.ColorGradeValue} placeholder="Select your Color Grade"
+                                        options={dataDropDowntColorGrade} onChange={this.handleColorGradeSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group">
@@ -774,7 +762,8 @@ class InventoryStone extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={`form-group ${(userLogin.permission.price == 'All' || userLogin.permission.price == 'Updated') ? '' : 'hidden'}`}>
+                            <div className={`form-group ${(userLogin.permission.price == 'All' || userLogin.permission.price == 'Updated') ?
+                                '' : 'hidden'}`}>
                                 <label className="col-sm-4 control-label">Markup (Times)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -806,15 +795,13 @@ class InventoryStone extends Component {
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar format="MM-DD-YYYY"
-                                            date={(paramsSearch != null)?paramsSearch.cerDateFrom:props.StoneCertificateDateFrom}
-                                            closeOnSelect = {true} onChange={this.handleChangeStart} />
+                                        <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeStart}
+                                            date={(paramsSearch != null)?paramsSearch.cerDateFrom:props.StoneCertificateDateFrom} />
                                     </div>
                                     <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar format="MM-DD-YYYY"
-                                            date={(paramsSearch != null)?paramsSearch.cerDateTo:props.StoneCertificateDateTo}
-                                            closeOnSelect = {true} onChange={this.handleChangeEnd} />
+                                        <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeEnd}
+                                            date={(paramsSearch != null)?paramsSearch.cerDateTo:props.StoneCertificateDateTo} />
                                     </div>
                                 </div>
                             </div>

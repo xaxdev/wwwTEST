@@ -73,11 +73,7 @@ class productdetail extends Component {
             const  Detail  = this.props.productdetail;
             const { lotNumbers } = this.props.productdetail;
             const { stonePageSize } = this.props;
-            const params = {
-                datas: lotNumbers,
-                page: 1,
-                size: !!stonePageSize ? stonePageSize : 20
-            };
+            const params = { datas: lotNumbers, page: 1, size: !!stonePageSize ? stonePageSize : 20 };
             this.props.getLotNaumberPerPage(params);
             if(Detail.type != 'STO' || Detail.type != 'CER'){
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
@@ -94,16 +90,18 @@ class productdetail extends Component {
         jQuery('#zoomimg').magnificPopup({
             key: 'my-popup',
             items: {
-                src: jQuery(`<div class="white-popup m-pt">
-                                  <div class="white-popup-left">
-                                      <img id="galleryimg"/>
-                                  </div>
-                                  <div class="white-popup-right">
-                                      <button id="btnup" class="btn btn-primary btn-radius">Up</button>
-                                      <button id="btndown" class="btn btn-primary btn-radius">Down</button>
-                                      <button id="btnzoom" class="btn btn-primary btn-radius" style="float:right">zoom</button>
-                                  </div>
-                              </div>`),
+                src: jQuery(
+                    `<div class="white-popup m-pt">
+                        <div class="white-popup-left">
+                            <img id="galleryimg"/>
+                        </div>
+                        <div class="white-popup-right">
+                            <button id="btnup" class="btn btn-primary btn-radius">Up</button>
+                            <button id="btndown" class="btn btn-primary btn-radius">Down</button>
+                            <button id="btnzoom" class="btn btn-primary btn-radius" style="float:right">zoom</button>
+                        </div>
+                    </div>`
+                ),
                 type: 'inline'
             },
             callbacks: {
@@ -140,25 +138,25 @@ class productdetail extends Component {
             },
             callbacks: {
                 open: function() {
-                     let activegallery = jQuery('#popupset img').attr('src');
-                     jQuery('#galleryimg').attr('src',activegallery);
-                     let rotatecount = 0;
-                     jQuery('#btnupset').click(function(){
-                         jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
-                     });
-                     jQuery('#btndownset').click(function(){
-                         jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
-                     });
-                     let zoomimg = false;
-                     jQuery('#btnzoomset').click(function(){
-                         if(zoomimg == false){
-                             zoomimg = true;
-                             jQuery('#galleryimgset').css({'width': jQuery('#galleryimgset').width() * 2 ,'max-width':'700px'});
-                         } else {
-                             zoomimg = false;
-                             jQuery('#galleryimgset').css({'width': 'auto' ,'max-width':'500px'});
-                         }
-                     });
+                    let activegallery = jQuery('#popupset img').attr('src');
+                    jQuery('#galleryimg').attr('src',activegallery);
+                    let rotatecount = 0;
+                    jQuery('#btnupset').click(function(){
+                        jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
+                    });
+                    jQuery('#btndownset').click(function(){
+                        jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
+                    });
+                    let zoomimg = false;
+                    jQuery('#btnzoomset').click(function(){
+                        if(zoomimg == false){
+                            zoomimg = true;
+                            jQuery('#galleryimgset').css({'width': jQuery('#galleryimgset').width() * 2 ,'max-width':'700px'});
+                        } else {
+                            zoomimg = false;
+                            jQuery('#galleryimgset').css({'width': 'auto' ,'max-width':'500px'});
+                        }
+                    });
                 }
             }
         });
@@ -203,9 +201,7 @@ class productdetail extends Component {
                 const { lotNumbers } = this.props.productdetail;
                 const { stonePageSize } = this.props;
                 const params = {
-                    datas: lotNumbers,
-                    page: 1,
-                    size: !!stonePageSize ? stonePageSize : 20
+                    datas: lotNumbers, page: 1, size: !!stonePageSize ? stonePageSize : 20
                 };
                 this.props.getLotNaumberPerPage(params);
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
@@ -225,12 +221,12 @@ class productdetail extends Component {
         let  Detailtitle  = '';
         if(!Detail){
             return(
-              <div>
-                   <center>
-                       <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                       <Loading type="spin" color="#202020" width="10%"/>
-                   </center>
-              </div>
+                <div>
+                    <center>
+                        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                        <Loading type="spin" color="#202020" width="10%"/>
+                    </center>
+                </div>
             );
         }
         switch (Detail.type) {
@@ -238,56 +234,56 @@ class productdetail extends Component {
                 Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
-                          <h2>{Detailtitle}</h2>
-                          <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
                 );
             case 'STO':
                 Detailtitle='STONE DETAILS';
                 return(
                     <div>
-                          <h2>{Detailtitle}</h2>
-                          <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
                 );
             case 'WAT':
                 Detailtitle='WATCH DETAILS';
                 return(
                     <div>
-                          <h2>{Detailtitle}</h2>
-                          <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
                 );
             case 'OBA':
                 Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
-                          <h2>{Detailtitle}</h2>
-                          <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
                 );
             case 'ACC':
                 Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
-                          <h2>{Detailtitle}</h2>
-                          <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
                 );
             case 'SPA':
                 Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
-                          <h2>{Detailtitle}</h2>
-                          <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
                 );
             case 'CER':
                 Detailtitle='CERTIFICATE DETAILS';
                 return(
                     <div>
-                          <h2>{Detailtitle}</h2>
-                          <ProductDescriptioncerBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptioncerBlock {...Detail} />
                     </div>
                 );
             }
@@ -307,63 +303,63 @@ class productdetail extends Component {
             );
         }
         switch (Detail.type) {
-              case 'JLY':
-                  Detailtitle='JEWELRY DETAILS';
-                  return(
-                      <div>
+            case 'JLY':
+                Detailtitle='JEWELRY DETAILS';
+                return(
+                    <div>
+                      <h2>{Detailtitle}</h2>
+                      <ProductDescriptionmovementBlock {...Detail} />
+                    </div>
+                );
+            case 'STO':
+                Detailtitle='STONE DETAILS';
+                return(
+                    <div>
                         <h2>{Detailtitle}</h2>
                         <ProductDescriptionmovementBlock {...Detail} />
-                      </div>
-                    );
-              case 'STO':
-                  Detailtitle='STONE DETAILS';
-                  return(
-                      <div>
+                    </div>
+                );
+            case 'WAT':
+                Detailtitle='WATCH DETAILS';
+                return(
+                    <div>
                         <h2>{Detailtitle}</h2>
                         <ProductDescriptionmovementBlock {...Detail} />
-                      </div>
-                    );
-              case 'WAT':
-                  Detailtitle='WATCH DETAILS';
-                  return(
-                      <div>
+                    </div>
+                );
+            case 'OBA':
+                Detailtitle='OBJECT OF ART DETAILS';
+                return(
+                    <div>
                         <h2>{Detailtitle}</h2>
                         <ProductDescriptionmovementBlock {...Detail} />
-                      </div>
-                    );
-              case 'OBA':
-                  Detailtitle='OBJECT OF ART DETAILS';
-                  return(
-                      <div>
+                    </div>
+                );
+            case 'ACC':
+                Detailtitle='ACCESSORY DETAILS';
+                return(
+                    <div>
+                      <h2>{Detailtitle}</h2>
+                      <ProductDescriptionmovementBlock {...Detail} />
+                    </div>
+                  );
+            case 'SPA':
+                Detailtitle='SPARE PARTS DETAILS';
+                return(
+                    <div>
                         <h2>{Detailtitle}</h2>
                         <ProductDescriptionmovementBlock {...Detail} />
-                      </div>
-                    );
-              case 'ACC':
-                  Detailtitle='ACCESSORY DETAILS';
-                  return(
-                      <div>
+                    </div>
+                );
+            case 'CER':
+                Detailtitle='CERTIFICATE DETAILS';
+                return(
+                    <div>
                         <h2>{Detailtitle}</h2>
                         <ProductDescriptionmovementBlock {...Detail} />
-                      </div>
-                    );
-              case 'SPA':
-                  Detailtitle='SPARE PARTS DETAILS';
-                  return(
-                      <div>
-                        <h2>{Detailtitle}</h2>
-                        <ProductDescriptionmovementBlock {...Detail} />
-                      </div>
-                    );
-              case 'CER':
-                  Detailtitle='CERTIFICATE DETAILS';
-                  return(
-                      <div>
-                        <h2>{Detailtitle}</h2>
-                        <ProductDescriptionmovementBlock {...Detail} />
-                      </div>
-                    );
-            }
+                    </div>
+                );
+        }
     }
 
     handleClickPageination = (page) => {
@@ -383,20 +379,14 @@ class productdetail extends Component {
         if (!!stonepage.value) {
             if (Number(stonepage.value) <= totalpage && Number(stonepage.value) > 0) {
                 const { lotNumbers } = this.props.productdetail;
-                const params = {
-                    datas: lotNumbers,
-                    page: Number(stonepage.value),
-                    size: stonePageSize
-                };
+                const params = { datas: lotNumbers, page: Number(stonepage.value), size: stonePageSize };
                 this.props.getLotNaumberPerPage(params);
             }
         }
     }
 
     renderAttr = _ => {
-        const { fields:{ stonepage },
-                   lotNumbers, stonActivePage, submitting, totalpage,
-                   stonePageSize,filterSearch } = this.props;
+        const { fields:{ stonepage }, lotNumbers, stonActivePage, submitting, totalpage, stonePageSize,filterSearch } = this.props;
         const  Detail  = this.props.productdetail;
 
         let  Attrtitle  = '';
@@ -413,64 +403,59 @@ class productdetail extends Component {
 
         switch (Detail.type) {
             case 'JLY':
-                  Attrtitle='JEWELRY ATTRIBUTES';
-                  return(
-                      <div>
+                Attrtitle='JEWELRY ATTRIBUTES';
+                return(
+                    <div>
                         <h2>{Attrtitle}</h2>
-                           <ProductJewelryAttributes {...Detail} />
-                      </div>
-                    );
+                        <ProductJewelryAttributes {...Detail} />
+                    </div>
+                );
             case 'STO':
-
-                 Attrtitle='STONE ATTRIBUTES';
-                 if (lotNumbers.length > 0) {
-                     return(
-                         <div>
-                           <h2>{Attrtitle}</h2>
-                               <ProductStoneAttributes Detail={Detail} pageSize={stonePageSize}
-                                   totalpage={totalpage}
-                                   lotNumbers={lotNumbers} onClickPage={this.handleClickPageination}
-                                   activePage={stonActivePage} onKeyPage={this.handleKeyPage} stonepage={stonepage}/>
-                         </div>
-                       );
-                 }else{
-                     return(
-                         <div>
-                         </div>
-                       );
-                 }
+                Attrtitle='STONE ATTRIBUTES';
+                if (lotNumbers.length > 0) {
+                    return(
+                        <div>
+                            <h2>{Attrtitle}</h2>
+                            <ProductStoneAttributes Detail={Detail} pageSize={stonePageSize} totalpage={totalpage} lotNumbers={lotNumbers}
+                                onClickPage={this.handleClickPageination} activePage={stonActivePage} onKeyPage={this.handleKeyPage}
+                                stonepage={stonepage}/>
+                        </div>
+                      );
+                }else{
+                    return(<div></div>);
+                }
             case 'WAT':
-                   Attrtitle='WATCH ATTRIBUTES';
-                   return(
-                       <div>
-                         <h2>{Attrtitle}</h2>
-                             <ProductWatchAttributes {...Detail} />
-                       </div>
-                     );
-           case 'OBA':
-                  Attrtitle='OBJECT OF ART ATTRIBUTES';
-                  return(
-                      <div>
+                Attrtitle='WATCH ATTRIBUTES';
+                return(
+                    <div>
                         <h2>{Attrtitle}</h2>
-                            <ProductObaAttributes {...Detail} />
-                      </div>
-                    );
-          case 'ACC':
-                 Attrtitle='ACCESSORY ATTRIBUTES';
-                 return(
-                     <div>
-                       <h2>{Attrtitle}</h2>
-                           <ProductAccAttributes {...Detail} />
-                     </div>
-                   );
-          case 'SPA':
+                        <ProductWatchAttributes {...Detail} />
+                    </div>
+                );
+            case 'OBA':
+                Attrtitle='OBJECT OF ART ATTRIBUTES';
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductObaAttributes {...Detail} />
+                    </div>
+                );
+            case 'ACC':
+                Attrtitle='ACCESSORY ATTRIBUTES';
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductAccAttributes {...Detail} />
+                    </div>
+                );
+            case 'SPA':
                 Attrtitle='SPARE PARTS ATTRIBUTES';
                 return(
                     <div>
-                      <h2>{Attrtitle}</h2>
-                          <ProductSpaAttributes {...Detail} />
+                        <h2>{Attrtitle}</h2>
+                        <ProductSpaAttributes {...Detail} />
                     </div>
-                  );
+                );
         }
     }
 
@@ -497,31 +482,17 @@ class productdetail extends Component {
                         <h2>SET DETAILS</h2>
                         <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
                             <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
-                            <ReactImageFallback
-                                id="imgset"
-                                src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                                fallbackImage="/images/blank.gif"
-                                initialImage="/images/blank.gif"
-                                width={120}
-                                height={120}
-                                className="img-responsive" />
+                            <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                                fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={120} height={120} className="img-responsive" />
                         </div>
                         <Setreference productset={setReferenceData}/>
                     </div>
                 );
             } else {
-                return(
-                    <div>
-
-                    </div>
-                );
+                return(<div></div>);
             }
         }else{
-            return(
-                <div>
-
-                </div>
-            );
+            return(<div></div>);
         }
     }
 
@@ -530,17 +501,19 @@ class productdetail extends Component {
         jQuery('#popupset').magnificPopup({
             key: 'my-popup2',
             items: {
-                src: jQuery(`<div class="white-popup m-pt">
-                                  <div class="white-popup-left">
-                                      <img id="galleryimgset"/>
-                                      <div id="showtotal"></div>
-                                  </div>
-                                  <div class="white-popup-right">
-                                      <button id="btnupset" class="btn btn-primary btn-radius">Up</button>
-                                      <button id="btndownset" class="btn btn-primary btn-radius">Down</button>
-                                      <button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button>
-                                  </div>
-                              </div>`),
+                src: jQuery(
+                    `<div class="white-popup m-pt">
+                        <div class="white-popup-left">
+                            <img id="galleryimgset"/>
+                            <div id="showtotal"></div>
+                        </div>
+                        <div class="white-popup-right">
+                            <button id="btnupset" class="btn btn-primary btn-radius">Up</button>
+                            <button id="btndownset" class="btn btn-primary btn-radius">Down</button>
+                            <button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button>
+                        </div>
+                    </div>`
+                ),
                 type: 'inline'
             },
             callbacks: {
@@ -581,7 +554,6 @@ class productdetail extends Component {
         const subType = Detail.subType;
 
         if(Detail.type == 'STO' || Detail.type == 'CER'){
-
         } else {
             if(!gemstoneAttr){
                 return(
@@ -597,13 +569,12 @@ class productdetail extends Component {
                 if(checkInarrayObject('type','Stone',gemstoneAttr)){
                     return(
                         <div>
-                          <h2>GEMSTONES ATTRIBUTES</h2>
-                          <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr}  onClick={this.downloadCer} />
+                            <h2>GEMSTONES ATTRIBUTES</h2>
+                            <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr}  onClick={this.downloadCer} />
                         </div>
                     );
                 }
             } else {
-
             }
         }
     }
@@ -613,7 +584,6 @@ class productdetail extends Component {
         const gemstoneAttr = Detail.gemstones;
         const subType = Detail.subType;
         if(Detail.type == 'STO' || Detail.type == 'CER'){
-
         } else {
             if(!gemstoneAttr){
                 return(
@@ -635,7 +605,6 @@ class productdetail extends Component {
                     );
                 }
             } else {
-
             }
         }
     }
@@ -662,13 +631,12 @@ class productdetail extends Component {
                 if(checkInarrayObjectOther('type',gemstoneAttr)){
                     return(
                         <div>
-                          <h2>RAW MATERIAL ATTRIBUTES</h2>
-                          <ProductRawmatirialAttributes gemstoneAttrData={gemstoneAttr} />
+                            <h2>RAW MATERIAL ATTRIBUTES</h2>
+                            <ProductRawmatirialAttributes gemstoneAttrData={gemstoneAttr} />
                         </div>
                       );
                 }
             } else {
-
             }
         }
     }
@@ -679,7 +647,7 @@ class productdetail extends Component {
             if(gallery.length > 0) {
                 return(
                     <div>
-                      <ProductGallery imagegallery={gallery}/>
+                        <ProductGallery imagegallery={gallery}/>
                     </div>
                 );
             } else {
@@ -694,9 +662,8 @@ class productdetail extends Component {
         const { imagesCOA } = this.props.productdetail;
 
         return(
-            <ModalShowImages images={imagesCOA}
-               isOpen={this.state.showCOA} isClose={this.handleCloseShowCOA}
-               productId={this.props.params.id} getCertificate={this.props.getCertificate}/>
+            <ModalShowImages images={imagesCOA} isOpen={this.state.showCOA} isClose={this.handleCloseShowCOA} productId={this.props.params.id}
+                getCertificate={this.props.getCertificate}/>
         );
 
     }
@@ -705,8 +672,7 @@ class productdetail extends Component {
         const { imagesDBC } = this.props.productdetail;
 
         return(
-            <ModalShowImages images={imagesDBC}
-               isOpen={this.state.showDBC} isClose={this.handleCloseShowDBC}
+            <ModalShowImages images={imagesDBC} isOpen={this.state.showDBC} isClose={this.handleCloseShowDBC}
                productId={this.props.params.id} getCertificate={this.props.getCertificate}/>
         );
     }
@@ -715,8 +681,7 @@ class productdetail extends Component {
         const { filesMonograph } = this.props.productdetail;
 
         return(
-            <ModalShowFilesPDF files={filesMonograph} isOpen={this.state.showMonograph}
-            isClose={this.handleCloseShowMonograph} />
+            <ModalShowFilesPDF files={filesMonograph} isOpen={this.state.showMonograph} isClose={this.handleCloseShowMonograph} />
         );
     }
 
@@ -730,37 +695,32 @@ class productdetail extends Component {
         const currency = logindata.currency;
 
         if(type != 'STO' && !products && type != 'CER'){
-            return(
-                <div></div>
-            );
+            return(<div></div>);
         }
         if(type != 'STO' && dominant && type != 'CER' && products.length >= 1){
             return(
                 <div className="col-md-12 col-sm-12 nopadding">
-                   <h2>RELATED DETAILS</h2>
-                   <ProductRelete productrelte={products}/>
-                   <div className="searchresult-navi pagenavi relete col-md-12 col-sm-12 nopadding">
-                       <Pagination prev next first last ellipsis boundaryLinks items={totalpage}
-                         maxButtons={3} activePage={reletepage.defaultValue}
-                         onSelect={(eventKey) => {
-                             this.props.getProductRelete(subType,eventKey,productId,dominant,currency,price[currency]);
-                         }} />
-                         <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
-                             <span>Page</span>
-                             <form onSubmit={handleSubmit(this.handleGo)} >
-                                 <input type="number" {...reletepage} />
-                                 <span>of</span>
-                                 <span>{numberFormat(totalpage)}</span>
-                                 <button>Go</button>
-                             </form>
-                         </div>
+                    <h2>RELATED DETAILS</h2>
+                    <ProductRelete productrelte={products}/>
+                    <div className="searchresult-navi pagenavi relete col-md-12 col-sm-12 nopadding">
+                        <Pagination prev next first last ellipsis boundaryLinks items={totalpage} maxButtons={3} activePage={reletepage.defaultValue}
+                            onSelect={(eventKey) => {
+                                this.props.getProductRelete(subType,eventKey,productId,dominant,currency,price[currency]);
+                            }} />
+                        <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
+                            <span>Page</span>
+                            <form onSubmit={handleSubmit(this.handleGo)} >
+                                <input type="number" {...reletepage} />
+                                <span>of</span>
+                                <span>{numberFormat(totalpage)}</span>
+                                <button>Go</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             );
         } else {
-            return(
-                <div></div>
-            );
+            return(<div></div>);
         }
     }
 
@@ -775,42 +735,42 @@ class productdetail extends Component {
 
         if(!productlist){
             return(
-              <div>
-                  <center>
-                      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                      <Loading type="spin" color="#202020" width="10%"/>
-                  </center>
-              </div>
+                <div>
+                    <center>
+                        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                        <Loading type="spin" color="#202020" width="10%"/>
+                    </center>
+                </div>
             );
         }
 
         if(productlist.length != 0){
             return(
                 <div className="bar-title-detail maring-t15">
-                          <div className="ft-white productdetail-search display-right">
-                            <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
-                          </div>
-                          <div className="margin-t5 text-center m-none display-right padding-lf15">
-                            <span className="bar-line">|</span>
-                          </div>
-                          <div className="display-right">
-                            <div className="float-l bar-detail-pre">
-                                   <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].id}`:''}}><span className="icon-back"></span></Link>
+                    <div className="ft-white productdetail-search display-right">
+                        <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
+                    </div>
+                    <div className="margin-t5 text-center m-none display-right padding-lf15">
+                        <span className="bar-line">|</span>
+                    </div>
+                    <div className="display-right">
+                        <div className="float-l bar-detail-pre">
+                            <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].id}`:''}}><span className="icon-back"></span></Link>
+                        </div>
+                        <div className="float-l bar-detail-text">
+                            <div className="float-l productdetailpage text-center nopadding">
+                                <form onSubmit={handleSubmit(this.handleKeyPressNavigation)} >
+                                    <input type="number" {...pagego} />
+                                </form>
                             </div>
-                            <div className="float-l bar-detail-text">
-                                <div className="float-l productdetailpage text-center nopadding">
-                                         <form onSubmit={handleSubmit(this.handleKeyPressNavigation)} >
-                                          <input type="number" {...pagego} />
-                                         </form>
-                                </div>
-                                <div className="float-l fc-fff margin-t5 text-center nopadding">
-                                      of {numberFormat(productlist.length)} items
-                                </div>
+                            <div className="float-l fc-fff margin-t5 text-center nopadding">
+                                of {numberFormat(productlist.length)} items
                             </div>
-                            <div className="float-l bar-detail-pre">
-                                  <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${productlist[productIndex+1].id}` : ''}}><span className="icon-next"></span></Link>
-                            </div>
-                          </div>
+                        </div>
+                        <div className="float-l bar-detail-pre">
+                            <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${productlist[productIndex+1].id}` : ''}}><span className="icon-next"></span></Link>
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -818,14 +778,11 @@ class productdetail extends Component {
 
     addMyCatalog = _=> {
         this.props.getCatalogNameSetItem().then(() =>{
-            const { fields: {
-                      oldCatalogName,newCatalogName,validateCatalogName
-                  } } = this.props;
+            const { fields: { oldCatalogName,newCatalogName,validateCatalogName } } = this.props;
 
             this.setState({isOpenAddMyCatalog: true});
             oldCatalogName.value = '';
             newCatalogName.value = '';
-
         });
     }
 
@@ -844,9 +801,7 @@ class productdetail extends Component {
     handleSubmitCatalog = (e) => {
         e.preventDefault();
         this.setState({isOpenAddMyCatalog: false});
-        const { fields: {
-            oldCatalogName,newCatalogName,validateCatalogName
-        } } = this.props;
+        const { fields: { oldCatalogName,newCatalogName,validateCatalogName } } = this.props;
         const  Detail  = this.props.productdetail;
         const  listCatalogName  = this.props.listCatalogName;
         let oldCatalogTitle = ''
@@ -859,9 +814,9 @@ class productdetail extends Component {
             catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
             items:[
                 {
-                   id:Detail.id,
-                   reference:Detail.reference,
-                   description:Detail.description
+                    id:Detail.id,
+                    reference:Detail.reference,
+                    description:Detail.description
                 }
             ]
         }
@@ -877,14 +832,18 @@ class productdetail extends Component {
     renderAddMyCatalog = _ =>{
         const { listCatalogName, submitting } = this.props;
 
-        return(<ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName}
-          isOpen={this.state.isOpenAddMyCatalog} isClose={this.handleClose} props={this.props}/>);
+        return(
+            <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName}
+                isOpen={this.state.isOpenAddMyCatalog} isClose={this.handleClose} props={this.props}/>
+        );
     }
 
     renderAlertmsg = _ =>{
         const { message } = this.props;
-        return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
-           props={this.props} message={message}/>);
+        return(
+            <Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
+                props={this.props} message={message}/>
+        );
     }
 
     handleGo = (data) => {
@@ -907,21 +866,19 @@ class productdetail extends Component {
 
     zoomicon = _ => {
         const { gallery } = this.props.productdetail;
-        let styles ={
-            displaynone:{
-                display:'none'
-            }
+        const styles ={
+            displaynone:{ display:'none' }
         };
         if(!!gallery && gallery.length > 0){
             return(
                 <div>
-                     <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+                    <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
                 </div>
             );
         } else {
             return(
                 <div>
-                     <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+                    <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
                 </div>
             );
         }
@@ -953,26 +910,24 @@ class productdetail extends Component {
 
     imagesCOAIcon = _ => {
         const { imagesCOA } = this.props.productdetail;
-        var styles ={
-            displaynone:{
-                display:'none'
-            }
+        const styles ={
+            displaynone:{ display:'none' }
         };
         if(!!imagesCOA && imagesCOA.length > 0){
             return(
                 <div>
-                     <a>
-                         <OverlayTrigger placement="bottom" overlay={tooltipCOA}>
-                             <div className="icon-coa margin-l10" id="imagesCOA" onClick={this.showImageGalleryCOA} >
-                             </div>
-                         </OverlayTrigger>
-                     </a>
+                    <a>
+                        <OverlayTrigger placement="bottom" overlay={tooltipCOA}>
+                            <div className="icon-coa margin-l10" id="imagesCOA" onClick={this.showImageGalleryCOA} >
+                            </div>
+                        </OverlayTrigger>
+                    </a>
                 </div>
             );
         } else {
             return(
                 <div>
-                     <a style={styles.displaynone}><div className="icon-coa margin-l10" id="imagesCOA"></div></a>
+                    <a style={styles.displaynone}><div className="icon-coa margin-l10" id="imagesCOA"></div></a>
                 </div>
             );
         }
@@ -980,10 +935,8 @@ class productdetail extends Component {
 
     imagesDBCIcon = _ => {
         const { imagesDBC } = this.props.productdetail;
-        var styles ={
-            displaynone:{
-                display:'none'
-            }
+        const styles ={
+            displaynone:{ display:'none' }
         };
         if(!!imagesDBC && imagesDBC.length > 0){
             return(
@@ -999,7 +952,7 @@ class productdetail extends Component {
         } else {
             return(
                 <div>
-                     <a style={styles.displaynone}><div className="icon-dbc margin-l10" id="imagesDBC"></div></a>
+                    <a style={styles.displaynone}><div className="icon-dbc margin-l10" id="imagesDBC"></div></a>
                 </div>
             );
         }
@@ -1007,10 +960,8 @@ class productdetail extends Component {
 
     filesMonographIcon = _ => {
         const { filesMonograph } = this.props.productdetail;
-        var styles ={
-            displaynone:{
-                display:'none'
-            }
+        const styles ={
+            displaynone:{ display:'none' }
         };
         if(!!filesMonograph && filesMonograph.length > 0){
             return(
@@ -1026,7 +977,7 @@ class productdetail extends Component {
         } else {
             return(
                 <div>
-                     <a style={styles.displaynone}><div className="icon-filesMonograph margin-l10" id="filesMonograph"></div></a>
+                    <a style={styles.displaynone}><div className="icon-filesMonograph margin-l10" id="filesMonograph"></div></a>
                 </div>
             );
         }
@@ -1070,8 +1021,10 @@ class productdetail extends Component {
     renderAlertmsgCer = _ => {
         const message = 'Please check your email for download certificate.';
         const title = 'DOWNLOAD CERTIFICATE';
-        return(<ModalalertMsgObj isOpen={this.state.isOpenDownloadCerMsg} isClose={this.handleCloseDownloadCerMsg}
-           props={this.props} message={message}  title={title}/>);
+        return(
+            <ModalalertMsgObj isOpen={this.state.isOpenDownloadCerMsg} isClose={this.handleCloseDownloadCerMsg}
+                props={this.props} message={message}  title={title}/>
+        );
     }
 
     handleCloseDownloadCerMsg = _=> {
@@ -1156,7 +1109,7 @@ class productdetail extends Component {
             <div id="page-wrapper">
                 <div className="col-sm-12 bg-hearder m-prodcutdetail">
                     <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding">
-                         <h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'PRODUCT DETAIL'}`}</h1>
+                        <h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'PRODUCT DETAIL'}`}</h1>
                     </div>
                     {this.renderNavigation()}
                 </div>
@@ -1196,8 +1149,7 @@ class productdetail extends Component {
                                     {this.imagesDBCIcon()}
                                     {this.filesMonographIcon()}
                                     <a>
-                                        <div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`}
-                                        onClick={ this.showmovement }> </div>
+                                        <div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }> </div>
                                     </a>
                                 </div>
                                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
@@ -1205,19 +1157,14 @@ class productdetail extends Component {
                                 <div className="col-md-6 col-sm-12">{this.renderImageGalleryDBC()}</div>
                                 <div className="col-md-6 col-sm-12">{this.renderFilesMonograph()}</div>
                                 <div className="col-md-6 col-sm-12">
-                                    <div className="col-md-12 col-sm-12">
-                                         {this.renderDesc()}
-                                    </div>
+                                    <div className="col-md-12 col-sm-12"> {this.renderDesc()} </div>
                                     <div className={`${type != 'JLY' || !setReference ? 'hidden' : 'col-md-12 col-sm-12 top-line-detail'}`}>
                                         {this.renderSetreference()}
                                     </div>
-                                    <div className="col-md-12 col-sm-12 top-line-detail">
-                                       {this.renderReleteproduct()}
-                                    </div>
+                                    <div className="col-md-12 col-sm-12 top-line-detail"> {this.renderReleteproduct()} </div>
                                 </div>
                                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">
-                                    <div className={`${type != 'CER' ? 'line-border' : ''}`}>
-                                    </div>
+                                    <div className={`${type != 'CER' ? 'line-border' : ''}`}> </div>
                                 </div>
                                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30">{this.renderAttr()}</div>
                                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">{this.renderFooterDiamondsAttr()}</div>
@@ -1238,18 +1185,12 @@ class productdetail extends Component {
                             <div className="panel-body padding-ft0">
                                 <div className="col-md-4 col-sm-12">
                                     <div className="mg-tb thumbnaillgrid">
-                                        <ReactImageFallback
-                                           src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
-                                             fallbackImage="/images/blank.gif"
-                                             initialImage="/images/blank.gif"
-                                             width={200}
-                                             height={200}
-                                             className="img-responsive image-gallery-image" />
+                                        <ReactImageFallback src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
+                                            fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={200} height={200}
+                                            className="img-responsive image-gallery-image" />
                                      </div>
                                 </div>
-                                <div className="col-md-8 col-sm-12">
-                                     {this.renderDescmovement()}
-                                </div>
+                                <div className="col-md-8 col-sm-12"> {this.renderDescmovement()} </div>
                                 <div className="col-md-12 col-sm-12 col-xs-12 padding-lf30 maring-t15">
                                     <h2>CUSTOMER VIEWINGS</h2>
                                     { !!activities && !!activities.goc &&
@@ -1271,15 +1212,9 @@ class productdetail extends Component {
     }
 }
 
-const tooltipCOA = (
-  <Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>
-);
-const tooltipDBC = (
-  <Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>
-);
-const tooltipMonograph = (
-  <Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>
-);
+const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>);
+const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>);
+const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>);
 
 productdetail.contextTypes = {
     router: PropTypes.object

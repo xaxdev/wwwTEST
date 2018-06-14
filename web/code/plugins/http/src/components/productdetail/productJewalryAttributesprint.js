@@ -8,7 +8,7 @@ import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 const allowDiamond = ['Loose Diamond','Diamond'];
 const allowGemstone = ["Stone"];
 
-let styles ={
+const styles ={
     colmd12:{
         width:'100%',
         float:'left'

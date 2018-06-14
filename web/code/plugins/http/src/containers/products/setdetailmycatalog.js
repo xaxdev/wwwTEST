@@ -189,8 +189,8 @@ class productdetail extends Component {
         }
         return(
             <div>
-              <h2>{Detailtitle}</h2>
-              <ProductDescriptionBlock {...Detail} />
+                <h2>{Detailtitle}</h2>
+                <ProductDescriptionBlock {...Detail} />
             </div>
         );
     }
@@ -213,59 +213,58 @@ class productdetail extends Component {
                 Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'STO':
-
                 Detailtitle='STONE DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'WAT':
                 Detailtitle='WATCH DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'OBA':
                 Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'ACC':
                 Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'SPA':
                 Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'CER':
                 Detailtitle='CERTIFICATE DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
         }
     }
 
@@ -298,9 +297,7 @@ class productdetail extends Component {
 
     renderAttr = _ => {
         const  Detail  = this.props.productdetail;
-        const { fields:{ stonepage },
-                   lotNumbers, stonActivePage, submitting, totalpage,
-                   stonePageSize,filterSearch } = this.props;
+        const { fields:{ stonepage }, lotNumbers, stonActivePage, submitting, totalpage, stonePageSize,filterSearch } = this.props;
 
         let  Attrtitle  = '';
         if(!Detail){
@@ -315,64 +312,59 @@ class productdetail extends Component {
         }
         switch (Detail.type) {
             case 'JLY':
-                  Attrtitle='JEWELRY ATTRIBUTES';
-                  return(
-                      <div>
+                Attrtitle='JEWELRY ATTRIBUTES';
+                return(
+                    <div>
                         <h2>{Attrtitle}</h2>
-                           <ProductJewelryAttributes {...Detail} />
-                      </div>
-                    );
+                        <ProductJewelryAttributes {...Detail} />
+                    </div>
+                );
             case 'STO':
-                   Attrtitle='STONE ATTRIBUTES';
-                 if (lotNumbers.length > 0) {
-                     return(
-                         <div>
-                           <h2>{Attrtitle}</h2>
-                               <ProductStoneAttributes Detail={Detail} pageSize={stonePageSize}
-                                   totalpage={totalpage}
-                                   lotNumbers={lotNumbers} onClickPage={this.handleClickPageination}
-                                   activePage={stonActivePage} onKeyPage={this.handleKeyPage} stonepage={stonepage}/>
-                         </div>
-                       );
-                 }else{
-                     return(
-                         <div>
-                         </div>
-                       );
-                 }
-
-            case 'WAT':
-                   Attrtitle='WATCH ATTRIBUTES';
-                   return(
-                       <div>
-                         <h2>{Attrtitle}</h2>
-                             <ProductWatchAttributes {...Detail} />
-                       </div>
-                     );
-           case 'OBA':
-                  Attrtitle='OBJECT OF ART ATTRIBUTES';
-                  return(
-                      <div>
-                        <h2>{Attrtitle}</h2>
-                            <ProductObaAttributes {...Detail} />
-                      </div>
+                Attrtitle='STONE ATTRIBUTES';
+                if (lotNumbers.length > 0) {
+                    return(
+                        <div>
+                            <h2>{Attrtitle}</h2>
+                            <ProductStoneAttributes Detail={Detail} pageSize={stonePageSize} totalpage={totalpage} lotNumbers={lotNumbers}
+                                onClickPage={this.handleClickPageination} activePage={stonActivePage} onKeyPage={this.handleKeyPage}
+                                stonepage={stonepage}/>
+                        </div>
                     );
-          case 'ACC':
-                 Attrtitle='ACCESSORY ATTRIBUTES';
-                 return(
-                     <div>
-                       <h2>{Attrtitle}</h2>
-                           <ProductAccAttributes {...Detail} />
-                     </div>
-                   );
-          case 'SPA':
+                }else{
+                    return( <div> </div> );
+                }
+            case 'WAT':
+                Attrtitle='WATCH ATTRIBUTES';
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductWatchAttributes {...Detail} />
+                    </div>
+                );
+            case 'OBA':
+                Attrtitle='OBJECT OF ART ATTRIBUTES';
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductObaAttributes {...Detail} />
+                    </div>
+                );
+            case 'ACC':
+                Attrtitle='ACCESSORY ATTRIBUTES';
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductAccAttributes {...Detail} />
+                    </div>
+                );
+            case 'SPA':
                 Attrtitle='SPARE PARTS ATTRIBUTES';
                 return(
                     <div>
-                      <h2>{Attrtitle}</h2>
-                          <ProductSpaAttributes {...Detail} />
+                        <h2>{Attrtitle}</h2>
+                        <ProductSpaAttributes {...Detail} />
                     </div>
-                  );
+                );
         }
     }
 
@@ -401,16 +393,10 @@ class productdetail extends Component {
                     </div>
                 );
             } else {
-                return(
-                    <div>
-                    </div>
-                );
+                return(<div></div>);
             }
         }else{
-            return(
-                <div>
-                </div>
-            );
+            return(<div></div>);
         }
     }
 
@@ -434,20 +420,19 @@ class productdetail extends Component {
                     jQuery('#showtotal').text('Total Retail Price (Set): '+numberFormat(totalprice)+' '+'USD');
                     let rotatecount = 0;
                     jQuery('#btnupset').click(function(){
-                      jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
+                        jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
                     });
                     jQuery('#btndownset').click(function(){
-
-                      jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
+                        jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount-=90)+'deg)'});
                     });
                     let zoomimg = false;
                     jQuery('#btnzoomset').click(function(){
                         if(zoomimg == false){
-                          zoomimg = true;
-                          jQuery('#galleryimgset').css({'width': jQuery('#galleryimgset').width() * 2 ,'max-width':'700px'});
+                            zoomimg = true;
+                            jQuery('#galleryimgset').css({'width': jQuery('#galleryimgset').width() * 2 ,'max-width':'700px'});
                         } else {
-                          zoomimg = false;
-                          jQuery('#galleryimgset').css({'width': 'auto' ,'max-width':'500px'});
+                            zoomimg = false;
+                            jQuery('#galleryimgset').css({'width': 'auto' ,'max-width':'500px'});
                         }
 
                     });
@@ -474,18 +459,17 @@ class productdetail extends Component {
                     </div>
                 );
             }
-          if(gemstoneAttr.length > 0){
-              if(checkInarrayObject('type','Stone',gemstoneAttr)){
-                  return(
-                      <div>
-                        <h2>GEMSTONES ATTRIBUTES</h2>
-                        <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr}  onClick={this.downloadCer} />
-                      </div>
-                  );
-              }
-          } else {
-
-          }
+            if(gemstoneAttr.length > 0){
+                if(checkInarrayObject('type','Stone',gemstoneAttr)){
+                    return(
+                        <div>
+                            <h2>GEMSTONES ATTRIBUTES</h2>
+                            <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr}  onClick={this.downloadCer} />
+                        </div>
+                    );
+                }
+            } else {
+            }
         }
     }
 
@@ -510,13 +494,12 @@ class productdetail extends Component {
                 if(checkInarrayObject('type','Loose Diamond',gemstoneAttr)){
                     return(
                         <div>
-                          <h2>DIAMONDS ATTRIBUTES</h2>
-                          <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} onClick={this.downloadCer} />
+                            <h2>DIAMONDS ATTRIBUTES</h2>
+                            <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} onClick={this.downloadCer} />
                         </div>
                     );
                 }
             } else {
-
             }
         }
     }
@@ -542,13 +525,12 @@ class productdetail extends Component {
                 if(checkInarrayObjectOther('type',gemstoneAttr)){
                     return(
                         <div>
-                          <h2>RAW MATERIAL ATTRIBUTES</h2>
-                          <ProductRawmatirialAttributes gemstoneAttrData={gemstoneAttr} />
+                            <h2>RAW MATERIAL ATTRIBUTES</h2>
+                            <ProductRawmatirialAttributes gemstoneAttrData={gemstoneAttr} />
                         </div>
                     );
                 }
             } else {
-
             }
         }
     }
@@ -559,9 +541,7 @@ class productdetail extends Component {
         if(gallery !== undefined){
             if(gallery.length > 0) {
                 return(
-                    <div>
-                      <ProductGallery imagegallery={gallery}/>
-                    </div>
+                    <div> <ProductGallery imagegallery={gallery}/> </div>
                 );
             } else {
                 return(
@@ -580,9 +560,7 @@ class productdetail extends Component {
         const currency = logindata.currency;
 
         if(type != 'STO' && !products && type != 'CER'){
-            return(
-                <div></div>
-            );
+            return(<div></div>);
         }
         if(type != 'STO' && dominant && type != 'CER' && products.length >= 1){
             return(
@@ -591,9 +569,9 @@ class productdetail extends Component {
                     <ProductRelete productrelte={products}/>
                     <div className="searchresult-navi pagenavi relete col-md-12 col-sm-12 nopadding">
                         <Pagination prev next first last ellipsis boundaryLinks items={totalpage} maxButtons={3}
-                          activePage={reletepage.defaultValue} onSelect={(eventKey) => {
-                              this.props.getProductRelete(subType,eventKey,productId,dominant,currency,price[currency]);
-                          }} />
+                            activePage={reletepage.defaultValue} onSelect={(eventKey) => {
+                                this.props.getProductRelete(subType,eventKey,productId,dominant,currency,price[currency]);
+                            }} />
                         <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
                             <span>Page</span>
                             <form onSubmit={handleSubmit(this.handleGo)} >
@@ -607,9 +585,7 @@ class productdetail extends Component {
                 </div>
             );
         } else {
-            return(
-                <div></div>
-            );
+            return(<div></div>);
         }
     }
 
@@ -632,9 +608,7 @@ class productdetail extends Component {
 
     addMyCatalog = _=> {
         this.props.getCatalogNameSetItem().then(() =>{
-            const { fields: {
-                oldCatalogName,newCatalogName,validateCatalogName
-            } } = this.props;
+            const { fields: {oldCatalogName,newCatalogName,validateCatalogName} } = this.props;
 
             oldCatalogName.value = ''
             newCatalogName.value = ''
@@ -657,9 +631,7 @@ class productdetail extends Component {
     handleSubmitCatalog = (e)=> {
         e.preventDefault();
         this.setState({isOpenAddMyCatalog: false});
-        const { fields: {
-            oldCatalogName,newCatalogName,validateCatalogName
-        } } = this.props;
+        const { fields: {oldCatalogName,newCatalogName,validateCatalogName} } = this.props;
         const  Detail  = this.props.productdetail;
         const  listCatalogName  = this.props.listCatalogName;
         let oldCatalogTitle = ''
@@ -690,16 +662,15 @@ class productdetail extends Component {
     renderAddMyCatalog = _=> {
         const { listCatalogName, submitting } = this.props;
         return(
-            <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName}
-             isOpen={this.state.isOpenAddMyCatalog} isClose={this.handleClose} props={this.props}/>
+            <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
+                isClose={this.handleClose} props={this.props}/>
         );
     }
 
     renderAlertmsg = _=> {
         const { message } = this.props;
         return(
-            <Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
-            props={this.props} message={message}/>
+            <Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}/>
         );
     }
 
@@ -714,160 +685,159 @@ class productdetail extends Component {
             this.props.getProductRelete(subType,getPage,productId,dominant,currency,price[currency]);
         }
     }
+    handleKeyPressNavigation = (data) => {
+        const { pagego} = data;
+        const productid = this.props.productlist[parseInt(pagego)-1].reference;
+        this.context.router.push(`/setdetail/${productid}`);
+    }
 
-   handleKeyPressNavigation = (data) => {
-       const { pagego} = data;
-       const productid = this.props.productlist[parseInt(pagego)-1].reference;
-       this.context.router.push(`/setdetail/${productid}`);
-   }
-
-   zoomicon = _ => {
-       const { gallery } = this.props.productdetail;
-       const styles ={
-           displaynone:{
-               display:'none'
-           }
-       };
-       if(!!gallery && gallery.length > 0){
-           return(
-               <div>
+    zoomicon = _ => {
+        const { gallery } = this.props.productdetail;
+        const styles ={
+            displaynone:{
+                display:'none'
+            }
+        };
+        if(!!gallery && gallery.length > 0){
+            return(
+                <div>
                     <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
-               </div>
-           );
-       } else {
-           return(
-             <div>
-                <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
-             </div>
-           );
-       }
-   }
+                </div>
+            );
+        } else {
+            return(
+                <div>
+                   <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+                </div>
+            );
+        }
+    }
 
-   downloadCertificateAll = _=> {
-       const userLogin = JSON.parse(sessionStorage.logindata);
-       const host = HOSTNAME || 'localhost';
-       const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
-       const { gemstones } = this.props.productdetail;
-       const productId = this.props.params.id;
+    downloadCertificateAll = _=> {
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const host = HOSTNAME || 'localhost';
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+        const { gemstones } = this.props.productdetail;
+        const productId = this.props.params.id;
 
-       let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
-       let allCer = [];
-       if(gemstones != undefined){
-           gemstones.map((item) => {
-               if (!!item.certificate) {
-                   item.certificate.images.map((img) => {
-                       allCer.push(img.original.replace('/images/products/original',''));
-                   })
-               }
-           })
-       }
-       let params = {
-                       'allCer': allCer,
-                       'userName': `${userLogin.username}`,
-                       'fileName': `${userLogin.username}_${exportDate}`,
-                       'userEmail': userLogin.email,
-                       'ROOT_URL': ROOT_URL,
-                       'productId': productId
-                   }
+        let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
+        let allCer = [];
+        if(gemstones != undefined){
+            gemstones.map((item) => {
+                if (!!item.certificate) {
+                    item.certificate.images.map((img) => {
+                        allCer.push(img.original.replace('/images/products/original',''));
+                    })
+                }
+            })
+        }
+        let params = {
+            'allCer': allCer,
+            'userName': `${userLogin.username}`,
+            'fileName': `${userLogin.username}_${exportDate}`,
+            'userEmail': userLogin.email,
+            'ROOT_URL': ROOT_URL,
+            'productId': productId
+        }
 
-       this.props.getCertificate(params).then((value) => {
-           if (value) {
-               this.setState({isOpenDownloadCerMsg: true});
-           }
-           console.log(value);
-       });
-   }
+        this.props.getCertificate(params).then((value) => {
+            if (value) {
+                this.setState({isOpenDownloadCerMsg: true});
+            }
+            console.log(value);
+        });
+    }
 
-   renderAlertmsgCer = _=> {
-       const message = 'Please check your email for download certificate.';
-       const title = 'DOWNLOAD CERTIFICATE';
-       return(
-           <ModalalertMsgObj isOpen={this.state.isOpenDownloadCerMsg} isClose={this.handleCloseDownloadCerMsg}
-                props={this.props} message={message}  title={title}/>
-       );
-   }
+    renderAlertmsgCer = _=> {
+        const message = 'Please check your email for download certificate.';
+        const title = 'DOWNLOAD CERTIFICATE';
+        return(
+            <ModalalertMsgObj isOpen={this.state.isOpenDownloadCerMsg} isClose={this.handleCloseDownloadCerMsg} props={this.props} message={message}
+                title={title}/>
+        );
+    }
 
-   handleCloseDownloadCerMsg = _=> {
-       this.setState({isOpenDownloadCerMsg: false});
-   }
+    handleCloseDownloadCerMsg = _=> {
+        this.setState({isOpenDownloadCerMsg: false});
+    }
 
-   downloadCer = (id,e) => {
-       const userLogin = JSON.parse(sessionStorage.logindata);
-       const host = HOSTNAME || 'localhost';
-       const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
-       const { gemstones } = this.props.productdetail;
-       const productId = this.props.params.id;
+    downloadCer = (id,e) => {
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const host = HOSTNAME || 'localhost';
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+        const { gemstones } = this.props.productdetail;
+        const productId = this.props.params.id;
 
-       let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
-       let allCer = [];
-       if(gemstones != undefined){
-           gemstones.map((item) => {
-               if (!!item.certificate) {
-                   if (item.certificate.number == id) {
-                       item.certificate.images.map((img) => {
-                           allCer.push(img.original.replace('/images/products/original',''));
-                       });
-                   }
-               }
-           });
-       }
+        let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
+        let allCer = [];
+        if(gemstones != undefined){
+            gemstones.map((item) => {
+                if (!!item.certificate) {
+                    if (item.certificate.number == id) {
+                        item.certificate.images.map((img) => {
+                            allCer.push(img.original.replace('/images/products/original',''));
+                        });
+                    }
+                }
+            });
+        }
 
-       let params = {
-           'allCer': allCer,
-           'userName': `${userLogin.username}`,
-           'fileName': `${userLogin.username}_${exportDate}`,
-           'userEmail': userLogin.email,
-           'ROOT_URL': ROOT_URL,
-           'productId': productId
-       }
+        let params = {
+            'allCer': allCer,
+            'userName': `${userLogin.username}`,
+            'fileName': `${userLogin.username}_${exportDate}`,
+            'userEmail': userLogin.email,
+            'ROOT_URL': ROOT_URL,
+            'productId': productId
+        }
 
-       this.props.getCertificate(params).then((value) => {
-           if (value) {
-               this.setState({isOpenDownloadCerMsg: true});
-           }
-       });
-   }
+        this.props.getCertificate(params).then((value) => {
+            if (value) {
+                this.setState({isOpenDownloadCerMsg: true});
+            }
+        });
+    }
+    render = _ => {
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const { totalpage,products,page } = this.props.productrelete;
+        const reletepage = this.props.productreletepage;
+        const productlist = this.props.productlist;
+        const productId = this.props.params.id;
+        const productIndex = this.props.productindex;
+        const productindexplus = this.props.productindexplus;
+        let type = 'JLY';
+        let { gallery, setReference } = this.props.productdetail;
+        const { lotNumbers, stonePageSize, stonActivePage,viewAsSet } = this.props;
+        let isCertificate = false;
+        let countImages = 0;
+        let imageCerDownload = '';
+        let imageName = '';
 
-   render = _ => {
-       const userLogin = JSON.parse(sessionStorage.logindata);
-       const { totalpage,products,page } = this.props.productrelete;
-       const reletepage = this.props.productreletepage;
-       const productlist = this.props.productlist;
-       const productId = this.props.params.id;
-       const productIndex = this.props.productindex;
-       const productindexplus = this.props.productindexplus;
-       let type = 'JLY';
-       let { gallery, setReference } = this.props.productdetail;
-       const { lotNumbers, stonePageSize, stonActivePage,viewAsSet } = this.props;
-       let isCertificate = false;
-       let countImages = 0;
-       let imageCerDownload = '';
-       let imageName = '';
+        if (!gallery) {
+            gallery = [];
+        }
 
-       if (!gallery) {
-           gallery = [];
-       }
-
-       return(
-           <div id="page-wrapper">
-               <div className="col-sm-12 bg-hearder m-prodcutdetail">
-                   <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding">
+        return(
+            <div id="page-wrapper">
+                <div className="col-sm-12 bg-hearder m-prodcutdetail">
+                    <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding">
                         <h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'PRODUCT DETAIL'}`}</h1>
-                   </div>
-                   {this.renderNavigation()}
-               </div>
-               <div className="bg-back-movement">
-                   <a className={`margin-l20 ${!this.state.showmovement ? 'hide' : ''}`}
-                       onClick={this.hidemovement}><img src="/images/icon-back-movement.jpg" /></a>
-               </div>
-               <div className={`${this.state.productdetailLoading == true ? 'centerloading' : 'hidden'}` }>
-                   <center>
+                    </div>
+                    {this.renderNavigation()}
+                </div>
+                <div className="bg-back-movement">
+                    <a className={`margin-l20 ${!this.state.showmovement ? 'hide' : ''}`} onClick={this.hidemovement}>
+                        <img src="/images/icon-back-movement.jpg" />
+                    </a>
+                </div>
+                <div className={`${this.state.productdetailLoading == true ? 'centerloading' : 'hidden'}` }>
+                    <center>
                         <br/><br/><br/><br/><br/><br/>
                         <Loading type="spin" color="#202020" width="10%"/>
-                   </center>
-                   <br/><br/><br/><br/><br/><br/>
-               </div>
-               <div className={`row ${this.state.showmovement ? 'hide' : ''}`}>
+                    </center>
+                    <br/><br/><br/><br/><br/><br/>
+                </div>
+                <div className={`row ${this.state.showmovement ? 'hide' : ''}`}>
                     {!viewAsSet ? this.renderAddMyCatalog():''}
                     {this.renderAlertmsg()}
                     <div className="col-sm-12">
@@ -915,32 +885,28 @@ class productdetail extends Component {
                         </div>
                     </div>
                     {this.renderAlertmsgCer()}
-               </div>
-               <div className={`row ${!this.state.showmovement ? 'hide' : ''}`}>
-                   <div className="col-sm-12">
-                       <div className="panel panel-default">
-                           <div className="panel-body padding-ft0">
-                               <div className="col-md-4 col-sm-12">
-                                   <div className="mg-tb thumbnaillgrid">
-                                       <ReactImageFallback
-                                          src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
-                                            fallbackImage="/images/blank.gif"
-                                            initialImage="/images/blank.gif"
-                                            width={200}
-                                            height={200}
+                </div>
+                <div className={`row ${!this.state.showmovement ? 'hide' : ''}`}>
+                    <div className="col-sm-12">
+                        <div className="panel panel-default">
+                            <div className="panel-body padding-ft0">
+                                <div className="col-md-4 col-sm-12">
+                                    <div className="mg-tb thumbnaillgrid">
+                                        <ReactImageFallback src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
+                                            fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={200} height={200}
                                             className="img-responsive image-gallery-image" />
-                                    </div>
-                               </div>
-                               <div className="col-md-8 col-sm-12">
+                                     </div>
+                                </div>
+                                <div className="col-md-8 col-sm-12">
                                     {/*this.renderDescmovement()*/}
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       );
-   }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
 productdetail.contextTypes = {
@@ -956,8 +922,6 @@ function mapStateToProps(state) {
         productrelete: state.productdetail.relete,
         listCatalogName: state.productdetail.ListCatalogName,
         message: state.productdetail.message,
-        //setreference:state.productdetail.setreference,
-        //productreletepage: state.productdetail.reletepage,
         productlist: state.productdetail.productlist,
         lotNumbers: state.productdetail.lotNumbers,
         stonActivePage: state.productdetail.stonActivePage,

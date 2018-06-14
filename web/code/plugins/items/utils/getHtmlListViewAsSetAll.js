@@ -30,9 +30,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                             </span>
                                             <span style="padding: 0 15px;">|</span>
                                         </span>
-                                        <span class="${(userPermissionPrice == 'Public'
-                                            || userPermissionPrice == 'Updated'
-                                            || userPermissionPrice == 'All') ?
+                                        <span class="${(userPermissionPrice == 'Public' || userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ?
                                             '' : 'hidden'}">
                                             <span style="font-weight: bold; color: #000;">Total Retail Price :</span>
                                             <span class="font-w9">
@@ -41,9 +39,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
                                             </span>
                                         </span>
-                                        <span class="${(userPermissionPrice == 'Updated'
-                                            || userPermissionPrice == 'All') ?
-                                            '' : 'hidden'}">
+                                        <span class="${(userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ? '' : 'hidden'}">
                                             <span style="padding: 0 15px;">|</span>
                                             <span style="font-weight: bold; color: #000;">Total Updated Cost :</span>
                                             <span class="font-w9">
@@ -102,13 +98,10 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                 <th><span>Location</span></th>
                                                                 <th><span>Item Weight (Grams)</span></th>
                                                                 <th><span>Stone Detail</span></th>
-                                                                <th><span style="${(userPermissionPrice == 'All') ?
-                                                                    '' : 'hidden'}">Group Cost Price (USD)</span></th>
-                                                                <th><span style="${(userPermissionPrice == 'Updated'
-                                                                    || userPermissionPrice == 'All') ?
+                                                                <th><span style="${(userPermissionPrice == 'All') ? '' : 'hidden'}">Group Cost Price (USD)</span></th>
+                                                                <th><span style="${(userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ?
                                                                     '' : 'hidden'}">Updated Cost Price (USD)</span></th>
-                                                                <th><span style="${(userPermissionPrice == 'Public'
-                                                                    || userPermissionPrice == 'Updated'
+                                                                <th><span style="${(userPermissionPrice == 'Public' || userPermissionPrice == 'Updated'
                                                                     || userPermissionPrice == 'All') ?
                                                                     '' : 'hidden'}">Selling Cost Price (USD)</span></th>
                                                             </tr>

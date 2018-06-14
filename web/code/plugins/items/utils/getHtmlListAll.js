@@ -29,9 +29,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                             </span>
                                             <span style="padding: 0 15px;">|</span>
                                         </span>
-                                        <span class="${(userPermissionPrice == 'Public'
-                                            || userPermissionPrice == 'Updated'
-                                            || userPermissionPrice == 'All') ?
+                                        <span class="${(userPermissionPrice == 'Public' || userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ?
                                             '' : 'hidden'}">
                                             <span style="font-weight: bold; color: #000;">Total Retail Price :</span>
                                             <span class="font-w9">
@@ -40,9 +38,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
                                             </span>
                                         </span>
-                                        <span class="${(userPermissionPrice == 'Updated'
-                                            || userPermissionPrice == 'All') ?
-                                            '' : 'hidden'}">
+                                        <span class="${(userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ? '' : 'hidden'}">
                                             <span style="padding: 0 15px;">|</span>
                                             <span style="font-weight: bold; color: #000;">Total Updated Cost :</span>
                                             <span class="font-w9">
@@ -157,18 +153,15 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                 let jewelsWeight = 0;
                                                                 let grossWeight = 0;
                                                                 let imgPath = env == 'production'
-                                                                                        ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
-                                                                                        : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                                                    ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
+                                                                    : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
                                                                 if(item.price != undefined){
-                                                                    price = (item.price[currency] != undefined) ?
-                                                                           numberFormat(item.price[currency]) :
-                                                                           '- ';
+                                                                    price = (item.price[currency] != undefined) ? numberFormat(item.price[currency]) : '- ';
                                                                 }else{
                                                                     price = '- ';
                                                                 }
 
                                                                 switch (item.type) {
-
                                                                     case 'JLY':
                                                                         size = (item.size != undefined) ? item.size : '';
                                                                         break;
@@ -182,13 +175,13 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                         break;
                                                                 }
                                                                 itemName = (item.type != 'CER')
-                                                                                  ? (item.description != undefined)
-                                                                                    ? item.description
-                                                                                    : '-'
-                                                                                  : item.name ;
+                                                                    ? (item.description != undefined)
+                                                                        ? item.description
+                                                                        : '-'
+                                                                    : item.name ;
                                                                 imagesProduct = (item.gallery) != undefined
-                                                                                    ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
-                                                                                    : '/images/blank.gif';
+                                                                    ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                                                    : '/images/blank.gif';
                                                                 imagesProduct = imagesProduct.replace(/\/images\//g,imgPath);
 
                                                                 if (item.gemstones != undefined) {

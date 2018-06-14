@@ -1,5 +1,5 @@
 export default function FindLocationWareHouse(that){
-    
+
     let dataDropDowntLocations = [];
     let dataDropDowntWareHouse = [];
     const obj = {};
@@ -28,82 +28,82 @@ export default function FindLocationWareHouse(that){
                     }else{
                         if(that.props.user.permission.onhandWarehouse != undefined){
                             if (that.props.user.permission.onhandWarehouse.type == 'Warehouse'
-                              || that.props.user.permission.onhandWarehouse.type == 'All'
-                              || that.props.user.permission.onhandWarehouse.type == 'AllWarehouse'){
-                                  if (that.props.user.permission.onhandWarehouse.type == 'AllWarehouse') {
-                                      that.props.user.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
-                                          newDate.push(_.filter(that.props.warehouseOnHand,
-                                              function(warehouse){
-                                                  if(warehouse.code != undefined){
-                                                      return warehouse.code.toString() == settingWarehouse;
-                                                  }
-                                              }
-                                          ));
-                                      });
+                                || that.props.user.permission.onhandWarehouse.type == 'All'
+                                || that.props.user.permission.onhandWarehouse.type == 'AllWarehouse'){
+                                if (that.props.user.permission.onhandWarehouse.type == 'AllWarehouse') {
+                                    that.props.user.permission.onhandWarehouse.places.forEach(function(settingWarehouse){
+                                        newDate.push(_.filter(that.props.warehouseOnHand,
+                                            function(warehouse){
+                                                if(warehouse.code != undefined){
+                                                    return warehouse.code.toString() == settingWarehouse;
+                                                }
+                                            }
+                                        ));
+                                    });
 
-                                      let subdata = [];
-                                      newDate.forEach(newdata =>{
-                                          newdata.forEach(subdata =>{
+                                    let subdata = [];
+                                    newDate.forEach(newdata =>{
+                                        newdata.forEach(subdata =>{
                                             data.push(subdata);
-                                          })
-                                      });
+                                        })
+                                    });
 
-                                      dataDropDowntWareHouse.push(data.map(warehouse =>{
-                                          return ({value: warehouse.code,name:warehouse.name});
-                                      }))
-                                      dataDropDowntWareHouse = dataDropDowntWareHouse[0];
+                                    dataDropDowntWareHouse.push(data.map(warehouse =>{
+                                        return ({value: warehouse.code,name:warehouse.name});
+                                    }))
+                                    dataDropDowntWareHouse = dataDropDowntWareHouse[0];
 
-                                  } else if(that.props.user.permission.onhandWarehouse.type == 'Warehouse') {
-                                      if (that.props.user.permission.onhandLocation.places.length == 0 && that.props.user.permission.onhandWarehouse.places.length != 0 ) {
-                                          that.props.locationOnHand.forEach(function(settingLocation){
-                                              newDate.push(_.filter(that.props.warehouseOnHand,
-                                                  function(warehouse){
-                                                      if(warehouse.code != undefined){
-                                                          return warehouse.comid.toString() == settingLocation.code.toString();
-                                                      }
-                                                  }
-                                              ));
-                                          });
-                                          let subdata = [];
-                                          newDate.forEach(newdata =>{
-                                              newdata.forEach(subdata =>{
+                                } else if(that.props.user.permission.onhandWarehouse.type == 'Warehouse') {
+                                    if (that.props.user.permission.onhandLocation.places.length == 0 && that.props.user.permission.onhandWarehouse.places.length != 0 ) {
+                                        that.props.locationOnHand.forEach(function(settingLocation){
+                                            newDate.push(_.filter(that.props.warehouseOnHand,
+                                                function(warehouse){
+                                                    if(warehouse.code != undefined){
+                                                        return warehouse.comid.toString() == settingLocation.code.toString();
+                                                    }
+                                                }
+                                            ));
+                                        });
+                                        let subdata = [];
+                                        newDate.forEach(newdata =>{
+                                            newdata.forEach(subdata =>{
                                                 data.push(subdata);
-                                              })
-                                          });
-                                          dataDropDowntWareHouse.push(data.map(warehouse =>{
-                                              return ({value: warehouse.code,name:warehouse.name});
-                                          }))
-                                          dataDropDowntWareHouse = dataDropDowntWareHouse[0];
-                                      }else{
-                                          that.props.user.permission.onhandLocation.places.forEach(function(settingLocation){
-                                              newDate.push(_.filter(that.props.warehouseOnHand,
-                                                  function(warehouse){
-                                                      if(warehouse.code != undefined){
-                                                          return warehouse.comid.toString() == settingLocation;
-                                                      }
-                                                  }
-                                              ));
-                                          });
-                                          let subdata = [];
-                                          newDate.forEach(newdata =>{
-                                              newdata.forEach(subdata =>{
+                                            })
+                                        });
+                                        dataDropDowntWareHouse.push(data.map(warehouse =>{
+                                            return ({value: warehouse.code,name:warehouse.name});
+                                        }))
+                                        dataDropDowntWareHouse = dataDropDowntWareHouse[0];
+                                    }else{
+                                        that.props.user.permission.onhandLocation.places.forEach(function(settingLocation){
+                                            newDate.push(_.filter(that.props.warehouseOnHand,
+                                                function(warehouse){
+                                                    if(warehouse.code != undefined){
+                                                        return warehouse.comid.toString() == settingLocation;
+                                                    }
+                                                }
+                                            ));
+                                        });
+                                        let subdata = [];
+                                        newDate.forEach(newdata =>{
+                                            newdata.forEach(subdata =>{
                                                 data.push(subdata);
-                                              })
-                                          });
-                                          dataDropDowntWareHouse.push(data.map(warehouse =>{
-                                              return ({value: warehouse.code,name:warehouse.name});
-                                          }))
-                                          dataDropDowntWareHouse = dataDropDowntWareHouse[0];
-                                      }
-                                  }else if(that.props.user.permission.onhandWarehouse.type == 'All') {
-                                      if (typeof (that.props.warehouseOnHand) !== 'undefined')  {
-                                          dataDropDowntWareHouse.push(that.props.warehouseOnHand.map(warehouse =>{
-                                              return ({value: warehouse.code,name:warehouse.name});
-                                          }))
-                                          dataDropDowntWareHouse = dataDropDowntWareHouse[0];
-                                      }
-                                  }
-                                  dataDropDowntWareHouse = dataDropDowntWareHouse.sortBy('value','asc');
+                                            })
+                                        });
+                                        dataDropDowntWareHouse.push(data.map(warehouse =>{
+                                            return ({value: warehouse.code,name:warehouse.name});
+                                        }))
+                                        dataDropDowntWareHouse = dataDropDowntWareHouse[0];
+                                    }
+                                }else if(that.props.user.permission.onhandWarehouse.type == 'All') {
+                                    if (typeof (that.props.warehouseOnHand) !== 'undefined')  {
+                                        dataDropDowntWareHouse.push(that.props.warehouseOnHand.map(warehouse =>{
+                                            return ({value: warehouse.code,name:warehouse.name});
+                                        }))
+                                        dataDropDowntWareHouse = dataDropDowntWareHouse[0];
+                                    }
+                                }
+                                dataDropDowntWareHouse = dataDropDowntWareHouse.sortBy('value','asc');
                             }
                         }
                     }
@@ -128,15 +128,15 @@ const compareBy = (property, order = 'asc') => (a, b) => {
     let priceA = 0;
     let priceB = 0;
     const first = (property.toLowerCase().indexOf('price') != -1)
-                  ? a[property] != undefined
-                      ? a[property] != undefined ? a[property] : 0
-                      : 0
-                  : a[property]
+        ? a[property] != undefined
+            ? a[property] != undefined ? a[property] : 0
+            : 0
+        : a[property]
     const second = (property.toLowerCase().indexOf('price') != -1)
-                  ? b[property] != undefined
-                      ? b[property] != undefined ? b[property] : 0
-                      : 0
-                  : b[property]
+        ? b[property] != undefined
+            ? b[property] != undefined ? b[property] : 0
+            : 0
+        : b[property]
     if (typeof first !== typeof second) {
         return 0
     }

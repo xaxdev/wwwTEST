@@ -101,27 +101,27 @@ module.exports = {
                 `{
                     "timeout": "5s",
                     "from": 0,
-                  "size": 10000,
-                  "sort" : [
-                      ${missing}
-                      {"${sortBy}" : "${sortDirections}"}
-                   ],
-                  "query":{
-                       "constant_score": {
-                         "filter": {
-                           "bool": {
-                             "must": [
-                               {
-                                 "match": {
-                                   "reference": "${setReferenceUniq.join(' ')}"
-                                 }
-                               }
-                             ]
-                           }
-                         }
-                       }
+                    "size": 10000,
+                    "sort" : [
+                        ${missing}
+                        {"${sortBy}" : "${sortDirections}"}
+                    ],
+                    "query":{
+                        "constant_score": {
+                            "filter": {
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "reference": "${setReferenceUniq.join(' ')}"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     }
-                  }`
+                }`
             );
 
             return elastic.search({
@@ -168,27 +168,27 @@ module.exports = {
                 `{
                     "timeout": "5s",
                     "from": 0,
-                  "size": 10000,
-                  "sort" : [
-                      ${missing}
-                      {"${sortBy}" : "${sortDirections}"}
-                   ],
-                  "query":{
-                       "constant_score": {
-                         "filter": {
-                           "bool": {
-                             "must": [
-                               {
-                                 "match": {
-                                   "reference": "${setReferenceUniq.join(' ')}"
-                                 }
-                               }
-                             ]
-                           }
-                         }
-                       }
+                    "size": 10000,
+                    "sort" : [
+                        ${missing}
+                        {"${sortBy}" : "${sortDirections}"}
+                    ],
+                    "query":{
+                        "constant_score": {
+                            "filter": {
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "reference": "${setReferenceUniq.join(' ')}"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     }
-                  }`
+                }`
             );
 
             return elastic.search({

@@ -4,8 +4,7 @@ import numberFormat from '../../../utils/convertNumberformat';
 
 class RenderClassTotals extends Component {
     render(){
-        const { userLogin,listSetCatalogItems, _totalPublicPrice, _totalUpdatedCost,
-                _totalPublicPriceSet, _totalUpdatedCostSet, avrgPrice } = this.props;
+        const { userLogin,listSetCatalogItems,_totalPublicPrice,_totalUpdatedCost,_totalPublicPriceSet,_totalUpdatedCostSet,avrgPrice } = this.props;
         return(
             <div>
               <div id="dvTotalSetItems" className="bg-f7d886 text-center">

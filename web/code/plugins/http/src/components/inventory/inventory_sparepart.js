@@ -106,9 +106,7 @@ class InventorySparePart extends Component {
         const { props } = this.props;
         let { fields: { sparePartProductHierarchy }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.sparePartProductHierarchy = treeSelected;
 
@@ -119,9 +117,7 @@ class InventorySparePart extends Component {
         const { props } = this.props;
         let { fields: { sparePartType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.sparePartType = sparePartTypeSelectValue;
 
@@ -133,9 +129,7 @@ class InventorySparePart extends Component {
         const { props } = this.props;
         let { fields: { buckleType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.buckleType = buckleTypeSelectValue;
 
@@ -147,9 +141,7 @@ class InventorySparePart extends Component {
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.metalType = metalTypeSelectValue;
 
@@ -161,9 +153,7 @@ class InventorySparePart extends Component {
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.metalColour = metalColourSelectValue;
 
@@ -175,9 +165,7 @@ class InventorySparePart extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.dominantStone = dominantStoneSelectValue;
 
@@ -193,9 +181,7 @@ class InventorySparePart extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
 
         if(props.options != undefined){
             if (props.options.sparePartType) {
@@ -288,9 +274,7 @@ class InventorySparePart extends Component {
                   publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo
               }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
 
         let dataDropDownSparePartType = [];
         let dataDropDowntBuckleType = [];
@@ -364,10 +348,8 @@ class InventorySparePart extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select simpleValue value={props.ArticleValue}
-                                        placeholder="Select your Article Grouping"
-                                        options={dataDropDowntArticle}
-                                        onChange={this.handleArticleSelectedChanged} />
+                                    <Select simpleValue value={props.ArticleValue} placeholder="Select your Article Grouping"
+                                        options={dataDropDowntArticle} onChange={this.handleArticleSelectedChanged} />
                                 </div>
                             </div>
                         </div>
@@ -387,10 +369,8 @@ class InventorySparePart extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.SparePartTypeValue}
-                                        placeholder="Select your Spare Part Type"
-                                        options={dataDropDownSparePartType}
-                                        onChange={this.handleSparePartTypeSelectChange} />
+                                    <Select multi simpleValue value={props.SparePartTypeValue} placeholder="Select your Spare Part Type"
+                                        options={dataDropDownSparePartType} onChange={this.handleSparePartTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -400,10 +380,8 @@ class InventorySparePart extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.BuckleTypeValue}
-                                        placeholder="Select your Buckle Type"
-                                        options={dataDropDowntBuckleType}
-                                        onChange={this.handleBuckleTypeSelectChange} />
+                                    <Select multi simpleValue value={props.BuckleTypeValue} placeholder="Select your Buckle Type"
+                                        options={dataDropDowntBuckleType} onChange={this.handleBuckleTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -413,16 +391,13 @@ class InventorySparePart extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MetalTypeValue}
-                                        placeholder="Select your Metal Type"
-                                        options={dataDropDowntMetalType}
-                                        onChange={this.handleMetalTypeSelectChange} />
+                                    <Select multi simpleValue value={props.MetalTypeValue} placeholder="Select your Metal Type"
+                                        options={dataDropDowntMetalType} onChange={this.handleMetalTypeSelectChange} />
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-6 form-horizontal">
-                            <div className={`form-group ${(userLogin.permission.price == 'All'
-                                || userLogin.permission.price == 'Updated') ?
+                            <div className={`form-group ${(userLogin.permission.price == 'All' || userLogin.permission.price == 'Updated') ?
                                 '' : 'hidden'}`}>
                                 <label className="col-sm-4 control-label">Markup (Times)</label>
                                 <div className="col-sm-7">
@@ -456,10 +431,8 @@ class InventorySparePart extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MetalColourValue}
-                                        placeholder="Select your Metal Colour"
-                                        options={dataDropDowntMetalColour}
-                                        onChange={this.handleMetalColourSelectChange} />
+                                    <Select multi simpleValue value={props.MetalColourValue} placeholder="Select your Metal Colour"
+                                        options={dataDropDowntMetalColour} onChange={this.handleMetalColourSelectChange} />
                                 </div>
                             </div>
                         </div>
