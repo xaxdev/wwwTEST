@@ -7,6 +7,90 @@ const sanitize = value => value.replace('(', '\\(').replace(')', '\\)').replace(
 const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_cutName', 'gemstone_color', 'gemstone_colorName', 'gemstone_clarity', 'gemstone_clarityName', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence', 'gemstone_stoneTypeId', 'gemstone_stoneTypeName', 'gemstone_type', 'gemstone_unit'];
 
 const mapSalesProperties = (item, record, exchangeRates) => {
+    // add gemstone, if not existed
+    if (!!record.gemstone_id && item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
+        const gemstone = {};
+
+        gemstoneProperties.forEach(property => {
+            if (record[property] !== undefined) {
+                const match = property.match(/^gemstone_(\w+)$/);
+                if (match) {
+                    gemstone[match[1]] = record[property];
+                }
+            }
+        });
+
+        // calculate cost in different currencies
+        if (gemstone.cost !== undefined) {
+            const exchangeRateFromUSDToHomeCurrency = exchangeRates.filter(exchangeRate => exchangeRate.from === 'USD' && exchangeRate.to === item.currency)[0];
+            const records = exchangeRates.filter(exchangeRate => exchangeRate.from === item.currency);
+            const cost = {};
+
+            // costs in other currencies
+            for (let record of records) {
+                cost[record.to] = gemstone.cost * record.exchangeRate / 100;
+            }
+
+            // cost in USD
+            if (!!exchangeRateFromUSDToHomeCurrency) {
+                cost.USD = gemstone.cost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
+            }
+
+            // cost in home currency
+            cost[item.currency] = gemstone.cost;
+
+            gemstone.cost = cost;
+        }
+
+        // add certificate
+        if (!!record.CertificateNo) {
+            const certificate = {
+                number: record.CertificateNo,
+                agency: record.CertificateAgency,
+                site: record.CertificateWarehouse,
+                issuedDate: record.CertifiedDate
+            };
+
+            gemstone.certificate = certificate;
+        }
+
+        item.gemstones.push(gemstone);
+    }
+
+    if (record.type === 'STO' && !!record.CertificateNo) {
+        const certificate = {
+            number: record.CertificateNo,
+            agency: record.CertificateAgency,
+            site: record.CertificateWarehouse,
+            issuedDate: record.CertifiedDate
+        };
+
+        if (item.certificates.findIndex(current => current.number === certificate.number ) === -1) {
+            item.certificates.push(certificate);
+        }
+    }
+
+    if (record.type === 'STO' && !!record.lotNumber) {
+        const stoneLotNumber = {
+            stoneType: record.subType,
+            stoneTypeName: record.subTypeName,
+            cut: record.cut,
+            cutName: record.cutName,
+            color: record.color,
+            colorName: record.colorName,
+            clarity: record.clarity,
+            clarityName: record.clarityName,
+            lotNumber: record.lotNumber,
+            lotQty: record.quantity,
+            carat: record.carat,
+            markup: record.markup,
+            certificateNo: record.CertificateNo,
+            laboratory: record.CertificateAgency,
+            certifiedDate: record.CertifiedDate
+        };
+        item.lotNumbers.push(stoneLotNumber);
+    }
+
     // add image, if not existed
     if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
         if (record.imageTypeId == 'Image') {
@@ -56,6 +140,46 @@ const mapSalesProperties = (item, record, exchangeRates) => {
         }
     }
 
+    // add certificate image, if not existed
+    if (!!record.CertificateImageName) {
+        const image = {
+            original: `${config.gallery.original}/${record.CertificateImageName}.${record.CertificateImageType}`,
+            thumbnail: `${config.gallery.thumbnail}/${record.CertificateImageName}.${record.CertificateImageType}`
+        };
+
+        if (record.type === 'STO') {
+            const certificate = item.certificates.find(certificate => certificate.number === record.CertificateNo);
+
+            if (!!certificate) {
+                if (certificate.images === undefined) {
+                    certificate.images = [];
+                }
+
+                if (certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${record.CertificateImageName}.${record.CertificateImageType}$`))) !== null) === -1) {
+                    certificate.images.push(image);
+                }
+            }
+        } else {
+            const gemstone = item.gemstones.find(gemstone => gemstone.id === record.gemstone_id);
+
+            if (gemstone && gemstone.certificate) {
+                if (gemstone.certificate.images === undefined) {
+                    gemstone.certificate.images = [];
+                }
+
+                if (gemstone.certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${record.CertificateImageName}.${record.CertificateImageType}$`))) !== null) === -1) {
+                    gemstone.certificate.images.push(image);
+                }
+            }
+        }
+    }
+
+    gemstoneProperties.forEach(property => {
+        if (item[property] !== undefined) {
+            delete item[property];
+        }
+    });
+
     if (item.imageName !== undefined) {
       delete item.imageName;
     }
@@ -70,6 +194,30 @@ const mapSalesProperties = (item, record, exchangeRates) => {
 
     if (item.imageType !== undefined) {
       delete item.imageType
+    }
+
+    if (item.CertificateNo !== undefined) {
+        delete item.CertificateNo;
+    }
+
+    if (item.CertificateAgency !== undefined) {
+        delete item.CertificateAgency;
+    }
+
+    if (item.CertificateWarehouse !== undefined) {
+        delete item.CertificateWarehouse;
+    }
+
+    if (item.CertifiedDate !== undefined) {
+        delete item.CertifiedDate;
+    }
+
+    if (item.CertificateImageName !== undefined) {
+        delete item.CertificateImageName;
+    }
+
+    if (item.CertificateImageType !== undefined) {
+        delete item.CertificateImageType;
     }
 }
 const mapProperties = (item, record, exchangeRates) => {
@@ -538,7 +686,9 @@ const mapSoldItem = (recordset, exchangeRates) => {
             
             id = Number(record.id);
             const soldItem = {...record};
+            soldItem.gemstones = [];
             soldItem.gallery = [];
+            soldItem.certificates = [];
             soldItem.imagesCOA = [];
             soldItem.imagesDBC = [];
             soldItem.filesMonograph = [];

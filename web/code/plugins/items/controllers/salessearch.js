@@ -59,7 +59,7 @@ module.exports = {
         }
 
 
-        // console.log(JSON.stringify(internals.query, null, 2));
+        console.log(JSON.stringify(internals.query, null, 2));
 
         const getAllSalesItems =  elastic.search({
             index: 'mol_solditems',

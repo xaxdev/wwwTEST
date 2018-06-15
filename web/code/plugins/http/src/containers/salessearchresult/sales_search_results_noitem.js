@@ -8,6 +8,7 @@ class SalesSearchResultOnItem extends Component {
 
         this.salesSortingBy = this.salesSortingBy.bind(this);
         this.salesSortingDirection = this.salesSortingDirection.bind(this);
+        this.hideModalNoResults = this.hideModalNoResults.bind(this);
 
         this.state = {
             activePage: this.props.currentSalesPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true,
@@ -125,10 +126,27 @@ class SalesSearchResultOnItem extends Component {
         props.setShowGridView(true);
         props.setShowListView(false);
     }
+    hideModalNoResults = (e) => {
+        e.preventDefault();
+        const {
+            props, context
+        } = this.props;
+        this.setState({isOpenNoResults: false});
+        this.setState({showLoading: true});
+
+        props.modifySearch(props.paramsSalesSearch);
+
+        const token = sessionStorage.token;
+
+        let modalOpen = jQuery('.modal-open');
+        modalOpen.removeClass();
+        if(token){
+            context.router.push('/salesreport');
+        }
+    }
     render(){
         const {
-            props, state, onClickNewSalesSearch, onClickModifySalesSearch, onClickGridViewResults, onClickListViewResults, hideModalNoResults,
-            onClickHideModalNoResults, submitting
+            props, state, onClickNewSalesSearch, onClickModifySalesSearch, onClickGridViewResults, onClickListViewResults, submitting
         } = this.props;
         return(
             <form role="form">
@@ -182,16 +200,16 @@ class SalesSearchResultOnItem extends Component {
                     </div>
                 </div>
                 <div >
-                    <Modal isOpen={state.isOpenNoResults} onRequestHide={hideModalNoResults}>
+                    <Modal isOpen={this.state.isOpenNoResults} onRequestHide={this.hideModalNoResults}>
                         <div className="modal-header">
-                            <ModalClose onClick={onClickHideModalNoResults}/>
+                            <ModalClose onClick={this.hideModalNoResults}/>
                             <h1 className="modal-title">Message</h1>
                         </div>
                         <div className="modal-body">
                             <h3>No Results.</h3>
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-default btn-radius btn-width" onClick={onClickHideModalNoResults}>
+                            <button className="btn btn-default btn-radius btn-width" onClick={this.hideModalNoResults}>
                               Ok
                             </button>
                         </div>

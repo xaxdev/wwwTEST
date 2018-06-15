@@ -144,7 +144,7 @@ class SalesSearchResult extends Component {
                 return(
                     <SalesSearchResultOnItem props={this.props} onClickNewSalesSearch={this.newSalesSearch} onClickModifySalesSearch={this.modifySalesSearch}
                         onClickGridViewResults={this.gridViewResults} onClickListViewResults={this.listViewResults} hideModalNoResults={this.hideModalNoResults}
-                        onClickHideModalNoResults={this.hideModalNoResults} submitting={submitting}/>
+                        onClickHideModalNoResults={this.hideModalNoResults} submitting={submitting} context={this.context}/>
                 );
             }else{
                 return(

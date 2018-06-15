@@ -77,6 +77,7 @@ const alias = async (index, name) => {
 
 const productHierarchy = async _ => {
     try {
+        console.log('Hierarchy!!!');
         await hierarchy.getSources()
     } catch (err) {
         throw err
