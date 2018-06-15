@@ -69,10 +69,11 @@ class productdetail extends Component {
         const productlist = allItems;
         this.setState({ productdetailLoading: true });
 
-        this.props.getProductDetail(productId,productlist).then(()=>{
+        this.props.getSalesProductDetail(productId,productlist).then(()=>{
             const  Detail  = this.props.productdetail;
             const { lotNumbers } = this.props.productdetail;
             const { stonePageSize } = this.props;
+            
             const params = {
                 datas: lotNumbers,
                 page: 1,

@@ -101,87 +101,89 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         data.forEach(function(item){
             // filter data from array lotnaumer
             if (item.type == 'STO') {
-                let newLot = item.lotNumbers;
-                if (item.lotNumbers.length > 0) {
-                    if (keys.length != 3 ){
-                        keys.forEach((key) => {
-                            if(key == 'lotNumbers'){
-                                const valusObj = obj[key];
-                                const lotFields = Object.keys(valusObj);
-                                lotFields.forEach((field)=>{
-                                    const fieldValus = valusObj[field];
-                                    let arrayFieldValus = fieldValus.split('-');
-                                    if (field == 'totalCaratWeightFrom') {
-                                        newLot = newLot.filter((item) => { return item.carat >= fieldValus });
-                                    }
-                                    if (field == 'totalCaratWeightTo') {
-                                        newLot = newLot.filter((item) => { return item.carat <= fieldValus });
-                                    }
-                                    if (field == 'lotQuantityFrom') {
-                                        newLot = newLot.filter((item) => { return item.lotQty >= fieldValus });
-                                    }
-                                    if (field == 'lotQuantityTo') {
-                                        newLot = newLot.filter((item) => { return item.lotQty <= fieldValus });
-                                    }
-                                    if (field == 'markupFrom') {
-                                        newLot = newLot.filter((item) => { return item.markup >= fieldValus });
-                                    }
-                                    if (field == 'markupTo') {
-                                        newLot = newLot.filter((item) => { return item.markup <= fieldValus });
-                                    }
-                                    if (field == 'cut') {
-                                        let customLot = [];
-                                        let custom = [];
-                                        if (fieldValus.indexOf(',') != -1) {
-                                            let values =  fieldValus.split(',');
-                                            values.forEach((val)=>{
-                                                customLot = newLot.filter((item) => { return item.cut == val });
-                                                if (customLot.length > 0) {
-                                                    newLot = custom.concat(customLot);
-                                                }
-                                            });
-                                        }else{
-                                            newLot = newLot.filter((item) => { return item.cut == fieldValus });
+                if (!!item.lotNumbers) {
+                    let newLot = item.lotNumbers;
+                    if (item.lotNumbers.length > 0) {
+                        if (keys.length != 3 ){
+                            keys.forEach((key) => {
+                                if(key == 'lotNumbers'){
+                                    const valusObj = obj[key];
+                                    const lotFields = Object.keys(valusObj);
+                                    lotFields.forEach((field)=>{
+                                        const fieldValus = valusObj[field];
+                                        let arrayFieldValus = fieldValus.split('-');
+                                        if (field == 'totalCaratWeightFrom') {
+                                            newLot = newLot.filter((item) => { return item.carat >= fieldValus });
                                         }
-                                    }
-                                    if (field == 'color') {
-                                        let customLot = [];
-                                        let custom = [];
-                                        if (fieldValus.indexOf(',') != -1) {
-                                            let values =  fieldValus.split(',');
-                                            values.forEach((val)=>{
-                                                customLot = newLot.filter((item) => { return item.color == val });
-                                                if (customLot.length > 0) {
-                                                    newLot = custom.concat(customLot);
-                                                }
-                                            });
-                                        }else{
-                                            newLot = newLot.filter((item) => { return item.color == fieldValus });
+                                        if (field == 'totalCaratWeightTo') {
+                                            newLot = newLot.filter((item) => { return item.carat <= fieldValus });
                                         }
-                                    }
-                                    if (field == 'clarity') {
-                                        let customLot = [];
-                                        let custom = [];
-                                        if (fieldValus.indexOf(',') != -1) {
-                                            let values =  fieldValus.split(',');
-                                            values.forEach((val)=>{
-                                                customLot = newLot.filter((item) => { return item.clarity == val });
-                                                if (customLot.length > 0) {
-                                                    newLot = custom.concat(customLot);
-                                                }
-                                            });
-                                        }else{
-                                            newLot = newLot.filter((item) => { return item.clarity == fieldValus });
+                                        if (field == 'lotQuantityFrom') {
+                                            newLot = newLot.filter((item) => { return item.lotQty >= fieldValus });
                                         }
-                                    }
-                                })
-                            }
-                        })
+                                        if (field == 'lotQuantityTo') {
+                                            newLot = newLot.filter((item) => { return item.lotQty <= fieldValus });
+                                        }
+                                        if (field == 'markupFrom') {
+                                            newLot = newLot.filter((item) => { return item.markup >= fieldValus });
+                                        }
+                                        if (field == 'markupTo') {
+                                            newLot = newLot.filter((item) => { return item.markup <= fieldValus });
+                                        }
+                                        if (field == 'cut') {
+                                            let customLot = [];
+                                            let custom = [];
+                                            if (fieldValus.indexOf(',') != -1) {
+                                                let values =  fieldValus.split(',');
+                                                values.forEach((val)=>{
+                                                    customLot = newLot.filter((item) => { return item.cut == val });
+                                                    if (customLot.length > 0) {
+                                                        newLot = custom.concat(customLot);
+                                                    }
+                                                });
+                                            }else{
+                                                newLot = newLot.filter((item) => { return item.cut == fieldValus });
+                                            }
+                                        }
+                                        if (field == 'color') {
+                                            let customLot = [];
+                                            let custom = [];
+                                            if (fieldValus.indexOf(',') != -1) {
+                                                let values =  fieldValus.split(',');
+                                                values.forEach((val)=>{
+                                                    customLot = newLot.filter((item) => { return item.color == val });
+                                                    if (customLot.length > 0) {
+                                                        newLot = custom.concat(customLot);
+                                                    }
+                                                });
+                                            }else{
+                                                newLot = newLot.filter((item) => { return item.color == fieldValus });
+                                            }
+                                        }
+                                        if (field == 'clarity') {
+                                            let customLot = [];
+                                            let custom = [];
+                                            if (fieldValus.indexOf(',') != -1) {
+                                                let values =  fieldValus.split(',');
+                                                values.forEach((val)=>{
+                                                    customLot = newLot.filter((item) => { return item.clarity == val });
+                                                    if (customLot.length > 0) {
+                                                        newLot = custom.concat(customLot);
+                                                    }
+                                                });
+                                            }else{
+                                                newLot = newLot.filter((item) => { return item.clarity == fieldValus });
+                                            }
+                                        }
+                                    })
+                                }
+                            })
+                        }
                     }
-                }
-                item.lotNumbers = newLot;
-                if (newLot.length == 0 ) {
-                    data = data.filter((lot) => { return lot.reference != item.reference });
+                    item.lotNumbers = newLot;
+                    if (newLot.length == 0 ) {
+                        data = data.filter((lot) => { return lot.reference != item.reference });
+                    }
                 }
             }
         });

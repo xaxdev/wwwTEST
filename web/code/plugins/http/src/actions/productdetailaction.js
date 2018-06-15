@@ -4,7 +4,7 @@ import fetch from 'isomorphic-fetch';
 import {
     FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME,ADD_CATALOG,GET_CERTIFICATE,
     GET_LOTNUMBER,GET_LOTNUMBERPAGE, GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS,ADD_NEWSETCATALOGITEM,GET_SETCATALOGNAME,
-    GET_SETCATALOGITEMSLIST, FETCH_SETCATALOGDETAILS
+    GET_SETCATALOGITEMSLIST, FETCH_SETCATALOGDETAILS, FETCH_SALESPRODUCTDETAIL
 } from '../constants/productdetailconstants';
 
 export function getItems(params){
@@ -186,6 +186,23 @@ export function getProductDetail(productId,productlist){
     return {
         type: FETCH_PRODUCTDETAIL,
         promise: fetch(`${ROOT_URL}api/items/${productId}`,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        productid:productId,
+        productlist:productlist
+    }
+}
+
+export function getSalesProductDetail(productId,productlist){
+    const token = sessionStorage.token;
+    return {
+        type: FETCH_SALESPRODUCTDETAIL,
+        promise: fetch(`${ROOT_URL}api/items/salesitem/${productId}`,{
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
