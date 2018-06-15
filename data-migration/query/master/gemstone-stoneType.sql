@@ -1,9 +1,6 @@
 SELECT DISTINCT
-  LTRIM(RTRIM([StoneTypeId])) AS 'code',
-  CASE
-    WHEN [StoneTypeName] IS NULL THEN LTRIM(RTRIM([StoneTypeId]))
-    ELSE LTRIM(RTRIM([StoneTypeName]))
-    END AS 'name'
+  LTRIM(RTRIM([NameAlias])) AS 'code',
+  LTRIM(RTRIM([NameAlias])) AS 'name'
 FROM [ITORAMA].[dbo].[ItemGemstones]
-WHERE [StoneTypeId] <> ''
+WHERE [NameAlias] <> ''
 ORDER BY name
