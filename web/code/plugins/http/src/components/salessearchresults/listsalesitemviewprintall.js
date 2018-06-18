@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
-import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import { DataTable } from '../../utils/DataTabelSearch/index';
 import ReactImageFallback from 'react-image-fallback';
 import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
@@ -87,7 +86,7 @@ class ListSalesItemsViewPrintAll extends Component {
         let items = null;
         const { ViewAsSet } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
-        const currency = userLogin.currency;
+        const currency = 'USD';
         const userLogin = JSON.parse(sessionStorage.logindata);
         const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
         const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;

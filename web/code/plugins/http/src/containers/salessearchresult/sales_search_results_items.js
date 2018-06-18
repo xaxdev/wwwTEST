@@ -18,16 +18,23 @@ import GetSalesPricePermission from '../../utils/getSalesPricePermission';
 
 const Loading = require('react-loading');
 
-const checkFields = ['categoryName', 'category', 'article', 'collection', 'setReferenceNumber', 'quantity','markup', 'certificatedNumber', 'dominantStone',
-    'brand', 'postedDate', 'salesId', 'salesPersonName', 'salesChannelType', 'customer', 'customerName', 'invoicedId', 'invoiceDate', 'inventSizeId'
+const checkFields = ['ingredients', 'categoryName', 'category', 'article', 'collection', 'setReferenceNumber', 'cut', 'color','clarity', 'caratWt', 'unit',
+    'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight', 'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName',
+    'metalColor', 'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex', 'dialColor','movement','serial',
+    'limitedEdition','limitedEditionNumber','itemCreatedDate', 'postedDate', 'salesId', 'salesPersonName', 'salesChannelType', 'customer', 'customerName', 
+    'invoicedId', 'invoiceDate', 'inventSizeId'
 ];
 
 const checkFieldsViewAsSet = ['totalActualCost','totalUpdatedCost','totalPrice', 'markup', 'companyName', 'warehouseName', 'postedDate'];
 
 const labels = {
-    categoryName: 'Category Name', category: 'Category', article: 'Article', collection: 'Collection', quantity: 'Quantity',
-    setReferenceNumber: 'Set Reference Number', dominantStone: 'Dominant Stone', markup: 'Markup%', certificatedNumber: 'Certificate Number',
-    brand: 'Brand', postedDate: 'Posted Date', salesId: 'Sales Id', salesPersonName: 'Sales Person Name', salesChannelType: 'Sales Channel Type',
+    ingredients: 'Ingredients', categoryName: 'Category Name', category: 'Category', article: 'Article', collection: 'Collection', cut: 'Cut', color: 'Color',
+    setReferenceNumber: 'Set Reference Number', clarity: 'Clarity', caratWt: 'Carat Wt', unit: 'Unit', qty: 'Qty', origin: 'Origin', symmetry: 'Symmetry',
+    flourance: 'Flourance', batch: 'Batch', netWeight: 'Gold weight (Grams)', stoneQty: 'Stone Qty', dominantStone: 'Dominant Stone', markup: 'Markup%',
+    certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date', vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalType: 'Metal Type',
+    metalColor: 'Metal Colour', brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color', buckleType: 'Buckle Type',
+    dialIndex: 'Dial Index', dialColor: 'Dial Color', movement: 'Movement', serial: 'Serial #', limitedEdition: 'Limited Edition', itemCreatedDate: 'Created Date',
+    limitedEditionNumber: 'Limited Edition #', postedDate: 'Posted Date', salesId: 'Sales Id', salesPersonName: 'Sales Person Name', salesChannelType: 'Sales Channel Type',
     customer: 'Customer', customerName: 'Customer Name', invoicedId: 'Invoiced Id', invoiceDate: 'Invoice Date', inventSizeId: 'Size'
 }
 
@@ -55,13 +62,17 @@ class SalesSearchResultOnItem extends Component {
         this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
 
         this.state = {
-            activePage: this.props.currentSalesPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true,
-            showImages: false, categoryName: false, category: false,article: false, collection: false, setReferenceNumber: false,showLoading: false,
-            quantity: false, dominantStone: false, markup: false, certificatedNumber: false, brand: false, postedDate:false, isOpenAddMyCatalog: false,
-            enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, markup: false, checkAllItems: false,
-            allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false, totalUpdatedCost: false, totalPrice: false,
-            companyName: false, warehouseName: false, createdDate: false, isOpenPrintOptions: false, salesId:false, salesPersonName:false, salesChannelType: false,
-            customer: false, customerName: false, invoicedId: false, invoiceDate: false, inventSizeId: false
+            activePage: this.props.currentSalesPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true, cut: false,
+            showImages: false, ingredients: false, categoryName: false, category: false,article: false, collection: false, setReferenceNumber: false,
+            color: false, clarity: false,caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false,
+            netWeight: false,stoneQty: false, dominantStone: false,  certificatedNumber: false, certificateDate: false, vendorCode: false,
+            vendorName: false, metalColor: false, metalType: false, brand: false, complication: false, strapType: false, strapColor: false, buckleType: false,
+            dialIndex: false,dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false, itemCreatedDate:false,
+            showLoading: false, postedDate:false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, 
+            isOpenMsgPageInvalid: false, markup: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, 
+            totalActualCost: false, totalUpdatedCost: false, totalPrice: false, companyName: false, warehouseName: false, createdDate: false, salesId:false, 
+            isOpenPrintOptions: false, salesPersonName:false, salesChannelType: false, customer: false, customerName: false, invoicedId: false, 
+            invoiceDate: false, inventSizeId: false
         };
     }
 
@@ -145,10 +156,10 @@ class SalesSearchResultOnItem extends Component {
             let salesSortingBy = '';
             switch (this.refs.salesSortingBy.value) {
                 case 'netAmount':
-                  salesSortingBy = 'netAmount.' + userLogin.currency;
+                  salesSortingBy = 'netAmount.' + 'USD';
                   break;
                 case 'price':
-                  salesSortingBy = 'price.' + userLogin.currency;
+                  salesSortingBy = 'price.' + 'USD';
                   break;
                 default:
                   salesSortingBy = this.refs.salesSortingBy.value;
@@ -203,10 +214,10 @@ class SalesSearchResultOnItem extends Component {
         let salesSortingBy = '';
         switch (e.target.value) {
             case 'netAmount':
-              salesSortingBy = 'netAmount.' + userLogin.currency;
+              salesSortingBy = 'netAmount.' + 'USD';
               break;
             case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
+                salesSortingBy = 'price.' + 'USD';
                 break;
             default:
                 salesSortingBy = e.target.value;
@@ -253,10 +264,10 @@ class SalesSearchResultOnItem extends Component {
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
             case 'netAmount':
-              salesSortingBy = 'netAmount.' + userLogin.currency;
+              salesSortingBy = 'netAmount.' + 'USD';
               break;
             case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
+                salesSortingBy = 'price.' + 'USD';
                 break;
             default:
                 salesSortingBy = this.refs.salesSortingBy.value;
@@ -303,10 +314,10 @@ class SalesSearchResultOnItem extends Component {
 
         switch (this.refs.salesSortingBy.value) {
             case 'netAmount':
-              salesSortingBy = 'netAmount.' + userLogin.currency;
+              salesSortingBy = 'netAmount.' + 'USD';
               break;
             case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
+                salesSortingBy = 'price.' + 'USD';
                 break;
             default:
                 salesSortingBy = this.refs.salesSortingBy.value;
@@ -347,10 +358,10 @@ class SalesSearchResultOnItem extends Component {
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
             case 'netAmount':
-              salesSortingBy = 'netAmount.' + userLogin.currency;
+              salesSortingBy = 'netAmount.' + 'USD';
               break;
             case 'price':
-              salesSortingBy = 'price.' + userLogin.currency;
+              salesSortingBy = 'price.' + 'USD';
               break;
             default:
               salesSortingBy = this.refs.salesSortingBy.value;
@@ -393,10 +404,10 @@ class SalesSearchResultOnItem extends Component {
             let salesSortingBy = '';
             switch (this.refs.salesSortingBy.value) {
                 case 'netAmount':
-                  salesSortingBy = 'netAmount.' + userLogin.currency;
+                  salesSortingBy = 'netAmount.' + 'USD';
                   break;
                 case 'price':
-                  salesSortingBy = 'price.' + userLogin.currency;
+                  salesSortingBy = 'price.' + 'USD';
                   break;
                 default:
                   salesSortingBy = this.refs.salesSortingBy.value;
@@ -549,10 +560,10 @@ class SalesSearchResultOnItem extends Component {
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
             case 'netAmount':
-              salesSortingBy = 'netAmount.' + userLogin.currency;
+              salesSortingBy = 'netAmount.' + 'USD';
               break;
             case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
+                salesSortingBy = 'price.' + 'USD';
                 break;
             default:
                 salesSortingBy = this.refs.salesSortingBy.value;
@@ -560,12 +571,19 @@ class SalesSearchResultOnItem extends Component {
         }
         const salesSortingDirection = this.refs.salesSortingDirection.value;
         let fields = {
-            allFields: this.state.allFields, showImages: this.state.showImages, categoryName: this.state.categoryName, category: this.state.category,
-            article: this.state.article, collection: this.state.collection, setReferenceNumber: this.state.setReferenceNumber, quantity: this.state.quantity,
-            dominantStone: this.state.dominantStone, markup: this.state.markup, certificatedNumber: this.state.certificatedNumber, brand: this.state.brand,
-            postedDate: this.state.postedDate, salesId: this.state.salesId, salesPersonName: this.state.salesPersonName, salesChannelType: this.state.salesChannelType,
-            customer: this.state.customer, customerName: this.state.customerName, invoicedId: this.state.invoicedId, invoiceDate: this.state.invoiceDate,
-            inventSizeId: this.state.inventSizeId
+            allFields: this.state.allFields, showImages: this.state.showImages, ingredients: this.state.ingredients, categoryName: this.state.categoryName, 
+            category: this.state.category, article: this.state.article, collection: this.state.collection, setReferenceNumber: this.state.setReferenceNumber, 
+            quantity: this.state.quantity, dominantStone: this.state.dominantStone, markup: this.state.markup, certificatedNumber: this.state.certificatedNumber, 
+            brand: this.state.brand, postedDate: this.state.postedDate, salesId: this.state.salesId, salesPersonName: this.state.salesPersonName, 
+            salesChannelType: this.state.salesChannelType, customer: this.state.customer, customerName: this.state.customerName, unit: this.state.unit,
+            caratWt: this.state.caratWt,flourance: this.state.flourance,batch: this.state.batch, netWeight: this.state.netWeight, stoneQty: this.state.stoneQty,
+            invoicedId: this.state.invoicedId, invoiceDate: this.state.invoiceDate, inventSizeId: this.state.inventSizeId, cut: this.state.cut,
+            color: this.state.color, clarity: this.state.clarity, qty: this.state.qty, origin: this.state.origin, symmetry: this.state.symmetry, 
+            certificateDate: this.state.certificateDate, vendorCode: this.state.vendorCode, vendorName: this.state.vendorName, metalColor: this.state.metalColor,
+            metalType: this.state.metalType, complication: this.state.complication, strapType: this.state.strapType,strapColor: this.state.strapColor,
+            buckleType: this.state.buckleType, dialIndex: this.state.dialIndex, dialColor: this.state.dialColor,movement: this.state.movement, 
+            serial: this.state.serial, limitedEdition: this.state.limitedEdition,limitedEditionNumber: this.state.limitedEditionNumber, 
+            itemCreatedDate: this.state.itemCreatedDate
         };
         let params = {
             'page' : (props.currentSalesPage!=undefined?props.currentSalesPage:1), 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection,
@@ -656,7 +674,7 @@ class SalesSearchResultOnItem extends Component {
 
         switch (this.refs.salesSortingBy.value) {
             case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
+                salesSortingBy = 'price.' + 'USD';
                 break;
             default:
                 salesSortingBy = this.refs.salesSortingBy.value;

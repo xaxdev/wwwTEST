@@ -31,10 +31,10 @@ class SalesSearchResultOnItem extends Component {
         let salesSortingBy = '';
         switch (e.target.value) {
             case 'netAmount':
-              salesSortingBy = 'netAmount.' + userLogin.currency;
+              salesSortingBy = 'netAmount.' + 'USD';
               break;
             case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
+                salesSortingBy = 'price.' + 'USD';
                 break;
             default:
                 salesSortingBy = e.target.value;
@@ -81,10 +81,10 @@ class SalesSearchResultOnItem extends Component {
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
             case 'netAmount':
-              salesSortingBy = 'netAmount.' + userLogin.currency;
+              salesSortingBy = 'netAmount.' + 'USD';
               break;
             case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
+                salesSortingBy = 'price.' + 'USD';
                 break;
             default:
                 salesSortingBy = this.refs.salesSortingBy.value;

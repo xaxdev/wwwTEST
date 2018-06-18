@@ -38,10 +38,10 @@ class SalesSearchResult extends Component {
         let salesSortingBy = '';
         switch (this.props.salesSortingBy) {
             case 'netAmount':
-              salesSortingBy = 'netAmount.' + userLogin.currency;
+              salesSortingBy = 'netAmount.' + 'USD';
               break;
             case 'price':
-              salesSortingBy = 'price.' + userLogin.currency;
+              salesSortingBy = 'price.' + 'USD';
               break;
             default:
               salesSortingBy = this.props.salesSortingBy;

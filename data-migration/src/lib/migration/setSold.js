@@ -106,51 +106,19 @@ const getSoldItemSets = async (index, exchangeRates) => {
                 const exchangeRateFromUSDToHomeCurrency = exchangeRates.filter(exchangeRate => exchangeRate.from === 'USD' && exchangeRate.to === record.currency)[0];
                 const rates = exchangeRates.filter(exchangeRate => exchangeRate.from === record.currency);
 
-                // price in other currencies
-                for (let rate of rates) {
-                    item.price[rate.to] = record.price * rate.exchangeRate / 100;
-                    item.actualCost[rate.to] = record.actualCost * rate.exchangeRate / 100;
-                    item.updatedCost[rate.to] = record.updatedCost * rate.exchangeRate / 100;
-                    item.netAmount[rate.to] = record.netAmount * rate.exchangeRate / 100;
-                    item.margin[rate.to] = record.margin * rate.exchangeRate / 100;
-                    item.discountAmount[rate.to] = record.discountAmountUSD * rate.exchangeRate / 100;
-                    current.totalPrice[rate.to] = (current.totalPrice[rate.to] || 0) + item.price[rate.to];
-                    current.totalActualCost[rate.to] = (current.totalActualCost[rate.to] || 0) + item.actualCost[rate.to];
-                    current.totalUpdatedCost[rate.to] = (current.totalUpdatedCost[rate.to] || 0) + item.updatedCost[rate.to];
-                    current.totalNetAmount[rate.to] = (current.totalNetAmount[rate.to] || 0) + item.netAmount[rate.to];
-                    current.totalMargin[rate.to] = (current.totalMargin[rate.to] || 0) + item.margin[rate.to];
-                    current.totalDiscountAmount[rate.to] = (current.totalDiscountAmount[rate.to] || 0) + item.discountAmount[rate.to];
-                }
-
                 // price in USD
-                if (!!exchangeRateFromUSDToHomeCurrency) {
-                    item.price.USD = record.price * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
-                    item.actualCost.USD = record.actualCost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
-                    item.updatedCost.USD = record.updatedCost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
-                    item.netAmount.USD = record.netAmount * exchangeRateFromUSDToHomeCurrency.exchangeRate / 100;
-                    item.margin.USD = record.margin * exchangeRateFromUSDToHomeCurrency.exchangeRate / 100;
-                    item.discountAmount.USD = record.discountAmountUSD * exchangeRateFromUSDToHomeCurrency.exchangeRate / 100;
-                    current.totalPrice.USD = (current.totalPrice.USD || 0) + item.price.USD;
-                    current.totalActualCost.USD = (current.totalActualCost.USD || 0) + item.actualCost.USD;
-                    current.totalUpdatedCost.USD = (current.totalUpdatedCost.USD || 0) + item.updatedCost.USD
-                    current.totalNetAmount.USD = (current.totalNetAmount.USD || 0) + item.netAmount.USD
-                    current.totalMargin.USD = (current.totalMargin.USD || 0) + item.margin.USD
-                    current.totalDiscountAmount.USD = (current.totalDiscountAmount.USD || 0) + item.discountAmount.USD
-                }
-
-                // price in home currency
-                item.price[record.currency] = record.price;
-                item.actualCost[record.currency] = record.actualCost;
-                item.updatedCost[record.currency] = record.updatedCost;
-                item.netAmount[record.currency] = record.netAmount;
-                item.margin[record.currency] = record.margin;
-                item.discountAmount[record.currency] = record.discountAmountUSD;
-                current.totalPrice[record.currency] = (current.totalPrice[record.currency] || 0) + item.price[record.currency];
-                current.totalActualCost[record.currency] = (current.totalActualCost[record.currency] || 0) + item.actualCost[record.currency];
-                current.totalUpdatedCost[record.currency] = (current.totalUpdatedCost[record.currency] || 0) + item.updatedCost[record.currency];
-                current.totalNetAmount[record.currency] = (current.totalNetAmount[record.currency] || 0) + item.netAmount[record.currency];
-                current.totalMargin[record.currency] = (current.totalMargin[record.currency] || 0) + item.margin[record.currency];
-                current.totalDiscountAmount[record.currency] = (current.totalDiscountAmount[record.currency] || 0) + item.discountAmount[record.currency];
+                item.price.USD  = record.price;
+                item.actualCost.USD  = record.actualCost;
+                item.updatedCost.USD  = record.updatedCost;
+                item.netAmount.USD  = record.netAmount;
+                item.margin.USD  = record.margin;
+                item.discountAmount.USD  = record.discountAmountUSD;
+                current.totalPrice.USD  = (current.totalPrice.USD  || 0) + item.price.USD;
+                current.totalActualCost.USD  = (current.totalActualCost.USD  || 0) + item.actualCost.USD;
+                current.totalUpdatedCost.USD  = (current.totalUpdatedCost.USD  || 0) + item.updatedCost.USD;
+                current.totalNetAmount.USD  = (current.totalNetAmount.USD  || 0) + item.netAmount.USD;
+                current.totalMargin.USD  = (current.totalMargin.USD  || 0) + item.margin.USD;
+                current.totalDiscountAmount.USD  = (current.totalDiscountAmount.USD  || 0) + item.discountAmount.USD;
 
                 current.description = description.join();
                 current.image = setImages;
@@ -219,51 +187,19 @@ const getSoldItemSets = async (index, exchangeRates) => {
                     const exchangeRateFromUSDToHomeCurrency = exchangeRates.filter(exchangeRate => exchangeRate.from === 'USD' && exchangeRate.to === record.currency)[0];
                     const rates = exchangeRates.filter(exchangeRate => exchangeRate.from === record.currency);
 
-                    // price in other currencies
-                    for (let rate of rates) {
-                        item.price[rate.to] = record.price * rate.exchangeRate / 100;
-                        item.actualCost[rate.to] = record.actualCost * rate.exchangeRate / 100;
-                        item.updatedCost[rate.to] = record.updatedCost * rate.exchangeRate / 100;
-                        item.netAmount[rate.to] = record.netAmount * rate.exchangeRate / 100;
-                        item.margin[rate.to] = record.margin * rate.exchangeRate / 100;
-                        item.discountAmount[rate.to] = record.discountAmountUSD * rate.exchangeRate / 100;
-                        current.totalPrice[rate.to] = (current.totalPrice[rate.to] || 0) + item.price[rate.to];
-                        current.totalActualCost[rate.to] = (current.totalActualCost[rate.to] || 0) + item.actualCost[rate.to];
-                        current.totalUpdatedCost[rate.to] = (current.totalUpdatedCost[rate.to] || 0) + item.updatedCost[rate.to];
-                        current.totalNetAmount[rate.to] = (current.totalNetAmount[rate.to] || 0) + item.netAmount[rate.to];
-                        current.totalMargin[rate.to] = (current.totalMargin[rate.to] || 0) + item.margin[rate.to];
-                        current.totalDiscountAmount[rate.to] = (current.totalDiscountAmount[rate.to] || 0) + item.discountAmount[rate.to];
-                    }
-
                     // price in USD
-                    if (!!exchangeRateFromUSDToHomeCurrency) {
-                        item.price.USD = record.price * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
-                        item.actualCost.USD = record.actualCost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
-                        item.updatedCost.USD = record.updatedCost * 100 / exchangeRateFromUSDToHomeCurrency.exchangeRate;
-                        item.netAmount.USD = record.netAmount * exchangeRateFromUSDToHomeCurrency.exchangeRate / 100;
-                        item.margin.USD = record.margin * exchangeRateFromUSDToHomeCurrency.exchangeRate / 100;
-                        item.discountAmount.USD = record.discountAmountUSD * exchangeRateFromUSDToHomeCurrency.exchangeRate / 100;
-                        current.totalPrice.USD = (current.totalPrice.USD || 0) + item.price.USD;
-                        current.totalActualCost.USD = (current.totalActualCost.USD || 0) + item.actualCost.USD;
-                        current.totalUpdatedCost.USD = (current.totalUpdatedCost.USD || 0) + item.updatedCost.USD
-                        current.totalNetAmount.USD = (current.totalNetAmount.USD || 0) + item.netAmount.USD
-                        current.totalMargin.USD = (current.totalMargin.USD || 0) + item.margin.USD
-                        current.totalDiscountAmount.USD = (current.totalDiscountAmount.USD || 0) + item.discountAmount.USD
-                    }
-
-                    // price in home currency
-                    item.price[record.currency] = record.price;
-                    item.actualCost[record.currency] = record.actualCost;
-                    item.updatedCost[record.currency] = record.updatedCost;
-                    item.netAmount[record.currency] = record.netAmount;
-                    item.margin[record.currency] = record.margin;
-                    item.discountAmount[record.currency] = record.discountAmountUSD;
-                    current.totalPrice[record.currency] = (current.totalPrice[record.currency] || 0) + item.price[record.currency];
-                    current.totalActualCost[record.currency] = (current.totalActualCost[record.currency] || 0) + item.actualCost[record.currency];
-                    current.totalUpdatedCost[record.currency] = (current.totalUpdatedCost[record.currency] || 0) + item.updatedCost[record.currency];
-                    current.totalNetAmount[record.currency] = (current.totalNetAmount[record.currency] || 0) + item.netAmount[record.currency];
-                    current.totalMargin[record.currency] = (current.totalMargin[record.currency] || 0) + item.margin[record.currency];
-                    current.totalDiscountAmount[record.currency] = (current.totalDiscountAmount[record.currency] || 0) + item.discountAmount[record.currency];
+                    item.price.USD  = record.price;
+                    item.actualCost.USD  = record.actualCost;
+                    item.updatedCost.USD  = record.updatedCost;
+                    item.netAmount.USD  = record.netAmount;
+                    item.margin.USD  = record.margin;
+                    item.discountAmount.USD  = record.discountAmountUSD;
+                    current.totalPrice.USD  = (current.totalPrice.USD  || 0) + item.price.USD;
+                    current.totalActualCost.USD  = (current.totalActualCost.USD  || 0) + item.actualCost.USD;
+                    current.totalUpdatedCost.USD  = (current.totalUpdatedCost.USD  || 0) + item.updatedCost.USD;
+                    current.totalNetAmount.USD  = (current.totalNetAmount.USD  || 0) + item.netAmount.USD;
+                    current.totalMargin.USD  = (current.totalMargin.USD  || 0) + item.margin.USD;
+                    current.totalDiscountAmount.USD  = (current.totalDiscountAmount.USD  || 0) + item.discountAmount.USD;
 
                     current.description = description.join();
                     current.image = setImages;

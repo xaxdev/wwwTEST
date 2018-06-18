@@ -3,7 +3,7 @@ import { reduxForm, reset } from 'redux-form';
 import { responsive } from 'react-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
 import ReactImageFallback from 'react-image-fallback';
-import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
+import GetSalesPriceWithCurrency from '../../utils/getSalesPriceWithCurrency';
 import convertDate from '../../utils/convertDate';
 import numberFormat from '../../utils/convertNumberformat';
 import OnMouseOverGrid from './onmouseovergrid';
@@ -119,22 +119,22 @@ class GridSalesItemsView extends Component {
                                               item.name
                                               ;
                         }else{
-                            lblActualCost = `Cost Price (${userLogin.currency})`;
-                            lblPrice = `Retail Price (${userLogin.currency})`;
-                            lblUpdatedCost = `Update Cost (${userLogin.currency})`;
-                            lblNetSales = `Net Sales (${userLogin.currency})`;
+                            lblActualCost = 'Cost Price (USD)';
+                            lblPrice = 'Retail Price (USD)';
+                            lblUpdatedCost = 'Update Cost (USD)';
+                            lblNetSales = 'Net Sales (USD)';
                             lblDiscount = 'Discount %';
                             lblMarginAmount = 'Margin Amount';
                             imagesProduct = (item.gallery) != undefined ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif' : '/images/blank.gif';
                             itemDate = convertDate(item.invoiceDate);
                             lblDate = 'Invoice Date';
 
-                            price = GetPriceWithCurrency(item,'price');
-                            actualCost = GetPriceWithCurrency(item,'actualCost');
-                            updatedCost = GetPriceWithCurrency(item,'updatedCost');
-                            netSales = GetPriceWithCurrency(item,'netAmount');
-                            discount = GetPriceWithCurrency(item,'discPercent');
-                            marginAmount = GetPriceWithCurrency(item,'margin');
+                            price = GetSalesPriceWithCurrency(item,'price','USD');
+                            actualCost = GetSalesPriceWithCurrency(item,'actualCost','USD');
+                            updatedCost = GetSalesPriceWithCurrency(item,'updatedCost','USD');
+                            netSales = GetSalesPriceWithCurrency(item,'netAmount','USD');
+                            discount = GetSalesPriceWithCurrency(item,'discPercent','USD');
+                            marginAmount = GetSalesPriceWithCurrency(item,'margin','USD');
 
                             itemName = (item.description != undefined)
                                         ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'

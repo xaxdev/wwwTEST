@@ -188,5 +188,5 @@ const getGOC = async (index) => {
     }
 };
 
-export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, getAccessory,
-        getSpareParts, getLotNumbers, getMovementActivities, getGOC, getAllExchangeRates };
+export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, getAccessory, getSpareParts, getLotNumbers, getMovementActivities, 
+    getGOC, getAllExchangeRates };

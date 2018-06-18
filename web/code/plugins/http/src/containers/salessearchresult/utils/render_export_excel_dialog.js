@@ -25,18 +25,14 @@ class RenderSalesExportExcelDialog extends Component {
                     <div className="modal-body">
                         <h3>Please choose additional fields for export.</h3>
                         <h5>(Normal export field Item Reference, Description, SKU,
-                              {`${(priceSalesCTP) ? 'Cost Price, ':''}`}
-                              {`${(priceSalesUCP) ? 'Updated Price, ':''}`}
-                              {`${(priceSalesRTP) ? 'Retail Price, ':''}`}
-                              {`${(priceSalesNSP) ? 'Net Sales, ':''}`}
                               {`${(priceSalesCTP) ? 'Cost Price (USD), ':''}`}
                               {`${(priceSalesUCP) ? 'Updated Price (USD), ':''}`}
                               {`${(priceSalesRTP) ? 'Retail Price (USD), ':''}`}
                               {`${(priceSalesNSP) ? 'Net Sales (USD), ':''}`}
                               {`${(priceSalesMGP) ? 'Margin %, ':''}`}
-                              {`${(priceSalesMGP) ? 'Margin Amount, ':''}`}
+                              {`${(priceSalesMGP) ? 'Margin Amount (USD), ':''}`}
                               {`${(priceSalesDSP) ? 'Discount %, ':''}`}
-                              {`${(priceSalesDSP) ? 'Discount Amount, ':''}`}
+                              {`${(priceSalesDSP) ? 'Discount Amount (USD), ':''}`}
                               Item Weight (Grams), Ring Size, Jewels Weight (text), Site, Company, Location)</h5>
                         <br/>
                         <div className="col-sm-12">

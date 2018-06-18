@@ -27,23 +27,23 @@ class RenderClassTotals extends Component {
                 <span className={`${(priceSalesNSP) ? '' : 'hidden'}`}>
                     <span className="padding-lf15">|</span>
                     <span className="font-b fc-000">Total Net Sales :</span>
-                    <span className="font-w9">{ numberFormat(_totalNetAmount) } { ViewAsSet ? 'USD' : userLogin.currency }</span>
+                    <span className="font-w9">{ numberFormat(_totalNetAmount) } { ViewAsSet ? 'USD' : 'USD' }</span>
                 </span>
                 <span className={`${(priceSalesUCP) ? '' : 'hidden'}`}>
                     <span className="padding-lf15">|</span>
                     <span className="font-b fc-000">Total Updated Cost :</span>
-                    <span className="font-w9">{ _totalUpdatedCost } { ViewAsSet ? 'USD' : userLogin.currency }</span>
+                    <span className="font-w9">{ _totalUpdatedCost } { ViewAsSet ? 'USD' : 'USD' }</span>
                 </span>
             </div>
             <div id="dvTotalsub2" className="bg-f7d886 text-center">
                 <span className={`${(priceSalesNSP) ? '' : 'hidden'}`}>
                     <span className="font-b fc-000">Highest Net Sales :</span>
-                    <span className="font-w9">{ numberFormat(maxPrice) } { ViewAsSet ? 'USD' : userLogin.currency } </span>
+                    <span className="font-w9">{ numberFormat(maxPrice) } { ViewAsSet ? 'USD' : 'USD' } </span>
                 </span>
                 <span className={`${(priceSalesNSP) ? '' : 'hidden'}`}>
                     <span className="padding-lf15">|</span>
                     <span className="font-b fc-000">Lowest Net Sales :</span>
-                    <span className="font-w9">{ numberFormat(minPrice) } { ViewAsSet ? 'USD' : userLogin.currency } </span>
+                    <span className="font-w9">{ numberFormat(minPrice) } { ViewAsSet ? 'USD' : 'USD' } </span>
                 </span>
                 <span className={`${(priceSalesMGP) ? '' : 'hidden'}`}>
                     <span className="padding-lf15">|</span>

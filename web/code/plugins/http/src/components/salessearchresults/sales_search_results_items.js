@@ -117,7 +117,7 @@ class SalesSearchResultOnItem extends Component {
             let salesSortingBy = '';
             switch (this.refs.salesSortingBy.value) {
                 case 'price':
-                  salesSortingBy = 'price.' + userLogin.currency;
+                  salesSortingBy = 'price.' + 'USD';
                   break;
                 default:
                   salesSortingBy = this.refs.salesSortingBy.value;
@@ -169,7 +169,7 @@ class SalesSearchResultOnItem extends Component {
         let salesSortingBy = '';
         switch (e.target.value) {
             case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
+                salesSortingBy = 'price.' + 'USD';
                 break;
             default:
                 salesSortingBy = e.target.value;
@@ -214,7 +214,7 @@ class SalesSearchResultOnItem extends Component {
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
             case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
+                salesSortingBy = 'price.' + 'USD';
                 break;
             default:
                 salesSortingBy = this.refs.salesSortingBy.value;
@@ -259,7 +259,7 @@ class SalesSearchResultOnItem extends Component {
 
         switch (this.refs.salesSortingBy.value) {
             case 'price':
-                salesSortingBy = 'price.' + userLogin.currency;
+                salesSortingBy = 'price.' + 'USD';
                 break;
             default:
                 salesSortingBy = this.refs.salesSortingBy.value;
@@ -298,7 +298,7 @@ class SalesSearchResultOnItem extends Component {
         let salesSortingBy = '';
         switch (this.refs.salesSortingBy.value) {
             case 'price':
-              salesSortingBy = 'price.' + userLogin.currency;
+              salesSortingBy = 'price.' + 'USD';
               break;
             default:
               salesSortingBy = this.refs.salesSortingBy.value;
@@ -340,7 +340,7 @@ class SalesSearchResultOnItem extends Component {
             let salesSortingBy = '';
             switch (this.refs.salesSortingBy.value) {
                 case 'price':
-                  salesSortingBy = 'price.' + userLogin.currency;
+                  salesSortingBy = 'price.' + 'USD';
                   break;
                 default:
                   salesSortingBy = this.refs.salesSortingBy.value;

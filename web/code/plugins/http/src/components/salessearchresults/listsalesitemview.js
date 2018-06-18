@@ -88,7 +88,7 @@ class ListSalesItemsView extends Component {
         let items = null;
         const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
-        const currency = userLogin.currency;
+        const currency = 'USD';
         const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
         const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
         const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
