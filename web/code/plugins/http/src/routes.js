@@ -262,6 +262,14 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/salesproducts/setsalesdetail'));
                     }, 'setsalesdetail');
                 }
+            }, {
+                onEnter: requirePermissionSalesReport,
+                path: '/salesproductreletedetail/:id',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/salesproducts/salesproductreletedetail'));
+                    }, 'salesproductreletedetail');
+                }
             },{
                 path: '*',
                 getComponent: (location, cb) => {

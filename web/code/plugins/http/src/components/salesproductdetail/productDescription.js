@@ -1,0 +1,121 @@
+import React,{PropTypes} from 'react';
+import numberFormat from '../../utils/convertNumberformat';
+import percentformatFormat from '../../utils/convertMarkpercent';
+import convertDate from '../../utils/convertDate';
+import convertBlanktodash  from '../../utils/convertBlanktodash';
+import convertMarkpercent from '../../utils/convertMarkpercent';
+import GetSalesPricePermission from '../../utils/getSalesPricePermission';
+const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+
+const Detail = (props) => {
+    if(logindata){
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
+        const currency = 'USD';
+
+        let invoicedDate = !!props.id ? convertDate(props.invoiceDate) : convertDate(props.invoiceDate);
+        let actualCost = !!props.id ? numberFormat(props.actualCost[currency]): numberFormat(props.totalActualCost['USD']);
+        let updatedCost = !!props.id ? numberFormat(props.updatedCost[currency]) : numberFormat(props.totalUpdatedCost['USD']);
+        let price = !!props.id ? numberFormat(props.price[currency]) : numberFormat(props.totalPrice['USD']);
+        let netSales = !!props.id ? numberFormat(props.netAmount[currency]) : numberFormat(props.totalNetAmount['USD']);
+        let discount = !!props.id ? numberFormat(props.discountAmountUSD) : numberFormat(props.totalDiscountAmount['USD']);
+        let discountPercent = !!props.id ? numberFormat(props.discPercent) : numberFormat(props.discPercent);
+        let marginAmount = !!props.id ? numberFormat(props.margin[currency]) : numberFormat(props.totalMargin['USD']);
+        let markUp = convertMarkpercent(props.markup);
+        let setReference = (props.setReference != undefined ) ? props.setReference : '-';
+        setReference = (setReference != '' ) ? setReference : '-';
+
+        return (
+            <div className="line-h">
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Item Reference</div>
+                    <div className="col-md-8 col-sm-8">{props.reference}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Description</div>
+                    <div className="col-md-8 col-sm-8 text-wrap">{props.description}</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesCTP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Cost Price ({ currency })</div>
+                    <div className="col-md-8 col-sm-8">{ actualCost }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesUCP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Updated Cost ({ currency })</div>
+                    <div className="col-md-8 col-sm-8">{ updatedCost }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesRTP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Retail Price ({ currency })</div>
+                    <div className="col-md-8 col-sm-8">{ price }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesNSP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Net Sales ({ currency })</div>
+                    <div className="col-md-8 col-sm-8">{ netSales }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesDSP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Discount Amount ({ currency })</div>
+                    <div className="col-md-8 col-sm-8">{ discount }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesDSP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Discount % </div>
+                    <div className="col-md-8 col-sm-8">{ discountPercent }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesMGP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Margin Amount ({ currency })</div>
+                    <div className="col-md-8 col-sm-8">{ marginAmount }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesUCP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Markup (Times)</div>
+                    <div className="col-md-8 col-sm-8">{markUp}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Company</div>
+                    <div className="col-md-8 col-sm-8">{props.companyName}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Location</div>
+                    <div className="col-md-8 col-sm-8">{props.warehouseName}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Vendor Item Reference</div>
+                    <div className="col-md-8 col-sm-8">{props.venderReference}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">SKU</div>
+                    <div className="col-md-8 col-sm-8">{props.sku}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Set Reference Number</div>
+                    <div className="col-md-8 col-sm-8">{setReference}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Invoice Id</div>
+                    <div className="col-md-8 col-sm-8">{props.invoicedId}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Customer Name</div>
+                    <div className="col-md-8 col-sm-8">{props.customerName}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Sales Name</div>
+                    <div className="col-md-8 col-sm-8">{props.salesPersonName}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Sales Channel</div>
+                    <div className="col-md-8 col-sm-8">{props.salesChannelType}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Invoice Created</div>
+                    <div className="col-md-8 col-sm-8">{invoicedDate}</div>
+                </div>
+            </div>
+        );
+    }
+}
+
+
+module.exports = Detail
