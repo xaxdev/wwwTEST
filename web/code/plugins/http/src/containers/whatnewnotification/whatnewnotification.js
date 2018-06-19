@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [8,7,6,5,4,3,2,1];
+            const roundData = [9,8,7,6,5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -386,6 +386,25 @@ class WhatNewNotification extends Component {
                                                   <p>- User can select full or current page to export set item.</p>
                                                   <div style="padding:15px 20px 0 20px;">
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/to-export-set-catalog.gif"/></div>
+                                                  </div>`
+                                              }
+                                            ]
+                                },
+                                {
+                                    'id': 9,
+                                    'round': 'June 2018',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'To Merge Stone Type',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">June 19, 2018</p>
+                                                  <p>- When users select Diamond at Stone type field, it will show items under DIA, Diamond, DIAMONDPCS, DIAMONDS after search.</p>
+                                                  <p>- When users select Emerald at Stone type field, it will show items under EMERALDCTS, EMERALDS, EMR after search.</p>
+                                                  <p>- When users select Pearl at Stone type field, it will show items under PEA, PEARL, PEARLPCS, PEARLS after search.</p>
+                                                  <p>- When users select Ruby at Stone type field, it will show items under RUB, RUBIES, Ruby, RUBYPCS after search.</p>
+                                                  <p>- When users select Sapphire at Stone type field, it will show items under SAP, Sapphire, SAPPHIREPCS, SAPPHIRES after search.</p>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <div style="margin:15px 0px; text-align:center;"><img src="/images/ston-type.gif"/></div>
                                                   </div>`
                                               }
                                             ]
