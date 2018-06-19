@@ -1,4 +1,5 @@
 export default function FindLocationWareHouse(that){
+    
     let dataDropDowntLocations = [];
     let dataDropDowntWareHouse = [];
     const obj = {};

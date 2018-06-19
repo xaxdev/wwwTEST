@@ -107,9 +107,7 @@ class InventoryOBA extends Component {
 
         let { fields: { obaProductHierarchy }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.obaProductHierarchy = treeSelected;
 
@@ -120,9 +118,7 @@ class InventoryOBA extends Component {
         const { props } = this.props;
         let { fields: { collection }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.collection = collectionSelectValue;
 
@@ -134,9 +130,7 @@ class InventoryOBA extends Component {
         const { props } = this.props;
         let { fields: { brand }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.brand = brandSelectValue;
 
@@ -148,9 +142,7 @@ class InventoryOBA extends Component {
         const { props } = this.props;
         let { fields: { mustHave }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.mustHave = mustHaveSelectValue;
 
@@ -162,9 +154,7 @@ class InventoryOBA extends Component {
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.metalType = metalTypeSelectValue;
 
@@ -176,9 +166,7 @@ class InventoryOBA extends Component {
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.metalColour = metalColourSelectValue;
 
@@ -190,9 +178,7 @@ class InventoryOBA extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.dominantStone = dominantStoneSelectValue;
 
@@ -208,9 +194,7 @@ class InventoryOBA extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
 
         if(props.options != undefined){
             if (props.options.collections) {
@@ -302,9 +286,7 @@ class InventoryOBA extends Component {
                   publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo, obaDimension
               },searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
 
         let dataDropDowntCollection = [];
         let dataDropDowntBrand = [];
@@ -378,10 +360,8 @@ class InventoryOBA extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select simpleValue value={props.ArticleValue}
-                                        placeholder="Select your Article Grouping"
-                                        options={dataDropDowntArticle}
-                                        onChange={this.handleArticleSelectedChanged} />
+                                    <Select simpleValue value={props.ArticleValue} placeholder="Select your Article Grouping"
+                                        options={dataDropDowntArticle} onChange={this.handleArticleSelectedChanged} />
                                 </div>
                             </div>
                         </div>
@@ -401,10 +381,8 @@ class InventoryOBA extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.CollectionValue}
-                                        placeholder="Select your Collection"
-                                        options={dataDropDowntCollection}
-                                        onChange={this.handleCollectionSelectChange} />
+                                    <Select multi simpleValue value={props.CollectionValue} placeholder="Select your Collection"
+                                        options={dataDropDowntCollection} onChange={this.handleCollectionSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -414,10 +392,8 @@ class InventoryOBA extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.BrandValue}
-                                        placeholder="Select your Brand"
-                                        options={dataDropDowntBrand}
-                                        onChange={this.handleBrandSelectChange} />
+                                    <Select multi simpleValue value={props.BrandValue} placeholder="Select your Brand"
+                                        options={dataDropDowntBrand} onChange={this.handleBrandSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -427,10 +403,8 @@ class InventoryOBA extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MustHaveValue}
-                                        placeholder="Select your MustHave"
-                                        options={yesNo}
-                                        onChange={this.handleMustHaveSelectChange} />
+                                    <Select multi simpleValue value={props.MustHaveValue} placeholder="Select your MustHave"
+                                        options={yesNo} onChange={this.handleMustHaveSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -445,23 +419,22 @@ class InventoryOBA extends Component {
                             </div>
                         </div>
                         <div className="col-lg-6 form-horizontal">
-                            <div className={`form-group ${(userLogin.permission.price == 'All'
-                                || userLogin.permission.price == 'Updated') ?
+                            <div className={`form-group ${(userLogin.permission.price == 'All' || userLogin.permission.price == 'Updated') ?
                                 '' : 'hidden'}`}>
-                                  <label className="col-sm-4 control-label">Markup (Times)</label>
-                                  <div className="col-sm-7">
-                                        <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                                        <div className="col-sm-4 nopadding">
-                                            <input type="number" className="form-control" {...markupFrom}/>
-                                        </div>
-                                        <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                                        <div className="col-sm-4 nopadding">
-                                            <input type="number" className="form-control" {...markupTo}/>
-                                        </div>
-                                  </div>
+                                <label className="col-sm-4 control-label">Markup (Times)</label>
+                                <div className="col-sm-7">
+                                    <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                                    <div className="col-sm-4 nopadding">
+                                        <input type="number" className="form-control" {...markupFrom}/>
+                                    </div>
+                                    <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                                    <div className="col-sm-4 nopadding">
+                                        <input type="number" className="form-control" {...markupTo}/>
+                                    </div>
+                                </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label">Gross Weight (Grams)</label>
+                                <label className="col-sm-4 control-label">Item Weight (Grams)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                     <div className="col-sm-4 nopadding">
@@ -480,10 +453,8 @@ class InventoryOBA extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MetalTypeValue}
-                                        placeholder="Select your Metal Type"
-                                        options={dataDropDowntMetalType}
-                                        onChange={this.handleMetalTypeSelectChange} />
+                                    <Select multi simpleValue value={props.MetalTypeValue} placeholder="Select your Metal Type"
+                                        options={dataDropDowntMetalType} onChange={this.handleMetalTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -493,10 +464,8 @@ class InventoryOBA extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MetalColourValue}
-                                        placeholder="Select your Metal Colour"
-                                        options={dataDropDowntMetalColour}
-                                        onChange={this.handleMetalColourSelectChange} />
+                                    <Select multi simpleValue value={props.MetalColourValue} placeholder="Select your Metal Colour"
+                                        options={dataDropDowntMetalColour} onChange={this.handleMetalColourSelectChange} />
                                 </div>
                             </div>
                         </div>

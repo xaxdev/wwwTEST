@@ -28,26 +28,25 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             titles.push('Item Reference', 'Description');
 
             if (price == 'All') {
-                titles.push('Total Actual Cost (USD)');
+                titles.push('Total Cost Price (USD)');
             }
             if (price == 'Updated' || price == 'All') {
                 titles.push('Total Updated Cost (USD)');
             }
             if (price == 'Public' || price == 'Updated' || price == 'All') {
-                titles.push('Total Public Price (USD)');
+                titles.push('Total Retail Price (USD)');
             }
-
-          if(fields.allFieldsViewAsSet){
-              titles.push('Markup (Times)', 'Company','Warehouse', 'Created Date');
-          }else{
-              if(fields.totalActualCost) titles.push('Total Actual Cost (USD)');
-              if(fields.totalUpdatedCost) titles.push('Total Updated Cost (USD)');
-              if(fields.totalPrice) titles.push('Total Public Price (USD)');
-              if(fields.markup) titles.push('Markup (Times)');
-              if(fields.companyName) titles.push('Company');
-              if(fields.warehouseName) titles.push('Warehouse');
-              if(fields.createdDate) titles.push('Created Date');
-          }
+            if(fields.allFieldsViewAsSet){
+                titles.push('Markup (Times)', 'Company','Location', 'Created Date');
+            }else{
+                if(fields.totalActualCost) titles.push('Total Cost Price (USD)');
+                if(fields.totalUpdatedCost) titles.push('Total Updated Cost (USD)');
+                if(fields.totalPrice) titles.push('Total Retail Price (USD)');
+                if(fields.markup) titles.push('Markup (Times)');
+                if(fields.companyName) titles.push('Company');
+                if(fields.warehouseName) titles.push('Location');
+                if(fields.createdDate) titles.push('Created Date');
+            }
         }else{
             if (fields.showImages)
                 titles.push('Images');
@@ -61,7 +60,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                     titles.push('Updated Price (' + userCurrency + ')');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                    titles.push('Public Price (' + userCurrency + ')');
+                    titles.push('Retail Price (' + userCurrency + ')');
                 }
 
                 if (price == 'All') {
@@ -71,7 +70,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                     titles.push('Updated Price (USD)');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                    titles.push('Public Price (USD)');
+                    titles.push('Retail Price (USD)');
                 }
             } else {
                 if (price == 'All') {
@@ -81,14 +80,14 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                     titles.push('Updated Price (USD)');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                    titles.push('Public Price (USD)');
+                    titles.push('Retail Price (USD)');
                 }
             }
-            titles.push('Gross Weight','Ring Size', 'Jewels Weight (text)','Site','Company', 'Warehouse');
+            titles.push('Item Weight (Grams)','Ring Size', 'Jewels Weight (text)','Site','Company', 'Location');
             if(fields.allFields){
                 titles.push(
                     'Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color',
-                    'Clarity','Carat Wt', 'Unit', 'Qty','Origin','Symmetry','Flourance','Batch','Net Weight',
+                    'Clarity','Carat Wt', 'Unit', 'Qty','Origin','Symmetry','Flourance','Batch','Gold weight (Grams)',
                     'Stone Qty','Dominant Stone', 'Markup%','Certificate Number','Certificate Date', 'Vendor Code',
                     'Vendor Name', 'Metal Colour', 'Metal','Brand','Complication','Strap Type','Strap Color',
                     'Buckle Type','Dial Index','Dial Color','Movement','Serial #','Limited Edition',
@@ -111,7 +110,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 if(fields.symmetry) titles.push('Symmetry');
                 if(fields.flourance) titles.push('Flourance');
                 if(fields.batch) titles.push('Batch');
-                if(fields.netWeight) titles.push('Net Weight');
+                if(fields.netWeight) titles.push('Gold weight (Grams)');
                 if(fields.stoneQty) titles.push('Stone Qty');
                 if(fields.dominantStone) titles.push('Dominant Stone');
                 if(fields.markup) titles.push('Markup%');

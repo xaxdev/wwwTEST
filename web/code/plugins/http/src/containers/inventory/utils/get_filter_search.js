@@ -3,8 +3,7 @@ import GetLotNumber from './get_lotnumber';
 import GetCodeNotUseHierarchy from './get_code_notusehierarchy';
 import ProductGroup from '../../../utils/userproductgroup';
 
-export default function GetFilterSearch(that, data, userLogin, filters, jlyHierarchy, watHierarchy, stoHierarchy,
-    accHierarchy, obaHierarchy, sppHierarchy){
+export default function GetFilterSearch(that, data, userLogin, filters, jlyHierarchy, watHierarchy, stoHierarchy, accHierarchy, obaHierarchy, sppHierarchy){
 
     let { paramsSearch, activeTabCategory, isAdvance } = that.props;
 

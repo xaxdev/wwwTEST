@@ -578,7 +578,7 @@ class UserDetailsFrom extends Component {
                     case 'site':
                         return (<option value={''}>{'Please select Site'}</option>);
                     case 'warehouse':
-                        return (<option value={''}>{'Please select warehouse'}</option>);
+                        return (<option value={''}>{'Please select Location'}</option>);
                     default:
                         return false;
                 }
@@ -810,10 +810,10 @@ class UserDetailsFrom extends Component {
                                             </div>
                                         </div>
                                         <div className={`form-group ${warehouse.touched && warehouse.invalid ? 'has-danger' : ''}` }>
-                                            <label className="col-sm-4 control-label">Warehouse</label>
+                                            <label className="col-sm-4 control-label">Location</label>
                                             <div className="col-sm-7">
                                                 <select  disabled={`${this.state.selectedSite ? '' : 'disabled'}`}   className="form-control" {...warehouse} >
-                                                    <option key={''} value={''}>{'Please select warehouse'}</option>
+                                                    <option key={''} value={''}>{'Please select Location'}</option>
                                                     {this.renderOption('warehouse')}
                                                 </select>
                                                 <div className="text-help">
@@ -902,13 +902,13 @@ class UserDetailsFrom extends Component {
                                                 <div className="col-sm-4">
                                                     <label>
                                                         <input type="radio" {...price} value="Public"
-                                                            checked={price.value === 'Public'} /> Only Public Price
+                                                            checked={price.value === 'Public'} /> Only Retail Price
                                                     </label>
                                                 </div>
                                                 <div className="col-sm-4">
                                                     <label>
                                                         <input type="radio" {...price} value="Updated"
-                                                            checked={price.value === 'Updated'} /> View Updated Cost and Public Price
+                                                            checked={price.value === 'Updated'} /> View Updated Cost and Retail Price
                                                     </label>
                                                 </div>
                                                 <div className="col-sm-2">

@@ -4,8 +4,7 @@ import numberFormat from '../../../utils/convertNumberformat';
 
 class RenderClassTotals extends Component {
     render(){
-        const { userLogin,listSetCatalogItems, _totalPublicPrice, _totalUpdatedCost,
-                _totalPublicPriceSet, _totalUpdatedCostSet, avrgPrice } = this.props;
+        const { userLogin,listSetCatalogItems,_totalPublicPrice,_totalUpdatedCost,_totalPublicPriceSet,_totalUpdatedCostSet,avrgPrice } = this.props;
         return(
             <div>
               <div id="dvTotalSetItems" className="bg-f7d886 text-center">
@@ -22,7 +21,7 @@ class RenderClassTotals extends Component {
                     <span className={`spSetItemsPublicPrice${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                             || userLogin.permission.price == 'All') ?
                             '' : ' hidden'}`}>
-                        <span className="font-b fc-000">Total Public Price(Set) :</span>
+                        <span className="font-b fc-000">Total Retail Price(Set) :</span>
                         <span className="font-w9">{ _totalPublicPriceSet } USD</span>
                     </span>
                     <span className={`spSetItemsUpdated${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?

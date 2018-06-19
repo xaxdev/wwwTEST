@@ -53,8 +53,8 @@ class InventoryWatch extends Component {
             const { props } = this.props;
             let { fields: { jewelryProductHierarchy }, searchResult } = props;
             if(props.SaveSearchHierarchy != null){
-                  await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
-                  this.refs.treeview.handleChange(props.SaveSearchHierarchy);
+                await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
+                this.refs.treeview.handleChange(props.SaveSearchHierarchy);
             }
         })()
     }
@@ -118,9 +118,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { watchProductHierarchy }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.watchProductHierarchy = treeSelected;
 
@@ -131,9 +129,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { watchCategory }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.watchCategory = watchCategorySelectValue;
 
@@ -145,9 +141,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { collection }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.collection = collectionSelectValue;
 
@@ -159,9 +153,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { brand }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.brand = brandSelectValue;
 
@@ -173,9 +165,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { mustHave }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.mustHave = mustHaveSelectValue;
 
@@ -187,9 +177,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.metalType = metalTypeSelectValue;
 
@@ -201,9 +189,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.metalColour = metalColourSelectValue;
 
@@ -215,9 +201,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.dominantStone = dominantStoneSelectValue;
 
@@ -229,9 +213,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { limitedEdition }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.limitedEdition = limitedEditionSelectValue;
 
@@ -243,9 +225,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { movement }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.movement = movementSelectValue;
 
@@ -280,9 +260,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { proDateFrom }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.proDateFrom = startDate;
 
@@ -295,9 +273,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { proDateTo }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.proDateTo = endDate;
 
@@ -310,9 +286,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { dialIndex }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.dialIndex = dialIndexSelectValue;
 
@@ -324,9 +298,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { dialColor }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.dialColor = dialColorSelectValue;
 
@@ -338,9 +310,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { dialMetal }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.dialMetal = dialMetalSelectValue;
 
@@ -352,9 +322,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { buckleType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.buckleType = buckleTypeSelectValue;
 
@@ -366,9 +334,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { strapType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.strapType = strapTypeSelectValue;
 
@@ -380,9 +346,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { strapColor }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.strapColor = strapColorSelectValue;
 
@@ -394,9 +358,7 @@ class InventoryWatch extends Component {
         const { props } = this.props;
         let { fields: { complication }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch :
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.complication = complicationSelectValue;
 
@@ -413,9 +375,7 @@ class InventoryWatch extends Component {
             complication }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
 
         if(props.options != undefined){
             if (props.options.watchCategories) {
@@ -629,14 +589,12 @@ class InventoryWatch extends Component {
     render() {
         const { props } = this.props;
         const yesNo = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
-        let { fields: {limitedEditionNumber, serialNumber, totalCostFrom, totalCostTo, totalUpdatedCostFrom,
-              totalUpdatedCostTo, publicPriceFrom, publicPriceTo, markupFrom, markupTo, grossWeightFrom,
-              grossWeightTo, caseDimensionFrom, caseDimensionTo, preciousMetalWeightFrom, preciousMetalWeightTo
+        let { fields: {limitedEditionNumber, serialNumber, totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,
+            publicPriceTo, markupFrom, markupTo, grossWeightFrom,grossWeightTo, caseDimensionFrom, caseDimensionTo, preciousMetalWeightFrom,
+            preciousMetalWeightTo
         }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
 
         let dataDropDowntWatchCategory = [];
         let dataDropDowntCollection = [];
@@ -773,10 +731,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select simpleValue value={props.ArticleValue}
-                                        placeholder="Select your Article Grouping"
-                                        options={dataDropDowntArticle}
-                                        onChange={this.handleArticleSelectedChanged} />
+                                    <Select simpleValue value={props.ArticleValue} placeholder="Select your Article Grouping"
+                                        options={dataDropDowntArticle} onChange={this.handleArticleSelectedChanged} />
                                 </div>
                             </div>
                         </div>
@@ -800,10 +756,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.WatchCategoryValue}
-                                        placeholder="Select your Watch Category"
-                                        options={dataDropDowntWatchCategory}
-                                        onChange={this.handleWatchCategorySelectChange} />
+                                    <Select multi simpleValue value={props.WatchCategoryValue} placeholder="Select your Watch Category"
+                                        options={dataDropDowntWatchCategory} onChange={this.handleWatchCategorySelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -813,10 +767,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.CollectionValue}
-                                        placeholder="Select your Collection"
-                                        options={dataDropDowntCollection}
-                                        onChange={this.handleCollectionSelectChange} />
+                                    <Select multi simpleValue value={props.CollectionValue} placeholder="Select your Collection"
+                                        options={dataDropDowntCollection} onChange={this.handleCollectionSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -826,10 +778,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.BrandValue}
-                                        placeholder="Select your Brand"
-                                        options={dataDropDowntBrand}
-                                        onChange={this.handleBrandSelectChange} />
+                                    <Select multi simpleValue value={props.BrandValue} placeholder="Select your Brand"
+                                        options={dataDropDowntBrand} onChange={this.handleBrandSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -839,10 +789,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MustHaveValue}
-                                        placeholder="Select your MustHave"
-                                        options={yesNo}
-                                        onChange={this.handleMustHaveSelectChange} />
+                                    <Select multi simpleValue value={props.MustHaveValue} placeholder="Select your MustHave"
+                                        options={yesNo} onChange={this.handleMustHaveSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -852,10 +800,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MetalTypeValue}
-                                        placeholder="Select your Metal Type"
-                                        options={dataDropDowntMetalType}
-                                        onChange={this.handleMetalTypeSelectChange} />
+                                    <Select multi simpleValue value={props.MetalTypeValue} placeholder="Select your Metal Type"
+                                        options={dataDropDowntMetalType} onChange={this.handleMetalTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -865,10 +811,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MetalColourValue}
-                                        placeholder="Select your Metal Colour"
-                                        options={dataDropDowntMetalColour}
-                                        onChange={this.handleMetalColourSelectChange} />
+                                    <Select multi simpleValue value={props.MetalColourValue} placeholder="Select your Metal Colour"
+                                        options={dataDropDowntMetalColour} onChange={this.handleMetalColourSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -878,10 +822,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.LimitedEditionValue}
-                                        placeholder="Select your Limited Edition"
-                                        options={yesNo}
-                                        onChange={this.handleLimitedEditionSelectChange} />
+                                    <Select multi simpleValue value={props.LimitedEditionValue} placeholder="Select your Limited Edition"
+                                        options={yesNo} onChange={this.handleLimitedEditionSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -903,10 +845,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MovementValue}
-                                        placeholder="Select your Movement"
-                                        options={dataDropDowntMovement}
-                                        onChange={this.handleMovementSelectChange} />
+                                    <Select multi simpleValue value={props.MovementValue} placeholder="Select your Movement"
+                                        options={dataDropDowntMovement} onChange={this.handleMovementSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -916,16 +856,13 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.ComplicationValue}
-                                        placeholder="Select your Complication"
-                                        options={dataDropDowntComplication}
-                                        onChange={this.handleComplicationSelectChange} />
+                                    <Select multi simpleValue value={props.ComplicationValue} placeholder="Select your Complication"
+                                        options={dataDropDowntComplication} onChange={this.handleComplicationSelectChange} />
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-6 form-horizontal">
-                            <div className={`form-group ${(userLogin.permission.price == 'All'
-                                || userLogin.permission.price == 'Updated') ?
+                            <div className={`form-group ${(userLogin.permission.price == 'All' || userLogin.permission.price == 'Updated') ?
                                 '' : 'hidden'}`}>
                                 <label className="col-sm-4 control-label">Markup (Times)</label>
                                 <div className="col-sm-7">
@@ -940,7 +877,7 @@ class InventoryWatch extends Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label">Gross Weight (Grams)</label>
+                                <label className="col-sm-4 control-label">Item Weight (Grams)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                     <div className="col-sm-4 nopadding">
@@ -957,19 +894,13 @@ class InventoryWatch extends Component {
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar
-                                            format="MM-DD-YYYY"
-                                            date={(paramsSearch != null)?paramsSearch.proDateFrom:props.ProductionDateFrom}
-                                            closeOnSelect = {true}
-                                            onChange={this.handleChangeStart} />
+                                        <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeStart}
+                                            date={(paramsSearch != null)?paramsSearch.proDateFrom:props.ProductionDateFrom} />
                                     </div>
                                     <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar
-                                            format="MM-DD-YYYY"
-                                            date={(paramsSearch != null)?paramsSearch.proDateTo:props.ProductionDateTo}
-                                            closeOnSelect = {true}
-                                            onChange={this.handleChangeEnd} />
+                                        <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeEnd}
+                                            date={(paramsSearch != null)?paramsSearch.proDateTo:props.ProductionDateTo} />
                                     </div>
                                 </div>
                             </div>
@@ -1006,10 +937,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.DialIndexValue}
-                                        placeholder="Select your Dial Index"
-                                        options={dataDropDowntDialIndex}
-                                        onChange={this.handleDialIndexSelectChange} />
+                                    <Select multi simpleValue value={props.DialIndexValue} placeholder="Select your Dial Index"
+                                        options={dataDropDowntDialIndex} onChange={this.handleDialIndexSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -1019,10 +948,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.DialColorValue}
-                                        placeholder="Select your Dial Color"
-                                        options={dataDropDowntDialColor}
-                                        onChange={this.handleDialColorSelectChange} />
+                                    <Select multi simpleValue value={props.DialColorValue} placeholder="Select your Dial Color"
+                                        options={dataDropDowntDialColor} onChange={this.handleDialColorSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -1032,10 +959,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.DialMetalValue}
-                                        placeholder="Select your Dial Metal"
-                                        options={dataDropDowntDialMetal}
-                                        onChange={this.handleDialMetalSelectChange} />
+                                    <Select multi simpleValue value={props.DialMetalValue} placeholder="Select your Dial Metal"
+                                        options={dataDropDowntDialMetal} onChange={this.handleDialMetalSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -1045,10 +970,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.BuckleTypeValue}
-                                        placeholder="Select your Buckle Type"
-                                        options={dataDropDowntBuckleType}
-                                        onChange={this.handleBuckleTypeSelectChange} />
+                                    <Select multi simpleValue value={props.BuckleTypeValue} placeholder="Select your Buckle Type"
+                                        options={dataDropDowntBuckleType} onChange={this.handleBuckleTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -1058,10 +981,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.StrapTypeValue}
-                                        placeholder="Select your Strap Type"
-                                        options={dataDropDowntStrapType}
-                                        onChange={this.handleStrapTypeSelectChange} />
+                                    <Select multi simpleValue value={props.StrapTypeValue} placeholder="Select your Strap Type"
+                                        options={dataDropDowntStrapType} onChange={this.handleStrapTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -1071,10 +992,8 @@ class InventoryWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.StrapColorValue}
-                                        placeholder="Select your Strap Color"
-                                        options={dataDropDowntStrapColor}
-                                        onChange={this.handleStrapColorSelectChange} />
+                                    <Select multi simpleValue value={props.StrapColorValue} placeholder="Select your Strap Color"
+                                        options={dataDropDowntStrapColor} onChange={this.handleStrapColorSelectChange} />
                                 </div>
                             </div>
                         </div>
@@ -1097,11 +1016,11 @@ const tooltipLimitedEdition = (<Tooltip id="tooltip"><strong>Search Limited Edit
 const tooltipLimitedEditionNumber = (<Tooltip id="tooltip"><strong>Limited Edition Number!</strong></Tooltip>);
 const tooltipSerialNumber = (<Tooltip id="tooltip"><strong>Serial Number!</strong></Tooltip>);
 const tooltipMovement = (<Tooltip id="tooltip"><strong>Search By Movement of the Watch (eg. Quartz, Automatic, Manual etc.) </strong></Tooltip>);
-const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>);
+const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>);
 const tooltipTotalUpdatedCost = (<Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>);
-const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>);
+const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Retail Price (USD)!</strong></Tooltip>);
 const tooltipMarkup = (<Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>);
-const tooltipGrossWeight = (<Tooltip id="tooltip"><strong>Gross Weight (Grams)!</strong></Tooltip>);
+const tooltipGrossWeight = (<Tooltip id="tooltip"><strong>Item Weight (Grams)!</strong></Tooltip>);
 const tooltipProductionDate = (<Tooltip id="tooltip"><strong>Production Date</strong></Tooltip>);
 const tooltipDialIndex = (<Tooltip id="tooltip"><strong>Search By Dial Index of the Watch (eg. Diamond on Index, Ruby on Index etc.)</strong></Tooltip>);
 const tooltipDialColor = (<Tooltip id="tooltip"><strong>Search By Dial Color of the Watch (eg. Black, Blue, Brown etc.)</strong></Tooltip>);

@@ -119,9 +119,7 @@ class InventoryJewelry extends Component {
 
         let { fields: { jewelryProductHierarchy }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                            ? searchResult.paramsSearch
-                            : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
 
         if(paramsSearch != null)
             paramsSearch.jewelryProductHierarchy = treeSelected;
@@ -133,9 +131,7 @@ class InventoryJewelry extends Component {
         const { props } = this.props;
         let { fields: { jewelryCategory }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.jewelryCategory = JewelryCategorySelectValue;
 
@@ -147,9 +143,7 @@ class InventoryJewelry extends Component {
         const { props } = this.props;
         let { fields: { collection }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.collection = CollectionSelectValue;
 
@@ -161,9 +155,7 @@ class InventoryJewelry extends Component {
         const { props } = this.props;
         let { fields: { brand }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
         if(paramsSearch != null)
             paramsSearch.brand = BrandSelectValue;
 
@@ -175,9 +167,7 @@ class InventoryJewelry extends Component {
         const { props } = this.props;
         let { fields: { mustHave }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
 
         if(paramsSearch != null)
             paramsSearch.mustHave = MustHaveSelectValue;
@@ -190,9 +180,7 @@ class InventoryJewelry extends Component {
         const { props } = this.props;
         let { fields: { ringSize }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
 
         if(paramsSearch != null)
             paramsSearch.ringSize = RingSizeSelectValue;
@@ -205,9 +193,7 @@ class InventoryJewelry extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
 
         if(paramsSearch != null)
             paramsSearch.dominantStone = DominantStoneSelectValue;
@@ -220,9 +206,7 @@ class InventoryJewelry extends Component {
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
 
         if(paramsSearch != null)
             paramsSearch.metalType = MetalTypeSelectValue;
@@ -235,9 +219,7 @@ class InventoryJewelry extends Component {
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
 
         if(paramsSearch != null)
             paramsSearch.metalColour = MetalColourSelectValue;
@@ -254,9 +236,7 @@ class InventoryJewelry extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
 
         if(props.options != undefined){
             if (props.options.jewelryCategories) {
@@ -373,9 +353,7 @@ class InventoryJewelry extends Component {
         const { props } = this.props;
         let { fields: { viewAsSet }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)
-                                ? searchResult.paramsSearch
-                                : null;
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
 
         if(paramsSearch != null)
             paramsSearch.viewAsSet = e.target.checked;
@@ -398,12 +376,12 @@ class InventoryJewelry extends Component {
       		let reader = new FileReader();
       		let name = f.name;
       		reader.onload = function(e) {
-                  let data = e.target.result;
-                  let arr = xls.fixdata(data);
-                  let wb = X.read(btoa(arr), {type: 'base64'});
-                  let items = xls.process_wb(wb);
-                  setReference.onChange(items.set);
-                  inventoryActions.setSetReferenceOrder(items.AllData);
+                let data = e.target.result;
+                let arr = xls.fixdata(data);
+                let wb = X.read(btoa(arr), {type: 'base64'});
+                let items = xls.process_wb(wb);
+                setReference.onChange(items.set);
+                inventoryActions.setSetReferenceOrder(items.AllData);
       		}
             if(rABS) reader.readAsBinaryString(f);
             else reader.readAsArrayBuffer(f);
@@ -509,10 +487,8 @@ class InventoryJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select simpleValue value={props.ArticleValue}
-                                        placeholder="Select your Article Grouping"
-                                        options={dataDropDowntArticle}
-                                        onChange={this.handleArticleSelectedChanged} />
+                                    <Select simpleValue value={props.ArticleValue} placeholder="Select your Article Grouping"
+                                        options={dataDropDowntArticle} onChange={this.handleArticleSelectedChanged} />
                                 </div>
                             </div>
                         </div>
@@ -526,10 +502,9 @@ class InventoryJewelry extends Component {
                                 <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
                                     <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
                                     <div className="col-sm-7">
-                                        <input type="checkbox" value="ViewAsSet" {...viewAsSet}
-                                            checked={props.ViewAsSet}
+                                        <input type="checkbox" value="ViewAsSet" {...viewAsSet} checked={props.ViewAsSet}
                                             onChange={this.selectedViewAsSet} />
-                                            <span className="control-label text-vertical-top">View as Set</span>
+                                        <span className="control-label text-vertical-top">View as Set</span>
                                     </div>
                                 </div>
                             </div>
@@ -542,10 +517,8 @@ class InventoryJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.JewelryCategoryValue}
-                                        placeholder="Select your Jewelry Category"
-                                        options={dataDropDowntJewelryCategory}
-                                        onChange={this.handleJewelryCategorySelectChange} />
+                                    <Select multi simpleValue value={props.JewelryCategoryValue} placeholder="Select your Jewelry Category"
+                                        options={dataDropDowntJewelryCategory} onChange={this.handleJewelryCategorySelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -555,10 +528,8 @@ class InventoryJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.CollectionValue}
-                                        placeholder="Select your Collection"
-                                        options={dataDropDowntCollection}
-                                        onChange={this.handleCollectionSelectChange} />
+                                    <Select multi simpleValue value={props.CollectionValue} placeholder="Select your Collection"
+                                        options={dataDropDowntCollection} onChange={this.handleCollectionSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -568,10 +539,8 @@ class InventoryJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.BrandValue}
-                                        placeholder="Select your Brand"
-                                        options={dataDropDowntBrand}
-                                        onChange={this.handleBrandSelectChange} />
+                                    <Select multi simpleValue value={props.BrandValue} placeholder="Select your Brand"
+                                        options={dataDropDowntBrand} onChange={this.handleBrandSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -581,10 +550,8 @@ class InventoryJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MustHaveValue}
-                                        placeholder="Select your MustHave"
-                                        options={musthaves}
-                                        onChange={this.handleMustHaveSelectChange} />
+                                    <Select multi simpleValue value={props.MustHaveValue} placeholder="Select your MustHave"
+                                        options={musthaves} onChange={this.handleMustHaveSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -599,8 +566,7 @@ class InventoryJewelry extends Component {
                             </div>
                         </div>
                         <div className="col-lg-6 form-horizontal">
-                            <div className={`form-group ${(userLogin.permission.price == 'All'
-                                || userLogin.permission.price == 'Updated') ? ''
+                            <div className={`form-group ${(userLogin.permission.price == 'All' || userLogin.permission.price == 'Updated') ? ''
                                 : 'hidden'}`}>
                                 <label className="col-sm-4 control-label">Markup (Times)</label>
                                 <div className="col-sm-7">
@@ -615,7 +581,7 @@ class InventoryJewelry extends Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label">Gross Weight (Grams)
+                                <label className="col-sm-4 control-label">Item Weight (Grams)
                                     <OverlayTrigger placement="top" overlay={tooltipGrossWeight}>
                                         <img src="/images/alphanumeric.png" />
                                     </OverlayTrigger>
@@ -638,10 +604,8 @@ class InventoryJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MetalTypeValue}
-                                        placeholder="Select your Metal Type"
-                                        options={dataDropDowntMetalType}
-                                        onChange={this.handleMetalTypeSelectChange} />
+                                    <Select multi simpleValue value={props.MetalTypeValue} placeholder="Select your Metal Type"
+                                        options={dataDropDowntMetalType} onChange={this.handleMetalTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -651,10 +615,8 @@ class InventoryJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MetalColourValue}
-                                        placeholder="Select your Metal Colour"
-                                        options={dataDropDowntMetalColour}
-                                        onChange={this.handleMetalColourSelectChange} />
+                                    <Select multi simpleValue value={props.MetalColourValue} placeholder="Select your Metal Colour"
+                                        options={dataDropDowntMetalColour} onChange={this.handleMetalColourSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -710,13 +672,13 @@ const tooltipRingSize = (
     <Tooltip id="tooltip"><strong>Search Product by Ring Size</strong></Tooltip>
 );
 const tooltipTotalCost = (
-    <Tooltip id="tooltip"><strong>Actual Cost (USD)!</strong></Tooltip>
+    <Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>
 );
 const tooltipTotalUpdatedCost = (
     <Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>
 );
 const tooltipPublicPrice = (
-    <Tooltip id="tooltip"><strong>Public Price (USD)!</strong></Tooltip>
+    <Tooltip id="tooltip"><strong>Retail Price (USD)!</strong></Tooltip>
 );
 const tooltipMarkup = (
     <Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>

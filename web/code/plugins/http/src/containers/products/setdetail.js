@@ -188,8 +188,8 @@ class productdetail extends Component {
         }
         return(
             <div>
-              <h2>{Detailtitle}</h2>
-              <ProductDescriptionBlock {...Detail} />
+                <h2>{Detailtitle}</h2>
+                <ProductDescriptionBlock {...Detail} />
             </div>
         );
     }
@@ -212,59 +212,58 @@ class productdetail extends Component {
                 Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'STO':
-
                 Detailtitle='STONE DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'WAT':
                 Detailtitle='WATCH DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'OBA':
                 Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'ACC':
                 Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'SPA':
                 Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'CER':
                 Detailtitle='CERTIFICATE DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionmovementBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionmovementBlock {...Detail} />
                     </div>
-                  );
+                );
         }
     }
 
@@ -297,9 +296,7 @@ class productdetail extends Component {
 
     renderAttr = _ => {
         const  Detail  = this.props.productdetail;
-        const { fields:{ stonepage },
-                   lotNumbers, stonActivePage, submitting, totalpage,
-                   stonePageSize,filterSearch } = this.props;
+        const { fields:{ stonepage }, lotNumbers, stonActivePage, submitting, totalpage, stonePageSize,filterSearch } = this.props;
 
         let  Attrtitle  = '';
         if(!Detail){
@@ -314,66 +311,61 @@ class productdetail extends Component {
         }
         switch (Detail.type) {
             case 'JLY':
-                  Attrtitle='JEWELRY ATTRIBUTES';
-                  return(
-                      <div>
+                Attrtitle='JEWELRY ATTRIBUTES';
+                return(
+                    <div>
                         <h2>{Attrtitle}</h2>
-                           <ProductJewelryAttributes {...Detail} />
-                      </div>
-                    );
+                        <ProductJewelryAttributes {...Detail} />
+                    </div>
+                );
             case 'STO':
-                   Attrtitle='STONE ATTRIBUTES';
-                 if (lotNumbers.length > 0) {
-                     return(
-                         <div>
-                           <h2>{Attrtitle}</h2>
-                               <ProductStoneAttributes Detail={Detail} pageSize={stonePageSize}
-                                   totalpage={totalpage}
-                                   lotNumbers={lotNumbers} onClickPage={this.handleClickPageination}
-                                   activePage={stonActivePage} onKeyPage={this.handleKeyPage} stonepage={stonepage}/>
-                         </div>
-                       );
-                 }else{
-                     return(
-                         <div>
-                         </div>
-                       );
-                 }
-
-            case 'WAT':
-                   Attrtitle='WATCH ATTRIBUTES';
-                   return(
-                       <div>
-                         <h2>{Attrtitle}</h2>
-                             <ProductWatchAttributes {...Detail} />
-                       </div>
-                     );
-           case 'OBA':
-                  Attrtitle='OBJECT OF ART ATTRIBUTES';
-                  return(
-                      <div>
-                        <h2>{Attrtitle}</h2>
-                            <ProductObaAttributes {...Detail} />
-                      </div>
+                Attrtitle='STONE ATTRIBUTES';
+                if (lotNumbers.length > 0) {
+                    return(
+                        <div>
+                            <h2>{Attrtitle}</h2>
+                            <ProductStoneAttributes Detail={Detail} pageSize={stonePageSize} totalpage={totalpage}
+                                lotNumbers={lotNumbers} onClickPage={this.handleClickPageination}
+                                activePage={stonActivePage} onKeyPage={this.handleKeyPage} stonepage={stonepage}/>
+                        </div>
                     );
-          case 'ACC':
-                 Attrtitle='ACCESSORY ATTRIBUTES';
-                 return(
-                     <div>
-                       <h2>{Attrtitle}</h2>
-                           <ProductAccAttributes {...Detail} />
-                     </div>
-                   );
-          case 'SPA':
+                }else{
+                    return(<div></div>);
+                }
+            case 'WAT':
+                Attrtitle='WATCH ATTRIBUTES';
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductWatchAttributes {...Detail} />
+                    </div>
+                );
+            case 'OBA':
+                Attrtitle='OBJECT OF ART ATTRIBUTES';
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductObaAttributes {...Detail} />
+                    </div>
+                );
+            case 'ACC':
+                Attrtitle='ACCESSORY ATTRIBUTES';
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductAccAttributes {...Detail} />
+                    </div>
+                );
+            case 'SPA':
                 Attrtitle='SPARE PARTS ATTRIBUTES';
                 return(
                     <div>
-                      <h2>{Attrtitle}</h2>
-                          <ProductSpaAttributes {...Detail} />
+                        <h2>{Attrtitle}</h2>
+                        <ProductSpaAttributes {...Detail} />
                     </div>
-                  );
+                );
         }
-     }
+    }
 
     renderSetreference = _ => {
         const { setReferenceData } = this.props.productdetail;
@@ -400,16 +392,10 @@ class productdetail extends Component {
                     </div>
                 );
             } else {
-                return(
-                    <div>
-                    </div>
-                );
+                return(<div></div>);
             }
         }else{
-            return(
-                <div>
-                </div>
-            );
+            return(<div></div>);
         }
     }
 
@@ -430,7 +416,7 @@ class productdetail extends Component {
                     const currency = logindata.currency;
 
                     jQuery('#galleryimgset').attr('src',activegallery);
-                    jQuery('#showtotal').text('Total Public Price (Set): '+numberFormat(totalprice)+' '+'USD');
+                    jQuery('#showtotal').text('Total Retail Price (Set): '+numberFormat(totalprice)+' '+'USD');
                     let rotatecount = 0;
                     jQuery('#btnupset').click(function(){
                         jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
@@ -475,13 +461,12 @@ class productdetail extends Component {
                 if(checkInarrayObject('type','Stone',gemstoneAttr)){
                     return(
                         <div>
-                          <h2>GEMSTONES ATTRIBUTES</h2>
-                          <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr}  onClick={this.downloadCer} />
+                            <h2>GEMSTONES ATTRIBUTES</h2>
+                            <ProductGemstoneAttributes gemstoneAttrData={gemstoneAttr}  onClick={this.downloadCer} />
                         </div>
                     );
                 }
             } else {
-
             }
         }
     }
@@ -507,13 +492,12 @@ class productdetail extends Component {
                 if(checkInarrayObject('type','Loose Diamond',gemstoneAttr)){
                     return(
                         <div>
-                          <h2>DIAMONDS ATTRIBUTES</h2>
-                          <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} onClick={this.downloadCer} />
+                            <h2>DIAMONDS ATTRIBUTES</h2>
+                            <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} onClick={this.downloadCer} />
                         </div>
                     );
                 }
             } else {
-
             }
         }
     }
@@ -539,13 +523,12 @@ class productdetail extends Component {
                 if(checkInarrayObjectOther('type',gemstoneAttr)){
                     return(
                         <div>
-                          <h2>RAW MATERIAL ATTRIBUTES</h2>
-                          <ProductRawmatirialAttributes gemstoneAttrData={gemstoneAttr} />
+                            <h2>RAW MATERIAL ATTRIBUTES</h2>
+                            <ProductRawmatirialAttributes gemstoneAttrData={gemstoneAttr} />
                         </div>
                     );
                 }
             } else {
-
             }
         }
     }
@@ -557,7 +540,7 @@ class productdetail extends Component {
             if(gallery.length > 0) {
                 return(
                     <div>
-                      <ProductGallery imagegallery={gallery}/>
+                        <ProductGallery imagegallery={gallery}/>
                     </div>
                 );
             } else {
@@ -578,9 +561,7 @@ class productdetail extends Component {
         const currency = logindata.currency;
 
         if(type != 'STO' && !products && type != 'CER'){
-            return(
-                <div></div>
-            );
+            return(<div></div>);
         }
         if(type != 'STO' && dominant && type != 'CER' && products.length >= 1){
             return(
@@ -589,25 +570,23 @@ class productdetail extends Component {
                     <ProductRelete productrelte={products}/>
                     <div className="searchresult-navi pagenavi relete col-md-12 col-sm-12 nopadding">
                         <Pagination prev next first last ellipsis boundaryLinks items={totalpage} maxButtons={3}
-                              activePage={reletepage.defaultValue} onSelect={(eventKey) => {
-                                  this.props.getProductRelete(subType,eventKey,productId,dominant,currency,price[currency]);
-                              }} />
+                            activePage={reletepage.defaultValue} onSelect={(eventKey) => {
+                                this.props.getProductRelete(subType,eventKey,productId,dominant,currency,price[currency]);
+                            }}/>
                         <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
                             <span>Page</span>
                             <form onSubmit={handleSubmit(this.handleGo)} >
-                                 <input type="number" {...reletepage} />
-                                 <span>of</span>
-                                 <span>{numberFormat(totalpage)}</span>
-                                 <button>Go</button>
+                                <input type="number" {...reletepage} />
+                                <span>of</span>
+                                <span>{numberFormat(totalpage)}</span>
+                                <button>Go</button>
                             </form>
                         </div>
                     </div>
                 </div>
               );
         } else {
-            return(
-                <div></div>
-            );
+            return(<div></div>);
         }
     }
 
@@ -639,7 +618,10 @@ class productdetail extends Component {
                     </div>
                     <div className="display-right">
                         <div className="float-l bar-detail-pre">
-                               <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].reference.replace('/','-')}`:''}}><span className="icon-back"></span></Link>
+                            <Link className={productIndex == 0?'disabled-link':''}
+                                to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].reference.replace('/','-')}`:''}}>
+                                <span className="icon-back"></span>
+                            </Link>
                         </div>
                         <div className="float-l bar-detail-text">
                             <div className="float-l productdetailpage text-center nopadding">
@@ -662,12 +644,9 @@ class productdetail extends Component {
 
     addMyCatalog = _=> {
         this.props.getCatalogNameSetItem().then(() =>{
-          const { fields: {
-                    oldCatalogName,newCatalogName,validateCatalogName
-                } } = this.props;
-
-                oldCatalogName.value = ''
-                newCatalogName.value = ''
+            const { fields: {oldCatalogName,newCatalogName,validateCatalogName} } = this.props;
+            oldCatalogName.value = ''
+            newCatalogName.value = ''
             this.setState({isOpenAddMyCatalog: true});
         });
     }
@@ -687,9 +666,7 @@ class productdetail extends Component {
     handleSubmitCatalog = (e)=> {
         e.preventDefault();
         this.setState({isOpenAddMyCatalog: false});
-        const { fields: {
-            oldCatalogName,newCatalogName,validateCatalogName
-        }, viewAsSet } = this.props;
+        const { fields: {oldCatalogName,newCatalogName,validateCatalogName}, viewAsSet } = this.props;
         const  Detail  = this.props.productdetail;
         const  listCatalogName  = this.props.listCatalogName;
         let oldCatalogTitle = ''
@@ -955,13 +932,9 @@ class productdetail extends Component {
                             <div className="panel-body padding-ft0">
                                 <div className="col-md-4 col-sm-12">
                                     <div className="mg-tb thumbnaillgrid">
-                                        <ReactImageFallback
-                                           src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
-                                             fallbackImage="/images/blank.gif"
-                                             initialImage="/images/blank.gif"
-                                             width={200}
-                                             height={200}
-                                             className="img-responsive image-gallery-image" />
+                                        <ReactImageFallback src={gallery.length !== 0 ? gallery[0].original :'/images/blank.gif' }
+                                            fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={200} height={200}
+                                            className="img-responsive image-gallery-image" />
                                      </div>
                                 </div>
                                 <div className="col-md-8 col-sm-12">
@@ -989,8 +962,6 @@ function mapStateToProps(state) {
         productrelete: state.productdetail.relete,
         listCatalogName: state.productdetail.ListCatalogName,
         message: state.productdetail.message,
-        //setreference:state.productdetail.setreference,
-        //productreletepage: state.productdetail.reletepage,
         productlist: state.productdetail.productlist,
         lotNumbers: state.productdetail.lotNumbers,
         stonActivePage: state.productdetail.stonActivePage,
