@@ -9,7 +9,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
   titles.push('Item Reference', 'Item Description', 'SKU', 'Vendor Item Reference');
   if (userLogin.currency != 'USD') {
     if (userLogin.permission.price == 'All') {
-      titles.push('Actual Price (' + userLogin.currency + ')');
+      titles.push('Cost Price (' + userLogin.currency + ')');
     }
     if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
       titles.push('Updated Price (' + userLogin.currency + ')');
@@ -20,7 +20,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }
 
     if (userLogin.permission.price == 'All') {
-      titles.push('Actual Price (USD)');
+      titles.push('Cost Price (USD)');
     }
     if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
       titles.push('Updated Price (USD)');
@@ -31,7 +31,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }
   } else {
     if (userLogin.permission.price == 'All') {
-      titles.push('Actual Price (USD)');
+      titles.push('Cost Price (USD)');
     }
     if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
       titles.push('Updated Price (USD)');
@@ -264,7 +264,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
                           ''); // Vendor ref
           if (userLogin.currency != 'USD') {
             if (userLogin.permission.price == 'All') {
-              arrayItems.push(numberFormat(gemstone.cost[userLogin.currency])); // actual Price
+              arrayItems.push(numberFormat(gemstone.cost[userLogin.currency])); // Cost Price
             }
             if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
               arrayItems.push(''); // updated Price
@@ -275,7 +275,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             }
 
             if (userLogin.permission.price == 'All') {
-                arrayItems.push(numberFormat(gemstone.cost['USD'])); // actual Price (USD)
+                arrayItems.push(numberFormat(gemstone.cost['USD'])); // Cost Price (USD)
             }
             if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
                 arrayItems.push(''); // updated Price (USD)
@@ -286,7 +286,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             }
           }else{
             if (userLogin.permission.price == 'All') {
-              arrayItems.push(numberFormat(gemstone.cost['USD']));// actual Price (USD)
+              arrayItems.push(numberFormat(gemstone.cost['USD']));// Cost Price (USD)
             }
             if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
               arrayItems.push(''); // updated Price (USD)

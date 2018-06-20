@@ -36,21 +36,21 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             titles.push('Item Reference', 'Description');
 
             if (priceSalesCTP) {
-                titles.push('Total Actual Cost (USD)');
+                titles.push('Total Cost Price (USD)');
             }
             if (priceSalesUCP) {
                 titles.push('Total Updated Cost (USD)');
             }
             if (priceSalesRTP) {
-                titles.push('Total Public Price (USD)');
+                titles.push('Total Retail Price (USD)');
             }
 
             if(fields.allFieldsViewAsSet){
                 titles.push('Markup (Times)', 'Company','Location', 'Posted Date');
             }else{
-                if(fields.totalActualCost) titles.push('Total Actual Cost (USD)');
+                if(fields.totalActualCost) titles.push('Total Cost Price (USD)');
                 if(fields.totalUpdatedCost) titles.push('Total Updated Cost (USD)');
-                if(fields.totalPrice) titles.push('Total Public Price (USD)');
+                if(fields.totalPrice) titles.push('Total Retail Price (USD)');
                 if(fields.markup) titles.push('Markup (Times)');
                 if(fields.companyName) titles.push('Company');
                 if(fields.warehouseName) titles.push('Location');
@@ -62,13 +62,13 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
 
             titles.push('Item Reference', 'Item Description', 'SKU');
             if (priceSalesCTP) {
-                titles.push('Actual Price (USD)');
+                titles.push('Cost Price (USD)');
             }
             if (priceSalesUCP) {
                 titles.push('Updated Price (USD)');
             }
             if (priceSalesRTP) {
-                titles.push('Public Price (USD)');
+                titles.push('Retail Price (USD)');
             }
             if (priceSalesNSP) {
                 titles.push('Net Sales (USD)');
@@ -89,7 +89,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             if(fields.allFields){
                 titles.push(
                     'Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color', 'Clarity','Carat Wt', 'Unit', 
-                    'Qty','Origin','Symmetry','Flourance','Batch','Net Weight', 'Stone Qty','Dominant Stone', 'Markup%','Certificate Number','Certificate Date', 
+                    'Qty','Origin','Symmetry','Flourance','Batch','Gold weight (Grams)', 'Stone Qty','Dominant Stone', 'Markup%','Certificate Number','Certificate Date', 
                     'Vendor Code', 'Vendor Name', 'Metal Colour', 'Metal','Brand','Complication','Strap Type','Strap Color', 'Buckle Type','Dial Index',
                     'Dial Color','Movement','Serial #','Limited Edition', 'Limited Edition #','Created Date','Posted Date', 'Sales Id','Sales Person Name',
                     'Sales Channel Type', 'Customer','Customer Name','Invoiced Id', 'Invoice Date','Size'
@@ -111,7 +111,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 if(fields.symmetry) titles.push('Symmetry');
                 if(fields.flourance) titles.push('Flourance');
                 if(fields.batch) titles.push('Batch');
-                if(fields.netWeight) titles.push('Net Weight');
+                if(fields.netWeight) titles.push('Gold weight (Grams)');
                 if(fields.stoneQty) titles.push('Stone Qty');
                 if(fields.dominantStone) titles.push('Dominant Stone');
                 if(fields.markup) titles.push('Markup%');

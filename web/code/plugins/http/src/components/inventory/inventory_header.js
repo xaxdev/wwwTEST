@@ -23,10 +23,7 @@ class InventoryHeader extends Component {
     handleWarehouseSelectChange (WarehouseSelectValue) {
         let {fields:{ warehouse}, searchResult} = this.props.props;
 
-        let paramsHeader = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
-
+        let paramsHeader = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
 
         if(paramsHeader != null)
             paramsHeader.warehouse = WarehouseSelectValue;
@@ -39,9 +36,7 @@ class InventoryHeader extends Component {
     handleLocationSelectChange(LocationSelectValue){
         let {fields:{ location },searchResult} = this.props.props;
 
-        let paramsLocation = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch.location:
-                              null;
+        let paramsLocation = (searchResult.paramsSearch != null)? searchResult.paramsSearch.location: null;
 
         paramsLocation = LocationSelectValue;
 
@@ -56,11 +51,9 @@ class InventoryHeader extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)?
-                              searchResult.paramsSearch:
-                              null;
+        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
-          paramsSearch.dominantStone = DominantStoneSelectValue;
+            paramsSearch.dominantStone = DominantStoneSelectValue;
 
         dominantStone.onChange(DominantStoneSelectValue);
         props.inventoryActions.setDataDominantStone(DominantStoneSelectValue);
@@ -180,148 +173,133 @@ class InventoryHeader extends Component {
         }
         return (
             <div >
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="panel panel-default">
-                    <div className="panel-body">
-                      <div className="row margin-ft">
-                        <div className="col-md-6 col-sm-12 form-horizontal">
-                            <div className="form-group">
-                              <label className="col-sm-4 control-label">Item Reference</label>
-                               <div className="col-sm-7">
-                                  <input type="text" className="form-control"
-                                      placeholder="Enter Multiple Item Ref separated with comma" {...reference}/>
-                               </div>
-                            </div>
-                            <div className="form-group">
-                              <label className="col-sm-4 control-label">Item Description</label>
-                              <div className="col-sm-7">
-                                  <input type="text" className="form-control" {...description}/>
-                              </div>
-                            </div>
-                            <div className="form-group">
-                              <label className="col-sm-4 control-label">Vendor Item Reference</label>
-                              <div className="col-sm-7">
-                                  <input type="text" className="form-control" {...venderReference}/>
-                              </div>
-                            </div>
-                            <div className="form-group">
-                              <label className="col-sm-4 control-label">Vendor Name</label>
-                              <div className="col-sm-7">
-                                  <input type="text" className="form-control" {...vendorName}/>
-                              </div>
-                            </div>
-                            <div className="form-group">
-                              <label className="col-sm-4 control-label">Certificated Number</label>
-                              <div className="col-sm-7">
-                                  <input type="text" className="form-control" {...certificatedNumber}/>
-                              </div>
-                            </div>
-                            <div className={`form-group ${(userLogin.permission.onhandLocation != undefined) ? '' :
-                                              'hidden'}` }>
-                              <label className="col-sm-4 control-label">Company</label>
-                              <div className= "col-sm-7">
-                                <Select multi simpleValue
-                                    value={this.props.props.LocationValue}
-                                    placeholder="Select your Company"
-                                    options={dataDropDowntLocations}
-                                    onChange={this.handleLocationSelectChange}
-                                    disabled={(userLogin.permission.onhandLocation != undefined) ? false : true}
-                                    ref="location"/>
-                              </div>
-                            </div>
-                            <div className={`form-group ${(userLogin.permission.onhandWarehouse != undefined) ?'' :
-                                              'hidden'}` }>
-                              <label className="col-sm-4 control-label">Location</label>
-                              <div className="col-sm-7">
-                                  <Select multi simpleValue
-                                    value={this.props.props.WarehouseValue}
-                                    placeholder="Select your Location"
-                                    options={dataDropDowntWareHouse}
-                                    onChange={this.handleWarehouseSelectChange}
-                                    disabled={(userLogin.permission.onhandWarehouse != undefined) ? false : true}/>
-                              </div>
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="panel panel-default">
+                            <div className="panel-body">
+                                <div className="row margin-ft">
+                                    <div className="col-md-6 col-sm-12 form-horizontal">
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Item Reference</label>
+                                             <div className="col-sm-7">
+                                                <input type="text" className="form-control"
+                                                    placeholder="Enter Multiple Item Ref separated with comma" {...reference}/>
+                                             </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Item Description</label>
+                                            <div className="col-sm-7">
+                                                <input type="text" className="form-control" {...description}/>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Vendor Item Reference</label>
+                                            <div className="col-sm-7">
+                                                <input type="text" className="form-control" {...venderReference}/>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Vendor Name</label>
+                                            <div className="col-sm-7">
+                                                <input type="text" className="form-control" {...vendorName}/>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Certificated Number</label>
+                                            <div className="col-sm-7">
+                                                <input type="text" className="form-control" {...certificatedNumber}/>
+                                            </div>
+                                        </div>
+                                        <div className={`form-group ${(userLogin.permission.onhandLocation != undefined) ? '' : 'hidden'}` }>
+                                            <label className="col-sm-4 control-label">Company</label>
+                                            <div className= "col-sm-7">
+                                                <Select multi simpleValue value={this.props.props.LocationValue} placeholder="Select your Company"
+                                                    options={dataDropDowntLocations} onChange={this.handleLocationSelectChange}
+                                                    disabled={(userLogin.permission.onhandLocation != undefined) ? false : true} ref="location"/>
+                                            </div>
+                                        </div>
+                                        <div className={`form-group ${(userLogin.permission.onhandWarehouse != undefined) ?'' : 'hidden'}` }>
+                                            <label className="col-sm-4 control-label">Location</label>
+                                            <div className="col-sm-7">
+                                                <Select multi simpleValue value={this.props.props.WarehouseValue} placeholder="Select your Location"
+                                                    options={dataDropDowntWareHouse} onChange={this.handleWarehouseSelectChange}
+                                                    disabled={(userLogin.permission.onhandWarehouse != undefined) ? false : true}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6 col-sm-12 form-horizontal">
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">SKU</label>
+                                            <div className="col-sm-7">
+                                                <input type="text" className="form-control" {...sku}/>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Dominant Stone</label>
+                                            <div className="col-sm-7">
+                                                <Select multi simpleValue value={props.DominantStoneValue} placeholder="Select your Dominant Stone"
+                                                  options={dataDropDowntDominantStone} onChange={this.handleDominantStoneSelectChange} />
+                                            </div>
+                                        </div>
+                                        <div className={`form-group ${(userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
+                                            <label className="col-sm-4 control-label">Cost Price ({userLogin.currency})</label>
+                                            <div className="col-sm-7">
+                                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                                                <div className="col-sm-4 nopadding">
+                                                    <input type="number" className="form-control" {...totalCostFrom}/>
+                                                </div>
+                                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                                                <div className="col-sm-4 nopadding">
+                                                    <input type="number" className="form-control" {...totalCostTo}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className={`form-group ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                                            '' : 'hidden'}`}>
+                                            <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
+                                            <div className="col-sm-7">
+                                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                                                <div className="col-sm-4 nopadding">
+                                                    <input type="number" className="form-control" {...totalUpdatedCostFrom}/>
+                                                </div>
+                                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                                                <div className="col-sm-4 nopadding">
+                                                    <input type="number" className="form-control" {...totalUpdatedCostTo}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className={`form-group ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                            || userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
+                                            <label className="col-sm-4 control-label">Retail Price ({userLogin.currency})</label>
+                                            <div className="col-sm-7">
+                                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                                                <div className="col-sm-4 nopadding">
+                                                    <input type="number" className="form-control" {...publicPriceFrom}/>
+                                                </div>
+                                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                                                <div className="col-sm-4 nopadding">
+                                                    <input type="number" className="form-control" {...publicPriceTo}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Attachment</label>
+                                            <div className="col-sm-7">
+                                                <input id="file" type="file" field={reference} onChange={this.readFile}/>
+                                                <span id="fileName"></span>
+                                                <input type="button" id="btn-browsefile" value=" "/>
+                                                <div className="font-nor control-label">
+                                                    The system able to import only excel file. Click here to download a format file
+                                                    <a href={ROOT_URL+'/upload_file/Mol_upload_items.xlsx'} >Mol upload items.xlsx</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="col-md-6 col-sm-12 form-horizontal">
-                            <div className="form-group">
-                              <label className="col-sm-4 control-label">SKU</label>
-                              <div className="col-sm-7">
-                                  <input type="text" className="form-control" {...sku}/>
-                              </div>
-                            </div>
-
-                            <div className="form-group">
-                              <label className="col-sm-4 control-label">Dominant Stone</label>
-                              <div className="col-sm-7">
-                                <Select multi simpleValue value={props.DominantStoneValue}
-                                  placeholder="Select your Dominant Stone"
-                                  options={dataDropDowntDominantStone}
-                                  onChange={this.handleDominantStoneSelectChange} />
-                              </div>
-                            </div>
-                            <div className={`form-group ${(userLogin.permission.price == 'All') ?
-                                '' : 'hidden'}`}>
-                              <label className="col-sm-4 control-label">Cost Price ({userLogin.currency})</label>
-                              <div className="col-sm-7">
-                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                                <div className="col-sm-4 nopadding">
-                                  <input type="number" className="form-control" {...totalCostFrom}/>
-                                </div>
-                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                                <div className="col-sm-4 nopadding">
-                                  <input type="number" className="form-control" {...totalCostTo}/>
-                                </div>
-                              </div>
-                            </div>
-                            <div className={`form-group ${(userLogin.permission.price == 'Updated'
-                                                          || userLogin.permission.price == 'All') ?
-                                                          '' : 'hidden'}`}>
-                              <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
-                              <div className="col-sm-7">
-                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                                <div className="col-sm-4 nopadding">
-                                  <input type="number" className="form-control" {...totalUpdatedCostFrom}/>
-                                </div>
-                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                                <div className="col-sm-4 nopadding">
-                                  <input type="number" className="form-control" {...totalUpdatedCostTo}/>
-                                </div>
-                              </div>
-                            </div>
-                            <div className={`form-group ${(userLogin.permission.price == 'Public'
-                                                          || userLogin.permission.price == 'Updated'
-                                                          || userLogin.permission.price == 'All') ?
-                                                        '' : 'hidden'}`}>
-                              <label className="col-sm-4 control-label">Retail Price ({userLogin.currency})</label>
-                               <div className="col-sm-7">
-                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                                <div className="col-sm-4 nopadding">
-                                  <input type="number" className="form-control" {...publicPriceFrom}/>
-                                </div>
-                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                                <div className="col-sm-4 nopadding">
-                                  <input type="number" className="form-control" {...publicPriceTo}/>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="form-group">
-                              <label className="col-sm-4 control-label">Attachment</label>
-                              <div className="col-sm-7">
-
-                                <input id="file" type="file" field={reference} onChange={this.readFile}/>
-                                <span id="fileName"></span>
-                                <input type="button" id="btn-browsefile" value=" "/>
-                                <div className="font-nor control-label">The system able to import only excel file. Click here to download a format file <a href={ROOT_URL+'/upload_file/Mol_upload_items.xlsx'} >Mol upload items.xlsx</a></div>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
         );
     }
