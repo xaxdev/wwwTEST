@@ -22,6 +22,12 @@ export const OBA_QUERY = './query/oba.sql';
 export const ACCESSORY_QUERY = './query/accessory.sql';
 export const SPARE_PARTS_QUERY = './query/spare_parts.sql';
 export const SOLDITEM_QUERY = './query/sold_item.sql';
+export const SOLDITEM_JEWELRY_QUERY = './query/sold_item_jewelry.sql';
+export const SOLDITEM_STONES_QUERY = './query/sold_item_stone.sql';
+export const SOLDITEM_WATCHES_QUERY = './query/sold_item_watch.sql';
+export const SOLDITEM_OBA_QUERY = './query/sold_item_oba.sql';
+export const SOLDITEM_ACCESSORY_QUERY = './query/sold_item_accessory.sql';
+export const SOLDITEM_SPARE_PARTS_QUERY = './query/sold_item_spare_part.sql';
 
 // Master
 export const COMPANY_QUERY = './query/master/company.sql';
@@ -74,6 +80,7 @@ export const SET_SOLD_QUERY = './query/set_sold_item.sql';
 
 // CertificateWarehouse
 export const CERTIFICATE_QUERY = './query/certificate.sql';
+export const SOLDITEM_CERTIFICATE_QUERY = './query/sold_item_certificate.sql';
 
 // Stone Lot Number
 export const STONESLOT_QUERY = './query/lot.sql';
