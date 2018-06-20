@@ -54,30 +54,30 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             titles.push('Item Reference', 'Item Description', 'SKU', 'Vendor Item Reference');
             if (userCurrency != 'USD') {
                 if (price == 'All') {
-                    titles.push('Actual Price (' + userCurrency + ')');
+                    titles.push('Cost Price (' + userCurrency + ')');
                 }
                 if (price == 'Updated' || price == 'All') {
-                    titles.push('Updated Price (' + userCurrency + ')');
+                    titles.push('Updated Cost (' + userCurrency + ')');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
                     titles.push('Retail Price (' + userCurrency + ')');
                 }
 
                 if (price == 'All') {
-                    titles.push('Actual Price (USD)');
+                    titles.push('Cost Price (USD)');
                 }
                 if (price == 'Updated' || price == 'All') {
-                    titles.push('Updated Price (USD)');
+                    titles.push('Updated Cost (USD)');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
                     titles.push('Retail Price (USD)');
                 }
             } else {
                 if (price == 'All') {
-                    titles.push('Actual Price (USD)');
+                    titles.push('Cost Price (USD)');
                 }
                 if (price == 'Updated' || price == 'All') {
-                    titles.push('Updated Price (USD)');
+                    titles.push('Updated Cost (USD)');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
                     titles.push('Retail Price (USD)');
