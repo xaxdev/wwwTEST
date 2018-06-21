@@ -31,7 +31,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                         </span>
                                         <span class="${(userPermissionPrice == 'Public' || userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ?
                                             '' : 'hidden'}">
-                                            <span style="font-weight: bold; color: #000;">Total Retail Price :</span>
+                                            <span style="font-weight: bold; color: #000;">Total Price :</span>
                                             <span class="font-w9">
                                                 <span>${numberFormat(datas.summary.price)}</span>
                                                 <span> </span>
@@ -138,8 +138,8 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                                 <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader"
-                                                                    scope="col" tabindex="0" aria-sort="none" aria-label="Retail Price: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Retail Price</span>
+                                                                    scope="col" tabindex="0" aria-sort="none" aria-label="Price: activate to sort column ascending" style="width: 0px;">
+                                                                    <span>Price</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                             </tr>

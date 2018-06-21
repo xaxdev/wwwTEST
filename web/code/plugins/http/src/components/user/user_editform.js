@@ -902,13 +902,13 @@ class UserDetailsFrom extends Component {
                                                 <div className="col-sm-4">
                                                     <label>
                                                         <input type="radio" {...price} value="Public"
-                                                            checked={price.value === 'Public'} /> Only Retail Price
+                                                            checked={price.value === 'Public'} /> Only Price
                                                     </label>
                                                 </div>
                                                 <div className="col-sm-4">
                                                     <label>
                                                         <input type="radio" {...price} value="Updated"
-                                                            checked={price.value === 'Updated'} /> View Updated Cost and Retail Price
+                                                            checked={price.value === 'Updated'} /> View Updated Cost and Price
                                                     </label>
                                                 </div>
                                                 <div className="col-sm-2">

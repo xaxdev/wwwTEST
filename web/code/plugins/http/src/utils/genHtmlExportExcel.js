@@ -15,7 +15,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             titles.push('Updated Price (' + userLogin.currency + ')');
         }
         if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
-            titles.push('Retail Price (' + userLogin.currency + ')');
+            titles.push('Price (' + userLogin.currency + ')');
         }
 
         if (userLogin.permission.price == 'All') {
@@ -25,7 +25,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             titles.push('Updated Price (USD)');
         }
         if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
-            titles.push('Retail Price (USD)');
+            titles.push('Price (USD)');
         }
     } else {
         if (userLogin.permission.price == 'All') {
@@ -35,7 +35,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
             titles.push('Updated Price (USD)');
         }
         if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
-            titles.push('Retail Price (USD)');
+            titles.push('Price (USD)');
         }
     }
 
@@ -257,7 +257,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
                             arrayItems.push(''); // updated Price
                         }
                         if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
-                            arrayItems.push('');// Retail Price
+                            arrayItems.push('');// Price
                         }
 
                         if (userLogin.permission.price == 'All') {
@@ -267,7 +267,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
                             arrayItems.push(''); // updated Price (USD)
                         }
                         if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
-                            arrayItems.push('');// Retail Price (USD)
+                            arrayItems.push('');// Price (USD)
                         }
                     }else{
                         if (userLogin.permission.price == 'All') {
@@ -277,7 +277,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
                             arrayItems.push(''); // updated Price (USD)
                         }
                         if (userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
-                            arrayItems.push('');// Retail Price (USD)
+                            arrayItems.push('');// Price (USD)
                         }
                     }
 

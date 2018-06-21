@@ -271,7 +271,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                     arrayItems.push(''); // updated Price
                                 }
                                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                                    arrayItems.push('');// Retail Price
+                                    arrayItems.push('');// Price
                                 }
 
                                 if (price == 'All') {
@@ -281,7 +281,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                     arrayItems.push(''); // updated Price (USD)
                                 }
                                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                                    arrayItems.push('');// Retail Price (USD)
+                                    arrayItems.push('');// Price (USD)
                                 }
                             }else{
                                 if (price == 'All') {
@@ -291,7 +291,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                     arrayItems.push(''); // updated Price (USD)
                                 }
                                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                                    arrayItems.push('');// Retail Price (USD)
+                                    arrayItems.push('');// Price (USD)
                                 }
                             }
 
