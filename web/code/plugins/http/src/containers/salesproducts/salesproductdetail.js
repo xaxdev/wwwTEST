@@ -41,7 +41,7 @@ import '../../utils/magnific-popup.js';
 
 const Loading = require('react-loading');
 
-class productdetail extends Component {
+class SalesProductDetail extends Component {
     constructor(props) {
         super(props);
 
@@ -489,14 +489,8 @@ class productdetail extends Component {
                         <h2>SET DETAILS</h2>
                         <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
                             <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
-                            <ReactImageFallback
-                                id="imgset"
-                                src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                                fallbackImage="/images/blank.gif"
-                                initialImage="/images/blank.gif"
-                                width={120}
-                                height={120}
-                                className="img-responsive" />
+                            <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                                fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={120} height={120} className="img-responsive" />
                         </div>
                         <Setreference productset={setReferenceData}/>
                     </div>
@@ -1050,7 +1044,7 @@ class productdetail extends Component {
                 }
             });
         }
-        let pructdetailurl = '/productdetail/';
+        let pructdetailurl = '/salesproductdetail/';
         return(
             <div id="page-wrapper">
                 <div className="col-sm-12 bg-hearder m-prodcutdetail">
@@ -1165,7 +1159,7 @@ const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</str
 const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>);
 const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>);
 
-productdetail.contextTypes = {
+SalesProductDetail.contextTypes = {
     router: PropTypes.object
 };
 
@@ -1194,4 +1188,4 @@ module.exports = reduxForm({
     form: 'Pageform',
     fields: ['pagego','reletepage','oldCatalogName','newCatalogName','validateCatalogName','stonepage'],
     validate:validateCatalog
-},mapStateToProps,productdetailaction)(productdetail)
+},mapStateToProps,productdetailaction)(SalesProductDetail)

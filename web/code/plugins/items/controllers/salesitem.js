@@ -35,9 +35,9 @@ module.exports = {
             try {
                 const [productResult] = response.hits.hits.map((element) => element._source);
                 if (!productResult) {
-                    return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
+                    return reply(Boom.badRequest('Couldn\'t found data product detail of item:' + id));
                 }
-                
+
                 const query = JSON.parse(
                     `{
                         "query":{
@@ -57,7 +57,7 @@ module.exports = {
                         }
                     }`
                 );
-        
+
                 return elastic.search({
                     index: 'mol_solditems',
                     type: 'setitems',
@@ -68,7 +68,7 @@ module.exports = {
                 return reply(Boom.badImplementation(err));
             }
         });
-        
+
         const getMovements = getProductDetail.then((response) => {
             try {
                 const [productResult] = response.hits.hits.map((element) => element._source);
@@ -76,7 +76,7 @@ module.exports = {
                     return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
                 }
                 const query =  GetMovement(productResult.reference,productResult.sku);
-        
+
                 return elastic.search({
                     index: 'mol_solditems',
                     type: 'activities',
@@ -87,7 +87,7 @@ module.exports = {
                 return reply(Boom.badImplementation(err));
             }
         });
-        
+
         const getGOCs = getProductDetail.then((response) => {
             try {
                 const [productResult] = response.hits.hits.map((element) => element._source);
@@ -95,7 +95,7 @@ module.exports = {
                     return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
                 }
                 const query =  GetGOC(productResult.reference,productResult.sku);
-        
+
                 return elastic.search({
                     index: 'mol_solditems',
                     type: 'activities',
@@ -112,7 +112,7 @@ module.exports = {
                 // add certificate images to item gallery
                 if (!!productResult.gemstones) {
                     let certificateImages = productResult.gemstones.reduce((certificateImages, gemstone) => (gemstone.certificate && gemstone.certificate.images)? certificateImages.concat(gemstone.certificate.images) : certificateImages, [])
-        
+
                     //change path original image of certificate by korakod
                     certificateImages = certificateImages.map((images) => {
                         let { original, thumbnail } = images;
@@ -122,13 +122,13 @@ module.exports = {
                     });
                     productResult.gallery.push(...certificateImages)
                 }
-        
+
                 const [setReferenceData] = setReference.hits.hits.map((element) => element._source);
                 if(typeof setReferenceData === 'undefined'){
                     productResult.setReferenceData = '';
                 } else {
                     let len = setReferenceData.items.length;
-        
+
                     let productdata = [];
                     for (let i = 0; i < len; i++) {
                         if(productResult.id !== setReferenceData.items[i].id){
@@ -155,9 +155,9 @@ module.exports = {
                     movement: movement,
                     goc: goc
                 };
-        
+
                 productResult.activities = activities;
-        
+
                 elastic.close();
                 return reply(JSON.stringify(productResult, null, 4));
             })
@@ -166,7 +166,7 @@ module.exports = {
                 console.log(err);
                 return reply(Boom.badImplementation(err));
             });
-        
+
         } catch (err) {
             elastic.close();
             return reply(Boom.badImplementation(err));

@@ -7,33 +7,31 @@ import { Modal, ModalClose } from 'react-modal-bootstrap';
 import jQuery from 'jquery';
 import moment from 'moment-timezone';
 import * as gemstoneattrdetailaction from '../../actions/gemstoneattrdetailaction';
-import ProductDescriptionBlock from '../../components/productdetail/productDescription';
-import ProductDescriptionSet from '../../components/productdetail/setDescription';
-import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptioncer';
-import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributes';
-import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
-import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
-import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributes';
-import ProductGallery from '../../components/productdetail/productGallery';
-import ProductRelete from '../../components/productdetail/productReleted';
-import ProductPrint from '../../components/productdetail/productPrint';
-import ProductObaAttributes from '../../components/productdetail/productObaAttributes';
-import ProductAccAttributes from '../../components/productdetail/productAccAttributes';
-import ProductSpaAttributes from '../../components/productdetail/productSppAttributes';
-import Setreference from '../../components/productdetail/productset';
+import ProductDescriptionBlock from '../../components/salesproductdetail/productDescription';
+import ProductDescriptionSet from '../../components/salesproductdetail/setDescription';
+import ProductDescriptioncerBlock from '../../components/salesproductdetail/productDescriptioncer';
+import ProductJewelryAttributes from '../../components/salesproductdetail/productJewalryAttributes';
+import ProductStoneAttributes from '../../components/salesproductdetail/productStoneAttributes';
+import ProductWatchAttributes from '../../components/salesproductdetail/productWatchAttributes.js';
+import ProductGemstoneAttributes from '../../components/salesproductdetail/productGemstonesAttributes';
+import ProductGallery from '../../components/salesproductdetail/productGallery';
+import ProductRelete from '../../components/salesproductdetail/productReleted';
+import ProductPrint from '../../components/salesproductdetail/productPrint';
+import ProductObaAttributes from '../../components/salesproductdetail/productObaAttributes';
+import ProductAccAttributes from '../../components/salesproductdetail/productAccAttributes';
+import ProductSpaAttributes from '../../components/salesproductdetail/productSppAttributes';
+import Setreference from '../../components/salesproductdetail/productset';
 import numberFormat from '../../utils/convertNumberformatwithcomma';
-import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
-import ModalShowImages from '../../components/productdetail/modalShowImages';
-import ModalShowFilesPDF from '../../components/productdetail/modalShowFilesPDF';
-import Modalalertmsg from '../../components/productdetail/modalalertmsg';
+import ModalShowImages from '../../components/salesproductdetail/modalShowImages';
+import ModalShowFilesPDF from '../../components/salesproductdetail/modalShowFilesPDF';
 import validateCatalog from '../../utils/validatecatalogproductdetail';
 import ModalalertMsgObj from '../../utils/modalalertmsg';
-import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributes';
-import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributes';
+import ProductDiamonsAttributes from  '../../components/salesproductdetail/productDiamondsAttributes';
+import ProductRawmatirialAttributes from  '../../components/salesproductdetail/productRawmaterialAttributes';
 import ReactImageFallback from 'react-image-fallback';
-import Movementlist from '../../components/productdetail/productmovement.js';
-import Goclist from '../../components/productdetail/productgoc.js'
-import ProductDescriptionmovementBlock from '../../components/productdetail/productDescmovement'
+import Movementlist from '../../components/salesproductdetail/productmovement.js';
+import Goclist from '../../components/salesproductdetail/productgoc.js'
+import ProductDescriptionmovementBlock from '../../components/salesproductdetail/productDescmovement'
 import checkInarrayObject from '../../utils/checkInarrayObject';
 import checkInarrayObjectOther from '../../utils/checkInarrayObjectOther';
 import '../../../public/css/image-gallery.css';
@@ -51,8 +49,6 @@ class SalesProductReleteDetail extends Component {
         this.handleKeyChangeNavigation = this.handleKeyChangeNavigation.bind(this);
         this.state = {
             productdetailLoading: false,
-            isOpenAddMyCatalog: false,
-            isOpenAddMyCatalogmsg: false,
             isOpenDownloadCerMsg: false,
             showmovement: false,
             showCOA: false,
@@ -66,13 +62,13 @@ class SalesProductReleteDetail extends Component {
         const productlist = this.props.productlist;
         this.setState({ productdetailLoading: true });
 
-        this.props.getProductDetail(productId).then(()=>{
+        this.props.getSalesProductDetail(productId).then(()=>{
             const  Detail  = this.props.productdetail;
             if(Detail.type != 'STO' || Detail.type != 'CER'){
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
                 const currency = logindata.currency;
                 if(Detail.dominant){
-                    this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                    this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
                 }
             }
             this.setState({ productdetailLoading: false });
@@ -140,12 +136,12 @@ class SalesProductReleteDetail extends Component {
             const productId = nextProps.params.id;
             this.setState({ productdetailLoading: true });
             const productlist = this.props.productlist;
-            this.props.getProductDetail(productId).then(()=>{
+            this.props.getSalesProductDetail(productId).then(()=>{
                 const  Detail  = this.props.productdetail;
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
                 const currency = logindata.currency;
                 if(Detail.dominant){
-                    this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
+                    this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
                 }
                 this.setState({ productdetailLoading: false });
             });
@@ -603,7 +599,7 @@ class SalesProductReleteDetail extends Component {
                     <div className="searchresult-navi pagenavi relete col-md-12 col-sm-12 nopadding">
                         <Pagination prev next first last ellipsis boundaryLinks items={totalpage} maxButtons={3}
                             activePage={reletepage.defaultValue} onSelect={(eventKey) => {
-                                this.props.getProductRelete(subType,eventKey,productId,dominant,currency,price[currency]);
+                                this.props.getSalesProductRelete(subType,eventKey,productId,dominant,currency,price[currency]);
                             }}/>
                         <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
                             <span>Page</span>
@@ -632,21 +628,21 @@ class SalesProductReleteDetail extends Component {
         if((getPage <= totalpage) && (getPage != 0)){
             const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
             const currency = logindata.currency;
-            this.props.getProductRelete(subType,getPage,productId,dominant,currency,price[currency]);
+            this.props.getSalesProductRelete(subType,getPage,productId,dominant,currency,price[currency]);
         }
     }
 
     handleKeyPressNavigation = (event) => {
         if(event.key == 'Enter'){
             const productid = this.props.productlist[event.target.value-1].id;
-            this.context.router.push(`/productdetail/${productid}`);
+            this.context.router.push(`/salesproductdetail/${productid}`);
         }
     }
 
     handleKeyChangeNavigation = (event) => {
         if(event.key == 'Enter'){
             const productid = this.props.productlist[event.target.value-1].id;
-            this.context.router.push(`/productdetail/${productid}`);
+            this.context.router.push(`/salesproductdetail/${productid}`);
         }
     }
 
@@ -765,19 +761,10 @@ class SalesProductReleteDetail extends Component {
         return(
             <div className="width-50 productreletedetail-width maring-t15">
                 <div className="col-md-12 col-sm-12 ft-white productdetail-search">
-                   <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
+                   <Link to={'/salessearchresult'} className="btn btn-searchresult">Search Result</Link>
                 </div>
             </div>
         );
-    }
-
-    addMyCatalog = _ =>{
-        this.props.getCatalogNameSetItem().then(() =>{
-            const { fields: { oldCatalogName,newCatalogName,validateCatalogName } } = this.props;
-            oldCatalogName.value = '';
-            newCatalogName.value = '';
-            this.setState({isOpenAddMyCatalog: true});
-        });
     }
 
     showmovement = _ => {
@@ -786,55 +773,6 @@ class SalesProductReleteDetail extends Component {
 
     hidemovement = _ => {
         this.setState({ showmovement: false });
-    }
-
-    handleClose = _ => {
-        this.setState({ isOpenAddMyCatalog: false });
-    }
-
-    handleSubmitCatalog = (e) => {
-        e.preventDefault();
-        this.setState({ isOpenAddMyCatalog: false });
-        const { fields: { oldCatalogName,newCatalogName,validateCatalogName } } = this.props;
-        const  Detail  = this.props.productdetail;
-        const  listCatalogName  = this.props.listCatalogName;
-        let oldCatalogTitle = ''
-        if (oldCatalogName.value) {
-            oldCatalogTitle = listCatalogName.find(catalogname => catalogname._id === oldCatalogName.value)
-        }
-        const catalogdata = {
-            id:!!oldCatalogName.value ? oldCatalogName.value:null,
-            catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
-            items:[
-                {
-                    id:Detail.id,
-                    reference:Detail.reference,
-                    description:Detail.description
-                }
-            ]
-        }
-        this.props.addCatalog(catalogdata).then( () =>{
-            this.setState({isOpenAddMyCatalogmsg: true});
-        });
-    }
-
-    handleClosemsg = _ => {
-        this.setState({ isOpenAddMyCatalogmsg: false });
-    }
-
-    renderAddMyCatalog = _=> {
-        const { listCatalogName, submitting } = this.props;
-        return(
-            <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
-                isClose={this.handleClose} props={this.props}/>
-        );
-    }
-
-    renderAlertmsg = _=> {
-        const { message } = this.props;
-        return(
-            <Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}/>
-        );
     }
 
     downloadCertificateAll = _=> {
@@ -970,13 +908,10 @@ class SalesProductReleteDetail extends Component {
                     <br/><br/><br/><br/><br/><br/>
                 </div>
                 <div className={`row ${this.state.showmovement ? 'hide' : ''}`}>
-                    {this.renderAddMyCatalog()}
-                    {this.renderAlertmsg()}
                     <div className="col-sm-12">
                         <div className="panel panel-default">
                             <div className="panel-body padding-ft0">
                                 <div className="col-md-12 col-sm-12 icon-detail">
-                                    <a><div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div></a>
                                     <a><div className="icon-print margin-l10" id="printproduct"></div></a>
                                     {this.zoomicon()}
                                     {isCertificate

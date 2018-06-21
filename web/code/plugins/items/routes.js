@@ -122,8 +122,13 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/relatedsalesitems/{collection}/{page}/{productId}/{dominant}/{currency}/{price}',
-        config: controllers.relatedsalesitems
+        path: '/salesrelateditems/{collection}/{page}/{productId}/{dominant}/{currency}/{price}',
+        config: controllers.salesrelateditems
+    },
+    {
+        method: 'GET',
+        path: '/salessetdetails/{setReference}',
+        config: controllers.salessetdetails
     },
     {
         method: 'POST',

@@ -6,7 +6,7 @@ import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertMarkpercent from '../../utils/convertMarkpercent';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
 
-const Detail = (props) => {
+const DetailCer = (props) => {
     if(logindata){
         const currency = 'USD';
         let invoicedDate = convertDate(props.invoiceDate);
@@ -47,4 +47,4 @@ const Detail = (props) => {
     }
 }
 
-module.exports = Detail
+module.exports = DetailCer

@@ -53,7 +53,10 @@ class Menu extends Component {
                                                                     ? 'active': ''}`}>Save Searches</NavItem>;
 
         const SalesReport = <button type="button" className={`${(props.currentLocation == '/salesreport' ||
-                                                                 props.currentLocation == '/salessearchresult')
+                                                                 props.currentLocation == '/salessearchresult' ||
+                                                                 props.currentLocation.indexOf('salesproductreletedetail') ||
+                                                                 props.currentLocation.indexOf('setsalesdetail') ||
+                                                                 props.currentLocation == '/salesproductdetail')
                                                                  ? 'btn btn-primary btn-radius pull-right margin-t5'
                                                                  : 'btn pull-right margin-t5 btn-radius'} ${(permission.userType != 'OnHand')?'':'hidden'}`}
                                 onClick={this.handleClickSalesReport}>Sales Report</button>
@@ -77,7 +80,10 @@ class Menu extends Component {
                                                               props.currentLocation.indexOf('setdetailmycatalog') == -1 &&
                                                               props.currentLocation.indexOf('setdetailsetcatalog') == -1 &&
                                                               props.currentLocation.indexOf('salesreport') == -1 &&
-                                                              props.currentLocation.indexOf('salessearchresult') == -1
+                                                              props.currentLocation.indexOf('salessearchresult') == -1 &&
+                                                              props.currentLocation.indexOf('salesproductreletedetail') == -1 &&
+                                                              props.currentLocation.indexOf('setsalesdetail') == -1 &&
+                                                              props.currentLocation.indexOf('salesproductdetail') == -1
                                                           )?'active':''} ${(permission.userType != 'Sales')?'':'hidden'}`}>Inventory Report</NavItem>
                   {/*<NavItem href="#">My Catalog</NavItem>*/}
                   {/*<NavDropdown  title="Download" id="basic-nav-dropdown">

@@ -4,7 +4,6 @@ const Joi = require('joi');
 const Promise = require('bluebird');
 const GetSearch = require('../utils/getSearch');
 const GetAllData = require('../utils/getAllData');
-// Require library export excel
 const xl = require('excel4node');
 const _ = require('lodash');
 const fs = require('fs');

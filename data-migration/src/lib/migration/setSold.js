@@ -6,7 +6,7 @@ import { db } from '../utils/db'
 import { es } from '../utils/es';
 
 const getSoldItemSets = async (index, exchangeRates) => {
-    
+
     try {
         console.log('Set Sold Items!!!');
         const query = await file.read(Path.resolve(constant.SET_SOLD_QUERY))
@@ -50,9 +50,7 @@ const getSoldItemSets = async (index, exchangeRates) => {
                 // in each set reference
                 if (!!record.setImageName && !!record.setImageType) {
                     // console.log(record.setImageName);
-                    let isFound = setImagesName.find((image) => {
-                                                    return image.name == record.setImageName;
-                                                });
+                    let isFound = setImagesName.find((image) => { return image.name == record.setImageName });
                     if (isFound == undefined ) {
                         setImagesName.push({name: record.setImageName});
 
@@ -129,9 +127,7 @@ const getSoldItemSets = async (index, exchangeRates) => {
                 // in each set reference
                 if (!!record.setImageName && !!record.setImageType) {
                     // console.log(record.setImageName);
-                    let isFound = setImagesName.find((image) => {
-                                                    return image.name == record.setImageName;
-                                                });
+                    let isFound = setImagesName.find((image) => { return image.name == record.setImageName });
                     if (isFound == undefined ) {
                         setImagesName.push({name: record.setImageName});
 

@@ -1,16 +1,23 @@
 import {
     FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,FETCH_SETREFERENCE,ADD_CATALOG,ADD_CATALOG_SUCCESS,GET_LOTNUMBER,GET_LOTNUMBERPAGE,
-    GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS, GET_SETCATALOGITEMSLIST,FETCH_SETCATALOGDETAILS,FETCH_SALESPRODUCTDETAIL,FETCH_SALESPRODUCTRELETED
+    GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS, GET_SETCATALOGITEMSLIST,FETCH_SETCATALOGDETAILS,FETCH_SALESPRODUCTDETAIL,FETCH_SALESPRODUCTRELETED,
+    FETCH_SALESSETDETAILS
 } from '../../constants/productdetailconstants';
 import { GET_CATALOGNAME} from '../../constants/itemconstants';
 const INITIAL_STATE = {
     detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1,setreference:'',ListCatalogName: [], lotNumbers: [],
-    stonActivePage:1,totalpage:null ,stonePageSize:20, activities:[], allData:[],setItemIndex:1,setItemList:[]
+    stonActivePage:1,totalpage:null ,stonePageSize:20, activities:[], allData:[],setItemIndex:1,setItemList:[],salessetdetail:'', salessetindexplus:1, salessetpagego:1,
+    salessetproductlist:null, salessettotalpage:null,salessetindex:1
 };
 
 export default function(state = INITIAL_STATE,action){
 
     switch (action.type) {
+        case FETCH_SALESSETDETAILS:
+            return {...state,salessetdetail:action.data, salessetindex:action.productlist?findSetIndex(action.productlist,action.productid):0
+                ,salessetindexplus:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
+                ,salessetpagego:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
+                ,salessetproductlist:action.productlist, salessettotalpage: Math.ceil(action.data.length/20)}
         case FETCH_SALESPRODUCTDETAIL:
             return { ...state,detail:action.data,index:action.productlist?findproductindex(action.productlist,action.productid):0
                 ,indexplus:action.productlist?findproductindexplus(action.productlist,action.productid):0

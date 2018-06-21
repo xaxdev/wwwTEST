@@ -59,7 +59,7 @@ module.exports = {
         }
 
 
-        console.log(JSON.stringify(internals.query, null, 2));
+        // console.log(JSON.stringify(internals.query, null, 2));
 
         const getAllSalesItems =  elastic.search({
             index: 'mol_solditems',
@@ -212,7 +212,7 @@ module.exports = {
 
                 let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
-                elastic.close();                
+                elastic.close();
 
                 if (isViewAsSet) {
                     return reply(getAllSalesData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,

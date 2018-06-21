@@ -12,7 +12,7 @@ const archiver = require('archiver');
 
 module.exports = {
     auth: {
-      strategy: 'authentication'
+        strategy: 'authentication'
     },
     handler: (request, reply) => {
         (async _ => {
@@ -51,24 +51,23 @@ module.exports = {
             });
 
             const rmDir = (dirPath, removeSelf) => new Promise((resolve, reject) => {
-              if (removeSelf === undefined)
-                removeSelf = true;
-              try { var files = fs.readdirSync(dirPath); }
-              catch(e) { notify(err);return; }
-              console.log(dirPath);
-              if (files.length > 0)
-                  for (var i = 0; i < files.length; i++) {
-                      var filePath = dirPath + '/' + files[i];
-                      if (fs.statSync(filePath).isFile())
-                      fs.unlinkSync(filePath);
-                      else
-                      rmDir(filePath);
-                      console.log('deleting..');
-                  }
-                //   console.log('Done');
-                  return resolve();
-              if (removeSelf)
-                fs.rmdirSync(dirPath);
+                if (removeSelf === undefined)
+                    removeSelf = true;
+                try { var files = fs.readdirSync(dirPath); }
+                catch(e) { notify(err);return; }
+                console.log(dirPath);
+                if (files.length > 0)
+                    for (var i = 0; i < files.length; i++) {
+                        var filePath = dirPath + '/' + files[i];
+                        if (fs.statSync(filePath).isFile())
+                        fs.unlinkSync(filePath);
+                        else
+                        rmDir(filePath);
+                        console.log('deleting..');
+                    }
+                    return resolve();
+                if (removeSelf)
+                    fs.rmdirSync(dirPath);
             });
 
             const zipFolder = dirPath => new Promise((resolve, reject) => {
@@ -144,7 +143,6 @@ module.exports = {
             const toEmail = request.payload.userEmail;
 
             try {
-                // console.log(request.payload);
                 const host = request.info.hostname;
                 const id = request.params.productId || '';
                 const userName = request.payload.userName;
@@ -160,8 +158,6 @@ module.exports = {
 
                 await mkDir(cerFolder);
                 await mkDir(userFolder);
-
-                // console.log(allCer.length);
 
                 if (allCer.length > 1) {
                     allCer.map((img) => {
@@ -189,11 +185,6 @@ module.exports = {
                         })()
                     });
                 }
-
-                // await copyFile(source,destination);
-                // await zipFolder(cerFolder);
-                // await notify('');
-                // console.log('copy done');
 
                 return reply({ status: true });
             } catch (err) {

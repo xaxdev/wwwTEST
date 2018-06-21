@@ -7,7 +7,7 @@ import convertMarkpercent from '../../utils/convertMarkpercent';
 import GetSalesPricePermission from '../../utils/getSalesPricePermission';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
 
-const Detail = (props) => {
+const DetailDescription = (props) => {
     if(logindata){
         const userLogin = JSON.parse(sessionStorage.logindata);
         const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
@@ -18,14 +18,14 @@ const Detail = (props) => {
         const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
         const currency = 'USD';
 
-        let invoicedDate = !!props.id ? convertDate(props.invoiceDate) : convertDate(props.invoiceDate);
-        let actualCost = !!props.id ? numberFormat(props.actualCost[currency]): numberFormat(props.totalActualCost['USD']);
-        let updatedCost = !!props.id ? numberFormat(props.updatedCost[currency]) : numberFormat(props.totalUpdatedCost['USD']);
-        let price = !!props.id ? numberFormat(props.price[currency]) : numberFormat(props.totalPrice['USD']);
-        let netSales = !!props.id ? numberFormat(props.netAmount[currency]) : numberFormat(props.totalNetAmount['USD']);
-        let discount = !!props.id ? numberFormat(props.discountAmountUSD) : numberFormat(props.totalDiscountAmount['USD']);
-        let discountPercent = !!props.id ? numberFormat(props.discPercent) : numberFormat(props.discPercent);
-        let marginAmount = !!props.id ? numberFormat(props.margin[currency]) : numberFormat(props.totalMargin['USD']);
+        let invoicedDate = !!props.id ? !!props.invoiceDate?convertDate(props.invoiceDate):'' : convertDate(props.invoiceDate);
+        let actualCost = !!props.id ? numberFormat(props.actualCost[currency]): numberFormat(!!props.totalActualCost?props.totalActualCost['USD']:0);
+        let updatedCost = !!props.id ? numberFormat(props.updatedCost[currency]) : numberFormat(!!props.totalUpdatedCost?props.totalUpdatedCost['USD']:0);
+        let price = !!props.id ? numberFormat(props.price[currency]) : numberFormat(!!props.totalPrice?props.totalPrice['USD']:0);
+        let netSales = !!props.id ? numberFormat(!!props.netAmount?props.netAmount[currency]:0) : numberFormat(!!props.totalNetAmount?props.totalNetAmount['USD']:0);
+        let discount = !!props.id ? numberFormat(!!props.discountAmountUSD?props.discountAmountUSD:0) : numberFormat(!!props.totalDiscountAmount?props.totalDiscountAmount['USD']:0);
+        let discountPercent = !!props.id ? numberFormat(!!props.discPercent?props.discPercent:0) : numberFormat(!!props.discPercent?props.discPercent:0);
+        let marginAmount = !!props.id ? numberFormat(!!props.margin?props.margin[currency]:0) : numberFormat(!!props.totalMargin?props.totalMargin['USD']:0);
         let markUp = convertMarkpercent(props.markup);
         let setReference = (props.setReference != undefined ) ? props.setReference : '-';
         setReference = (setReference != '' ) ? setReference : '-';
@@ -118,4 +118,4 @@ const Detail = (props) => {
 }
 
 
-module.exports = Detail
+module.exports = DetailDescription
