@@ -34,7 +34,7 @@ const getSoldItems = async (index, allExchangeRates) => {
 const getCertificates = async index => {
     try {
         console.log('SoldItems Certificates!!!');
-        const total = await core.parallelize(await settings(index, null, constant.SOLDITEM_CERTIFICATE_QUERY, mapper.mapCertificate));
+        const total = await core.parallelize(await settingsSoldItem(index, null, constant.SOLDITEM_CERTIFICATE_QUERY, mapper.mapCertificate));
         console.log(`${total} items were processed in total.`);
     } catch (err) {
         throw err;
