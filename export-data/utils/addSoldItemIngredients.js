@@ -298,7 +298,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                 arrayItems.push(''); // updated Price (USD)
                             }
                             if (priceSalesRTP) {
-                                arrayItems.push('');// Retail Price (USD)
+                                arrayItems.push('');// Price (USD)
                             }
                             if (priceSalesNSP) {
                                 arrayItems.push('');// Net Amount (USD)

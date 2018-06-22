@@ -17,7 +17,7 @@ class RenderViewPriceSales extends Component {
                             checked={priceSalesRTP.value === 'RTP'}
                             {...priceSalesRTP}
                             onChange={onChangedPriceSales}/>
-                        <span>Retail Price</span>
+                        <span>Price</span>
                     </div>
                     <div className="col-sm-4">
                         <input type="checkbox"  value="UCP"

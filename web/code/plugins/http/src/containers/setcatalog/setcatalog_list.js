@@ -821,7 +821,7 @@ class SetCatalog extends Component {
                                   <select onChange={this.changeSortingBy} value={catalogSortingBy}
                                     ref="sortingBy">
                                     <option key={1} value={1}>{'Updated Date'}</option>
-                                    <option key={2} value={2}>{'Retail Price'}</option>
+                                    <option key={2} value={2}>{'Price'}</option>
                                     <option key={3} value={3}>{'Description'}</option>
                                     <option key={4} value={4}>{'Set Reference Number'}</option>
                                   </select>

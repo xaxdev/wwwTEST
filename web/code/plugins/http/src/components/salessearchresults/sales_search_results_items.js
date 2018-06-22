@@ -449,7 +449,7 @@ class SalesSearchResultOnItem extends Component {
                                     <select className="form-searchresult" onChange={this.salesSortingBy}
                                         ref="salesSortingBy">
                                         <option key={'postedDate'} value={'postedDate'}>{'Updated Date'}</option>
-                                        <option key={'price'} value={'price'}>{'Retail Price'}</option>
+                                        <option key={'price'} value={'price'}>{'Price'}</option>
                                         <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                         <option key={'description'} value={'description'}>{'Description'}</option>
                                         <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>

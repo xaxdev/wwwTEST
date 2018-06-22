@@ -194,7 +194,7 @@ class ListItemsViewPrintAll extends Component {
                 { title: 'Size', prop: 'size' },
                 { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                 { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                { title: 'Retail Price', prop: 'priceUSD' },
+                { title: 'Price', prop: 'priceUSD' },
                 { title: '', render: this.renderAction, className: 'text-center' },
               ];
           }else{
@@ -209,7 +209,7 @@ class ListItemsViewPrintAll extends Component {
                 { title: 'Size', prop: 'size' },
                 { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                 { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                { title: 'Retail Price', prop: 'priceUSD' },
+                { title: 'Price', prop: 'priceUSD' },
                 { title: '', render: this.renderAction, className: 'text-center' },
               ];
           }

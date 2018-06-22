@@ -377,7 +377,7 @@ class SalesReportHeader extends Component {
                                                                       || userLogin.permission.price == 'Updated'
                                                                       || userLogin.permission.price == 'All') ?
                                                                     '' : 'hidden'}`}>
-                                            <label className="col-sm-4 control-label">Retail Price ({userLogin.currency})</label>
+                                            <label className="col-sm-4 control-label">Price ({userLogin.currency})</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                                 <div className="col-sm-4 nopadding">

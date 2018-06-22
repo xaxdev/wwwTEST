@@ -63,7 +63,7 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>{ updatedCost }</div>
                 </div>
                 <div style={(priceSalesRTP) ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Retail Price ({ currency })</div>
+                    <div style={styles.colmd5}>Price ({ currency })</div>
                     <div style={styles.colmd5}>{ price }</div>
                 </div>
                 <div style={(priceSalesNSP) ? styles.colmd12  : styles.colmdhide}>

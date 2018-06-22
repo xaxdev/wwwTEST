@@ -27,7 +27,7 @@ class RenderSalesExportExcelDialog extends Component {
                         <h5>(Normal export field Item Reference, Description, SKU,
                               {`${(priceSalesCTP) ? 'Cost Price (USD), ':''}`}
                               {`${(priceSalesUCP) ? 'Updated Price (USD), ':''}`}
-                              {`${(priceSalesRTP) ? 'Retail Price (USD), ':''}`}
+                              {`${(priceSalesRTP) ? 'Price (USD), ':''}`}
                               {`${(priceSalesNSP) ? 'Net Sales (USD), ':''}`}
                               {`${(priceSalesMGP) ? 'Margin %, ':''}`}
                               {`${(priceSalesMGP) ? 'Margin Amount (USD), ':''}`}

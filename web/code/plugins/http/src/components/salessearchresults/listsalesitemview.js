@@ -190,7 +190,7 @@ class ListSalesItemsView extends Component {
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                         { title: 'Stone Detail', prop: 'stoneDetail' },
-                        { title: 'Retail Price', prop: 'priceUSD' },
+                        { title: 'Price', prop: 'priceUSD' },
                         { title: '', render: this.renderAction, className: 'text-center' },
                     ]; 
                     fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate', 'grossWeight', 'stoneDetail',
@@ -223,7 +223,7 @@ class ListSalesItemsView extends Component {
                         { title: 'Net Amount', prop: 'netAmountUSD' },
                         { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                         { title: 'Stone Detail', prop: 'stoneDetail' },
-                        { title: 'Retail Price', prop: 'priceUSD' },
+                        { title: 'Price', prop: 'priceUSD' },
                         { title: '', render: this.renderAction, className: 'text-center' },
                     ]; 
                     fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight',
@@ -242,7 +242,7 @@ class ListSalesItemsView extends Component {
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                         { title: 'Stone Detail', prop: 'stoneDetail' },
-                        { title: 'Retail Price', prop: 'priceUSD' },
+                        { title: 'Price', prop: 'priceUSD' },
                         { title: '', render: this.renderAction, className: 'text-center' },
                     ];
                     fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate', 'grossWeight', 'stoneDetail',
@@ -275,7 +275,7 @@ class ListSalesItemsView extends Component {
                         { title: 'Net Amount', prop: 'netAmountUSD' },
                         { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                         { title: 'Stone Detail', prop: 'stoneDetail' },
-                        { title: 'Retail Price', prop: 'priceUSD' },
+                        { title: 'Price', prop: 'priceUSD' },
                         { title: '', render: this.renderAction, className: 'text-center' },
                     ];
 

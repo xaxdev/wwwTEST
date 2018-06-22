@@ -42,7 +42,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 titles.push('Total Updated Cost (USD)');
             }
             if (priceSalesRTP) {
-                titles.push('Total Retail Price (USD)');
+                titles.push('Total Price (USD)');
             }
 
             if(fields.allFieldsViewAsSet){
@@ -50,7 +50,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             }else{
                 if(fields.totalActualCost) titles.push('Total Cost Price (USD)');
                 if(fields.totalUpdatedCost) titles.push('Total Updated Cost (USD)');
-                if(fields.totalPrice) titles.push('Total Retail Price (USD)');
+                if(fields.totalPrice) titles.push('Total Price (USD)');
                 if(fields.markup) titles.push('Markup (Times)');
                 if(fields.companyName) titles.push('Company');
                 if(fields.warehouseName) titles.push('Location');
@@ -68,7 +68,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 titles.push('Updated Price (USD)');
             }
             if (priceSalesRTP) {
-                titles.push('Retail Price (USD)');
+                titles.push('Price (USD)');
             }
             if (priceSalesNSP) {
                 titles.push('Net Sales (USD)');

@@ -54,7 +54,7 @@ const Detail = (props) =>{
               || userLogin.permission.price == 'Updated'
               || userLogin.permission.price == 'All') ?
             styles.colmd12  : styles.colmdhide}>
-          <div style={styles.colmd5}>Retail Price ({ currency })</div>
+          <div style={styles.colmd5}>Price ({ currency })</div>
           <div style={styles.colmd5}>{ price }</div>
         </div>
         <div style={(userLogin.permission.price == 'Updated'
