@@ -368,7 +368,7 @@ class SalesReportJewelry extends Component {
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
     }
 
-    selectedViewAsSet = e => {       
+    selectedViewAsSet = e => {
         const { props } = this.props;
         let { fields: { viewAsSet }, searchResult } = props;
 

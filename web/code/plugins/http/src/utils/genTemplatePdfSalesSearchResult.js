@@ -38,6 +38,12 @@ export default function GenSalesTemplateHtml(showGridView, showListView, ROOT_UR
     let imgPath = env == 'production'
                             ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                             : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+    let imgPathPublic = env == 'production'
+                            ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
+                            : 'file:///home/dev/www/mol/web/code/plugins/http/public';
+
+    let tagbarsoldoutgrid = `position: absolute;top: 0;right: 0;z-index: 9999;width: 88px;height: 93px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out.png)right top no-repeat;`
+    let tagbarsoldoutlist = `position: absolute;top: -5px;right: -5px;z-index: 9999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out_list.png)right top no-repeat;`
 
     dvTotal1 = dvTotal1.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotal1 = dvTotal1.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
@@ -62,7 +68,7 @@ export default function GenSalesTemplateHtml(showGridView, showListView, ROOT_UR
     dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridview = dvGridview.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
     dvGridview = dvGridview.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
-    // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
+    dvGridview = dvGridview.replace(/class="tagbar-soldout"/g,`style="${tagbarsoldoutgrid}"`);
 
     dvGridviewAll = dvGridviewAll.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     dvGridviewAll = dvGridviewAll.replace(/\/images\//g,imgPath);
@@ -79,7 +85,7 @@ export default function GenSalesTemplateHtml(showGridView, showListView, ROOT_UR
     dvGridviewAll = dvGridviewAll.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridviewAll = dvGridviewAll.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
     dvGridviewAll = dvGridviewAll.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
-    // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
+    dvGridviewAll = dvGridviewAll.replace(/class="tagbar-soldout"/g,`style="${tagbarsoldoutgrid}"`);
 
     dvListview = dvListview.replace(/\/images\//g,imgPath);
     // dvListview = dvListview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
@@ -98,7 +104,7 @@ export default function GenSalesTemplateHtml(showGridView, showListView, ROOT_UR
     dvListview = dvListview.replace(/class="font-b fc-000 text-right bg-eb"/g,`style="text-align:right;font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 5px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"`);
     dvListview = dvListview.replace(/class="font-b fc-000 text-right bg-eb hidden"/g,`style="text-align:right;font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 5px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;display: none !important;visibility: hidden !important;"`);
     dvListview = dvListview.replace(/class="bd-tblr-white"/g,'style="border-left: 1px solid #fff;border-right: 1px solid #fff;border-bottom: transparent;"');
-
+    dvListview = dvListview.replace(/class="tagbar-soldout"/g,`style="${tagbarsoldoutgrid}"`);
     // dvListview = dvListview.replace(/\/original\//g,'/thumbnail/');
 
     // dvListviewAll = dvListviewAll.replace(/\/images\//g,imgPath);

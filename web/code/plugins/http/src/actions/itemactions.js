@@ -9,7 +9,7 @@ import {
     GET_SETCATALOGITEMS, SET_RENAMESETCATALOG, SET_NEWSETCATALOGNAME, DELETE_SETCATALOG, SET_SHARESETCATALOG, SET_CLOSEALERTMSGSET, SET_SETCATALOGSORTBY,
     SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG, FETCH_EXPORTITEMS,POST_SALESSAVESEARCH,SET_SALESPARAMS,SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS,
     SET_SALESSORTBY, SET_SALESSORTDIRECTION, SET_SALESPAGESIZE, SET_SALESSHOWGRIDVIEW, SET_SALESSHOWLISTVIEW, NEWSALESSEARCH, MODIFY_SALESSEARCH,
-    SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER, FETCH_EXPORTSALESITEMS
+    SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER, FETCH_EXPORTSALESITEMS, FETCH_SALESALLPDF
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
@@ -21,6 +21,24 @@ export function getAllPDF(params){
 
     return {
         type: FETCH_ALLPDF,
+        promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        currPage: params.page
+    }
+}
+export function getSalesAllPDF(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/items/salessearchpdf`;
+
+    return {
+        type: FETCH_SALESALLPDF,
         promise: fetch(url,{
             method: 'POST',
             body: JSON.stringify(params),

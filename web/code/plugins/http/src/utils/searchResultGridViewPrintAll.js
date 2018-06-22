@@ -61,6 +61,7 @@ export default function SearchResultListViewPrintAll(items, userLogin, ViewAsSet
             <div class="col-md-3 col-sm-3 nopadding">
                 <div class="searchresult-prodcut ">
                     <div className="thumbnaillgrid">
+                        <span className="tagbar-soldout"></span>
                         <img  src="${imagesProduct}" />
                     </div>
                     <p class="font-b fc-000">

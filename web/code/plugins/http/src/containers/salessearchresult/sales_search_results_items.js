@@ -21,7 +21,7 @@ const Loading = require('react-loading');
 const checkFields = ['ingredients', 'categoryName', 'category', 'article', 'collection', 'setReferenceNumber', 'cut', 'color','clarity', 'caratWt', 'unit',
     'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight', 'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName',
     'metalColor', 'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex', 'dialColor','movement','serial',
-    'limitedEdition','limitedEditionNumber','itemCreatedDate', 'postedDate', 'salesId', 'salesPersonName', 'salesChannelType', 'customer', 'customerName', 
+    'limitedEdition','limitedEditionNumber','itemCreatedDate', 'postedDate', 'salesId', 'salesPersonName', 'salesChannelType', 'customer', 'customerName',
     'invoicedId', 'invoiceDate', 'inventSizeId'
 ];
 
@@ -68,10 +68,10 @@ class SalesSearchResultOnItem extends Component {
             netWeight: false,stoneQty: false, dominantStone: false,  certificatedNumber: false, certificateDate: false, vendorCode: false,
             vendorName: false, metalColor: false, metalType: false, brand: false, complication: false, strapType: false, strapColor: false, buckleType: false,
             dialIndex: false,dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false, itemCreatedDate:false,
-            showLoading: false, postedDate:false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, 
-            isOpenMsgPageInvalid: false, markup: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, 
-            totalActualCost: false, totalUpdatedCost: false, totalPrice: false, companyName: false, warehouseName: false, createdDate: false, salesId:false, 
-            isOpenPrintOptions: false, salesPersonName:false, salesChannelType: false, customer: false, customerName: false, invoicedId: false, 
+            showLoading: false, postedDate:false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false,
+            isOpenMsgPageInvalid: false, markup: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false,
+            totalActualCost: false, totalUpdatedCost: false, totalPrice: false, companyName: false, warehouseName: false, createdDate: false, salesId:false,
+            isOpenPrintOptions: false, salesPersonName:false, salesChannelType: false, customer: false, customerName: false, invoicedId: false,
             invoiceDate: false, inventSizeId: false
         };
     }
@@ -141,9 +141,10 @@ class SalesSearchResultOnItem extends Component {
         let htmlTemplate = '';
         if (printPage.value != 'all') {
             htmlTemplate = GenSalesTemplateHtml(salesShowGridView, salesShowListView, ROOT_URL, imagesReplace, dv);
+            console.log('htmlTemplate-->',htmlTemplate);
             let params = {
                 'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'pdf'
-            }           
+            }
 
             props.writeHtml(params).then((value) => {
                 if (value) {
@@ -167,7 +168,8 @@ class SalesSearchResultOnItem extends Component {
             }
             const salesSortingDirection = this.refs.salesSortingDirection.value;
             const salesPageSize = this.refs.salesPageSize.value;
-            const userPermissionPrice = userLogin.permission.price;
+            // const userPermissionPrice = userLogin.permission.price;
+            const userPermissionPrice = GetSalesPricePermission(userLogin.permission.priceSales);
             let viewType = '';
             if (salesShowGridView) {
                 viewType = 'grid';
@@ -175,14 +177,14 @@ class SalesSearchResultOnItem extends Component {
                 viewType = 'list';
             }
             let params = {
-                'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection, 'pageSize' : salesPageSize, 'ItemsOrder': ItemsOrder,
-                'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email,'ROOT_URL': ROOT_URL,
+                'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': salesSortingDirection, 'pageSize' : salesPageSize, 'ItemsSalesOrder': ItemsSalesOrder,
+                'SetReferenceSalesOrder': SetReferenceSalesOrder,'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email,'ROOT_URL': ROOT_URL,
                 'env': env_web, 'viewType': viewType, 'userPermissionPrice': userPermissionPrice
             };
             const filters =  JSON.parse(sessionStorage.filters);
             params = GetGemstoneLotnumberFilter(filters, params);
 
-            await props.getAllPDF(params).then((value) => {
+            await props.getSalesAllPDF(params).then((value) => {
                 if (value) {
                     this.setState({isOpenPrintPdfmsg: true});
                 }
@@ -471,7 +473,7 @@ class SalesSearchResultOnItem extends Component {
         let _totalDiscount =  (totalDiscount!=null) ? totalDiscount : 0;
         let _totalMargin =  (totalMargin!=null) ? totalMargin : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
-        
+
         return(
             <RenderClassTotals userLogin={userLogin} allItems={allItems} ViewAsSet={ViewAsSet} _totalPublicPrice = {_totalPublicPrice} maxPrice = {maxPrice}
                 _totalUpdatedCost = {_totalUpdatedCost} minPrice = {minPrice} avrgPrice = {avrgPrice} _totalNetAmount = {_totalNetAmount}
@@ -571,18 +573,18 @@ class SalesSearchResultOnItem extends Component {
         }
         const salesSortingDirection = this.refs.salesSortingDirection.value;
         let fields = {
-            allFields: this.state.allFields, showImages: this.state.showImages, ingredients: this.state.ingredients, categoryName: this.state.categoryName, 
-            category: this.state.category, article: this.state.article, collection: this.state.collection, setReferenceNumber: this.state.setReferenceNumber, 
-            quantity: this.state.quantity, dominantStone: this.state.dominantStone, markup: this.state.markup, certificatedNumber: this.state.certificatedNumber, 
-            brand: this.state.brand, postedDate: this.state.postedDate, salesId: this.state.salesId, salesPersonName: this.state.salesPersonName, 
+            allFields: this.state.allFields, showImages: this.state.showImages, ingredients: this.state.ingredients, categoryName: this.state.categoryName,
+            category: this.state.category, article: this.state.article, collection: this.state.collection, setReferenceNumber: this.state.setReferenceNumber,
+            quantity: this.state.quantity, dominantStone: this.state.dominantStone, markup: this.state.markup, certificatedNumber: this.state.certificatedNumber,
+            brand: this.state.brand, postedDate: this.state.postedDate, salesId: this.state.salesId, salesPersonName: this.state.salesPersonName,
             salesChannelType: this.state.salesChannelType, customer: this.state.customer, customerName: this.state.customerName, unit: this.state.unit,
             caratWt: this.state.caratWt,flourance: this.state.flourance,batch: this.state.batch, netWeight: this.state.netWeight, stoneQty: this.state.stoneQty,
             invoicedId: this.state.invoicedId, invoiceDate: this.state.invoiceDate, inventSizeId: this.state.inventSizeId, cut: this.state.cut,
-            color: this.state.color, clarity: this.state.clarity, qty: this.state.qty, origin: this.state.origin, symmetry: this.state.symmetry, 
+            color: this.state.color, clarity: this.state.clarity, qty: this.state.qty, origin: this.state.origin, symmetry: this.state.symmetry,
             certificateDate: this.state.certificateDate, vendorCode: this.state.vendorCode, vendorName: this.state.vendorName, metalColor: this.state.metalColor,
             metalType: this.state.metalType, complication: this.state.complication, strapType: this.state.strapType,strapColor: this.state.strapColor,
-            buckleType: this.state.buckleType, dialIndex: this.state.dialIndex, dialColor: this.state.dialColor,movement: this.state.movement, 
-            serial: this.state.serial, limitedEdition: this.state.limitedEdition,limitedEditionNumber: this.state.limitedEditionNumber, 
+            buckleType: this.state.buckleType, dialIndex: this.state.dialIndex, dialColor: this.state.dialColor,movement: this.state.movement,
+            serial: this.state.serial, limitedEdition: this.state.limitedEdition,limitedEditionNumber: this.state.limitedEditionNumber,
             itemCreatedDate: this.state.itemCreatedDate
         };
         let params = {

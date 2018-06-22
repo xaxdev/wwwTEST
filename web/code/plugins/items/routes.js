@@ -12,6 +12,11 @@ module.exports = [
     },
     {
         method: 'POST',
+        path: '/salessearchpdf',
+        config: controllers.salessearchpdf
+    },
+    {
+        method: 'POST',
         path: '/writehtml',
         config: controllers.writehtml
     },

@@ -4,14 +4,14 @@ const Promise = require('bluebird');
 const _ = require('lodash');
 const GetPriceCurrency = require('./getPriceCurrency');
 
-module.exports = async (response, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder, setReferencdOrder, isSetReference, cb) => {
+module.exports = async (response, sortDirections, sortBy, size, page, userCurrency, keys, obj, request,itemsOrder, setReferencdOrder, isSetReference, cb) => {
     try {
         let allData = [];
         let setReferences = [];
         let sumPriceData = [];
         let sumCostData = [];
         let exportData = null;
-        let itemCount = response.length;
+        let itemCount = response.length
         let avrgPrice = 0;
         let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
         let data = response;
@@ -105,22 +105,22 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                                         const fieldValus = valusObj[field];
                                         let arrayFieldValus = fieldValus.split('-');
                                         if (field == 'totalCaratWeightFrom') {
-                                            newLot = newLot.filter((item) => { return item.carat >= fieldValus });
+                                            newLot = newLot.filter((item) => {return item.carat >= fieldValus});
                                         }
                                         if (field == 'totalCaratWeightTo') {
-                                            newLot = newLot.filter((item) => { return item.carat <= fieldValus });
+                                            newLot = newLot.filter((item) => {return item.carat <= fieldValus});
                                         }
                                         if (field == 'lotQuantityFrom') {
-                                            newLot = newLot.filter((item) => { return item.lotQty >= fieldValus });
+                                            newLot = newLot.filter((item) => {return item.lotQty >= fieldValus});
                                         }
                                         if (field == 'lotQuantityTo') {
-                                            newLot = newLot.filter((item) => { return item.lotQty <= fieldValus });
+                                            newLot = newLot.filter((item) => {return item.lotQty <= fieldValus});
                                         }
                                         if (field == 'markupFrom') {
-                                            newLot = newLot.filter((item) => { return item.markup >= fieldValus });
+                                            newLot = newLot.filter((item) => {return item.markup >= fieldValus});
                                         }
                                         if (field == 'markupTo') {
-                                            newLot = newLot.filter((item) => { return item.markup <= fieldValus });
+                                            newLot = newLot.filter((item) => {return item.markup <= fieldValus});
                                         }
                                         if (field == 'cut') {
                                             let customLot = [];
@@ -128,13 +128,13 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                                             if (fieldValus.indexOf(',') != -1) {
                                                 let values =  fieldValus.split(',');
                                                 values.forEach((val)=>{
-                                                    customLot = newLot.filter((item) => { return item.cut == val });
+                                                    customLot = newLot.filter((item) => {return item.cut == val});
                                                     if (customLot.length > 0) {
                                                         newLot = custom.concat(customLot);
                                                     }
                                                 });
                                             }else{
-                                                newLot = newLot.filter((item) => { return item.cut == fieldValus });
+                                                newLot = newLot.filter((item) => {return item.cut == fieldValus});
                                             }
                                         }
                                         if (field == 'color') {
@@ -143,13 +143,13 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                                             if (fieldValus.indexOf(',') != -1) {
                                                 let values =  fieldValus.split(',');
                                                 values.forEach((val)=>{
-                                                    customLot = newLot.filter((item) => { return item.color == val });
+                                                    customLot = newLot.filter((item) => {return item.color == val});
                                                     if (customLot.length > 0) {
                                                         newLot = custom.concat(customLot);
                                                     }
                                                 });
                                             }else{
-                                                newLot = newLot.filter((item) => { return item.color == fieldValus });
+                                                newLot = newLot.filter((item) => {return item.color == fieldValus});
                                             }
                                         }
                                         if (field == 'clarity') {
@@ -158,13 +158,13 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                                             if (fieldValus.indexOf(',') != -1) {
                                                 let values =  fieldValus.split(',');
                                                 values.forEach((val)=>{
-                                                    customLot = newLot.filter((item) => { return item.clarity == val });
+                                                    customLot = newLot.filter((item) => {return item.clarity == val});
                                                     if (customLot.length > 0) {
                                                         newLot = custom.concat(customLot);
                                                     }
                                                 });
                                             }else{
-                                                newLot = newLot.filter((item) => { return item.clarity == fieldValus });
+                                                newLot = newLot.filter((item) => {return item.clarity == fieldValus});
                                             }
                                         }
                                     })
@@ -174,7 +174,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                     }
                     item.lotNumbers = newLot;
                     if (newLot.length == 0 ) {
-                        data = data.filter((lot) => { return lot.reference != item.reference });
+                        data = data.filter((lot) => {return lot.reference != item.reference})
                     }
                 }
             }
@@ -212,9 +212,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 if (isViewAsSet) {
                     if(item.totalNetAmount['USD'] != undefined){
                         if(item.totalNetAmount['USD'] != 0){
-                          maxPrice = Math.max(maxPrice, item.totalNetAmount['USD']);
+                            maxPrice = Math.max(maxPrice, item.totalNetAmount['USD']);
                         }else{
-                          maxPrice = Math.max(maxPrice, 0);
+                            maxPrice = Math.max(maxPrice, 0);
                         }
                     }else{
                         item.totalNetAmount['USD'] = 0;
@@ -288,7 +288,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                     sumCostData.push(GetPriceCurrency(item,'updatedCost',userCurrency));
                 }
             });
-
             sumCostData.forEach(function(cost) {
                 sumCost = sumCost+Math.round(cost);
             });
@@ -350,6 +349,60 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         return sendData;
     } catch (err) {
         console.log(err);
+    }
+}
+
+const getSetReferencesData = async (setReferences, request) => {
+    const setReferencesData = [];
+    const elastic = new Elasticsearch.Client({
+        host: request.elasticsearch.host,
+        keepAlive: false
+    });
+    try {
+        const getSetreference = async (response) => {
+            const query = JSON.parse(
+                `{
+                    "query":{
+                        "constant_score": {
+                            "filter": {
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "reference": "${response}"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }`
+            );
+            return elastic.search({
+                index: 'mol',
+                type: 'setitems',
+                body: query
+            });
+        };
+        const listSetData =  (setReferences) =>{
+            setReferences.map((set) => {return set.reference});
+        }
+
+        Promise.all([listSetData(setReferences), getSetreference]).spread((setDatas, setReference) => {
+            let setData = setReference(set.reference);
+        }).catch(function(err) {
+            elastic.close();
+            console.log(err);
+            return reply(Boom.badImplementation(err));
+        });
+
+        await console.log('setReferencesData-->',setReferencesData.length);
+        await elastic.close();
+        return setReferencesData
+    } catch (err) {
+        elastic.close();
+        throw err
     }
 }
 

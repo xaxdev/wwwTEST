@@ -1,10 +1,17 @@
 import Elasticsearch from 'elasticsearch'
+import GetHTMLViewASSetGridAllSales from '../utils/getHtmlViewAsSetGridAllSales';
+import GetHTMLListAllSales from '../utils/getHtmlListAllSales';
+import GetHTMLListViewAsSetAllSales from '../utils/getHtmlListViewAsSetAllSales';
+import * as file from '../utils/file'
 const Boom = require('boom');
 const Hoek = require('hoek');
 const Joi = require('joi');
 const Promise = require('bluebird');
 const GetSalesSearch = require('../utils/getSalesSearch');
-const getAllSalesData = require('../utils/getAllSalesData');
+const GetAllSalesData = require('../utils/getAllSalesDataPDF');
+const fs = require('fs');
+const Path = require('path');
+const amqp = require('amqplib/callback_api');
 
 const internals = {
     filters: []
@@ -16,17 +23,19 @@ module.exports = {
     },
     handler: (request, reply) => {
         const elastic = request.server.plugins.elastic.client;
-
-        let obj = request.payload;
-        let page = request.payload.page;
+        const obj = request.payload;
+        const page = request.payload.page;
         let sortBy = request.payload.sortBy;
-        let sortDirections = request.payload.sortDirections;
-        let userCurrency = 'USD';
-        let keys = Object.keys(obj);
-        let size = request.payload.pageSize;
-        let itemsOrder = request.payload.ItemsSalesOrder;
-        let setReferencdOrder = request.payload.SetReferenceSalesOrder;
-        let isSetReference = !!request.payload.setReference? true: false;
+        const sortDirections = request.payload.sortDirections;
+        const userCurrency = 'USD';
+        const userPermissionPrice = request.payload.userPermissionPrice;
+        const keys = Object.keys(obj);
+        const size = request.payload.pageSize;
+        const itemsOrder = request.payload.ItemsOrder;
+        const setReferencdOrder = request.payload.SetReferencdOrder;
+        const isSetReference = !!request.payload.setReference? true: false;
+        const amqpHost = request.server.plugins.amqp.host;
+        const amqpChannel = request.server.plugins.amqp.channelPdf;
         let ps=[];
 
         const getClarityItems =  (query) => {
@@ -60,13 +69,13 @@ module.exports = {
 
         // console.log(JSON.stringify(internals.query, null, 2));
 
-        const getAllSalesItems =  elastic.search({
+        const getAllItems =  elastic.search({
             index: 'mol_solditems',
             type: 'solditems',
             body: internals.query
         });
 
-        const getSetReference = getAllSalesItems.then((response) => {
+        const getSetReference = getAllItems.then((response) => {
             const setReferenceResult = response.hits.hits.map((element) => element._source);
             const setReferenceFilter = setReferenceResult.filter((item) => {
                 return item.setReference != undefined && item.setReference != '';
@@ -95,10 +104,8 @@ module.exports = {
                     missing = '"missing" : "_first"';
                     missing = `{"${sortBy}" : {${missing}}},`;
                     break;
-                default:
-                    break;
+              default:
             }
-
             const query = JSON.parse(
                 `{
                     "timeout": "5s",
@@ -125,7 +132,6 @@ module.exports = {
                     }
                 }`
             );
-
             return elastic.search({
                 index: 'mol_solditems',
                 type: 'setitems',
@@ -209,19 +215,79 @@ module.exports = {
                 const setReferences = await getSetReferenceData(data);
                 const setReferenceData = setReferences.hits.hits.map((element) => element._source);
 
+                let itemsNotMMECONSResult =[{}];
+                let itemsMMECONSResult =[{}];
+
                 let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
                 elastic.close();
+                console.log('writing html...');
+                let temp = '';
+                const userName =  request.payload.userName;
+                const env =  request.payload.env;
+                const viewType =  request.payload.viewType;
+                let datas = null;
+                let curr = isViewAsSet ? 'USD' : userCurrency
+                console.log('isViewAsSet-->',isViewAsSet);
+                (async _ => {
+                    if (isViewAsSet) {
+                        datas = await GetAllSalesData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
+                            obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
 
-                if (isViewAsSet) {
-                    return reply(getAllSalesData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
-                        setReferencdOrder,isSetReference
-                    ));
-                }else {
-                    return reply(getAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder, setReferencdOrder,
-                        isSetReference
-                    ));
-                }
+                        if (viewType == 'grid') {
+                            temp = await GetHTMLViewASSetGridAllSales(datas,curr,isViewAsSet,env,userPermissionPrice);
+                        } else {
+                            temp = await GetHTMLListViewAsSetAllSales(datas,curr,isViewAsSet,env,userPermissionPrice);
+                        }
+                        const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
+
+                        await file.write(`${destination}/${userName}.html`, temp);
+                        console.log('writing done!');
+                        amqp.connect(amqpHost, function(err, conn) {
+                            conn.createChannel(function(err, ch) {
+                                const q = amqpChannel;
+
+                                ch.assertQueue(q);
+                                // Note: on Node 6 Buffer.from(msg) should be used
+                                let params = {
+                                    'userName': userName,
+                                    'userEmail': request.payload.userEmail,
+                                    'ROOT_URL': request.payload.ROOT_URL
+                                };
+                                ch.sendToQueue(q, new Buffer(JSON.stringify(params, null, 2)), {persistent: true});
+                              });
+                        });
+                        return reply({temp:'done!'});
+                    }else {
+                        datas = await GetAllSalesData(data, sortDirections, sortBy, size, page, userCurrency, keys,
+                            obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
+                        if (viewType == 'grid') {
+                            temp = await GetHTMLViewASSetGridAllSales(datas,curr,isViewAsSet,env,userPermissionPrice)
+                        } else if (viewType == 'list') {
+                            temp = await GetHTMLListAllSales(datas,curr,isViewAsSet,env,userPermissionPrice)
+                        }
+                        const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
+
+                        await file.write(`${destination}/${userName}.html`, temp);
+                        console.log('writing done!');
+                        amqp.connect(amqpHost, function(err, conn) {
+                            conn.createChannel(function(err, ch) {
+                                const q = amqpChannel;
+
+                                ch.assertQueue(q);
+                                // Note: on Node 6 Buffer.from(msg) should be used
+                                let params = {
+                                    'userName': userName,
+                                    'userEmail': request.payload.userEmail,
+                                    'ROOT_URL': request.payload.ROOT_URL
+                                };
+                                ch.sendToQueue(q, new Buffer(JSON.stringify(params, null, 2)), {persistent: true});
+                                // console.log(' [x] Sent "Parameter!"');
+                              });
+                        });
+                        return reply({temp:'done!'});
+                    }
+                })()
 
             })
             .catch(function(err) {
