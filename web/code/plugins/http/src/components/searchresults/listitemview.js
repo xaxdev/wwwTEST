@@ -207,7 +207,7 @@ class ListItemsView extends Component {
                     { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                     { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                     { title: 'Stone Detail', prop: 'stoneDetail' },
-                    { title: 'Retail Price', prop: 'priceUSD' },
+                    { title: 'Price', prop: 'priceUSD' },
                     { title: '', render: this.renderAction, className: 'text-center' },
                 ];
             }else{
@@ -223,7 +223,7 @@ class ListItemsView extends Component {
                     { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                     { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                     { title: 'Stone Detail', prop: 'stoneDetail' },
-                    { title: 'Retail Price', prop: 'priceUSD' },
+                    { title: 'Price', prop: 'priceUSD' },
                     { title: '', render: this.renderAction, className: 'text-center' },
                 ];
             }

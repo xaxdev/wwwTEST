@@ -34,14 +34,14 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 titles.push('Total Updated Cost (USD)');
             }
             if (price == 'Public' || price == 'Updated' || price == 'All') {
-                titles.push('Total Retail Price (USD)');
+                titles.push('Total Price (USD)');
             }
             if(fields.allFieldsViewAsSet){
                 titles.push('Markup (Times)', 'Company','Location', 'Created Date');
             }else{
                 if(fields.totalActualCost) titles.push('Total Cost Price (USD)');
                 if(fields.totalUpdatedCost) titles.push('Total Updated Cost (USD)');
-                if(fields.totalPrice) titles.push('Total Retail Price (USD)');
+                if(fields.totalPrice) titles.push('Total Price (USD)');
                 if(fields.markup) titles.push('Markup (Times)');
                 if(fields.companyName) titles.push('Company');
                 if(fields.warehouseName) titles.push('Location');
@@ -60,7 +60,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                     titles.push('Updated Cost (' + userCurrency + ')');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                    titles.push('Retail Price (' + userCurrency + ')');
+                    titles.push('Price (' + userCurrency + ')');
                 }
 
                 if (price == 'All') {
@@ -70,7 +70,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                     titles.push('Updated Cost (USD)');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                    titles.push('Retail Price (USD)');
+                    titles.push('Price (USD)');
                 }
             } else {
                 if (price == 'All') {
@@ -80,7 +80,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                     titles.push('Updated Cost (USD)');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                    titles.push('Retail Price (USD)');
+                    titles.push('Price (USD)');
                 }
             }
             titles.push('Item Weight (Grams)','Ring Size', 'Jewels Weight (text)','Site','Company', 'Location');

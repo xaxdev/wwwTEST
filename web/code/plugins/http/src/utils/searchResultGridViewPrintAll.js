@@ -20,7 +20,7 @@ export default function SearchResultListViewPrintAll(items, userLogin, ViewAsSet
 
         if (ViewAsSet) {
             lblActualCost = 'Total Cost Price (USD)';
-            lblPrice = 'Total Retail Price (USD)';
+            lblPrice = 'Total Price (USD)';
             lblUpdatedCost = 'Total Update Cost (USD)';
             imagesProduct = (item.image) != undefined ? item.image.length != 0 ?item.image[0].original : '/images/blank.gif' : '/images/blank.gif';
             itemDate = convertDate(item.createdDate);
@@ -36,7 +36,7 @@ export default function SearchResultListViewPrintAll(items, userLogin, ViewAsSet
                 item.name ;
         }else{
             lblActualCost = `Cost Price (${userLogin.currency})`;
-            lblPrice = `Retail Price (${userLogin.currency})`;
+            lblPrice = `Price (${userLogin.currency})`;
             lblUpdatedCost = `Update Cost (${userLogin.currency})`;
             imagesProduct = (item.gallery) != undefined
                 ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
