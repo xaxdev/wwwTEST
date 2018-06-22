@@ -75,7 +75,7 @@ class GridItemsViewPrint extends Component {
 
                         if (item.id != null) {
                             lblActualCost = `Cost Price (${userLogin.currency})`;
-                            lblPrice = `Retail Price (${userLogin.currency})`;
+                            lblPrice = `Price (${userLogin.currency})`;
                             lblUpdatedCost = `Update Cost (${userLogin.currency})`;
                             imagesProduct = (item.authorization)
                                 ? (item.gallery.length) != 0
@@ -112,7 +112,7 @@ class GridItemsViewPrint extends Component {
                             itemNameCat = (item.authorization)? (item.type != 'CER')? item.description: item.name : '';
                         }else{
                             lblActualCost = 'Total Cost Price (USD)';
-                            lblPrice = 'Total Retail Price (USD)';
+                            lblPrice = 'Total Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
                             imagesProduct = (item.image) != undefined
                                 ? item.image.length != 0

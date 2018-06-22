@@ -39,7 +39,7 @@ const Detail = (props) =>{
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                 || userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Retail Price ({ currency })</div>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Price ({ currency })</div>
                     <div className="col-md-8 col-sm-8">{ price }</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?

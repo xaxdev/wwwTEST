@@ -60,7 +60,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                                 if (chkSellingCost) {
                                                     htmlTemplate = htmlTemplate +   `<span>
                                                                                         <span style="${paddinglf15}">|</span>
-                                                                                        <span style="${fontbfc000}">Total Retail Price(Set) :</span>
+                                                                                        <span style="${fontbfc000}">Total Price(Set) :</span>
                                                                                         <span style="${fontw9}">
                                                                                             <span>${_totalPublicPriceSet}</span>
                                                                                             <span> USD</span>

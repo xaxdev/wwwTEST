@@ -183,7 +183,7 @@ class ListItemsViewPrint extends Component {
                     { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                     { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                     { title: 'Stone Detail', prop: 'stoneDetail' },
-                    { title: 'Retail Price', prop: 'priceUSD' },
+                    { title: 'Price', prop: 'priceUSD' },
                 ];
             }else{
                 tableColumns = [
@@ -197,7 +197,7 @@ class ListItemsViewPrint extends Component {
                     { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                     { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                     { title: 'Stone Detail', prop: 'stoneDetail' },
-                    { title: 'Retail Price', prop: 'priceUSD' },
+                    { title: 'Price', prop: 'priceUSD' },
                 ];
             }
             if (ViewAsSet) {
