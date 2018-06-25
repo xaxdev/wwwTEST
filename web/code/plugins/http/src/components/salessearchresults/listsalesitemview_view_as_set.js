@@ -29,9 +29,7 @@ class ListSalesItemsViewASSet extends Component {
         checkItem = !checkItem ? false : true;  //if undefined checked false else true
         return(
             <div className="checkbox checkbox-warning">
-                <input type="checkbox" className="styled" type="checkbox" name={val} checked={checkItem} id={val} value={val}
-                    onChange={onCheckedOneItemMyCatalog}
-                />
+                <input type="checkbox" className="styled" type="checkbox" name={val} checked={checkItem} id={val} value={val} onChange={onCheckedOneItemMyCatalog} />
                 <label className="checkbox1"></label>
             </div>
         );
@@ -56,7 +54,12 @@ class ListSalesItemsViewASSet extends Component {
                         return (
                             <tr key={subitem.reference} id={subitem.reference}>
                                 <td>{this.renderCheckItem(item.reference)}</td>
-                                <td><img id={item.reference} src={item.imageThumbnail} width="60" onClick={this.onClickGrid}/></td>
+                                <td>
+                                    <div className="list-tagbar-soldout">
+                                        <span className="tagbar-soldout"></span>
+                                        <img id={item.reference} src={item.imageThumbnail} width="60" onClick={this.onClickGrid}/>
+                                    </div>
+                                </td>
                                 <td><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
                                 <td>{subitem.reference}</td>
                                 <td>{subitem.description}</td>
@@ -89,7 +92,12 @@ class ListSalesItemsViewASSet extends Component {
                 <tbody key={item.reference} id={item.reference}>
                     <tr>
                         <td rowSpan={row}>{this.renderCheckItem(item.reference)}</td>
-                        <td rowSpan={row}><img id={item.reference} src={item.imageThumbnail} width="60" onClick={this.onClickGrid}/></td>
+                        <td rowSpan={row}>
+                            <div className="list-tagbar-soldout">
+                                <span className="list-tagbar-soldout tagbar-soldout"></span>
+                                <img id={item.reference} src={item.imageThumbnail} width="60" onClick={this.onClickGrid}/>
+                            </div>
+                        </td>
                         <td rowSpan={row}><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
                     </tr>
                     {item.items.map((subitem,index) => {
@@ -126,7 +134,12 @@ class ListSalesItemsViewASSet extends Component {
                 <tbody key={item.reference} id={item.reference}>
                     <tr>
                         <td rowSpan={row}>{this.renderCheckItem(item.reference)}</td>
-                        <td rowSpan={row}><img id={item.reference} src={item.imageThumbnail} width="60" onClick={this.onClickGrid}/></td>
+                        <td rowSpan={row}>
+                            <div className="list-tagbar-soldout">
+                                <span className="list-tagbar-soldout tagbar-soldout"></span>
+                                <img id={item.reference} src={item.imageThumbnail} width="60" onClick={this.onClickGrid}/>
+                            </div>
+                        </td>
                         <td rowSpan={row}><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
                     </tr>
                     <tr>

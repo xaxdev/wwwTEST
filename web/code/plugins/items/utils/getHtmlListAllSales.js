@@ -1,6 +1,7 @@
 import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 import numberFormat2digit from './convertNumberformatwithcomma2digit';
+import convertDate from './convertDate';
 
 export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userPermissionPrice){
     const priceSalesRTP = userPermissionPrice.priceSalesRTP;
@@ -118,23 +119,23 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                                 <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col" tabindex="0"
-                                                                    aria-sort="none" aria-label="Company: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Company</span>
-                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
-                                                                </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col" tabindex="0"
                                                                     aria-sort="none" aria-label="Location: activate to sort column ascending" style="width: 0px;">
                                                                     <span>Location</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
-                                                                    tabindex="0" aria-sort="none" aria-label="Size: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Size</span>
+                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col" tabindex="0"
+                                                                    aria-sort="none" aria-label="Location: activate to sort column ascending" style="width: 0px;">
+                                                                    <span>Customer Name</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                                 <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
-                                                                    tabindex="0" aria-sort="none" aria-label="Jewelry Weight: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Jewelry Weight</span>
+                                                                    tabindex="0" aria-sort="none" aria-label="Size: activate to sort column ascending" style="width: 0px;">
+                                                                    <span>Invoice Date</span>
+                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
+                                                                </th>
+                                                                <th style="${(priceSalesNSP) ? '' : 'hidden'} padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;width: 0px;" role="columnheader" scope="col"
+                                                                    tabindex="0" aria-sort="none" aria-label="Jewelry Weight: activate to sort column ascending " >
+                                                                    <span>Net Amount</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
                                                                 <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
@@ -147,8 +148,8 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                     <span>Stone Detail</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader"
-                                                                    scope="col" tabindex="0" aria-sort="none" aria-label="Price: activate to sort column ascending" style="width: 0px;">
+                                                                <th style="${(priceSalesRTP) ? '' : 'hidden'} padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954; width: 0px;" role="columnheader"
+                                                                    scope="col" tabindex="0" aria-sort="none" aria-label="Price: activate to sort column ascending ">
                                                                     <span>Price</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
@@ -165,10 +166,16 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                 let imgPath = env == 'production'
                                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                                                                     : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
-                                                                if(item.price != undefined){
-                                                                    price = (item.price[currency] != undefined) ? numberFormat(item.price[currency]) : '- ';
-                                                                }else{
-                                                                    price = '- ';
+                                                                let imgPathPublic = env == 'production'
+                                                                    ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
+                                                                    : 'file:///home/dev/www/mol/web/code/plugins/http/public';
+                                                                let tagbarsoldoutlist = `position: absolute;top: -5px;right: -5px;z-index: 9999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out_list.png)right top no-repeat;`
+                                                                if (priceSalesRTP) {
+                                                                    if(item.price != undefined){
+                                                                        price = (item.price[currency] != undefined) ? numberFormat(item.price[currency]) : '- ';
+                                                                    }else{
+                                                                        price = '- ';
+                                                                    }
                                                                 }
 
                                                                 switch (item.type) {
@@ -203,12 +210,20 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                 } else {
                                                                     jewelsWeight = '';
                                                                 }
+                                                                if (priceSalesNSP) {
+                                                                    if(item.netAmount != undefined){
+                                                                        item.netAmountUSD = (item.netAmount[currency] != undefined) ? numberFormat(item.netAmount[currency]) : '- ';
+                                                                    }else{
+                                                                        item.netAmountUSD = '- ';
+                                                                    }
+                                                                }
                                                                 jewelsWeight = numberFormat2digit(jewelsWeight);
                                                                 grossWeight = numberFormat2digit(item.grossWeight)
 
                                                                 return (`<tr>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>
+                                                                                    <span style="${tagbarsoldoutlist}"></span>
                                                                                     <img src="${imagesProduct}" width="60">
                                                                                 </span>
                                                                             </td>
@@ -222,16 +237,16 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                                 <span>${item.sku}</span>
                                                                             </td>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.companyName}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${item.warehouseName}</span>
                                                                             </td>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${size}</span>
+                                                                                <span>${item.customerName}</span>
                                                                             </td>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${jewelsWeight}</span>
+                                                                                <span>${convertDate(item.invoiceDate)}</span>
+                                                                            </td>
+                                                                            <td style="${(priceSalesNSP) ? '' : 'hidden'} padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                <span>${item.netAmountUSD}</span>
                                                                             </td>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${grossWeight}</span>
@@ -239,7 +254,7 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${item.stoneDetail != ''? item.stoneDetail: '-'}</span>
                                                                             </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <td style="${(priceSalesRTP) ? '' : 'hidden'} padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${price}</span>
                                                                             </td>
                                                                         </tr>`)

@@ -69,12 +69,10 @@ class ListSalesItemsViewPrintAll extends Component {
     }
     renderImage=
         (val,row) =>
-        <ReactImageFallback
-            src={row.imageThumbnail}
-            fallbackImage="/images/blank.gif"
-            initialImage="/images/blank.gif"
-            width="60"
-            />;
+        <div className="list-tagbar-soldout">
+            <span className="tagbar-soldout"></span>
+            <ReactImageFallback src={row.imageThumbnail} fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width="60" />;
+        </div>
 
     renderCheckItem =
         (val, row) =>
@@ -151,7 +149,7 @@ class ListSalesItemsViewPrintAll extends Component {
                             col.netAmountUSD = '- ';
                         }
                     }
-                    
+
                     if (col.gemstones != undefined) {
                         col.gemstones.forEach(function(gemstone) {
                             if(gemstone.carat != undefined){
@@ -185,9 +183,9 @@ class ListSalesItemsViewPrintAll extends Component {
                         { title: 'Stone Detail', prop: 'stoneDetail' },
                         { title: 'Price', prop: 'priceUSD' },
                         { title: '', render: this.renderAction, className: 'text-center' },
-                    ]; 
+                    ];
                     fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate', 'grossWeight', 'stoneDetail',
-                    'priceUSD','' ]   
+                    'priceUSD','' ]
                 }else if (!priceSalesRTP) {
                     tableColumns = [
                         { title: 'Images', render: this.renderImage },
@@ -218,7 +216,7 @@ class ListSalesItemsViewPrintAll extends Component {
                         { title: 'Stone Detail', prop: 'stoneDetail' },
                         { title: 'Price', prop: 'priceUSD' },
                         { title: '', render: this.renderAction, className: 'text-center' },
-                    ]; 
+                    ];
                     fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight',
                     'stoneDetail','priceUSD','' ]
                 }

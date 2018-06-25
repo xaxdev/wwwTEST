@@ -65,7 +65,10 @@ class ListSalesItemsViewPrint extends Component {
 
     renderImage = (val,row) => {
         return (
-            <ReactImageFallback src={row.imageThumbnail} fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width="60" />
+            <div className="list-tagbar-soldout">
+                <span className="tagbar-soldout"></span>
+                <ReactImageFallback src={row.imageThumbnail} fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width="60" />
+            </div>
         );
     }
 
@@ -174,9 +177,9 @@ class ListSalesItemsViewPrint extends Component {
                         { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                         { title: 'Stone Detail', prop: 'stoneDetail' },
                         { title: 'Price', prop: 'priceUSD' },
-                    ]; 
+                    ];
                     fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate', 'grossWeight', 'stoneDetail',
-                    'priceUSD','' ]   
+                    'priceUSD','' ]
                 }else if (!priceSalesRTP) {
                     tableColumns = [
                         { title: 'Images', render: this.renderImage },
@@ -205,11 +208,11 @@ class ListSalesItemsViewPrint extends Component {
                         { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                         { title: 'Stone Detail', prop: 'stoneDetail' },
                         { title: 'Price', prop: 'priceUSD' },
-                    ]; 
+                    ];
                     fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight',
                     'stoneDetail','priceUSD','' ]
                 }
-                
+
             }else{
                 if (!priceSalesNSP) {
                     tableColumns = [

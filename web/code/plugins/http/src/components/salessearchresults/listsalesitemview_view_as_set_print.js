@@ -27,7 +27,12 @@ class ListSalesItemsViewASSetPrint extends Component {
                     {item.items.map((subitem) => {
                         return (
                             <tr key={subitem.reference} id={subitem.reference}>
-                                <td className="tdd"><img src={item.imageThumbnail} width="60"/></td>
+                                <td>
+                                    <div className="list-tagbar-soldout">
+                                        <span className="list-tagbar-soldout tagbar-soldout"></span>
+                                        <img src={item.imageThumbnail} width="60"/>
+                                    </div>
+                                </td>
                                 <td className="tdd">{item.reference}</td>
                                 <td className="tdd">{subitem.reference}</td>
                                 <td className="tdd">{subitem.description}</td>
@@ -59,7 +64,12 @@ class ListSalesItemsViewASSetPrint extends Component {
             return (
                 <tbody key={item.reference} id={item.reference}>
                     <tr>
-                        <td className="tdd" rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
+                        <td rowSpan={row}>
+                            <div className="list-tagbar-soldout">
+                                <span className="list-tagbar-soldout tagbar-soldout"></span>
+                                <img src={item.imageThumbnail} width="60"/>
+                            </div>
+                        </td>
                         <td className="tdd" rowSpan={row}>{item.reference}</td>
                     </tr>
                     {item.items.map((subitem,index) => {
@@ -95,7 +105,12 @@ class ListSalesItemsViewASSetPrint extends Component {
             return (
                 <tbody>
                     <tr>
-                        <td className="tdd" rowSpan={row}><img src={item.imageThumbnail} width="60"/></td>
+                        <td rowSpan={row}>
+                            <div className="list-tagbar-soldout">
+                                <span className="list-tagbar-soldout tagbar-soldout"></span>
+                                <img src={item.imageThumbnail} width="60"/>
+                            </div>
+                        </td>
                         <td className="tdd" rowSpan={row}>{item.reference}</td>
                     </tr>
                     <tr>

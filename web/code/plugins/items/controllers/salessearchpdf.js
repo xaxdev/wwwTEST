@@ -231,7 +231,7 @@ module.exports = {
                 console.log('isViewAsSet-->',isViewAsSet);
                 (async _ => {
                     if (isViewAsSet) {
-                        datas = await GetAllSalesData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
+                        datas = await GetAllSalesData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys,
                             obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
 
                         if (viewType == 'grid') {

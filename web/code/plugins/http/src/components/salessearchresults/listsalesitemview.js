@@ -73,14 +73,14 @@ class ListSalesItemsView extends Component {
 
     renderImage = (val,row) => {
         return (
-        <div className="list-tagbar-soldout">
-            <span className="tagbar-soldout"></span>
-            <ReactImageFallback
-                src={row.imageThumbnail}
-                fallbackImage="/images/blank.gif"
-                initialImage="/images/blank.gif"
-                width="60"/>
-        </div>
+            <div className="list-tagbar-soldout">
+                <span className="tagbar-soldout"></span>
+                <ReactImageFallback
+                    src={row.imageThumbnail}
+                    fallbackImage="/images/blank.gif"
+                    initialImage="/images/blank.gif"
+                    width="60"/>
+            </div>
         );
     }
 
@@ -95,7 +95,7 @@ class ListSalesItemsView extends Component {
         const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
         const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
         const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
-        
+
         if (this.props.items.length != 0){
             let isCompany = true;
             items = this.props.items.map(function (col, idx) {
@@ -144,7 +144,7 @@ class ListSalesItemsView extends Component {
                             col.priceUSD = (col.price[currency] != undefined) ? numberFormat(col.price[currency]) : '- ';
                         }else{
                             col.priceUSD = '- ';
-                        }    
+                        }
                     }
 
                     if (priceSalesNSP) {
@@ -154,7 +154,7 @@ class ListSalesItemsView extends Component {
                             col.netAmountUSD = '- ';
                         }
                     }
-                    
+
                     if (col.gemstones != undefined) {
                         col.gemstones.forEach(function(gemstone) {
                             if(gemstone.carat != undefined){
@@ -170,10 +170,10 @@ class ListSalesItemsView extends Component {
 
                     itemName = (col.type != 'CER') ? (col.description != undefined) ? col.description: '-' : col.name ;
                 }
-                
+
                 return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size, itemName: itemName,
                     grossWeight:numberFormat2digit(col.grossWeight),invoiceDate: convertDate(col.invoiceDate)}
-                
+
             });
 
             let tableColumns = [];
@@ -192,9 +192,9 @@ class ListSalesItemsView extends Component {
                         { title: 'Stone Detail', prop: 'stoneDetail' },
                         { title: 'Price', prop: 'priceUSD' },
                         { title: '', render: this.renderAction, className: 'text-center' },
-                    ]; 
+                    ];
                     fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate', 'grossWeight', 'stoneDetail',
-                    'priceUSD','' ]   
+                    'priceUSD','' ]
                 }else if (!priceSalesRTP) {
                     tableColumns = [
                         { title: 'Images', render: this.renderImage },
@@ -225,11 +225,11 @@ class ListSalesItemsView extends Component {
                         { title: 'Stone Detail', prop: 'stoneDetail' },
                         { title: 'Price', prop: 'priceUSD' },
                         { title: '', render: this.renderAction, className: 'text-center' },
-                    ]; 
+                    ];
                     fieldKeys = ['image','reference', 'itemName', 'sku', 'warehouseName', 'customerName', 'invoiceDate','netAmountUSD', 'grossWeight',
                     'stoneDetail','priceUSD','' ]
                 }
-                
+
             }else{
                 if (!priceSalesNSP) {
                     tableColumns = [
