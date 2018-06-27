@@ -229,11 +229,10 @@ class InventoryJewelry extends Component {
     }
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
-        const { props } = this.props;
+        const { props, handleArticleSelected } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
-        let { fields: { article, jewelryCategory, collection, brand, ringSize, dominantStone, metalType, metalColour
-        }, searchResult } = props;
+        let { fields: { article, jewelryCategory, collection, brand, ringSize, dominantStone, metalType, metalColour }, searchResult } = props;
         let findFieldName = [];
 
         let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
@@ -248,11 +247,13 @@ class InventoryJewelry extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.jewelryCategory = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.jewelryCategory = findFieldName;
 
-                    jewelryCategory.onChange(findFieldName);
-                    props.inventoryActions.setDataJewelryCategory(findFieldName);
+                        jewelryCategory.onChange(findFieldName);
+                        props.inventoryActions.setDataJewelryCategory(findFieldName);
+                    }
                 }
                 if (props.options.collections) {
                     findFieldName = []
@@ -262,11 +263,13 @@ class InventoryJewelry extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.collection = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.collection = findFieldName;
 
-                    collection.onChange(findFieldName);
-                    props.inventoryActions.setDataCollection(findFieldName);
+                        collection.onChange(findFieldName);
+                        props.inventoryActions.setDataCollection(findFieldName);
+                    }
                 }
                 if (props.options.brands) {
                     findFieldName = []
@@ -276,11 +279,13 @@ class InventoryJewelry extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.brand = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.brand = findFieldName;
 
-                    brand.onChange(findFieldName);
-                    props.inventoryActions.setDataBrand(findFieldName);
+                        brand.onChange(findFieldName);
+                        props.inventoryActions.setDataBrand(findFieldName);
+                    }
                 }
                 if (props.options.ringSizes) {
                     findFieldName = []
@@ -290,11 +295,13 @@ class InventoryJewelry extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.ringSize = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.ringSize = findFieldName;
 
-                    ringSize.onChange(findFieldName);
-                    props.inventoryActions.setDataRingSize(findFieldName);
+                        ringSize.onChange(findFieldName);
+                        props.inventoryActions.setDataRingSize(findFieldName);
+                    }
                 }
                 if (props.options.dominantStones) {
                     findFieldName = []
@@ -304,11 +311,13 @@ class InventoryJewelry extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.dominantStone = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.dominantStone = findFieldName;
 
-                    dominantStone.onChange(findFieldName);
-                    props.inventoryActions.setDataDominantStone(findFieldName);
+                        dominantStone.onChange(findFieldName);
+                        props.inventoryActions.setDataDominantStone(findFieldName);
+                    }
                 }
                 if (props.options.metalTypes) {
                     findFieldName = []
@@ -318,11 +327,13 @@ class InventoryJewelry extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.metalType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.metalType = findFieldName;
 
-                    metalType.onChange(findFieldName);
-                    props.inventoryActions.setDataMetalType(findFieldName);
+                        metalType.onChange(findFieldName);
+                        props.inventoryActions.setDataMetalType(findFieldName);
+                    }
                 }
                 if (props.options.metalColours) {
                     findFieldName = []
@@ -332,11 +343,13 @@ class InventoryJewelry extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.metalColour = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.metalColour = findFieldName;
 
-                    metalColour.onChange(findFieldName);
-                    props.inventoryActions.setDataMetalColour(findFieldName);
+                        metalColour.onChange(findFieldName);
+                        props.inventoryActions.setDataMetalColour(findFieldName);
+                    }
                 }
             }else{
                 if (props.options.jewelryCategories) {
@@ -399,6 +412,7 @@ class InventoryJewelry extends Component {
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
+        handleArticleSelected(ArticleSelectedValue);
     }
 
     selectedViewAsSet = e => {
