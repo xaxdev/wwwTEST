@@ -367,7 +367,7 @@ class InventoryWatch extends Component {
     }
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
-        const { props } = this.props;
+        const { props, handleArticleSelected } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
         let { fields: { article, watchCategory, collection, brand, metalType, metalColour, dominantStone,
@@ -386,12 +386,13 @@ class InventoryWatch extends Component {
                             return item.name
                         }
                     }).map((item) => { return item.code });
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.watchCategory = findFieldName;
 
-                    if(paramsSearch != null)
-                        paramsSearch.watchCategory = findFieldName;
-
-                    watchCategory.onChange(findFieldName);
-                    props.inventoryActions.setDataWatchCategory(findFieldName);
+                        watchCategory.onChange(findFieldName);
+                        props.inventoryActions.setDataWatchCategory(findFieldName);
+                    }
                 }
                 if (props.options.collections) {
                     findFieldName = []
@@ -401,11 +402,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.collection = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.collection = findFieldName;
 
-                    collection.onChange(findFieldName);
-                    props.inventoryActions.setDataCollection(findFieldName);
+                        collection.onChange(findFieldName);
+                        props.inventoryActions.setDataCollection(findFieldName);
+                    }
                 }
                 if (props.options.brands) {
                     findFieldName = []
@@ -415,11 +418,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.brand = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.brand = findFieldName;
 
-                    brand.onChange(findFieldName);
-                    props.inventoryActions.setDataBrand(findFieldName);
+                        brand.onChange(findFieldName);
+                        props.inventoryActions.setDataBrand(findFieldName);
+                    }
                 }
                 if (props.options.metalTypes) {
                     findFieldName = []
@@ -429,11 +434,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.metalType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.metalType = findFieldName;
 
-                    metalType.onChange(findFieldName);
-                    props.inventoryActions.setDataMetalType(findFieldName);
+                        metalType.onChange(findFieldName);
+                        props.inventoryActions.setDataMetalType(findFieldName);
+                    }
                 }
                 if (props.options.metalColours) {
                     findFieldName = []
@@ -443,11 +450,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.metalColour = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.metalColour = findFieldName;
 
-                    metalColour.onChange(findFieldName);
-                    props.inventoryActions.setDataMetalColour(findFieldName);
+                        metalColour.onChange(findFieldName);
+                        props.inventoryActions.setDataMetalColour(findFieldName);
+                    }
                 }
                 if (props.options.dominantStones) {
                     findFieldName = []
@@ -457,11 +466,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.dominantStone = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.dominantStone = findFieldName;
 
-                    dominantStone.onChange(findFieldName);
-                    props.inventoryActions.setDataDominantStone(findFieldName);
+                        dominantStone.onChange(findFieldName);
+                        props.inventoryActions.setDataDominantStone(findFieldName);
+                    }
                 }
                 if (props.options.movements) {
                     findFieldName = []
@@ -471,11 +482,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.movement = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.movement = findFieldName;
 
-                    movement.onChange(findFieldName);
-                    props.inventoryActions.setDataMovement(findFieldName);
+                        movement.onChange(findFieldName);
+                        props.inventoryActions.setDataMovement(findFieldName);
+                    }
                 }
                 if (props.options.dialIndexs) {
                     findFieldName = []
@@ -485,11 +498,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.dialIndex = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.dialIndex = findFieldName;
 
-                    dialIndex.onChange(findFieldName);
-                    props.inventoryActions.setDataDialIndex(findFieldName);
+                        dialIndex.onChange(findFieldName);
+                        props.inventoryActions.setDataDialIndex(findFieldName);
+                    }
                 }
                 if (props.options.dialColors) {
                     findFieldName = []
@@ -499,11 +514,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.dialColor = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.dialColor = findFieldName;
 
-                    dialColor.onChange(findFieldName);
-                    props.inventoryActions.setDataDialColor(findFieldName);
+                        dialColor.onChange(findFieldName);
+                        props.inventoryActions.setDataDialColor(findFieldName);
+                    }
                 }
                 if (props.options.dialMetals) {
                     findFieldName = []
@@ -513,11 +530,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.dialMetal = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.dialMetal = findFieldName;
 
-                    dialMetal.onChange(findFieldName);
-                    props.inventoryActions.setDataDialMetal(findFieldName);
+                        dialMetal.onChange(findFieldName);
+                        props.inventoryActions.setDataDialMetal(findFieldName);
+                    }
                 }
                 if (props.options.buckleTypes) {
                     findFieldName = []
@@ -527,11 +546,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.buckleType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.buckleType = findFieldName;
 
-                    buckleType.onChange(findFieldName);
-                    props.inventoryActions.setDataBuckleType(findFieldName);
+                        buckleType.onChange(findFieldName);
+                        props.inventoryActions.setDataBuckleType(findFieldName);
+                    }
                 }
                 if (props.options.strapTypes) {
                     findFieldName = []
@@ -541,11 +562,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.strapType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.strapType = findFieldName;
 
-                    strapType.onChange(findFieldName);
-                    props.inventoryActions.setDataStrapType(findFieldName);
+                        strapType.onChange(findFieldName);
+                        props.inventoryActions.setDataStrapType(findFieldName);
+                    }
                 }
                 if (props.options.strapColors) {
                     findFieldName = []
@@ -555,11 +578,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.strapColor = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.strapColor = findFieldName;
 
-                    strapColor.onChange(findFieldName);
-                    props.inventoryActions.setDataStrapColor(findFieldName);
+                        strapColor.onChange(findFieldName);
+                        props.inventoryActions.setDataStrapColor(findFieldName);
+                    }
                 }
                 if (props.options.complications) {
                     findFieldName = []
@@ -569,11 +594,13 @@ class InventoryWatch extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.complication = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.complication = findFieldName;
 
-                    complication.onChange(findFieldName);
-                    props.inventoryActions.setDataComplication(findFieldName);
+                        complication.onChange(findFieldName);
+                        props.inventoryActions.setDataComplication(findFieldName);
+                    }
                 }
             }else{
                 if (props.options.watchCategories) {
@@ -685,6 +712,7 @@ class InventoryWatch extends Component {
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
+        handleArticleSelected(ArticleSelectedValue);
     }
 
     render() {

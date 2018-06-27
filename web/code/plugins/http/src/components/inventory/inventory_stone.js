@@ -318,7 +318,7 @@ class InventoryStone extends Component {
     }
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
-        const { props } = this.props;
+        const { props, handleArticleSelected } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
         let { fields: { article, stoneType, cut, cutGrade, color, colorGrade, clarity, certificateAgency, polish, symmetry, treatment, fluorescence,
@@ -338,11 +338,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.stoneType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.stoneType = findFieldName;
 
-                    stoneType.onChange(findFieldName);
-                    props.inventoryActions.setDatastoneType(findFieldName);
+                        stoneType.onChange(findFieldName);
+                        props.inventoryActions.setDatastoneType(findFieldName);
+                    }
                 }
                 if (props.options.cut) {
                     findFieldName = []
@@ -352,11 +354,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.cut = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.cut = findFieldName;
 
-                    cut.onChange(findFieldName);
-                    props.inventoryActions.setDataCut(findFieldName);
+                        cut.onChange(findFieldName);
+                        props.inventoryActions.setDataCut(findFieldName);
+                    }
                 }
                 if (props.options.cutGrades) {
                     findFieldName = []
@@ -366,11 +370,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.cutGrade = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.cutGrade = findFieldName;
 
-                    cutGrade.onChange(findFieldName);
-                    props.inventoryActions.setDataCutGrade(findFieldName);
+                        cutGrade.onChange(findFieldName);
+                        props.inventoryActions.setDataCutGrade(findFieldName);
+                    }
                 }
                 if (props.options.colors) {
                     findFieldName = []
@@ -380,11 +386,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.color = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.color = findFieldName;
 
-                    color.onChange(findFieldName);
-                    props.inventoryActions.setDataColor(findFieldName);
+                        color.onChange(findFieldName);
+                        props.inventoryActions.setDataColor(findFieldName);
+                    }
                 }
                 if (props.options.colorGrades) {
                     findFieldName = []
@@ -394,11 +402,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.colorGrade = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.colorGrade = findFieldName;
 
-                    colorGrade.onChange(findFieldName);
-                    props.inventoryActions.setDataColorGrade(findFieldName);
+                        colorGrade.onChange(findFieldName);
+                        props.inventoryActions.setDataColorGrade(findFieldName);
+                    }
                 }
                 if (props.options.clarities) {
                     findFieldName = []
@@ -408,11 +418,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.clarity = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.clarity = findFieldName;
 
-                    clarity.onChange(findFieldName);
-                    props.inventoryActions.setDataClarity(findFieldName);
+                        clarity.onChange(findFieldName);
+                        props.inventoryActions.setDataClarity(findFieldName);
+                    }
                 }
                 if (props.options.certificateAgencys) {
                     findFieldName = []
@@ -422,11 +434,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.certificateAgency = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.certificateAgency = findFieldName;
 
-                    certificateAgency.onChange(findFieldName);
-                    props.inventoryActions.setDataCertificateAgency(findFieldName);
+                        certificateAgency.onChange(findFieldName);
+                        props.inventoryActions.setDataCertificateAgency(findFieldName);
+                    }
                 }
                 if (props.options.polishs) {
                     findFieldName = []
@@ -436,11 +450,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.polish = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.polish = findFieldName;
 
-                    polish.onChange(findFieldName);
-                    props.inventoryActions.setDataPolish(findFieldName);
+                        polish.onChange(findFieldName);
+                        props.inventoryActions.setDataPolish(findFieldName);
+                    }
                 }
                 if (props.options.symmetries) {
                     findFieldName = []
@@ -450,11 +466,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.symmetry = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.symmetry = findFieldName;
 
-                    symmetry.onChange(findFieldName);
-                    props.inventoryActions.setDataSymmetry(findFieldName);
+                        symmetry.onChange(findFieldName);
+                        props.inventoryActions.setDataSymmetry(findFieldName);
+                    }
                 }
                 if (props.options.treatments) {
                     findFieldName = []
@@ -464,11 +482,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.treatment = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.treatment = findFieldName;
 
-                    treatment.onChange(findFieldName);
-                    props.inventoryActions.setDataTreatment(findFieldName);
+                        treatment.onChange(findFieldName);
+                        props.inventoryActions.setDataTreatment(findFieldName);
+                    }
                 }
                 if (props.options.fluorescences) {
                     findFieldName = []
@@ -478,11 +498,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.fluorescence = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.fluorescence = findFieldName;
 
-                    fluorescence.onChange(findFieldName);
-                    props.inventoryActions.setDataFluorescence(findFieldName);
+                        fluorescence.onChange(findFieldName);
+                        props.inventoryActions.setDataFluorescence(findFieldName);
+                    }
                 }
                 if (props.options.origins) {
                     findFieldName = []
@@ -492,11 +514,13 @@ class InventoryStone extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.origin = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.origin = findFieldName;
 
-                    origin.onChange(findFieldName);
-                    props.inventoryActions.setDataOrigin(findFieldName);
+                        origin.onChange(findFieldName);
+                        props.inventoryActions.setDataOrigin(findFieldName);
+                    }
                 }
             }else{
                 if (props.options.stoneType) {
@@ -594,6 +618,7 @@ class InventoryStone extends Component {
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
+        handleArticleSelected(ArticleSelectedValue);
     }
 
     render() {

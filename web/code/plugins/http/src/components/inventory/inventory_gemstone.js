@@ -48,7 +48,7 @@ class InventoryGemStone extends Component {
             paramsSearch.gemstone_stoneType = stoneTypeSelectValue;
 
         gemstone_stoneType.onChange(stoneTypeSelectValue);
-        props.inventoryActions.setDatastoneType(stoneTypeSelectValue);
+        props.inventoryActions.setDataGemstoneStoneType(stoneTypeSelectValue);
     }
     handleCutSelectChange(CutSelectValue){
         const { props } = this.props;
@@ -209,7 +209,6 @@ class InventoryGemStone extends Component {
 
     render() {
         const { props } = this.props;
-
         let {
             fields: {
                 gemstone_stoneCostFrom, gemstone_stoneCostTo, gemstone_totalCaratWeightFrom, gemstone_totalCaratWeightTo,
@@ -305,7 +304,7 @@ class InventoryGemStone extends Component {
                                 </OverlayTrigger>
                             </label>
                             <div className="col-sm-7">
-                                <Select multi simpleValue value={props.StoneTypeValue} placeholder="Select your Stone Type"
+                                <Select multi simpleValue value={props.GemStoneTypeValue} placeholder="Select your Stone Type"
                                     options={dataDropDowntGemstoneStoneType} onChange={this.handlestoneTypeSelectChange} />
                             </div>
                         </div>

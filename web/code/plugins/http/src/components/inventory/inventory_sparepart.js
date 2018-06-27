@@ -174,7 +174,7 @@ class InventorySparePart extends Component {
     }
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
-        const { props } = this.props;
+        const { props, handleArticleSelected } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
         let { fields: { article, sparePartType, buckleType, metalType, metalColour, dominantStone
@@ -193,11 +193,13 @@ class InventorySparePart extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.sparePartType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.sparePartType = findFieldName;
 
-                    sparePartType.onChange(findFieldName);
-                    props.inventoryActions.setDataSparePartType(findFieldName);
+                        sparePartType.onChange(findFieldName);
+                        props.inventoryActions.setDataSparePartType(findFieldName);
+                    }
                 }
                 if (props.options.buckleTypes) {
                     findFieldName = []
@@ -207,11 +209,13 @@ class InventorySparePart extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.buckleType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.buckleType = findFieldName;
 
-                    buckleType.onChange(findFieldName);
-                    props.inventoryActions.setDataBuckleType(findFieldName);
+                        buckleType.onChange(findFieldName);
+                        props.inventoryActions.setDataBuckleType(findFieldName);
+                    }
                 }
                 if (props.options.metalTypes) {
                     findFieldName = []
@@ -221,11 +225,13 @@ class InventorySparePart extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.metalType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.metalType = findFieldName;
 
-                    metalType.onChange(findFieldName);
-                    props.inventoryActions.setDataMetalType(findFieldName);
+                        metalType.onChange(findFieldName);
+                        props.inventoryActions.setDataMetalType(findFieldName);
+                    }
                 }
                 if (props.options.metalColours) {
                     findFieldName = []
@@ -235,11 +241,13 @@ class InventorySparePart extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.metalColour = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.metalColour = findFieldName;
 
-                    metalColour.onChange(findFieldName);
-                    props.inventoryActions.setDataMetalColour(findFieldName);
+                        metalColour.onChange(findFieldName);
+                        props.inventoryActions.setDataMetalColour(findFieldName);
+                    }
                 }
                 if (props.options.dominantStones) {
                     findFieldName = []
@@ -249,11 +257,13 @@ class InventorySparePart extends Component {
                         }
                     }).map((item) => { return item.code });
 
-                    if(paramsSearch != null)
-                        paramsSearch.dominantStone = findFieldName;
-    
-                    dominantStone.onChange(findFieldName);
-                    props.inventoryActions.setDataDominantStone(findFieldName);
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.dominantStone = findFieldName;
+
+                        dominantStone.onChange(findFieldName);
+                        props.inventoryActions.setDataDominantStone(findFieldName);
+                    }
                 }
             }else{
                 if (props.options.sparePartType) {
@@ -302,6 +312,7 @@ class InventorySparePart extends Component {
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
+        handleArticleSelected(ArticleSelectedValue);
     }
 
     render() {

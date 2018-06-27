@@ -3,29 +3,22 @@ import InitData from './initData';
 export default function InitModifyData(props) {
     let {
         fields:{
-            reference,description,venderReference,vendorName,certificatedNumber,sku,location,warehouse,attachment,
-            stoneType,cut,stoneProductHierarchy,lotNumber,cutGrade,color,colorGrade,clarity,lotQuantityFrom,
-            lotQuantityTo,totalCaratWeightFrom,totalCaratWeightTo,totalCostFrom,totalCostTo,totalUpdatedCostFrom,
-            totalUpdatedCostTo,publicPriceFrom,publicPriceTo,markupFrom,markupTo,certificateLab,
-            jewelryProductHierarchy,jewelryCategory,collection,grossWeightFrom,grossWeightTo,setReference,
-            brand,mustHave,ringSize,dominantStone,metalType,metalColour,cerDateFrom,cerDateTo,polish,symmetry,
-            treatment,fluorescence,origin,certificateAgency,stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,
-            watchProductHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,proDateFrom,
-            proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,
-            dialMetal,buckleType,strapType,strapColor,complication,gemstone_stoneType,gemstone_cut,gemstone_cutGrade,
-            gemstone_color,gemstone_clarity,gemstone_certificatedNumber,gemstone_certificateAgency,gemstone_cerDateFrom,
-            gemstone_cerDateTo,gemstone_stoneCostFrom,gemstone_stoneCostTo,gemstone_quantityFrom,gemstone_quantityTo,
-            gemstone_totalCaratWeightFrom,gemstone_totalCaratWeightTo,gemstone_polish,gemstone_symmetry,gemstone_treatment,
-            gemstone_fluorescence,gemstone_origin,accessoryProductHierarchy,accessoryType,obaProductHierarchy,
-            obaDimension,sparePartProductHierarchy,sparePartType,article
+            reference,description,venderReference,vendorName,certificatedNumber,sku,location,warehouse,attachment,stoneType,cut,stoneProductHierarchy,lotNumber,
+            cutGrade,color,colorGrade,clarity,lotQuantityFrom,lotQuantityTo,totalCaratWeightFrom,totalCaratWeightTo,totalCostFrom,totalCostTo,totalUpdatedCostFrom,
+            totalUpdatedCostTo,publicPriceFrom,publicPriceTo,markupFrom,markupTo,certificateLab,jewelryProductHierarchy,jewelryCategory,collection,grossWeightFrom,
+            grossWeightTo,setReference,brand,mustHave,ringSize,dominantStone,metalType,metalColour,cerDateFrom,cerDateTo,polish,symmetry,treatment,fluorescence,origin,
+            certificateAgency,stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,watchProductHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,
+            movement,proDateFrom,proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,dialMetal,buckleType,
+            strapType,strapColor,complication,gemstone_stoneType,gemstone_cut,gemstone_cutGrade,gemstone_color,gemstone_clarity,gemstone_certificatedNumber,
+            gemstone_certificateAgency,gemstone_cerDateFrom,gemstone_cerDateTo,gemstone_stoneCostFrom,gemstone_stoneCostTo,gemstone_quantityFrom,gemstone_quantityTo,
+            gemstone_totalCaratWeightFrom,gemstone_totalCaratWeightTo,gemstone_polish,gemstone_symmetry,gemstone_treatment,gemstone_fluorescence,gemstone_origin,
+            accessoryProductHierarchy,accessoryType,obaProductHierarchy,obaDimension,sparePartProductHierarchy,sparePartType,article
         },
         searchResult
     } = props;
 
     // Header Search
-    let paramsSearch = (searchResult.paramsSearch != null)?
-                          searchResult.paramsSearch:
-                          null;
+    let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
 
     if(reference != undefined){
         reference.value = InitData(paramsSearch,reference.value,'reference');
