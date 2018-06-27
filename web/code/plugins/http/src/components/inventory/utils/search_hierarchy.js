@@ -22,7 +22,7 @@ function filterByProperty(array, prop, value){
         }
     };
     var traverseNodes = function (node) {
-        if (node.label == value) {
+        if (node.label.toLowerCase().indexOf(value.toLowerCase()) != -1) {
             if (node.checked != undefined) {
                 node.checked = true;
             }
@@ -39,7 +39,7 @@ function filterByProperty(array, prop, value){
             node.children.forEach(traverseNodesCheckedAll);
         }
     };
-    if (array[0].label == value) {
+    if (array[0].label.toLowerCase().indexOf(value.toLowerCase()) != -1) {
         if (array[0].checked != undefined) {
             array[0].checked = true;
         }

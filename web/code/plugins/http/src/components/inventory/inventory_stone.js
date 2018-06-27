@@ -327,175 +327,262 @@ class InventoryStone extends Component {
         let findFieldName = [];
 
         let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
-
+        const expr = ArticleSelectedValue.toLowerCase();
         if(props.options != undefined){
-            if (props.options.stoneType) {
-                findFieldName = []
-                findFieldName = props.options.stoneType.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+            if (expr != '') {
+                if (props.options.stoneType) {
+                    findFieldName = []
+                    findFieldName = props.options.stoneType.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.stoneType = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.stoneType = findFieldName;
 
-                stoneType.onChange(findFieldName);
-                props.inventoryActions.setDatastoneType(findFieldName);
-            }
-            if (props.options.cut) {
-                findFieldName = []
-                findFieldName = props.options.cut.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    stoneType.onChange(findFieldName);
+                    props.inventoryActions.setDatastoneType(findFieldName);
+                }
+                if (props.options.cut) {
+                    findFieldName = []
+                    findFieldName = props.options.cut.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.cut = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.cut = findFieldName;
 
-                cut.onChange(findFieldName);
-                props.inventoryActions.setDataCut(findFieldName);
-            }
-            if (props.options.cutGrades) {
-                findFieldName = []
-                findFieldName = props.options.cutGrades.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    cut.onChange(findFieldName);
+                    props.inventoryActions.setDataCut(findFieldName);
+                }
+                if (props.options.cutGrades) {
+                    findFieldName = []
+                    findFieldName = props.options.cutGrades.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.cutGrade = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.cutGrade = findFieldName;
 
-                cutGrade.onChange(findFieldName);
-                props.inventoryActions.setDataCutGrade(findFieldName);
-            }
-            if (props.options.colors) {
-                findFieldName = []
-                findFieldName = props.options.colors.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    cutGrade.onChange(findFieldName);
+                    props.inventoryActions.setDataCutGrade(findFieldName);
+                }
+                if (props.options.colors) {
+                    findFieldName = []
+                    findFieldName = props.options.colors.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.color = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.color = findFieldName;
 
-                color.onChange(findFieldName);
-                props.inventoryActions.setDataColor(findFieldName);
-            }
-            if (props.options.colorGrades) {
-                findFieldName = []
-                findFieldName = props.options.colorGrades.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    color.onChange(findFieldName);
+                    props.inventoryActions.setDataColor(findFieldName);
+                }
+                if (props.options.colorGrades) {
+                    findFieldName = []
+                    findFieldName = props.options.colorGrades.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.colorGrade = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.colorGrade = findFieldName;
 
-                colorGrade.onChange(findFieldName);
-                props.inventoryActions.setDataColorGrade(findFieldName);
-            }
-            if (props.options.clarities) {
-                findFieldName = []
-                findFieldName = props.options.clarities.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    colorGrade.onChange(findFieldName);
+                    props.inventoryActions.setDataColorGrade(findFieldName);
+                }
+                if (props.options.clarities) {
+                    findFieldName = []
+                    findFieldName = props.options.clarities.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.clarity = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.clarity = findFieldName;
 
-                clarity.onChange(findFieldName);
-                props.inventoryActions.setDataClarity(findFieldName);
-            }
-            if (props.options.certificateAgencys) {
-                findFieldName = []
-                findFieldName = props.options.certificateAgencys.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    clarity.onChange(findFieldName);
+                    props.inventoryActions.setDataClarity(findFieldName);
+                }
+                if (props.options.certificateAgencys) {
+                    findFieldName = []
+                    findFieldName = props.options.certificateAgencys.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.certificateAgency = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.certificateAgency = findFieldName;
 
-                certificateAgency.onChange(findFieldName);
-                props.inventoryActions.setDataCertificateAgency(findFieldName);
-            }
-            if (props.options.polishs) {
-                findFieldName = []
-                findFieldName = props.options.polishs.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    certificateAgency.onChange(findFieldName);
+                    props.inventoryActions.setDataCertificateAgency(findFieldName);
+                }
+                if (props.options.polishs) {
+                    findFieldName = []
+                    findFieldName = props.options.polishs.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.polish = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.polish = findFieldName;
 
-                polish.onChange(findFieldName);
-                props.inventoryActions.setDataPolish(findFieldName);
-            }
-            if (props.options.symmetries) {
-                findFieldName = []
-                findFieldName = props.options.symmetries.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    polish.onChange(findFieldName);
+                    props.inventoryActions.setDataPolish(findFieldName);
+                }
+                if (props.options.symmetries) {
+                    findFieldName = []
+                    findFieldName = props.options.symmetries.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.symmetry = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.symmetry = findFieldName;
 
-                symmetry.onChange(findFieldName);
-                props.inventoryActions.setDataSymmetry(findFieldName);
-            }
-            if (props.options.treatments) {
-                findFieldName = []
-                findFieldName = props.options.treatments.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    symmetry.onChange(findFieldName);
+                    props.inventoryActions.setDataSymmetry(findFieldName);
+                }
+                if (props.options.treatments) {
+                    findFieldName = []
+                    findFieldName = props.options.treatments.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.treatment = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.treatment = findFieldName;
 
-                treatment.onChange(findFieldName);
-                props.inventoryActions.setDataTreatment(findFieldName);
-            }
-            if (props.options.fluorescences) {
-                findFieldName = []
-                findFieldName = props.options.fluorescences.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    treatment.onChange(findFieldName);
+                    props.inventoryActions.setDataTreatment(findFieldName);
+                }
+                if (props.options.fluorescences) {
+                    findFieldName = []
+                    findFieldName = props.options.fluorescences.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.fluorescence = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.fluorescence = findFieldName;
 
-                fluorescence.onChange(findFieldName);
-                props.inventoryActions.setDataFluorescence(findFieldName);
-            }
-            if (props.options.origins) {
-                findFieldName = []
-                findFieldName = props.options.origins.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    fluorescence.onChange(findFieldName);
+                    props.inventoryActions.setDataFluorescence(findFieldName);
+                }
+                if (props.options.origins) {
+                    findFieldName = []
+                    findFieldName = props.options.origins.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.origin = findFieldName;
+                    if(paramsSearch != null)
+                        paramsSearch.origin = findFieldName;
 
-                origin.onChange(findFieldName);
-                props.inventoryActions.setDataOrigin(findFieldName);
+                    origin.onChange(findFieldName);
+                    props.inventoryActions.setDataOrigin(findFieldName);
+                }
+            }else{
+                if (props.options.stoneType) {
+                    if(paramsSearch != null)
+                        paramsSearch.stoneType = '';
+
+                    stoneType.onChange('');
+                    props.inventoryActions.setDatastoneType('');
+                }
+                if (props.options.cut) {
+                    if(paramsSearch != null)
+                        paramsSearch.cut = '';
+
+                    cut.onChange('');
+                    props.inventoryActions.setDataCut('');
+                }
+                if (props.options.cutGrades) {
+                    if(paramsSearch != null)
+                        paramsSearch.cutGrade = '';
+
+                    cutGrade.onChange('');
+                    props.inventoryActions.setDataCutGrade('');
+                }
+                if (props.options.colors) {
+                    if(paramsSearch != null)
+                        paramsSearch.color = '';
+
+                    color.onChange('');
+                    props.inventoryActions.setDataColor('');
+                }
+                if (props.options.colorGrades) {
+                    if(paramsSearch != null)
+                        paramsSearch.colorGrade = '';
+
+                    colorGrade.onChange('');
+                    props.inventoryActions.setDataColorGrade('');
+                }
+                if (props.options.clarities) {
+                    if(paramsSearch != null)
+                        paramsSearch.clarity = '';
+
+                    clarity.onChange('');
+                    props.inventoryActions.setDataClarity('');
+                }
+                if (props.options.certificateAgencys) {
+                    if(paramsSearch != null)
+                        paramsSearch.certificateAgency = '';
+
+                    certificateAgency.onChange('');
+                    props.inventoryActions.setDataCertificateAgency('');
+                }
+                if (props.options.polishs) {
+                    if(paramsSearch != null)
+                        paramsSearch.polish = '';
+
+                    polish.onChange('');
+                    props.inventoryActions.setDataPolish('');
+                }
+                if (props.options.symmetries) {
+                    if(paramsSearch != null)
+                        paramsSearch.symmetry = '';
+
+                    symmetry.onChange('');
+                    props.inventoryActions.setDataSymmetry('');
+                }
+                if (props.options.treatments) {
+                    if(paramsSearch != null)
+                        paramsSearch.treatment = '';
+
+                    treatment.onChange('');
+                    props.inventoryActions.setDataTreatment('');
+                }
+                if (props.options.fluorescences) {
+                    if(paramsSearch != null)
+                        paramsSearch.fluorescence = '';
+
+                    fluorescence.onChange('');
+                    props.inventoryActions.setDataFluorescence('');
+                }
+                if (props.options.origins) {
+                    if(paramsSearch != null)
+                        paramsSearch.origin = '';
+
+                    origin.onChange('');
+                    props.inventoryActions.setDataOrigin('');
+                }
             }
         }
         if (ArticleSelectedValue == '') {
