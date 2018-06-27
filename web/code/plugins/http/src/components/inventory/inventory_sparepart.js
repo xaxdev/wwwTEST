@@ -174,7 +174,7 @@ class InventorySparePart extends Component {
     }
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
-        const { props } = this.props;
+        const { props, handleArticleSelected } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
         let { fields: { article, sparePartType, buckleType, metalType, metalColour, dominantStone
@@ -182,77 +182,125 @@ class InventorySparePart extends Component {
         let findFieldName = [];
 
         let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
-
+        const expr = ArticleSelectedValue.toLowerCase();
         if(props.options != undefined){
-            if (props.options.sparePartType) {
-                findFieldName = []
-                findFieldName = props.options.sparePartType.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+            if (expr != '') {
+                if (props.options.sparePartType) {
+                    findFieldName = []
+                    findFieldName = props.options.sparePartType.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
+
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.sparePartType = findFieldName;
+
+                        sparePartType.onChange(findFieldName);
+                        props.inventoryActions.setDataSparePartType(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.buckleTypes) {
+                    findFieldName = []
+                    findFieldName = props.options.buckleTypes.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.sparePartType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.buckleType = findFieldName;
 
-                sparePartType.onChange(findFieldName);
-                props.inventoryActions.setDataSparePartType(findFieldName);
-            }
-            if (props.options.buckleTypes) {
-                findFieldName = []
-                findFieldName = props.options.buckleTypes.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        buckleType.onChange(findFieldName);
+                        props.inventoryActions.setDataBuckleType(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.metalTypes) {
+                    findFieldName = []
+                    findFieldName = props.options.metalTypes.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.buckleType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.metalType = findFieldName;
 
-                buckleType.onChange(findFieldName);
-                props.inventoryActions.setDataBuckleType(findFieldName);
-            }
-            if (props.options.metalTypes) {
-                findFieldName = []
-                findFieldName = props.options.metalTypes.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        metalType.onChange(findFieldName);
+                        props.inventoryActions.setDataMetalType(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.metalColours) {
+                    findFieldName = []
+                    findFieldName = props.options.metalColours.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.metalType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.metalColour = findFieldName;
 
-                metalType.onChange(findFieldName);
-                props.inventoryActions.setDataMetalType(findFieldName);
-            }
-            if (props.options.metalColours) {
-                findFieldName = []
-                findFieldName = props.options.metalColours.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        metalColour.onChange(findFieldName);
+                        props.inventoryActions.setDataMetalColour(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.dominantStones) {
+                    findFieldName = []
+                    findFieldName = props.options.dominantStones.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.metalColour = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.dominantStone = findFieldName;
 
-                metalColour.onChange(findFieldName);
-                props.inventoryActions.setDataMetalColour(findFieldName);
-            }
-            if (props.options.dominantStones) {
-                findFieldName = []
-                findFieldName = props.options.dominantStones.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        dominantStone.onChange(findFieldName);
+                        props.inventoryActions.setDataDominantStone(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+            }else{
+                if (props.options.sparePartType) {
+                    if(paramsSearch != null)
+                        paramsSearch.sparePartType = '';
 
-                if(paramsSearch != null)
-                    paramsSearch.dominantStone = findFieldName;
+                    sparePartType.onChange('');
+                    props.inventoryActions.setDataSparePartType('');
+                }
+                if (props.options.buckleTypes) {
+                    if(paramsSearch != null)
+                        paramsSearch.buckleType = '';
 
-                dominantStone.onChange(findFieldName);
-                props.inventoryActions.setDataDominantStone(findFieldName);
+                    buckleType.onChange('');
+                    props.inventoryActions.setDataBuckleType('');
+                }
+                if (props.options.metalTypes) {
+                    if(paramsSearch != null)
+                        paramsSearch.metalType = '';
+
+                    metalType.onChange('');
+                    props.inventoryActions.setDataMetalType('');
+                }
+                if (props.options.metalColours) {
+                    if(paramsSearch != null)
+                        paramsSearch.metalColour = '';
+
+                    metalColour.onChange('');
+                    props.inventoryActions.setDataMetalColour('');
+                }
+                if (props.options.dominantStones) {
+                    if(paramsSearch != null)
+                        paramsSearch.dominantStone = '';
+
+                    dominantStone.onChange('');
+                    props.inventoryActions.setDataDominantStone('');
+                }
             }
         }
         if (ArticleSelectedValue == '') {
@@ -264,6 +312,7 @@ class InventorySparePart extends Component {
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
+        handleArticleSelected(ArticleSelectedValue);
     }
 
     render() {

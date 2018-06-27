@@ -318,7 +318,7 @@ class InventoryStone extends Component {
     }
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
-        const { props } = this.props;
+        const { props, handleArticleSelected } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
         let { fields: { article, stoneType, cut, cutGrade, color, colorGrade, clarity, certificateAgency, polish, symmetry, treatment, fluorescence,
@@ -327,175 +327,286 @@ class InventoryStone extends Component {
         let findFieldName = [];
 
         let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
-
+        const expr = ArticleSelectedValue.toLowerCase();
         if(props.options != undefined){
-            if (props.options.stoneType) {
-                findFieldName = []
-                findFieldName = props.options.stoneType.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+            if (expr != '') {
+                if (props.options.stoneType) {
+                    findFieldName = []
+                    findFieldName = props.options.stoneType.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
+
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.stoneType = findFieldName;
+
+                        stoneType.onChange(findFieldName);
+                        props.inventoryActions.setDatastoneType(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.cut) {
+                    findFieldName = []
+                    findFieldName = props.options.cut.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.stoneType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.cut = findFieldName;
 
-                stoneType.onChange(findFieldName);
-                props.inventoryActions.setDatastoneType(findFieldName);
-            }
-            if (props.options.cut) {
-                findFieldName = []
-                findFieldName = props.options.cut.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        cut.onChange(findFieldName);
+                        props.inventoryActions.setDataCut(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.cutGrades) {
+                    findFieldName = []
+                    findFieldName = props.options.cutGrades.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.cut = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.cutGrade = findFieldName;
 
-                cut.onChange(findFieldName);
-                props.inventoryActions.setDataCut(findFieldName);
-            }
-            if (props.options.cutGrades) {
-                findFieldName = []
-                findFieldName = props.options.cutGrades.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        cutGrade.onChange(findFieldName);
+                        props.inventoryActions.setDataCutGrade(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.colors) {
+                    findFieldName = []
+                    findFieldName = props.options.colors.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.cutGrade = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.color = findFieldName;
 
-                cutGrade.onChange(findFieldName);
-                props.inventoryActions.setDataCutGrade(findFieldName);
-            }
-            if (props.options.colors) {
-                findFieldName = []
-                findFieldName = props.options.colors.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        color.onChange(findFieldName);
+                        props.inventoryActions.setDataColor(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.colorGrades) {
+                    findFieldName = []
+                    findFieldName = props.options.colorGrades.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.color = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.colorGrade = findFieldName;
 
-                color.onChange(findFieldName);
-                props.inventoryActions.setDataColor(findFieldName);
-            }
-            if (props.options.colorGrades) {
-                findFieldName = []
-                findFieldName = props.options.colorGrades.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        colorGrade.onChange(findFieldName);
+                        props.inventoryActions.setDataColorGrade(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.clarities) {
+                    findFieldName = []
+                    findFieldName = props.options.clarities.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.colorGrade = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.clarity = findFieldName;
 
-                colorGrade.onChange(findFieldName);
-                props.inventoryActions.setDataColorGrade(findFieldName);
-            }
-            if (props.options.clarities) {
-                findFieldName = []
-                findFieldName = props.options.clarities.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        clarity.onChange(findFieldName);
+                        props.inventoryActions.setDataClarity(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.certificateAgencys) {
+                    findFieldName = []
+                    findFieldName = props.options.certificateAgencys.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.clarity = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.certificateAgency = findFieldName;
 
-                clarity.onChange(findFieldName);
-                props.inventoryActions.setDataClarity(findFieldName);
-            }
-            if (props.options.certificateAgencys) {
-                findFieldName = []
-                findFieldName = props.options.certificateAgencys.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        certificateAgency.onChange(findFieldName);
+                        props.inventoryActions.setDataCertificateAgency(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.polishs) {
+                    findFieldName = []
+                    findFieldName = props.options.polishs.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.certificateAgency = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.polish = findFieldName;
 
-                certificateAgency.onChange(findFieldName);
-                props.inventoryActions.setDataCertificateAgency(findFieldName);
-            }
-            if (props.options.polishs) {
-                findFieldName = []
-                findFieldName = props.options.polishs.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        polish.onChange(findFieldName);
+                        props.inventoryActions.setDataPolish(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.symmetries) {
+                    findFieldName = []
+                    findFieldName = props.options.symmetries.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.polish = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.symmetry = findFieldName;
 
-                polish.onChange(findFieldName);
-                props.inventoryActions.setDataPolish(findFieldName);
-            }
-            if (props.options.symmetries) {
-                findFieldName = []
-                findFieldName = props.options.symmetries.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        symmetry.onChange(findFieldName);
+                        props.inventoryActions.setDataSymmetry(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.treatments) {
+                    findFieldName = []
+                    findFieldName = props.options.treatments.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.symmetry = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.treatment = findFieldName;
 
-                symmetry.onChange(findFieldName);
-                props.inventoryActions.setDataSymmetry(findFieldName);
-            }
-            if (props.options.treatments) {
-                findFieldName = []
-                findFieldName = props.options.treatments.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        treatment.onChange(findFieldName);
+                        props.inventoryActions.setDataTreatment(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.fluorescences) {
+                    findFieldName = []
+                    findFieldName = props.options.fluorescences.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.treatment = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.fluorescence = findFieldName;
 
-                treatment.onChange(findFieldName);
-                props.inventoryActions.setDataTreatment(findFieldName);
-            }
-            if (props.options.fluorescences) {
-                findFieldName = []
-                findFieldName = props.options.fluorescences.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        fluorescence.onChange(findFieldName);
+                        props.inventoryActions.setDataFluorescence(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.origins) {
+                    findFieldName = []
+                    findFieldName = props.options.origins.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.fluorescence = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.origin = findFieldName;
 
-                fluorescence.onChange(findFieldName);
-                props.inventoryActions.setDataFluorescence(findFieldName);
-            }
-            if (props.options.origins) {
-                findFieldName = []
-                findFieldName = props.options.origins.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        origin.onChange(findFieldName);
+                        props.inventoryActions.setDataOrigin(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+            }else{
+                if (props.options.stoneType) {
+                    if(paramsSearch != null)
+                        paramsSearch.stoneType = '';
 
-                if(paramsSearch != null)
-                    paramsSearch.origin = findFieldName;
+                    stoneType.onChange('');
+                    props.inventoryActions.setDatastoneType('');
+                }
+                if (props.options.cut) {
+                    if(paramsSearch != null)
+                        paramsSearch.cut = '';
 
-                origin.onChange(findFieldName);
-                props.inventoryActions.setDataOrigin(findFieldName);
+                    cut.onChange('');
+                    props.inventoryActions.setDataCut('');
+                }
+                if (props.options.cutGrades) {
+                    if(paramsSearch != null)
+                        paramsSearch.cutGrade = '';
+
+                    cutGrade.onChange('');
+                    props.inventoryActions.setDataCutGrade('');
+                }
+                if (props.options.colors) {
+                    if(paramsSearch != null)
+                        paramsSearch.color = '';
+
+                    color.onChange('');
+                    props.inventoryActions.setDataColor('');
+                }
+                if (props.options.colorGrades) {
+                    if(paramsSearch != null)
+                        paramsSearch.colorGrade = '';
+
+                    colorGrade.onChange('');
+                    props.inventoryActions.setDataColorGrade('');
+                }
+                if (props.options.clarities) {
+                    if(paramsSearch != null)
+                        paramsSearch.clarity = '';
+
+                    clarity.onChange('');
+                    props.inventoryActions.setDataClarity('');
+                }
+                if (props.options.certificateAgencys) {
+                    if(paramsSearch != null)
+                        paramsSearch.certificateAgency = '';
+
+                    certificateAgency.onChange('');
+                    props.inventoryActions.setDataCertificateAgency('');
+                }
+                if (props.options.polishs) {
+                    if(paramsSearch != null)
+                        paramsSearch.polish = '';
+
+                    polish.onChange('');
+                    props.inventoryActions.setDataPolish('');
+                }
+                if (props.options.symmetries) {
+                    if(paramsSearch != null)
+                        paramsSearch.symmetry = '';
+
+                    symmetry.onChange('');
+                    props.inventoryActions.setDataSymmetry('');
+                }
+                if (props.options.treatments) {
+                    if(paramsSearch != null)
+                        paramsSearch.treatment = '';
+
+                    treatment.onChange('');
+                    props.inventoryActions.setDataTreatment('');
+                }
+                if (props.options.fluorescences) {
+                    if(paramsSearch != null)
+                        paramsSearch.fluorescence = '';
+
+                    fluorescence.onChange('');
+                    props.inventoryActions.setDataFluorescence('');
+                }
+                if (props.options.origins) {
+                    if(paramsSearch != null)
+                        paramsSearch.origin = '';
+
+                    origin.onChange('');
+                    props.inventoryActions.setDataOrigin('');
+                }
             }
         }
         if (ArticleSelectedValue == '') {
@@ -507,6 +618,7 @@ class InventoryStone extends Component {
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
+        handleArticleSelected(ArticleSelectedValue);
     }
 
     render() {

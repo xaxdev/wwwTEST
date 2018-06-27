@@ -187,7 +187,7 @@ class InventoryOBA extends Component {
     }
 
     handleArticleSelectedChanged = (ArticleSelectedValue) => {
-        const { props } = this.props;
+        const { props, handleArticleSelected } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
         let { fields: { article, collection, brand, metalType, metalColour, dominantStone
@@ -195,77 +195,125 @@ class InventoryOBA extends Component {
         let findFieldName = [];
 
         let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
-
+        const expr = ArticleSelectedValue.toLowerCase();
         if(props.options != undefined){
-            if (props.options.collections) {
-                findFieldName = []
-                findFieldName = props.options.collections.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+            if (expr != '') {
+                if (props.options.collections) {
+                    findFieldName = []
+                    findFieldName = props.options.collections.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
+
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.collection = findFieldName;
+
+                        collection.onChange(findFieldName);
+                        props.inventoryActions.setDataCollection(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.brands) {
+                    findFieldName = []
+                    findFieldName = props.options.brands.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.collection = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.brand = findFieldName;
 
-                collection.onChange(findFieldName);
-                props.inventoryActions.setDataCollection(findFieldName);
-            }
-            if (props.options.brands) {
-                findFieldName = []
-                findFieldName = props.options.brands.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        brand.onChange(findFieldName);
+                        props.inventoryActions.setDataBrand(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.metalTypes) {
+                    findFieldName = []
+                    findFieldName = props.options.metalTypes.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.brand = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.metalType = findFieldName;
 
-                brand.onChange(findFieldName);
-                props.inventoryActions.setDataBrand(findFieldName);
-            }
-            if (props.options.metalTypes) {
-                findFieldName = []
-                findFieldName = props.options.metalTypes.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        metalType.onChange(findFieldName);
+                        props.inventoryActions.setDataMetalType(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.metalColours) {
+                    findFieldName = []
+                    findFieldName = props.options.metalColours.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.metalType = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.metalColour = findFieldName;
 
-                metalType.onChange(findFieldName);
-                props.inventoryActions.setDataMetalType(findFieldName);
-            }
-            if (props.options.metalColours) {
-                findFieldName = []
-                findFieldName = props.options.metalColours.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        metalColour.onChange(findFieldName);
+                        props.inventoryActions.setDataMetalColour(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+                if (props.options.dominantStones) {
+                    findFieldName = []
+                    findFieldName = props.options.dominantStones.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSearch != null)
-                    paramsSearch.metalColour = findFieldName;
+                    if (findFieldName.length != 0) {
+                        if(paramsSearch != null)
+                            paramsSearch.dominantStone = findFieldName;
 
-                metalColour.onChange(findFieldName);
-                props.inventoryActions.setDataMetalColour(findFieldName);
-            }
-            if (props.options.dominantStones) {
-                findFieldName = []
-                findFieldName = props.options.dominantStones.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
+                        dominantStone.onChange(findFieldName);
+                        props.inventoryActions.setDataDominantStone(findFieldName);
                     }
-                }).map((item) => { return item.code });
+                }
+            }else{
+                if (props.options.collections) {
+                    if(paramsSearch != null)
+                        paramsSearch.collection = '';
 
-                if(paramsSearch != null)
-                    paramsSearch.dominantStone = findFieldName;
+                    collection.onChange('');
+                    props.inventoryActions.setDataCollection('');
+                }
+                if (props.options.brands) {
+                    if(paramsSearch != null)
+                        paramsSearch.brand = '';
 
-                dominantStone.onChange(findFieldName);
-                props.inventoryActions.setDataDominantStone(findFieldName);
+                    brand.onChange('');
+                    props.inventoryActions.setDataBrand('');
+                }
+                if (props.options.metalTypes) {
+                    if(paramsSearch != null)
+                        paramsSearch.metalType = '';
+
+                    metalType.onChange('');
+                    props.inventoryActions.setDataMetalType('');
+                }
+                if (props.options.metalColours) {
+                    if(paramsSearch != null)
+                        paramsSearch.metalColour = '';
+
+                    metalColour.onChange('');
+                    props.inventoryActions.setDataMetalColour('');
+                }
+                if (props.options.dominantStones) {
+                    if(paramsSearch != null)
+                        paramsSearch.dominantStone = '';
+
+                    dominantStone.onChange('');
+                    props.inventoryActions.setDataDominantStone('');
+                }
             }
         }
         if (ArticleSelectedValue == '') {
@@ -277,6 +325,7 @@ class InventoryOBA extends Component {
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
+        handleArticleSelected(ArticleSelectedValue);
     }
 
     render() {
