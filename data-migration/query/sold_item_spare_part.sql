@@ -27,7 +27,8 @@ SELECT	SOL.[Id] AS 'id'
 		, SOL.[MetalColor] AS 'metalColor'
 		, ISNULL(SOL.[MetalColorName], '') AS 'metalColorName'
 		, ISNULL(SOL.[Store], '') AS 'store'
-		, ISNULL(SOL.[SalesChannelType], '') AS 'salesChannelType'
+		, ISNULL(SOL.[SalesChannelType], '') AS 'salesChannel'
+		, ISNULL(saleschannels.[Description], '') AS 'salesChannelName'
 		, ISNULL(SOL.[CustomerId], '') AS 'customer'
 		, ISNULL(SOL.[CustomerName], '') AS 'customerName'
 		, ISNULL(cus.[Email], '') AS 'customerEmail'
@@ -119,7 +120,10 @@ FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 			ON SOL.[CustomerId] = cus.[AccountNumber]
 		LEFT JOIN [ITORAMA].[dbo].[DominantStone] dominantstone
   			ON dominantstone.[Code] = SOL.[DominantStone]
-WHERE	1=1 
+		LEFT JOIN [ITORAMA].[dbo].[SalesChannels] saleschannels
+  			ON saleschannels.[SalesChannel] = SOL.[SalesChannelType]
+			AND UPPER(SOL.[DataAreaId]) = UPPER(saleschannels.[DataAreaId])
+WHERE	1=1
 		AND SOL.[Type] = 'Spare'
 		AND SOL.[Id] BETWEEN @from AND @to
 ORDER BY SOL.[Id]

@@ -7,7 +7,7 @@ export default function ResetFormMain(that){
         stoneCostFrom,stoneCostTo,quantityFrom,quantityTo,watchProductSalesHierarchy,watchCategory,limitedEdition,limitedEditionNumber,serialNumber,movement,
         proDateFrom,proDateTo,caseDimensionFrom,caseDimensionTo,preciousMetalWeightFrom,preciousMetalWeightTo,dialIndex,dialColor,dialMetal,buckleType,
         strapType,strapColor,complication,accessoryProductSalesHierarchy,accessoryType,obaProductSalesHierarchy,obaDimension,sparePartProductSalesHierarchy,sparePartType,
-        salesChannel
+        salesChannel,invoiceDateFrom,invoiceDateTo
     }, resetForm } = that.props;
 
     // resetForm();
@@ -43,6 +43,8 @@ export default function ResetFormMain(that){
     treatment.value = '';
     fluorescence.value = '';
     origin.value = '';
+    invoiceDateFrom.value = '';
+    invoiceDateTo.value = '';
     //
     jewelryProductSalesHierarchy.value = '';
     jewelryCategory.value = '';

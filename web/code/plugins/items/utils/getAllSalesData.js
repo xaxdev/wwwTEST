@@ -71,18 +71,20 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                     sortBy = 'postedDate';
                     break;
                 default:
-                    sortBy = sortBy.toLowerCase().indexOf('netAmount') != -1 ? 'totalNetAmount' : sortBy
-                    userCurrency = sortBy.toLowerCase().indexOf('netAmount') != -1 ? 'USD' : userCurrency
+                    sortBy = sortBy.toLowerCase().indexOf('netamount') != -1 ? 'totalNetAmount' : sortBy
+                    userCurrency = sortBy.toLowerCase().indexOf('netamount') != -1 ? 'USD' : userCurrency
                     break;
             }
         }else{
-            sortBy = sortBy.toLowerCase().indexOf('netAmount') != -1 ? 'netAmount' : sortBy
+            sortBy = sortBy.toLowerCase().indexOf('netamount') != -1 ? 'netAmount' : sortBy
         }
+        // console.log('sortBy-->',sortBy);
 
         if (itemsOrder == null && setReferencdOrder == null) {
             //   Not have SetReference criteria
             if (!isSetReference) {
                 data = data.sortBy(sortBy,sortDirections,userCurrency);
+                // console.log('data-->',data[0]);
             }
         }
 
@@ -266,6 +268,8 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         let sumNetAmount = 0;
         let sumDisconst = 0;
         let sumMargin = 0;
+        let sumDisconstPercent = 0;
+        let sumMarginPercent = 0;
 
         if(pageData.length != 0){
             data.forEach(function(item){
@@ -316,6 +320,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             sumDisconstData.forEach(function(price) {
                 sumDisconst = sumDisconst+Math.round(price);
             });
+            sumDisconstPercent = (sumDisconst/sumPrice)*100;
 
             data.forEach(function(item){
                 if (isViewAsSet) {
@@ -328,6 +333,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             sumMarginData.forEach(function(price) {
                 sumMargin = sumMargin+Math.round(price);
             });
+            sumMarginPercent = (sumMargin/sumNetAmount)*100;
         }
 
         const sendData = {
@@ -344,7 +350,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 'avrgPrice': avrgPrice,
                 'netAmount': sumNetAmount,
                 'disconst': sumDisconst,
-                'margin': sumMargin
+                'margin': sumMargin,
+                'sumDisconstPercent': sumDisconstPercent,
+                'sumMarginPercent': sumMarginPercent
             }
         };
         return sendData;
@@ -354,6 +362,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
 }
 
 const compareBy = (property, order = 'asc', userCurrency) => (a, b) => {
+    console.log('property-->',property);
+    console.log('order-->',order);
+    console.log('userCurrency-->',userCurrency);
     if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
         return 0;
     }
@@ -386,6 +397,9 @@ const compareBy = (property, order = 'asc', userCurrency) => (a, b) => {
 }
 
 Array.prototype.sortBy = function(property, order = 'asc', userCurrency) {
+    console.log('property-->',property);
+    console.log('order-->',order);
+    console.log('userCurrency-->',userCurrency);
     return Array.prototype.sort.call(this, compareBy(property, order, userCurrency))
 }
 

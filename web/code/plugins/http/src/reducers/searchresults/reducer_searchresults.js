@@ -12,7 +12,7 @@ import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CU
     SET_BUCKLETYPE, SET_STRAPTYPE, SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE, SET_HIERARCHY,
     SET_GEMS_CERTIFICATE_DATE_FROM, SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM, SET_STONE_CERTIFICATE_DATE_TO, SET_PRODUCTION_DATE_FROM,
     SET_PRODUCTION_DATE_TO,SET_SUBMITACTION, SET_SAVESEARCHHIERARCHY, SET_VIEWASSET, SET_ITEMSORDER,SET_SETREFERENCEORDER, SET_ARTICLE, SET_SALESCHANNEL,
-    SET_SALESHIERARCHY, SET_SALESADVANCE, SELECTED_TABSALESCATEGORY, SET_SAVESEARCHSALESHIERARCHY, SET_GEMS_STONE_TYPE
+    SET_SALESHIERARCHY, SET_SALESADVANCE, SELECTED_TABSALESCATEGORY, SET_SAVESEARCHSALESHIERARCHY, SET_GEMS_STONE_TYPE, SET_INVOICE_DATE_FROM, SET_INVOICE_DATE_TO
 } from '../../constants/inventoryConstants';
 
 const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, currentPage:1, totalpage:null, totalpublicprice:null, totalupdatedcost:null,
@@ -26,16 +26,21 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
     ProductionDateTo:null, PageSize:16, SortingBy:'itemCreatedDate', SortDirection:'desc', ShowGridView: true, ShowListView: false, SubmitAction: null,
     saveSearchStatus: false, msg: '',saveSearchStatusCode: 100, isSAveSearch: false, listSaveSearch: null, criteriaSaveSearch:null, saveSearchHierarchy: null,
     idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null, viewAsSet: false, itemsOrder:null,setReferenceOrder:null,tempPDF:null,
-    ArticleValue:[],
-    SalesChannelValue:[], SalesHierarchyValue:null,SalesIsAdvance:false, activeTabSalesCategory:1, idEditSalesSaveSearch: null,
+    ArticleValue:[], SalesChannelValue:[], SalesHierarchyValue:null,SalesIsAdvance:false, activeTabSalesCategory:1, idEditSalesSaveSearch: null,
     nameEditSalesSaveSearch: null, criteriaSalesSaveSearch: null, paramsSalesSearch:null, saveSalesSearchStatus: false, msgSales: '',
     saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, saveSearchSalesHierarchy: null, SalesSortingBy:'postedDate', SalesSortDirection:'desc',
     currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, SalesShowGridView: true, SalesShowListView: false,
-    totalnetamount: null,totaldiscount: null,totalmargin:null, GemStoneTypeValue:[]
+    totalnetamount: null,totaldiscount: null,totalmargin:null, GemStoneTypeValue:[], InvoiceDateFrom:null, InvoiceDateTo:null
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case SET_INVOICE_DATE_FROM :
+            return {...state, InvoiceDateFrom: action.invoiceDateFrom };
+            break;
+        case SET_INVOICE_DATE_TO :
+            return {...state, InvoiceDateTo: action.invoiceDateTo };
+            break;
         case SET_GEMS_STONE_TYPE:
             return {...state, GemStoneTypeValue: action.gemstoneStoneType};
             break;
@@ -61,7 +66,7 @@ export default function(state = INITIAL_STATE, action){
                 SearchAction:'New', exportItems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null, GemCertificateDateTo:null,
                 StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, SalesPageSize:16, viewAsSet: false,
                 SalesShowGridView: true, SalesShowListView: false, ListCatalogName: [], ArticleValue:[], SalesChannelValue:[], totalnetamount: null,
-                totaldiscount: null,totalmargin:null
+                totaldiscount: null,totalmargin:null, InvoiceDateFrom:null, InvoiceDateTo:null
             }
             break;
         case SET_SALESSHOWLISTVIEW :
@@ -198,7 +203,7 @@ export default function(state = INITIAL_STATE, action){
                 saveSearchHierarchy: null, idDeleteSaveSearch: null, idEditSaveSearch: null, nameEditSaveSearch: null,viewAsSet: false, ArticleValue:[],
                 SalesChannelValue:[], idEditSalesSaveSearch: null, nameEditSalesSaveSearch: null, criteriaSalesSaveSearch: null, paramsSalesSearch:null,
                 saveSalesSearchStatus: false, msgSales: '', saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, SaveSearchSalesHierarchy: null,
-                GemStoneTypeValue:[]
+                GemStoneTypeValue:[], InvoiceDateFrom:null, InvoiceDateTo:null
             };
             break;
         case SET_SHOWGRIDVIEW :
@@ -367,7 +372,7 @@ export default function(state = INITIAL_STATE, action){
                 SearchAction:'New', exportItems:[], maxPrice:null, minPrice:null, avrgPrice:null, GemCertificateDateFrom:null, GemCertificateDateTo:null,
                 StoneCertificateDateFrom:null, StoneCertificateDateTo:null, ProductionDateFrom:null, ProductionDateTo:null, PageSize:16, ShowGridView: true,
                 showListView: false, ListCatalogName: [], viewAsSet: false, ArticleValue:[], paramsSalesSearch:null, SalesChannelValue:[], currentSalesPage: 1,
-                GemStoneTypeValue:[]
+                GemStoneTypeValue:[], InvoiceDateFrom:null, InvoiceDateTo:null
             }
             break;
         case SET_PARAMS:

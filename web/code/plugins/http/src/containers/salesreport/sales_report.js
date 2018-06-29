@@ -18,13 +18,11 @@ class SalesReport extends Component {
     }
 
     handleSubmit = (data) => {
-        console.log('data-->', data);
+        // console.log('data-->', data);
         const that = this;
         let { filters, submitAction, idEditSalesSaveSearch } = this.props;
 
-        const isNotOwnerSharedSearch = this.props.searchResult.criteriaSalesSaveSearch != null
-                                      ? this.props.searchResult.criteriaSalesSaveSearch.shared
-                                      : false;
+        const isNotOwnerSharedSearch = this.props.searchResult.criteriaSalesSaveSearch != null ? this.props.searchResult.criteriaSalesSaveSearch.shared : false;
 
         const userLogin = JSON.parse(sessionStorage.logindata);
 

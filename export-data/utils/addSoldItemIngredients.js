@@ -156,7 +156,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 (item.company != undefined) ? item.company : '',
                 (item.warehouse != undefined) ? item.warehouse : '',
             );
-            
+
             if(fields.allFields){
                 arrayItems.push(
                     'Main',
@@ -210,14 +210,14 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                     (item.postedDate != undefined) ? convertDate(item.postedDate) : '',
                     (item.salesId != undefined) ? item.salesId : '',
                     (item.salesPersonName != undefined) ? item.salesPersonName : '',
-                    (item.salesChannelType != undefined) ? item.salesChannelType : '',
+                    (item.salesChannel != undefined) ? item.salesChannel : '',
                     (item.customer != undefined) ? item.customer : '',
                     (item.customerName != undefined) ? item.customerName : '',
                     (item.invoicedId != undefined) ? item.invoicedId : '',
-                    (item.invoiceDate != undefined) ? item.invoiceDate : '',
+                    (item.invoiceDate != undefined) ? convertDate(item.invoiceDate) : '',
                     (item.inventSizeId != undefined) ? item.inventSizeId : ''
                 );
-                
+
             }else{
                 if(fields.ingredients) arrayItems.push('Main');
                 if(fields.categoryName) arrayItems.push((item.hierarchy != undefined) ? item.hierarchy.split('\\').pop() : '');
@@ -268,11 +268,11 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 if(fields.postedDate) arrayItems.push((item.postedDate != undefined) ? convertDate(item.postedDate) : '')
                 if(fields.salesId) arrayItems.push((item.salesId != undefined) ? item.salesId : '');
                 if(fields.salesPersonName) arrayItems.push((item.salesPersonName != undefined) ? item.salesPersonName : '');
-                if(fields.salesChannelType) arrayItems.push((item.salesChannelType != undefined) ? item.salesChannelType : '');
+                if(fields.salesChannel) arrayItems.push((item.salesChannel != undefined) ? item.salesChannel : '');
                 if(fields.customer) arrayItems.push((item.customer != undefined) ? item.customer : '');
                 if(fields.customerName) arrayItems.push((item.customerName != undefined) ? item.customerName : '');
                 if(fields.invoicedId) arrayItems.push((item.invoicedId != undefined) ? item.invoicedId : '');
-                if(fields.invoiceDate) arrayItems.push((item.invoiceDate != undefined) ? item.invoiceDate : '');
+                if(fields.invoiceDate) arrayItems.push((item.invoiceDate != undefined) ? convertDate(item.invoiceDate) : '');
                 if(fields.inventSizeId) arrayItems.push((item.inventSizeId != undefined) ? item.inventSizeId : '');
             }
             if(item.gemstones != undefined){
@@ -322,7 +322,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                 '', // Site
                                 '', // Company
                                 '' // Location
-                            ); 
+                            );
                             arrayItems.push('Ingredient');
                             if(fields.categoryName || fields.allFields) arrayItems.push(''); // Category Name
                             if(fields.category || fields.allFields) arrayItems.push(''); // Category
@@ -364,7 +364,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                             if(fields.postedDate) arrayItems.push('')
                             if(fields.salesId) arrayItems.push('');
                             if(fields.salesPersonName) arrayItems.push('');
-                            if(fields.salesChannelType) arrayItems.push('');
+                            if(fields.salesChannel) arrayItems.push('');
                             if(fields.customer) arrayItems.push('');
                             if(fields.customerName) arrayItems.push('');
                             if(fields.invoicedId) arrayItems.push('');

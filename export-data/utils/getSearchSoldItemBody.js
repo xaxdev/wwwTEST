@@ -19,40 +19,38 @@ module.exports = (obj, fromRecord, sizeRecord) => {
     let filter = '';
     let pageSize = obj.pageSize;
     let fromitem = (page-1)*pageSize;
-
     let keyFromLot = '';
     let valFromLot = 0;
     let valToLot = 0;
-
     let keyFromCarat = '';
     let valFromCarat = 0;
     let valToCarat = 0;
-
     let keyFromCost = '';
     let valFromCost = 0;
     let valToCost = 0;
-
     let keyFromUpdatedCost = '';
     let valFromUpdatedCost = 0;
     let valToUpdatedCost = 0;
-
     let keyFromPPP = '';
     let valFromPPP = 0;
     let valToPPP = 0;
-
     let keyFromMarkup = '';
     let valFromMarkup = 0;
     let valToMarkup = 0;
-
     let valFromGrossW = 0;
     let valToGrossW = 0;
-
     let valFromProDate = '';
     let valToProDate = '';
     let valDimensionFrom = 0;
     let valDimensionTo = 0;
     let valMetalWeightFrom = 0;
     let valMetalWeightTo = 0;
+    let valFromNetSales = 0;
+    let valToNetSales = 0;
+    let valFromMargin = 0;
+    let valToMargin = 0;
+    let valFromDiscount = 0;
+    let valToDiscount = 0;
 
     internals.filters = [];
 
@@ -131,38 +129,7 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                         valToCost = value;
                     }
                     let objLength = objRange.length +1;
-                    switch(userCurrency){
-                        case 'AED':
-                            objRange = {...objRange,'actualCost.AED':{'from':valFromCost,'to':valToCost},'length':objLength};
-                            break;
-                        case 'CHF':
-                            objRange = {...objRange,'actualCost.CHF':{'from':valFromCost,'to':valToCost},'length':objLength};
-                            break;
-                        case 'EUR':
-                            objRange = {...objRange,'actualCost.EUR':{'from':valFromCost,'to':valToCost},'length':objLength};
-                            break;
-                        case 'JOD':
-                            objRange = {...objRange,'actualCost.JOD':{'from':valFromCost,'to':valToCost},'length':objLength};
-                            break;
-                        case 'KWD':
-                            objRange = {...objRange,'actualCost.KWD':{'from':valFromCost,'to':valToCost},'length':objLength};
-                            break;
-                        case 'LBP':
-                            objRange = {...objRange,'actualCost.LBP':{'from':valFromCost,'to':valToCost},'length':objLength};
-                            break;
-                        case 'OMR':
-                            objRange = {...objRange,'actualCost.OMR':{'from':valFromCost,'to':valToCost},'length':objLength};
-                            break;
-                        case 'QAR':
-                            objRange = {...objRange,'actualCost.QAR':{'from':valFromCost,'to':valToCost},'length':objLength};
-                            break;
-                        case 'SAR':
-                            objRange = {...objRange,'actualCost.SAR':{'from':valFromCost,'to':valToCost},'length':objLength};
-                            break;
-                        default:
-                            objRange = {...objRange,'actualCost.USD':{'from':valFromCost,'to':valToCost},'length':objLength};
-                            break;
-                    }
+                    objRange = {...objRange,'actualCost.USD':{'from':valFromCost,'to':valToCost},'length':objLength};
                 } else if(key == 'totalUpdatedCostFrom' || key == 'totalUpdatedCostTo'){
                     keyFromUpdatedCost = 'updatedCostUSD';
                     if(key == 'totalUpdatedCostFrom'){
@@ -172,38 +139,7 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                         valToUpdatedCost = value;
                     }
                     let objLength = objRange.length +1;
-                    switch(userCurrency){
-                        case 'AED':
-                            objRange = {...objRange,'updatedCost.AED':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
-                            break;
-                        case 'CHF':
-                            objRange = {...objRange,'updatedCost.CHF':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
-                            break;
-                        case 'EUR':
-                            objRange = {...objRange,'updatedCost.EUR':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
-                            break;
-                        case 'JOD':
-                            objRange = {...objRange,'updatedCost.JOD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
-                            break;
-                        case 'KWD':
-                            objRange = {...objRange,'updatedCost.KWD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
-                            break;
-                        case 'LBP':
-                            objRange = {...objRange,'updatedCost.LBP':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
-                            break;
-                        case 'OMR':
-                            objRange = {...objRange,'updatedCost.OMR':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
-                            break;
-                        case 'QAR':
-                            objRange = {...objRange,'updatedCost.QAR':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
-                            break;
-                        case 'SAR':
-                            objRange = {...objRange,'updatedCost.SAR':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
-                            break;
-                        default:
-                            objRange = {...objRange,'updatedCost.USD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
-                            break;
-                    }
+                    objRange = {...objRange,'updatedCost.USD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
                 } else if(key == 'publicPriceFrom' || key == 'publicPriceTo'){
                     keyFromPPP = 'priceUSD';
                     if(key == 'publicPriceFrom'){
@@ -213,38 +149,34 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                         valToPPP = value;
                     }
                     let objLength = objRange.length +1;
-                    switch(userCurrency){
-                        case 'AED':
-                            objRange = {...objRange,'price.AED':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                            break;
-                        case 'CHF':
-                            objRange = {...objRange,'price.CHF':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                            break;
-                        case 'EUR':
-                            objRange = {...objRange,'price.EUR':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                            break;
-                        case 'JOD':
-                            objRange = {...objRange,'price.JOD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                            break;
-                        case 'KWD':
-                            objRange = {...objRange,'price.KWD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                            break;
-                        case 'LBP':
-                            objRange = {...objRange,'price.LBP':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                            break;
-                        case 'OMR':
-                            objRange = {...objRange,'price.OMR':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                            break;
-                        case 'QAR':
-                            objRange = {...objRange,'price.QAR':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                            break;
-                        case 'SAR':
-                            objRange = {...objRange,'price.SAR':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                            break;
-                        default:
-                            objRange = {...objRange,'price.USD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                            break;
+                    objRange = {...objRange,'price.USD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                } else if(key == 'netSalesFrom' || key == 'netSalesTo'){
+                    if(key == 'netSalesFrom'){
+                        valFromNetSales = value;
                     }
+                    if(key == 'netSalesTo'){
+                        valToNetSales = value;
+                    }
+                    let objLength = objRange.length +1;
+                    objRange = {...objRange,'netAmount.USD':{'from':valFromNetSales,'to':valToNetSales},'length':objLength};
+                } else if(key == 'marginFrom' || key == 'marginTo'){
+                    if(key == 'marginFrom'){
+                        valFromMargin = value;
+                    }
+                    if(key == 'marginTo'){
+                        valToMargin = value;
+                    }
+                    let objLength = objRange.length +1;
+                    objRange = {...objRange,'margin.USD':{'from':valFromMargin,'to':valToMargin},'length':objLength};
+                } else if(key == 'discountFrom' || key == 'discountTo'){
+                    if(key == 'discountFrom'){
+                        valFromDiscount = value;
+                    }
+                    if(key == 'discountTo'){
+                        valToDiscount = value;
+                    }
+                    let objLength = objRange.length +1;
+                    objRange = {...objRange,'discPercent':{'from':valFromDiscount,'to':valToDiscount},'length':objLength};
                 } else if(key == 'markupFrom' || key == 'markupTo'){
                     keyFromMarkup = 'markup';
                     if(key == 'markupFrom'){
@@ -277,6 +209,19 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                     }
                     let objLength = objRange.length +1;
                     objRange = {...objRange,'productionDate':{'from':valFromProDate,'to':valToProDate},'length':objLength};
+                } else if(key == 'invoiceDateFrom' || key == 'invoiceDateTo'){
+                    if(key == 'invoiceDateFrom'){
+                        // MM-dd-YYYY to YYYY-MM-dd
+                        let d = value.split('-');
+                        valFromInvoiceDate = `${d[2]}-${d[0]}-${d[1]}`;
+                    }
+                    if(key == 'invoiceDateTo'){
+                        // MM-dd-YYYY to YYYY-MM-dd
+                        let d = value.split('-');
+                        valToInvoiceDate= `${d[2]}-${d[0]}-${d[1]}`;
+                    }
+                    let objLength = objRange.length +1;
+                    objRange = {...objRange,'invoiceDate':{'from':valFromInvoiceDate,'to':valToInvoiceDate},'length':objLength};
                 } else if(key == 'caseDimensionFrom' || key == 'caseDimensionTo'){
                     if(key == 'caseDimensionFrom'){
                         valDimensionFrom = value;
@@ -363,9 +308,9 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                         }
                     }`;
                 } else if(key == 'gemstones'){
-                    // filter = GetSearchGemstone(key, obj, userCurrency);
+                    filter = GetSearchGemstone(key, obj, userCurrency);
                 } else if(key == 'lotNumbers'){
-                    // filter = GetSearchLotNumber(key, obj, userCurrency);
+                    filter = GetSearchLotNumber(key, obj, userCurrency);
                 } else {
                     filter =
                     `{

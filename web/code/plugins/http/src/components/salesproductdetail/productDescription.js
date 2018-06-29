@@ -24,11 +24,13 @@ const DetailDescription = (props) => {
         let price = !!props.id ? numberFormat(props.price[currency]) : numberFormat(!!props.totalPrice?props.totalPrice['USD']:0);
         let netSales = !!props.id ? numberFormat(!!props.netAmount?props.netAmount[currency]:0) : numberFormat(!!props.totalNetAmount?props.totalNetAmount['USD']:0);
         let discount = !!props.id ? numberFormat(!!props.discountAmountUSD?props.discountAmountUSD:0) : numberFormat(!!props.totalDiscountAmount?props.totalDiscountAmount['USD']:0);
-        let discountPercent = !!props.id ? numberFormat(!!props.discPercent?props.discPercent:0) : numberFormat(!!props.discPercent?props.discPercent:0);
+        let discountPercent = !!props.id ? numberFormat(!!props.discountPercent?props.discountPercent:0) : numberFormat(!!props.totalDiscountPercent?props.totalDiscountPercent:0);
         let marginAmount = !!props.id ? numberFormat(!!props.margin?props.margin[currency]:0) : numberFormat(!!props.totalMargin?props.totalMargin['USD']:0);
+        let marginPercent = !!props.id ? numberFormat(!!props.marginPercent?props.marginPercent:0) : numberFormat(!!props.totalMarginPercent?props.totalMarginPercent:0);
         let markUp = convertMarkpercent(props.markup);
         let setReference = (props.setReference != undefined ) ? props.setReference : '-';
         setReference = (setReference != '' ) ? setReference : '-';
+        let dateCreate = !!props.id ? convertDate(props.itemCreatedDate) : convertDate(props.postedDate);
 
         return (
             <div className="line-h">
@@ -56,17 +58,21 @@ const DetailDescription = (props) => {
                     <div className="col-md-4 col-sm-4 nopadding font-b">Net Sales ({ currency })</div>
                     <div className="col-md-8 col-sm-8">{ netSales }</div>
                 </div>
-                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesDSP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Discount Amount ({ currency })</div>
-                    <div className="col-md-8 col-sm-8">{ discount }</div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesMGP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Margin %</div>
+                    <div className="col-md-8 col-sm-8">{ marginPercent }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesMGP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Margin Amount ({ currency })</div>
+                    <div className="col-md-8 col-sm-8">{ marginAmount }</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesDSP) ? '' : 'hidden'}`}>
                     <div className="col-md-4 col-sm-4 nopadding font-b">Discount % </div>
                     <div className="col-md-8 col-sm-8">{ discountPercent }</div>
                 </div>
-                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesMGP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Margin Amount ({ currency })</div>
-                    <div className="col-md-8 col-sm-8">{ marginAmount }</div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesDSP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Discount Amount ({ currency })</div>
+                    <div className="col-md-8 col-sm-8">{ discount }</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesUCP) ? '' : 'hidden'}`}>
                     <div className="col-md-4 col-sm-4 nopadding font-b">Markup (Times)</div>
@@ -93,24 +99,28 @@ const DetailDescription = (props) => {
                     <div className="col-md-8 col-sm-8">{setReference}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Invoice Id</div>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Date Created</div>
+                    <div className="col-md-8 col-sm-8">{dateCreate}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Channel</div>
+                    <div className="col-md-8 col-sm-8">{props.salesChannel}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Customer Name & ID</div>
+                    <div className="col-md-8 col-sm-8">{props.customerName} - {props.customer}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Invoice Date</div>
+                    <div className="col-md-8 col-sm-8">{invoicedDate}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Invoice No</div>
                     <div className="col-md-8 col-sm-8">{props.invoicedId}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Customer Name</div>
-                    <div className="col-md-8 col-sm-8">{props.customerName}</div>
-                </div>
-                <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Sales Name</div>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Sales Person Name</div>
                     <div className="col-md-8 col-sm-8">{props.salesPersonName}</div>
-                </div>
-                <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Sales Channel</div>
-                    <div className="col-md-8 col-sm-8">{props.salesChannelType}</div>
-                </div>
-                <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Invoice Created</div>
-                    <div className="col-md-8 col-sm-8">{invoicedDate}</div>
                 </div>
             </div>
         );

@@ -52,8 +52,8 @@ class SalesReportWatch extends Component {
         (async () => {
             const { props } = this.props;
             if(props.SaveSearchSalesHierarchy != null){
-                  await props.inventoryActions.setSalesHierarchy(props.SaveSearchSalesHierarchy);
-                  this.refs.treeview.handleChange(props.SaveSearchSalesHierarchy);
+                await props.inventoryActions.setSalesHierarchy(props.SaveSearchSalesHierarchy);
+                this.refs.treeview.handleChange(props.SaveSearchSalesHierarchy);
             }
         })()
     }
@@ -117,9 +117,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { watchProductSalesHierarchy }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.watchProductSalesHierarchy = treeSelected;
 
@@ -130,9 +128,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { watchCategory }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.watchCategory = watchCategorySelectValue;
 
@@ -144,9 +140,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { collection }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.collection = collectionSelectValue;
 
@@ -158,9 +152,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { brand }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.brand = brandSelectValue;
 
@@ -172,9 +164,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { mustHave }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.mustHave = mustHaveSelectValue;
 
@@ -186,9 +176,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.metalType = metalTypeSelectValue;
 
@@ -200,9 +188,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.metalColour = metalColourSelectValue;
 
@@ -214,9 +200,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.dominantStone = dominantStoneSelectValue;
 
@@ -228,9 +212,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { limitedEdition }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.limitedEdition = limitedEditionSelectValue;
 
@@ -242,9 +224,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { movement }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.movement = movementSelectValue;
 
@@ -279,9 +259,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { proDateFrom }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.proDateFrom = startDate;
 
@@ -294,9 +272,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { proDateTo }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.proDateTo = endDate;
 
@@ -309,9 +285,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { dialIndex }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.dialIndex = dialIndexSelectValue;
 
@@ -323,9 +297,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { dialColor }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.dialColor = dialColorSelectValue;
 
@@ -337,9 +309,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { dialMetal }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.dialMetal = dialMetalSelectValue;
 
@@ -351,9 +321,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { buckleType }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.buckleType = buckleTypeSelectValue;
 
@@ -365,9 +333,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { strapType }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.strapType = strapTypeSelectValue;
 
@@ -379,9 +345,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { strapColor }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.strapColor = strapColorSelectValue;
 
@@ -393,9 +357,7 @@ class SalesReportWatch extends Component {
         const { props } = this.props;
         let { fields: { complication }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.complication = complicationSelectValue;
 
@@ -412,9 +374,7 @@ class SalesReportWatch extends Component {
             complication }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
-                                ? searchResult.paramsSalesSearch
-                                : null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null) ? searchResult.paramsSalesSearch : null;
 
         if(props.options != undefined){
             if (props.options.watchCategories) {
@@ -633,9 +593,7 @@ class SalesReportWatch extends Component {
               grossWeightTo, caseDimensionFrom, caseDimensionTo, preciousMetalWeightFrom, preciousMetalWeightTo
         }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
 
         let dataDropDowntWatchCategory = [];
         let dataDropDowntCollection = [];
@@ -923,9 +881,7 @@ class SalesReportWatch extends Component {
                             </div>
                         </div>
                         <div className="col-lg-6 form-horizontal">
-                            <div className={`form-group ${(userLogin.permission.price == 'All'
-                                || userLogin.permission.price == 'Updated') ?
-                                '' : 'hidden'}`}>
+                            <div className={`form-group ${(userLogin.permission.price == 'All' || userLogin.permission.price == 'Updated') ? '' : 'hidden'}`}>
                                 <label className="col-sm-4 control-label">Markup (Times)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -956,19 +912,13 @@ class SalesReportWatch extends Component {
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar
-                                            format="MM-DD-YYYY"
-                                            date={(paramsSalesSearch != null)?paramsSalesSearch.proDateFrom:props.ProductionDateFrom}
-                                            closeOnSelect = {true}
-                                            onChange={this.handleChangeStart} />
+                                        <Calendar format="MM-DD-YYYY" date={(paramsSalesSearch != null)? paramsSalesSearch.proDateFrom: props.ProductionDateFrom}
+                                            closeOnSelect = {true} onChange={this.handleChangeStart} />
                                     </div>
                                     <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar
-                                            format="MM-DD-YYYY"
-                                            date={(paramsSalesSearch != null)?paramsSalesSearch.proDateTo:props.ProductionDateTo}
-                                            closeOnSelect = {true}
-                                            onChange={this.handleChangeEnd} />
+                                        <Calendar format="MM-DD-YYYY" date={(paramsSalesSearch != null)? paramsSalesSearch.proDateTo: props.ProductionDateTo}
+                                            closeOnSelect = {true} onChange={this.handleChangeEnd} />
                                     </div>
                                 </div>
                             </div>
@@ -1005,10 +955,8 @@ class SalesReportWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.DialIndexValue}
-                                        placeholder="Select your Dial Index"
-                                        options={dataDropDowntDialIndex}
-                                        onChange={this.handleDialIndexSelectChange} />
+                                    <Select multi simpleValue value={props.DialIndexValue} placeholder="Select your Dial Index"
+                                        options={dataDropDowntDialIndex} onChange={this.handleDialIndexSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -1018,10 +966,8 @@ class SalesReportWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.DialColorValue}
-                                        placeholder="Select your Dial Color"
-                                        options={dataDropDowntDialColor}
-                                        onChange={this.handleDialColorSelectChange} />
+                                    <Select multi simpleValue value={props.DialColorValue} placeholder="Select your Dial Color"
+                                        options={dataDropDowntDialColor} onChange={this.handleDialColorSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -1031,10 +977,8 @@ class SalesReportWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.DialMetalValue}
-                                        placeholder="Select your Dial Metal"
-                                        options={dataDropDowntDialMetal}
-                                        onChange={this.handleDialMetalSelectChange} />
+                                    <Select multi simpleValue value={props.DialMetalValue} placeholder="Select your Dial Metal"
+                                        options={dataDropDowntDialMetal} onChange={this.handleDialMetalSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -1044,10 +988,8 @@ class SalesReportWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.BuckleTypeValue}
-                                        placeholder="Select your Buckle Type"
-                                        options={dataDropDowntBuckleType}
-                                        onChange={this.handleBuckleTypeSelectChange} />
+                                    <Select multi simpleValue value={props.BuckleTypeValue} placeholder="Select your Buckle Type"
+                                        options={dataDropDowntBuckleType} onChange={this.handleBuckleTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -1057,10 +999,8 @@ class SalesReportWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.StrapTypeValue}
-                                        placeholder="Select your Strap Type"
-                                        options={dataDropDowntStrapType}
-                                        onChange={this.handleStrapTypeSelectChange} />
+                                    <Select multi simpleValue value={props.StrapTypeValue} placeholder="Select your Strap Type"
+                                        options={dataDropDowntStrapType} onChange={this.handleStrapTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -1070,10 +1010,8 @@ class SalesReportWatch extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.StrapColorValue}
-                                        placeholder="Select your Strap Color"
-                                        options={dataDropDowntStrapColor}
-                                        onChange={this.handleStrapColorSelectChange} />
+                                    <Select multi simpleValue value={props.StrapColorValue} placeholder="Select your Strap Color"
+                                        options={dataDropDowntStrapColor} onChange={this.handleStrapColorSelectChange} />
                                 </div>
                             </div>
                         </div>

@@ -306,7 +306,7 @@ class SalesReportMain extends Component {
         let fileName = jQuery('#fileName');
         let fileNameSetReference = jQuery('#fileNameSetReference');
 
-        this.props.itemActions.newSearch();
+        this.props.itemActions.newSalesSearch();
 
         fileName.html('');
         fileNameSetReference.html('');
@@ -376,9 +376,7 @@ class SalesReportMain extends Component {
         const { handleSubmit, activeTabSalesCategory } = this.props;
         const { alert } = this.state;
         const userLogin = JSON.parse(sessionStorage.logindata);
-        const isNotOwnerSharedSalesSearch = this.props.searchResult.criteriaSalesSaveSearch != null
-                                        ? this.props.searchResult.criteriaSalesSaveSearch.shared
-                                        : false ;
+        const isNotOwnerSharedSalesSearch = this.props.searchResult.criteriaSalesSaveSearch != null ? this.props.searchResult.criteriaSalesSaveSearch.shared : false ;
 
         let permission = userLogin.permission;
         let bitwise = Number(permission.productGroupSales).toString(2);
@@ -625,6 +623,8 @@ function mapStateToProps(state) {
         warehouseSales: state.users.warehouseSales,
         SaveSearchSalesHierarchy: state.searchResult.saveSearchSalesHierarchy,
         SearchAction: state.searchResult.SearchAction,
+        InvoiceDateFrom: state.searchResult.InvoiceDateFrom,
+        InvoiceDateTo: state.searchResult.InvoiceDateTo,
     }
 }
 function mapDispatchToProps(dispatch) {

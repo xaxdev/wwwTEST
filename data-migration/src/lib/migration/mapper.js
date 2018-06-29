@@ -506,6 +506,8 @@ const calculateSalesPrices = (item, exchangeRates) => {
     const price = {};
     const netAmount = {};
     const margin = {};
+    let marginPercent = 0;
+    let discountPercent = 0;
     const exchangeRateFromUSDToHomeCurrency = exchangeRates.filter(exchangeRate => exchangeRate.from === 'USD' && exchangeRate.to === item.currency)[0];
     const records = exchangeRates.filter(exchangeRate => exchangeRate.from === item.currency);
 
@@ -515,12 +517,16 @@ const calculateSalesPrices = (item, exchangeRates) => {
     price.USD = item.price;
     netAmount.USD = item.netAmount;
     margin.USD = item.margin;
+    marginPercent = (item.margin/item.netAmount)*100;
+    discountPercent = item.discPercent == 0 ? (item.discountAmountUSD/item.price)*100 : item.discPercent;
 
     item.actualCost = actualCost;
     item.updatedCost = updatedCost;
     item.price = price;
     item.netAmount = netAmount;
     item.margin = margin;
+    item.marginPercent = marginPercent;
+    item.discountPercent = discountPercent;
 };
 
 const filterImages = (items) => {
@@ -658,14 +664,14 @@ const mapMovement = (recordset) => {
 const mapSoldItem = (recordset, exchangeRates) => {
     const soldItems = [];
     let id = 0;
-    
+
     for (let record of recordset)  {
         if (id != record.id) {
-            
+
             exchangeRates = exchangeRates.filter((item) => {
                 return item.fromDate <= record.invoiceDate && item.toDate >= record.invoiceDate
             });
-            
+
             id = Number(record.id);
             const soldItem = {...record};
             soldItem.gemstones = [];

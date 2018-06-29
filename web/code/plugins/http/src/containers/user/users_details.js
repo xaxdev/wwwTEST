@@ -22,7 +22,7 @@ class UserDetails extends Component {
     }
 
     handleSubmit(data) {
-        console.log('data-->',data);
+        // console.log('data-->',data);
         let FLAG_ZERO = 0x0; // 000001
         let FLAG_JLY = 0x1; // 000001
         let FLAG_WAT = 0x2; // 000010

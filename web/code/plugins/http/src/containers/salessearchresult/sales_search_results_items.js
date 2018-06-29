@@ -21,7 +21,7 @@ const Loading = require('react-loading');
 const checkFields = ['ingredients', 'categoryName', 'category', 'article', 'collection', 'setReferenceNumber', 'cut', 'color','clarity', 'caratWt', 'unit',
     'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight', 'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName',
     'metalColor', 'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex', 'dialColor','movement','serial',
-    'limitedEdition','limitedEditionNumber','itemCreatedDate', 'postedDate', 'salesId', 'salesPersonName', 'salesChannelType', 'customer', 'customerName',
+    'limitedEdition','limitedEditionNumber','itemCreatedDate', 'postedDate', 'salesId', 'salesPersonName', 'salesChannel', 'customer', 'customerName',
     'invoicedId', 'invoiceDate', 'inventSizeId'
 ];
 
@@ -34,7 +34,7 @@ const labels = {
     certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date', vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalType: 'Metal Type',
     metalColor: 'Metal Colour', brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color', buckleType: 'Buckle Type',
     dialIndex: 'Dial Index', dialColor: 'Dial Color', movement: 'Movement', serial: 'Serial #', limitedEdition: 'Limited Edition', itemCreatedDate: 'Created Date',
-    limitedEditionNumber: 'Limited Edition #', postedDate: 'Posted Date', salesId: 'Sales Id', salesPersonName: 'Sales Person Name', salesChannelType: 'Sales Channel Type',
+    limitedEditionNumber: 'Limited Edition #', postedDate: 'Posted Date', salesId: 'Sales Id', salesPersonName: 'Sales Person Name', salesChannel: 'Sales Channel Type',
     customer: 'Customer', customerName: 'Customer Name', invoicedId: 'Invoiced Id', invoiceDate: 'Invoice Date', inventSizeId: 'Size'
 }
 
@@ -71,7 +71,7 @@ class SalesSearchResultOnItem extends Component {
             showLoading: false, postedDate:false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false,
             isOpenMsgPageInvalid: false, markup: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false,
             totalActualCost: false, totalUpdatedCost: false, totalPrice: false, companyName: false, warehouseName: false, createdDate: false, salesId:false,
-            isOpenPrintOptions: false, salesPersonName:false, salesChannelType: false, customer: false, customerName: false, invoicedId: false,
+            isOpenPrintOptions: false, salesPersonName:false, salesChannel: false, customer: false, customerName: false, invoicedId: false,
             invoiceDate: false, inventSizeId: false
         };
     }
@@ -577,7 +577,7 @@ class SalesSearchResultOnItem extends Component {
             category: this.state.category, article: this.state.article, collection: this.state.collection, setReferenceNumber: this.state.setReferenceNumber,
             quantity: this.state.quantity, dominantStone: this.state.dominantStone, markup: this.state.markup, certificatedNumber: this.state.certificatedNumber,
             brand: this.state.brand, postedDate: this.state.postedDate, salesId: this.state.salesId, salesPersonName: this.state.salesPersonName,
-            salesChannelType: this.state.salesChannelType, customer: this.state.customer, customerName: this.state.customerName, unit: this.state.unit,
+            salesChannel: this.state.salesChannel, customer: this.state.customer, customerName: this.state.customerName, unit: this.state.unit,
             caratWt: this.state.caratWt,flourance: this.state.flourance,batch: this.state.batch, netWeight: this.state.netWeight, stoneQty: this.state.stoneQty,
             invoicedId: this.state.invoicedId, invoiceDate: this.state.invoiceDate, inventSizeId: this.state.inventSizeId, cut: this.state.cut,
             color: this.state.color, clarity: this.state.clarity, qty: this.state.qty, origin: this.state.origin, symmetry: this.state.symmetry,

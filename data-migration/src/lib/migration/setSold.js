@@ -33,7 +33,9 @@ const getSoldItemSets = async (index, exchangeRates) => {
                     totalPrice: {},
                     totalNetAmount: {},
                     totalMargin: {},
+                    totalMarginPercent: {},
                     totalDiscountAmount: {},
+                    totalDiscountPercent: {},
                     markup: record.markup,
                     company: record.company,
                     companyName: record.companyName,
@@ -83,7 +85,9 @@ const getSoldItemSets = async (index, exchangeRates) => {
                     updatedCost: {},
                     netAmount: {},
                     margin: {},
+                    marginPercent: {},
                     discountAmount: {},
+                    discountPercent: {},
                     markup: record.markup,
                     company: record.company,
                     companyName: record.companyName,
@@ -110,13 +114,17 @@ const getSoldItemSets = async (index, exchangeRates) => {
                 item.updatedCost.USD  = record.updatedCost;
                 item.netAmount.USD  = record.netAmount;
                 item.margin.USD  = record.margin;
+                item.marginPercent  = (record.margin/record.netAmount)*100;
                 item.discountAmount.USD  = record.discountAmountUSD;
+                item.discountPercent  = record.discPercent == 0 ? (record.discountAmountUSD/record.price)*100 : record.discPercent;
                 current.totalPrice.USD  = (current.totalPrice.USD  || 0) + item.price.USD;
                 current.totalActualCost.USD  = (current.totalActualCost.USD  || 0) + item.actualCost.USD;
                 current.totalUpdatedCost.USD  = (current.totalUpdatedCost.USD  || 0) + item.updatedCost.USD;
                 current.totalNetAmount.USD  = (current.totalNetAmount.USD  || 0) + item.netAmount.USD;
                 current.totalMargin.USD  = (current.totalMargin.USD  || 0) + item.margin.USD;
+                current.totalMarginPercent  = (current.totalMarginPercent  || 0) + item.marginPercent;
                 current.totalDiscountAmount.USD  = (current.totalDiscountAmount.USD  || 0) + item.discountAmount.USD;
+                current.totalDiscountPercent  = (current.totalDiscountPercent  || 0) + item.discountPercent;
 
                 current.description = description.join();
                 current.image = setImages;
@@ -161,7 +169,9 @@ const getSoldItemSets = async (index, exchangeRates) => {
                         updatedCost: {},
                         netAmount: {},
                         margin: {},
+                        marginPercent: {},
                         discountAmount: {},
+                        discountPercent: {},
                         markup: record.markup,
                         company: record.company,
                         companyName: record.companyName,
@@ -189,13 +199,17 @@ const getSoldItemSets = async (index, exchangeRates) => {
                     item.updatedCost.USD  = record.updatedCost;
                     item.netAmount.USD  = record.netAmount;
                     item.margin.USD  = record.margin;
+                    item.marginPercent  = (record.margin/record.netAmount)*100;
                     item.discountAmount.USD  = record.discountAmountUSD;
+                    item.discountPercent  = record.discPercent == 0 ? (record.discountAmountUSD/record.price)*100 : record.discPercent;
                     current.totalPrice.USD  = (current.totalPrice.USD  || 0) + item.price.USD;
                     current.totalActualCost.USD  = (current.totalActualCost.USD  || 0) + item.actualCost.USD;
                     current.totalUpdatedCost.USD  = (current.totalUpdatedCost.USD  || 0) + item.updatedCost.USD;
                     current.totalNetAmount.USD  = (current.totalNetAmount.USD  || 0) + item.netAmount.USD;
                     current.totalMargin.USD  = (current.totalMargin.USD  || 0) + item.margin.USD;
+                    current.totalMarginPercent  = (current.totalMarginPercent  || 0) + item.marginPercent;
                     current.totalDiscountAmount.USD  = (current.totalDiscountAmount.USD  || 0) + item.discountAmount.USD;
+                    current.totalDiscountPercent  = (current.totalDiscountPercent  || 0) + item.discountPercent;
 
                     current.description = description.join();
                     current.image = setImages;

@@ -38,11 +38,13 @@ const DetailDescriptionPrint = (props) => {
         let price = !!props.id ? numberFormat(props.price[currency]) : numberFormat(!!props.totalPrice?props.totalPrice['USD']:0);
         let netSales = !!props.id ? numberFormat(!!props.netAmount?props.netAmount[currency]:0) : numberFormat(!!props.totalNetAmount?props.totalNetAmount['USD']:0);
         let discount = !!props.id ? numberFormat(!!props.discountAmountUSD?props.discountAmountUSD:0) : numberFormat(!!props.totalDiscountAmount?props.totalDiscountAmount['USD']:0);
-        let discountPercent = !!props.id ? numberFormat(!!props.discPercent?props.discPercent:0) : numberFormat(!!props.discPercent?props.discPercent:0);
+        let discountPercent = !!props.id ? numberFormat(!!props.discountPercent?props.discountPercent:0) : numberFormat(!!props.totalDiscountPercent?props.totalDiscountPercent:0);
         let marginAmount = !!props.id ? numberFormat(!!props.margin?props.margin[currency]:0) : numberFormat(!!props.totalMargin?props.totalMargin['USD']:0);
+        let marginPercent = !!props.id ? numberFormat(!!props.marginPercent?props.marginPercent:0) : numberFormat(!!props.totalMarginPercent?props.totalMarginPercent:0);
         let markUp = convertMarkpercent(props.markup);
         let setReference = (props.setReference != undefined ) ? props.setReference : '-';
         setReference = (setReference != '' ) ? setReference : '-';
+        let dateCreate = !!props.id ? convertDate(props.itemCreatedDate) : convertDate(props.postedDate);
 
         return (
             <div>
@@ -70,17 +72,21 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>Net Sales ({ currency })</div>
                     <div style={styles.colmd5}>{ netSales }</div>
                 </div>
-                <div style={(priceSalesDSP) ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Discount Amount ({ currency })</div>
-                    <div style={styles.colmd5}>{ discount }</div>
+                <div style={(priceSalesMGP) ? styles.colmd12  : styles.colmdhide}>
+                    <div style={styles.colmd5}>Margin %</div>
+                    <div style={styles.colmd5}>{ marginPercent }</div>
+                </div>
+                <div style={(priceSalesMGP) ? styles.colmd12  : styles.colmdhide}>
+                    <div style={styles.colmd5}>Margin Amount ({ currency })</div>
+                    <div style={styles.colmd5}>{ marginAmount }</div>
                 </div>
                 <div style={(priceSalesDSP) ? styles.colmd12  : styles.colmdhide}>
                     <div style={styles.colmd5}>Discount % </div>
                     <div style={styles.colmd5}>{ discountPercent }</div>
                 </div>
-                <div style={(priceSalesMGP) ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Margin Amount ({ currency })</div>
-                    <div style={styles.colmd5}>{ marginAmount }</div>
+                <div style={(priceSalesDSP) ? styles.colmd12  : styles.colmdhide}>
+                    <div style={styles.colmd5}>Discount Amount ({ currency })</div>
+                    <div style={styles.colmd5}>{ discount }</div>
                 </div>
                 <div style={(priceSalesUCP) ?styles.colmd12  : styles.colmdhide}>
                     <div style={styles.colmd5}>Markup (Times)</div>
@@ -107,24 +113,28 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>{convertBlanktodash(setReference)}</div>
                 </div>
                 <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Invoice Id</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(props.invoicedId)}</div>
+                    <div style={styles.colmd5}>Date Created</div>
+                    <div style={styles.colmd5}>{dateCreate}</div>
                 </div>
                 <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Customer Name</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(props.customerName)}</div>
+                    <div style={styles.colmd5}>Channel</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.salesChannel)}</div>
                 </div>
                 <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Sales Name</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(props.salesPersonName)}</div>
-                </div>
-                <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Sales Channel</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(props.salesChannelType)}</div>
+                    <div style={styles.colmd5}>Customer Name & ID</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.customerName) - convertBlanktodash(props.customer)}</div>
                 </div>
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Invoiced Date</div>
                     <div style={styles.colmd5}>{invoicedDate}</div>
+                </div>
+                <div style={styles.colmd12}>
+                    <div style={styles.colmd5}>Invoice No</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.invoicedId)}</div>
+                </div>
+                <div style={styles.colmd12}>
+                    <div style={styles.colmd5}>Sales Person Name</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.salesPersonName)}</div>
                 </div>
             </div>
         );

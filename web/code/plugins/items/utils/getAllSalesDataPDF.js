@@ -266,6 +266,8 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         let sumNetAmount = 0;
         let sumDisconst = 0;
         let sumMargin = 0;
+        let sumDisconstPercent = 0;
+        let sumMarginPercent = 0;
 
         if(pageData.length != 0){
             data.forEach(function(item){
@@ -315,6 +317,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             sumDisconstData.forEach(function(price) {
                 sumDisconst = sumDisconst+Math.round(price);
             });
+            sumDisconstPercent = (sumDisconst/sumPrice)*100;
 
             data.forEach(function(item){
                 if (isViewAsSet) {
@@ -327,6 +330,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             sumMarginData.forEach(function(price) {
                 sumMargin = sumMargin+Math.round(price);
             });
+            sumMarginPercent = (sumMargin/sumNetAmount)*100;
         }
 
         const sendData = {
@@ -343,7 +347,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 'avrgPrice': avrgPrice,
                 'netAmount': sumNetAmount,
                 'disconst': sumDisconst,
-                'margin': sumMargin
+                'margin': sumMargin,
+                'sumDisconstPercent': sumDisconstPercent,
+                'sumMarginPercent': sumMarginPercent
             }
         };
         return sendData;

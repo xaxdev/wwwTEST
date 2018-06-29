@@ -21,7 +21,8 @@ SELECT	SOL.[Id] AS 'id'
 		, SOL.[Margin] AS 'margin'
 		, SOL.[DiscPercent] AS 'discPercent'
 		, ISNULL(SOL.[Store], '') AS 'store'
-		, ISNULL(SOL.[SalesChannelType], '') AS 'salesChannelType'
+		, ISNULL(SOL.[SalesChannelType], '') AS 'salesChannel'
+		, ISNULL(saleschannels.[Description], '') AS 'salesChannelName'
 		, ISNULL(SOL.[CustomerId], '') AS 'customer'
 		, ISNULL(SOL.[CustomerName], '') AS 'customerName'
 		, ISNULL(SOL.[ArticleCode], '') AS 'subType'
@@ -107,6 +108,9 @@ FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
 			ON cert.[CERTIFICATIONNO] = certmaster.[Item]
 			AND SOL.[DataAreaId] = certmaster.[Company]
+		LEFT JOIN [ITORAMA].[dbo].[SalesChannels] saleschannels
+  			ON saleschannels.[SalesChannel] = SOL.[SalesChannelType]
+			AND UPPER(SOL.[DataAreaId]) = UPPER(saleschannels.[DataAreaId])
 WHERE	1=1
 		AND SOL.[Id] BETWEEN @from AND @to
 ORDER BY SOL.[Id]

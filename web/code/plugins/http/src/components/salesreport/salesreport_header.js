@@ -1,11 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
+import Calendar from 'react-input-calendar';
+import moment from 'moment';
 import InitDataLocation from '../../utils/initDataLocation';
 import InitDataCompany from '../../utils/initDataCompany';
 import InitModifySalesData from '../../utils/initModifySalesData';
 import * as xls from '../../utils/xls';
 import * as inventoryActions from '../../actions/inventoryactions';
+import GetSalesPricePermission from '../../utils/getSalesPricePermission';
 import jQuery from 'jquery';
 let _ = require('lodash');
 let X = XLSX;
@@ -18,7 +21,15 @@ class SalesReportHeader extends Component {
         this.handleWarehouseSelectChange = this.handleWarehouseSelectChange.bind(this);
         this.handleDominantStoneSelectChange = this.handleDominantStoneSelectChange.bind(this);
         this.handleSalesChannelSelectChange = this.handleSalesChannelSelectChange.bind(this);
+        this.handleChangeStart = this.handleChangeStart.bind(this);
+        this.handleChangeEnd = this.handleChangeEnd.bind(this);
         this.readFile = this.readFile.bind(this);
+
+        this.state = {
+            startDate: null,
+            endDate: null,
+            treeViewData:null
+        }
     }
 
     componentDidMount() {
@@ -38,9 +49,7 @@ class SalesReportHeader extends Component {
         const { props } = this.props;
         let {fields:{ location }, searchResult} = props;
 
-        let paramsLocation = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch.location:
-                              null;
+        let paramsLocation = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch.location: null;
 
         paramsLocation = LocationSelectValue;
 
@@ -55,9 +64,7 @@ class SalesReportHeader extends Component {
         const { props } = this.props;
         let {fields:{ warehouse}, searchResult} = props;
 
-        let paramsHeader = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsHeader = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
 
 
         if(paramsHeader != null)
@@ -72,9 +79,7 @@ class SalesReportHeader extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.dominantStone = DominantStoneSelectValue;
 
@@ -86,9 +91,7 @@ class SalesReportHeader extends Component {
         const { props } = this.props;
         let { fields: { salesChannel }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.salesChannel = SalesChannelSelectValue;
 
@@ -124,6 +127,55 @@ class SalesReportHeader extends Component {
     	};
     }
 
+    handleChangeStart(startDate){
+        const { props } = this.props;
+        let { fields: { invoiceDateFrom }, searchResult } = props;
+
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.invoiceDateFrom = startDate;
+
+        invoiceDateFrom.onChange(startDate);
+        this.setState({startDate});
+        this.handleChangeDate({ startDate });
+    }
+
+    handleChangeEnd(endDate){
+        const { props } = this.props;
+        let { fields: { invoiceDateTo }, searchResult } = props;
+
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch : null;
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.invoiceDateTo = endDate;
+
+        invoiceDateTo.onChange(endDate);
+        this.setState({endDate});
+        this.handleChangeDate({ endDate });
+    }
+
+    handleChangeDate ({ startDate, endDate }) {
+        const { props } = this.props;
+        let startDateM = (typeof startDate !== 'undefined')? moment(startDate,'MM-DD-YYYY') : moment(this.state.startDate,'MM-DD-YYYY');
+        let endDateM = (typeof endDate !== 'undefined')? moment(endDate,'MM-DD-YYYY') : moment(this.state.endDate,'MM-DD-YYYY');
+
+        if (startDateM.isAfter(endDateM)) {
+            let temp = startDate || this.state.startDate;
+            startDate = endDate|| this.state.endDate;
+            endDate = temp
+        }else{
+            if(startDate == undefined){
+                startDate = startDateM._i;
+            }
+            if(endDate == undefined){
+                endDate = endDateM._i;
+            }
+        }
+
+        this.setState({ startDate, endDate })
+        props.inventoryActions.setInvoiceDateFrom(startDate);
+        props.inventoryActions.setInvoiceDateTo(endDate);
+    }
+
     render() {
         const { props } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
@@ -135,9 +187,9 @@ class SalesReportHeader extends Component {
                 reference, description, certificatedNumber, sku, customer, salesPersonName, invoiceNo, invoiceDateFrom, invoiceDateTo, totalCostFrom,
                 totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo, retailPriceFrom, retailPriceTo, netSalesFrom, netSalesTo, marginFrom, marginTo,
                 discountFrom, discountTo
-            }
+            }, searchResult
         } = props;
-
+        
         InitModifySalesData(this.props.props);
 
         let dataDropDowntLocations = [];
@@ -145,6 +197,8 @@ class SalesReportHeader extends Component {
         let dataDropDowntDominantStone = [];
         let dataDropDowntSalesChannel = [];
         let that = this;
+
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
 
         if(userLogin.permission.salesLocation != undefined){
             if(userLogin.permission.salesLocation.type == 'SalesLocation' || userLogin.permission.salesLocation.type == 'All'){
@@ -207,6 +261,13 @@ class SalesReportHeader extends Component {
             }
         }
 
+        const priceSalesRTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesRTP;
+        const priceSalesUCP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesUCP;
+        const priceSalesCTP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesCTP;
+        const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
+        const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
+        const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
+
         return (
             <div>
                 <div className="row">
@@ -244,38 +305,27 @@ class SalesReportHeader extends Component {
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
-                                        <div className={`form-group ${(userLogin.permission.salesLocation != undefined) ? '' :
-                                                          'hidden'}` }>
+                                        <div className={`form-group ${(userLogin.permission.salesLocation != undefined) ? '' : 'hidden'}` }>
                                             <label className="col-sm-4 control-label">Company</label>
                                             <div className= "col-sm-7">
-                                                <Select multi simpleValue
-                                                    value={props.LocationValue}
-                                                    placeholder="Select your Company"
-                                                    options={dataDropDowntLocations}
-                                                    onChange={this.handleLocationSelectChange}
-                                                    disabled={(userLogin.permission.salesLocation != undefined) ? false : true}
-                                                    ref="location"/>
+                                                <Select multi simpleValue value={props.LocationValue} placeholder="Select your Company"
+                                                    options={dataDropDowntLocations} onChange={this.handleLocationSelectChange}
+                                                    disabled={(userLogin.permission.salesLocation != undefined) ? false : true} ref="location"/>
                                             </div>
                                         </div>
-                                        <div className={`form-group ${(userLogin.permission.salesWarehouse != undefined) ?'' :
-                                                          'hidden'}` }>
+                                        <div className={`form-group ${(userLogin.permission.salesWarehouse != undefined) ?'' : 'hidden'}` }>
                                             <label className="col-sm-4 control-label">Location</label>
                                             <div className="col-sm-7">
-                                                <Select multi simpleValue
-                                                  value={props.WarehouseValue}
-                                                  placeholder="Select your Location"
-                                                  options={dataDropDowntWareHouse}
-                                                  onChange={this.handleWarehouseSelectChange}
-                                                  disabled={(userLogin.permission.salesWarehouse != undefined) ? false : true}/>
+                                                <Select multi simpleValue value={props.WarehouseValue} placeholder="Select your Location"
+                                                    options={dataDropDowntWareHouse} onChange={this.handleWarehouseSelectChange}
+                                                    disabled={(userLogin.permission.salesWarehouse != undefined) ? false : true}/>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <label className="col-sm-4 control-label">Dominant Stone</label>
                                             <div className="col-sm-7">
-                                                <Select multi simpleValue value={props.DominantStoneValue}
-                                                  placeholder="Select your Dominant Stone"
-                                                  options={dataDropDowntDominantStone}
-                                                  onChange={this.handleDominantStoneSelectChange} />
+                                                <Select multi simpleValue value={props.DominantStoneValue} placeholder="Select your Dominant Stone"
+                                                    options={dataDropDowntDominantStone} onChange={this.handleDominantStoneSelectChange} />
                                             </div>
                                         </div>
                                     </div>
@@ -283,8 +333,7 @@ class SalesReportHeader extends Component {
                             </div>
                             <div className="panel-body">
                                 <div className="row margin-ft">
-                                    <div className="row salesreport-bar">
-                                    </div>
+                                    <div className="row salesreport-bar"></div>
                                     <div className="col-md-12 col-sm-12 form-horizontal">
                                         <div className="form-group">
                                             <label className="col-md-2 col-sm-4 control-label">Customer Search</label>
@@ -306,10 +355,8 @@ class SalesReportHeader extends Component {
                                         <div className="form-group">
                                             <label className="col-sm-4 control-label">Channel</label>
                                             <div className="col-sm-7">
-                                                <Select multi simpleValue value={props.SalesChannelValue}
-                                                  placeholder="Select your Sales Channel"
-                                                  options={dataDropDowntSalesChannel}
-                                                  onChange={this.handleSalesChannelSelectChange} />
+                                                <Select multi simpleValue value={props.SalesChannelValue} placeholder="Select your Sales Channel"
+                                                    options={dataDropDowntSalesChannel} onChange={this.handleSalesChannelSelectChange} />
                                             </div>
                                         </div>
                                     </div>
@@ -333,17 +380,18 @@ class SalesReportHeader extends Component {
                                             <label className="col-sm-4 control-label">Invoice Date</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                                                <div className="col-sm-4 nopadding">
-                                                    <input type="number" className="form-control" {...invoiceDateFrom}/>
+                                                <div className="col-sm-10 nopadding">
+                                                    <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeStart}
+                                                        date={(paramsSalesSearch != null)? paramsSalesSearch.invoiceDateFrom: props.InvoiceDateFrom} />
                                                 </div>
                                                 <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                                                <div className="col-sm-4 nopadding">
-                                                    <input type="number" className="form-control" {...invoiceDateTo}/>
+                                                <div className="col-sm-10 nopadding">
+                                                    <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeEnd}
+                                                        date={(paramsSalesSearch != null)? paramsSalesSearch.invoiceDateTo: props.InvoiceDateTo} />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className={`form-group ${(userLogin.permission.price == 'All') ?
-                                            '' : 'hidden'}`}>
+                                        <div className={`form-group ${(priceSalesCTP) ? '' : 'hidden'}`}>
                                             <label className="col-sm-4 control-label">Cost Price ({userLogin.currency})</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -358,9 +406,7 @@ class SalesReportHeader extends Component {
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
-                                        <div className={`form-group ${(userLogin.permission.price == 'Updated'
-                                                                      || userLogin.permission.price == 'All') ?
-                                                                      '' : 'hidden'}`}>
+                                        <div className={`form-group ${(priceSalesUCP) ? '' : 'hidden'}`}>
                                             <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -373,10 +419,7 @@ class SalesReportHeader extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className={`form-group ${(userLogin.permission.price == 'Public'
-                                                                      || userLogin.permission.price == 'Updated'
-                                                                      || userLogin.permission.price == 'All') ?
-                                                                    '' : 'hidden'}`}>
+                                        <div className={`form-group ${(priceSalesRTP) ? '' : 'hidden'}`}>
                                             <label className="col-sm-4 control-label">Price ({userLogin.currency})</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -397,7 +440,7 @@ class SalesReportHeader extends Component {
                                     <div className="row salesreport-bar">
                                     </div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
-                                        <div className="form-group">
+                                        <div className={`form-group ${(priceSalesNSP) ? '' : 'hidden'}`}>
                                             <label className="col-sm-4 control-label">Net Sales ({userLogin.currency})</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -410,7 +453,7 @@ class SalesReportHeader extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="form-group">
+                                        <div className={`form-group ${(priceSalesMGP) ? '' : 'hidden'}`}>
                                             <label className="col-sm-4 control-label">Margin %</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -423,7 +466,7 @@ class SalesReportHeader extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="form-group">
+                                        <div className={`form-group ${(priceSalesDSP) ? '' : 'hidden'}`}>
                                             <label className="col-sm-4 control-label">Discount %</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
