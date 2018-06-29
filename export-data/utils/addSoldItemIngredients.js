@@ -210,7 +210,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                     (item.postedDate != undefined) ? convertDate(item.postedDate) : '',
                     (item.salesId != undefined) ? item.salesId : '',
                     (item.salesPersonName != undefined) ? item.salesPersonName : '',
-                    (item.salesChannel != undefined) ? item.salesChannel : '',
+                    (item.salesChannel != undefined) ? item.salesChannelName : '',
                     (item.customer != undefined) ? item.customer : '',
                     (item.customerName != undefined) ? item.customerName : '',
                     (item.invoicedId != undefined) ? item.invoicedId : '',
@@ -268,7 +268,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 if(fields.postedDate) arrayItems.push((item.postedDate != undefined) ? convertDate(item.postedDate) : '')
                 if(fields.salesId) arrayItems.push((item.salesId != undefined) ? item.salesId : '');
                 if(fields.salesPersonName) arrayItems.push((item.salesPersonName != undefined) ? item.salesPersonName : '');
-                if(fields.salesChannel) arrayItems.push((item.salesChannel != undefined) ? item.salesChannel : '');
+                if(fields.salesChannel) arrayItems.push((item.salesChannelName != undefined) ? item.salesChannelName : '');
                 if(fields.customer) arrayItems.push((item.customer != undefined) ? item.customer : '');
                 if(fields.customerName) arrayItems.push((item.customerName != undefined) ? item.customerName : '');
                 if(fields.invoicedId) arrayItems.push((item.invoicedId != undefined) ? item.invoicedId : '');

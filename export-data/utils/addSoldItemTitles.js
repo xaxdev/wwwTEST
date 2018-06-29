@@ -88,8 +88,8 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             titles.push('Item Weight (Grams)','Ring Size', 'Jewels Weight (text)','Site','Company', 'Location');
             if(fields.allFields){
                 titles.push(
-                    'Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color', 'Clarity','Carat Wt', 'Unit', 
-                    'Qty','Origin','Symmetry','Flourance','Batch','Gold weight (Grams)', 'Stone Qty','Dominant Stone', 'Markup%','Certificate Number','Certificate Date', 
+                    'Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color', 'Clarity','Carat Wt', 'Unit',
+                    'Qty','Origin','Symmetry','Flourance','Batch','Gold weight (Grams)', 'Stone Qty','Dominant Stone', 'Markup%','Certificate Number','Certificate Date',
                     'Vendor Code', 'Vendor Name', 'Metal Colour', 'Metal','Brand','Complication','Strap Type','Strap Color', 'Buckle Type','Dial Index',
                     'Dial Color','Movement','Serial #','Limited Edition', 'Limited Edition #','Created Date','Posted Date', 'Sales Id','Sales Person Name',
                     'Sales Channel Type', 'Customer','Customer Name','Invoiced Id', 'Invoice Date','Size'
@@ -136,7 +136,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 if(fields.postedDate) titles.push('Posted Date');
                 if(fields.salesId) titles.push('Sales Id');
                 if(fields.salesPersonName) titles.push('Sales Person Name');
-                if(fields.salesChannelType) titles.push('Sales Channel Type');
+                if(fields.salesChannel) titles.push('Sales Channel Type');
                 if(fields.customer) titles.push('Customer');
                 if(fields.customerName) titles.push('Customer Name');
                 if(fields.invoicedId) titles.push('Invoiced Id');
