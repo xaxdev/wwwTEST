@@ -118,7 +118,7 @@ const DetailDescriptionPrint = (props) => {
                 </div>
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Channel</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(props.salesChannel)}</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.salesChannelName)}</div>
                 </div>
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Customer Name & ID</div>
