@@ -78,6 +78,7 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                     || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour' || key == 'origin' || key == 'watchCategory'
                     || key == 'limitedEdition' || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'buckleType'
                     || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse' || key == 'location' || key=='certificatedNumber'
+                    || key == 'invoiceNo'
                 ){
                     if(key == 'metalColour')
                         key = 'metalColor'
@@ -93,6 +94,8 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                         key = 'dominant'
                     if(key == 'stoneType')
                         key = 'subType'
+                    if(key == 'invoiceNo')
+                        key = 'invoicedId'
                     filter =
                     `{
                         "match": {
