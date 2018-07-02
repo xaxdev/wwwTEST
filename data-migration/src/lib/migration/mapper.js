@@ -174,6 +174,8 @@ const mapSalesProperties = (item, record, exchangeRates) => {
         }
     }
 
+    item.customerSearch = item.customer + ' ' +  item.customerName + ' ' +  item.customerEmail + ' ' +  item.customerPhone
+
     gemstoneProperties.forEach(property => {
         if (item[property] !== undefined) {
             delete item[property];
