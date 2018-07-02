@@ -189,7 +189,7 @@ class SalesReportHeader extends Component {
                 discountFrom, discountTo
             }, searchResult
         } = props;
-        
+
         InitModifySalesData(this.props.props);
 
         let dataDropDowntLocations = [];
@@ -392,7 +392,7 @@ class SalesReportHeader extends Component {
                                             </div>
                                         </div>
                                         <div className={`form-group ${(priceSalesCTP) ? '' : 'hidden'}`}>
-                                            <label className="col-sm-4 control-label">Cost Price ({userLogin.currency})</label>
+                                            <label className="col-sm-4 control-label">Cost Price (USD)</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                                 <div className="col-sm-4 nopadding">
@@ -407,7 +407,7 @@ class SalesReportHeader extends Component {
                                     </div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
                                         <div className={`form-group ${(priceSalesUCP) ? '' : 'hidden'}`}>
-                                            <label className="col-sm-4 control-label">Updated Cost ({userLogin.currency})</label>
+                                            <label className="col-sm-4 control-label">Updated Cost (USD)</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                                 <div className="col-sm-4 nopadding">
@@ -420,7 +420,7 @@ class SalesReportHeader extends Component {
                                             </div>
                                         </div>
                                         <div className={`form-group ${(priceSalesRTP) ? '' : 'hidden'}`}>
-                                            <label className="col-sm-4 control-label">Price ({userLogin.currency})</label>
+                                            <label className="col-sm-4 control-label">Price (USD)</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                                 <div className="col-sm-4 nopadding">
@@ -441,7 +441,7 @@ class SalesReportHeader extends Component {
                                     </div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
                                         <div className={`form-group ${(priceSalesNSP) ? '' : 'hidden'}`}>
-                                            <label className="col-sm-4 control-label">Net Sales ({userLogin.currency})</label>
+                                            <label className="col-sm-4 control-label">Net Sales (USD)</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                                 <div className="col-sm-4 nopadding">

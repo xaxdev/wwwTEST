@@ -652,13 +652,21 @@ class SalesProductReleteDetail extends Component {
         if(!!gallery && gallery.length > 0){
             return(
                 <div>
-                    <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+                    <a>
+                        <OverlayTrigger placement="bottom" overlay={tooltipZoom}>
+                            <div className="icon-zoom margin-l10" id="zoomimg"></div>
+                        </OverlayTrigger>
+                    </a>
                 </div>
             );
         } else {
             return(
                 <div>
-                    <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+                    <a style={styles.displaynone}>
+                        <OverlayTrigger placement="bottom" overlay={tooltipZoom}>
+                            <div className="icon-zoom margin-l10" id="zoomimg"></div>
+                        </OverlayTrigger>
+                    </a>
                 </div>
             );
         }
@@ -912,19 +920,35 @@ class SalesProductReleteDetail extends Component {
                         <div className="panel panel-default">
                             <div className="panel-body padding-ft0">
                                 <div className="col-md-12 col-sm-12 icon-detail">
-                                    <a><div className="icon-print margin-l10" id="printproduct"></div></a>
+                                    <a>
+                                        <OverlayTrigger placement="bottom" overlay={tooltipPrint}>
+                                            <div className="icon-print margin-l10" id="printproduct"></div>
+                                        </OverlayTrigger>
+                                    </a>
                                     {this.zoomicon()}
                                     {isCertificate
-                                      ? countImages != 1
-                                        ? <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a>
-                                        : <a href={imageCerDownload} download={imageName}><div className="icon-certificate margin-l10"/></a>
-                                      :
-                                      <a><div className=""></div></a>
+                                        ? countImages != 1
+                                            ?   <a>
+                                                    <OverlayTrigger placement="bottom" overlay={tooltipCertificate}>
+                                                        <div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div>
+                                                    </OverlayTrigger>
+                                                </a>
+                                            :   <a href={imageCerDownload} download={imageName} >
+                                                    <OverlayTrigger placement="bottom" overlay={tooltipCertificate}>
+                                                        <div className="icon-certificate margin-l10"/>
+                                                    </OverlayTrigger>
+                                                </a>
+                                        :
+                                        <a><div className=""></div></a>
                                     }
                                     {this.imagesCOAIcon()}
                                     {this.imagesDBCIcon()}
                                     {this.filesMonographIcon()}
-                                    <a><div className="icon-movement margin-l10" onClick={ this.showmovement }></div></a>
+                                    <a>
+                                        <OverlayTrigger placement="bottom" overlay={tooltipMovement}>
+                                            <div className="icon-movement margin-l10" onClick={ this.showmovement }></div>
+                                        </OverlayTrigger>
+                                    </a>
                                 </div>
                                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
                                 <div className="col-md-6 col-sm-12">{this.renderImageGalleryCOA()}</div>
@@ -993,6 +1017,10 @@ class SalesProductReleteDetail extends Component {
     }
 }
 
+const tooltipPrint = (<Tooltip id="tooltip"><strong>Preview & Print</strong></Tooltip>);
+const tooltipZoom = (<Tooltip id="tooltip"><strong>Zoom</strong></Tooltip>);
+const tooltipMovement = (<Tooltip id="tooltip"><strong>Movement & Activiy</strong></Tooltip>);
+const tooltipCertificate = (<Tooltip id="tooltip"><strong>Download Certificate</strong></Tooltip>);
 const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>);
 const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>);
 const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>);
