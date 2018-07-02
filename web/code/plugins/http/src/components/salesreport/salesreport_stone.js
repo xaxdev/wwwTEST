@@ -49,8 +49,8 @@ class SalesReportStone extends Component {
         (async () => {
             const { props } = this.props;
             if(props.SaveSearchSalesHierarchy != null){
-                  await props.inventoryActions.setSalesHierarchy(props.SaveSearchSalesHierarchy);
-                  this.refs.treeview.handleChange(props.SaveSearchSalesHierarchy);
+                await props.inventoryActions.setSalesHierarchy(props.SaveSearchSalesHierarchy);
+                this.refs.treeview.handleChange(props.SaveSearchSalesHierarchy);
             }
         })()
     }
@@ -115,9 +115,7 @@ class SalesReportStone extends Component {
 
         let { fields: { stoneProductSalesHierarchy }, searchResult} = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.stoneProductSalesHierarchy = treeSelected;
 
@@ -128,9 +126,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { stoneType }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.stoneType = stoneTypeSelectValue;
 
@@ -142,9 +138,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { cut, CutValue }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.cut = CutSelectValue;
 
@@ -156,9 +150,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { cutGrade, CutGradeValue }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.cutGrade = CutGradeSelectValue;
 
@@ -170,9 +162,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { color, ColorValue }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.color = ColorSelectValue;
 
@@ -184,9 +174,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { colorGrade, ColorGradeValue }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.colorGrade = ColorGradeSelectValue;
 
@@ -198,9 +186,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { clarity, ClarityValue }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.clarity = ClaritySelectValue;
 
@@ -212,9 +198,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { certificateAgency, CertificateAgencyValue }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.certificateAgency = CertificateLabSelectValue;
 
@@ -250,9 +234,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { cerDateFrom }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.cerDateFrom = startDate;
 
@@ -265,9 +247,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { cerDateTo }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.cerDateTo = endDate;
 
@@ -280,9 +260,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { polish }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.polish = PolishSelectValue;
 
@@ -294,9 +272,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { symmetry }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.symmetry = SymmetrySelectValue;
 
@@ -308,9 +284,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { treatment }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.treatment = TreatmentSelectValue;
 
@@ -322,9 +296,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { fluorescence }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.fluorescence = FluorescenceSelectValue;
 
@@ -336,9 +308,7 @@ class SalesReportStone extends Component {
         const { props } = this.props;
         let { fields: { origin }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.origin = OriginSelectValue;
 
@@ -355,178 +325,263 @@ class SalesReportStone extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
-                                ? searchResult.paramsSalesSearch
-                                : null;
-
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null) ? searchResult.paramsSalesSearch : null;
+        const expr = ArticleSelectedValue.toLowerCase();
         if(props.options != undefined){
-            if (props.options.stoneType) {
-                findFieldName = []
-                findFieldName = props.options.stoneType.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+            if (expr != '') {
+                if (props.options.stoneType) {
+                    findFieldName = []
+                    findFieldName = props.options.stoneType.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.stoneType = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.stoneType = findFieldName;
 
-                stoneType.onChange(findFieldName);
-                props.inventoryActions.setDatastoneType(findFieldName);
-            }
-            if (props.options.cut) {
-                findFieldName = []
-                findFieldName = props.options.cut.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    stoneType.onChange(findFieldName);
+                    props.inventoryActions.setDatastoneType(findFieldName);
+                }
+                if (props.options.cut) {
+                    findFieldName = []
+                    findFieldName = props.options.cut.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.cut = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.cut = findFieldName;
 
-                cut.onChange(findFieldName);
-                props.inventoryActions.setDataCut(findFieldName);
-            }
-            if (props.options.cutGrades) {
-                findFieldName = []
-                findFieldName = props.options.cutGrades.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    cut.onChange(findFieldName);
+                    props.inventoryActions.setDataCut(findFieldName);
+                }
+                if (props.options.cutGrades) {
+                    findFieldName = []
+                    findFieldName = props.options.cutGrades.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.cutGrade = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.cutGrade = findFieldName;
 
-                cutGrade.onChange(findFieldName);
-                props.inventoryActions.setDataCutGrade(findFieldName);
-            }
-            if (props.options.colors) {
-                findFieldName = []
-                findFieldName = props.options.colors.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    cutGrade.onChange(findFieldName);
+                    props.inventoryActions.setDataCutGrade(findFieldName);
+                }
+                if (props.options.colors) {
+                    findFieldName = []
+                    findFieldName = props.options.colors.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.color = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.color = findFieldName;
 
-                color.onChange(findFieldName);
-                props.inventoryActions.setDataColor(findFieldName);
-            }
-            if (props.options.colorGrades) {
-                findFieldName = []
-                findFieldName = props.options.colorGrades.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    color.onChange(findFieldName);
+                    props.inventoryActions.setDataColor(findFieldName);
+                }
+                if (props.options.colorGrades) {
+                    findFieldName = []
+                    findFieldName = props.options.colorGrades.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.colorGrade = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.colorGrade = findFieldName;
 
-                colorGrade.onChange(findFieldName);
-                props.inventoryActions.setDataColorGrade(findFieldName);
-            }
-            if (props.options.clarities) {
-                findFieldName = []
-                findFieldName = props.options.clarities.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    colorGrade.onChange(findFieldName);
+                    props.inventoryActions.setDataColorGrade(findFieldName);
+                }
+                if (props.options.clarities) {
+                    findFieldName = []
+                    findFieldName = props.options.clarities.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.clarity = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.clarity = findFieldName;
 
-                clarity.onChange(findFieldName);
-                props.inventoryActions.setDataClarity(findFieldName);
-            }
-            if (props.options.certificateAgencys) {
-                findFieldName = []
-                findFieldName = props.options.certificateAgencys.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    clarity.onChange(findFieldName);
+                    props.inventoryActions.setDataClarity(findFieldName);
+                }
+                if (props.options.certificateAgencys) {
+                    findFieldName = []
+                    findFieldName = props.options.certificateAgencys.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.certificateAgency = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.certificateAgency = findFieldName;
 
-                certificateAgency.onChange(findFieldName);
-                props.inventoryActions.setDataCertificateAgency(findFieldName);
-            }
-            if (props.options.polishs) {
-                findFieldName = []
-                findFieldName = props.options.polishs.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    certificateAgency.onChange(findFieldName);
+                    props.inventoryActions.setDataCertificateAgency(findFieldName);
+                }
+                if (props.options.polishs) {
+                    findFieldName = []
+                    findFieldName = props.options.polishs.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.polish = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.polish = findFieldName;
 
-                polish.onChange(findFieldName);
-                props.inventoryActions.setDataPolish(findFieldName);
-            }
-            if (props.options.symmetries) {
-                findFieldName = []
-                findFieldName = props.options.symmetries.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    polish.onChange(findFieldName);
+                    props.inventoryActions.setDataPolish(findFieldName);
+                }
+                if (props.options.symmetries) {
+                    findFieldName = []
+                    findFieldName = props.options.symmetries.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.symmetry = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.symmetry = findFieldName;
 
-                symmetry.onChange(findFieldName);
-                props.inventoryActions.setDataSymmetry(findFieldName);
-            }
-            if (props.options.treatments) {
-                findFieldName = []
-                findFieldName = props.options.treatments.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    symmetry.onChange(findFieldName);
+                    props.inventoryActions.setDataSymmetry(findFieldName);
+                }
+                if (props.options.treatments) {
+                    findFieldName = []
+                    findFieldName = props.options.treatments.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.treatment = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.treatment = findFieldName;
 
-                treatment.onChange(findFieldName);
-                props.inventoryActions.setDataTreatment(findFieldName);
-            }
-            if (props.options.fluorescences) {
-                findFieldName = []
-                findFieldName = props.options.fluorescences.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    treatment.onChange(findFieldName);
+                    props.inventoryActions.setDataTreatment(findFieldName);
+                }
+                if (props.options.fluorescences) {
+                    findFieldName = []
+                    findFieldName = props.options.fluorescences.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.fluorescence = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.fluorescence = findFieldName;
 
-                fluorescence.onChange(findFieldName);
-                props.inventoryActions.setDataFluorescence(findFieldName);
-            }
-            if (props.options.origins) {
-                findFieldName = []
-                findFieldName = props.options.origins.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    fluorescence.onChange(findFieldName);
+                    props.inventoryActions.setDataFluorescence(findFieldName);
+                }
+                if (props.options.origins) {
+                    findFieldName = []
+                    findFieldName = props.options.origins.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.origin = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.origin = findFieldName;
 
-                origin.onChange(findFieldName);
-                props.inventoryActions.setDataOrigin(findFieldName);
+                    origin.onChange(findFieldName);
+                    props.inventoryActions.setDataOrigin(findFieldName);
+                }
+            }else{
+                if (props.options.stoneType) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.stoneType = '';
+
+                    stoneType.onChange('');
+                    props.inventoryActions.setDatastoneType('');
+                }
+                if (props.options.cut) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.cut = '';
+
+                    cut.onChange('');
+                    props.inventoryActions.setDataCut('');
+                }
+                if (props.options.cutGrades) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.cutGrade = '';
+
+                    cutGrade.onChange('');
+                    props.inventoryActions.setDataCutGrade('');
+                }
+                if (props.options.colors) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.color = '';
+
+                    color.onChange('');
+                    props.inventoryActions.setDataColor('');
+                }
+                if (props.options.colorGrades) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.colorGrade = '';
+
+                    colorGrade.onChange('');
+                    props.inventoryActions.setDataColorGrade('');
+                }
+                if (props.options.clarities) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.clarity = '';
+
+                    clarity.onChange('');
+                    props.inventoryActions.setDataClarity('');
+                }
+                if (props.options.certificateAgencys) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.certificateAgency = '';
+
+                    certificateAgency.onChange('');
+                    props.inventoryActions.setDataCertificateAgency('');
+                }
+                if (props.options.polishs) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.polish = '';
+
+                    polish.onChange('');
+                    props.inventoryActions.setDataPolish('');
+                }
+                if (props.options.symmetries) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.symmetry = '';
+
+                    symmetry.onChange('');
+                    props.inventoryActions.setDataSymmetry('');
+                }
+                if (props.options.treatments) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.treatment = '';
+
+                    treatment.onChange('');
+                    props.inventoryActions.setDataTreatment('');
+                }
+                if (props.options.fluorescences) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.fluorescence = '';
+
+                    fluorescence.onChange('');
+                    props.inventoryActions.setDataFluorescence('');
+                }
+                if (props.options.origins) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.origin = '';
+
+                    origin.onChange('');
+                    props.inventoryActions.setDataOrigin('');
+                }
             }
         }
         if (ArticleSelectedValue == '') {
@@ -542,15 +597,12 @@ class SalesReportStone extends Component {
 
     render() {
         const { props } = this.props;
-        let { fields: { lotNumber, lotQuantityFrom, lotQuantityTo, totalCaratWeightFrom, totalCaratWeightTo,
-            totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo,
-            markupFrom, markupTo, certificatedNumber, cerDateFrom, cerDateTo, polish, symmetry, treatment,
-            fluorescence, origin
+        let { fields: {
+            lotNumber, lotQuantityFrom, lotQuantityTo, totalCaratWeightFrom, totalCaratWeightTo, totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo,
+            publicPriceFrom,publicPriceTo, markupFrom, markupTo, certificatedNumber, cerDateFrom, cerDateTo, polish, symmetry, treatment, fluorescence, origin
         }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                            searchResult.paramsSalesSearch:
-                            null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
 
         let dataDropDowntstoneType = [];
         let dataDropDowntCut = [];
@@ -677,10 +729,8 @@ class SalesReportStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select simpleValue value={props.ArticleValue}
-                                        placeholder="Select your Article Grouping"
-                                        options={dataDropDowntArticle}
-                                        onChange={this.handleArticleSelectedChanged} />
+                                    <Select simpleValue value={props.ArticleValue} placeholder="Select your Article Grouping"
+                                        options={dataDropDowntArticle} onChange={this.handleArticleSelectedChanged} />
                                 </div>
                             </div>
                         </div>
@@ -704,10 +754,8 @@ class SalesReportStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.StoneTypeValue}
-                                        placeholder="Select your Stone Type"
-                                        options={dataDropDowntstoneType}
-                                        onChange={this.handlestoneTypeSelectChange} />
+                                    <Select multi simpleValue value={props.StoneTypeValue} placeholder="Select your Stone Type"
+                                        options={dataDropDowntstoneType} onChange={this.handlestoneTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -717,10 +765,8 @@ class SalesReportStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.CutValue}
-                                        placeholder="Select your Cut (Shape)"
-                                        options={dataDropDowntCut}
-                                        onChange={this.handleCutSelectChange} />
+                                    <Select multi simpleValue value={props.CutValue} placeholder="Select your Cut (Shape)"
+                                        options={dataDropDowntCut} onChange={this.handleCutSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group hidden" >
@@ -730,10 +776,8 @@ class SalesReportStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.CutGradeValue}
-                                        placeholder="Select your Cut Grade"
-                                        options={dataDropDowntCutGrade}
-                                        onChange={this.handleCutGradeSelectChange} />
+                                    <Select multi simpleValue value={props.CutGradeValue} placeholder="Select your Cut Grade"
+                                        options={dataDropDowntCutGrade} onChange={this.handleCutGradeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -743,10 +787,8 @@ class SalesReportStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.ColorValue}
-                                        placeholder="Select your Color"
-                                        options={dataDropDowntColor}
-                                        onChange={this.handleColorSelectChange} />
+                                    <Select multi simpleValue value={props.ColorValue} placeholder="Select your Color"
+                                        options={dataDropDowntColor} onChange={this.handleColorSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group hidden">
@@ -756,10 +798,8 @@ class SalesReportStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.ColorGradeValue}
-                                        placeholder="Select your Color Grade"
-                                        options={dataDropDowntColorGrade}
-                                        onChange={this.handleColorGradeSelectChange}/>
+                                    <Select multi simpleValue value={props.ColorGradeValue} placeholder="Select your Color Grade"
+                                        options={dataDropDowntColorGrade} onChange={this.handleColorGradeSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group">
@@ -769,10 +809,8 @@ class SalesReportStone extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.ClarityValue}
-                                        placeholder="Select your Clarity"
-                                        options={dataDropDowntClarity}
-                                        onChange={this.handleClaritiesSelectChange}/>
+                                    <Select multi simpleValue value={props.ClarityValue} placeholder="Select your Clarity"
+                                        options={dataDropDowntClarity} onChange={this.handleClaritiesSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group">
@@ -809,9 +847,7 @@ class SalesReportStone extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={`form-group ${(userLogin.permission.price == 'All'
-                                || userLogin.permission.price == 'Updated') ?
-                                '' : 'hidden'}`}>
+                            <div className={`form-group ${(userLogin.permission.price == 'All' || userLogin.permission.price == 'Updated') ? '' : 'hidden'}`}>
                                 <label className="col-sm-4 control-label">Markup (Times)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -834,10 +870,8 @@ class SalesReportStone extends Component {
                                 <label className="col-sm-4 control-label tooltiop-span">Laboratory
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.CertificateAgencyValue}
-                                        placeholder="Select your Laboratory"
-                                        options={dataDropDowntCertificateLab}
-                                        onChange={this.handleCertificateLabsSelectChange}/>
+                                    <Select multi simpleValue value={props.CertificateAgencyValue} placeholder="Select your Laboratory"
+                                        options={dataDropDowntCertificateLab} onChange={this.handleCertificateLabsSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group">
@@ -845,65 +879,49 @@ class SalesReportStone extends Component {
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar
-                                            format="MM-DD-YYYY"
-                                            date={(paramsSalesSearch != null)?paramsSalesSearch.cerDateFrom:props.StoneCertificateDateFrom}
-                                            closeOnSelect = {true}
-                                            onChange={this.handleChangeStart} />
+                                        <Calendar format="MM-DD-YYYY" date={(paramsSalesSearch != null)?paramsSalesSearch.cerDateFrom:props.StoneCertificateDateFrom}
+                                            closeOnSelect = {true} onChange={this.handleChangeStart} />
                                     </div>
                                     <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar
-                                            format="MM-DD-YYYY"
-                                            date={(paramsSalesSearch != null)?paramsSalesSearch.cerDateTo:props.StoneCertificateDateTo}
-                                            closeOnSelect = {true}
-                                            onChange={this.handleChangeEnd} />
+                                        <Calendar format="MM-DD-YYYY" date={(paramsSalesSearch != null)?paramsSalesSearch.cerDateTo:props.StoneCertificateDateTo}
+                                            closeOnSelect = {true} onChange={this.handleChangeEnd} />
                                     </div>
                                 </div>
                             </div>
                             <div className="form-group hidden">
                                 <label className="col-sm-4 control-label">Polish</label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.PolishValue}
-                                        placeholder="Select your Polish"
-                                        options={dataDropDowntPolish}
-                                        onChange={this.handlePolishSelectChange}/>
+                                    <Select multi simpleValue value={props.PolishValue} placeholder="Select your Polish"
+                                        options={dataDropDowntPolish} onChange={this.handlePolishSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group hidden">
                                 <label className="col-sm-4 control-label">Symmetry</label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.SymmetryValue}
-                                        placeholder="Select your Symmetry"
-                                        options={dataDropDowntSymmetry}
-                                        onChange={this.handleSymmetrySelectChange}/>
+                                    <Select multi simpleValue value={props.SymmetryValue} placeholder="Select your Symmetry"
+                                        options={dataDropDowntSymmetry} onChange={this.handleSymmetrySelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group hidden">
                                 <label className="col-sm-4 control-label">Treatment</label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.TreatmentValue}
-                                        placeholder="Select your Treatment"
-                                        options={dataDropDowntTreatment}
-                                        onChange={this.handleTreatmentSelectChange}/>
+                                    <Select multi simpleValue value={props.TreatmentValue} placeholder="Select your Treatment"
+                                        options={dataDropDowntTreatment} onChange={this.handleTreatmentSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group hidden">
                                 <label className="col-sm-4 control-label">Fluorescence</label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.FluorescenceValue}
-                                        placeholder="Select your Fluorescence"
-                                        options={dataDropDowntFluorescence}
-                                        onChange={this.handleFluorescenceSelectChange}/>
+                                    <Select multi simpleValue value={props.FluorescenceValue} placeholder="Select your Fluorescence"
+                                        options={dataDropDowntFluorescence} onChange={this.handleFluorescenceSelectChange}/>
                                 </div>
                             </div>
                             <div className="form-group hidden">
                                 <label className="col-sm-4 control-label">Origin</label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.OriginValue}
-                                        placeholder="Select your Origin"
-                                        options={dataDropDowntOrigin}
-                                        onChange={this.handleOriginSelectChange}/>
+                                    <Select multi simpleValue value={props.OriginValue} placeholder="Select your Origin"
+                                        options={dataDropDowntOrigin} onChange={this.handleOriginSelectChange}/>
                                 </div>
                             </div>
                         </div>

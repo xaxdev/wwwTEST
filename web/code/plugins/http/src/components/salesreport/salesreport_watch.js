@@ -375,210 +375,311 @@ class SalesReportWatch extends Component {
         let findFieldName = [];
 
         let paramsSalesSearch = (searchResult.paramsSalesSearch != null) ? searchResult.paramsSalesSearch : null;
-
+        const expr = ArticleSelectedValue.toLowerCase();
         if(props.options != undefined){
-            if (props.options.watchCategories) {
-                findFieldName = []
-                findFieldName = props.options.watchCategories.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+            if (expr != '') {
+                if (props.options.watchCategories) {
+                    findFieldName = []
+                    findFieldName = props.options.watchCategories.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.watchCategory = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.watchCategory = findFieldName;
 
-                watchCategory.onChange(findFieldName);
-                props.inventoryActions.setDataWatchCategory(findFieldName);
-            }
-            if (props.options.collections) {
-                findFieldName = []
-                findFieldName = props.options.collections.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    watchCategory.onChange(findFieldName);
+                    props.inventoryActions.setDataWatchCategory(findFieldName);
+                }
+                if (props.options.collections) {
+                    findFieldName = []
+                    findFieldName = props.options.collections.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.collection = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.collection = findFieldName;
 
-                collection.onChange(findFieldName);
-                props.inventoryActions.setDataCollection(findFieldName);
-            }
-            if (props.options.brands) {
-                findFieldName = []
-                findFieldName = props.options.brands.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    collection.onChange(findFieldName);
+                    props.inventoryActions.setDataCollection(findFieldName);
+                }
+                if (props.options.brands) {
+                    findFieldName = []
+                    findFieldName = props.options.brands.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.brand = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.brand = findFieldName;
 
-                brand.onChange(findFieldName);
-                props.inventoryActions.setDataBrand(findFieldName);
-            }
-            if (props.options.metalTypes) {
-                findFieldName = []
-                findFieldName = props.options.metalTypes.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    brand.onChange(findFieldName);
+                    props.inventoryActions.setDataBrand(findFieldName);
+                }
+                if (props.options.metalTypes) {
+                    findFieldName = []
+                    findFieldName = props.options.metalTypes.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.metalType = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.metalType = findFieldName;
 
-                metalType.onChange(findFieldName);
-                props.inventoryActions.setDataMetalType(findFieldName);
-            }
-            if (props.options.metalColours) {
-                findFieldName = []
-                findFieldName = props.options.metalColours.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    metalType.onChange(findFieldName);
+                    props.inventoryActions.setDataMetalType(findFieldName);
+                }
+                if (props.options.metalColours) {
+                    findFieldName = []
+                    findFieldName = props.options.metalColours.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.metalColour = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.metalColour = findFieldName;
 
-                metalColour.onChange(findFieldName);
-                props.inventoryActions.setDataMetalColour(findFieldName);
-            }
-            if (props.options.dominantStones) {
-                findFieldName = []
-                findFieldName = props.options.dominantStones.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    metalColour.onChange(findFieldName);
+                    props.inventoryActions.setDataMetalColour(findFieldName);
+                }
+                if (props.options.dominantStones) {
+                    findFieldName = []
+                    findFieldName = props.options.dominantStones.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.dominantStone = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.dominantStone = findFieldName;
 
-                dominantStone.onChange(findFieldName);
-                props.inventoryActions.setDataDominantStone(findFieldName);
-            }
-            if (props.options.movements) {
-                findFieldName = []
-                findFieldName = props.options.movements.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    dominantStone.onChange(findFieldName);
+                    props.inventoryActions.setDataDominantStone(findFieldName);
+                }
+                if (props.options.movements) {
+                    findFieldName = []
+                    findFieldName = props.options.movements.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.movement = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.movement = findFieldName;
 
-                movement.onChange(findFieldName);
-                props.inventoryActions.setDataMovement(findFieldName);
-            }
-            if (props.options.dialIndexs) {
-                findFieldName = []
-                findFieldName = props.options.dialIndexs.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    movement.onChange(findFieldName);
+                    props.inventoryActions.setDataMovement(findFieldName);
+                }
+                if (props.options.dialIndexs) {
+                    findFieldName = []
+                    findFieldName = props.options.dialIndexs.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.dialIndex = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.dialIndex = findFieldName;
 
-                dialIndex.onChange(findFieldName);
-                props.inventoryActions.setDataDialIndex(findFieldName);
-            }
-            if (props.options.dialColors) {
-                findFieldName = []
-                findFieldName = props.options.dialColors.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    dialIndex.onChange(findFieldName);
+                    props.inventoryActions.setDataDialIndex(findFieldName);
+                }
+                if (props.options.dialColors) {
+                    findFieldName = []
+                    findFieldName = props.options.dialColors.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.dialColor = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.dialColor = findFieldName;
 
-                dialColor.onChange(findFieldName);
-                props.inventoryActions.setDataDialColor(findFieldName);
-            }
-            if (props.options.dialMetals) {
-                findFieldName = []
-                findFieldName = props.options.dialMetals.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    dialColor.onChange(findFieldName);
+                    props.inventoryActions.setDataDialColor(findFieldName);
+                }
+                if (props.options.dialMetals) {
+                    findFieldName = []
+                    findFieldName = props.options.dialMetals.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.dialMetal = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.dialMetal = findFieldName;
 
-                dialMetal.onChange(findFieldName);
-                props.inventoryActions.setDataDialMetal(findFieldName);
-            }
-            if (props.options.buckleTypes) {
-                findFieldName = []
-                findFieldName = props.options.buckleTypes.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    dialMetal.onChange(findFieldName);
+                    props.inventoryActions.setDataDialMetal(findFieldName);
+                }
+                if (props.options.buckleTypes) {
+                    findFieldName = []
+                    findFieldName = props.options.buckleTypes.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.buckleType = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.buckleType = findFieldName;
 
-                buckleType.onChange(findFieldName);
-                props.inventoryActions.setDataBuckleType(findFieldName);
-            }
-            if (props.options.strapTypes) {
-                findFieldName = []
-                findFieldName = props.options.strapTypes.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    buckleType.onChange(findFieldName);
+                    props.inventoryActions.setDataBuckleType(findFieldName);
+                }
+                if (props.options.strapTypes) {
+                    findFieldName = []
+                    findFieldName = props.options.strapTypes.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.strapType = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.strapType = findFieldName;
 
-                strapType.onChange(findFieldName);
-                props.inventoryActions.setDataStrapType(findFieldName);
-            }
-            if (props.options.strapColors) {
-                findFieldName = []
-                findFieldName = props.options.strapColors.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    strapType.onChange(findFieldName);
+                    props.inventoryActions.setDataStrapType(findFieldName);
+                }
+                if (props.options.strapColors) {
+                    findFieldName = []
+                    findFieldName = props.options.strapColors.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.strapColor = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.strapColor = findFieldName;
 
-                strapColor.onChange(findFieldName);
-                props.inventoryActions.setDataStrapColor(findFieldName);
-            }
-            if (props.options.complications) {
-                findFieldName = []
-                findFieldName = props.options.complications.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    strapColor.onChange(findFieldName);
+                    props.inventoryActions.setDataStrapColor(findFieldName);
+                }
+                if (props.options.complications) {
+                    findFieldName = []
+                    findFieldName = props.options.complications.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.complication = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.complication = findFieldName;
 
-                complication.onChange(findFieldName);
-                props.inventoryActions.setDataComplication(findFieldName);
+                    complication.onChange(findFieldName);
+                    props.inventoryActions.setDataComplication(findFieldName);
+                }
+            }else{
+                if (props.options.watchCategories) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.watchCategory = '';
+
+                    watchCategory.onChange('');
+                    props.inventoryActions.setDataWatchCategory('');
+                }
+                if (props.options.collections) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.collection = '';
+
+                    collection.onChange('');
+                    props.inventoryActions.setDataCollection('');
+                }
+                if (props.options.brands) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.brand = '';
+
+                    brand.onChange('');
+                    props.inventoryActions.setDataBrand('');
+                }
+                if (props.options.metalTypes) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.metalType = '';
+
+                    metalType.onChange('');
+                    props.inventoryActions.setDataMetalType('');
+                }
+                if (props.options.metalColours) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.metalColour = '';
+
+                    metalColour.onChange('');
+                    props.inventoryActions.setDataMetalColour('');
+                }
+                if (props.options.dominantStones) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.dominantStone = '';
+
+                    dominantStone.onChange('');
+                    props.inventoryActions.setDataDominantStone('');
+                }
+                if (props.options.movements) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.movement = '';
+
+                    movement.onChange('');
+                    props.inventoryActions.setDataMovement('');
+                }
+                if (props.options.dialIndexs) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.dialIndex = '';
+
+                    dialIndex.onChange('');
+                    props.inventoryActions.setDataDialIndex('');
+                }
+                if (props.options.dialColors) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.dialColor = '';
+
+                    dialColor.onChange('');
+                    props.inventoryActions.setDataDialColor('');
+                }
+                if (props.options.dialMetals) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.dialMetal = '';
+
+                    dialMetal.onChange('');
+                    props.inventoryActions.setDataDialMetal('');
+                }
+                if (props.options.buckleTypes) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.buckleType = '';
+
+                    buckleType.onChange('');
+                    props.inventoryActions.setDataBuckleType('');
+                }
+                if (props.options.strapTypes) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.strapType = '';
+
+                    strapType.onChange('');
+                    props.inventoryActions.setDataStrapType('');
+                }
+                if (props.options.strapColors) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.strapColor = '';
+
+                    strapColor.onChange('');
+                    props.inventoryActions.setDataStrapColor('');
+                }
+                if (props.options.complications) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.complication = '';
+
+                    complication.onChange('');
+                    props.inventoryActions.setDataComplication('');
+                }
             }
         }
         if (ArticleSelectedValue == '') {
-            let salesHierarchyData = RemoveHierarchy(notUseSalesHierarchy, hiTreeData, 'WAT');
+            let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, hiTreeData, 'WAT');
             DeleteSalesHierarchy(salesHierarchyData)
         }else{
-            let salesHierarchyData = RemoveHierarchy(notUseSalesHierarchy, hiTreeData, 'WAT');
+            let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, hiTreeData, 'WAT');
             ClearSalesHierarchy(salesHierarchyData);
         }
         article.onChange(ArticleSelectedValue);

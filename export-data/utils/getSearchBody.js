@@ -97,13 +97,13 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                     if(key == 'stoneType')
                         key = 'subType'
                     filter =
-                      `{
-                        "match": {
-                          "${key}": {
-                            "query": "${value}"
-                          }
-                        }
-                      }`;
+                        `{
+                            "match": {
+                                "${key}": {
+                                    "query": "${value}"
+                                }
+                            }
+                        }`;
                 } else if(key == 'lotQuantityFrom' || key == 'lotQuantityTo'){
                     if(key == 'lotQuantityFrom'){
                         valFromLot = value;

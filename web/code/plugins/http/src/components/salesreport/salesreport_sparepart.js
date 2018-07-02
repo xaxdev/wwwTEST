@@ -105,9 +105,7 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { sparePartProductSalesHierarchy }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch :null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.sparePartProductSalesHierarchy = treeSelected;
 
@@ -118,9 +116,7 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { sparePartType }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch :null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.sparePartType = sparePartTypeSelectValue;
 
@@ -132,9 +128,7 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { buckleType }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch :null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.buckleType = buckleTypeSelectValue;
 
@@ -146,9 +140,7 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { metalType }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch :null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.metalType = metalTypeSelectValue;
 
@@ -160,9 +152,7 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { metalColour }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch :null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.metalColour = metalColourSelectValue;
 
@@ -174,9 +164,7 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         let { fields: { dominantStone }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch :
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch :null;
         if(paramsSalesSearch != null)
             paramsSalesSearch.dominantStone = dominantStoneSelectValue;
 
@@ -192,80 +180,116 @@ class SalesReportSparePart extends Component {
         }, searchResult } = props;
         let findFieldName = [];
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)
-                                ? searchResult.paramsSalesSearch
-                                : null;
-
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
+        const expr = ArticleSelectedValue.toLowerCase();
         if(props.options != undefined){
-            if (props.options.sparePartType) {
-                findFieldName = []
-                findFieldName = props.options.sparePartType.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+            if (expr != '') {
+                if (props.options.sparePartType) {
+                    findFieldName = []
+                    findFieldName = props.options.sparePartType.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.sparePartType = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.sparePartType = findFieldName;
 
-                sparePartType.onChange(findFieldName);
-                props.inventoryActions.setDataSparePartType(findFieldName);
-            }
-            if (props.options.buckleTypes) {
-                findFieldName = []
-                findFieldName = props.options.buckleTypes.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    sparePartType.onChange(findFieldName);
+                    props.inventoryActions.setDataSparePartType(findFieldName);
+                }
+                if (props.options.buckleTypes) {
+                    findFieldName = []
+                    findFieldName = props.options.buckleTypes.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.buckleType = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.buckleType = findFieldName;
 
-                buckleType.onChange(findFieldName);
-                props.inventoryActions.setDataBuckleType(findFieldName);
-            }
-            if (props.options.metalTypes) {
-                findFieldName = []
-                findFieldName = props.options.metalTypes.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    buckleType.onChange(findFieldName);
+                    props.inventoryActions.setDataBuckleType(findFieldName);
+                }
+                if (props.options.metalTypes) {
+                    findFieldName = []
+                    findFieldName = props.options.metalTypes.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.metalType = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.metalType = findFieldName;
 
-                metalType.onChange(findFieldName);
-                props.inventoryActions.setDataMetalType(findFieldName);
-            }
-            if (props.options.metalColours) {
-                findFieldName = []
-                findFieldName = props.options.metalColours.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    metalType.onChange(findFieldName);
+                    props.inventoryActions.setDataMetalType(findFieldName);
+                }
+                if (props.options.metalColours) {
+                    findFieldName = []
+                    findFieldName = props.options.metalColours.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.metalColour = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.metalColour = findFieldName;
 
-                metalColour.onChange(findFieldName);
-                props.inventoryActions.setDataMetalColour(findFieldName);
-            }
-            if (props.options.dominantStones) {
-                findFieldName = []
-                findFieldName = props.options.dominantStones.filter((item) => {
-                    if (item.name == ArticleSelectedValue) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
+                    metalColour.onChange(findFieldName);
+                    props.inventoryActions.setDataMetalColour(findFieldName);
+                }
+                if (props.options.dominantStones) {
+                    findFieldName = []
+                    findFieldName = props.options.dominantStones.filter((item) => {
+                        if (item.name.toLowerCase().indexOf(expr) != -1) {
+                            return item.name
+                        }
+                    }).map((item) => { return item.code });
 
-                if(paramsSalesSearch != null)
-                    paramsSalesSearch.dominantStone = findFieldName;
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.dominantStone = findFieldName;
 
-                dominantStone.onChange(findFieldName);
-                props.inventoryActions.setDataDominantStone(findFieldName);
+                    dominantStone.onChange(findFieldName);
+                    props.inventoryActions.setDataDominantStone(findFieldName);
+                }
+            }else{
+                if (props.options.sparePartType) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.sparePartType = '';
+
+                    sparePartType.onChange('');
+                    props.inventoryActions.setDataSparePartType('');
+                }
+                if (props.options.buckleTypes) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.buckleType = '';
+
+                    buckleType.onChange('');
+                    props.inventoryActions.setDataBuckleType('');
+                }
+                if (props.options.metalTypes) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.metalType = '';
+
+                    metalType.onChange('');
+                    props.inventoryActions.setDataMetalType('');
+                }
+                if (props.options.metalColours) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.metalColour = '';
+
+                    metalColour.onChange('');
+                    props.inventoryActions.setDataMetalColour('');
+                }
+                if (props.options.dominantStones) {
+                    if(paramsSalesSearch != null)
+                        paramsSalesSearch.dominantStone = '';
+
+                    dominantStone.onChange('');
+                    props.inventoryActions.setDataDominantStone('');
+                }
             }
         }
         if (ArticleSelectedValue == '') {
@@ -283,13 +307,11 @@ class SalesReportSparePart extends Component {
         const { props } = this.props;
         const yesNo = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
 
-        let { fields: { totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo,publicPriceFrom,
-                  publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo
-              }, searchResult } = props;
+        let { fields: {
+            totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo,publicPriceFrom,publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo
+        }, searchResult } = props;
 
-        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                              searchResult.paramsSalesSearch:
-                              null;
+        let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
 
         let dataDropDownSparePartType = [];
         let dataDropDowntBuckleType = [];
@@ -363,10 +385,8 @@ class SalesReportSparePart extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select simpleValue value={props.ArticleValue}
-                                        placeholder="Select your Article Grouping"
-                                        options={dataDropDowntArticle}
-                                        onChange={this.handleArticleSelectedChanged} />
+                                    <Select simpleValue value={props.ArticleValue} placeholder="Select your Article Grouping"
+                                        options={dataDropDowntArticle} onChange={this.handleArticleSelectedChanged} />
                                 </div>
                             </div>
                         </div>
@@ -386,10 +406,8 @@ class SalesReportSparePart extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.SparePartTypeValue}
-                                        placeholder="Select your Spare Part Type"
-                                        options={dataDropDownSparePartType}
-                                        onChange={this.handleSparePartTypeSelectChange} />
+                                    <Select multi simpleValue value={props.SparePartTypeValue} placeholder="Select your Spare Part Type"
+                                        options={dataDropDownSparePartType} onChange={this.handleSparePartTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -399,10 +417,8 @@ class SalesReportSparePart extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.BuckleTypeValue}
-                                        placeholder="Select your Buckle Type"
-                                        options={dataDropDowntBuckleType}
-                                        onChange={this.handleBuckleTypeSelectChange} />
+                                    <Select multi simpleValue value={props.BuckleTypeValue} placeholder="Select your Buckle Type"
+                                        options={dataDropDowntBuckleType} onChange={this.handleBuckleTypeSelectChange} />
                                 </div>
                             </div>
                             <div className="form-group">
@@ -412,17 +428,13 @@ class SalesReportSparePart extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MetalTypeValue}
-                                        placeholder="Select your Metal Type"
-                                        options={dataDropDowntMetalType}
-                                        onChange={this.handleMetalTypeSelectChange} />
+                                    <Select multi simpleValue value={props.MetalTypeValue} placeholder="Select your Metal Type"
+                                        options={dataDropDowntMetalType} onChange={this.handleMetalTypeSelectChange} />
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-6 form-horizontal">
-                            <div className={`form-group ${(userLogin.permission.price == 'All'
-                                || userLogin.permission.price == 'Updated') ?
-                                '' : 'hidden'}`}>
+                            <div className={`form-group ${(userLogin.permission.price == 'All' || userLogin.permission.price == 'Updated') ? '' : 'hidden'}`}>
                                 <label className="col-sm-4 control-label">Markup (Times)</label>
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 control-label padding-l font-nor">From: </label>
@@ -455,10 +467,8 @@ class SalesReportSparePart extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <Select multi simpleValue value={props.MetalColourValue}
-                                        placeholder="Select your Metal Colour"
-                                        options={dataDropDowntMetalColour}
-                                        onChange={this.handleMetalColourSelectChange} />
+                                    <Select multi simpleValue value={props.MetalColourValue} placeholder="Select your Metal Colour"
+                                        options={dataDropDowntMetalColour} onChange={this.handleMetalColourSelectChange} />
                                 </div>
                             </div>
                         </div>

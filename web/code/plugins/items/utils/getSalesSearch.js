@@ -424,16 +424,16 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                             "constant_score": {
                                 "query": {
                                     "bool": {
-                                          "must": ${JSON.stringify(internals.filters)},
-                                          "must_not":[
+                                        "must": ${JSON.stringify(internals.filters)},
+                                        "must_not":[
                                             {
-                                                  "match": {
-                                                      "warehouse": {
-                                                          "query": "MME.CONS"
-                                                      }
-                                                  }
-                                              }
-                                          ]
+                                                "match": {
+                                                    "warehouse": {
+                                                        "query": "MME.CONS"
+                                                    }
+                                                }
+                                            }
+                                        ]
                                     }
                                 }
                             }
@@ -454,16 +454,16 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                         "constant_score": {
                             "query": {
                                 "bool": {
-                                      "must": ${JSON.stringify(internals.filters)},
-                                      "must_not":[
+                                    "must": ${JSON.stringify(internals.filters)},
+                                    "must_not":[
                                         {
-                                              "match": {
-                                                  "warehouse": {
-                                                      "query": "MME.CONS"
-                                                  }
-                                              }
-                                          }
-                                      ]
+                                            "match": {
+                                                "warehouse": {
+                                                    "query": "MME.CONS"
+                                                }
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
