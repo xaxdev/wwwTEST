@@ -26,22 +26,19 @@ export default function promiseMiddleware() {
         })
         .then(data => {
             if(type== 'SELECTED_COMPANY'){
-                const sites = data.locations
-                              .filter(function(site){
-                                  return site.comid == action.selected;
-                              });
+                const sites = data.locations.filter(function(site){
+                    return site.comid == action.selected;
+                });
                 data.locations = sites;
             }
             if(type== 'SELECTED_WAREHOUSES'){
-                const sites = data.locations
-                              .filter(function(site){
-                                  return site.comid == action.comid;
-                              });
+                const sites = data.locations.filter(function(site){
+                    return site.comid == action.comid;
+                });
                 data.locations = sites;
-                const warehouses = data.warehouses
-                                  .filter(function(warehouse){
-                                      return warehouse.locationid == action.selected;
-                                  });
+                const warehouses = data.warehouses.filter(function(warehouse){
+                    return warehouse.locationid == action.selected;
+                });
                 data.warehouses = warehouses;
             }
             if(type== 'GET_ONHANDWAREHOUSES'){
@@ -50,7 +47,7 @@ export default function promiseMiddleware() {
                 locationSelected.forEach(function(location) {
                     data.warehouses.forEach(function(warehouse){
                         if(warehouse.comid == location)
-                          ware.push(warehouse);
+                            ware.push(warehouse);
                     });
                 });
                 data.warehouses = ware;
@@ -61,7 +58,7 @@ export default function promiseMiddleware() {
                 locationSelected.forEach(function(location) {
                     data.warehouses.forEach(function(warehouse){
                         if(warehouse.comid == location)
-                          ware.push(warehouse);
+                            ware.push(warehouse);
                     });
                 });
                 data.warehouses = ware;

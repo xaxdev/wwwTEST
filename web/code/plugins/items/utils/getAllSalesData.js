@@ -43,6 +43,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         if (itemsOrder != null) {
             data.map((item) => {
                 let order = itemsOrder.find((val) => {return val.item_reference == item.reference})
+                console.log('order-->',order);
                 item.order = parseInt(order.order)
                 return item;
             });

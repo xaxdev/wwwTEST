@@ -115,12 +115,12 @@ class SalesReportHeader extends Component {
       		let reader = new FileReader();
       		let name = f.name;
       		reader.onload = function(e) {
-                  let data = e.target.result;
-                  let arr = xls.fixdata(data);
-                  let wb = X.read(btoa(arr), {type: 'base64'});
-                  let items = xls.process_wb(wb);
-                  reference.onChange(items.item);
-                  that.props.setItemsOrder(items.AllData);
+                let data = e.target.result;
+                let arr = xls.fixdata(data);
+                let wb = X.read(btoa(arr), {type: 'base64'});
+                let items = xls.process_wb(wb);
+                reference.onChange(items.item);
+                that.props.setItemsSalesOrder(items.AllData);
       		}
             if(rABS) reader.readAsBinaryString(f);
             else reader.readAsArrayBuffer(f);

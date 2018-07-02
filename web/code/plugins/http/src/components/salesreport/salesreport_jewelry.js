@@ -432,7 +432,7 @@ class SalesReportJewelry extends Component {
                 let wb = X.read(btoa(arr), {type: 'base64'});
                 let items = xls.process_wb(wb);
                 setReference.onChange(items.set);
-                inventoryActions.setSetReferenceOrder(items.AllData);
+                inventoryActions.setSetReferenceSalesOrder(items.AllData);
       		}
             if(rABS) reader.readAsBinaryString(f);
             else reader.readAsArrayBuffer(f);
