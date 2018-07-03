@@ -35,7 +35,7 @@ class SaveSearchList extends Component {
 
         this.setState({ showLoading: true });
 
-        this.props.getSaveCriteria(params).then((value) => {
+        this.props.getSalesSaveCriteria(params).then((value) => {
             (async () => {
                 if (this.props.criteriaSalesSaveSearch != null) {
                     sessionStorage.setItem('filters', this.props.criteriaSalesSaveSearch.criteria);
@@ -53,7 +53,7 @@ class SaveSearchList extends Component {
                     }
                     let editParams = {id:id, name:this.props.criteriaSalesSaveSearch.name}
                     await props.saveSearchAction.setIdEditSalesSaveSearch(editParams);
-                    that.context.router.push('/searchresult');
+                    that.context.router.push('/salessearchresult');
                 }
             })()
         });

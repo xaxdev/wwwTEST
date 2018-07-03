@@ -251,9 +251,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             }
         });
 
-        if (itemsOrder == null && setReferencdOrder == null) {
-            allData = allData.sort(compareBy(sortBy, sortDirections, userCurrency));
-        }
+        // if (itemsOrder == null && setReferencdOrder == null) {
+        //     allData = allData.sort(compareBy(sortBy, sortDirections, userCurrency));
+        // }
 
         if (!isViewAsSet) {
             allData = allData.map((item) => {return {'id':item.id}})
