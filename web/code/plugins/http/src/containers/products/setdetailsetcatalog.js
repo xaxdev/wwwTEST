@@ -644,11 +644,11 @@ class productdetail extends Component {
                     <div className="ft-white productdetail-search display-right">
                         <Link to={'/setcatalog'} className="btn btn-searchresult">Set Catalog</Link>
                     </div>
-                    <div className="margin-t5 text-center m-none display-right padding-lf15">
+                    <div className={`margin-t5 text-center m-none display-right padding-lf15 ${productIndex == 0?'hidden':''}`}>
                         <span className="bar-line">|</span>
                     </div>
                     <div className="display-right">
-                        <div className="float-l bar-detail-pre">
+                        <div className={`float-l bar-detail-pre ${productIndex == 0?'hidden':''}`}>
                                <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].reference.replace('/','-')}`:''}}><span className="icon-back"></span></Link>
                         </div>
                         <div className="float-l bar-detail-text">
@@ -661,7 +661,7 @@ class productdetail extends Component {
                                 of {numberFormat(productlist.length)} items
                             </div>
                         </div>
-                        <div className="float-l bar-detail-pre">
+                        <div className={`float-l bar-detail-pre ${productIndex+1 >= productlist.length?'hidden':''}`}>
                             <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${productlist[productIndex+1].reference.replace('/','-')}` : ''}}><span className="icon-next"></span></Link>
                         </div>
                     </div>
