@@ -1,6 +1,9 @@
 import React,{Component,PropTypes} from 'react';
+import { reduxForm, reset } from 'redux-form';
 import { Link } from 'react-router';
 import { Navbar,Nav,NavDropdown,MenuItem,NavItem } from 'react-bootstrap';
+import ResetFormSalesReport from '../../utils/resertFormSalesReport';
+import * as itemactions from '../../actions/itemactions';
 
 class Menu extends Component {
     constructor(props, context) {
@@ -20,8 +23,9 @@ class Menu extends Component {
         this.context.router.push('/setcatalog');
     }
 
-    handleClickSalesReport(e){
+    handleClickSalesReport = async (e) =>{
         e.preventDefault();
+        await this.props.newSalesSearch();
         this.context.router.push('/salesreport');
     }
 
@@ -106,4 +110,7 @@ Menu.contextTypes = {
 	router: PropTypes.object
 }
 
-module.exports = Menu
+module.exports = reduxForm({
+    form: 'Menu',
+    fields: [],
+},null,itemactions)(Menu)

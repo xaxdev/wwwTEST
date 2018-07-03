@@ -86,7 +86,7 @@ class SalesSearchResultOnItem extends Component {
         if(this.refs.salesSortingBy != undefined){
             let values = [].filter.call(this.refs.salesSortingBy.options, function (o) {
                 o.selected = false;
-                if(o.value == that.props.salesSortingBy){
+                if(o.value == props.salesSortingBy){
                     o.selected = true
                 }
                 return o.selected;
@@ -97,7 +97,7 @@ class SalesSearchResultOnItem extends Component {
         if(this.refs.salesSortingDirection != undefined){
             let values = [].filter.call(this.refs.salesSortingDirection.options, function (o) {
                 o.selected = false;
-                if(o.value == that.props.sortDirection){
+                if(o.value == props.salesSortDirection){
                     o.selected = true
                 }
                 return o.selected;
@@ -108,7 +108,7 @@ class SalesSearchResultOnItem extends Component {
         if(this.refs.salesPageSize != undefined){
             let values = [].filter.call(this.refs.salesPageSize.options, function (o) {
                 o.selected = false;
-                if(o.value == that.props.salesPageSize){
+                if(o.value == props.salesPageSize){
                     o.selected = true
                 }
                 return o.selected;
@@ -291,7 +291,7 @@ class SalesSearchResultOnItem extends Component {
         this.setState({ showLoading: true });
         props.setItemsSalesOrder(null);
         props.setSetReferenceSalesOrder(null);
-        props.setSortDirection(e.target.value);
+        props.setSalesSortDirection(e.target.value);
         props.getSalesItems(params).then(async (value) => {
             this.setState({showLoading: false});
             if(girdView){
