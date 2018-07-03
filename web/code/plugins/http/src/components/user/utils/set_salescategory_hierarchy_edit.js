@@ -25,7 +25,7 @@ export default function SetSalesCategoryHierarchy(that, value, name, ClearHierar
               }else{
                   delete objNotUseSalesHeirarchy['OBA']
                   notUseSalesHierarchy.onChange(objNotUseSalesHeirarchy);
-                  categoryOBASales.onChange(false);
+                  categorySalesOBA.onChange(false);
                   ClearHierarchy(hierarchyDataOBASales);
               }
               break;
