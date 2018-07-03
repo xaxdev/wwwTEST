@@ -43,11 +43,10 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         if (itemsOrder != null) {
             data.map((item) => {
                 let order = itemsOrder.find((val) => {return val.item_reference == item.reference})
-                console.log('order-->',order);
                 item.order = parseInt(order.order)
                 return item;
             });
-            data = data.sortBy('order','asc',userCurrency);
+            data = data.sort(compareBy('order','asc',userCurrency));
         }
         if (setReferencdOrder != null) {
             data.map((item) => {
@@ -60,7 +59,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 item.order = parseInt(order.order)
                 return item;
             });
-            data = data.sortBy('order','asc',userCurrency);
+            data = data.sort(compareBy('order','asc',userCurrency));
         }
 
         if (isViewAsSet) {
@@ -79,13 +78,11 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         }else{
             sortBy = sortBy.toLowerCase().indexOf('netamount') != -1 ? 'netAmount' : sortBy
         }
-        // console.log('sortBy-->',sortBy);
 
         if (itemsOrder == null && setReferencdOrder == null) {
             //   Not have SetReference criteria
             if (!isSetReference) {
-                data = data.sortBy(sortBy,sortDirections,userCurrency);
-                // console.log('data-->',data[0]);
+                data = data.sort(compareBy(sortBy, sortDirections, userCurrency));
             }
         }
 
@@ -255,7 +252,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         });
 
         if (itemsOrder == null && setReferencdOrder == null) {
-            allData = allData.sortBy(sortBy,sortDirections,userCurrency);
+            allData = allData.sort(compareBy(sortBy, sortDirections, userCurrency));
         }
 
         if (!isViewAsSet) {
@@ -363,24 +360,21 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
 }
 
 const compareBy = (property, order = 'asc', userCurrency) => (a, b) => {
-    console.log('property-->',property);
-    console.log('order-->',order);
-    console.log('userCurrency-->',userCurrency);
     if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
         return 0;
     }
     let priceA = 0;
     let priceB = 0;
-    const first = (property.toLowerCase().indexOf('price') != -1)
-                  ? a[property] != undefined
-                      ? a[property][userCurrency] != undefined ? a[property][userCurrency] : 0
-                      : 0
-                  : a[property]
-    const second = (property.toLowerCase().indexOf('price') != -1)
-                  ? b[property] != undefined
-                      ? b[property][userCurrency] != undefined ? b[property][userCurrency] : 0
-                      : 0
-                  : b[property]
+    const first = (property.toLowerCase().indexOf('price') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? a[property] != undefined
+                        ? a[property][userCurrency] != undefined ? a[property][userCurrency] : 0
+                        : 0
+                    : a[property]
+    const second = (property.toLowerCase().indexOf('price') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? b[property] != undefined
+                        ? b[property][userCurrency] != undefined ? b[property][userCurrency] : 0
+                        : 0
+                    : b[property]
     if (typeof first !== typeof second) {
         return 0
     }
@@ -395,13 +389,6 @@ const compareBy = (property, order = 'asc', userCurrency) => (a, b) => {
     }
 
     return (order === 'desc')? (comparison * -1) : comparison
-}
-
-Array.prototype.sortBy = function(property, order = 'asc', userCurrency) {
-    console.log('property-->',property);
-    console.log('order-->',order);
-    console.log('userCurrency-->',userCurrency);
-    return Array.prototype.sort.call(this, compareBy(property, order, userCurrency))
 }
 
 const count = (ary, classifier) => {

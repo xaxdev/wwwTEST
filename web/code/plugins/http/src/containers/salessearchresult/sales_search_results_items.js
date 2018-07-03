@@ -767,13 +767,18 @@ class SalesSearchResultOnItem extends Component {
                             </div>
                             <div className="col-sm-2 col-xs-12 nopadding">
                                 <div className="styled-select">
-                                    <select className="form-searchresult" onChange={this.salesSortingBy}
-                                        ref="salesSortingBy">
-                                        <option key={'postedDate'} value={'postedDate'}>{'Updated Date'}</option>
+                                    <select className="form-searchresult" onChange={this.salesSortingBy} ref="salesSortingBy">
+                                        <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
                                         <option key={'netAmount'} value={'netAmount'}>{'Net Sales'}</option>
                                         <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                         <option key={'description'} value={'description'}>{'Description'}</option>
                                         <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>
+                                        <option key={'invoicedId'} value={'invoicedId'}>{'Invoiced No.'}</option>
+                                        <option key={'invoiceDate'} value={'invoiceDate'}>{'Invoice Date'}</option>
+                                        <option key={'customer'} value={'customer'}>{'Customer ID'}</option>
+                                        <option key={'customerName'} value={'customerName'}>{'Customer Name'}</option>
+                                        <option key={'salesChannel'} value={'salesChannel'}>{'Channel'}</option>
+                                        <option key={'site'} value={'site'}>{'Location Code'}</option>
                                     </select>
                                 </div>
                             </div>
