@@ -83,6 +83,8 @@ class SalesReportMain extends Component {
 
         let numbers = document.querySelectorAll('input[type="number"]');
 
+        this.resetFormSalesReport();
+
         for (let i in numbers) {
             if (numbers.hasOwnProperty(i)) {
                 numbers[i].onkeydown = function(e) {
