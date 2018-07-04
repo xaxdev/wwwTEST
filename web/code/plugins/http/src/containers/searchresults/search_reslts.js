@@ -774,7 +774,7 @@ class SearchResult extends Component {
         e.preventDefault();
         const that = this;
         const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `//${host}`;
         const { items, exportItems, paramsSearch, showGridView,showListView } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         let sortingBy = '';
@@ -833,7 +833,7 @@ class SearchResult extends Component {
         e.preventDefault();
         const that = this;
         const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `//${host}`;
         const { items, exportItems, paramsSearch, showGridView,showListView } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
 

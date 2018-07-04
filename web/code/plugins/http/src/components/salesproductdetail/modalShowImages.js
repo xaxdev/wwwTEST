@@ -37,7 +37,7 @@ class ModalShowImages extends Component {
 
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
         const { images, productId, getCertificate } = this.props;
 
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');

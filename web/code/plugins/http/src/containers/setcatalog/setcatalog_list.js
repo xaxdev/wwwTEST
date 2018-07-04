@@ -191,7 +191,7 @@ class SetCatalog extends Component {
         const dataSet = printPageWord == 'all' ? allItems : items;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
-        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
 
         let htmlTemplate = '';
         htmlTemplate = GenTemplateWordHtml(this, dataSet, ROOT_URL, _totalPublicPriceSet, _totalUpdatedCostSet, _totalSetItems, _totalPages);

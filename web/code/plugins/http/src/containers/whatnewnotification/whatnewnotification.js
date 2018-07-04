@@ -6,7 +6,7 @@ class WhatNewNotification extends Component {
 
     render() {
             const host = HOSTNAME || 'localhost';
-            const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+            const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
             const Title = 'What\'s news';
             const roundData = [9,8,7,6,5,4,3,2,1];
             const msgData = [

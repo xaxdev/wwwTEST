@@ -477,7 +477,7 @@ class InventoryJewelry extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
 
         const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `//${host}`;
 
         InitModifyData(props);
 
