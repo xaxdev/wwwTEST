@@ -22,7 +22,7 @@
 				"port": 3002
 			},
 			"staging": {
-				"port": 3002
+				"port": 4002
 			},
 			"production": {
 				"port": 3002
@@ -40,7 +40,7 @@
 				"port": 3005
 			},
 			"staging": {
-				"port": 3005
+				"port": 4005
 			},
 			"production": {
 				"port": 3005
@@ -72,7 +72,7 @@
 						"url": "mongodb://192.168.1.93:27017/mol_test"
 					},
 					"staging": {
-						"url": "mongodb://127.0.0.1:27017/mol"
+						"url": "mongodb://10.128.133.78:27017/mol_staging"
 					},
 					"production": {
 						"url": "mongodb://10.128.133.78:27017/mol"
@@ -107,9 +107,9 @@
 								"user": "root"
 							},
 							"staging": {
-								"host": "127.0.0.1",
-								"database": "mol",
-								"user": "root",
+								"host": "localhost",
+								"database": "mol_staging",
+								"user": "mol",
 								"password": "P@ssw0rd#431"
 							},
 							"production": {
@@ -252,7 +252,7 @@
 						"host": "192.168.1.94:9200"
 					},
 					"staging": {
-						"host": "127.0.0.1:9200"
+						"host": "10.128.133.77:9200"
 					},
 					"production": {
 						"host": "10.128.133.77:9200"
@@ -369,6 +369,12 @@
 					},
 					"test": {
 						"host": "amqp://dev:P@ssw0rd@192.168.1.92:5672",
+						"channelExcel": "mol",
+						"channelPdf": "pdf",
+						"channelWord": "word"
+					},
+					"staging": {
+						"host": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
 						"channelExcel": "mol",
 						"channelPdf": "pdf",
 						"channelWord": "word"
