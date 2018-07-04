@@ -375,9 +375,9 @@
 					},
 					"staging": {
 						"host": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
-						"channelExcel": "mol",
-						"channelPdf": "pdf",
-						"channelWord": "word"
+						"channelExcel": "mol-staging",
+						"channelPdf": "pdf-staging",
+						"channelWord": "word-staging"
 					},
 					"production": {
 						"host": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
