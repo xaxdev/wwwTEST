@@ -165,10 +165,14 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                 let grossWeight = 0;
                                                                 let imgPath = env == 'production'
                                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
-                                                                    : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                                                    : env == 'staging'
+                                                                        ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
+                                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
                                                                 let imgPathPublic = env == 'production'
                                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
-                                                                    : 'file:///home/dev/www/mol/web/code/plugins/http/public';
+                                                                    : env == 'staging'
+                                                                        ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public';
                                                                 let tagbarsoldoutlist = `position: absolute;top: -5px;right: -5px;z-index: 9999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out_list.png)right top no-repeat;`
                                                                 if (priceSalesRTP) {
                                                                     if(item.price != undefined){

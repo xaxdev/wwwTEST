@@ -37,10 +37,14 @@ export default function GenSalesTemplateHtml(showGridView, showListView, ROOT_UR
     // let imgPath = 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/';
     let imgPath = env == 'production'
                             ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
-                            : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                            : env == 'staging'
+                                ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
+                                :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
     let imgPathPublic = env == 'production'
                             ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
-                            : 'file:///home/dev/www/mol/web/code/plugins/http/public';
+                            : env == 'staging'
+                                ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                :'file:///home/dev/www/mol/web/code/plugins/http/public';
 
     let tagbarsoldoutgrid = `position: absolute;top: 0;right: 0;z-index: 9999;width: 88px;height: 93px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out.png)right top no-repeat;`
     let tagbarsoldoutlist = `position: absolute;top: -5px;right: -5px;z-index: 9999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out_list.png)right top no-repeat;`

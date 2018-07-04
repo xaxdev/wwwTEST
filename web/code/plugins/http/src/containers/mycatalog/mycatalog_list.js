@@ -143,8 +143,8 @@ class MyCatalog extends Component {
         // console.log('items-->',items);
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
-        const env_web = ENVIRONMENT !== 'production' ? 'development' : 'production';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+        const env_web = ENVIRONMENT;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
         let imagesReplace = ROOT_URL+'/images/';
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
         let dvTotalItems = jQuery('#dvTotalItems').html();

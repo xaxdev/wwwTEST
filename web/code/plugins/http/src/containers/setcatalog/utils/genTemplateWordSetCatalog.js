@@ -5,7 +5,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
     const userLogin = JSON.parse(sessionStorage.logindata);
 
     const printPrice = 'public';
-    const env = ENVIRONMENT !== 'production' ? 'development' : 'production';
+    const env = ENVIRONMENT;
 
     const listView = 'width: 100%;border-radius: 0;margin-bottom: 0 !important;border: 0;box-shadow: none;';
     const tableStyle = 'width: 100%;max-width: 100%;margin-bottom: 20px;border: 1px solid #ddd;background-color: transparent;border-spacing: 0;border-collapse: collapse;';

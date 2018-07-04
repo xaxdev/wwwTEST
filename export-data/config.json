@@ -24,6 +24,14 @@
             "typeSetItem": "setitems",
             "indexSoldItems": "mol_solditems",
             "typeSoldItems": "solditems"
+        },
+        "staging": {
+            "host": "10.128.133.77:9200 ",
+            "index": "mol",
+            "typeItems": "items",
+            "typeSetItem": "setitems",
+            "indexSoldItems": "mol_solditems",
+            "typeSoldItems": "solditems"
         }
     },
     "rabbit": {
@@ -39,6 +47,10 @@
         "production": {
             "url": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
             "channel": "mol"
+        },
+        "staging": {
+            "url": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
+            "channel": "mol"
         }
     },
     "excel": {
@@ -52,6 +64,10 @@
             "maxRow": 2000
         },
         "production": {
+            "bufferSize": 500,
+            "maxRow": 5000
+        },
+        "staging": {
             "bufferSize": 500,
             "maxRow": 5000
         }

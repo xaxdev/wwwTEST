@@ -1,6 +1,6 @@
 const host = HOSTNAME || 'localhost';
 
-export const ROOT_URL = `//${host}:3002`;
+export const ROOT_URL = `//${host}:${(ENVIRONMENT!='staging')?3002:4002}`;
 export const FETCH_ALLITEMS = 'FETCH_ALLITEMS';
 export const FETCH_ITEM = 'FETCH_ITEM';
 export const FETCH_SORTING = 'FETCH_SORTING';

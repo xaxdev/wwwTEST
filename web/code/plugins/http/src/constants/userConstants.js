@@ -1,6 +1,5 @@
 const host = HOSTNAME || 'localhost';
-
-export const ROOT_URL = `//${host}:3002/api/`;
+export const ROOT_URL = `//${host}:${(ENVIRONMENT!='staging')?3002:4002}/api/`;
 export const FETCH_USERS = 'FETCH_USERS';
 export const CREATE_USER = 'CREATE_USER';
 export const FETCH_USER = 'FETCH_USER';
