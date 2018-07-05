@@ -27,7 +27,7 @@ class ListSalesItemsViewASSetPrint extends Component {
                     {item.items.map((subitem) => {
                         return (
                             <tr key={subitem.reference} id={subitem.reference}>
-                                <td>
+                                <td className="tdd">
                                     <div className="list-tagbar-soldout">
                                         <span className="list-tagbar-soldout tagbar-soldout"></span>
                                         <img src={item.imageThumbnail} width="60"/>
@@ -49,14 +49,14 @@ class ListSalesItemsViewASSetPrint extends Component {
                         );
                     })}
                     <tr>
-                        <td colSpan="9" className="bd-lb-white"></td>
+                        <td colSpan="9"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
-                        <td className={`font-b fc-000 text-right bg-eb${(priceSalesCTP) ? '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
-                        <td className={`font-b fc-000 text-right bg-eb${(priceSalesUCP) ? '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
-                        <td className={`font-b fc-000 text-right bg-eb${(priceSalesRTP) ? '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesCTP) ? '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesUCP) ? '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesRTP) ? '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
                     </tr>
                     <tr>
-                        <td className="bd-tblr-white" colSpan="12" height="40px" ></td>
+                        <td colSpan="13" height="40px" ></td>
                     </tr>
                 </tbody>
             );
@@ -64,7 +64,7 @@ class ListSalesItemsViewASSetPrint extends Component {
             return (
                 <tbody key={item.reference} id={item.reference}>
                     <tr>
-                        <td rowSpan={row}>
+                        <td rowSpan={row} className="tdd">
                             <div className="list-tagbar-soldout">
                                 <span className="list-tagbar-soldout tagbar-soldout"></span>
                                 <img src={item.imageThumbnail} width="60"/>
@@ -90,14 +90,14 @@ class ListSalesItemsViewASSetPrint extends Component {
                         );
                     })}
                     <tr>
-                        <td  colSpan="9" className="bd-lb-white"></td>
+                        <td colSpan="9"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
-                        <td className={`font-b fc-000 text-right bg-eb${(priceSalesCTP) ? '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
-                        <td className={`font-b fc-000 text-right bg-eb${(priceSalesUCP) ? '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
-                        <td className={`font-b fc-000 text-right bg-eb${(priceSalesRTP) ? '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesCTP) ? '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesUCP) ? '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesRTP) ? '' : ' hidden'}`}>{numberFormat(item.totalPrice['USD'])}</td>
                     </tr>
                     <tr>
-                        <td className="bd-tblr-white" colSpan="12" height="40px" ></td>
+                        <td colSpan="13" height="40px" ></td>
                     </tr>
                 </tbody>
             );
@@ -105,7 +105,7 @@ class ListSalesItemsViewASSetPrint extends Component {
             return (
                 <tbody>
                     <tr>
-                        <td rowSpan={row}>
+                        <td rowSpan={row} className="tdd">
                             <div className="list-tagbar-soldout">
                                 <span className="list-tagbar-soldout tagbar-soldout"></span>
                                 <img src={item.imageThumbnail} width="60"/>
@@ -114,20 +114,20 @@ class ListSalesItemsViewASSetPrint extends Component {
                         <td className="tdd" rowSpan={row}>{item.reference}</td>
                     </tr>
                     <tr>
-                        <td  colSpan="9" className="bd-lb-white"></td>
+                        <td colSpan="9"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
-                        <td className={`font-b fc-000 text-right bg-eb${(priceSalesCTP) ? '' : ' hidden'}`}>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesCTP) ? '' : ' hidden'}`}>
                             {numberFormat(!!item.totalActualCost?item.totalActualCost['USD']:0)}
                         </td>
-                        <td className={`font-b fc-000 text-right bg-eb${(priceSalesUCP) ? '' : ' hidden'}`}>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesUCP) ? '' : ' hidden'}`}>
                             {numberFormat(!!item.totalUpdatedCost?item.totalUpdatedCost['USD']:0)}
                         </td>
-                        <td className={`font-b fc-000 text-right bg-eb${(priceSalesRTP) ? '' : ' hidden'}`}>
+                        <td className={`font-b fc-000 bg-eb td-text ${(priceSalesRTP) ? '' : ' hidden'}`}>
                             {numberFormat(!!item.totalPrice?item.totalPrice['USD']:0)}
                         </td>
                     </tr>
                     <tr>
-                        <td className="bd-tblr-white" colSpan="12" height="40px" ></td>
+                        <td colSpan="13" height="40px" ></td>
                     </tr>
                 </tbody>
             );
