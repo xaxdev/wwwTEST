@@ -141,7 +141,7 @@ class SalesSearchResultOnItem extends Component {
         let htmlTemplate = '';
         if (printPage.value != 'all') {
             htmlTemplate = GenSalesTemplateHtml(salesShowGridView, salesShowListView, ROOT_URL, imagesReplace, dv);
-            console.log('htmlTemplate-->',htmlTemplate);
+            // console.log('htmlTemplate-->',htmlTemplate);
             let params = {
                 'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'pdf'
             }

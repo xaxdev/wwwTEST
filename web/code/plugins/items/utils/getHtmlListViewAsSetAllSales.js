@@ -1,7 +1,7 @@
 import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 import numberFormat2digit from './convertNumberformatwithcomma2digit';
-import GetListViewAsSetItem from './getListViewAsSetItem';
+import GetListViewAsSetSalesItem from './getListViewAsSetSalesItem';
 
 export default function GetHTMLListViewAsSetAllSales(datas,currency,isViewAsSet,env,userPermissionPrice){
     const priceSalesRTP = userPermissionPrice.priceSalesRTP;
@@ -114,7 +114,7 @@ export default function GetHTMLListViewAsSetAllSales(datas,currency,isViewAsSet,
                                                             </tr>
                                                         </thead>
                                                         ${datas.exportData.map((item,index) => {
-                                                            return GetListViewAsSetItem(item,currency,isViewAsSet,env,userPermissionPrice);
+                                                            return GetListViewAsSetSalesItem(item,currency,isViewAsSet,env,userPermissionPrice);
                                                         }).join('')}
                                                     </table>
                                                 </div>
