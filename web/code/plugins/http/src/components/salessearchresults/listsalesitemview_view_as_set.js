@@ -8,7 +8,6 @@ class ListSalesItemsViewASSet extends Component {
     constructor(props) {
         super(props);
 
-        this.renderCheckItem = this.renderCheckItem.bind(this);
         this.onClickGrid = this.onClickGrid.bind(this);
 
     }
@@ -16,23 +15,6 @@ class ListSalesItemsViewASSet extends Component {
     onClickGrid = (event) => {
         event.preventDefault();
         this.props.onClickList(event.currentTarget.id);
-    }
-
-    renderCheckItem = (val, row) => {
-        const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog, items } = this.props;
-        let checkItem = false;
-        if (!!listMyCatalog) {
-            checkItem = listMyCatalog.find((myItem) => {
-                return myItem.reference == val;
-            });
-        }
-        checkItem = !checkItem ? false : true;  //if undefined checked false else true
-        return(
-            <div className="checkbox checkbox-warning">
-                <input type="checkbox" className="styled" type="checkbox" name={val} checked={checkItem} id={val} value={val} onChange={onCheckedOneItemMyCatalog} />
-                <label className="checkbox1"></label>
-            </div>
-        );
     }
 
     render = _ => {
@@ -53,10 +35,9 @@ class ListSalesItemsViewASSet extends Component {
                     {item.items.map((subitem) => {
                         return (
                             <tr key={subitem.reference} id={subitem.reference}>
-                                <td>{this.renderCheckItem(item.reference)}</td>
                                 <td>
                                     <div className="list-tagbar-soldout">
-                                        <span className="tagbar-soldout"></span>
+                                        <span className="list-tagbar-soldout tagbar-soldout"></span>
                                         <img id={item.reference} src={item.imageThumbnail} width="60" onClick={this.onClickGrid}/>
                                     </div>
                                 </td>
@@ -76,7 +57,7 @@ class ListSalesItemsViewASSet extends Component {
                         );
                     })}
                     <tr>
-                        <td  colSpan="10" className="bd-lb-white"></td>
+                        <td  colSpan="9" className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
                         <td className={`font-b fc-000 bg-eb td-text ${(priceSalesCTP) ? '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
                         <td className={`font-b fc-000 bg-eb td-text ${(priceSalesUCP) ? '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
@@ -91,7 +72,6 @@ class ListSalesItemsViewASSet extends Component {
             return (
                 <tbody key={item.reference} id={item.reference}>
                     <tr>
-                        <td rowSpan={row}>{this.renderCheckItem(item.reference)}</td>
                         <td rowSpan={row}>
                             <div className="list-tagbar-soldout">
                                 <span className="list-tagbar-soldout tagbar-soldout"></span>
@@ -118,7 +98,7 @@ class ListSalesItemsViewASSet extends Component {
                         );
                     })}
                     <tr>
-                        <td  colSpan="10" className="bd-lb-white"></td>
+                        <td  colSpan="9" className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
                         <td className={`font-b fc-000 text-right bg-eb td-text ${(priceSalesCTP) ? '' : ' hidden'}`}>{numberFormat(item.totalActualCost['USD'])}</td>
                         <td className={`font-b fc-000 text-right bg-eb td-text ${(priceSalesUCP) ? '' : ' hidden'}`}>{numberFormat(item.totalUpdatedCost['USD'])}</td>
@@ -133,7 +113,6 @@ class ListSalesItemsViewASSet extends Component {
             return (
                 <tbody key={item.reference} id={item.reference}>
                     <tr>
-                        <td rowSpan={row}>{this.renderCheckItem(item.reference)}</td>
                         <td rowSpan={row}>
                             <div className="list-tagbar-soldout">
                                 <span className="list-tagbar-soldout tagbar-soldout"></span>
@@ -143,7 +122,7 @@ class ListSalesItemsViewASSet extends Component {
                         <td rowSpan={row}><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
                     </tr>
                     <tr>
-                        <td  colSpan="10" className="bd-lb-white"></td>
+                        <td  colSpan="9" className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
                         <td className={`font-b fc-000 text-right bg-eb td-text ${(priceSalesCTP) ? '' : ' hidden'}`}>
                             {numberFormat(!!item.totalActualCost?item.totalActualCost['USD']:0)}

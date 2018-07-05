@@ -227,8 +227,10 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                 return (`<tr>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>
-                                                                                    <span style="${tagbarsoldoutlist}"></span>
-                                                                                    <img src="${imagesProduct}" width="60">
+                                                                                    <div style="position: relative;">
+                                                                                        <span style="${tagbarsoldoutlist}"></span>
+                                                                                        <img src="${imagesProduct}" width="60">
+                                                                                    </div>
                                                                                 </span>
                                                                             </td>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">

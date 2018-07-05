@@ -289,7 +289,6 @@ class ListSalesItemsView extends Component {
                         <table key={'listView'} id={'listView'} className="table table-bordered table-searchresult table-searchset">
                             <thead key={'listView'} id={'listView'}>
                                 <tr>
-                                    <th><span></span></th>
                                     <th><span>Images</span></th>
                                     <th><span>Set Product Number</span></th>
                                     <th><span>Item Reference</span></th>
