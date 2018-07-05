@@ -1066,6 +1066,90 @@ class SearchResult extends Component {
         this.setState({isOpenMsgPageInvalid: false});
     }
 
+    hideModalDownload = (e) => {
+        e.preventDefault();
+        const { showGridView,showListView } = this.props;
+
+        this.setState({ isOpenDownload: false });
+
+        let girdView = showGridView;
+        let listView = showListView;
+
+        this.props.setShowGridView(false);
+        this.props.setShowListView(false);
+
+        if(girdView){
+            this.props.setShowGridView(true);
+        }else if (listView) {
+            this.props.setShowListView(true);
+        }
+    }
+
+    renderDownloadDialog = _=>{
+        let that = this;
+        const { listFileName } = that.props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        if(listFileName != null){
+            return(
+                <div>
+                    <div  className="popexport">
+                        <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
+                            <div className="modal-header">
+                                <ModalClose onClick={this.hideModalDownload}/>
+                                <h1 className="modal-title">Export</h1>
+                            </div>
+                            <div className="modal-body">
+                                <h3>Please check your email for download files.</h3>
+                                <a href={listFileName[0]} target="_blank" >{listFileName[0]}</a>
+                                <link></link>
+                                <br/>
+                                <div className="col-sm-12">
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                </div>
+                                <div className="col-md-12">
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
+                                    Close
+                                </button>
+                            </div>
+                        </Modal>
+                    </div>
+                </div>
+            );
+        }else{
+            return(
+                <div>
+                    <div  className="popexport">
+                        <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
+                            <div className="modal-header">
+                                <ModalClose onClick={this.hideModalDownload}/>
+                                <h1 className="modal-title">Export</h1>
+                            </div>
+                            <div className="modal-body">
+                                <h3>Please check your email for download files.</h3>
+                                <br/>
+                                <div className="col-sm-12">
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                </div>
+                                <div className="col-md-12">
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
+                                    Close
+                                </button>
+                            </div>
+                        </Modal>
+                    </div>
+                </div>
+            );
+        }
+    }
+    
     render() {
         const { fields: { oldCatalogName, newCatalogName, validateCatalogName },
               totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize,exportItems,
@@ -1271,6 +1355,7 @@ class SearchResult extends Component {
                             </div>
                         </div>
                         {this.renderExportExcelDialog()}
+                        {this.renderDownloadDialog()}
                         {this.renderExportExcelViewAsSetDialog()}
                         {this.renderAddMyCatalog()}
                         {this.renderAlertmsg()}

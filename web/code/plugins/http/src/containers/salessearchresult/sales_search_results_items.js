@@ -739,6 +739,90 @@ class SalesSearchResultOnItem extends Component {
         this.setState({ allFieldsViewAsSet:false });
     }
 
+    hideModalDownload = (e) => {
+        e.preventDefault();
+        const { salesShowGridView,salesShowListView } = this.props;
+
+        this.setState({ isOpenDownload: false });
+
+        let girdView = salesShowGridView;
+        let listView = salesShowListView;
+
+        this.props.setSalesShowGridView(false);
+        this.props.setSalesShowListView(false);
+
+        if(girdView){
+            this.props.setSalesShowGridView(true);
+        }else if (listView) {
+            this.props.setSalesShowListView(true);
+        }
+    }
+
+    renderDownloadDialog = _=>{
+        let that = this;
+        const { listFileName } = that.props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        if(listFileName != null){
+            return(
+                <div>
+                    <div  className="popexport">
+                        <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
+                            <div className="modal-header">
+                                <ModalClose onClick={this.hideModalDownload}/>
+                                <h1 className="modal-title">Export</h1>
+                            </div>
+                            <div className="modal-body">
+                                <h3>Please check your email for download files.</h3>
+                                <a href={listFileName[0]} target="_blank" >{listFileName[0]}</a>
+                                <link></link>
+                                <br/>
+                                <div className="col-sm-12">
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                </div>
+                                <div className="col-md-12">
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
+                                    Close
+                                </button>
+                            </div>
+                        </Modal>
+                    </div>
+                </div>
+            );
+        }else{
+            return(
+                <div>
+                    <div  className="popexport">
+                        <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
+                            <div className="modal-header">
+                                <ModalClose onClick={this.hideModalDownload}/>
+                                <h1 className="modal-title">Export</h1>
+                            </div>
+                            <div className="modal-body">
+                                <h3>Please check your email for download files.</h3>
+                                <br/>
+                                <div className="col-sm-12">
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                </div>
+                                <div className="col-md-12">
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
+                                    Close
+                                </button>
+                            </div>
+                        </Modal>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     render(){
         const {
             props, onClickNewSalesSearch, onClickModifySalesSearch, onChangedSalesSortingBy, onChangedSalesSortingDirection, onClickGridViewResults,
@@ -892,6 +976,7 @@ class SalesSearchResultOnItem extends Component {
                 {this.renderAlertmsgPageInvalid()}
                 {this.renderExportExcelDialog()}
                 {this.renderExportExcelViewAsSetDialog()}
+                {this.renderDownloadDialog()}
             </form>
         )
     }
