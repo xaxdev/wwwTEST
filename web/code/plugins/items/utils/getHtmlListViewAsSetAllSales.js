@@ -114,7 +114,7 @@ export default function GetHTMLListViewAsSetAllSales(datas,currency,isViewAsSet,
                                                             </tr>
                                                         </thead>
                                                         ${datas.exportData.map((item,index) => {
-                                                            return GetListViewAsSetItem(item,currency,isViewAsSet,env);
+                                                            return GetListViewAsSetItem(item,currency,isViewAsSet,env,userPermissionPrice);
                                                         }).join('')}
                                                     </table>
                                                 </div>
