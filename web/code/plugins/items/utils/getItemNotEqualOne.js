@@ -13,7 +13,6 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPe
         : env == 'staging'
             ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
             :'file:///home/dev/www/mol/web/code/plugins/http/public';
-    let tagbarsoldoutlist = `position: absolute;top: -5px;right: -5px;z-index: 9999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out_list.png)right top no-repeat;`
     let imagesThumbnail = (item.image) != undefined
                       ?  item.image.length != 0
                           ? item.image[0].thumbnail
@@ -25,7 +24,6 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPe
     `<tbody>
         <tr>
             <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;" rowspan="${row}">
-                <span style="${tagbarsoldoutlist}"></span>
                 <img src="${imagesProduct}" width="60">
             </td>
             <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;" rowspan="${row}">${item.reference}</td>
