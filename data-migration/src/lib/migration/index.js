@@ -95,15 +95,15 @@ const itemSets= async index => {
 
 const soldItems= async index => {
     try {
-        const allExchangeRates = await item.getAllExchangeRates();        
+        const allExchangeRates = await item.getAllExchangeRates();
         // await soldItem.getSoldItems(index, allExchangeRates);
-        await soldItem.getCertificates(index)
         await soldItem.getJewelry(index, allExchangeRates);
         await soldItem.getStones(index, allExchangeRates);
         await soldItem.getWatches(index, allExchangeRates);
         await soldItem.getOBA(index, allExchangeRates);
         await soldItem.getAccessory(index, allExchangeRates);
         await soldItem.getSpareParts(index, allExchangeRates);
+        await soldItem.getCertificates(index)
 
     } catch (err) {
         throw err
@@ -112,7 +112,7 @@ const soldItems= async index => {
 
 const soldItemsSets= async index => {
     try {
-        const allExchangeRates = await item.getAllExchangeRates();  
+        const allExchangeRates = await item.getAllExchangeRates();
         await setSold.getSoldItemSets(index, allExchangeRates)
     } catch (err) {
         throw err
