@@ -486,9 +486,9 @@ class SalesSearchResultOnItem extends Component {
         const token = sessionStorage.token;
         if(token){
             if (ViewAsSet) {
-                context.router.push(`/setsalesdetail/${pageNumber.replace('/','-')}`);
+                // context.router.push(`/setsalesdetail/${pageNumber.replace('/','-')}`);
             }else{
-                context.router.push(`/salesproductdetail/${pageNumber}`);
+                // context.router.push(`/salesproductdetail/${pageNumber}`);
             }
         }
     }

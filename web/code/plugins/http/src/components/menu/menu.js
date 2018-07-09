@@ -61,7 +61,7 @@ class Menu extends Component {
                                                                  props.currentLocation.indexOf('salesproductreletedetail') ||
                                                                  props.currentLocation.indexOf('setsalesdetail') ||
                                                                  props.currentLocation == '/salesproductdetail')
-                                                                 ? 'btn btn-radius pull-right margin-t5'
+                                                                 ? 'btn btn-primary btn-radius pull-right margin-t5'
                                                                  : 'btn pull-right margin-t5 btn-radius'} ${(permission.userType != 'OnHand')?'':'hidden'}`}
                                 onClick={this.handleClickSalesReport}>Sales Report</button>
 
