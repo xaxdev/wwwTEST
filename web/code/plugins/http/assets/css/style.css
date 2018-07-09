@@ -527,6 +527,11 @@ select.form-searchresult option{
 .dropdown-menu>li>a{color: #fff;}
 .dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{color: #ddbd66 !important; background-color: transparent;}
 .bg-hearder{background: #383735; height: 60px;}
+.btn-active{
+  color: #fff;
+  background-color: #ddbe6a !important;
+  border-color: #ddbe6a !important;
+}
 .btn-primary {
     color: #fff;
     background-color: #ddbe6a !important;
@@ -1270,7 +1275,16 @@ select.form-searchresult option{
   width: 88px;
   height: 93px;
 }
-.list-tagbar-soldout{
+.tagbar-soldout-pdf{
+  background:url(../images/img_sold_out_pdf.png)right top no-repeat;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  width: 50px;
+  height: 53px;
+}
+.list-tagbar-soldout, .tagbar-soldout-detail{
   position: relative;
 }
 .list-tagbar-soldout .tagbar-soldout {
