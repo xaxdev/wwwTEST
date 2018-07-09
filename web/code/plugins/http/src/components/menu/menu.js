@@ -58,8 +58,8 @@ class Menu extends Component {
 
         const SalesReport = <button type="button" className={`${(props.currentLocation == '/salesreport' ||
                                                                  props.currentLocation == '/salessearchresult' ||
-                                                                 props.currentLocation.indexOf('salesproductreletedetail') ||
-                                                                 props.currentLocation.indexOf('setsalesdetail') ||
+                                                                 props.currentLocation.indexOf('salesproductreletedetail') != -1 ||
+                                                                 props.currentLocation.indexOf('setsalesdetail') != -1 ||
                                                                  props.currentLocation == '/salesproductdetail')
                                                                  ? 'btn btn-primary btn-radius pull-right margin-t5'
                                                                  : 'btn pull-right margin-t5 btn-radius'} ${(permission.userType != 'OnHand')?'':'hidden'}`}
