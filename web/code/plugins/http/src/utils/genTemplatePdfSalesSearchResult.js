@@ -46,7 +46,7 @@ export default function GenSalesTemplateHtml(showGridView, showListView, ROOT_UR
                                 ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
                                 :'file:///home/dev/www/mol/web/code/plugins/http/public';
 
-    let tagbarsoldoutgrid = `position: absolute;top: 0;right: 0;z-index: 9999;width: 88px;height: 93px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out.png)right top no-repeat;`
+    let tagbarsoldoutgrid = `position: absolute;top: 0;right: 0;z-index: 9999;width: 88px;height: 93px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out_pdf.png)right top no-repeat;`
     let tagbarsoldoutlist = `position: absolute;top: -5px;right: -5px;z-index: 9999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out_list.png)right top no-repeat;`
 
     dvTotal1 = dvTotal1.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
