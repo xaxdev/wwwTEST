@@ -82,7 +82,15 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         if (itemsOrder == null && setReferencdOrder == null) {
             //   Not have SetReference criteria
             if (!isSetReference) {
-                data = data.sort(compareBy(sortBy, sortDirections, userCurrency));
+                if (sortBy.toLowerCase().indexOf('date') == -1) {
+                    // data = data.sort(compareBy(sortBy, sortDirections, userCurrency));
+                }
+                if (sortBy.toLowerCase().indexOf('reference') != -1) {
+                    data = data.sort(compareBy(sortBy, sortDirections, userCurrency));
+                }
+                if (sortBy.toLowerCase().indexOf('customer') != -1) {
+                    data = data.sort(compareBy(sortBy, sortDirections, userCurrency));
+                }
             }
         }
 
