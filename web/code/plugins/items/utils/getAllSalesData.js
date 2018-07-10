@@ -83,6 +83,9 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
             //   Not have SetReference criteria
             if (!isSetReference) {
                 if (sortBy.toLowerCase().indexOf('date') == -1) {
+                    // data = data.sort(compareBy(sortBy, sortDirections, userCurrency));
+                }
+                if (sortBy.toLowerCase().indexOf('reference') != -1) {
                     data = data.sort(compareBy(sortBy, sortDirections, userCurrency));
                 }
             }
