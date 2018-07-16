@@ -84,6 +84,7 @@ module.exports = {
             .populate('onhandWarehouse')
             .populate('salesLocation')
             .populate('salesWarehouse')
+            .populate('salesChannel')
             .then(function (permission) {
                 user.permission = permission.toJSON();
                 return reply({ data: user });

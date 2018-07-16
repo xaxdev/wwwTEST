@@ -95,6 +95,7 @@ const setnewprops = (data) => {
     let categorySalesACC=false;
     let categorySalesOBA=false;
     let categorySalesSPP=false;
+    let salesChannelValue = [];
 
     checkbits.map(function(value,key){
         switch (numberDiit) {
@@ -458,10 +459,12 @@ const setnewprops = (data) => {
         onhandLocationValue: (permission.onhandLocation != null) ? permission.onhandLocation.places : null,
         onhandWarehouseValue: (permission.onhandWarehouse != null) ? permission.onhandWarehouse.places : null,
         salesLocation: (permission.salesLocation != null) ? (permission.salesLocation.type.indexOf('All') != -1) ? true : false : false,
+        salesChannel: (permission.salesChannel != null) ? (permission.salesChannel.type.indexOf('All') != -1) ? true : false : false,
         salesWarehouse: (permission.salesWarehouse != null) ? (permission.salesWarehouse != null && permission.salesWarehouse.type.indexOf('AllSalesWarehouse') != -1) ? true : false : false,
         salesAll: (permission.salesLocation != null) ? (permission.salesLocation.type.indexOf('All') != -1) ? true : false : false,
         salesLocationValue: (permission.salesLocation != null) ? permission.salesLocation.places : null,
         salesWarehouseValue: (permission.salesWarehouse != null) ? permission.salesWarehouse.places : null,
+        salesChannelValue: (permission.salesChannel != null) ? permission.salesChannel.places : null,
         notUseHierarchy: JSON.parse(permission.notUseHierarchy),
         notUseSalesHierarchy: JSON.parse(permission.notUseSalesHierarchy)
     }

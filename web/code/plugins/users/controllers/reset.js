@@ -152,6 +152,7 @@ exports.validate = {
                   .populate('onhandWarehouse')
                   .populate('salesLocation')
                   .populate('salesWarehouse')
+                  .populate('salesChannel')
                   .then(function (permission) {
                       user.permission = permission.toJSON();
                       return reply(user).header('Authorization', token);
@@ -199,6 +200,7 @@ exports.update = {
                     .populate('onhandWarehouse')
                     .populate('salesLocation')
                     .populate('salesWarehouse')
+                    .populate('salesChannel')
                     .then(function (permission) {
                         user.permission = permission.toJSON();
                         return reply({

@@ -72,8 +72,8 @@ module.exports = {
                 .populate('onhandLocation')
                 .populate('onhandWarehouse')
                 .populate('salesLocation')
-                .populate('salesWarehouse');
-
+                .populate('salesWarehouse')
+                .populate('salesChannel');
             return reply(user).header('Authorization', token);
         } catch (err) {
             return reply(Boom.badImplementation('', err));

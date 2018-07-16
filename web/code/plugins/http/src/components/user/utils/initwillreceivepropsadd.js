@@ -1,5 +1,5 @@
 export default function InitWillReceiveProps(that, nextProps){
-    const { fields: { onhandLocationValue, onhandWarehouseValue, salesLocationValue, salesWarehouseValue } } = nextProps;
+    const { fields: { onhandLocationValue, onhandWarehouseValue, salesLocationValue, salesWarehouseValue, salesChannelValue } } = nextProps;
 
     if(that.props.user != undefined ){
         if(that.props.user.permission.onhandLocation != undefined){
@@ -33,6 +33,14 @@ export default function InitWillReceiveProps(that, nextProps){
                 that.setState({chkSalesWarehouse: salesWarehouseValue.value});
             }
         }
+
+        if(that.props.user.permission.salesChannel != undefined){
+            if (that.state.selectedSalesChannel) {
+
+            }else{
+                that.setState({chkSalesChannel: salesChannelValue.value});
+            }
+        }
     }else{
         if (that.state.selectedOnHandLocation) {
 
@@ -53,6 +61,11 @@ export default function InitWillReceiveProps(that, nextProps){
 
         }else{
             that.setState({chkSalesWarehouse: salesWarehouseValue.value});
+        }
+        if (that.state.selectedSalesChannel) {
+
+        }else{
+            that.setState({chkSalesChannel: salesChannelValue.value});
         }
     }
 }

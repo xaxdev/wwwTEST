@@ -42,6 +42,7 @@ import RenderViewPriceOnHand from './render_view_price_onhand';
 import RenderViewPriceSales from  './render_view_price_sales';
 import RenderViewOnHand  from  './render_view_onhand';
 import RenderViewSales  from  './render_view_sales';
+import RenderViewSalesChannel  from  './render_view_sales_channel';
 import FindProductHierarchy from './utils/find_product_hierarchy';
 
 let _ = require('lodash');
@@ -65,7 +66,8 @@ export const fields = [
     'categorySTO','categoryACC','categoryOBA','categorySPP','notUseHierarchy','userType','productGroupSales','productGroupSalesSTO','productGroupSalesJLY',
     'productGroupSalesWAT', 'productGroupSalesACC','productGroupSalesOBA','productGroupSalesSPA','productGroupSalesErr','priceSalesRTP','priceSalesUCP',
     'priceSalesCTP','priceSalesNSP', 'priceSalesMGP','priceSalesDSP','salesLocation','salesLocationValue','salesWarehouse','salesWarehouseValue','salesAll',
-    'sales','categorySalesJLY', 'categorySalesWAT','categorySalesSTO','categorySalesACC','categorySalesOBA','categorySalesSPP','notUseSalesHierarchy'
+    'sales','categorySalesJLY', 'categorySalesWAT','categorySalesSTO','categorySalesACC','categorySalesOBA','categorySalesSPP','notUseSalesHierarchy',
+    'salesChannel','salesChannelValue', 'salesChannelType'
 ];
 
 class UsersNewFrom extends Component {
@@ -99,8 +101,10 @@ class UsersNewFrom extends Component {
 
         this.selectedSalesLocation = this.selectedSalesLocation.bind(this);
         this.selectedSalesWarehouse = this.selectedSalesWarehouse.bind(this);
+        this.selectedSalesChannel = this.selectedSalesChannel.bind(this);
         this.changedSalesLocationChecked = this.changedSalesLocationChecked.bind(this);
         this.changedSalesWarehouseChecked = this.changedSalesWarehouseChecked.bind(this);
+        this.changedSalesChannelChecked = this.changedSalesChannelChecked.bind(this);
         this.treeOnClickSalesJLY = this.treeOnClickSalesJLY.bind(this);
         this.treeOnClickSalesWAT = this.treeOnClickSalesWAT.bind(this);
         this.treeOnClickSalesSTO = this.treeOnClickSalesSTO.bind(this);
@@ -162,6 +166,8 @@ class UsersNewFrom extends Component {
             clickAllSalesLocarion: true,
             clickAllSalesWarehouse: true,
             userNotUseSalesHierarchy: (this.props.user != undefined)?JSON.parse(this.props.user.permission.notUseSalesHierarchy):{},
+            selectedSalesChannel: true,
+            clickAllSalesChannel: true,
         };
 
         this.props.fields.status.onChange(true);
@@ -432,6 +438,56 @@ class UsersNewFrom extends Component {
                 salesWarehouseValue.onChange([]);
             }
         });
+    }
+
+    changedSalesChannelChecked  = e => {
+        let el = e.target;
+        let name = 'chkSalesChannel';
+        let nameObj = el.name;
+        let type = el.type;
+        let stateChange = {};
+        let { fields: { salesChannelValue, salesChannel, salesChannelType }} = this.props;
+        let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
+        let checkSalesChannel = jQuery('input[name="checkbox-allSalesChannel"]');
+        let valuesAllSalesChannel = [].filter.call(checkSalesChannel, function(o) {
+            return o.checked || !o.checked;
+        }).map(function(o) {
+            return o.value;
+        });
+
+        if (objType == '[object RadioNodeList]' || objType == '[object NodeList]' || objType == '[object HTMLCollection]') {
+            let checkedBoxes = (Array.isArray(this.state[name]) ? this.state[name].slice() : []);
+            if (el.checked) {
+                checkedBoxes.push(el.value);
+
+                if (checkedBoxes.length == valuesAllSalesChannel.length) {
+                    this.setState({selectedSalesChannel: true});
+                    this.setState({clickAllSalesChannel: true});
+                    salesChannelType.onChange('All');
+                    salesChannel.onChange(true);
+                }else {
+                    this.setState({selectedSalesChannel: false});
+                    this.setState({clickAllSalesChannel: false});
+                    salesChannelType.onChange('SalesChannel');
+                    salesChannel.onChange(false);
+                }
+            }else {
+                if (this.state.clickAllSalesChannel) {
+                    checkedBoxes = valuesAllSalesChannel;
+                    salesChannelType.onChange('SalesChannel');
+                    salesChannel.onChange(false);
+                }
+                checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
+                this.setState({selectedSalesChannel: false});
+                this.setState({clickAllSalesChannel: false});
+            }
+            stateChange[name] = checkedBoxes;
+        } else {
+            stateChange[name] = el.checked;
+        }
+        this.setState(stateChange);
+
+        salesChannelValue.onChange(stateChange.chkSalesChannel);
     }
 
     selectedCompany(e){
@@ -829,6 +885,49 @@ class UsersNewFrom extends Component {
         }
     }
 
+    selectedSalesChannel = e =>{
+        let { fields: { sales, salesChannel, salesChannelValue, salesChannelType }} = this.props;
+        if (e.target.checked) {
+            this.setState({
+                selectedSalesChannel: true,
+                clickAllSalesChannel: true,
+                firstloading: false
+            });
+
+            let checkSalesChannel = jQuery('input[name="checkbox-allSalesChannel"]');
+            let values = [].filter.call(checkSalesChannel, function(o) {
+                return o.checked || !o.checked;
+            }).map(function(o) {
+                return o.value;
+            });
+            this.setState({chkSalesChannel: values});
+
+            _.each(checkSalesChannel,function (o) {
+                o.checked = false;
+            });
+
+            salesChannelType.onChange('All');
+            this.props.optionsActions.get();
+        } else {
+            this.setState({
+                selectedSalesChannel: false,
+                clickAllSalesChannel: false,
+                firstloading: false,
+                chkSalesChannel: []
+            });
+
+            let checkSalesChannel = jQuery('input[name="checkbox-allSalesChannel"]');
+            let values = [].filter.call(checkSalesChannel, function(o) {
+                return o.checked || !o.checked;
+            }).map(function(o) {
+                return o.value;
+            });
+
+            salesChannelValue.onChange([]);
+            salesChannelType.onChange('SalesChannel');
+        }
+    }
+
     selectedOnHandAll(e){
         let {fields: { onhand }} = this.props;
         if(e.target.checked){
@@ -1116,6 +1215,8 @@ class UsersNewFrom extends Component {
         let objWareHouseLocation = {};
         let dataDropDowntSalesLocations = [];
         let dataDropDowntSalesWareHouse = [];
+        let dataDropDowntSalesChannel = [];
+
         const userLogin = JSON.parse(sessionStorage.logindata);
 
         objWareHouseLocation = FindLocationWareHouse(this);
@@ -1123,6 +1224,15 @@ class UsersNewFrom extends Component {
         dataDropDowntWareHouse = objWareHouseLocation.warehouse;
         dataDropDowntSalesLocations = objWareHouseLocation.salesLocation;
         dataDropDowntSalesWareHouse = objWareHouseLocation.salesWarehouse;
+
+        if (this.props.options != undefined){
+            if (this.props.options.salesChannels) {
+                dataDropDowntSalesChannel.push(this.props.options.salesChannels.map(salesChannel =>{
+                    return ({value: salesChannel.code, name:salesChannel.name});
+                }))
+                dataDropDowntSalesChannel = dataDropDowntSalesChannel[0];
+            }
+        }
 
         return (
             <form onSubmit={handleSubmit}>
@@ -1228,6 +1338,11 @@ class UsersNewFrom extends Component {
 
                                         <RenderViewPriceSales props={this.props} state={this.state}
                                             onChangedPriceSales={this.handleInputChangePriceSales}/>
+
+                                        <RenderViewSalesChannel props={this.props} state={this.state}
+                                            dataDropDowntSalesChannel={dataDropDowntSalesChannel}
+                                            onChangedSalesChannel={this.selectedSalesChannel}
+                                            onChangedSalesChannelChecked={this.changedSalesChannelChecked}/>
 
                                         <RenderViewOnHand props={this.props} state={this.state}
                                             onChangedOnHandLocation={this.selectedOnHandLocation}

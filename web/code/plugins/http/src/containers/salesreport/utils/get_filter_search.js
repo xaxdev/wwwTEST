@@ -187,8 +187,10 @@ export default function GetFilterSearch(that, data, userLogin, filters, jlySales
     }
 
     filters.push({'userCurrency':userLogin.currency});
+
     const findLocation = filters.find((item) => {return item.location != undefined});
     const findWareHouse = filters.find((item) => {return item.warehouse != undefined});
+    const findSalesChannel = filters.find((item) => {return item.salesChannel != undefined});
 
     if (!findLocation) {
         if (userLogin.permission.salesLocation.places.length != 0) {
@@ -199,6 +201,12 @@ export default function GetFilterSearch(that, data, userLogin, filters, jlySales
     if (!findWareHouse) {
         if (userLogin.permission.salesWarehouse.places.length != 0) {
             filters.push({'warehouse':userLogin.permission.salesWarehouse.places});
+        }
+    }
+
+    if (!findSalesChannel) {
+        if (userLogin.permission.salesChannel.places.length != 0) {
+            filters.push({'salesChannel':userLogin.permission.salesChannel.places});
         }
     }
     return filters;

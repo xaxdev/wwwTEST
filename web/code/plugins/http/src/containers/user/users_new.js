@@ -39,6 +39,7 @@ class UsersNew extends Component {
         let onhandWarehouse = null;
         let salesLocation = null;
         let salesWarehouse = null;
+        let salesChannel = null;
 
         if(data.warehouse == undefined || data.warehouse == ''){
             data.warehouse = '';
@@ -180,6 +181,10 @@ class UsersNew extends Component {
             type:(data.sales != undefined) ? (data.sales.indexOf('All') != -1) ? 'AllSalesWarehouse': 'SalesWarehouse' : 'SalesWarehouse',
             places:(!data.salesWarehouseValue)?[]:data.salesWarehouseValue
         };
+        salesChannel = {
+            type: 'SalesChannel',
+            places: (!data.salesChannelValue) ? [] : data.salesChannelValue
+        };
 
         if (data.onhandAll || (data.onhandAll == undefined)) {
             onhandLocation = {
@@ -201,6 +206,12 @@ class UsersNew extends Component {
                 places:[]
             };
         }
+        if(data.salesChannel || (data.salesChannel == undefined)){
+            salesChannel = {
+                type:'All',
+                places:[]
+            };
+        }
 
         permission = {...data.permission,
             id: data.permissionId,
@@ -208,6 +219,7 @@ class UsersNew extends Component {
             onhandWarehouse: onhandWarehouse,
             salesLocation: salesLocation,
             salesWarehouse: salesWarehouse,
+            salesChannel: salesChannel,
             userType: data.userType,
             price: data.price,
             notUseHierarchy:JSON.stringify(data.notUseHierarchy),
@@ -253,6 +265,9 @@ class UsersNew extends Component {
         delete data.salesAll;
         delete data.salesLocation;
         delete data.salesWarehouse;
+        delete data.salesChannel;
+        delete data.salesChannelType;
+        delete data.salesChannelValue;
         delete data.categoryACC;
         delete data.categoryJLY;
         delete data.categoryOBA;

@@ -41,6 +41,10 @@ module.exports = {
                     type: Joi.string(),
                     places: Joi.array().items(Joi.string())
                 }).allow(null),
+                salesChannel: Joi.object({
+                    type: Joi.string(),
+                    places: Joi.array().items(Joi.string())
+                }).allow(null),
                 price: Joi.string(),
                 priceSales: Joi.number().integer(),
                 notUseHierarchy: Joi.string(),
@@ -100,6 +104,7 @@ module.exports = {
         const OnhandsWarehouse = request.collections.onhandwarehouse;
         const SalesLocation = request.collections.saleslocation;
         const SalesWarehouse = request.collections.saleswarehouse;
+        const SalesChannel = request.collections.saleschannel;
         let perUser = null;
         let perId = null;
 
@@ -115,7 +120,8 @@ module.exports = {
             const onhandsWarehouse = OnhandsWarehouse.update({ id: permission.onhandWarehouse }, { permission: permission.id });
             const salesLocation = SalesLocation.update({ id: permission.salesLocation }, { permission: permission.id });
             const salesWarehouse = SalesWarehouse.update({ id: permission.salesWarehouse }, { permission: permission.id });
-            Promise.all([onhandsLocation,onhandsWarehouse,salesLocation,salesWarehouse])
+            const salesChannel = SalesChannel.update({ id: permission.salesChannel }, { permission: permission.id });
+            Promise.all([onhandsLocation,onhandsWarehouse,salesLocation,salesWarehouse,salesChannel])
             .then(function(onhand){
                 if(onhand[0].length != 0){
                     perId = onhand[0].permission;

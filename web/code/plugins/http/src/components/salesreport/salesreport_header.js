@@ -5,6 +5,7 @@ import Calendar from 'react-input-calendar';
 import moment from 'moment';
 import InitDataLocation from '../../utils/initDataLocation';
 import InitDataCompany from '../../utils/initDataCompany';
+import InitDataSalesChannel from '../../utils/initDataSalesChannel';
 import InitModifySalesData from '../../utils/initModifySalesData';
 import * as xls from '../../utils/xls';
 import * as inventoryActions from '../../actions/inventoryactions';
@@ -210,13 +211,17 @@ class SalesReportHeader extends Component {
             }
         }
 
-        if (props.options != undefined){
-            if (props.options.salesChannels) {
-                dataDropDowntSalesChannel.push(props.options.salesChannels.map(salesChannel =>{
-                    return ({value: salesChannel.code, label:salesChannel.name});
-                }))
-                dataDropDowntSalesChannel = dataDropDowntSalesChannel[0];
+        if(userLogin.permission.salesChannel != undefined){
+            if(userLogin.permission.salesChannel.type == 'SalesChannel' || userLogin.permission.salesChannel.type == 'All'){
+                if (props.options != undefined){
+                    if (props.options.salesChannels) {
+                        dataDropDowntSalesChannel = InitDataSalesChannel(props.options.salesChannels, userLogin);
+                    }
+                }
             }
+        }
+
+        if (props.options != undefined){
             if (props.options.dominantStones) {
                 dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
                     return ({value: dominantStone.code, label:dominantStone.name});
@@ -232,7 +237,7 @@ class SalesReportHeader extends Component {
                             newDate.push(_.filter(that.props.props.warehouseSales,
                                 function(warehouse){
                                     if(warehouse.code != undefined){
-                                      return warehouse.code.toString() == settingWarehouse;
+                                        return warehouse.code.toString() == settingWarehouse;
                                     }
                                 }
                             ));
@@ -241,8 +246,8 @@ class SalesReportHeader extends Component {
                     if (userLogin.permission.salesWarehouse.type == 'All'){
                         dataDropDowntLocations.forEach(function(location){
                             newDate.push(_.filter(that.props.props.warehouseSales,
-                              function(warehouse)
-                              { return warehouse.comid == location.value})
+                                function(warehouse)
+                                { return warehouse.comid == location.value})
                             );
                         });
                     }
@@ -250,7 +255,7 @@ class SalesReportHeader extends Component {
                 let subdata = [];
                 newDate.forEach(newdata =>{
                     newdata.forEach(subdata =>{
-                      data.push(subdata);
+                        data.push(subdata);
                     })
                 });
 

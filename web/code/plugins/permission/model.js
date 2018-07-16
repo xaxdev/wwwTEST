@@ -33,6 +33,9 @@ module.exports = {
         salesWarehouse: {
             model: 'salesWarehouse'
         },
+        salesChannel: {
+            model: 'salesChannel'
+        },
         price: {
             type: 'string',
             enum: ['Public', 'Updated', 'All','NULL'],
