@@ -682,6 +682,8 @@ const mapSoldItem = (recordset, exchangeRates) => {
             soldItem.imagesCOA = [];
             soldItem.imagesDBC = [];
             soldItem.filesMonograph = [];
+            soldItem.customerNameFullTextSearch = record.customerName;
+            soldItem.customerNameSplitTextSearch = record.customerName;
             calculateSalesPrices(soldItem, exchangeRates);
             soldItems.push(soldItem);
         }

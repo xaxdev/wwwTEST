@@ -82,7 +82,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour' || key == 'origin' || key == 'watchCategory'
                     || key == 'limitedEdition' || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'buckleType'
                     || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse' || key == 'location' || key=='certificatedNumber'
-                    || key == 'invoiceNo' || key == 'customer' || key == 'dominant'
+                    || key == 'invoiceNo' || key == 'dominant'
                 ){
                     if(key == 'metalColour')
                         key = 'metalColor'
@@ -100,8 +100,6 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                         key = 'subType'
                     if(key == 'invoiceNo')
                         key = 'invoicedId'
-                    if(key == 'customer')
-                        key = 'customerSearch'
                     if(key == 'dominant')
                         key = 'dominantStone'
 
@@ -322,6 +320,69 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     filter = GetSearchGemstone(key, obj, userCurrency, clarity);
                 } else if(key == 'lotNumbers'){
                     filter = GetSearchLotNumber(key, obj, userCurrency);
+                } else if (key == 'customer') {
+                    let filterSplit = [];
+                    let hasSpace = value.indexOf(" ") != -1 ? true : false;
+                    console.log('hasSpace-->',hasSpace);
+                    if (hasSpace) {
+                        let mapField =
+                        `{
+                            "match": {
+                                "customerNameFullTextSearch": {
+                                    "query": "${value.trim()}"
+                                }
+                            }
+                        }`;
+                        filterSplit.push(JSON.parse(mapField));
+                    }else {
+                        let mapField =
+                        `{
+                            "match": {
+                                "customerNameSplitTextSearch": {
+                                    "query": "${value.trim()}"
+                                }
+                            }
+                        }`;
+                        filterSplit.push(JSON.parse(mapField));
+                    }
+
+                    let mapField =
+                    `{
+                        "match": {
+                            "customerEmail": {
+                                "query": "${value.trim()}"
+                            }
+                        }
+                    }`;
+                    filterSplit.push(JSON.parse(mapField));
+                    mapField = '';
+                    mapField =
+                    `{
+                        "match": {
+                            "customer": {
+                                "query": "${value.trim()}"
+                            }
+                        }
+                    }`;
+                    filterSplit.push(JSON.parse(mapField));
+                    mapField = '';
+                    mapField =
+                    `{
+                        "match": {
+                            "customerPhone": {
+                                "query": "${value.trim()}"
+                            }
+                        }
+                    }`;
+                    filterSplit.push(JSON.parse(mapField));
+                    filter =
+                    `{
+                        "bool": {
+                            "should": [
+                                ${JSON.stringify(filterSplit)}
+                            ]
+                        }
+                    }`;
                 } else {
                     filter =
                     `{
