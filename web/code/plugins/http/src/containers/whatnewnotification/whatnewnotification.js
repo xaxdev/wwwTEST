@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [9,8,7,6,5,4,3,2,1];
+            const roundData = [10,9,8,7,6,5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -405,6 +405,25 @@ class WhatNewNotification extends Component {
                                                   <p>- When users select Sapphire at Stone type field, it will show items under SAP, Sapphire, SAPPHIREPCS, SAPPHIRES after search.</p>
                                                   <div style="padding:15px 20px 0 20px;">
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/ston-type.gif"/></div>
+                                                  </div>`
+                                              }
+                                            ]
+                                },
+                                {
+                                    'id': 10,
+                                    'round': 'July 2018',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Sales Report Module in MOL',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">July 20, 2018</p>
+                                                  <p>User who has user permission type "Sales Module" can search Sales Report.<p>
+                                                  <h3 style="padding:17px 0px 0px 0px">How to use Sales Report:</h3>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <p>1. Click Sales Report Button.</p>
+                                                  <p>2. Search items at Sales Report Page.</p>
+                                                  <p>3. Sold items will show at Sales Search Results.</p>
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/Sale_Module.gif"/></div>
                                                   </div>`
                                               }
                                             ]
