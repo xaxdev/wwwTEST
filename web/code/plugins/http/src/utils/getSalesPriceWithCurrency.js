@@ -23,8 +23,8 @@ export default (item, type, currency)=> {
             }
             break;
         case 'discPercent':
-            if(item.discPercent != undefined){
-                return item.discPercent + ' %';
+            if(item.discountPercent != undefined){
+                return numberFormat(item.discountPercent) + ' %';
             }else{
                 return '- %';
             }
