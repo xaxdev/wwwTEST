@@ -323,7 +323,6 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                 } else if (key == 'customer') {
                     let filterSplit = [];
                     let hasSpace = value.indexOf(" ") != -1 ? true : false;
-                    console.log('hasSpace-->',hasSpace);
                     if (hasSpace) {
                         let mapField =
                         `{
