@@ -382,6 +382,7 @@ class SalesSearchResultOnItem extends Component {
         props.setSalesShowGridView(false);
         props.setSalesShowListView(false);
         this.setState({ showLoading: true });
+        props.setCurrentSalesPage(eventKey);
         props.getSalesItems(params).then(async (value) => {
             this.setState({showLoading: false});
             if(girdView){
@@ -428,6 +429,7 @@ class SalesSearchResultOnItem extends Component {
             let listView = salesShowListView;
             props.setSalesShowGridView(false);
             props.setSalesShowListView(false);
+            props.setCurrentSalesPage(getPage);
             this.setState({ showLoading: true });
             props.getSalesItems(params).then(async (value) => {
                 this.setState({showLoading: false});
@@ -449,7 +451,7 @@ class SalesSearchResultOnItem extends Component {
             <div>
                 <Pagination prev next first last ellipsis boundaryLinks
                     items={totalPages} maxButtons={4}
-                    activePage={this.state.activePage}
+                    activePage={currentSalesPage}
                     onSelect={this.handleSelect} />
                 <div>
                     <span>Page</span>
