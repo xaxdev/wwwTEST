@@ -51,6 +51,8 @@ module.exports = (obj, fromRecord, sizeRecord) => {
     let valToMargin = 0;
     let valFromDiscount = 0;
     let valToDiscount = 0;
+    let valFromSalesPrice = 0;
+    let valToSalesPrice = 0;
 
     internals.filters = [];
 
@@ -155,7 +157,16 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                     }
                     let objLength = objRange.length +1;
                     objRange = {...objRange,'price.USD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
-                } else if(key == 'netSalesFrom' || key == 'netSalesTo'){
+                }  else if(key == 'retailPriceFrom' || key == 'retailPriceTo'){
+                    if(key == 'retailPriceFrom'){
+                        valFromSalesPrice = value;
+                    }
+                    if(key == 'retailPriceTo'){
+                        valToSalesPrice = value;
+                    }
+                    let objLength = objRange.length +1;
+                    objRange = {...objRange,'price.USD':{'from':valFromSalesPrice,'to':valToSalesPrice},'length':objLength};
+                }  else if(key == 'netSalesFrom' || key == 'netSalesTo'){
                     if(key == 'netSalesFrom'){
                         valFromNetSales = value;
                     }

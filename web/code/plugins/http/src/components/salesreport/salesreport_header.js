@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import Calendar from 'react-input-calendar';
 import moment from 'moment';
-import InitDataLocation from '../../utils/initDataLocation';
-import InitDataCompany from '../../utils/initDataCompany';
+import InitDataSalesLocation from '../../utils/initDataSalesLocation';
+import InitDataSalesCompany from '../../utils/initDataSalesCompany';
 import InitDataSalesChannel from '../../utils/initDataSalesChannel';
 import InitModifySalesData from '../../utils/initModifySalesData';
 import * as xls from '../../utils/xls';
@@ -205,7 +205,7 @@ class SalesReportHeader extends Component {
             if(userLogin.permission.salesLocation.type == 'SalesLocation' || userLogin.permission.salesLocation.type == 'All'){
                 if (props.options != undefined){
                     if (props.options.companies) {
-                        dataDropDowntLocations = InitDataCompany(props.options.companies, userLogin);
+                        dataDropDowntLocations = InitDataSalesCompany(props.options.companies, userLogin);
                     }
                 }
             }
