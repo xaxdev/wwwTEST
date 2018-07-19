@@ -350,18 +350,18 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                             }
                         }`;
                         filterSplit.push(JSON.parse(mapField));
+                        mapField =
+                        `{
+                            "match": {
+                                "customerEmail": {
+                                    "query": "${value.trim()}"
+                                }
+                            }
+                        }`;
+                        filterSplit.push(JSON.parse(mapField));
                     }
 
-                    let mapField =
-                    `{
-                        "match": {
-                            "customerEmail": {
-                                "query": "${value.trim()}"
-                            }
-                        }
-                    }`;
-                    filterSplit.push(JSON.parse(mapField));
-                    mapField = '';
+                    let mapField = '';
                     mapField =
                     `{
                         "match": {
