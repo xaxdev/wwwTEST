@@ -69,6 +69,8 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                     sortBy = 'postedDate';
                 }else if (obj.sortBy.indexOf('setReference') != -1) {
                     sortBy = 'reference';
+                }else if (sortBy.indexOf('netAmount') != -1) {
+                    sortBy = 'totalNetAmount.USD';
                 }else{
                     sortBy = sortBy;
                 }

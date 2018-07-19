@@ -58,7 +58,7 @@ module.exports = {
             ps.push(getClarityItems(internals.query));
         }
 
-        // console.log(JSON.stringify(internals.query, null, 2));
+        console.log(JSON.stringify(internals.query, null, 2));
 
         const getAllSalesItems =  elastic.search({
             index: 'mol_solditems',
@@ -151,6 +151,8 @@ module.exports = {
                 sortBy = 'postedDate';
             }else if (sortBy.indexOf('setReference') != -1) {
                 sortBy = 'reference';
+            }else if (sortBy.indexOf('netAmount') != -1) {
+                sortBy = 'totalNetAmount.USD';
             }else{
                 sortBy = sortBy;
             }
