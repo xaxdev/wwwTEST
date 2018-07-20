@@ -750,11 +750,11 @@ class productdetail extends Component {
                     <div className="ft-white productdetail-search display-right">
                         <Link to={'/searchresult'} className="btn btn-searchresult">Search Result</Link>
                     </div>
-                    <div className="margin-t5 text-center m-none display-right padding-lf15">
+                    <div className={`margin-t5 text-center m-none display-right padding-lf15 ${productIndex == 0?'hidden':''}`}>
                         <span className="bar-line">|</span>
                     </div>
                     <div className="display-right">
-                        <div className="float-l bar-detail-pre">
+                        <div className={`float-l bar-detail-pre ${productIndex == 0?'hidden':''}`}>
                             <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${productlist[productIndex-1].id}`:''}}><span className="icon-back"></span></Link>
                         </div>
                         <div className="float-l bar-detail-text">
@@ -767,7 +767,7 @@ class productdetail extends Component {
                                 of {numberFormat(productlist.length)} items
                             </div>
                         </div>
-                        <div className="float-l bar-detail-pre">
+                        <div className={`float-l bar-detail-pre ${productIndex+1 >= productlist.length?'hidden':''}`}>
                             <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${productlist[productIndex+1].id}` : ''}}><span className="icon-next"></span></Link>
                         </div>
                     </div>
@@ -872,13 +872,21 @@ class productdetail extends Component {
         if(!!gallery && gallery.length > 0){
             return(
                 <div>
-                    <a><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+                    <a>
+                        <OverlayTrigger placement="bottom" overlay={tooltipZoom}>
+                            <div className="icon-zoom margin-l10" id="zoomimg"></div>
+                        </OverlayTrigger>
+                    </a>
                 </div>
             );
         } else {
             return(
                 <div>
-                    <a style={styles.displaynone}><div className="icon-zoom margin-l10" id="zoomimg"></div></a>
+                    <a style={styles.displaynone}>
+                        <OverlayTrigger placement="bottom" overlay={tooltipZoom}>
+                            <div className="icon-zoom margin-l10" id="zoomimg"></div>
+                        </OverlayTrigger>
+                    </a>
                 </div>
             );
         }
@@ -986,7 +994,7 @@ class productdetail extends Component {
     downloadCertificateAll = _=> {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
         const { gemstones } = this.props.productdetail;
         const productId = this.props.params.id;
 
@@ -1034,7 +1042,7 @@ class productdetail extends Component {
     downloadCer = (id, e) => {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
         const { gemstones } = this.props.productdetail;
         const productId = this.props.params.id;
 
@@ -1132,24 +1140,38 @@ class productdetail extends Component {
                             <div className="panel-body padding-ft0">
                                 <div className="col-md-12 col-sm-12 icon-detail">
                                     <a>
-                                        <div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div>
+                                        <OverlayTrigger placement="bottom" overlay={tooltipAddCatalog}>
+                                            <div className="icon-add margin-l10" onClick={ this.addMyCatalog }></div>
+                                        </OverlayTrigger>
                                     </a>
                                     <a>
-                                        <div className="icon-print margin-l10" id="printproduct"></div>
+                                        <OverlayTrigger placement="bottom" overlay={tooltipPrint}>
+                                            <div className="icon-print margin-l10" id="printproduct"></div>
+                                        </OverlayTrigger>
                                     </a>
                                     {this.zoomicon()}
                                     {isCertificate
-                                      ? countImages != 1
-                                        ? <a><div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div></a>
-                                        : <a href={imageCerDownload} download={imageName} ><div className="icon-certificate margin-l10"/></a>
-                                      :
-                                      <a><div className=""></div></a>
+                                        ? countImages != 1
+                                            ?   <a>
+                                                    <OverlayTrigger placement="bottom" overlay={tooltipCertificate}>
+                                                        <div className="icon-certificate margin-l10" onClick={ this.downloadCertificateAll }></div>
+                                                    </OverlayTrigger>
+                                                </a>
+                                            :   <a href={imageCerDownload} download={imageName} >
+                                                    <OverlayTrigger placement="bottom" overlay={tooltipCertificate}>
+                                                        <div className="icon-certificate margin-l10"/>
+                                                    </OverlayTrigger>
+                                                </a>
+                                        :
+                                        <a><div className=""></div></a>
                                     }
                                     {this.imagesCOAIcon()}
                                     {this.imagesDBCIcon()}
                                     {this.filesMonographIcon()}
                                     <a>
-                                        <div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }> </div>
+                                        <OverlayTrigger placement="bottom" overlay={tooltipMovement}>
+                                            <div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div>
+                                        </OverlayTrigger>
                                     </a>
                                 </div>
                                 <div className="col-md-6 col-sm-12">{this.renderImagegallery()}</div>
@@ -1212,6 +1234,11 @@ class productdetail extends Component {
     }
 }
 
+const tooltipAddCatalog = (<Tooltip id="tooltip"><strong>Add to Catalog</strong></Tooltip>);
+const tooltipPrint = (<Tooltip id="tooltip"><strong>Preview & Print</strong></Tooltip>);
+const tooltipZoom = (<Tooltip id="tooltip"><strong>Zoom</strong></Tooltip>);
+const tooltipMovement = (<Tooltip id="tooltip"><strong>Movement & Activiy</strong></Tooltip>);
+const tooltipCertificate = (<Tooltip id="tooltip"><strong>Download Certificate</strong></Tooltip>);
 const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>);
 const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>);
 const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>);

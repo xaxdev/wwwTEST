@@ -35,7 +35,9 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     // let imgPath = 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/';
     let imgPath = env == 'production'
                             ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
-                            : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                            : env == 'staging'
+                                ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
+                                :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
 
 
     dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"'):'';

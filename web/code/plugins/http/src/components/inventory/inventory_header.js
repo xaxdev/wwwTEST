@@ -53,7 +53,7 @@ class InventoryHeader extends Component {
 
         let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch: null;
         if(paramsSearch != null)
-          paramsSearch.dominantStone = DominantStoneSelectValue;
+            paramsSearch.dominantStone = DominantStoneSelectValue;
 
         dominantStone.onChange(DominantStoneSelectValue);
         props.inventoryActions.setDataDominantStone(DominantStoneSelectValue);
@@ -63,8 +63,9 @@ class InventoryHeader extends Component {
         jQuery('#file').hide();
         jQuery('#btn-browsefile').click(function(){
             jQuery('#file').click();
-        });
+              });
         jQuery('#file').change(function() {
+
             let filename =jQuery('#file')[0].files[0];
             //alert(filename.name);
             jQuery('#fileName').text(filename.name);
@@ -86,12 +87,12 @@ class InventoryHeader extends Component {
       		let reader = new FileReader();
       		let name = f.name;
       		reader.onload = function(e) {
-                let data = e.target.result;
-                let arr = xls.fixdata(data);
-                let wb = X.read(btoa(arr), {type: 'base64'});
-                let items = xls.process_wb(wb);
-                reference.onChange(items.item);
-                that.props.setItemsOrder(items.AllData);
+                  let data = e.target.result;
+                  let arr = xls.fixdata(data);
+                  let wb = X.read(btoa(arr), {type: 'base64'});
+                  let items = xls.process_wb(wb);
+                  reference.onChange(items.item);
+                  that.props.setItemsOrder(items.AllData);
       		}
             if(rABS) reader.readAsBinaryString(f);
             else reader.readAsArrayBuffer(f);
@@ -107,7 +108,7 @@ class InventoryHeader extends Component {
         } = this.props.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `//${host}`;
 
         InitModifyData(this.props.props);
 
@@ -129,7 +130,7 @@ class InventoryHeader extends Component {
             if (this.props.props.options.dominantStones) {
                 dataDropDowntDominantStone.push(this.props.props.options.dominantStones.map(dominantStone =>{
                     return ({value: dominantStone.code,label:dominantStone.name});
-                }))
+                  }))
                 dataDropDowntDominantStone = dataDropDowntDominantStone[0];
             }
 
@@ -142,7 +143,7 @@ class InventoryHeader extends Component {
                             newDate.push(_.filter(that.props.props.options.warehouses,
                                 function(warehouse){
                                     if(warehouse.code != undefined){
-                                        return warehouse.code.toString() == settingWarehouse;
+                                      return warehouse.code.toString() == settingWarehouse;
                                     }
                                 }
                             ));
@@ -150,14 +151,17 @@ class InventoryHeader extends Component {
                     }
                     if (userLogin.permission.onhandWarehouse.type == 'All'){
                         dataDropDowntLocations.forEach(function(location){
-                            newDate.push(_.filter(that.props.props.options.warehouses, function(warehouse){return warehouse.comid == location.value}));
+                            newDate.push(_.filter(that.props.props.options.warehouses,
+                              function(warehouse)
+                              { return warehouse.comid == location.value})
+                            );
                         });
                     }
                 }
                 let subdata = [];
                 newDate.forEach(newdata =>{
                     newdata.forEach(subdata =>{
-                        data.push(subdata);
+                      data.push(subdata);
                     })
                 });
 
@@ -300,4 +304,5 @@ class InventoryHeader extends Component {
         );
     }
 }
+
 module.exports = connect(null,inventoryActions)(InventoryHeader);

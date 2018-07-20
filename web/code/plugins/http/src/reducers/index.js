@@ -9,14 +9,14 @@ import searchResultReducer from '../reducers/searchresults/reducer_searchresults
 import myCatalogReducer from '../reducers/mycatalog/reducer_mycatalog';
 
 const rootReducer = combineReducers({
-  routing: routerReducer,
-  users: UsersReducer,
-  form: formReducer,
-  login:loginReducer,
-  forgot:forgotReducer,
-  productdetail:productdetailReducer,
-  searchResult: searchResultReducer,
-  myCatalog: myCatalogReducer
+    routing: routerReducer,
+    users: UsersReducer,
+    form: formReducer,
+    login:loginReducer,
+    forgot:forgotReducer,
+    productdetail:productdetailReducer,
+    searchResult: searchResultReducer,
+    myCatalog: myCatalogReducer
 });
 
 export default rootReducer;

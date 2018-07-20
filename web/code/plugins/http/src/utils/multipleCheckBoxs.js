@@ -53,7 +53,6 @@ class MultipleCheckBoxs extends Component {
     }
     render() {
         const { datas, name, onChange, checkedAll, chekedValue } = this.props;
-        // console.log('datas-->',datas);
         return(
             <div>
             {

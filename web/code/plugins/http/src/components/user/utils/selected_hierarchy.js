@@ -18,7 +18,7 @@ export default function SelectedHierarchy(that, value, cat){
         // return treeSelected;
     });
 
-    let { fields: { notUseHierarchy },CanNotUseHierarchy } = that.props;
+    let { CanNotUseHierarchy } = that.props;
     switch (cat) {
         case 'JLY':
             objHeirarchy = {...CanNotUseHierarchy, JLY: treeSelected}

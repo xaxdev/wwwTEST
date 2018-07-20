@@ -4,7 +4,9 @@ import * as es from './es';
 import * as hierarchy from './hierarchy';
 import * as set from './set';
 import * as lot from './lot';
+import * as soldItem from './solditem';
 import * as constant from './constant';
+import * as setSold from './setSold';
 
 const migrate = async index => {
     try {
@@ -57,6 +59,8 @@ const migrate = async index => {
         await master.getStoneType(index);
         await master.getHierarchy(index);
         await master.getArticle(index);
+        await master.getCustomer(index);
+        await master.getSaleChannel(index);
 
     } catch (err) {
         throw err;
@@ -73,6 +77,7 @@ const alias = async (index, name) => {
 
 const productHierarchy = async _ => {
     try {
+        console.log('Hierarchy!!!');
         await hierarchy.getSources()
     } catch (err) {
         throw err
@@ -88,4 +93,30 @@ const itemSets= async index => {
     }
 }
 
-export { alias, migrate, productHierarchy, itemSets };
+const soldItems= async index => {
+    try {
+        const allExchangeRates = await item.getAllExchangeRates();
+        // await soldItem.getSoldItems(index, allExchangeRates);
+        await soldItem.getJewelry(index, allExchangeRates);
+        await soldItem.getStones(index, allExchangeRates);
+        await soldItem.getWatches(index, allExchangeRates);
+        await soldItem.getOBA(index, allExchangeRates);
+        await soldItem.getAccessory(index, allExchangeRates);
+        await soldItem.getSpareParts(index, allExchangeRates);
+        await soldItem.getCertificates(index)
+
+    } catch (err) {
+        throw err
+    }
+}
+
+const soldItemsSets= async index => {
+    try {
+        const allExchangeRates = await item.getAllExchangeRates();
+        await setSold.getSoldItemSets(index, allExchangeRates)
+    } catch (err) {
+        throw err
+    }
+}
+
+export { alias, migrate, productHierarchy, itemSets, soldItems, soldItemsSets };

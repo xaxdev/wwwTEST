@@ -1,4 +1,4 @@
-export default function RemoveHierarchy(hierarchy, article){
+export default function SearchHierarchy(hierarchy, article){
     let hierarchyData = filterByProperty(hierarchy, 'label', article);
     return hierarchyData;
 }

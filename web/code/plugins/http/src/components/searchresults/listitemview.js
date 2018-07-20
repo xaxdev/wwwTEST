@@ -76,7 +76,12 @@ class ListItemsView extends Component {
 
     renderImage = (val,row) => {
         return (
-            <ReactImageFallback src={row.imageThumbnail} fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width="60" />
+            <ReactImageFallback
+                 src={row.imageThumbnail}
+                 fallbackImage="/images/blank.gif"
+                 initialImage="/images/blank.gif"
+                 width="60"
+                 />
         );
     }
 
@@ -123,18 +128,20 @@ class ListItemsView extends Component {
                 isCompany = col.companyName != undefined ? true : false;
                 if (ViewAsSet) {
                     imagesOriginal = (col.image) != undefined
-                        ? col.image.length != 0
-                            ? col.image[0].original
-                            : '/images/blank.gif'
-                        : '/images/blank.gif';
+                                      ? col.image.length != 0
+                                          ? col.image[0].original
+                                          : '/images/blank.gif'
+                                      : '/images/blank.gif';
                     imagesThumbnail = (col.image) != undefined
-                        ?  col.image.length != 0
-                            ? col.image[0].thumbnail
-                            : '/images/blank.gif'
-                        : '/images/blank.gif';
+                                      ?  col.image.length != 0
+                                          ? col.image[0].thumbnail
+                                          : '/images/blank.gif'
+                                      : '/images/blank.gif';
 
                     if(col.totalPrice != undefined){
-                        col.priceUSD = (col.totalPrice['USD'] != undefined) ? numberFormat(col.totalPrice['USD']) : '- ';
+                        col.priceUSD = (col.totalPrice['USD'] != undefined)
+                                      ? numberFormat(col.totalPrice['USD'])
+                                      : '- ';
                     }else{
                         col.priceUSD = '- ';
                     }
@@ -147,46 +154,52 @@ class ListItemsView extends Component {
 
                 }else{
                     imagesOriginal = (col.gallery) != undefined
-                        ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif'
-                        : '/images/blank.gif';
+                                      ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif'
+                                       : '/images/blank.gif';
                     imagesThumbnail = (col.gallery) != undefined
-                        ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
-                        : '/images/blank.gif';
+                                      ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
+                                      : '/images/blank.gif';
 
                     switch (col.type) {
-                        case 'JLY':
-                            size = (col.size != undefined) ? col.size : '';
-                            break;
-                        case 'WAT':
-                            size = (col.caseDimension != undefined) ? col.caseDimension : '';
-                            break;
-                        case 'OBA':
-                            size = (col.dimension != undefined) ? col.dimension : '';
-                            break;
-                        default:
-                            break;
+                      case 'JLY':
+                        size = (col.size != undefined) ? col.size : '';
+                        break;
+                      case 'WAT':
+                        size = (col.caseDimension != undefined) ? col.caseDimension : '';
+                        break;
+                      case 'OBA':
+                        size = (col.dimension != undefined) ? col.dimension : '';
+                        break;
+                      default:
+                        break;
                     }
 
                     if(col.price != undefined){
-                        col.priceUSD = (col.price[currency] != undefined) ? numberFormat(col.price[currency]) : '- ';
+                      col.priceUSD = (col.price[currency] != undefined) ?
+                             numberFormat(col.price[currency]) :
+                             '- ';
                     }else{
-                        col.priceUSD = '- ';
+                      col.priceUSD = '- ';
                     }
 
                     if (col.gemstones != undefined) {
-                        col.gemstones.forEach(function(gemstone) {
-                            if(gemstone.carat != undefined){
-                                jewelsWeight = jewelsWeight + gemstone.carat;
-                            }
-                        });
+                      col.gemstones.forEach(function(gemstone) {
+                        if(gemstone.carat != undefined){
+                          jewelsWeight = jewelsWeight + gemstone.carat;
+                        }
+                      });
                     } else {
-                        jewelsWeight = '';
+                      jewelsWeight = '';
                     }
 
                     col.jewelsWeight = numberFormat2digit(jewelsWeight);
                     col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 
-                    itemName = (col.type != 'CER') ? (col.description != undefined) ? col.description: '-' : col.name ;
+                    itemName = (col.type != 'CER')
+                                      ?
+                                      (col.description != undefined) ? col.description: '-' :
+                                      col.name
+                                      ;
 
                 }
                 return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
@@ -196,42 +209,41 @@ class ListItemsView extends Component {
             let tableColumns = [];
             if (isCompany) {
                 tableColumns = [
-                    { title: '', render: this.renderCheckItem, className: 'text-center' },
-                    { title: 'Images', render: this.renderImage },
-                    { title: 'Item Reference', prop: 'reference' },
-                    { title: 'Description', prop: 'itemName' },
-                    { title: 'SKU', prop: 'sku' },
-                    { title: 'Company', prop: 'companyName' },
-                    { title: 'Location', prop: 'warehouseName' },
-                    { title: 'Size', prop: 'size' },
-                    { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                    { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                    { title: 'Stone Detail', prop: 'stoneDetail' },
-                    { title: 'Price', prop: 'priceUSD' },
-                    { title: '', render: this.renderAction, className: 'text-center' },
+                  { title: '', render: this.renderCheckItem, className: 'text-center' },
+                  { title: 'Images', render: this.renderImage },
+                  { title: 'Item Reference', prop: 'reference' },
+                  { title: 'Description', prop: 'itemName' },
+                  { title: 'SKU', prop: 'sku' },
+                  { title: 'Company', prop: 'companyName' },
+                  { title: 'Location', prop: 'warehouseName' },
+                  { title: 'Size', prop: 'size' },
+                  { title: 'Jewelry Weight', prop: 'jewelsWeight' },
+                  { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                  { title: 'Stone Detail', prop: 'stoneDetail' },
+                  { title: 'Price', prop: 'priceUSD' },
+                  { title: '', render: this.renderAction, className: 'text-center' },
                 ];
             }else{
                 tableColumns = [
-                    { title: '', render: this.renderCheckItem, className: 'text-center' },
-                    { title: 'Images', render: this.renderImage },
-                    { title: 'Item Reference', prop: 'reference' },
-                    { title: 'Description', prop: 'itemName' },
-                    { title: 'SKU', prop: 'sku' },
-                    { title: 'Company', prop: 'company' },
-                    { title: 'Location', prop: 'warehouse' },
-                    { title: 'Size', prop: 'size' },
-                    { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                    { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                    { title: 'Stone Detail', prop: 'stoneDetail' },
-                    { title: 'Price', prop: 'priceUSD' },
-                    { title: '', render: this.renderAction, className: 'text-center' },
+                  { title: '', render: this.renderCheckItem, className: 'text-center' },
+                  { title: 'Images', render: this.renderImage },
+                  { title: 'Item Reference', prop: 'reference' },
+                  { title: 'Description', prop: 'itemName' },
+                  { title: 'SKU', prop: 'sku' },
+                  { title: 'Company', prop: 'company' },
+                  { title: 'Location', prop: 'warehouse' },
+                  { title: 'Size', prop: 'size' },
+                  { title: 'Jewelry Weight', prop: 'jewelsWeight' },
+                  { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                  { title: 'Stone Detail', prop: 'stoneDetail' },
+                  { title: 'Price', prop: 'priceUSD' },
+                  { title: '', render: this.renderAction, className: 'text-center' },
                 ];
             }
             if (ViewAsSet) {
                 return (
                     <div key={'listView'} id={'listView'}>
-                        <table key={'listView'} id={'listView'}
-                            className="table table-bordered table-searchresult table-searchset">
+                        <table key={'listView'} id={'listView'} className="table table-bordered table-searchresult table-searchset">
                             <thead key={'listView'} id={'listView'}>
                                 <tr>
                                     <th><span></span></th>
@@ -245,12 +257,13 @@ class ListItemsView extends Component {
                                     <th><span>Location</span></th>
                                     <th><span>Item Weight (Grams)</span></th>
                                     <th><span>Stone Detail</span></th>
-                                    <th className={`${(userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
-                                        <span>Group Cost Price (USD)</span>
-                                    </th>
-                                    <th className={`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                                    <th className={`${(userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
                                         '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
-                                    <th className={`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                    <th className={`${(userLogin.permission.price == 'Public'
+                                        || userLogin.permission.price == 'Updated'
                                         || userLogin.permission.price == 'All') ?
                                         '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
                                 </tr>
@@ -265,15 +278,20 @@ class ListItemsView extends Component {
                             })}
                         </table>
                     </div>
+
                 );
             }else{
                 return (
                     <div>
-                        <DataTable
+                        <DataTable 
                             className="col-sm-12"
-                            keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight', 'stoneDetail','priceUSD','' ]}
-                            columns={tableColumns} initialData={items} initialPageLength={this.state.initialPageLength}
-                            initialSortBy={{ prop: 'reference', order: 'ascending' }} pageLengthOptions={[ 5, 20, 50 ]}
+                            keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight', 
+                                    'stoneDetail','priceUSD','' ]}
+                            columns={tableColumns}
+                            initialData={items}
+                            initialPageLength={this.state.initialPageLength}
+                            initialSortBy={{ prop: 'reference', order: 'ascending' }}
+                            pageLengthOptions={[ 5, 20, 50 ]}
                         />
                     </div>
                 );

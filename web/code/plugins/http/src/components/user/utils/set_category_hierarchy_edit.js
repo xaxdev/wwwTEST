@@ -7,6 +7,7 @@ export default function SetCategoryHierarchy(that, value, name, ClearHierarchy, 
 
       let { fields: { notUseHierarchy } } = that.props;
       let objNotUseHeirarchy = notUseHierarchy.value;
+      console.log('SetCategoryHierarchy-->',name);
 
       switch (name) {
           case 'categorySPP':

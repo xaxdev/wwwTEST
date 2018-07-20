@@ -72,44 +72,47 @@ class GridItemsViewPrint extends Component {
                         let lblActualCost = '';
                         let lblPrice = '';
                         let lblUpdatedCost = '';
-
                         if (item.id != null) {
                             lblActualCost = `Cost Price (${userLogin.currency})`;
                             lblPrice = `Price (${userLogin.currency})`;
                             lblUpdatedCost = `Update Cost (${userLogin.currency})`;
                             imagesProduct = (item.authorization)
-                                ? (item.gallery.length) != 0
-                                      ? item.gallery[0].original
-                                      : '/images/blank.gif'
-                                :'/images/login-logo@2x.png';
-                            imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
+                              ? (item.gallery.length) != 0
+                                    ? item.gallery[0].original
+                                    : '/images/blank.gif'
+                              :'/images/login-logo@2x.png';
+                              imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
                             itemDate = (item.authorization)
-                                ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
-                                : '';
-                            lblDate = (item.authorization) ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:' : '';
+                              ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
+                              : '';
+                            lblDate = (item.authorization)
+                              ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
+                              : '';
                             price = (item.authorization)
-                                ? (item.priceInUSD != -1)
-                                    ? numberFormat(item.priceInUSD) + ' ' + 'USD'
-                                    : '- ' + 'USD'
-                                : '- ' + 'USD';
+                              ? (item.priceInUSD != -1)
+                                  ? numberFormat(item.priceInUSD) + ' ' + 'USD'
+                                  : '- ' + 'USD'
+                              : '- ' + 'USD';
                             actualCost = (item.authorization)
-                                ? (item.actualCostInUSD != -1)
-                                    ? numberFormat(item.actualCostInUSD) + ' ' + 'USD'
-                                    : '- ' + 'USD'
-                                : '- ' + 'USD';
+                              ? (item.actualCostInUSD != -1)
+                                  ? numberFormat(item.actualCostInUSD) + ' ' + 'USD'
+                                  : '- ' + 'USD'
+                              : '- ' + 'USD';
                             updatedCost = (item.authorization)
-                                ? (item.updatedCostInUSD != -1)
-                                    ? numberFormat(item.updatedCostInUSD) + ' ' + 'USD'
-                                    : '- ' + 'USD'
-                                : '- ' + 'USD';
+                              ? (item.updatedCostInUSD != -1)
+                                  ? numberFormat(item.updatedCostInUSD) + ' ' + 'USD'
+                                  : '- ' + 'USD'
+                              : '- ' + 'USD';
                             itemName = (item.authorization)
-                                ? (item.type != 'CER')?
-                                    (item.description != undefined) ?
-                                    (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
-                                    : '-' :
-                                    item.name
-                                : '';
-                            itemNameCat = (item.authorization)? (item.type != 'CER')? item.description: item.name : '';
+                              ? (item.type != 'CER')?
+                                  (item.description != undefined) ?
+                                  (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                                  : '-' :
+                                  item.name
+                              : '';
+                            itemNameCat = (item.authorization)
+                              ? (item.type != 'CER')? item.description: item.name
+                              : '';
                         }else{
                             lblActualCost = 'Total Cost Price (USD)';
                             lblPrice = 'Total Price (USD)';

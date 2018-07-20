@@ -24,6 +24,22 @@ const settingsArray = async (index, type, path) => ({
     data: await require(path)
 });
 
+const settingsParallelize = async (index, type, path, table, field) => ({
+    ...config,
+    elasticsearch: {
+        index: index,
+        type: type,
+        ...config.elasticsearch
+    },
+    mapper: mapper.mapMaster,
+    parallelization: {
+        table: table,
+        field: field,
+        template: await file.read(path),
+        ...config.parallelization
+    }
+});
+
 const getCompany = async index => {
     try {
         console.log('Company!!!');
@@ -364,6 +380,16 @@ const getArticle = async index => {
     }
 };
 
+const getCustomer = async index => {
+    try {
+        console.log('Customer!!!');
+        const total = await core.parallelize(await settingsParallelize(index, 'customers', constant.CUSTOMER_QUERY, constant.CUSTOMER_TABLE, constant.CUSTOMER_ID));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
 const getLotNumbers = async index => {
     try {
         console.log('LotNumbers!!!');
@@ -374,9 +400,19 @@ const getLotNumbers = async index => {
     }
 };
 
+const getSaleChannel = async index => {
+    try {
+        console.log('SaleChannel!!!');
+        const total = await core.get(await settings(index, 'salechannels', constant.SALECHANNEL_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
 export { getCompany, getLocation, getWarehouse, getCountry, getCut, getCutShap, getColor, getClarity, getSymmetry,
         getFluorescence, getCollection, getBrand, getMetalType, getMetalColor, getCertificateAgency, getDialIndex,
         getDialColor, getDialMetal, getBuckleType, getStrapType, getStrapColor, getOrigin, getCurrency, getRole,
-        getProductGroup, getJewelryCategory, getWatchCategory, getAccessoryType, getSparePartType
-        , getDominantStones, getGemstoneStoneType, getStoneType, getHierarchy, getLotNumbers, getArticle
+        getProductGroup, getJewelryCategory, getWatchCategory, getAccessoryType, getSparePartType, getDominantStones,
+        getGemstoneStoneType, getStoneType, getHierarchy, getLotNumbers, getArticle, getCustomer, getSaleChannel
       };

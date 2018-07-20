@@ -1,0 +1,21 @@
+{
+  "apps" : [{
+    "name": "word-staging",
+    "script": "./bootstrap.js",
+    "node_args": "--max_old_space_size=2048",
+    "watch": false,
+    "env_production": {
+      "NODE_ENV": "production",
+    },
+    "env_test": {
+	    "NODE_ENV": "test"
+	},
+    "env_staging": {
+	    "NODE_ENV": "staging"
+	},
+    "merge_logs": true,
+    "error_file": "./logs/word-err.log",
+    "out_file": "./logs/word-out.log",
+    "log_date_format": "YYYY-MM-DD HH:mm Z"
+  }]
+}

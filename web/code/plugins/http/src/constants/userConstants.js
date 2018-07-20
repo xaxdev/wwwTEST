@@ -1,6 +1,5 @@
 const host = HOSTNAME || 'localhost';
-
-export const ROOT_URL = `//${host}:3002/api/`;
+export const ROOT_URL = `//${host}:${(ENVIRONMENT!='staging')?3002:4002}/api/`;
 export const FETCH_USERS = 'FETCH_USERS';
 export const CREATE_USER = 'CREATE_USER';
 export const FETCH_USER = 'FETCH_USER';
@@ -17,3 +16,5 @@ export const CHANGEPASSWORD_USER = 'CHANGEPASSWORD_USER';
 export const SET_SHAREEMAILTO = 'SET_SHAREEMAILTO';
 export const FETCH_SHAREUSERS = 'FETCH_SHAREUSERS';
 export const SET_NOTUSEHIERARCHY = 'SET_NOTUSEHIERARCHY';
+export const SET_USERTYPE = 'SET_USERTYPE';
+export const SET_NOTUSESALESHIERARCHY = 'SET_NOTUSESALESHIERARCHY';

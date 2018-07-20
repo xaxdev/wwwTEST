@@ -12,6 +12,11 @@ module.exports = [
     },
     {
         method: 'POST',
+        path: '/salessearchpdf',
+        config: controllers.salessearchpdf
+    },
+    {
+        method: 'POST',
         path: '/writehtml',
         config: controllers.writehtml
     },
@@ -24,6 +29,11 @@ module.exports = [
         method: 'POST',
         path: '/search',
         config: controllers.search
+    },
+    {
+        method: 'POST',
+        path: '/salessearch',
+        config: controllers.salessearch
     },
     {
         method: 'GET',
@@ -66,6 +76,11 @@ module.exports = [
         config: controllers.searchsave
     },
     {
+        method: 'POST',
+        path: '/salessearch/save',
+        config: controllers.salessearchsave
+    },
+    {
         method: 'GET',
         path: '/search/list',
         config: controllers.searchlist
@@ -76,9 +91,19 @@ module.exports = [
         config: controllers.searchdelete
     },
     {
+        method: 'DELETE',
+        path: '/salessearch/remove',
+        config: controllers.salessearchdelete
+    },
+    {
         method: 'POST',
         path: '/search/share',
         config: controllers.searchshare
+    },
+    {
+        method: 'POST',
+        path: '/salessearch/share',
+        config: controllers.salessearchshare
     },
     {
         method: 'GET',
@@ -87,7 +112,32 @@ module.exports = [
     },
     {
         method: 'GET',
+        path: '/salessearch/view/{id}',
+        config: controllers.salessearchview
+    },
+    {
+        method: 'GET',
         path: '/search/edit/{id}',
         config: controllers.searchedit
+    },
+    {
+        method: 'GET',
+        path: '/salesitem/{id}',
+        config: controllers.salesitem
+    },
+    {
+        method: 'GET',
+        path: '/salesrelateditems/{collection}/{page}/{productId}/{dominant}/{currency}/{price}',
+        config: controllers.salesrelateditems
+    },
+    {
+        method: 'GET',
+        path: '/salessetdetails/{setReference}',
+        config: controllers.salessetdetails
+    },
+    {
+        method: 'POST',
+        path: '/export/sales',
+        config: controllers.salesexport
     }
 ];

@@ -12,14 +12,11 @@ module.exports = {
         }
     },
     handler: (request, reply) => {
-
         (async () => {
-
             try {
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
                 const searchId = request.payload.id
-
                 const searchCollection = await db.collection('SearchCriteria').deleteOne({ _id: new ObjectID(searchId) })
 
                 return reply({

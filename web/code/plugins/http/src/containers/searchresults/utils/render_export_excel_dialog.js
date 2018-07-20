@@ -4,10 +4,10 @@ import { Modal, ModalClose } from 'react-modal-bootstrap';
 
 class RenderExportExcelDialog extends Component {
     render(){
-        const { that, userLogin, checkFields, labels } = this.props;
+        const { that, userLogin, checkFields, labels, selectedAllFields, selectedNoAllFields } = this.props;
         let checkAll = true;
         return(
-            <div  className="popexport">
+            <div className="popexport">
                 <Modal isOpen={that.state.isOpen} onRequestHide={that.hideModal}>
                     <div className="modal-header">
                         <ModalClose onClick={that.hideModal}/>
@@ -16,29 +16,30 @@ class RenderExportExcelDialog extends Component {
                     <div className="modal-body">
                         <h3>Please choose additional fields for export.</h3>
                         <h5>(Normal export field Item Reference, Item Description, SKU, Item Vendor Reference,
-                            {`${(userLogin.permission.price == 'All') ? 'Actual Price, ':''}`}
-                            {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price, ':''}`}
-                            {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Price, ':''}`}
-                            {`${(userLogin.permission.price == 'All') ? 'Actual Price (USD), ':''}`}
-                            {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price (USD), ':''}`}
-                            {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Price (USD), ':''}`}
-                            Item Weight (Grams), Ring Size, Jewels Weight (text), Site, Company, Location)
+                              {`${(userLogin.permission.price == 'All') ? 'Cost Price, ':''}`}
+                              {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price, ':''}`}
+                              {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Price, ':''}`}
+                              {`${(userLogin.permission.price == 'All') ? 'Cost Price (USD), ':''}`}
+                              {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price (USD), ':''}`}
+                              {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Price (USD), ':''}`}
+                              Item Weight (Grams), Ring Size, Jewels Weight (text), Site, Company, Location)
                         </h5>
                         <br/>
                         <div className="col-sm-12">
                             <div className="col-sm-3 checkbox checkbox-warning popexport">
-                                <input type="checkbox" checked={that.state.allFields} onChange={event => {
-                                    that.setState({ allFields: event.target.checked });
-                                    if (event.target.checked) {
-                                        checkFields.map(function(field, index){
-                                            that.setState({ [field]: true });
-                                        });
-                                    } else {
-                                        checkFields.map(function(field, index){
-                                            that.setState({ [field]: false });
-                                        });
-                                    }
-                                }}/>
+                                <input type="checkbox" checked={that.state.allFields}
+                                    onChange={event => {
+                                        that.setState({ allFields: event.target.checked });
+                                        if (event.target.checked) {
+                                            checkFields.map(function(field, index){
+                                                that.setState({ [field]: true });
+                                            });
+                                        } else {
+                                            checkFields.map(function(field, index){
+                                                that.setState({ [field]: false });
+                                            });
+                                        }
+                                    }}/>
                                 <label className="control-label checkbox1">Select All</label>
                             </div>
                             <div className="col-sm-3 checkbox checkbox-warning popexport">
@@ -49,27 +50,28 @@ class RenderExportExcelDialog extends Component {
                             <div className="col-sm-3"> </div>
                         </div>
                         <div className="col-md-12">
-                            {
-                                checkFields.map(function(field, index){
-                                    checkAll = checkAll && that.state[field];
-                                    if (checkAll) {
-                                        that.setState({ allFields:true });
-                                    }else{
-                                        that.setState({ allFields:false });
-                                    }
-                                    return(
-                                        <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
-                                            <label key={index}>
-                                                <input id={index} type="checkbox" checked={that.state[field]} onChange={event => {
-                                                    that.setState({ [field]: event.target.checked });
-                                                    that.setState({ allFields:false });
-                                                }} />
-                                                {labels[ field ]}
-                                            </label>
-                                        </div>
-                                    );
-                                })
-                            }
+                          {
+                              checkFields.map(function(field, index){
+                                  checkAll = checkAll && that.state[field];
+                                  if (checkAll) {
+                                      selectedAllFields
+                                  }else{
+                                      selectedNoAllFields
+                                  }
+                                  return(
+                                      <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
+                                          <label key={index}>
+                                              <input id={index} type="checkbox" checked={that.state[field]}
+                                                  onChange={event => {
+                                                      that.setState({ [field]: event.target.checked });
+                                                      that.setState({ allFields:false });
+                                                  }} />
+                                              {labels[ field ]}
+                                          </label>
+                                      </div>
+                                  );
+                              })
+                          }
                         </div>
                     </div>
                     <div className="modal-footer">

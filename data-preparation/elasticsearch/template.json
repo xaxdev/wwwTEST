@@ -36,6 +36,24 @@
                         "lowercase",
                         "remove_space_filter"
                     ]
+                },
+                "remove_space_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "whitespace",
+                    "filter": [
+                        "lowercase",
+                        "remove_space_filter",
+                        "ngram_filter"
+                    ]
+                },
+                "email_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "uax_url_email",
+                    "filter" : [
+                        "email_filter",
+                        "lowercase",
+                        "unique"
+                    ]
                 }
             },
             "tokenizer": {
@@ -58,6 +76,17 @@
                     "type": "pattern_replace",
                     "pattern": " ",
                     "replacement": "_"
+                },
+                "email_filter": {
+                    "type": "pattern_capture",
+                    "preserve_original" : true,
+                    "patterns": [
+                        "([^@]+)",
+                        "(\\p{L}+)",
+                        "(\\d+)",
+                        "@(.+)",
+                        "([^-@]+)"
+                    ]
                 }
             }
         }
@@ -243,6 +272,50 @@
                         "mapping": {
                             "type": "nested"
                          }
+                    }
+                },
+                {
+                    "customerNameFullTextSearch": {
+                        "match_mapping_type": "string",
+                        "match_pattern": "regex",
+                        "match": "customerNameFullTextSearch",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "forward_slash_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "customerNameSplitTextSearch": {
+                        "match_mapping_type": "string",
+                        "match_pattern": "regex",
+                        "match": "customerNameSplitTextSearch",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "whitespace_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "customerEmail": {
+                        "match_mapping_type": "string",
+                        "match": "customerEmail",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "email_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
                     }
                 },
                 {

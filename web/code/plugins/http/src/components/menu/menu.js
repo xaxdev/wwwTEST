@@ -1,12 +1,16 @@
 import React,{Component,PropTypes} from 'react';
+import { reduxForm, reset } from 'redux-form';
 import { Link } from 'react-router';
 import { Navbar,Nav,NavDropdown,MenuItem,NavItem } from 'react-bootstrap';
+import ResetFormSalesReport from '../../utils/resertFormSalesReport';
+import * as itemactions from '../../actions/itemactions';
 
 class Menu extends Component {
     constructor(props, context) {
         super(props, context);
         this.handleClickMyCatalog = this.handleClickMyCatalog.bind(this);
         this.handleClickSetCatalog = this.handleClickSetCatalog.bind(this);
+        this.handleClickSalesReport = this.handleClickSalesReport.bind(this);
     }
 
     handleClickMyCatalog(e){
@@ -19,18 +23,24 @@ class Menu extends Component {
         this.context.router.push('/setcatalog');
     }
 
+    handleClickSalesReport = async (e) =>{
+        e.preventDefault();
+        await this.props.newSalesSearch();
+        this.context.router.push('/salesreport');
+    }
+
     render(){
         const props = this.props;
         const url = window.location.href;
         const countLastPath = url.split('/').length - 1;
         const lastPath = url.split('/')[countLastPath];
-        const { role } = JSON.parse(sessionStorage.logindata);
+        const { role, permission } = JSON.parse(sessionStorage.logindata);
         const UserManagement = role == 'Admin'? <NavItem href="/users" className={`${(props.currentLocation == '/users' ||
                                                                                     props.currentLocation == '/user' ||
                                                                                     props.currentLocation == '/user/new' ||
                                                                                     props.currentLocation.indexOf('user') != -1
                                                                                 )?'active':''}`}>User Management</NavItem> : '';
-        const MyCatalog = <NavDropdown id="catalog" title="Catalog">
+        const MyCatalog = <NavDropdown id="catalog" title="Catalog" className={`${(permission.userType != 'Sales')?'':'hidden'}`}>
                             <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog' ||
                                                                     props.currentLocation.indexOf('productmycatalog') != -1 ||
                                                                     props.currentLocation.indexOf('setdetailmycatalog') != -1
@@ -42,11 +52,18 @@ class Menu extends Component {
                                                                 )?'active': ''}`}
                                                         onClick={this.handleClickSetCatalog}>Set Catalog</NavItem>
                           </NavDropdown>;
-        // const MyCatalog = <NavItem href="/mycatalog" className={`${(props.currentLocation == '/mycatalog' ||
-        //                                                             props.currentLocation.indexOf('productmycatalog') != -1
-        //                                                         )?'active': ''}`}>My Catalog</NavItem>;
+
         const SaveSearch = <NavItem href="/savesearch" className={`${(props.currentLocation == '/savesearch')
                                                                     ? 'active': ''}`}>Save Searches</NavItem>;
+
+        const SalesReport = <button type="button" className={`${(props.currentLocation == '/salesreport' ||
+                                                                 props.currentLocation == '/salessearchresult' ||
+                                                                 props.currentLocation.indexOf('salesproductreletedetail') != -1 ||
+                                                                 props.currentLocation.indexOf('setsalesdetail') != -1 ||
+                                                                 props.currentLocation == '/salesproductdetail')
+                                                                 ? 'btn btn-primary btn-radius pull-right margin-t5'
+                                                                 : 'btn pull-right margin-t5 btn-radius'} ${(permission.userType != 'OnHand')?'':'hidden'}`}
+                                onClick={this.handleClickSalesReport}>Sales Report</button>
 
         return(
           <Navbar inverse >
@@ -65,8 +82,13 @@ class Menu extends Component {
                                                               props.currentLocation !== '/whatnewnotification' &&
                                                               props.currentLocation.indexOf('productmycatalog') == -1 &&
                                                               props.currentLocation.indexOf('setdetailmycatalog') == -1 &&
-                                                              props.currentLocation.indexOf('setdetailsetcatalog') == -1
-                                                           )?'active':''}`}>Inventory Report</NavItem>
+                                                              props.currentLocation.indexOf('setdetailsetcatalog') == -1 &&
+                                                              props.currentLocation.indexOf('salesreport') == -1 &&
+                                                              props.currentLocation.indexOf('salessearchresult') == -1 &&
+                                                              props.currentLocation.indexOf('salesproductreletedetail') == -1 &&
+                                                              props.currentLocation.indexOf('setsalesdetail') == -1 &&
+                                                              props.currentLocation.indexOf('salesproductdetail') == -1
+                                                          )?'active':''} ${(permission.userType != 'Sales')?'':'hidden'}`}>Inventory Report</NavItem>
                   {/*<NavItem href="#">My Catalog</NavItem>*/}
                   {/*<NavDropdown  title="Download" id="basic-nav-dropdown">
                     <MenuItem >Download</MenuItem>
@@ -76,6 +98,7 @@ class Menu extends Component {
                   {MyCatalog}
                   {UserManagement}
                   {SaveSearch}
+                  {SalesReport}
                 </Nav>
               </Navbar.Collapse>
           </Navbar>
@@ -87,4 +110,7 @@ Menu.contextTypes = {
 	router: PropTypes.object
 }
 
-module.exports = Menu
+module.exports = reduxForm({
+    form: 'Menu',
+    fields: [],
+},null,itemactions)(Menu)

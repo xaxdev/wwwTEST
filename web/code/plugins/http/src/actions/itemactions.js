@@ -2,13 +2,14 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {
-    FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE, SET_PAGESIZE,
-    SET_SORTBY, SET_SORTDIRECTION, SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS,
-    DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG, SET_NEWCATALOGNAME, DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION,
-    SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG, SET_ISCATALOGSHARED, POST_SAVESEARCH,
-    SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER,FETCH_ALLPDF,ADD_NEWSETCATALOGITEM, GET_SETCATALOGNAME, GET_SETCATALOGITEMS,
-    SET_RENAMESETCATALOG, SET_NEWSETCATALOGNAME, DELETE_SETCATALOG, SET_SHARESETCATALOG, SET_CLOSEALERTMSGSET, SET_SETCATALOGSORTBY,
-    SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG, FETCH_EXPORTITEMS
+    FETCH_ALLITEMS, FETCH_ITEM, ROOT_URL, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET_PARAMS, SET_CURRENTPAGE, SET_PAGESIZE, SET_SORTBY, SET_SORTDIRECTION,
+    SET_SHOWGRIDVIEW, SET_SHOWLISTVIEW, GET_CATALOGNAME, ADD_CATALOG, GET_CATALOGITEMS, DELETE_ITEMSFROMCATALOG, SET_SLECTEDCATALOG, SET_NEWCATALOGNAME,
+    DELETE_CATALOG, SET_CATALOGSORTBY, SET_CATALOGSORTDIRECTION, SET_CATALOGCURRENTPAGE, SET_RENAMECATALOG, WRITE_HTML, SET_SHARECATALOG, SET_CLOSEALERTMSG,
+    SET_ISCATALOGSHARED, POST_SAVESEARCH, SET_ISSAVESEARCH,SET_ITEMSORDER,SET_SETREFERENCEORDER,FETCH_ALLPDF,ADD_NEWSETCATALOGITEM, GET_SETCATALOGNAME,
+    GET_SETCATALOGITEMS, SET_RENAMESETCATALOG, SET_NEWSETCATALOGNAME, DELETE_SETCATALOG, SET_SHARESETCATALOG, SET_CLOSEALERTMSGSET, SET_SETCATALOGSORTBY,
+    SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG, FETCH_EXPORTITEMS,POST_SALESSAVESEARCH,SET_SALESPARAMS,SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS,
+    SET_SALESSORTBY, SET_SALESSORTDIRECTION, SET_SALESPAGESIZE, SET_SALESSHOWGRIDVIEW, SET_SALESSHOWLISTVIEW, NEWSALESSEARCH, MODIFY_SALESSEARCH,
+    SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER, FETCH_EXPORTSALESITEMS, FETCH_SALESALLPDF, SET_CURRENTSALESPAGE
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
@@ -32,16 +33,46 @@ export function getAllPDF(params){
         currPage: params.page
     }
 }
+export function getSalesAllPDF(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/items/salessearchpdf`;
+
+    return {
+        type: FETCH_SALESALLPDF,
+        promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        currPage: params.page
+    }
+}
 export function setSetReferenceOrder(value){
     return {
         type: SET_SETREFERENCEORDER,
         setReferenceOrder: value
     }
 }
+export function setSetReferenceSalesOrder(value){
+    return {
+        type: SET_SETREFERENCESALESORDER,
+        setReferenceSalesOrder: value
+    }
+}
 export function setItemsOrder(value){
     return {
         type: SET_ITEMSORDER,
         itemsOrder: value
+    }
+}
+export function setItemsSalesOrder(value){
+    return {
+        type: SET_ITEMSSALESORDER,
+        itemsSalesOrder: value
     }
 }
 
@@ -171,6 +202,23 @@ export function saveSearchCriteria(params){
         })
     }
 }
+export function saveSearchSalesCriteria(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/items/salessearch/save`;
+
+    return {
+        type: POST_SALESSAVESEARCH,
+        promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        })
+    }
+}
 export function setIsCatalogShare(value){
     return {
         type: SET_ISCATALOGSHARED,
@@ -189,6 +237,13 @@ export function setCloseAlertMsgSet(value){
     return {
         type: SET_CLOSEALERTMSGSET,
         closeAlertMsgSet:value
+    }
+}
+
+export function setCloseAlertMsgSales(value){
+    return {
+        type: SET_CLOSEALERTMSGSALES,
+        closeAlertMsgSales:value
     }
 }
 
@@ -422,10 +477,22 @@ export function setShowGridView(value){
         showGridView: value
     }
 }
+export function setSalesShowGridView(value){
+    return {
+        type: SET_SALESSHOWGRIDVIEW,
+        salesShowGridView: value
+    }
+}
 export function setShowListView(value){
     return {
         type: SET_SHOWLISTVIEW,
         showListView: value
+    }
+}
+export function setSalesShowListView(value){
+    return {
+        type: SET_SALESSHOWLISTVIEW,
+        salesShowListView: value
     }
 }
 export function setCatalogCurrentPage(value){
@@ -464,10 +531,22 @@ export function setSortingBy(value){
         sortingBy: value
     }
 }
+export function setSalesSortingBy(value){
+    return {
+        type: SET_SALESSORTBY,
+        salesSortingBy: value
+    }
+}
 export function setSortDirection(value){
     return {
         type: SET_SORTDIRECTION,
         sortDirection: value
+    }
+}
+export function setSalesSortDirection(value){
+    return {
+        type: SET_SALESSORTDIRECTION,
+        salesSortDirection: value
     }
 }
 export function getItems(params){
@@ -476,6 +555,25 @@ export function getItems(params){
 
     return {
         type: FETCH_ALLITEMS,
+        promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        currPage: params.page
+    }
+}
+
+export function getSalesItems(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/items/salessearch`;
+
+    return {
+        type: FETCH_ALLSALESITEMS,
         promise: fetch(url,{
             method: 'POST',
             body: JSON.stringify(params),
@@ -508,6 +606,25 @@ export function exportDatas(params){
     }
 }
 
+export function exportSalesDatas(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/items/export/sales`;
+
+    return {
+        type: FETCH_EXPORTSALESITEMS,
+        promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        currSalesPage: params.page
+    }
+}
+
 export function sortBy(data,sortBy,sortDirections){
     const token = sessionStorage.token;
     return {
@@ -524,11 +641,24 @@ export function newSearch(){
         type: NEWSEARCH
     }
 }
+export function newSalesSearch(){
+    const token = sessionStorage.token;
+    return {
+        type: NEWSALESSEARCH
+    }
+}
 export function modifySearch(paramsSearch){
     const token = sessionStorage.token;
     return {
         type: MODIFY_SEARCH,
         params: paramsSearch
+    }
+}
+export function modifySalesSearch(paramsSalesSearch){
+    const token = sessionStorage.token;
+    return {
+        type: MODIFY_SALESSEARCH,
+        params: paramsSalesSearch
     }
 }
 export function setParams(params){
@@ -538,15 +668,34 @@ export function setParams(params){
         params: params
     }
 }
+export function setSalesParams(params){
+    const token = sessionStorage.token;
+    return {
+        type: SET_SALESPARAMS,
+        params: params
+    }
+}
 export function setCurrentPage(value){
     return {
         type: SET_CURRENTPAGE,
         currentPage: value
     }
 }
+export function setCurrentSalesPage(value){
+    return {
+        type: SET_CURRENTSALESPAGE,
+        currentSalesPage: value
+    }
+}
 export function setPageSize(value){
     return {
         type: SET_PAGESIZE,
         pageSize: value
+    }
+}
+export function setSalesPageSize(value){
+    return {
+        type: SET_SALESPAGESIZE,
+        salesPageSize: value
     }
 }
