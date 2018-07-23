@@ -21,12 +21,12 @@ export default function(state = INITIAL_STATE,action){
                 ,totalpage:Math.ceil(!!action.data.lotNumbers ? filterLotNumbers(action.data.lotNumbers).length/20 : action.data.length/20)
             }
         case FETCH_SALESVIEWASSETDETAILS:
-            return {...state,salessetdetail:action.data, salessetindex:action.productlist?findSetIndex(action.productlist,action.productid):0
+            return {...state,detail:action.data, salessetindex:action.productlist?findSetIndex(action.productlist,action.productid):0
                 ,salessetindexplus:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
                 ,salessetpagego:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
                 ,salessetproductlist:action.productlist, salessettotalpage: Math.ceil(action.data.length/20)}
         case FETCH_SALESSETDETAILS:
-            return {...state,salessetdetail:action.data, salessetindex:action.productlist?findSetIndex(action.productlist,action.productid):0
+            return {...state,detail:action.data, salessetindex:action.productlist?findSetIndex(action.productlist,action.productid):0
                 ,salessetindexplus:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
                 ,salessetpagego:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
                 ,salessetproductlist:action.productlist, salessettotalpage: Math.ceil(action.data.length/20)}

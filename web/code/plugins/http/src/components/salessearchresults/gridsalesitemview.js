@@ -105,12 +105,12 @@ class GridSalesItemsView extends Component {
                             imagesProduct = (item.image) != undefined ? item.image.length != 0 ?item.image[0].original : '/images/blank.gif' : '/images/blank.gif';
                             itemDate = convertDate(item.postedDate);
                             lblDate = 'Posted Date:';
-                            price = numberFormat(item.totalPrice['USD']!=undefined?item.totalPrice['USD']:0) + ' ' + 'USD';
-                            actualCost = numberFormat(item.totalActualCost['USD']!=undefined?item.totalActualCost['USD']:0) + ' ' + 'USD';
-                            updatedCost = numberFormat(item.totalUpdatedCost['USD']!=undefined?item.totalUpdatedCost['USD']:0) + ' ' + 'USD';
-                            netSales = numberFormat(item.totalNetAmount['USD']!=undefined?item.totalNetAmount['USD']:0) + ' ' + 'USD';
-                            discount = numberFormat(item.totalDiscountAmount['USD']!=undefined?item.totalDiscountAmount['USD']:0) + ' ' + 'USD';
-                            marginAmount = numberFormat(item.totalMargin['USD']!=undefined?item.totalMargin['USD']:0) + ' ' + 'USD';
+                            price = numberFormat(item.totalPrice!=undefined?item.totalPrice['USD']:0) + ' ' + 'USD';
+                            actualCost = numberFormat(item.totalActualCost!=undefined?item.totalActualCost['USD']:0) + ' ' + 'USD';
+                            updatedCost = numberFormat(item.totalUpdatedCost!=undefined?item.totalUpdatedCost['USD']:0) + ' ' + 'USD';
+                            netSales = numberFormat(item.totalNetAmount!=undefined?item.totalNetAmount['USD']:0) + ' ' + 'USD';
+                            discount = numberFormat(item.totalDiscountAmount!=undefined?item.totalDiscountAmount['USD']:0) + ' ' + 'USD';
+                            marginAmount = numberFormat(item.totalMargin!=undefined?item.totalMargin['USD']:0) + ' ' + 'USD';
 
                             itemName = (item.type != 'CER')?
                                               (item.description != undefined) ?

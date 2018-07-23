@@ -904,7 +904,7 @@ SetSalesDetail.contextTypes = {
 function mapStateToProps(state) {
     return {
         initialValues: state.productdetail,
-        productdetail: state.productdetail.salessetdetail,
+        productdetail: state.productdetail.detail,
         productindex: state.productdetail.salessetindex,
         productindexplus: state.productdetail.salessetindexplus,
         productrelete: state.productdetail.relete,
