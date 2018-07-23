@@ -243,14 +243,27 @@ class SalesSearchResultOnItem extends Component {
         props.setItemsSalesOrder(null);
         props.setSetReferenceSalesOrder(null);
         props.setSalesSortingBy(e.target.value);
-        props.getSalesItems(params).then(async (value) => {
-            this.setState({showLoading: false});
-            if(girdView){
-                props.setSalesShowGridView(true);
-            }else if (listView) {
-                props.setSalesShowListView(true);
-            }
-        });
+        props.setCurrentSalesPage(1);
+        if (props.ViewAsSet) {
+            props.getSalesSetReferences(params).then(async (value) => {
+                this.setState({showLoading: false});
+                if(girdView){
+                    props.setSalesShowGridView(true);
+                }else if (listView) {
+                    props.setSalesShowListView(true);
+                }
+            });
+        }else{
+            props.getSalesItems(params).then(async (value) => {
+                this.setState({showLoading: false});
+                if(girdView){
+                    props.setSalesShowGridView(true);
+                }else if (listView) {
+                    props.setSalesShowListView(true);
+                }
+            });
+        }
+
         let { currPage } = props.fields;
         currPage.onChange(1);
         currPage.value = 1;
@@ -292,14 +305,26 @@ class SalesSearchResultOnItem extends Component {
         props.setItemsSalesOrder(null);
         props.setSetReferenceSalesOrder(null);
         props.setSalesSortDirection(e.target.value);
-        props.getSalesItems(params).then(async (value) => {
-            this.setState({showLoading: false});
-            if(girdView){
-                props.setSalesShowGridView(true);
-            }else if (listView) {
-                props.setSalesShowListView(true);
-            }
-        });
+        props.setCurrentSalesPage(1);
+        if (props.ViewAsSet) {
+            props.getSalesSetReferences(params).then(async (value) => {
+                this.setState({showLoading: false});
+                if(girdView){
+                    props.setSalesShowGridView(true);
+                }else if (listView) {
+                    props.setSalesShowListView(true);
+                }
+            });
+        }else{
+            props.getSalesItems(params).then(async (value) => {
+                this.setState({showLoading: false});
+                if(girdView){
+                    props.setSalesShowGridView(true);
+                }else if (listView) {
+                    props.setSalesShowListView(true);
+                }
+            });
+        }
         let { currPage } = props.fields;
         currPage.onChange(1);
         currPage.value = 1;
@@ -341,15 +366,26 @@ class SalesSearchResultOnItem extends Component {
         props.setSalesShowGridView(false);
         props.setSalesShowListView(false);
         this.setState({ showLoading: true });
-        props.setSalesPageSize(salesPageSize);
-        props.getSalesItems(params).then(async (value) => {
-            this.setState({showLoading: false});
-            if(girdView){
-                props.setSalesShowGridView(true);
-            }else if (listView) {
-                props.setSalesShowListView(true);
-            }
-        });
+        props.setCurrentSalesPage(1);
+        if (props.ViewAsSet) {
+            props.getSalesSetReferences(params).then(async (value) => {
+                this.setState({showLoading: false});
+                if(girdView){
+                    props.setSalesShowGridView(true);
+                }else if (listView) {
+                    props.setSalesShowListView(true);
+                }
+            });
+        }else{
+            props.getSalesItems(params).then(async (value) => {
+                this.setState({showLoading: false});
+                if(girdView){
+                    props.setSalesShowGridView(true);
+                }else if (listView) {
+                    props.setSalesShowListView(true);
+                }
+            });
+        }
     }
 
     handleSelect(eventKey) {
@@ -383,14 +419,25 @@ class SalesSearchResultOnItem extends Component {
         props.setSalesShowListView(false);
         this.setState({ showLoading: true });
         props.setCurrentSalesPage(eventKey);
-        props.getSalesItems(params).then(async (value) => {
-            this.setState({showLoading: false});
-            if(girdView){
-                props.setSalesShowGridView(true);
-            }else if (listView) {
-                props.setSalesShowListView(true);
-            }
-        });
+        if (props.ViewAsSet) {
+            props.getSalesSetReferences(params).then(async (value) => {
+                this.setState({showLoading: false});
+                if(girdView){
+                    props.setSalesShowGridView(true);
+                }else if (listView) {
+                    props.setSalesShowListView(true);
+                }
+            });
+        }else{
+            props.getSalesItems(params).then(async (value) => {
+                this.setState({showLoading: false});
+                if(girdView){
+                    props.setSalesShowGridView(true);
+                }else if (listView) {
+                    props.setSalesShowListView(true);
+                }
+            });
+        }
         let { currPage } = props.fields;
         currPage.onChange(eventKey);
     }
@@ -431,14 +478,25 @@ class SalesSearchResultOnItem extends Component {
             props.setSalesShowListView(false);
             props.setCurrentSalesPage(getPage);
             this.setState({ showLoading: true });
-            props.getSalesItems(params).then(async (value) => {
-                this.setState({showLoading: false});
-                if(girdView){
-                    props.setSalesShowGridView(true);
-                }else if (listView) {
-                    props.setSalesShowListView(true);
-                }
-            });
+            if (props.ViewAsSet) {
+                props.getSalesSetReferences(params).then(async (value) => {
+                    this.setState({showLoading: false});
+                    if(girdView){
+                        props.setSalesShowGridView(true);
+                    }else if (listView) {
+                        props.setSalesShowListView(true);
+                    }
+                });
+            }else{
+                props.getSalesItems(params).then(async (value) => {
+                    this.setState({showLoading: false});
+                    if(girdView){
+                        props.setSalesShowGridView(true);
+                    }else if (listView) {
+                        props.setSalesShowListView(true);
+                    }
+                });
+            }
         }
     }
 
@@ -857,10 +915,10 @@ class SalesSearchResultOnItem extends Component {
                                         ViewAsSet
                                         ?
                                         <select className="form-searchresult" onChange={this.salesSortingBy} ref="salesSortingBy">
-                                            <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                            <option key={'netAmount'} value={'netAmount'}>{'Net Sales'}</option>
+                                            <option key={'postedDate'} value={'postedDate'}>{'Updated Date'}</option>
+                                            <option key={'totalNetAmount'} value={'totalNetAmount'}>{'Net Sales'}</option>
                                             <option key={'description'} value={'description'}>{'Description'}</option>
-                                            <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>
+                                            <option key={'reference'} value={'reference'}>{'Set Reference Number'}</option>
                                         </select>
                                         :
                                         <select className="form-searchresult" onChange={this.salesSortingBy} ref="salesSortingBy">
@@ -910,7 +968,7 @@ class SalesSearchResultOnItem extends Component {
                                     <div className="col-md-3 col-sm-12 col-xs-12 nopadding">
                                         {
                                             ViewAsSet
-                                            ? <a><div className="icon-excel" disabled={submitting}
+                                            ? <a><div className="icon-excel hidden" disabled={submitting}
                                                   onClick={ this.exportExcelViewAsSet }></div></a>
                                             : <a><div className="icon-excel" disabled={submitting}
                                                   onClick={ this.exportExcel }></div></a>

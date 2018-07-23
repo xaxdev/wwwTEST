@@ -66,6 +66,8 @@ SELECT	SOL.[Id] AS 'id'
 		, ISNULL(img.[FILETYPE], '') AS 'imageType'
 		, ISNULL(img.[TYPEID], '') AS 'imageTypeId'
 		, ISNULL(img.[Company], '') AS 'imageCompany'
+		, ISNULL(setimg.[FILENAME], '') AS 'setImageName'
+		, ISNULL(setimg.[FILETYPE], '') AS 'setImageType'
 		, 'JLY' AS 'type'
 		, ISNULL(SOL.[SetReference], '') AS 'setReference'
 		, gemstone.[Id] AS 'gemstone_id'
@@ -108,6 +110,10 @@ FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 			ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
 			AND certimage.[Company] = SOL.[DataAreaId]
 			AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
+		LEFT JOIN [ITORAMA].[dbo].[ItemImages] setimg
+			ON SOL.[SetReference] = setimg.[ITEMID]
+			AND setimg.[Company] = 'mme'
+			AND setimg.[TYPEID] = 'Image'
 		LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
 			ON cert.[CERTIFICATIONNO] = certmaster.[Item]
 			AND SOL.[DataAreaId] = certmaster.[Company]

@@ -60,9 +60,17 @@ class SetSalesDetail extends Component {
 
         this.setState({ productdetailLoading: true });
 
-        this.props.getSalesSetDetails(setReferenceId,setReferencelist).then(()=>{
-            this.setState({ productdetailLoading: false });
-        });
+        if (this.props.viewAsSet) {
+            this.props.getSalesViewAsSetDetails(setReferenceId,setReferencelist).then(()=>{
+                this.setState({ productdetailLoading: false });
+            });
+        }else{
+            this.props.getSalesSetDetails(setReferenceId,setReferencelist).then(()=>{
+                this.setState({ productdetailLoading: false });
+            });
+        }
+
+
     }
 
     componentDidMount = _ => {
@@ -163,9 +171,15 @@ class SetSalesDetail extends Component {
 
             this.setState({ productdetailLoading: true });
 
-            this.props.getSalesSetDetails(setReferenceId,setReferencelist).then(()=>{
-                this.setState({ productdetailLoading: false });
-            });
+            if (this.props.viewAsSet) {
+                this.props.getSalesViewAsSetDetails(setReferenceId,setReferencelist).then(()=>{
+                    this.setState({ productdetailLoading: false });
+                });
+            }else{
+                this.props.getSalesSetDetails(setReferenceId,setReferencelist).then(()=>{
+                    this.setState({ productdetailLoading: false });
+                });
+            }
         }
     }
 

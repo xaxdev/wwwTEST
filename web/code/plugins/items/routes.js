@@ -36,6 +36,11 @@ module.exports = [
         config: controllers.salessearch
     },
     {
+        method: 'POST',
+        path: '/salessetreference',
+        config: controllers.salessetreference
+    },
+    {
         method: 'GET',
         path: '/relateditems/{collection}/{page}/{productId}/{dominant}/{currency}/{price}',
         config: controllers.relateditems
@@ -127,6 +132,11 @@ module.exports = [
     },
     {
         method: 'GET',
+        path: '/salesviewassetitem/{id}',
+        config: controllers.salesviewassetitem
+    },
+    {
+        method: 'GET',
         path: '/salesrelateditems/{collection}/{page}/{productId}/{dominant}/{currency}/{price}',
         config: controllers.salesrelateditems
     },
@@ -134,6 +144,11 @@ module.exports = [
         method: 'GET',
         path: '/salessetdetails/{setReference}',
         config: controllers.salessetdetails
+    },
+    {
+        method: 'GET',
+        path: '/salesviewassetdetails/{setReference}',
+        config: controllers.salesviewassetdetails
     },
     {
         method: 'POST',

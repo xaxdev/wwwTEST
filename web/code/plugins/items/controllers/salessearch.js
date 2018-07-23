@@ -5,6 +5,8 @@ const Joi = require('joi');
 const Promise = require('bluebird');
 const GetSalesSearch = require('../utils/getSalesSearch');
 const getAllSalesData = require('../utils/getAllSalesData');
+const getSalesSetReference = require('../utils/getSalesSetReference');
+const saveSalesSetReferenceData =  require('../utils/saveSalesSetReferenceData');
 
 const internals = {
     filters: []
@@ -58,7 +60,7 @@ module.exports = {
             ps.push(getClarityItems(internals.query));
         }
 
-        console.log(JSON.stringify(internals.query, null, 2));
+        // console.log(JSON.stringify(internals.query, null, 2));
 
         const getAllSalesItems =  elastic.search({
             index: 'mol_solditems',
@@ -66,157 +68,23 @@ module.exports = {
             body: internals.query
         });
 
-        const getSetReference = getAllSalesItems.then((response) => {
-            const setReferenceResult = response.hits.hits.map((element) => element._source);
-            const setReferenceFilter = setReferenceResult.filter((item) => {
-                return item.setReference != undefined && item.setReference != '';
-            })
-            const setReferenceArray = setReferenceFilter.map((item) => {
-                return item.setReference;
-            })
-            const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
-                return !pos || item != ary[pos - 1];
-            })
-            let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-            if (sortBy.indexOf('price') != -1) {
-                sortBy = 'totalPrice.USD';
-            }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'postedDate';
-            }else if (sortBy.indexOf('setReference') != -1) {
-                sortBy = 'reference';
-            }else{
-                sortBy = sortBy;
-            }
-
-            let missing = '';
-
-            switch (sortDirections) {
-                case 'asc':
-                    missing = '"missing" : "_first"';
-                    missing = `{"${sortBy}" : {${missing}}},`;
-                    break;
-                default:
-                    break;
-            }
-
-            const query = JSON.parse(
-                `{
-                    "timeout": "5s",
-                    "from": 0,
-                    "size": 10000,
-                    "sort" : [
-                        ${missing}
-                        {"${sortBy}" : "${sortDirections}"}
-                    ],
-                    "query":{
-                        "constant_score": {
-                            "filter": {
-                                "bool": {
-                                    "must": [
-                                        {
-                                            "match": {
-                                                "reference": "${setReferenceUniq.join(' ')}"
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }`
-            );
-
-            return elastic.search({
-                index: 'mol_solditems',
-                type: 'setitems',
-                body: query
-            })
-        });
-
-        const getSetReferenceData = (data) => {
-            const setReferenceResult = data;
-            const setReferenceFilter = setReferenceResult.filter((item) => {
-                return item.setReference != undefined && item.setReference != '';
-            })
-            const setReferenceArray = setReferenceFilter.map((item) => {
-                return item.setReference;
-            })
-            const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
-                return !pos || item != ary[pos - 1];
-            })
-            let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-            if (sortBy.indexOf('price') != -1) {
-                sortBy = 'totalPrice.USD';
-            }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'postedDate';
-            }else if (sortBy.indexOf('setReference') != -1) {
-                sortBy = 'reference';
-            }else if (sortBy.indexOf('netAmount') != -1) {
-                sortBy = 'totalNetAmount.USD';
-            }else{
-                sortBy = sortBy;
-            }
-
-            let missing = '';
-
-            switch (sortDirections) {
-                case 'asc':
-                    missing = '"missing" : "_first"';
-                    missing = `{"${sortBy}" : {${missing}}},`;
-                    break;
-                default:
-                    break;
-            }
-
-            const query = JSON.parse(
-                `{
-                    "timeout": "5s",
-                    "from": 0,
-                    "size": 10000,
-                    "sort" : [
-                        ${missing}
-                        {"${sortBy}" : "${sortDirections}"}
-                    ],
-                    "query":{
-                        "constant_score": {
-                            "filter": {
-                                "bool": {
-                                    "must": [
-                                        {
-                                            "match": {
-                                                "reference": "${setReferenceUniq.join(' ')}"
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }`
-            );
-
-            return elastic.search({
-                index: 'mol_solditems',
-                type: 'setitems',
-                body: query
-            })
-        };
-
         try {
             Promise.all(ps).then(async (allItems) => {
                 let data = [];
                 await allItems.map((all) => {
                     data.push(...all.hits.hits.map((element) => element._source))
                 })
-                const setReferences = await getSetReferenceData(data);
-                const setReferenceData = setReferences.hits.hits.map((element) => element._source);
 
                 let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
                 elastic.close();
 
                 if (isViewAsSet) {
-                    return reply(getAllSalesData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
+                    data = data.sort(compareBy('setReference','asc'));
+                    let setSalesReferences = await getSalesSetReference(data);
+
+                    await saveSalesSetReferenceData(request,setSalesReferences);
+                    return reply(getAllSalesData(setSalesReferences, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
                         setReferencdOrder,isSetReference
                     ));
                 }else {
@@ -237,3 +105,35 @@ module.exports = {
         }
     }
 };
+
+const compareBy = (property, order = 'asc') => (a, b) => {
+    if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
+        return 0;
+    }
+    let priceA = 0;
+    let priceB = 0;
+    const first = (property.toLowerCase().indexOf('price') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? a[property] != undefined
+                        ? a[property] != undefined ? a[property]: 0
+                        : 0
+                    : a[property]
+    const second = (property.toLowerCase().indexOf('price') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? b[property] != undefined
+                        ? b[property] != undefined ? b[property] : 0
+                        : 0
+                    : b[property]
+    if (typeof first !== typeof second) {
+        return 0
+    }
+
+    let comparison = 0
+    if (first > second) {
+        comparison = 1
+    }
+
+    if (first < second) {
+        comparison = -1
+    }
+
+    return (order === 'desc')? (comparison * -1) : comparison
+}

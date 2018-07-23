@@ -4,7 +4,7 @@ import {FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET
     GET_SAVESALESCRITERIA, SET_SALESPARAMS, MODIFY_SALESSEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH,
     GET_SALESSAVECRITERIA, POST_SALESSAVESEARCH, SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS,SET_SALESSORTBY,SET_SALESSORTDIRECTION,SET_SALESPAGESIZE,
     SET_SALESSHOWGRIDVIEW, SET_SALESSHOWLISTVIEW, NEWSALESSEARCH, SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER,FETCH_EXPORTSALESITEMS,FETCH_SALESALLPDF,
-    SET_CURRENTSALESPAGE
+    SET_CURRENTSALESPAGE, FETCH_ALLSALESSETREFERENCE
 } from '../../constants/itemconstants';
 
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY, SET_CERTIFICATELAB, SET_POLISH,
@@ -36,6 +36,14 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case FETCH_ALLSALESSETREFERENCE:
+            return {...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/action.data.pageSize),
+                totalpublicprice: action.data.summary.price, totalupdatedcost: action.data.summary.cost, currentPage: action.currentSalesPage,
+                allItems: action.data.allData, exportItems: action.data.exportData, maxPrice: action.data.summary.maxPrice,
+                minPrice: action.data.summary.minPrice, avrgPrice: action.data.summary.avrgPrice, totalnetamount: action.data.summary.netAmount,
+                totaldiscount: action.data.summary.disconst,totalmargin: action.data.summary.margin
+            };
+            break;
         case SET_CURRENTSALESPAGE :
             return {...state, currentSalesPage: action.currentSalesPage };
             break;

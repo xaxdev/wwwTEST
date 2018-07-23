@@ -2,10 +2,25 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {
-    FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME, ADD_CATALOG, GET_CERTIFICATE, FETCH_SALESPRODUCTDETAIL
+    FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME, ADD_CATALOG, GET_CERTIFICATE, FETCH_SALESPRODUCTDETAIL,
+    FETCH_SALESVIEWASSETPRODUCTDETAIL, FETCH_SALESPRODUCTRELETED
 } from '../constants/productdetailconstants';
 
-
+export function getSalesProductRelete(collection,page,productId,dominant,currency,price){
+    const token = sessionStorage.token;
+    return {
+        type: FETCH_SALESPRODUCTRELETED,
+        promise: fetch( `${ROOT_URL}api/items/salesrelateditems/${collection}/${page}/${productId}/${dominant}/${currency}/${price}`,{
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            method:'GET'
+        }),
+        page:page
+    }
+}
 export function getCertificate(params){
     const token = sessionStorage.token;
     const url = `${ROOT_URL}api/items/certificate/${params.productId}`;
@@ -27,6 +42,22 @@ export function getSalesProductDetail(productId,productlist){
     return {
         type: FETCH_SALESPRODUCTDETAIL,
         promise: fetch(`${ROOT_URL}api/items/salesitem/${productId}`,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        productid:productId,
+        productlist:productlist
+    }
+}
+export function getSalesViewAsSetProductDetail(productId,productlist){
+    const token = sessionStorage.token;
+    return {
+        type: FETCH_SALESVIEWASSETPRODUCTDETAIL,
+        promise: fetch(`${ROOT_URL}api/items/salesviewassetitem/${productId}`,{
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

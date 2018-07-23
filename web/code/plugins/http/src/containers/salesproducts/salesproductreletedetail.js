@@ -61,18 +61,33 @@ class SalesProductReleteDetail extends Component {
         const productId = this.props.params.id;
         const productlist = this.props.productlist;
         this.setState({ productdetailLoading: true });
+        console.log('viewAsSet-->',this.props.ViewAsSet);
 
-        this.props.getSalesProductDetail(productId).then(()=>{
-            const  Detail  = this.props.productdetail;
-            if(Detail.type != 'STO' || Detail.type != 'CER'){
-                const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-                const currency = logindata.currency;
-                if(Detail.dominant){
-                    this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+        if (this.props.ViewAsSet) {
+            this.props.getSalesViewAsSetProductDetail(productId).then(()=>{
+                const  Detail  = this.props.productdetail;
+                if(Detail.type != 'STO' || Detail.type != 'CER'){
+                    const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+                    const currency = logindata.currency;
+                    if(Detail.dominant){
+                        this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                    }
                 }
-            }
-            this.setState({ productdetailLoading: false });
-        });
+                this.setState({ productdetailLoading: false });
+            });
+        }else{
+            this.props.getSalesProductDetail(productId).then(()=>{
+                const  Detail  = this.props.productdetail;
+                if(Detail.type != 'STO' || Detail.type != 'CER'){
+                    const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+                    const currency = logindata.currency;
+                    if(Detail.dominant){
+                        this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                    }
+                }
+                this.setState({ productdetailLoading: false });
+            });
+        }
 
         jQuery('#zoomimg').magnificPopup({
             key: 'my-popup',
@@ -136,15 +151,31 @@ class SalesProductReleteDetail extends Component {
             const productId = nextProps.params.id;
             this.setState({ productdetailLoading: true });
             const productlist = this.props.productlist;
-            this.props.getSalesProductDetail(productId).then(()=>{
-                const  Detail  = this.props.productdetail;
-                const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-                const currency = logindata.currency;
-                if(Detail.dominant){
-                    this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
-                }
-                this.setState({ productdetailLoading: false });
-            });
+            if (this.props.ViewAsSet) {
+                this.props.getSalesViewAsSetProductDetail(productId).then(()=>{
+                    const  Detail  = this.props.productdetail;
+                    if(Detail.type != 'STO' || Detail.type != 'CER'){
+                        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+                        const currency = logindata.currency;
+                        if(Detail.dominant){
+                            this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                        }
+                    }
+                    this.setState({ productdetailLoading: false });
+                });
+            }else{
+                this.props.getSalesProductDetail(productId).then(()=>{
+                    const  Detail  = this.props.productdetail;
+                    if(Detail.type != 'STO' || Detail.type != 'CER'){
+                        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+                        const currency = logindata.currency;
+                        if(Detail.dominant){
+                            this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                        }
+                    }
+                    this.setState({ productdetailLoading: false });
+                });
+            }
         }
     }
 
