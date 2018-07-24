@@ -14,9 +14,7 @@ module.exports = {
         }
     },
     handler: (request, reply) => {
-
         (async () => {
-
             try {
                 const userHelper = request.user
                 const helper = request.helper
@@ -33,9 +31,9 @@ module.exports = {
                 const sorting = { [sort]: order }
                 let allData = [];
 
-                let setReferences = await db.collection('SetReferenceSearch').find({ "userId": request.auth.credentials.id  })
+                let setReferences = await db.collection('SetReferenceSearch').find({"userId": request.auth.credentials.id})
                 .sort(sorting).limit(size).skip((page - 1) * size).toArray()
-                let exportData = await db.collection('SetReferenceSearch').find({ "userId": request.auth.credentials.id  }).toArray()
+                let exportData = await db.collection('SetReferenceSearch').find({"userId": request.auth.credentials.id}).sort(sorting).toArray()
                 exportData = exportData.map(function(item){
                     const netamount = item.totalNetAmount;
                     delete item.totalNetAmount

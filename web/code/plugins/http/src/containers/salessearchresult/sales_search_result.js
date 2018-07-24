@@ -57,7 +57,7 @@ class SalesSearchResult extends Component {
         const paramsSalesSearchStorage =  JSON.parse(sessionStorage.paramsSalesSearch);
         // this.props.setCurrentSalesPage(1);
         this.props.setSalesParams(paramsSalesSearchStorage)
-        if (this.props.salesSortingBy != 'postedDate') {
+        if (this.props.ViewAsSet) {
             this.props.getSalesSetReferences(params)
         }else{
             this.props.getSalesItems(params);
