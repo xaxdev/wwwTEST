@@ -33,7 +33,7 @@ class SalesSearchResult extends Component {
         }
     }
     componentWillMount() {
-        const { ItemsSalesOrder, SetReferenceSalesOrder } = this.props;
+        const { ItemsSalesOrder, SetReferenceSalesOrder, firstSearch } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         let salesSortingBy = '';
         switch (this.props.salesSortingBy) {
@@ -58,7 +58,11 @@ class SalesSearchResult extends Component {
         // this.props.setCurrentSalesPage(1);
         this.props.setSalesParams(paramsSalesSearchStorage)
         if (this.props.ViewAsSet) {
-            this.props.getSalesSetReferences(params)
+            if (firstSearch != 1) {
+                this.props.getSalesSetReferences(params)
+            }else{
+                this.props.getSalesItems(params);
+            }
         }else{
             this.props.getSalesItems(params);
         }
@@ -188,6 +192,7 @@ function mapStateToProps(state) {
         totalNetAmount: state.searchResult.totalnetamount,
         totalDiscount: state.searchResult.totaldiscount,
         totalMargin: state.searchResult.totalmargin,
+        firstSearch: state.searchResult.firstSearch,
     }
 }
 SalesSearchResult.contextTypes = {

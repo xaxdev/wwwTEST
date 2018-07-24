@@ -41,6 +41,7 @@ class SalesReport extends Component {
         this.props.setCurrentSalesPage(1);
         this.props.setSalesSortingBy('postedDate');
         this.props.setSalesSortDirection('desc');
+        this.props.setFirstSearch(1);
 
         switch (submitAction) {
             case 'save':

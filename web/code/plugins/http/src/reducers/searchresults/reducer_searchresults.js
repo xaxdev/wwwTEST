@@ -4,7 +4,7 @@ import {FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET
     GET_SAVESALESCRITERIA, SET_SALESPARAMS, MODIFY_SALESSEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH,
     GET_SALESSAVECRITERIA, POST_SALESSAVESEARCH, SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS,SET_SALESSORTBY,SET_SALESSORTDIRECTION,SET_SALESPAGESIZE,
     SET_SALESSHOWGRIDVIEW, SET_SALESSHOWLISTVIEW, NEWSALESSEARCH, SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER,FETCH_EXPORTSALESITEMS,FETCH_SALESALLPDF,
-    SET_CURRENTSALESPAGE, FETCH_ALLSALESSETREFERENCE
+    SET_CURRENTSALESPAGE, FETCH_ALLSALESSETREFERENCE, FIRSTSEARCH
 } from '../../constants/itemconstants';
 
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY, SET_CERTIFICATELAB, SET_POLISH,
@@ -31,11 +31,14 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
     nameEditSalesSaveSearch: null, criteriaSalesSaveSearch: null, paramsSalesSearch:null, saveSalesSearchStatus: false, msgSales: '',
     saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, saveSearchSalesHierarchy: null, SalesSortingBy:'postedDate', SalesSortDirection:'desc',
     currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, SalesShowGridView: true, SalesShowListView: false,
-    totalnetamount: null,totaldiscount: null,totalmargin:null, GemStoneTypeValue:[], InvoiceDateFrom:null, InvoiceDateTo:null
+    totalnetamount: null,totaldiscount: null,totalmargin:null, GemStoneTypeValue:[], InvoiceDateFrom:null, InvoiceDateTo:null, firstSearch: null
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case FIRSTSEARCH :
+            return {...state, firstSearch: action.value };
+            break;
         case FETCH_ALLSALESSETREFERENCE:
             return {...state, datas: action.data.data, totalpage:Math.ceil(action.data.summary.count/action.data.pageSize),
                 totalpublicprice: action.data.summary.price, totalupdatedcost: action.data.summary.cost, currentPage: action.currentSalesPage,

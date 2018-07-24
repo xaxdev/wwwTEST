@@ -244,6 +244,7 @@ class SalesSearchResultOnItem extends Component {
         props.setSetReferenceSalesOrder(null);
         props.setSalesSortingBy(e.target.value);
         props.setCurrentSalesPage(1);
+        props.setFirstSearch(2);
         if (props.ViewAsSet) {
             props.getSalesSetReferences(params).then(async (value) => {
                 this.setState({showLoading: false});
@@ -306,6 +307,7 @@ class SalesSearchResultOnItem extends Component {
         props.setSetReferenceSalesOrder(null);
         props.setSalesSortDirection(e.target.value);
         props.setCurrentSalesPage(1);
+        props.setFirstSearch(2);
         if (props.ViewAsSet) {
             props.getSalesSetReferences(params).then(async (value) => {
                 this.setState({showLoading: false});
@@ -367,6 +369,7 @@ class SalesSearchResultOnItem extends Component {
         props.setSalesShowListView(false);
         this.setState({ showLoading: true });
         props.setCurrentSalesPage(1);
+        props.setFirstSearch(2);
         if (props.ViewAsSet) {
             props.getSalesSetReferences(params).then(async (value) => {
                 this.setState({showLoading: false});
@@ -419,6 +422,7 @@ class SalesSearchResultOnItem extends Component {
         props.setSalesShowListView(false);
         this.setState({ showLoading: true });
         props.setCurrentSalesPage(eventKey);
+        props.setFirstSearch(2);
         if (props.ViewAsSet) {
             props.getSalesSetReferences(params).then(async (value) => {
                 this.setState({showLoading: false});
@@ -477,6 +481,7 @@ class SalesSearchResultOnItem extends Component {
             props.setSalesShowGridView(false);
             props.setSalesShowListView(false);
             props.setCurrentSalesPage(getPage);
+            props.setFirstSearch(2);
             this.setState({ showLoading: true });
             if (props.ViewAsSet) {
                 props.getSalesSetReferences(params).then(async (value) => {
@@ -694,9 +699,11 @@ class SalesSearchResultOnItem extends Component {
     selectedShowImages = event =>{
         this.setState({ showImages: event.target.checked })
     }
+
     selectedAllFields = _ =>{
         this.setState({ allFields:true });
     }
+
     selectedNoAllFields = _ =>{
         this.setState({ allFields:false });
     }
