@@ -38,7 +38,7 @@ class SalesReport extends Component {
 
         delete data.searchName;
 
-        this.props.setCurrentPage(1);
+        this.props.setCurrentSalesPage(1);
         this.props.setSalesSortingBy('postedDate');
         this.props.setSalesSortDirection('desc');
 

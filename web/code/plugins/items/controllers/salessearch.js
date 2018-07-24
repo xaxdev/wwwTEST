@@ -61,7 +61,7 @@ module.exports = {
         }
 
         // console.log(JSON.stringify(internals.query, null, 2));
-
+        console.log('Create Query');
         const getAllSalesItems =  elastic.search({
             index: 'mol_solditems',
             type: 'solditems',
@@ -71,6 +71,7 @@ module.exports = {
         try {
             Promise.all(ps).then(async (allItems) => {
                 let data = [];
+                console.log('Get All data');
                 await allItems.map((all) => {
                     data.push(...all.hits.hits.map((element) => element._source))
                 })
@@ -81,9 +82,13 @@ module.exports = {
 
                 if (isViewAsSet) {
                     data = data.sort(compareBy('setReference','asc'));
+                    console.log('Create data set for view as set.');
                     let setSalesReferences = await getSalesSetReference(data);
+                    console.log('Sorting data set');
                     setSalesReferences = setSalesReferences.sort(compareBy(sortBy,sortDirections));
+                    console.log('Start save set data to es.');
                     await saveSalesSetReferenceData(request,setSalesReferences);
+                    console.log('End save set data to es.');
                     return reply(getAllSalesData(setSalesReferences, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
                         setReferencdOrder,isSetReference
                     ));

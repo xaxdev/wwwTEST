@@ -53,10 +53,7 @@ class SalesSearchResult extends Component {
         };  // default search params
 
         const filters =  JSON.parse(sessionStorage.filters);
-        console.log('filters-->',filters);
         params = GetGemstoneLotnumberFilter(filters, params);
-        console.log('params-->',params);
-        console.log('ViewAsSet-->',this.props.ViewAsSet);
         const paramsSalesSearchStorage =  JSON.parse(sessionStorage.paramsSalesSearch);
         // this.props.setCurrentSalesPage(1);
         this.props.setSalesParams(paramsSalesSearchStorage)
