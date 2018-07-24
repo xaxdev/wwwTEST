@@ -48,15 +48,23 @@ class SalesSearchResult extends Component {
               break;
         }
         let params = {
-            'page' : 1, 'sortBy': salesSortingBy, 'sortDirections': this.props.salesSortDirection, 'pageSize' : this.props.salesPageSize,
+            'page' : this.props.currentSalesPage, 'sortBy': salesSortingBy, 'sortDirections': this.props.salesSortDirection, 'pageSize' : this.props.salesPageSize,
             'ItemsSalesOrder': ItemsSalesOrder,'SetReferenceSalesOrder': SetReferenceSalesOrder
         };  // default search params
 
         const filters =  JSON.parse(sessionStorage.filters);
+        console.log('filters-->',filters);
         params = GetGemstoneLotnumberFilter(filters, params);
         console.log('params-->',params);
+        console.log('ViewAsSet-->',this.props.ViewAsSet);
         const paramsSalesSearchStorage =  JSON.parse(sessionStorage.paramsSalesSearch);
+        // this.props.setCurrentSalesPage(1);
         this.props.setSalesParams(paramsSalesSearchStorage)
+        // if (this.props.ViewAsSet) {
+        //     this.props.getSalesSetReferences(params)
+        // }else{
+        //     this.props.getSalesItems(params);
+        // }
         this.props.getSalesItems(params);
     }
 

@@ -82,7 +82,7 @@ module.exports = {
                 if (isViewAsSet) {
                     data = data.sort(compareBy('setReference','asc'));
                     let setSalesReferences = await getSalesSetReference(data);
-
+                    setSalesReferences = setSalesReferences.sort(compareBy(sortBy,sortDirections));
                     await saveSalesSetReferenceData(request,setSalesReferences);
                     return reply(getAllSalesData(setSalesReferences, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
                         setReferencdOrder,isSetReference
