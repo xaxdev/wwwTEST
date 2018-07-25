@@ -1,4 +1,4 @@
-export default function ClearHierarchy(value){
+export default function DeleteHierarchy(value){
     return value.map((val) => {
         let checkAllNodes = function(node){
             if (node.children) {

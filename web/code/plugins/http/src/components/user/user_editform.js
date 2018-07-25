@@ -132,7 +132,6 @@ class UserDetailsFrom extends Component {
         ClearHierarchy(hierarchyDataAccessory);
         ClearHierarchy(hierarchyDataOBA);
         ClearHierarchy(hierarchyDataSpare);
-
         ClearHierarchy(hierarchyDataJewelrySales);
         ClearHierarchy(hierarchyDataWatchSales);
         ClearHierarchy(hierarchyDataStoneSales);

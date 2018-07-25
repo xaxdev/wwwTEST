@@ -61,7 +61,6 @@ class SalesProductReleteDetail extends Component {
         const productId = this.props.params.id;
         const productlist = this.props.productlist;
         this.setState({ productdetailLoading: true });
-        console.log('viewAsSet-->',this.props.ViewAsSet);
 
         if (this.props.ViewAsSet) {
             this.props.getSalesViewAsSetProductDetail(productId).then(()=>{
@@ -421,14 +420,9 @@ class SalesProductReleteDetail extends Component {
                         <h2>SET DETAILS</h2>
                         <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
                             <input id="totalsetprice" type="hidden" value={parseInt(setReferenceData.totalprice['USD'])} />
-                            <ReactImageFallback
-                            id="imgset"
-                            src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                            fallbackImage="/images/blank.gif"
-                            initialImage="/images/blank.gif"
-                            width={120}
-                            height={120}
-                            className="img-responsive" />
+                            <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                                fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={120} height={120}
+                                className="img-responsive" />
                         </div>
                         <Setreference productset={setReferenceData}/>
                     </div>
@@ -744,7 +738,7 @@ class SalesProductReleteDetail extends Component {
         } else {
             return(
                 <div>
-                     <a style={styles.displaynone}><div className="icon-coa margin-l10" id="imagesCOA"></div></a>
+                    <a style={styles.displaynone}><div className="icon-coa margin-l10" id="imagesCOA"></div></a>
                 </div>
             );
         }
@@ -767,7 +761,7 @@ class SalesProductReleteDetail extends Component {
         } else {
             return(
                 <div>
-                     <a style={styles.displaynone}><div className="icon-dbc margin-l10" id="imagesDBC"></div></a>
+                    <a style={styles.displaynone}><div className="icon-dbc margin-l10" id="imagesDBC"></div></a>
                 </div>
             );
         }

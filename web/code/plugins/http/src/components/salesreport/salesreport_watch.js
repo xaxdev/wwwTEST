@@ -11,6 +11,7 @@ import RemoveSalesHierarchy from './utils/remove_hierarchy';
 import SearchSalesHierarchy from './utils/search_hierarchy';
 import DeleteSalesHierarchy from './utils/delete_hierarchy_attr';
 
+DeleteSalesHierarchy([TreeData]);
 let hiTreeData = TreeData;
 
 class SalesReportWatch extends Component {
