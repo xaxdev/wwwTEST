@@ -350,6 +350,7 @@ class UserDetailsFrom extends Component {
                     onhand.onChange('All');
                     onhandAll.onChange(true);
                 }
+                this.setState({changedOnHandLocation: true});
             }else {
                 if (this.state.clickAllLocarion) {
                     checkedBoxes = valuesAllCompany;
@@ -359,6 +360,7 @@ class UserDetailsFrom extends Component {
                 checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
                 this.setState({selectedOnHandLocation: false});
                 this.setState({clickAllLocarion: false});
+                this.setState({changedOnHandLocation: false});
             }
             stateChange[name] = checkedBoxes;
         } else {
@@ -415,6 +417,7 @@ class UserDetailsFrom extends Component {
                     sales.onChange('All');
                     salesAll.onChange(true);
                 }
+                this.setState({changedSalesLocation: true});
             }else {
                 if (this.state.clickAllSalesLocarion) {
                     checkedBoxes = valuesAllSalesCompany;
@@ -424,6 +427,7 @@ class UserDetailsFrom extends Component {
                 checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
                 this.setState({selectedSalesLocation: false});
                 this.setState({clickAllSalesLocarion: false});
+                this.setState({changedSalesLocation: false});
             }
             stateChange[name] = checkedBoxes;
         } else {
@@ -850,7 +854,7 @@ class UserDetailsFrom extends Component {
                 selectedSalesWarehouse: true,
                 selectedSalesLocation: true,
                 selectedSalesAll: true,
-                changedOnHandLocation: true,
+                changedSalesLocation: true,
                 clickAllSalesLocarion: true,
                 firstloading: false
             });
