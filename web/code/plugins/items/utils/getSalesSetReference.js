@@ -122,14 +122,14 @@ module.exports = async (records, cb) => {
                     item.marginPercent  = (record.margin['USD']/record.netAmount['USD'])*100;
                     item.discountAmount.USD  = record.discountAmountUSD;
                     item.discountPercent  = record.discPercent == 0 ? (record.discountAmountUSD/record.price['USD'])*100 : record.discPercent;
-                    current.totalPrice.USD  = (current.totalPrice.USD  || 0) + item.price.USD;
-                    current.totalActualCost.USD  = (current.totalActualCost.USD  || 0) + item.actualCost.USD;
-                    current.totalUpdatedCost.USD  = (current.totalUpdatedCost.USD  || 0) + item.updatedCost.USD;
-                    current.totalNetAmount.USD  = (current.totalNetAmount.USD  || 0) + item.netAmount.USD;
-                    current.totalMargin.USD  = (current.totalMargin.USD  || 0) + item.margin.USD;
-                    current.totalMarginPercent.percent  = (current.totalMarginPercent.percent  || 0) + item.marginPercent;
-                    current.totalDiscountAmount.USD  = (current.totalDiscountAmount.USD  || 0) + item.discountAmount.USD;
-                    current.totalDiscountPercent.percent  = (current.totalDiscountPercent.percent  || 0) + item.discountPercent;
+                    current.totalPrice.USD  = (current.totalPrice.USD  || 0) + Math.round(item.price.USD);
+                    current.totalActualCost.USD  = (current.totalActualCost.USD  || 0) + Math.round(item.actualCost.USD);
+                    current.totalUpdatedCost.USD  = (current.totalUpdatedCost.USD  || 0) + Math.round(item.updatedCost.USD);
+                    current.totalNetAmount.USD  = (current.totalNetAmount.USD  || 0) + Math.round(item.netAmount.USD);
+                    current.totalMargin.USD  = (current.totalMargin.USD  || 0) + Math.round(item.margin.USD);
+                    current.totalMarginPercent.percent  = (current.totalMarginPercent.percent  || 0) + Math.round(item.marginPercent);
+                    current.totalDiscountAmount.USD  = (current.totalDiscountAmount.USD  || 0) + Math.round(item.discountAmount.USD);
+                    current.totalDiscountPercent.percent  = (current.totalDiscountPercent.percent  || 0) + Math.round(item.discountPercent);
 
                     current.description = description.join();
                     current.companyName = companyName.join();
@@ -215,14 +215,14 @@ module.exports = async (records, cb) => {
                         item.marginPercent  = (record.margin['USD']/record.netAmount['USD'])*100;
                         item.discountAmount.USD  = record.discountAmountUSD;
                         item.discountPercent  = record.discPercent == 0 ? (record.discountAmountUSD/record.price['USD'])*100 : record.discPercent;
-                        current.totalPrice.USD  = (current.totalPrice.USD  || 0) + item.price.USD;
-                        current.totalActualCost.USD  = (current.totalActualCost.USD  || 0) + item.actualCost.USD;
-                        current.totalUpdatedCost.USD  = (current.totalUpdatedCost.USD  || 0) + item.updatedCost.USD;
-                        current.totalNetAmount.USD  = (current.totalNetAmount.USD  || 0) + item.netAmount.USD;
-                        current.totalMargin.USD  = (current.totalMargin.USD  || 0) + item.margin.USD;
-                        current.totalMarginPercent.percent  = (current.totalMarginPercent.percent  || 0) + item.marginPercent;
-                        current.totalDiscountAmount.USD  = (current.totalDiscountAmount.USD  || 0) + item.discountAmount.USD;
-                        current.totalDiscountPercent.percent  = (current.totalDiscountPercent.percent  || 0) + item.discountPercent;
+                        current.totalPrice.USD  = (current.totalPrice.USD  || 0) + Math.round(item.price.USD);
+                        current.totalActualCost.USD  = (current.totalActualCost.USD  || 0) + Math.round(item.actualCost.USD);
+                        current.totalUpdatedCost.USD  = (current.totalUpdatedCost.USD  || 0) + Math.round(item.updatedCost.USD);
+                        current.totalNetAmount.USD  = (current.totalNetAmount.USD  || 0) + Math.round(item.netAmount.USD);
+                        current.totalMargin.USD  = (current.totalMargin.USD  || 0) + Math.round(item.margin.USD);
+                        current.totalMarginPercent.percent  = (current.totalMarginPercent.percent  || 0) + Math.round(item.marginPercent);
+                        current.totalDiscountAmount.USD  = (current.totalDiscountAmount.USD  || 0) + Math.round(item.discountAmount.USD);
+                        current.totalDiscountPercent.percent  = (current.totalDiscountPercent.percent  || 0) + Math.round(item.discountPercent);
 
                         current.description = description.join();
                         current.companyName = companyName.join();
