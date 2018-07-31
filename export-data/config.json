@@ -26,7 +26,7 @@
             "typeSoldItems": "solditems"
         },
         "staging": {
-            "host": "10.128.133.77:9200 ",
+            "host": "13.67.69.236:9200 ",
             "index": "mol",
             "typeItems": "items",
             "typeSetItem": "setitems",
