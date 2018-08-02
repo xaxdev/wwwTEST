@@ -64,6 +64,23 @@ export const ARTICLE_QUERY = './query/master/article.sql';
 export const CUSTOMER_QUERY = './query/master/customer.sql';
 export const SALECHANNEL_QUERY = './query/master/saleChannel.sql';
 
+// Sold Master
+export const SOLD_BRAND_QUERY = './query/master/soldbrand.sql';
+export const SOLD_BUCKLETYPE_QUERY = './query/master/soldbuckleType.sql';
+export const SOLD_CERTIFICATEAGENCY_QUERY = './query/master/soldcertificateAgency.sql';
+export const SOLD_CLARITY_QUERY = './query/master/soldclarity.sql';
+export const SOLD_COLLECTION_QUERY = './query/master/soldcollection.sql';
+export const SOLD_COLOR_QUERY = './query/master/soldcolor.sql';
+export const SOLD_CUT_QUERY = './query/master/soldcut.sql';
+export const SOLD_CUTSHAP_QUERY = './query/master/soldcutShap.sql';
+export const SOLD_DIALMETAL_QUERY = './query/master/solddialMetal.sql';
+export const SOLD_DIALCOLOR_QUERY = './query/master/solddialColor.sql';
+export const SOLD_METALCOLOR_QUERY = './query/master/soldmetalColor.sql';
+export const SOLD_METALTYPE_QUERY = './query/master/soldmetalType.sql';
+export const SOLD_ORIGIN_QUERY = './query/master/soldorigin.sql';
+export const SOLD_STRAPCOLOR_QUERY = './query/master/soldstrapColor.sql';
+export const SOLD_STRAPTYPE_QUERY = './query/master/soldstrapType.sql';
+
 // from array
 export const CURRENCY_DATA = '../../../query/master/currency.js';
 export const ROLE_DATA = '../../../query/master/role.js';

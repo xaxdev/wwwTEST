@@ -23,6 +23,22 @@ export function get(){
         })
     }
 }
+export function getSold(){
+    const token = sessionStorage.token;
+    const url = `${ROOT_URL}/api/masterdata/soldmasterdata`;
+
+    return {
+        type: FETCH_OPTIONS,
+        promise: fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        })
+    }
+}
 export function setNotUseHierarchy(value){
     return {
         type: SET_NOTUSEHIERARCHY,
@@ -103,7 +119,7 @@ export function getOnHandWarehouse(locations) {
 
 export function getSalesWarehouse(locations) {
     const token = sessionStorage.token;
-    const url = `${ROOT_URL}/api/masterdata`;
+    const url = `${ROOT_URL}/api/masterdata/soldmasterdata`;
     return {
         type: GET_SALESWAREHOUSES,
         promise: fetch(url,{

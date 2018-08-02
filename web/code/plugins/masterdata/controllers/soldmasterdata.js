@@ -25,7 +25,7 @@ module.exports = {
         buckleTypes,strapTypes,strapColors,complications,hierarchy,accessoryTypes,sparePartTypes,articles,salechannels`;
 
         const alldata = elastic.search({
-            index: 'mol',
+            index: 'mol_solditems',
             type: type,
             body:internals.query
         });

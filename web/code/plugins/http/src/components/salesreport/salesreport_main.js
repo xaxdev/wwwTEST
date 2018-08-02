@@ -65,7 +65,7 @@ class SalesReportMain extends Component {
     }
 
     componentWillMount() {
-        this.props.masterDataActions.get().then( () => {
+        this.props.masterDataActions.getSold().then( () => {
             setTimeout(()=> {
                 this.setState({ showLoading: false });
             },500)

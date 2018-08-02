@@ -12,9 +12,8 @@ export default function FindLocationWareHouse(that){
                 if (typeof (that.props.warehouseOnHand) !== 'undefined')  {
                     dataDropDownWareHouse.push(that.props.warehouseOnHand.map(warehouse =>{
                         return ({value: warehouse.code,name:warehouse.name});
-                    })
-                  )
-                  dataDropDownWareHouse = dataDropDownWareHouse[0];
+                    }))
+                    dataDropDownWareHouse = dataDropDownWareHouse[0];
                 }
             }else{
                 if (that.props.warehouseOnHand) {
