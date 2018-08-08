@@ -1,5 +1,5 @@
 SELECT item.[Id] AS 'id'
-  , item.[Reference] AS 'reference'
+  , UPPER(item.[Reference]) AS 'reference'
     , item.[Name] AS 'name'
     , item.[DESCRIPTION] AS 'description'
     , UPPER(item.[Company]) AS 'company'

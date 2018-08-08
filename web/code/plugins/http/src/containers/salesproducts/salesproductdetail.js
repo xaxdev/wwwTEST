@@ -214,7 +214,6 @@ class SalesProductDetail extends Component {
                 if(Detail.dominantStone){
                     this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominantStone,currency,Detail.price[currency]);
                 }
-
                 this.setState({ productdetailLoading: false });
             });
         }
@@ -468,16 +467,8 @@ class SalesProductDetail extends Component {
 
     renderSetreference = _ => {
         const { setReferenceData } = this.props.productdetail;
-
         if(!!!setReferenceData){
-            return(
-                <div>
-                    <center>
-                        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                        <Loading type="spin" color="#202020" width="10%"/>
-                    </center>
-                </div>
-            );
+            return(<div></div>);
         }
 
         if (!!setReferenceData.products) {
