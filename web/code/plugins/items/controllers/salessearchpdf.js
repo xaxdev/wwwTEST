@@ -9,6 +9,7 @@ const Joi = require('joi');
 const Promise = require('bluebird');
 const GetSalesSearch = require('../utils/getSalesSearch');
 const GetAllSalesData = require('../utils/getAllSalesDataPDF');
+const getSalesSetReference = require('../utils/getSalesSetReference');
 const fs = require('fs');
 const Path = require('path');
 const amqp = require('amqplib/callback_api');
@@ -212,6 +213,7 @@ module.exports = {
                 await allItems.map((all) => {
                     data.push(...all.hits.hits.map((element) => element._source))
                 })
+
                 const setReferences = await getSetReferenceData(data);
                 const setReferenceData = setReferences.hits.hits.map((element) => element._source);
 
@@ -231,7 +233,10 @@ module.exports = {
                 console.log('isViewAsSet-->',isViewAsSet);
                 (async _ => {
                     if (isViewAsSet) {
-                        datas = await GetAllSalesData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys,
+                        data = data.sort(compareBy('setReference','asc'));
+                        let setSalesReferences = await getSalesSetReference(data);
+                        setSalesReferences = setSalesReferences.sort(compareBy(sortBy,sortDirections));
+                        datas = await GetAllSalesData(setSalesReferences, sortDirections, sortBy, size, page, userCurrency, keys,
                             obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
 
                         if (viewType == 'grid') {
@@ -301,3 +306,35 @@ module.exports = {
         }
     }
 };
+
+const compareBy = (property, order = 'asc') => (a, b) => {
+    if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
+        return 0;
+    }
+    let priceA = 0;
+    let priceB = 0;
+    const first = (property.toLowerCase().indexOf('price') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? a[property] != undefined
+                        ? a[property] != undefined ? a[property]: 0
+                        : 0
+                    : a[property]
+    const second = (property.toLowerCase().indexOf('price') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? b[property] != undefined
+                        ? b[property] != undefined ? b[property] : 0
+                        : 0
+                    : b[property]
+    if (typeof first !== typeof second) {
+        return 0
+    }
+
+    let comparison = 0
+    if (first > second) {
+        comparison = 1
+    }
+
+    if (first < second) {
+        comparison = -1
+    }
+
+    return (order === 'desc')? (comparison * -1) : comparison
+}

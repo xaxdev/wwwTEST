@@ -34,6 +34,8 @@ import Goclist from '../../components/salesproductdetail/productgoc.js'
 import ProductDescriptionmovementBlock from '../../components/salesproductdetail/productDescmovement'
 import checkInarrayObject from '../../utils/checkInarrayObject';
 import checkInarrayObjectOther from '../../utils/checkInarrayObjectOther';
+import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter';
+
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
@@ -62,6 +64,28 @@ class SalesProductReleteDetail extends Component {
         const productlist = this.props.productlist;
         this.setState({ productdetailLoading: true });
 
+        const { ItemsSalesOrder, SetReferenceSalesOrder, firstSearch } = this.props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        let salesSortingBy = '';
+        switch (this.props.salesSortingBy) {
+            case 'netAmount':
+              salesSortingBy = 'netAmount.' + 'USD';
+              break;
+            case 'price':
+              salesSortingBy = 'price.' + 'USD';
+              break;
+            default:
+              salesSortingBy = this.props.salesSortingBy;
+              break;
+        }
+        let params = {
+            'page' : this.props.currentSalesPage, 'sortBy': salesSortingBy, 'sortDirections': this.props.salesSortDirection, 'pageSize' : this.props.salesPageSize,
+            'ItemsSalesOrder': ItemsSalesOrder,'SetReferenceSalesOrder': SetReferenceSalesOrder
+        };  // default search params
+
+        const filters =  JSON.parse(sessionStorage.filters);
+        params = GetGemstoneLotnumberFilter(filters, params);
+
         if (this.props.ViewAsSet) {
             this.props.getSalesViewAsSetProductDetail(productId).then(()=>{
                 const  Detail  = this.props.productdetail;
@@ -75,7 +99,7 @@ class SalesProductReleteDetail extends Component {
                 this.setState({ productdetailLoading: false });
             });
         }else{
-            this.props.getSalesProductDetail(productId).then(()=>{
+            this.props.getSalesProductDetail(productId,productlist,params).then(()=>{
                 const  Detail  = this.props.productdetail;
                 if(Detail.type != 'STO' || Detail.type != 'CER'){
                     const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
@@ -163,7 +187,29 @@ class SalesProductReleteDetail extends Component {
                     this.setState({ productdetailLoading: false });
                 });
             }else{
-                this.props.getSalesProductDetail(productId).then(()=>{
+                const { ItemsSalesOrder, SetReferenceSalesOrder, firstSearch } = this.props;
+                const userLogin = JSON.parse(sessionStorage.logindata);
+                let salesSortingBy = '';
+                switch (this.props.salesSortingBy) {
+                    case 'netAmount':
+                      salesSortingBy = 'netAmount.' + 'USD';
+                      break;
+                    case 'price':
+                      salesSortingBy = 'price.' + 'USD';
+                      break;
+                    default:
+                      salesSortingBy = this.props.salesSortingBy;
+                      break;
+                }
+                let params = {
+                    'page' : this.props.currentSalesPage, 'sortBy': salesSortingBy, 'sortDirections': this.props.salesSortDirection, 'pageSize' : this.props.salesPageSize,
+                    'ItemsSalesOrder': ItemsSalesOrder,'SetReferenceSalesOrder': SetReferenceSalesOrder
+                };  // default search params
+
+                const filters =  JSON.parse(sessionStorage.filters);
+                params = GetGemstoneLotnumberFilter(filters, params);
+
+                this.props.getSalesProductDetail(productId,productlist,params).then(()=>{
                     const  Detail  = this.props.productdetail;
                     if(Detail.type != 'STO' || Detail.type != 'CER'){
                         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
@@ -1057,7 +1103,13 @@ function mapStateToProps(state) {
         productrelete: state.productdetail.relete,
         listCatalogName: state.productdetail.ListCatalogName,
         message: state.productdetail.message,
-        ViewAsSet: state.searchResult.viewAsSet
+        ViewAsSet: state.searchResult.viewAsSet,
+        salesSortingBy: state.searchResult.SalesSortingBy,
+        currentSalesPage: state.searchResult.currentSalesPage,
+        salesSortDirection: state.searchResult.SalesSortDirection,
+        salesPageSize: state.searchResult.SalesPageSize,
+        ItemsSalesOrder: state.searchResult.itemsSalesOrder,
+        SetReferenceSalesOrder: state.searchResult.setReferenceSalesOrder
      }
 }
 module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!

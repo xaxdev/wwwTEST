@@ -33,6 +33,7 @@ import checkInarrayObject from '../../utils/checkInarrayObject';
 import checkInarrayObjectOther from '../../utils/checkInarrayObjectOther';
 import validateCatalog from '../../utils/validatecatalogproductdetail';
 import ModalalertMsgObj from '../../utils/modalalertmsg';
+import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter';
 
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
@@ -66,7 +67,29 @@ class SalesProductDetail extends Component {
         const productlist = allItems;
         this.setState({ productdetailLoading: true });
 
-        this.props.getSalesProductDetail(productId,productlist).then(()=>{
+        const { ItemsSalesOrder, SetReferenceSalesOrder, firstSearch } = this.props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        let salesSortingBy = '';
+        switch (this.props.salesSortingBy) {
+            case 'netAmount':
+              salesSortingBy = 'netAmount.' + 'USD';
+              break;
+            case 'price':
+              salesSortingBy = 'price.' + 'USD';
+              break;
+            default:
+              salesSortingBy = this.props.salesSortingBy;
+              break;
+        }
+        let params = {
+            'page' : this.props.currentSalesPage, 'sortBy': salesSortingBy, 'sortDirections': this.props.salesSortDirection, 'pageSize' : this.props.salesPageSize,
+            'ItemsSalesOrder': ItemsSalesOrder,'SetReferenceSalesOrder': SetReferenceSalesOrder
+        };  // default search params
+
+        const filters =  JSON.parse(sessionStorage.filters);
+        params = GetGemstoneLotnumberFilter(filters, params);
+
+        this.props.getSalesProductDetail(productId,productlist,params).then(()=>{
             const  Detail  = this.props.productdetail;
             const { lotNumbers } = this.props.productdetail;
             const { stonePageSize } = this.props;
@@ -198,7 +221,29 @@ class SalesProductDetail extends Component {
             const { allItems } =  this.props;
             const productlist = allItems;
 
-            this.props.getSalesProductDetail(productId,productlist).then(()=>{
+            const { ItemsSalesOrder, SetReferenceSalesOrder, firstSearch } = this.props;
+            const userLogin = JSON.parse(sessionStorage.logindata);
+            let salesSortingBy = '';
+            switch (this.props.salesSortingBy) {
+                case 'netAmount':
+                  salesSortingBy = 'netAmount.' + 'USD';
+                  break;
+                case 'price':
+                  salesSortingBy = 'price.' + 'USD';
+                  break;
+                default:
+                  salesSortingBy = this.props.salesSortingBy;
+                  break;
+            }
+            let params = {
+                'page' : this.props.currentSalesPage, 'sortBy': salesSortingBy, 'sortDirections': this.props.salesSortDirection, 'pageSize' : this.props.salesPageSize,
+                'ItemsSalesOrder': ItemsSalesOrder,'SetReferenceSalesOrder': SetReferenceSalesOrder
+            };  // default search params
+
+            const filters =  JSON.parse(sessionStorage.filters);
+            params = GetGemstoneLotnumberFilter(filters, params);
+
+            this.props.getSalesProductDetail(productId,productlist,params).then(()=>{
                 const  Detail  = this.props.productdetail;
                 const { lotNumbers } = this.props.productdetail;
                 const { stonePageSize } = this.props;
@@ -1190,7 +1235,13 @@ function mapStateToProps(state) {
         filterSearch: state.searchResult.paramsSearch,
         ItemsOrder: state.searchResult.itemsOrder,
         SetReferencdOrder: state.searchResult.setReferenceOrder,
-        allItems: state.searchResult.allItems
+        allItems: state.searchResult.allItems,
+        salesSortingBy: state.searchResult.SalesSortingBy,
+        currentSalesPage: state.searchResult.currentSalesPage,
+        salesSortDirection: state.searchResult.SalesSortDirection,
+        salesPageSize: state.searchResult.SalesPageSize,
+        ItemsSalesOrder: state.searchResult.itemsSalesOrder,
+        SetReferenceSalesOrder: state.searchResult.setReferenceSalesOrder
     }
 }
 

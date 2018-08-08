@@ -3,6 +3,8 @@ import Elasticsearch from 'elasticsearch'
 const Promise = require('bluebird');
 const GetMovement = require('../utils/getMovement');
 const GetGOC = require('../utils/getGOC');
+const GetSalesSearch = require('../utils/getSalesSearch');
+const getSalesSetReference = require('../utils/getSalesSetReference');
 
 const internals = {
     filters: []
@@ -18,9 +20,46 @@ module.exports = {
             keepAlive: false
         });
         const id = request.params.id;
+        let obj = request.payload;
+        let sortBy = request.payload.sortBy;
+        let sortDirections = request.payload.sortDirections;
+        let keys = Object.keys(obj);
+        let ps=[];
+
+        const getClarityItems =  (query) => {
+            // console.log(JSON.stringify(query, null, 2));
+            return elastic.search({
+                index: 'mol_solditems',
+                type: 'solditems',
+                body: query
+            })
+        };
+
+        if (!!keys.find((key) => {return key == 'gemstones'})) {
+            const valusObj = obj['gemstones'];
+            const clarityFields = Object.keys(valusObj);
+            if (!!clarityFields.find((key) => {return key == 'clarity'})) {
+                const clarities = valusObj.clarity.split(',');
+                clarities.map((clar) => {
+                    internals.querySet = GetSalesSearch(request, 0, 100000,clar);
+                    ps.push(getClarityItems(internals.querySet));
+                })
+            }else{
+                internals.querySet = GetSalesSearch(request, 0, 100000,null);
+                // console.log(JSON.stringify(internals.query, null, 2));
+                ps.push(getClarityItems(internals.querySet));
+            }
+        }else{
+            internals.querySet = GetSalesSearch(request, 0, 100000,null);
+            // console.log(JSON.stringify(internals.query, null, 2));
+            ps.push(getClarityItems(internals.querySet));
+        }
+
+        // console.log(JSON.stringify(internals.querySet, null, 2));
+
         internals.query = JSON.parse(
             `{
-              "query":
+                "query":
                 {
                     "match": {"id": "${id}"}
                 }
@@ -38,30 +77,10 @@ module.exports = {
                     return reply(Boom.badRequest('Couldn\'t found data product detail of item:' + id));
                 }
 
-                const query = JSON.parse(
-                    `{
-                        "query":{
-                            "constant_score": {
-                                "filter": {
-                                    "bool": {
-                                        "must": [
-                                            {
-                                                "match": {
-                                                    "reference": "${productResult.setReference}"
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }`
-                );
-
                 return elastic.search({
                     index: 'mol_solditems',
-                    type: 'setitems',
-                    body: query
+                    type: 'solditems',
+                    body: internals.querySet
                 });
             } catch (err) {
                 console.log(err);
@@ -107,7 +126,7 @@ module.exports = {
             }
         });
         try {
-            Promise.all([getProductDetail, getSetreference, getMovements, getGOCs]).spread((productDetail, setReference, movements, gocs) => {
+            Promise.all([getProductDetail, getSetreference, getMovements, getGOCs]).spread(async (productDetail, setReference, movements, gocs) => {
                 const [productResult] = productDetail.hits.hits.map((element) => element._source);
                 // add certificate images to item gallery
                 if (!!productResult.gemstones) {
@@ -123,24 +142,27 @@ module.exports = {
                     productResult.gallery.push(...certificateImages)
                 }
 
-                const [setReferenceData] = setReference.hits.hits.map((element) => element._source);
-                if(typeof setReferenceData === 'undefined'){
+                let setReferenceData = setReference.hits.hits.map((element) => element._source);
+                setReferenceData = setReferenceData.sort(compareBy('setReference','asc'));
+                let [setSalesReferences] = await getSalesSetReference(setReferenceData);
+
+                if(typeof setSalesReferences === 'undefined'){
                     productResult.setReferenceData = '';
                 } else {
-                    let len = setReferenceData.items.length;
+                    let len = setSalesReferences.items.length;
 
                     let productdata = [];
                     for (let i = 0; i < len; i++) {
-                        if(productResult.id !== setReferenceData.items[i].id){
+                        if(productResult.id !== setSalesReferences.items[i].id){
                             productdata.push({
-                                id: setReferenceData.items[i].id,
-                                image:setReferenceData.items[i].image
+                                id: setSalesReferences.items[i].id,
+                                image:setSalesReferences.items[i].image
                             });
                         }
                     }
                     const responseSetData = {
-                        totalprice:setReferenceData.totalPrice,
-                        setimage: (!!setReferenceData.image) ? setReferenceData.image.length != 0 ?setReferenceData.image[0].original : null : null,
+                        totalprice:setSalesReferences.totalPrice,
+                        setimage: (!!setSalesReferences.image) ? setSalesReferences.image.length != 0 ?setSalesReferences.image[0].original : null : null,
                         products:productdata
                     }
                     productResult.setReferenceData = responseSetData;
@@ -173,3 +195,35 @@ module.exports = {
         }
     }
 };
+
+const compareBy = (property, order = 'asc') => (a, b) => {
+    if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
+        return 0;
+    }
+    let priceA = 0;
+    let priceB = 0;
+    const first = (property.toLowerCase().indexOf('price') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? a[property] != undefined
+                        ? a[property] != undefined ? a[property]: 0
+                        : 0
+                    : a[property]
+    const second = (property.toLowerCase().indexOf('price') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? b[property] != undefined
+                        ? b[property] != undefined ? b[property] : 0
+                        : 0
+                    : b[property]
+    if (typeof first !== typeof second) {
+        return 0
+    }
+
+    let comparison = 0
+    if (first > second) {
+        comparison = 1
+    }
+
+    if (first < second) {
+        comparison = -1
+    }
+
+    return (order === 'desc')? (comparison * -1) : comparison
+}
