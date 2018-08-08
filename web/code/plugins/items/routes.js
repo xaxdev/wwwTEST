@@ -126,7 +126,7 @@ module.exports = [
         config: controllers.searchedit
     },
     {
-        method: 'GET',
+        method: 'POST',
         path: '/salesitem/{id}',
         config: controllers.salesitem
     },
