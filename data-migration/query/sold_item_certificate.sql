@@ -1,7 +1,7 @@
 SELECT [ITORAMA].[dbo].[SoldCertificateMaster].[RecId] AS 'id'
       ,[ITORAMA].[dbo].[SoldCertificateMaster].[Name] AS 'name'
       ,[ITORAMA].[dbo].[SoldCertificateMaster].[SKU] AS 'sku'
-      ,[ITORAMA].[dbo].[SoldCertificateMaster].[Item] AS 'reference'
+      ,UPPER([ITORAMA].[dbo].[SoldCertificateMaster].[Item]) AS 'reference'
       ,ISNULL(cert.[AGENCYID], '') AS 'agency'
       ,'CER' AS 'type'
       ,[ITORAMA].[dbo].[SoldCertificateMaster].[Site] AS 'site'
@@ -22,6 +22,6 @@ LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
     AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[Company] company
     ON [ITORAMA].[dbo].[SoldCertificateMaster].[Company] = company.[Code]
-WHERE 1=1 
+WHERE 1=1
 	AND [ITORAMA].[dbo].[SoldCertificateMaster].[RecId] BETWEEN @from AND @to
 ORDER BY [ITORAMA].[dbo].[SoldCertificateMaster].[RecId]

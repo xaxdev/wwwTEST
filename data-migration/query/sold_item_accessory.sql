@@ -1,5 +1,5 @@
 SELECT	SOL.[Id] AS 'id'
-		, SOL.[Reference] AS 'reference'
+		, UPPER(SOL.[Reference]) AS 'reference'
 		, ISNULL(SOL.[Description], '') AS 'description'
 		, SOL.[Sku] AS 'sku'
 		, SOL.[VendorItemReferance] AS 'venderReference'

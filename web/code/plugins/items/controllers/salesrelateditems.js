@@ -58,7 +58,9 @@ module.exports = {
                                     {
                                         "match": {
                                             "id": "${productId}"
-                                        },
+                                        }
+                                    },
+                                    {
                                         "match": {
                                             "warehouse": {
                                                 "query": "MME.CONS"

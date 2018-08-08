@@ -2,7 +2,7 @@ USE [ITORAMA]
 
 SELECT [Id] AS 'id'
       ,[SetReference] AS 'setReference'
-      ,[Reference] AS 'reference'
+      ,UPPER([Reference]) AS 'reference'
       ,[InvoicedId] AS 'invoicedId'
       ,[InvoiceDate] AS 'invoiceDate'
 	  ,[ItemType] AS 'itemType'

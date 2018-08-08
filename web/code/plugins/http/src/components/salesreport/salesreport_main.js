@@ -132,10 +132,10 @@ class SalesReportMain extends Component {
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-default btn-radius btn-width" onClick={this.confirmModal}>
-                          Ok
+                            Ok
                         </button>
                         <button className="btn btn-default btn-radius btn-width" onClick={this.hideModal}>
-                          Cancel
+                            Cancel
                         </button>
                     </div>
                 </Modal>
