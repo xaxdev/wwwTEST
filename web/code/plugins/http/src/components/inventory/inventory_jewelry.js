@@ -51,6 +51,7 @@ class InventoryJewelry extends Component {
             const { props } = this.props;
             let { fields: { jewelryProductHierarchy }, searchResult } = props;
             if(props.SaveSearchHierarchy != null){
+                console.log('props.SaveSearchHierarchy-->',props.SaveSearchHierarchy);
                 await props.inventoryActions.setHierarchy(props.SaveSearchHierarchy);
                 this.refs.treeview.handleChange(props.SaveSearchHierarchy);
             }
@@ -476,7 +477,7 @@ class InventoryJewelry extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
 
         const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `//${host}`;
 
         InitModifyData(props);
 
@@ -535,6 +536,7 @@ class InventoryJewelry extends Component {
         }
 
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
+        // console.log('Inven TreeData-->',TreeData);
         // delete hierarchy
         let hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'JLY');
         if (props.ArticleValue.length != 0) {

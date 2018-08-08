@@ -26,38 +26,38 @@ import RenderClassTotals from './utils/render_total';
 import RenderExportExcelDialog from './utils/render_export_excel_dialog';
 import RenderExportExcelViewAsSetDialog from './utils/render_export_excel_viewasset_dialog'
 import ModalPrintOptions from './utils/modalPrintOptions';
+import SearchResultLoader from './search_results_loader';
+import SearchResultOnItem from './search_results_noitem';
 
-let _ = require('lodash');
-let Loading = require('react-loading');
-let sortBy = require('lodash.sortby');
+const _ = require('lodash');
+const Loading = require('react-loading');
+const sortBy = require('lodash.sortby');
 
-const checkFields = ['ingredients','categoryName','category', 'article', 'collection','setReferenceNumber','cut',
-    'color','clarity', 'caratWt', 'unit', 'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight',
-    'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName', 'metalColor',
-    'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex',
-    'dialColor','movement','serial', 'limitedEdition','limitedEditionNumber','itemCreatedDate'
+const checkFields = ['ingredients', 'categoryName', 'category', 'article', 'collection', 'setReferenceNumber', 'cut', 'color','clarity', 'caratWt', 'unit',
+    'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight', 'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName',
+    'metalColor', 'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex', 'dialColor','movement','serial',
+    'limitedEdition','limitedEditionNumber','itemCreatedDate'
 ];
-const checkFieldsViewAsSet = ['totalActualCost','totalUpdatedCost','totalPrice', 'markup', 'companyName',
-    'warehouseName','createdDate'
-];
-const chkAllItems = [
-    '0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17','18','19', '20', '21', '22', '23', '24','25','26',
-    '27', '28', '29', '30', '31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54',
+
+const checkFieldsViewAsSet = ['totalActualCost','totalUpdatedCost','totalPrice', 'markup', 'companyName', 'warehouseName', 'createdDate'];
+
+const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17', '18','19', '20', '21', '22', '23', '24','25',
+    '26','27', '28', '29', '30', '31','32','33','34','35','36','37', '38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54',
     '55','56','57','58','59','60'
 ];
 const labels = {
-    ingredients: 'Ingredients', categoryName: 'Category Name', category: 'Category', article: 'Article', collection: 'Collection',
-    setReferenceNumber: 'Set Reference Number', cut: 'Cut', color: 'Color',clarity: 'Clarity', caratWt: 'Carat Wt', unit: 'Unit', qty: 'Qty',
-    origin: 'Origin', symmetry: 'Symmetry',flourance: 'Flourance', batch: 'Batch', netWeight: 'Gold weight (Grams)', stoneQty: 'Stone Qty',
-    dominantStone: 'Dominant Stone',markup: 'Markup%', certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date',
-    vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalColor: 'Metal Colour', metalType: 'Metal Type',brand: 'Brand',
-    complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color',buckleType: 'Buckle Type', dialIndex: 'Dial Index',
-    dialColor: 'Dial Color', movement: 'Movement',serial: 'Serial #', limitedEdition: 'Limited Edition', limitedEditionNumber: 'Limited Edition #',
-    itemCreatedDate: 'Created Date'
+    ingredients: 'Ingredients', categoryName: 'Category Name', category: 'Category', article: 'Article', collection: 'Collection', cut: 'Cut', color: 'Color',
+    setReferenceNumber: 'Set Reference Number', clarity: 'Clarity', caratWt: 'Carat Wt', unit: 'Unit', qty: 'Qty', origin: 'Origin', symmetry: 'Symmetry',
+    flourance: 'Flourance', batch: 'Batch', netWeight: 'Gold weight (Grams)', stoneQty: 'Stone Qty', dominantStone: 'Dominant Stone', markup: 'Markup%',
+    certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date', vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalType: 'Metal Type',
+    metalColor: 'Metal Colour', brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color', buckleType: 'Buckle Type',
+    dialIndex: 'Dial Index', dialColor: 'Dial Color', movement: 'Movement', serial: 'Serial #', limitedEdition: 'Limited Edition', itemCreatedDate: 'Created Date',
+    limitedEditionNumber: 'Limited Edition #'
+
 }
 const labelsViewAsSet = {
-    totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Price (USD)',
-    markup: 'Markup (Times)', companyName: 'Company',warehouseName: 'Location', createdDate: 'Created Date'
+    totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Price (USD)', markup: 'Markup (Times)',
+    companyName: 'Company', warehouseName: 'Location', createdDate: 'Created Date'
 }
 let listMyCatalog = []
 
@@ -86,20 +86,17 @@ class SearchResult extends Component {
         this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
         this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
+
         this.state = {
-            activePage: this.props.currentPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false,
-            isOpenNoResults: true, showImages: false, ingredients: false, categoryName: false, category: false,
-            article: false, collection: false, setReferenceNumber: false, cut: false, color: false, clarity: false,
-            caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false,
-            netWeight: false,stoneQty: false, dominantStone: false, markup: false, certificatedNumber: false,
-            certificateDate: false, vendorCode: false, vendorName: false, metalColor: false, metalType: false,
-            brand: false, complication: false, strapType: false, strapColor: false, buckleType: false, dialIndex: false,
-            dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false,
-            itemCreatedDate:false,showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false,
-            isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, isOpenMsgPageInvalid: false, checkAllItems: false,
-            allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
-            totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false,
-            createdDate: false, isOpenPrintOptions: false
+            activePage: this.props.currentPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true, cut: false,
+            showImages: false, ingredients: false, categoryName: false, category: false, article: false, collection: false, setReferenceNumber: false,
+            color: false, clarity: false,caratWt: false, unit: false, qty: false, origin: false, symmetry: false, flourance: false, batch: false,
+            netWeight: false,stoneQty: false, dominantStone: false, markup: false, certificatedNumber: false, certificateDate: false, vendorCode: false,
+            vendorName: false, metalColor: false, metalType: false, brand: false, complication: false, strapType: false, strapColor: false, buckleType: false,
+            dialIndex: false,dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false, itemCreatedDate:false,
+            showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, createdDate: false,
+            isOpenMsgPageInvalid: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
+            totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false, isOpenPrintOptions: false
         };
     }
 
@@ -109,11 +106,11 @@ class SearchResult extends Component {
         let sortingBy = '';
         switch (this.props.sortingBy) {
             case 'price':
-                sortingBy = 'price.' + userLogin.currency;
-                break;
+              sortingBy = 'price.' + userLogin.currency;
+              break;
             default:
-                sortingBy = this.props.sortingBy;
-                break;
+              sortingBy = this.props.sortingBy;
+              break;
         }
         let params = {
             'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': this.props.sortDirection,
@@ -176,9 +173,13 @@ class SearchResult extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        let { fields:{currPage} } = this.props;
         if(this.props.currentPage != nextProps.currentPage){
-            let { currPage } = this.props.fields;
             currPage.onChange(nextProps.currentPage);
+        }else{
+            if (currPage.value == undefined) {
+                currPage.onChange(nextProps.currentPage);
+            }
         }
     }
 
@@ -188,8 +189,8 @@ class SearchResult extends Component {
         const { showGridView, showListView } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
-        const env_web = ENVIRONMENT !== 'production' ? 'development' : 'production';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+        const env_web = ENVIRONMENT;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
         let imagesReplace = ROOT_URL+'/images/';
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
         let dvTotal1 = jQuery('#dvTotalsub1').html();
@@ -198,17 +199,16 @@ class SearchResult extends Component {
         let dvListview = jQuery('#dvListview').html();
         let dvListviewAll = jQuery('#dvListviewAll').html();
         let dv = {
-            'dvTotal1': dvTotal1, 'dvTotal2': dvTotal2, 'dvGridview': dvGridview, 'dvListview': dvListview, 'printPage':printPage,
-            'items': exportItems, 'userLogin': userLogin, 'ViewAsSet': ViewAsSet,'dvListviewAll': dvListviewAll, 'env': env_web
+            'dvTotal1': dvTotal1, 'dvTotal2': dvTotal2, 'dvGridview': dvGridview, 'dvListview': dvListview,
+            'printPage':printPage, 'items': exportItems, 'userLogin': userLogin, 'ViewAsSet': ViewAsSet,
+            'dvListviewAll': dvListviewAll, 'env': env_web
         };
         let htmlTemplate = '';
         if (printPage.value != 'all') {
             htmlTemplate = GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv);
+          //   console.log('htmlTemplate-->',htmlTemplate);
             let params = {
-                'temp': htmlTemplate,
-                'userName': `${userLogin.username}_${exportDate}`,
-                'userEmail': userLogin.email,
-                'ROOT_URL': ROOT_URL
+                'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'pdf'
             }
 
             this.props.writeHtml(params).then((value) => {
@@ -222,11 +222,11 @@ class SearchResult extends Component {
             let sortingBy = '';
             switch (this.refs.sortingBy.value) {
                 case 'price':
-                    sortingBy = 'price.' + userLogin.currency;
-                    break;
+                  sortingBy = 'price.' + userLogin.currency;
+                  break;
                 default:
-                    sortingBy = this.refs.sortingBy.value;
-                    break;
+                  sortingBy = this.refs.sortingBy.value;
+                  break;
             }
             const sortingDirection = this.refs.sortingDirection.value;
             const pageSize = this.refs.pageSize.value;
@@ -265,8 +265,8 @@ class SearchResult extends Component {
 
     renderDialogPrintOptions = _ =>{
         return(
-            <ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions} isClose={this.handleClosePrintOptions}
-                props={this.props} />
+            <ModalPrintOptions onSubmit={this.printResults} isOpen={this.state.isOpenPrintOptions}
+                isClose={this.handleClosePrintOptions} props={this.props} />
         );
     }
 
@@ -277,17 +277,17 @@ class SearchResult extends Component {
         let sortingBy = '';
         switch (this.refs.sortingBy.value) {
             case 'price':
-                sortingBy = 'price.' + userLogin.currency;
-                break;
+              sortingBy = 'price.' + userLogin.currency;
+              break;
             default:
-                sortingBy = this.refs.sortingBy.value;
-                break;
+              sortingBy = this.refs.sortingBy.value;
+              break;
         }
         const sortingDirection = this.refs.sortingDirection.value;
         const pageSize = this.refs.pageSize.value;
         let params = {
-            'page' : eventKey, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize, 'ItemsOrder': ItemsOrder,
-            'SetReferencdOrder': SetReferencdOrder
+            'page' : eventKey, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+            'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
         };
         const filters =  JSON.parse(sessionStorage.filters);
         params = GetGemstoneLotnumberFilter(filters, params);
@@ -321,18 +321,18 @@ class SearchResult extends Component {
             let sortingBy = '';
             switch (this.refs.sortingBy.value) {
                 case 'price':
-                    sortingBy = 'price.' + userLogin.currency;
-                    break;
+                  sortingBy = 'price.' + userLogin.currency;
+                  break;
                 default:
-                    sortingBy = this.refs.sortingBy.value;
-                    break;
+                  sortingBy = this.refs.sortingBy.value;
+                  break;
             }
             const sortingDirection = this.refs.sortingDirection.value;
             const pageSize = this.refs.pageSize.value;
             this.setState({activePage: getPage});
             let params = {
-                'page' : getPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize, 'ItemsOrder': ItemsOrder,
-                'SetReferencdOrder': SetReferencdOrder
+                'page' : getPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+                'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
             };
             const filters =  JSON.parse(sessionStorage.filters);
             params = GetGemstoneLotnumberFilter(filters, params);
@@ -383,8 +383,9 @@ class SearchResult extends Component {
         let _totalPublicPrice =  (totalPublicPrice!=null) ? numberFormat(totalPublicPrice) : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
         return(
-            <RenderClassTotals userLogin={userLogin} allItems={allItems} ViewAsSet={ViewAsSet} _totalPublicPrice = {_totalPublicPrice}
-                _totalUpdatedCost = {_totalUpdatedCost} maxPrice = {maxPrice} minPrice = {minPrice} avrgPrice = {avrgPrice} />
+            <RenderClassTotals userLogin={userLogin} allItems={allItems} ViewAsSet={ViewAsSet}
+                _totalPublicPrice = {_totalPublicPrice} _totalUpdatedCost = {_totalUpdatedCost}
+                maxPrice = {maxPrice} minPrice = {minPrice} avrgPrice = {avrgPrice} />
         );
     }
 
@@ -407,9 +408,14 @@ class SearchResult extends Component {
         allItems.map((item) => {
             let objItem = {};
             if (ViewAsSet) {
-                let itemName = (item.type != undefined) ? (item.type != 'CER') ? item.description : item.name :item.description;
+                let itemName = (item.type != undefined)
+                                ? (item.type != 'CER')
+                                    ? item.description
+                                    : item.name
+                                :item.description;
                 objItem = {...objItem, reference: item.reference, description: itemName, priceUSD: item.totalPrice['USD']};
             }else{
+                //   objItem = {...objItem, id: item.id, reference: item.reference, description: itemName, priceUSD: item.price['USD']};
                 objItem = {...objItem, id: item.id};
             }
             listMyCatalog.push(objItem);
@@ -442,7 +448,11 @@ class SearchResult extends Component {
         }
         itemAdded = itemAdded[0];
 
-        let itemName = (itemAdded.type != undefined) ? (itemAdded.type != 'CER') ? itemAdded.description : itemAdded.name :itemAdded.description;
+        let itemName = (itemAdded.type != undefined)
+                        ? (itemAdded.type != 'CER')
+                            ? itemAdded.description
+                            : itemAdded.name
+                        :itemAdded.description;
 
         let objItem = {};
         if (ViewAsSet) {
@@ -486,7 +496,11 @@ class SearchResult extends Component {
             itemAdded = items.filter(oneItem => oneItem.id === item.target.attributes[3].value);
         }
         itemAdded = itemAdded[0];
-        let itemName = (itemAdded.type != undefined) ? (itemAdded.type != 'CER') ? itemAdded.description : itemAdded.name :itemAdded.description;
+        let itemName = (itemAdded.type != undefined)
+                          ? (itemAdded.type != 'CER')
+                              ? itemAdded.description
+                              : itemAdded.name
+                          :itemAdded.description;
         let objItem = {};
         if (ViewAsSet) {
             objItem = {...objItem, reference: itemAdded.reference, description: itemName, priceUSD: itemAdded.priceUSD};
@@ -525,8 +539,8 @@ class SearchResult extends Component {
         const sortingDirection = this.refs.sortingDirection.value;
         const pageSize = this.refs.pageSize.value;
         let params = {
-            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize, 'ItemsOrder': null,
-            'SetReferencdOrder': null
+            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+            'ItemsOrder': null, 'SetReferencdOrder': null
         };
         const filters =  JSON.parse(sessionStorage.filters);
         params = GetGemstoneLotnumberFilter(filters, params);
@@ -571,8 +585,8 @@ class SearchResult extends Component {
         this.setState({activePage: 1});
         const pageSize = this.refs.pageSize.value;
         let params = {
-            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize, 'ItemsOrder': null,
-            'SetReferencdOrder': null
+            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+            'ItemsOrder': null, 'SetReferencdOrder': null
         };
 
         const filters =  JSON.parse(sessionStorage.filters);
@@ -621,8 +635,8 @@ class SearchResult extends Component {
 
         this.setState({activePage: 1});
         let params = {
-            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize, 'ItemsOrder': ItemsOrder,
-            'SetReferencdOrder': SetReferencdOrder
+            'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
+            'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder
         };
 
         const filters =  JSON.parse(sessionStorage.filters);
@@ -760,7 +774,7 @@ class SearchResult extends Component {
         e.preventDefault();
         const that = this;
         const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `//${host}`;
         const { items, exportItems, paramsSearch, showGridView,showListView } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         let sortingBy = '';
@@ -774,21 +788,23 @@ class SearchResult extends Component {
         }
         const sortingDirection = this.refs.sortingDirection.value;
         let fields = {
-            allFields: this.state.allFields,showImages: this.state.showImages,ingredients: this.state.ingredients,article: this.state.article,
-            categoryName: this.state.categoryName, category: this.state.category, collection: this.state.collection, cut: this.state.cut,
-            setReferenceNumber: this.state.setReferenceNumber, color: this.state.color, clarity: this.state.clarity, caratWt: this.state.caratWt,
-            unit: this.state.unit,qty: this.state.qty, origin: this.state.origin, symmetry: this.state.symmetry, flourance: this.state.flourance,
-            batch: this.state.batch, netWeight: this.state.netWeight, stoneQty: this.state.stoneQty,markup: this.state.markup,brand: this.state.brand,
-            dominantStone: this.state.dominantStone,  certificatedNumber: this.state.certificatedNumber, certificateDate: this.state.certificateDate,
-            vendorCode: this.state.vendorCode, vendorName: this.state.vendorName, metalColor: this.state.metalColor, metalType: this.state.metalType,
-            complication: this.state.complication, strapType: this.state.strapType, strapColor: this.state.strapColor, buckleType: this.state.buckleType,
-            dialIndex: this.state.dialIndex, dialColor: this.state.dialColor,movement: this.state.movement, serial: this.state.serial,
-            limitedEdition: this.state.limitedEdition,limitedEditionNumber: this.state.limitedEditionNumber, itemCreatedDate: this.state.itemCreatedDate
+            allFields: this.state.allFields, showImages: this.state.showImages, ingredients: this.state.ingredients,
+            categoryName: this.state.categoryName, category: this.state.category, article: this.state.article,
+            collection: this.state.collection, setReferenceNumber: this.state.setReferenceNumber, cut: this.state.cut,
+            color: this.state.color, clarity: this.state.clarity, caratWt: this.state.caratWt, unit: this.state.unit,
+            qty: this.state.qty, origin: this.state.origin, symmetry: this.state.symmetry, flourance: this.state.flourance,
+            batch: this.state.batch, netWeight: this.state.netWeight, stoneQty: this.state.stoneQty,
+            dominantStone: this.state.dominantStone, markup: this.state.markup, certificatedNumber: this.state.certificatedNumber,
+            certificateDate: this.state.certificateDate, vendorCode: this.state.vendorCode, brand: this.state.brand,
+            vendorName: this.state.vendorName, metalColor: this.state.metalColor, metalType: this.state.metalType,
+            complication: this.state.complication, strapType: this.state.strapType, strapColor: this.state.strapColor,
+            buckleType: this.state.buckleType, dialIndex: this.state.dialIndex, dialColor: this.state.dialColor,
+            movement: this.state.movement, serial: this.state.serial, limitedEdition: this.state.limitedEdition,
+            limitedEditionNumber: this.state.limitedEditionNumber, itemCreatedDate: this.state.itemCreatedDate
         };
         let params = {
-            'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection,
-            'pageSize' : this.props.pageSize, 'fields': fields, 'price': userLogin.permission.price,
-            'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email
+            'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : this.props.pageSize, 'fields': fields,
+            'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'OnHand'
         };
         // default search params
         const filters =  JSON.parse(sessionStorage.filters);
@@ -817,7 +833,7 @@ class SearchResult extends Component {
         e.preventDefault();
         const that = this;
         const host = HOSTNAME || 'localhost';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:3005`: `//${host}`;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `//${host}`;
         const { items, exportItems, paramsSearch, showGridView,showListView } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
 
@@ -842,9 +858,8 @@ class SearchResult extends Component {
         };
 
         let params = {
-            'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection,
-            'pageSize' : this.props.pageSize, 'fields': fields, 'price': userLogin.permission.price,
-            'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email
+            'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : this.props.pageSize,  'fields': fields,
+            'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'OnHand'
         };
 
         // default search params
@@ -874,85 +889,37 @@ class SearchResult extends Component {
     }
 
     renderExportExcelDialog(){
-        let that = this;
+        const that = this;
         const userLogin = JSON.parse(sessionStorage.logindata);
         return(
-            <RenderExportExcelDialog that={this} userLogin={userLogin} checkFields={checkFields} labels={labels}/>
+            <RenderExportExcelDialog that={this} userLogin={userLogin} checkFields={checkFields} labels={labels} selectedAllFields={this.selectedAllFields}
+                selectedNoAllFields={this.selectedNoAllFields}/>
         );
+    }
+
+    selectedAllFields = _ =>{
+        this.setState({ allFields:true });
+    }
+
+    selectedNoAllFields = _ =>{
+        this.setState({ allFields:false });
     }
 
     renderExportExcelViewAsSetDialog = _=>{
-        let that = this;
+        const that = this;
         const userLogin = JSON.parse(sessionStorage.logindata);
         return(
-            <RenderExportExcelViewAsSetDialog that={this} userLogin={userLogin} checkFieldsViewAsSet ={checkFieldsViewAsSet }
-                labelsViewAsSet={labelsViewAsSet}/>
+            <RenderExportExcelViewAsSetDialog that={this} userLogin={userLogin} checkFieldsViewAsSet ={checkFieldsViewAsSet } labelsViewAsSet={labelsViewAsSet}
+                selectedAllFieldsViewAsSet={this.selectedAllFieldsViewAsSet} selectedNoAllFieldsViewAsSet={this.selectedNoAllFieldsViewAsSet}/>
         );
     }
 
-    renderDownloadDialog(){
-        let that = this;
-        const { listFileName } = that.props;
-        const userLogin = JSON.parse(sessionStorage.logindata);
-        if(listFileName != null){
-            return(
-                <div>
-                    <div  className="popexport">
-                        <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
-                            <div className="modal-header">
-                                <ModalClose onClick={this.hideModalDownload}/>
-                                <h1 className="modal-title">Export</h1>
-                            </div>
-                            <div className="modal-body">
-                                <h3>Please check your email for download files.</h3>
-                                <a href={listFileName[0]} target="_blank" >{listFileName[0]}</a>
-                                <link></link>
-                                <br/>
-                                <div className="col-sm-12">
-                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
-                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
-                                </div>
-                                <div className="col-md-12">
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
-                                    Close
-                                </button>
-                            </div>
-                        </Modal>
-                    </div>
-                </div>
-            );
-        }else{
-            return(
-                <div>
-                    <div  className="popexport">
-                        <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
-                            <div className="modal-header">
-                                <ModalClose onClick={this.hideModalDownload}/>
-                                <h1 className="modal-title">Export</h1>
-                            </div>
-                            <div className="modal-body">
-                                <h3>Please check your email for download files.</h3>
-                                <br/>
-                                <div className="col-sm-12">
-                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
-                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
-                                </div>
-                                <div className="col-md-12">
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
-                                    Close
-                                </button>
-                            </div>
-                        </Modal>
-                    </div>
-                </div>
-            );
-        }
+    selectedAllFieldsViewAsSet = _ =>{
+        this.setState({ allFieldsViewAsSet:true });
+    }
+
+    selectedNoAllFieldsViewAsSet = _ =>{
+        this.setState({ allFieldsViewAsSet:false });
     }
 
     addMyCatalog = _=>{
@@ -1046,7 +1013,7 @@ class SearchResult extends Component {
         const { listCatalogName, listSetCatalogName, submitting } = this.props;
         return(
             <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
-                isClose={this.handleClose} props={this.props}listSetCatalogName = {listSetCatalogName}/>
+                isClose={this.handleClose} props={this.props} listSetCatalogName = {listSetCatalogName}/>
         );
     }
 
@@ -1054,8 +1021,8 @@ class SearchResult extends Component {
         const message = 'Add to catalog success';
         const title = 'SEARCH RESULTS';
         return(
-            <Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}
-                title={title}/>
+            <Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
+                props={this.props} message={message}  title={title}/>
         );
     }
 
@@ -1063,8 +1030,8 @@ class SearchResult extends Component {
         const message = 'Please check your email for printing files.';
         const title = 'SEARCH RESULTS';
         return(
-            <Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg} props={this.props} message={message}
-                title={title}/>
+            <Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
+                props={this.props} message={message}  title={title}/>
         );
     }
 
@@ -1090,8 +1057,8 @@ class SearchResult extends Component {
         const message = 'Page is invalid.';
         const title = 'SEARCH RESULTS';
         return(
-            <Modalalertmsg isOpen={this.state.isOpenMsgPageInvalid} isClose={this.handleCloseMsgPageInvalid} props={this.props} message={message}
-                title={title}/>
+            <Modalalertmsg isOpen={this.state.isOpenMsgPageInvalid} isClose={this.handleCloseMsgPageInvalid}
+                props={this.props} message={message}  title={title}/>
         );
     }
 
@@ -1099,114 +1066,128 @@ class SearchResult extends Component {
         this.setState({isOpenMsgPageInvalid: false});
     }
 
+    hideModalDownload = (e) => {
+        e.preventDefault();
+        const { showGridView,showListView } = this.props;
+
+        this.setState({ isOpenDownload: false });
+
+        let girdView = showGridView;
+        let listView = showListView;
+
+        this.props.setShowGridView(false);
+        this.props.setShowListView(false);
+
+        if(girdView){
+            this.props.setShowGridView(true);
+        }else if (listView) {
+            this.props.setShowListView(true);
+        }
+    }
+
+    renderDownloadDialog = _=>{
+        let that = this;
+        const { listFileName } = that.props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        if(listFileName != null){
+            return(
+                <div>
+                    <div  className="popexport">
+                        <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
+                            <div className="modal-header">
+                                <ModalClose onClick={this.hideModalDownload}/>
+                                <h1 className="modal-title">Export</h1>
+                            </div>
+                            <div className="modal-body">
+                                <h3>Please check your email for download files.</h3>
+                                <a href={listFileName[0]} target="_blank" >{listFileName[0]}</a>
+                                <link></link>
+                                <br/>
+                                <div className="col-sm-12">
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                </div>
+                                <div className="col-md-12">
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
+                                    Close
+                                </button>
+                            </div>
+                        </Modal>
+                    </div>
+                </div>
+            );
+        }else{
+            return(
+                <div>
+                    <div  className="popexport">
+                        <Modal isOpen={this.state.isOpenDownload} onRequestHide={this.hideModalDownload}>
+                            <div className="modal-header">
+                                <ModalClose onClick={this.hideModalDownload}/>
+                                <h1 className="modal-title">Export</h1>
+                            </div>
+                            <div className="modal-body">
+                                <h3>Please check your email for download files.</h3>
+                                <br/>
+                                <div className="col-sm-12">
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                    <div className="col-sm-3"></div><div className="col-sm-3"></div>
+                                </div>
+                                <div className="col-md-12">
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-default btn-radius" onClick={this.hideModalDownload}>
+                                    Close
+                                </button>
+                            </div>
+                        </Modal>
+                    </div>
+                </div>
+            );
+        }
+    }
+    
     render() {
-        const {
-            fields: { oldCatalogName, newCatalogName, validateCatalogName }, totalPages, showGridView, showListView, ViewAsSet, currentPage,
-            allItems, pageSize,exportItems,totalPublicPrice, totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsOrder,sortingBy,
-            sortDirection
-        } = this.props;
+        const { fields: { oldCatalogName, newCatalogName, validateCatalogName },
+              totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize,exportItems,
+              totalPublicPrice, totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsOrder,
+              sortingBy, sortDirection } = this.props;
         const { isOpenMessage } = this.state;
         const userLogin = JSON.parse(sessionStorage.logindata);
-        let { items } = this.props;
-        let numbers = document.querySelectorAll('input[type="number"]');
+        const { items } = this.props;
+        const numbers = document.querySelectorAll('input[type="number"]');
 
         for (var i in numbers) {
             if (numbers.hasOwnProperty(i)) {
                 numbers[i].onkeydown = function(e) {
                     if(!((e.keyCode > 95 && e.keyCode < 106)
-                        || (e.keyCode > 47 && e.keyCode < 58)
-                        || e.keyCode == 8
-                        || e.keyCode == 37
-                        || e.keyCode == 39
-                        || e.keyCode == 46
-                        || e.keyCode == 110
-                        || e.keyCode == 190 )) {
+                      || (e.keyCode > 47 && e.keyCode < 58)
+                      || e.keyCode == 8
+                      || e.keyCode == 37
+                      || e.keyCode == 39
+                      || e.keyCode == 46
+                      || e.keyCode == 110
+                      || e.keyCode == 190 )) {
                         return false;
                     }
                 }
             }
         }
+
         if(items == null){
             return (
-                <form role="form">
-                    <div >
-                        <center>
-                            <h3>Please wait....</h3>
-                            <br/><br/><br/><br/><br/><br/>
-                            <Loading type="spin" color="#202020" width="10%"/>
-                        </center>
-                    </div>
-                </form>
+                <SearchResultLoader/>
             );
         }else{
             if(allItems.length == 0){
                 return(
-                    <form role="form">
-                        {/* Header Search */}
-                        <div className="col-sm-12 bg-hearder bg-header-searchresult">
-                            <div className="col-md-4 col-sm-12 ft-white m-nopadding">
-                                <h1>SEARCH RESULTS</h1>
-                            </div>
-                            <div className="col-md-8 col-sm-12 nopadding">
-                                <div className="m-width-100 text-right maring-t15 float-r ip-font ipp-margin m-pt">
-                                    <div className="col-sm-4 col-xs-12 nopadding">
-                                        <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                            <button className="btn btn-searchresult" disabled={submitting} onClick={this.newSearch}>New Search</button>
-                                        </div>
-                                        <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                            <button className="btn btn-searchresult" disabled={submitting} onClick={this.modifySearch}>Modify Search</button>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-2 col-xs-12 ft-white margin-t5">
-                                        <ControlLabel> <span className="fc-ddbe6a m-none">|</span> Sort By: </ControlLabel>
-                                    </div>
-                                    <div className="col-sm-2 col-xs-12 nopadding">
-                                        <div className="styled-select">
-                                            <select className="form-searchresult" onChange={this.sortingBy} ref="sortingBy" >
-                                                <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                                <option key={'price'} value={'price'}>{'Price'}</option>
-                                                <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
-                                                <option key={'description'} value={'description'}>{'Description'}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
-                                        <div className="styled-select">
-                                            <select className="form-searchresult" onChange={this.sortingDirection}
-                                                ref="sortingDirection">
-                                                <option key={'desc'} value={'desc'}>{'Descending'}</option>
-                                                <option key={'asc'} value={'asc'}>{'Ascending'}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-2 ft-white nopadding pd-10">
-                                        <div disabled={submitting} onClick={ this.gridViewResults }>
-                                            <div className="bd-white m-pt-mgl"></div>
-                                        </div>
-                                        <div disabled={submitting} onClick={ this.listViewResults } >
-                                            <div className="bd-white m-pt-mgl"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div >
-                            <Modal isOpen={this.state.isOpenNoResults} onRequestHide={this.hideModalNoResults}>
-                                <div className="modal-header">
-                                    <ModalClose onClick={this.hideModalNoResults}/>
-                                    <h1 className="modal-title">Message</h1>
-                                </div>
-                                <div className="modal-body">
-                                    <h3>No Results.</h3>
-                                </div>
-                                <div className="modal-footer">
-                                    <button className="btn btn-default btn-radius btn-width" onClick={this.hideModalNoResults}>
-                                      Ok
-                                    </button>
-                                </div>
-                            </Modal>
-                        </div>
-                    </form>
+                    <SearchResultOnItem props={this.props} onClickNewSearch={this.newSearch} onClickModifySearch={this.modifySearch}
+                        onChangedSortingBy={this.sortingBy} onChangedSortingDirection={this.sortingDirection} onClickGridViewResults={this.gridViewResults}
+                        onClickListViewResults={this.listViewResults} hideModalNoResults={this.hideModalNoResults}
+                        onClickHideModalNoResults={this.hideModalNoResults}/>
                 );
             }else{
                 return(
@@ -1375,11 +1356,11 @@ class SearchResult extends Component {
                         </div>
                         {this.renderExportExcelDialog()}
                         {this.renderDownloadDialog()}
+                        {this.renderExportExcelViewAsSetDialog()}
                         {this.renderAddMyCatalog()}
                         {this.renderAlertmsg()}
                         {this.renderAlertmsgPdf()}
                         {this.renderAlertmsgPageInvalid()}
-                        {this.renderExportExcelViewAsSetDialog()}
                         {this.renderDialogPrintOptions()}
                     </form>
                 );

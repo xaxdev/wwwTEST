@@ -32,7 +32,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                             }
                         }
                     })
-
                 })
                 data = clarityData;
             }
@@ -46,7 +45,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 item.order = parseInt(order.order)
                 return item;
             });
-            data = data.sortBy('order','asc',userCurrency);
+            data = data.sort(compareBy('order','asc',userCurrency));
         }
         if (setReferencdOrder != null) {
             data.map((item) => {
@@ -63,7 +62,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 item.order = parseInt(order.order)
                 return item;
             });
-            data = data.sortBy('order','asc',userCurrency);
+            data = data.sort(compareBy('order','asc',userCurrency));
         }
 
         if (isViewAsSet) {
@@ -86,7 +85,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
         if (itemsOrder == null && setReferencdOrder == null) {
             //   Not have SetReference criteria
             if (!isSetReference) {
-                data = data.sortBy(sortBy,sortDirections,userCurrency);
+                data = data.sort(compareBy(sortBy, sortDirections, userCurrency));
             }
         }
 
@@ -194,7 +193,7 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 });
             }else{
                 allData.push({
-                    'id': item.id,'reference':item.reference,'itemCreatedDate':item.itemCreatedDate,
+                    'id': item.id,'reference':item.reference,'createdDate':item.itemCreatedDate,
                     'price':item.price,'description':item.description,'setReference':item.setReference
                 });
             }
@@ -255,10 +254,11 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 }
             }
         });
-
-        if (itemsOrder == null && setReferencdOrder == null) {
-            allData = allData.sortBy(sortBy,sortDirections,userCurrency);
-        }
+        // console.log('allData-->',allData[0]);
+        // if (itemsOrder == null && setReferencdOrder == null) {
+        //     allData = allData.sort(compareBy(sortBy, sortDirections, userCurrency));
+        // }
+        // console.log('allData-->',allData[0]);
 
         if (!isViewAsSet) {
             allData = allData.map((item) => {return {'id':item.id}})
@@ -347,10 +347,6 @@ const compareBy = (property, order = 'asc', userCurrency) => (a, b) => {
     }
 
     return (order === 'desc')? (comparison * -1) : comparison
-}
-
-Array.prototype.sortBy = function(property, order = 'asc', userCurrency) {
-    return Array.prototype.sort.call(this, compareBy(property, order, userCurrency))
 }
 
 const count = (ary, classifier) => {

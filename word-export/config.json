@@ -12,6 +12,10 @@
         "production": {
             "url": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
             "channel": "word"
+        },
+        "staging": {
+            "url": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
+            "channel": "word-staging"
         }
     }
 }

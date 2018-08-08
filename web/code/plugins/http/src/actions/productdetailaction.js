@@ -4,7 +4,8 @@ import fetch from 'isomorphic-fetch';
 import {
     FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME,ADD_CATALOG,GET_CERTIFICATE,
     GET_LOTNUMBER,GET_LOTNUMBERPAGE, GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS,ADD_NEWSETCATALOGITEM,GET_SETCATALOGNAME,
-    GET_SETCATALOGITEMSLIST, FETCH_SETCATALOGDETAILS
+    GET_SETCATALOGITEMSLIST, FETCH_SETCATALOGDETAILS, FETCH_SALESPRODUCTDETAIL, FETCH_SALESPRODUCTRELETED, FETCH_SALESSETDETAILS,
+    FETCH_SALESVIEWASSETDETAILS, FETCH_SALESVIEWASSETPRODUCTDETAIL
 } from '../constants/productdetailconstants';
 
 export function getItems(params){
@@ -89,6 +90,40 @@ export function getSetDetails(setReferenceId, setReferencelist){
         productlist:setReferencelist
     }
 }
+export function getSalesSetDetails(setReferenceId, setReferencelist){
+    const token = sessionStorage.token;
+    return {
+        type: FETCH_SALESSETDETAILS,
+        promise: fetch(`${ROOT_URL}api/items/salessetdetails/${setReferenceId}`,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        }),
+        productid:setReferenceId.replace('-','/'),
+        productlist:setReferencelist
+    }
+}
+
+export function getSalesViewAsSetDetails(setReferenceId, setReferencelist){
+    const token = sessionStorage.token;
+    return {
+        type: FETCH_SALESVIEWASSETDETAILS,
+        promise: fetch(`${ROOT_URL}api/items/salesviewassetdetails/${setReferenceId}`,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        }),
+        productid:setReferenceId.replace('-','/'),
+        productlist:setReferencelist
+    }
+}
+
 export function getSetCatalogDetails(setReferenceId, setReferencelist){
     const token = sessionStorage.token;
     return {
@@ -198,11 +233,61 @@ export function getProductDetail(productId,productlist){
     }
 }
 
+export function getSalesProductDetail(productId,productlist){
+    const token = sessionStorage.token;
+    return {
+        type: FETCH_SALESPRODUCTDETAIL,
+        promise: fetch(`${ROOT_URL}api/items/salesitem/${productId}`,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        productid:productId,
+        productlist:productlist
+    }
+}
+
+export function getSalesViewAsSetProductDetail(productId,productlist){
+    const token = sessionStorage.token;
+    return {
+        type: FETCH_SALESVIEWASSETPRODUCTDETAIL,
+        promise: fetch(`${ROOT_URL}api/items/salesviewassetitem/${productId}`,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        productid:productId,
+        productlist:productlist
+    }
+}
+
 export function getProductRelete(collection,page,productId,dominant,currency,price){
     const token = sessionStorage.token;
     return {
         type: FETCH_PRODUCTRELETED,
         promise: fetch( `${ROOT_URL}api/items/relateditems/${collection}/${page}/${productId}/${dominant}/${currency}/${price}`,{
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            method:'GET'
+        }),
+        page:page
+    }
+}
+
+export function getSalesProductRelete(collection,page,productId,dominant,currency,price){
+    const token = sessionStorage.token;
+    return {
+        type: FETCH_SALESPRODUCTRELETED,
+        promise: fetch( `${ROOT_URL}api/items/salesrelateditems/${collection}/${page}/${productId}/${dominant}/${currency}/${price}`,{
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',

@@ -2,22 +2,36 @@
     "elasticsearch": {
         "$filter": "env",
         "development": {
-            "host": "192.168.1.94:9200 ",
+            "host": "192.168.3.19:9200 ",
             "index": "mol",
             "typeItems": "items",
-            "typeSetItem": "setitems"
+            "typeSetItem": "setitems",
+            "indexSoldItems": "mol_solditems",
+            "typeSoldItems": "solditems"
         },
         "test": {
             "host": "192.168.1.94:9200 ",
             "index": "mol",
             "typeItems": "items",
-            "typeSetItem": "setitems"
+            "typeSetItem": "setitems",
+            "indexSoldItems": "mol_solditems",
+            "typeSoldItems": "solditems"
         },
         "production": {
             "host": "10.128.133.77:9200 ",
             "index": "mol",
             "typeItems": "items",
-            "typeSetItem": "setitems"
+            "typeSetItem": "setitems",
+            "indexSoldItems": "mol_solditems",
+            "typeSoldItems": "solditems"
+        },
+        "staging": {
+            "host": "13.67.69.236:9200 ",
+            "index": "mol",
+            "typeItems": "items",
+            "typeSetItem": "setitems",
+            "indexSoldItems": "mol_solditems",
+            "typeSoldItems": "solditems"
         }
     },
     "rabbit": {
@@ -33,6 +47,10 @@
         "production": {
             "url": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
             "channel": "mol"
+        },
+        "staging": {
+            "url": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
+            "channel": "mol-staging"
         }
     },
     "excel": {
@@ -46,6 +64,10 @@
             "maxRow": 2000
         },
         "production": {
+            "bufferSize": 500,
+            "maxRow": 5000
+        },
+        "staging": {
             "bufferSize": 500,
             "maxRow": 5000
         }

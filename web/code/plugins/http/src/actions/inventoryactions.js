@@ -2,18 +2,44 @@ import 'babel-polyfill';
 import fetch from 'isomorphic-fetch';
 
 import {
-    RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY, SET_POLISH, SET_SYMMETRY, SET_TREATMENT,
-    SET_FLUORESCENCE, SET_ORIGIN, SET_JEWELRYCATEGORY, SET_COLLECTION, SET_BRAND, SET_MUSTHAVE, SET_RINGSIZE, SET_DOMINANTSTONE, SET_METALTYPE, SET_METALCOLOUR,
-    SET_CERTIFICATEAGENCY, SET_WATCHCATEORY, SET_LIMITEDEDITION, SET_MOVEMENT, SET_DIALINDEX, SET_DIALCOLOR, SET_DIALMETAL, SET_BUCKLETYPE, SET_STRAPTYPE,
-    SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE,SET_HIERARCHY, SET_GEMS_CERTIFICATE_DATE_FROM,
-    SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM,SET_STONE_CERTIFICATE_DATE_TO, SET_PRODUCTION_DATE_FROM, SET_PRODUCTION_DATE_TO, SET_SUBMITACTION,
-    SET_SAVESEARCHHIERARCHY,SET_VIEWASSET, SET_ITEMSORDER, SET_SETREFERENCEORDER, SET_ARTICLE, SET_GEMS_STONE_TYPE
+    RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY, SET_POLISH, SET_SYMMETRY,
+    SET_TREATMENT, SET_FLUORESCENCE, SET_ORIGIN, SET_JEWELRYCATEGORY, SET_COLLECTION, SET_BRAND, SET_MUSTHAVE, SET_RINGSIZE, SET_DOMINANTSTONE, SET_METALTYPE,
+    SET_METALCOLOUR, SET_CERTIFICATEAGENCY, SET_WATCHCATEORY, SET_LIMITEDEDITION, SET_MOVEMENT, SET_DIALINDEX, SET_DIALCOLOR, SET_DIALMETAL, SET_BUCKLETYPE,
+    SET_STRAPTYPE, SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE,SET_HIERARCHY,
+    SET_GEMS_CERTIFICATE_DATE_FROM, SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM,SET_STONE_CERTIFICATE_DATE_TO, SET_PRODUCTION_DATE_FROM,
+    SET_PRODUCTION_DATE_TO,SET_SUBMITACTION,SET_SAVESEARCHHIERARCHY,SET_VIEWASSET, SET_ITEMSORDER, SET_SETREFERENCEORDER, SET_ARTICLE,SET_SALESADVANCE,
+    SELECTED_TABSALESCATEGORY,SET_SALESCHANNEL, SET_SALESHIERARCHY, SET_SAVESEARCHSALESHIERARCHY, SET_GEMS_STONE_TYPE, SET_INVOICE_DATE_FROM, SET_INVOICE_DATE_TO,
+    SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER
 } from '../constants/inventoryConstants';
 
+export function setInvoiceDateFrom(value){
+    return {
+        type: SET_INVOICE_DATE_FROM,
+        invoiceDateFrom: value
+    }
+}
+export function setInvoiceDateTo(value){
+    return {
+        type: SET_INVOICE_DATE_TO,
+        invoiceDateTo: value
+    }
+}
 export function setDataGemstoneStoneType(value){
     return {
         type: SET_GEMS_STONE_TYPE,
         gemstoneStoneType:value
+    }
+}
+export function setSaveSearchSalesHierarchy(value){
+    return {
+        type: SET_SAVESEARCHSALESHIERARCHY,
+        savesearchsaleshierarchy:value
+    }
+}
+export function setDataSalesChannel(value){
+    return {
+        type: SET_SALESCHANNEL,
+        salesChannel:value
     }
 }
 export function setSetReferenceOrder(value){
@@ -26,6 +52,18 @@ export function setItemsOrder(value){
     return {
         type: SET_ITEMSORDER,
         itemsOrder: value
+    }
+}
+export function setSetReferenceSalesOrder(value){
+    return {
+        type: SET_SETREFERENCESALESORDER,
+        setReferenceSalesOrder: value
+    }
+}
+export function setItemsSalesOrder(value){
+    return {
+        type: SET_ITEMSSALESORDER,
+        itemsSalesOrder: value
     }
 }
 export function setViewAsSet(value){
@@ -94,6 +132,12 @@ export function setHierarchy(value){
         hierarchy:value
     }
 }
+export function setSalesHierarchy(value){
+    return {
+        type: SET_SALESHIERARCHY,
+        salesHierarchy:value
+    }
+}
 export function setDataSparePartType(value){
     return {
         type: SET_SPAREPARTTYPE,
@@ -112,13 +156,24 @@ export function setAdvance(isAdvance){
         isAdvance:isAdvance
     }
 }
+export function setSalesAdvance(value){
+    return {
+        type: SET_SALESADVANCE ,
+        salesIsAdvance:value
+    }
+}
 export function selectedTabCategory(activeTab){
     return {
         type: SELECTED_TABCATEGORY ,
         tab:activeTab
     }
 }
-
+export function selectedTabSalesCategory(activeTab){
+    return {
+        type: SELECTED_TABSALESCATEGORY ,
+        tab:activeTab
+    }
+}
 export function setDataComplication(value){
     return {
         type: SET_COMPLICATION ,

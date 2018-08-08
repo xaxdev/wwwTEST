@@ -1,0 +1,708 @@
+{
+    "id": "44",
+    "label": "Jewelry",
+    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry",
+    "children": [
+        {
+            "id": "45",
+            "label": "Classic",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic",
+            "children": [
+                {
+                    "id": "46",
+                    "label": "Colored Diamond Classic",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Colored Diamond Classic"
+                },
+                {
+                    "id": "47",
+                    "label": "Diamond Classic",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic",
+                    "children": [
+                        {
+                            "id": "48",
+                            "label": "3 Stone Earrings",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\3 Stone Earrings"
+                        },
+                        {
+                            "id": "49",
+                            "label": "Dangling Earrings",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Dangling Earrings"
+                        },
+                        {
+                            "id": "50",
+                            "label": "Engagement Ring",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Engagement Ring",
+                            "children": [
+                                {
+                                    "id": "51",
+                                    "label": "3 Stones",
+                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Engagement Ring\\\\\\\\3 Stones"
+                                },
+                                {
+                                    "id": "52",
+                                    "label": "Solitaire",
+                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Engagement Ring\\\\\\\\Solitaire"
+                                },
+                                {
+                                    "id": "53",
+                                    "label": "Solitaire Ring",
+                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Engagement Ring\\\\\\\\Solitaire Ring"
+                                },
+                                {
+                                    "id": "54",
+                                    "label": "Solitaire with Side Stones",
+                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Engagement Ring\\\\\\\\Solitaire with Side Stones"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "55",
+                            "label": "Hoop Earrings",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Hoop Earrings"
+                        },
+                        {
+                            "id": "56",
+                            "label": "Line Bracelet",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Line Bracelet"
+                        },
+                        {
+                            "id": "57",
+                            "label": "Riviera Necklace",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Riviera Necklace"
+                        },
+                        {
+                            "id": "58",
+                            "label": "Solitaire Bracelet",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Solitaire Bracelet"
+                        },
+                        {
+                            "id": "59",
+                            "label": "Solitaire Pendant",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Solitaire Pendant"
+                        },
+                        {
+                            "id": "60",
+                            "label": "Stud Earrings",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Stud Earrings"
+                        },
+                        {
+                            "id": "61",
+                            "label": "Tennis Bracelet",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Tennis Bracelet"
+                        },
+                        {
+                            "id": "62",
+                            "label": "Three Stone Pendants",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Three Stone Pendants"
+                        },
+                        {
+                            "id": "63",
+                            "label": "Wedding Band",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band",
+                            "children": [
+                                {
+                                    "id": "64",
+                                    "label": "Gold Wedding Band",
+                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band",
+                                    "children": [
+                                        {
+                                            "id": "65",
+                                            "label": "Gold Plain",
+                                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\Gold Plain"
+                                        },
+                                        {
+                                            "id": "66",
+                                            "label": "GW Diamond Accent",
+                                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\GW Diamond Accent",
+                                            "children": [
+                                                {
+                                                    "id": "67",
+                                                    "label": "GWDA Full Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\GW Diamond Accent\\\\\\\\GWDA Full Eternity"
+                                                },
+                                                {
+                                                    "id": "68",
+                                                    "label": "GWDA Half Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\GW Diamond Accent\\\\\\\\GWDA Half Eternity"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "69",
+                                            "label": "GW Diamond and Gemstone Accent",
+                                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\GW Diamond and Gemstone Accent",
+                                            "children": [
+                                                {
+                                                    "id": "70",
+                                                    "label": "GWDG Full Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\GW Diamond and Gemstone Accent\\\\\\\\GWDG Full Eternity"
+                                                },
+                                                {
+                                                    "id": "71",
+                                                    "label": "GWDG Half Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\GW Diamond and Gemstone Accent\\\\\\\\GWDG Half Eternity"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "72",
+                                            "label": "GW Diamond Band",
+                                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\GW Diamond Band"
+                                        },
+                                        {
+                                            "id": "73",
+                                            "label": "GW Gemstone Accent",
+                                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\GW Gemstone Accent",
+                                            "children": [
+                                                {
+                                                    "id": "74",
+                                                    "label": "GWGA Full Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\GW Gemstone Accent\\\\\\\\GWGA Full Eternity"
+                                                },
+                                                {
+                                                    "id": "75",
+                                                    "label": "GWGA Half Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Gold Wedding Band\\\\\\\\GW Gemstone Accent\\\\\\\\GWGA Half Eternity"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "76",
+                                    "label": "Platinum Wedding Band",
+                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band",
+                                    "children": [
+                                        {
+                                            "id": "77",
+                                            "label": "Diamond Accent",
+                                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Diamond Accent",
+                                            "children": [
+                                                {
+                                                    "id": "78",
+                                                    "label": "Full Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Diamond Accent\\\\\\\\Full Eternity"
+                                                },
+                                                {
+                                                    "id": "79",
+                                                    "label": "Half Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Diamond Accent\\\\\\\\Half Eternity"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "80",
+                                            "label": "Diamond and Gemstone Accent",
+                                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Diamond and Gemstone Accent",
+                                            "children": [
+                                                {
+                                                    "id": "81",
+                                                    "label": "DG Full Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Diamond and Gemstone Accent\\\\\\\\DG Full Eternity"
+                                                },
+                                                {
+                                                    "id": "82",
+                                                    "label": "DG Half Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Diamond and Gemstone Accent\\\\\\\\DG Half Eternity"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "83",
+                                            "label": "Diamond Band",
+                                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Diamond Band"
+                                        },
+                                        {
+                                            "id": "84",
+                                            "label": "Gemstone Accent",
+                                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Gemstone Accent",
+                                            "children": [
+                                                {
+                                                    "id": "85",
+                                                    "label": "Gemstone Full Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Gemstone Accent\\\\\\\\Gemstone Full Eternity"
+                                                },
+                                                {
+                                                    "id": "86",
+                                                    "label": "Gemstone Half Eternity",
+                                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Gemstone Accent\\\\\\\\Gemstone Half Eternity"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "87",
+                                            "label": "Platinum Plain",
+                                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Band\\\\\\\\Platinum Wedding Band\\\\\\\\Platinum Plain"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "88",
+                            "label": "Wedding Sets",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Wedding Sets"
+                        }
+                    ]
+                },
+                {
+                    "id": "89",
+                    "label": "Diamond Staples",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Staples"
+                },
+                {
+                    "id": "90",
+                    "label": "Gemstone Classic",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Gemstone Classic",
+                    "children": [
+                        {
+                            "id": "91",
+                            "label": "Opera",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Gemstone Classic\\\\\\\\Opera"
+                        },
+                        {
+                            "id": "92",
+                            "label": "Royale Rings",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Gemstone Classic\\\\\\\\Royale Rings"
+                        },
+                        {
+                            "id": "93",
+                            "label": "Sultan",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Gemstone Classic\\\\\\\\Sultan"
+                        }
+                    ]
+                },
+                {
+                    "id": "94",
+                    "label": "Other Classics",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Other Classics",
+                    "children": [
+                        {
+                            "id": "95",
+                            "label": "4 Marquise",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Other Classics\\\\\\\\4 Marquise"
+                        },
+                        {
+                            "id": "96",
+                            "label": "Rosecut Classic",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Other Classics\\\\\\\\Rosecut Classic"
+                        }
+                    ]
+                },
+                {
+                    "id": "97",
+                    "label": "Pearl Classics",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Pearl Classics"
+                }
+            ]
+        },
+        {
+            "id": "98",
+            "label": "Collection",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection",
+            "children": [
+                {
+                    "id": "99",
+                    "label": "Non Signature Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Non Signature Collection",
+                    "children": [
+                        {
+                            "id": "100",
+                            "label": "Non Signature Jewelry",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Non Signature Collection\\\\\\\\Non Signature Jewelry"
+                        },
+                        {
+                            "id": "101",
+                            "label": "Silver Baby Line",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Non Signature Collection\\\\\\\\Silver Baby Line"
+                        },
+                        {
+                            "id": "102",
+                            "label": "Silver Jewelry",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Non Signature Collection\\\\\\\\Silver Jewelry"
+                        }
+                    ]
+                },
+                {
+                    "id": "103",
+                    "label": "Other Signature Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection",
+                    "children": [
+                        {
+                            "id": "104",
+                            "label": "Charity Bracelet",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Charity Bracelet"
+                        },
+                        {
+                            "id": "105",
+                            "label": "Charms",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Charms"
+                        },
+                        {
+                            "id": "106",
+                            "label": "Classic Pearl",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Classic Pearl"
+                        },
+                        {
+                            "id": "107",
+                            "label": "CLC - Cufflinks Collection",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\CLC - Cufflinks Collection"
+                        },
+                        {
+                            "id": "108",
+                            "label": "Diva",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Diva"
+                        },
+                        {
+                            "id": "109",
+                            "label": "Eleanor",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Eleanor"
+                        },
+                        {
+                            "id": "110",
+                            "label": "Fantasia",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Fantasia"
+                        },
+                        {
+                            "id": "111",
+                            "label": "Gents Ring",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Gents Ring",
+                            "children": [
+                                {
+                                    "id": "112",
+                                    "label": "Hukom Ring Silver",
+                                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Gents Ring\\\\\\\\Hukom Ring Silver"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "113",
+                            "label": "Gents Set",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Gents Set"
+                        },
+                        {
+                            "id": "114",
+                            "label": "Glamour",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Glamour"
+                        },
+                        {
+                            "id": "115",
+                            "label": "GRC - Gent’s Ring Collection",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\GRC - Gent’s Ring Collection"
+                        },
+                        {
+                            "id": "116",
+                            "label": "Hilal",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Hilal"
+                        },
+                        {
+                            "id": "117",
+                            "label": "Imperial",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Imperial"
+                        },
+                        {
+                            "id": "118",
+                            "label": "Larme d'Amour",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Larme d'Amour"
+                        },
+                        {
+                            "id": "119",
+                            "label": "Lava",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Lava"
+                        },
+                        {
+                            "id": "120",
+                            "label": "Le Coeur",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Le Coeur"
+                        },
+                        {
+                            "id": "121",
+                            "label": "Leila",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Leila"
+                        },
+                        {
+                            "id": "122",
+                            "label": "Misbaha",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Misbaha"
+                        },
+                        {
+                            "id": "123",
+                            "label": "Opera1(inactive)",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Opera1(inactive)"
+                        },
+                        {
+                            "id": "124",
+                            "label": "Oriana",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Oriana"
+                        },
+                        {
+                            "id": "125",
+                            "label": "Papillon",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Papillon"
+                        },
+                        {
+                            "id": "126",
+                            "label": "Peacock",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Peacock"
+                        },
+                        {
+                            "id": "127",
+                            "label": "Rainbow",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Rainbow"
+                        },
+                        {
+                            "id": "128",
+                            "label": "Rosecut Classics",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Rosecut Classics"
+                        },
+                        {
+                            "id": "129",
+                            "label": "Sample Review",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Sample Review"
+                        },
+                        {
+                            "id": "130",
+                            "label": "Shehrazad",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Other Signature Collection\\\\\\\\Shehrazad"
+                        }
+                    ]
+                },
+                {
+                    "id": "131",
+                    "label": "Signature Boutique Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Signature Boutique Collection",
+                    "children": [
+                        {
+                            "id": "132",
+                            "label": "Flower of Eternity",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Signature Boutique Collection\\\\\\\\Flower of Eternity"
+                        },
+                        {
+                            "id": "133",
+                            "label": "Grande Ellipse Accessories",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Signature Boutique Collection\\\\\\\\Grande Ellipse Accessories"
+                        },
+                        {
+                            "id": "134",
+                            "label": "Love M",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Signature Boutique Collection\\\\\\\\Love M"
+                        },
+                        {
+                            "id": "135",
+                            "label": "Rosette",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Signature Boutique Collection\\\\\\\\Rosette"
+                        },
+                        {
+                            "id": "136",
+                            "label": "Silhouette",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Signature Boutique Collection\\\\\\\\Silhouette"
+                        },
+                        {
+                            "id": "137",
+                            "label": "TGC - Trigon Collection",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Signature Boutique Collection\\\\\\\\TGC - Trigon Collection"
+                        },
+                        {
+                            "id": "138",
+                            "label": "Vie",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Collection\\\\\\\\Signature Boutique Collection\\\\\\\\Vie"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "139",
+            "label": "Customer SKU",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Customer SKU"
+        },
+        {
+            "id": "140",
+            "label": "Gents",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Gents",
+            "children": [
+                {
+                    "id": "141",
+                    "label": "CLC-Cufflinks Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Gents\\\\\\\\CLC-Cufflinks Collection"
+                },
+                {
+                    "id": "142",
+                    "label": "GE Accessories",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Gents\\\\\\\\GE Accessories"
+                },
+                {
+                    "id": "143",
+                    "label": "Gents Sets",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Gents\\\\\\\\Gents Sets",
+                    "children": [
+                        {
+                            "id": "144",
+                            "label": "2 Piece",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Gents\\\\\\\\Gents Sets\\\\\\\\2 Piece"
+                        },
+                        {
+                            "id": "145",
+                            "label": "3 Piece",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Gents\\\\\\\\Gents Sets\\\\\\\\3 Piece"
+                        }
+                    ]
+                },
+                {
+                    "id": "146",
+                    "label": "GRC-Gents Ring Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Gents\\\\\\\\GRC-Gents Ring Collection"
+                },
+                {
+                    "id": "147",
+                    "label": "Hukom Gents Ring Silver",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Gents\\\\\\\\Hukom Gents Ring Silver"
+                },
+                {
+                    "id": "148",
+                    "label": "Misbahas",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Gents\\\\\\\\Misbahas"
+                },
+                {
+                    "id": "149",
+                    "label": "TGC-Trigon Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Gents\\\\\\\\TGC-Trigon Collection"
+                }
+            ]
+        },
+        {
+            "id": "150",
+            "label": "Individual Pieces",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces",
+            "children": [
+                {
+                    "id": "151",
+                    "label": "IP Boutique Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces\\\\\\\\IP Boutique Collection"
+                },
+                {
+                    "id": "152",
+                    "label": "IP High Jewelry Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces\\\\\\\\IP High Jewelry Collection",
+                    "children": [
+                        {
+                            "id": "153",
+                            "label": "IP Category A: USD 500,000 to USD 999,999",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces\\\\\\\\IP High Jewelry Collection\\\\\\\\IP Category A: USD 500,000 to USD 999,999"
+                        },
+                        {
+                            "id": "154",
+                            "label": "IP Category B: USD 250,000 to USD 499,999",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces\\\\\\\\IP High Jewelry Collection\\\\\\\\IP Category B: USD 250,000 to USD 499,999"
+                        },
+                        {
+                            "id": "155",
+                            "label": "IP Category C: USD 100,000 to USD 249,999",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces\\\\\\\\IP High Jewelry Collection\\\\\\\\IP Category C: USD 100,000 to USD 249,999"
+                        },
+                        {
+                            "id": "156",
+                            "label": "IP Category D: USD 50,000 to USD99,999",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces\\\\\\\\IP High Jewelry Collection\\\\\\\\IP Category D: USD 50,000 to USD99,999"
+                        }
+                    ]
+                },
+                {
+                    "id": "157",
+                    "label": "IP Masterpiece Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces\\\\\\\\IP Masterpiece Collection",
+                    "children": [
+                        {
+                            "id": "158",
+                            "label": "IP Category A: USD 3 million +",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces\\\\\\\\IP Masterpiece Collection\\\\\\\\IP Category A: USD 3 million +"
+                        },
+                        {
+                            "id": "159",
+                            "label": "IP Category B: USD 1 million to USD 2,999,999",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces\\\\\\\\IP Masterpiece Collection\\\\\\\\IP Category B: USD 1 million to USD 2,999,999"
+                        }
+                    ]
+                },
+                {
+                    "id": "160",
+                    "label": "IP Vintage",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Individual Pieces\\\\\\\\IP Vintage"
+                }
+            ]
+        },
+        {
+            "id": "161",
+            "label": "Other Jewelry Brands",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Other Jewelry Brands",
+            "children": [
+                {
+                    "id": "162",
+                    "label": "Sample Review - old",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Other Jewelry Brands\\\\\\\\Sample Review - old"
+                }
+            ]
+        },
+        {
+            "id": "163",
+            "label": "Set",
+            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set",
+            "children": [
+                {
+                    "id": "164",
+                    "label": "Boutique Set",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set\\\\\\\\Boutique Set"
+                },
+                {
+                    "id": "165",
+                    "label": "High Jewelry Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set\\\\\\\\High Jewelry Collection",
+                    "children": [
+                        {
+                            "id": "166",
+                            "label": "Category A: USD 500,000 to USD 999,999",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set\\\\\\\\High Jewelry Collection\\\\\\\\Category A: USD 500,000 to USD 999,999"
+                        },
+                        {
+                            "id": "167",
+                            "label": "Category B: USD 250,000 to USD 499,999",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set\\\\\\\\High Jewelry Collection\\\\\\\\Category B: USD 250,000 to USD 499,999"
+                        },
+                        {
+                            "id": "168",
+                            "label": "Category C: USD 100,000 to USD 249,999",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set\\\\\\\\High Jewelry Collection\\\\\\\\Category C: USD 100,000 to USD 249,999"
+                        },
+                        {
+                            "id": "169",
+                            "label": "Category D: USD 50,000 to USD99,999",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set\\\\\\\\High Jewelry Collection\\\\\\\\Category D: USD 50,000 to USD99,999"
+                        }
+                    ]
+                },
+                {
+                    "id": "170",
+                    "label": "Master Pieces Collection",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set\\\\\\\\Master Pieces Collection",
+                    "children": [
+                        {
+                            "id": "171",
+                            "label": "Category A: USD 3 million +",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set\\\\\\\\Master Pieces Collection\\\\\\\\Category A: USD 3 million +"
+                        },
+                        {
+                            "id": "172",
+                            "label": "Category B: USD 1 million to USD 2,999,999",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set\\\\\\\\Master Pieces Collection\\\\\\\\Category B: USD 1 million to USD 2,999,999"
+                        }
+                    ]
+                },
+                {
+                    "id": "173",
+                    "label": "Vintage",
+                    "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Set\\\\\\\\Vintage"
+                }
+            ]
+        }
+    ]
+}

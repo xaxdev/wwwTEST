@@ -6,9 +6,9 @@ class WhatNewNotification extends Component {
 
     render() {
             const host = HOSTNAME || 'localhost';
-            const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+            const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [9,8,7,6,5,4,3,2,1];
+            const roundData = [10,9,8,7,6,5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -225,10 +225,10 @@ class WhatNewNotification extends Component {
                                                     'type':'new',
                                                     'title': 'Movement Activity',
                                                     'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 3, 2017</p>
-                                                    <p>It presented the inventory movement history of both Sales Consignment and Intercompany/Warehouse Transfer</p>
+                                                    <p>It presented the inventory movement history of both Sales Consignment and Intercompany/Location Transfer</p>
                                                     <div style="margin-left: 20px;">
                                                     <p>• Customer Viewings displays the product sold to the external customers</p>
-                                                    <p>• Intercompany Transfer displays the all records of intercompany & warehouse in each product</p>
+                                                    <p>• Intercompany Transfer displays the all records of intercompany & Location in each product</p>
                                                     <p><span style="color:red;">*</span> We, IT team, will grant the right to some users who will be able to view the Movement Activity</p>
                                                     </div>
                                                     <h3 style="padding:17px 0px 0px 0px">How to use Movement Activity</h3>
@@ -405,6 +405,25 @@ class WhatNewNotification extends Component {
                                                   <p>- When users select Sapphire at Stone type field, it will show items under SAP, Sapphire, SAPPHIREPCS, SAPPHIRES after search.</p>
                                                   <div style="padding:15px 20px 0 20px;">
                                                   <div style="margin:15px 0px; text-align:center;"><img src="/images/ston-type.gif"/></div>
+                                                  </div>`
+                                              }
+                                            ]
+                                },
+                                {
+                                    'id': 10,
+                                    'round': 'July 2018',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Sales Report Module in MOL',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">July 20, 2018</p>
+                                                  <p>User who has user permission type "Sales Module" can search Sales Report.<p>
+                                                  <h3 style="padding:17px 0px 0px 0px">How to use Sales Report:</h3>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <p>1. Click Sales Report Button.</p>
+                                                  <p>2. Search items at Sales Report Page.</p>
+                                                  <p>3. Sold items will show at Sales Search Results.</p>
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/Sale_Module.gif"/></div>
                                                   </div>`
                                               }
                                             ]

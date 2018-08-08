@@ -6,6 +6,9 @@ const setstate = async (props,criterias) => {
         const valueKeys = criteria[keyscat[0]];
         if (keyscat.length != 0) {
             switch (keyscat[0]) {
+                case 'salesChannel':
+                    props.inventoryActions.setDataSalesChannel(valueKeys);
+                    break;
                 case 'origin':
                     props.inventoryActions.setDataOrigin(valueKeys);
                     break;
@@ -100,6 +103,7 @@ const setstate = async (props,criterias) => {
                     props.inventoryActions.setSaveSearchHierarchy(valueKeys);
                     break;
                 case 'jewelryProductHierarchy':
+                    console.log('jewelryProductHierarchy-->', valueKeys);
                     props.inventoryActions.setSaveSearchHierarchy(valueKeys);
                     break;
                 case 'gemstones.certificateAgency':

@@ -1,8 +1,7 @@
 'use strict';
 
 exports.register = (server, options, next) => {
-
-  next();
+    next();
 };
 
 exports.register.attributes = require('./package');

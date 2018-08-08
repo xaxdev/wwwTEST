@@ -11,7 +11,7 @@ const probe = async params => {
     }
 };
 
-const get = async params => {
+const get = async params => {   
     try {
         // query from db
         const recordset = await db.exec(params.query, params.db);

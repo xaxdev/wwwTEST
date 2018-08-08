@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import { DataTable } from '../../utils/dataTableSaveSearch/index';
-import ShareModal from './share_model';
-import * as setcriteria from './setstate';
+import ShareModalSales from './share_modal_sales';
+import * as setcriteria from './setsalesstate';
 import ModalConfirmDelete from './modalConfirmDelete';
 let Loading = require('react-loading');
 
@@ -13,7 +13,7 @@ class SaveSearchList extends Component {
 
         this.state = {
             isOpen: false,
-            initialPageLength:20,
+            initialPageLength:10,
             userStatus:null,
             userData:[],
             currentPage: 0,
@@ -30,30 +30,30 @@ class SaveSearchList extends Component {
     searchSaveCriteria = (id) => {
         const that = this;
         const { props } = this.props;
-        let { filters, paramsSearch } = props;
+        let { filters, paramsSalesSearch } = props;
         let params = {id:id}
 
         this.setState({ showLoading: true });
 
-        this.props.getSaveCriteria(params).then((value) => {
+        this.props.getSalesSaveCriteria(params).then((value) => {
             (async () => {
-                if (this.props.criteriaSaveSearch != null) {
-                    sessionStorage.setItem('filters', this.props.criteriaSaveSearch.criteria);
-                    const criterias = JSON.parse(this.props.criteriaSaveSearch.criteria);
+                if (this.props.criteriaSalesSaveSearch != null) {
+                    sessionStorage.setItem('filters', this.props.criteriaSalesSaveSearch.criteria);
+                    const criterias = JSON.parse(this.props.criteriaSalesSaveSearch.criteria);
                     let data = null;
-                    data = await setcriteria.setstate(props,criterias);
+                    data = await setcriteria.setSalesState(props,criterias);
                     if(filters.length != 0){
-                        await props.saveSearchAction.setParams(paramsSearch)
-                        await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
+                        await props.saveSearchAction.setSalesParams(paramsSalesSearch)
+                        await sessionStorage.setItem('paramsSalesSearch', JSON.stringify(paramsSalesSearch));
                     }else{
                         // if not have filters is mean new search
                         // set params by new criterias
-                        await props.saveSearchAction.setParams(data);
-                        await sessionStorage.setItem('paramsSearch', JSON.stringify(data));
+                        await props.saveSearchAction.setSalesParams(data);
+                        await sessionStorage.setItem('paramsSalesSearch', JSON.stringify(data));
                     }
-                    let editParams = {id:id, name:this.props.criteriaSaveSearch.name}
-                    await props.saveSearchAction.setIdEditSaveSearch(editParams);
-                    that.context.router.push('/searchresult');
+                    let editParams = {id:id, name:this.props.criteriaSalesSaveSearch.name}
+                    await props.saveSearchAction.setIdEditSalesSaveSearch(editParams);
+                    that.context.router.push('/salessearchresult');
                 }
             })()
         });
@@ -61,43 +61,43 @@ class SaveSearchList extends Component {
     editeSaveCriteria = (id) => {
         const that = this;
         const { props } = this.props;
-        let { filters, paramsSearch } = props;
+        let { filters, paramsSalesSearch } = props;
         let params = {id:id}
 
         this.setState({showLoading: true});
 
-        this.props.getSaveCriteria(params).then((value) => {
+        this.props.getSalesSaveCriteria(params).then((value) => {
             (async () => {
-                if (this.props.criteriaSaveSearch != null) {
-                    sessionStorage.setItem('filters', this.props.criteriaSaveSearch.criteria);
-                    const criterias = JSON.parse(this.props.criteriaSaveSearch.criteria);
+                if (this.props.criteriaSalesSaveSearch != null) {
+                    sessionStorage.setItem('filters', this.props.criteriaSalesSaveSearch.criteria);
+                    const criterias = JSON.parse(this.props.criteriaSalesSaveSearch.criteria);
                     let data = null;
-                    data = await setcriteria.setstate(props,criterias);
+                    data = await setcriteria.setSalesState(props,criterias);
                     if(filters.length != 0){
-                        await props.saveSearchAction.setParams(paramsSearch)
-                        await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
+                        await props.saveSearchAction.setSalesParams(paramsSalesSearch)
+                        await sessionStorage.setItem('paramsSalesSearch', JSON.stringify(paramsSalesSearch));
                     }else{
                         // if not have filters is mean new search
                         // set params by new criterias
-                        await props.saveSearchAction.setParams(data);
-                        await sessionStorage.setItem('paramsSearch', JSON.stringify(data));
+                        await props.saveSearchAction.setSalesParams(data);
+                        await sessionStorage.setItem('paramsSalesSearch', JSON.stringify(data));
                     }
-                    let editParams = {id:id, name:this.props.criteriaSaveSearch.name}
-                    await props.saveSearchAction.setIdEditSaveSearch(editParams);
-                    that.context.router.push('/inventories');
+                    let editParams = {id:id, name:this.props.criteriaSalesSaveSearch.name}
+                    await props.saveSearchAction.setIdEditSalesSaveSearch(editParams);
+                    that.context.router.push('/salesreport');
                 }
             })()
         });
     }
-    confirmDeleteSaveSearch = async (id) => {
-        await this.props.setIdDeleteSaveSearch(id);
+    confirmDeleteSalesSaveSearch = async (id) => {
+        await this.props.setIdDeleteSalesSaveSearch(id);
         this.setState({isOpenDeleteSaveSearch: true});
     }
     deleteSaveSearch = async _=> {
         const { props } = this.props;
-        const { IdDeleteSaveSearch } = props;
-        let params = {id:IdDeleteSaveSearch};
-        await this.props.deleteSaveSearch(params);
+        const { IdDeleteSalesSaveSearch } = props;
+        let params = {id:IdDeleteSalesSaveSearch};
+        await this.props.deleteSalesSaveSearch(params);
         await this.props.getListsSaveSearch();
         this.setState({isOpenDeleteSaveSearch: false});
     }
@@ -105,7 +105,7 @@ class SaveSearchList extends Component {
         this.setState({isOpenDeleteSaveSearch: false});
     }
     renderModalConfirmDelete = _=> {
-        const title = 'DELETE SAVED SEARCH';
+        const title = 'DELETE SALES SAVED SEARCH';
         const msg = 'Are you sure!';
         return(
             <div>
@@ -127,11 +127,10 @@ class SaveSearchList extends Component {
                         onClick={this.searchSaveCriteria.bind(this,row._id)}>
                     </div>
                 </a>
-                <ShareModal key={ row._id } saveSearch={ row }
-                    shareSaveSearch={this.props.shareSaveSearch}/>
+                <ShareModalSales key={ row._id } saveSearch={ row } shareSalesSaveSearch={this.props.shareSalesSaveSearch}/>
                 <a>
                     <div className={`${row.shared ? 'icon-del fa' : 'icon-del'}`}
-                        onClick={row.shared ? '' : this.confirmDeleteSaveSearch.bind(this,row._id)}>
+                        onClick={row.shared ? '' : this.confirmDeleteSalesSaveSearch.bind(this,row._id)}>
                     </div>
                 </a>
             </div>
@@ -145,8 +144,8 @@ class SaveSearchList extends Component {
     render() {
         let lists = [];
         const { saveSearches } = this.props;
-        if (saveSearches.length != 0){
-            lists = saveSearches.map(function (col, idx) {
+        if (saveSearches.sales.length != 0){
+            lists = saveSearches.sales.map(function (col, idx) {
                 let id = idx + 1;
                 let status = !col.shared ? 'Owner' : 'Shared'
                 return {...col, id: id, status: status}
@@ -176,7 +175,7 @@ class SaveSearchList extends Component {
                         initialData={lists}
                         initialPageLength={this.state.initialPageLength}
                         initialSortBy={{ prop: 'id', order: 'ascending' }}
-                        pageLengthOptions={[ 5, 20, 50 ]} />
+                        pageLengthOptions={[ 5, 10, 20 ]} />
                     {this.renderModalConfirmDelete()}
                 </div>
             );
@@ -186,7 +185,7 @@ class SaveSearchList extends Component {
                     <Modal isOpen={this.state.isOpenAlertMessage} >
                         <div className="modal-header">
                             <ModalClose onClick={this.isCloseAlertMessage}/>
-                            <h1 className="modal-title">SAVED SEARCHES</h1>
+                            <h1 className="modal-title">SALES SAVED SEARCHES</h1>
                         </div>
                         <div className="modal-body">
                             <div className="text-center maring-t20 font-b">

@@ -10,6 +10,9 @@
     "env_test": {
 	    "NODE_ENV": "test"
 	},
+    "env_staging": {
+	    "NODE_ENV": "staging"
+	},
     "merge_logs": true,
     "error_file": "./logs/export-data-err.log",
     "out_file": "./logs/export-data-out.log",

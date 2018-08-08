@@ -1,41 +1,74 @@
 import React from 'react';
-import {
-    Route,
-    IndexRoute
-} from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 if (typeof require.ensure !== 'function') require.ensure = function(d, c) {
     c(require);
 };
 
 export default ({ dispatch,getState}) => {
-
     const requireAuth = (nextState, replace) => {
-      const token = sessionStorage.token;
-      if (!token) {
-        replace({
-          pathname: '/',
-          state: { nextPathname: nextState.location.pathname }
-        })
-      }
-    };
-
-    const  requireAccess = (nextState, replace) => {
-      const token = sessionStorage.token;
-      if (!token) {
-        replace({
-          pathname: '/',
-          state: { nextPathname: nextState.location.pathname }
-        })
-      } else {
-        const { role } = JSON.parse(sessionStorage.logindata);
-        if( role != 'Admin'){
-          replace({
-            pathname: '/accessdenied',
-            state: { nextPathname: nextState.location.pathname }
-          })
+        const token = sessionStorage.token;
+        if (!token) {
+            replace({
+                pathname: '/',
+                state: { nextPathname: nextState.location.pathname }
+            })
         }
-      }
+    };
+    const  requireAccess = (nextState, replace) => {
+        const token = sessionStorage.token;
+        if (!token) {
+            replace({
+                pathname: '/',
+                state: { nextPathname: nextState.location.pathname }
+            })
+        } else {
+            const { role } = JSON.parse(sessionStorage.logindata);
+            if( role != 'Admin'){
+                replace({
+                    pathname: '/accessdenied',
+                    state: { nextPathname: nextState.location.pathname }
+                })
+            }
+        }
+    };
+    const  requirePermissionInventory = (nextState, replace) => {
+        const token = sessionStorage.token;
+        if (!token) {
+            replace({
+                pathname: '/',
+                state: { nextPathname: nextState.location.pathname }
+            })
+        } else {
+            const { role, permission } = JSON.parse(sessionStorage.logindata);
+            if (role != 'Admin') {
+                if( permission.userType != 'OnHand' && permission.userType != 'All' ){
+                    replace({
+                        pathname: '/accessdenied',
+                        state: { nextPathname: nextState.location.pathname }
+                    })
+                }
+            }
+        }
+    };
+    const  requirePermissionSalesReport = (nextState, replace) => {
+        const token = sessionStorage.token;
+        if (!token) {
+            replace({
+                pathname: '/',
+                state: { nextPathname: nextState.location.pathname }
+            })
+        } else {
+            const { role, permission } = JSON.parse(sessionStorage.logindata);
+            if (role != 'Admin') {
+                if( permission.userType != 'Sales' && permission.userType != 'All' ){
+                    replace({
+                        pathname: '/accessdenied',
+                        state: { nextPathname: nextState.location.pathname }
+                    })
+                }
+            }
+        }
     };
     return {
         component: 'div',
@@ -50,7 +83,7 @@ export default ({ dispatch,getState}) => {
                 }
             },
             childRoutes: [{
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'inventories',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -96,7 +129,7 @@ export default ({ dispatch,getState}) => {
                     }, 'resetpassword');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'searchresult',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -104,7 +137,7 @@ export default ({ dispatch,getState}) => {
                     }, 'searchresult');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'productdetail/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -112,7 +145,7 @@ export default ({ dispatch,getState}) => {
                     }, 'productdetail');
                 }
             },{
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'setdetail/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -120,7 +153,7 @@ export default ({ dispatch,getState}) => {
                     }, 'setdetail');
                 }
             },{
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'setdetailmycatalog/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -128,7 +161,7 @@ export default ({ dispatch,getState}) => {
                     }, 'setdetailmycatalog');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: '/productreletedetail/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -150,7 +183,7 @@ export default ({ dispatch,getState}) => {
                     }, 'accessdenied');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'mycatalog',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -158,7 +191,7 @@ export default ({ dispatch,getState}) => {
                     }, 'mycatalog');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: '/productmycatalog/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -182,7 +215,7 @@ export default ({ dispatch,getState}) => {
                     }, 'savesearch');
                 }
             }, {
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'setcatalog',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
@@ -190,12 +223,52 @@ export default ({ dispatch,getState}) => {
                     }, 'mycatalog');
                 }
             },{
-                onEnter: requireAuth,
+                onEnter: requirePermissionInventory,
                 path: 'setdetailsetcatalog/:id',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
                         cb(null, require('./containers/products/setdetailsetcatalog'));
                     }, 'setdetailsetcatalog');
+                }
+            },{
+                onEnter: requirePermissionSalesReport,
+                path: 'salesreport',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/salesreport/sales_report'));
+                    }, 'salesreport');
+                }
+            },{
+                onEnter: requirePermissionSalesReport,
+                path: 'salessearchresult',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/salessearchresult/sales_search_result'));
+                    }, 'salessearchresult');
+                }
+            },{
+                onEnter: requirePermissionSalesReport,
+                path: 'salesproductdetail/:id',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/salesproducts/salesproductdetail'));
+                    }, 'salesproductdetail');
+                }
+            },{
+                onEnter: requirePermissionSalesReport,
+                path: 'setsalesdetail/:id',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/salesproducts/setsalesdetail'));
+                    }, 'setsalesdetail');
+                }
+            }, {
+                onEnter: requirePermissionSalesReport,
+                path: '/salesproductreletedetail/:id',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/salesproducts/salesproductreletedetail'));
+                    }, 'salesproductreletedetail');
                 }
             },{
                 path: '*',

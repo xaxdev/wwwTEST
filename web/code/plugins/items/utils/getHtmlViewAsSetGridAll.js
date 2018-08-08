@@ -86,7 +86,9 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                 let price = '';
                                                 let imgPath = env == 'production'
                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
-                                                    : 'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                                    : env == 'staging'
+                                                        ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
+                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
                                                 if(isViewAsSet){
                                                     price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
                                                     itemName = (item.type != 'CER')

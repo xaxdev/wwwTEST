@@ -88,16 +88,14 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
 
         data.forEach(function(item){
             items = items+1;
-            // console.log('item-->',item);
             let arrayItems = [];
             let itemReference = item.reference;
 
             if (fields.showImages){
-              arrayItems.push((item.gallery.length) != 0 ? item.gallery[0].thumbnail : '');
+                arrayItems.push((item.gallery.length) != 0 ? item.gallery[0].thumbnail : '');
             }
-            // console.log(`items: ${items}--> reference: ${item.reference}`);
-            arrayItems.push(item.reference,item.description,item.sku,item.venderReference);
 
+            arrayItems.push(item.reference,item.description,item.sku,item.venderReference);
             if (userCurrency != 'USD') {
                 if (price == 'All') {
                     arrayItems.push(numberFormat((item.actualCost != undefined)? item.actualCost[userCurrency]: 0 ));
@@ -108,6 +106,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
                     arrayItems.push(numberFormat((item.price != undefined)? item.price[userCurrency]: 0 ));
                 }
+
                 if (price == 'All') {
                     arrayItems.push(numberFormat((item.actualCost != undefined)? item.actualCost['USD']: 0));
                 }
@@ -246,6 +245,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 if(fields.limitedEditionNumber) arrayItems.push((item.limitedEditionNumber != undefined) ? item.limitedEditionNumber : '');
                 if(fields.itemCreatedDate) arrayItems.push((item.itemCreatedDate != undefined) ? convertDate(item.itemCreatedDate) : '');
             }
+
             if(item.gemstones != undefined){
                 if(item.gemstones.length == 0){
                     newdata.push(arrayItems);
@@ -265,7 +265,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                             ); // Vendor ref
                             if (userCurrency != 'USD') {
                                 if (price == 'All') {
-                                    arrayItems.push(numberFormat((gemstone.cost[userCurrency] != undefined)? gemstone.cost[userCurrency]: 0 )); // actual Price
+                                    arrayItems.push(numberFormat((gemstone.cost[userCurrency] != undefined)? gemstone.cost[userCurrency]: 0 )); // Cost Price
                                 }
                                 if (price == 'Updated' || price == 'All') {
                                     arrayItems.push(''); // updated Price
@@ -275,7 +275,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                 }
 
                                 if (price == 'All') {
-                                    arrayItems.push(numberFormat((gemstone.cost['USD'] != undefined)? gemstone.cost['USD']: 0 )); // actual Price (USD)
+                                    arrayItems.push(numberFormat((gemstone.cost['USD'] != undefined)? gemstone.cost['USD']: 0 )); // Cost Price (USD)
                                 }
                                 if (price == 'Updated' || price == 'All') {
                                     arrayItems.push(''); // updated Price (USD)
@@ -285,7 +285,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                 }
                             }else{
                                 if (price == 'All') {
-                                    arrayItems.push(numberFormat((gemstone.cost['USD'] != undefined)? gemstone.cost['USD']: 0 ));// actual Price (USD)
+                                    arrayItems.push(numberFormat((gemstone.cost['USD'] != undefined)? gemstone.cost['USD']: 0 ));// Cost Price (USD)
                                 }
                                 if (price == 'Updated' || price == 'All') {
                                     arrayItems.push(''); // updated Price (USD)
@@ -294,7 +294,6 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                     arrayItems.push('');// Price (USD)
                                 }
                             }
-
                             arrayItems.push(
                                 '', // Item Weight(Grams)
                                 '', // Ring Size

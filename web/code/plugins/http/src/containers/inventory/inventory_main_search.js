@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import InventoryFilter  from '../../components/inventory/inventory_filter';
 import * as itemactions from '../../actions/itemactions';
-import ProductGroup from '../../utils/userproductgroup';
 import Modalalertmsg from '../../utils/modalalertmsg';
 import GetFilterSearch from './utils/get_filter_search';
+import GetFilterSave from './utils/get_filter_save';
 
 const Loading = require('react-loading');
 
@@ -39,32 +39,40 @@ class InventorySearch extends Component {
 
         delete data.searchName;
 
-        filters = GetFilterSearch(this, data, userLogin, filters, jlyHierarchy, watHierarchy, stoHierarchy,
-            accHierarchy, obaHierarchy, sppHierarchy
-        );
-
         this.props.setCurrentPage(1);
-        sessionStorage.setItem('filters', JSON.stringify(filters));
+
         switch (submitAction) {
             case 'save':
-                if(jlyHierarchy){
+                filters = GetFilterSave(this, data, userLogin, filters, jlyHierarchy, watHierarchy, stoHierarchy,
+                    accHierarchy, obaHierarchy, sppHierarchy
+                );
+
+                const findjlyHierarchy = filters.find((item) => {return item.jlyHierarchy != undefined});
+                const findwatHierarchy = filters.find((item) => {return item.watHierarchy != undefined});
+                const findstoHierarchy = filters.find((item) => {return item.stoHierarchy != undefined});
+                const findaccHierarchy = filters.find((item) => {return item.accHierarchy != undefined});
+                const findobaHierarchy = filters.find((item) => {return item.obaHierarchy != undefined});
+                const findsppHierarchy = filters.find((item) => {return item.sppHierarchy != undefined});
+
+                if(findjlyHierarchy != undefined){
                     filters.push({'jewelryProductHierarchy':data.jewelryProductHierarchy})
                 }
-                if(watHierarchy){
+                if(findwatHierarchy != undefined){
                     filters.push({'watchProductHierarchy':data.watchProductHierarchy})
                 }
-                if(stoHierarchy){
+                if(findstoHierarchy != undefined){
                     filters.push({'stoneProductHierarchy':data.stoneProductHierarchy})
                 }
-                if(accHierarchy){
+                if(findaccHierarchy != undefined){
                     filters.push({'accessoryProductHierarchy':data.accessoryProductHierarchy})
                 }
-                if(obaHierarchy){
+                if(findobaHierarchy != undefined){
                     filters.push({'obaProductHierarchy':data.obaProductHierarchy})
                 }
-                if(sppHierarchy){
+                if(findsppHierarchy != undefined){
                     filters.push({'sparePartProductHierarchy':data.sparePartProductHierarchy})
                 }
+
                 let paramsSaveSearch = {};
                 if (IdEditSaveSearch != null) {
                     if (isNotOwnerSharedSearch) {
@@ -87,6 +95,10 @@ class InventorySearch extends Component {
                 this.props.saveSearchCriteria(paramsSaveSearch);
                 break;
             case 'search':
+                filters = GetFilterSearch(this, data, userLogin, filters, jlyHierarchy, watHierarchy, stoHierarchy,
+                    accHierarchy, obaHierarchy, sppHierarchy
+                );
+                sessionStorage.setItem('filters', JSON.stringify(filters));
                 this.context.router.push('/searchresult');
                 break;
             default:

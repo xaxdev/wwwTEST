@@ -20,11 +20,11 @@ import { LASTMODIFIED, REFERENCE, DESCRIPTION, DESCENDING, ASCENDING } from '../
 
 const Loading = require('react-loading');
 
-const chkAllItems = [
-    '0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17', '18','19', '20', '21', '22', '23',
-    '24','25','26','27','28', '29', '30', '31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47',
-    '48','49','50','51', '52','53','54','55','56','57','58','59','60'
-];
+const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17',
+      '18','19', '20', '21', '22', '23', '24','25','26','27', '28', '29', '30', '31','32','33','34','35',
+      '36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55',
+      '56','57','58','59','60'
+    ];
 
 let listMyCatalog = [];
 let listDeleteMyCatalog = [];
@@ -57,10 +57,10 @@ class MyCatalog extends Component {
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
 
         this.state = {
-            activePage: !!this.props.currentPage?this.props.currentPage:1, isOpenDeleteItem: false, isOpenAddMyCatalogmsg: false,
-            isTooltipActive: false, isOpenDeleteCatalog: false, enabledMyCatalog: false, isOpenDeleteAllItem: false,
-            isOpenZeroCatalog: true, isOpenPrintPdfmsg: false, isOpenShareMyCatalog: false, checkAllItems: false,
-            isOpenPrintOptions: false
+          activePage: !!this.props.currentPage?this.props.currentPage:1, isOpenDeleteItem: false, isOpenAddMyCatalogmsg: false,
+          isTooltipActive: false, isOpenDeleteCatalog: false, enabledMyCatalog: false, isOpenDeleteAllItem: false,
+          isOpenZeroCatalog: true, isOpenPrintPdfmsg: false, isOpenShareMyCatalog: false, checkAllItems: false,
+          isOpenPrintOptions: false
         }
     }
 
@@ -105,65 +105,72 @@ class MyCatalog extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let inputCatalogName = this.refs.catalogName;
-        if (inputCatalogName != undefined) {
-            if (this.props.catalogName != nextProps.catalogName) {
-                inputCatalogName.value = nextProps.catalogName;
-            }
-        }
+      let inputCatalogName = this.refs.catalogName;
+      if (inputCatalogName != undefined) {
+          if (this.props.catalogName != nextProps.catalogName) {
+              inputCatalogName.value = nextProps.catalogName;
+          }
+      }
     }
 
     componentDidMount() {
         let that = this;
         if(this.refs.pageSize != undefined){
-            let values = [].filter.call(this.refs.pageSize.options, function (o) {
+          let values = [].filter.call(this.refs.pageSize.options, function (o) {
                 o.selected = false;
                 if(o.value == that.props.pageSize){
-                    o.selected = true
+                  o.selected = true
                 }
                 return o.selected;
-            }).map(function (o) {
+              }).map(function (o) {
                 return o.value;
-            });
+              });
         }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return shallowCompare(this, nextProps, nextState);
+      return shallowCompare(this, nextProps, nextState);
     }
 
     printResults(e){
+        //   e.preventDefault();
         const { fields: {printPage, printPrice} } = this.props;
         let items = this.props.listCatalogName != undefined ?
                         this.props.listCatalogName.length != 0 ?
                             this.props.listCatalogItems.allItems != undefined ? this.props.listCatalogItems.allItems : [] :
                         [] :
                     [];
+        // console.log('items-->',items);
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
-        const env_web = ENVIRONMENT !== 'production' ? 'development' : 'production';
-        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
+        const env_web = ENVIRONMENT;
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
         let imagesReplace = ROOT_URL+'/images/';
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
         let dvTotalItems = jQuery('#dvTotalItems').html();
         let dvTotalSetItems = jQuery('#dvTotalSetItems').html();
         let dvGridview = jQuery('#dvGridview').html();
         let dv = {
-            'dvTotalItems': dvTotalItems, 'dvTotalSetItems': dvTotalSetItems, 'dvGridview': dvGridview, 'printPage':printPage,
-            'printPrice': printPrice, 'items': items, 'userLogin': userLogin, 'env': env_web
-        };
+                    'dvTotalItems': dvTotalItems, 'dvTotalSetItems': dvTotalSetItems, 'dvGridview': dvGridview,
+                    'printPage':printPage, 'printPrice': printPrice, 'items': items, 'userLogin': userLogin,
+                    'env': env_web
+                };
         let htmlTemplate = '';
         htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
 
-        let params = {'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL};
+        // console.log('htmlTemplate-->',htmlTemplate);
 
+        let params = {
+            'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'pdf'
+        };
         this.props.writeHtml(params)
-        .then((value) => {
-            if (value) {
-                this.setState({isOpenPrintPdfmsg: true});
-            }
-        });
-        this.setState({isOpenPrintOptions: false});
+            .then((value) => {
+                if (value) {
+                    this.setState({isOpenPrintPdfmsg: true});
+                }
+                // console.log(value);
+            });
+          this.setState({isOpenPrintOptions: false});
     }
 
     showDialogPrintOptions = _ =>{
@@ -203,10 +210,10 @@ class MyCatalog extends Component {
         if (catalogId != null) {
             this.props.deleteCatalogItems(paramsItem).then( () =>{
                 let params = {
-                    id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: 16,
-                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
-                    order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-                };
+                                id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: 16,
+                                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
+                                order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+                            };
                 this.props.getCatalogItemsWithSetItem(params);
             });
         }
@@ -269,8 +276,9 @@ class MyCatalog extends Component {
         itemAdded = itemAdded[0];
         let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
         let objItem = {
-            id: itemAdded.id, reference: itemAdded.reference, description: itemName, catalogId: catalogId
-        };
+                        id: itemAdded.id, reference: itemAdded.reference, description: itemName,
+                        catalogId: catalogId
+                    };
 
         if(!this.state.enabledMyCatalog){
             listMyCatalog = [];
@@ -289,9 +297,9 @@ class MyCatalog extends Component {
             this.setState({checkAllItems: false});
         }
         if (listMyCatalog.length != 0) {
-            this.setState({enabledMyCatalog: true});
+          this.setState({enabledMyCatalog: true});
         } else {
-            this.setState({enabledMyCatalog: false});
+          this.setState({enabledMyCatalog: false});
         }
     }
 
@@ -301,9 +309,9 @@ class MyCatalog extends Component {
         const pageSize = this.refs.pageSize.value;
         const { catalogId, listCatalogItems } = this.props;
         let parasm = {
-            id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: pageSize, order: sortingDirection,
-            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1
-        };
+                id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: pageSize, order: sortingDirection,
+                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1
+            };
         this.props.setCatalogSortDirection(sortingDirection);
         if (catalogId != null) {
             this.props.getCatalogItemsWithSetItem(parasm);
@@ -316,9 +324,9 @@ class MyCatalog extends Component {
         const pageSize = this.refs.pageSize.value;
         const { catalogId, listCatalogItems } = this.props;
         let parasm = {
-            id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: pageSize, sort: sortingBy,
-            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-        };
+                id: catalogId, page: !!this.props.currentPage?this.props.currentPage:1, size: pageSize, sort: sortingBy,
+                order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+            };
         this.props.setCatalogSortingBy(sortingBy);
         if (catalogId != null) {
             this.props.getCatalogItemsWithSetItem(parasm);
@@ -356,15 +364,15 @@ class MyCatalog extends Component {
     }
 
     onClickGrid(pageNumber){
-        const token = sessionStorage.token;
-        const getIdReference = pageNumber.split('=');
-        if(token){
-            if (getIdReference[0] == 'id') {
-                this.context.router.push(`/productmycatalog/${getIdReference[1]}`);
-            } else {
-                this.context.router.push(`/setdetailmycatalog/${getIdReference[1].replace('/','-')}`);
-            }
-        }
+      const token = sessionStorage.token;
+      const getIdReference = pageNumber.split('=');
+      if(token){
+          if (getIdReference[0] == 'id') {
+              this.context.router.push(`/productmycatalog/${getIdReference[1]}`);
+          } else {
+              this.context.router.push(`/setdetailmycatalog/${getIdReference[1].replace('/','-')}`);
+          }
+      }
     }
 
     handleGo(e){
@@ -379,10 +387,10 @@ class MyCatalog extends Component {
             this.setState({activePage: getPage});
             this.setState({showLoading: true});
             let parasm = {
-                id: catalogId, page: getPage, size: pageSize,
-                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
-                order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-            };
+                    id: catalogId, page: getPage, size: pageSize,
+                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
+                    order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+                };
             this.props.setCatalogCurrentPage(getPage);
             if (catalogId != null) {
                 this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
@@ -399,10 +407,10 @@ class MyCatalog extends Component {
         this.props.setCatalogCurrentPage(1);
         let [selectedCatalog] = listCatalogName.filter((catalog) => {return catalog._id == catalogId});
         let parasm = {
-            id: catalogId, page: 1, size: 16,
-            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
-            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-        };
+                    id: catalogId, page: 1, size: 16,
+                    sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
+                    order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+                };
         this.props.getCatalogItemsWithSetItem(parasm)
         this.props.setIsCatalogShare(selectedCatalog.shared);
     }
@@ -422,8 +430,9 @@ class MyCatalog extends Component {
         itemAdded = itemAdded[0];
         let itemName = (itemAdded.type != 'CER')? itemAdded.description: itemAdded.name;
         let objItem = {
-            id: itemAdded.id, reference: itemAdded.reference, description: itemName, catalogId: catalogId
-        };
+                        id: itemAdded.id, reference: itemAdded.reference, description: itemName,
+                        catalogId: catalogId
+                    };
 
         listDeleteMyCatalog.push(objItem);
         this.setState({isOpenDeleteItem: true});
@@ -517,21 +526,22 @@ class MyCatalog extends Component {
     }
 
     renderPagination(){
-        const { fields: { currPage }, currentPage, handleSubmit, resetForm, submitting } = this.props;
-        const page = this.state.activePage;
-        const totalPages = this.props.listCatalogItems.total_pages;
-        return(
-            <div>
-                <Pagination prev next first last ellipsis boundaryLinks items={totalPages} maxButtons={4} activePage={this.state.activePage}
-                    onSelect={this.handleSelect} />
-                <div>
-                    <span>Page</span>
-                    <input type="number" placeholder={page} ref="reletego" {...currPage}/>
-                    <span>of</span>
-                    <span>{numberFormat(totalPages)}</span>
-                    <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
-                </div>
-            </div>
+      const { fields: { currPage }, currentPage, handleSubmit, resetForm, submitting } = this.props;
+      const page = this.state.activePage;
+      const totalPages = this.props.listCatalogItems.total_pages;
+      return(
+          <div>
+              <Pagination prev next first last ellipsis boundaryLinks items={totalPages} maxButtons={4}
+               activePage={this.state.activePage}
+               onSelect={this.handleSelect} />
+              <div>
+                <span>Page</span>
+                  <input type="number" placeholder={page} ref="reletego" {...currPage}/>
+                <span>of</span>
+                <span>{numberFormat(totalPages)}</span>
+                <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
+              </div>
+          </div>
         );
     }
 
@@ -568,19 +578,18 @@ class MyCatalog extends Component {
         let _totalUpdatedCostSet = (setItemUpdatedCost!=null) ? numberFormat(setItemUpdatedCost) : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
 
-        return(
-            <RenderClassTotals userLogin={userLogin} listCatalogItems = {listCatalogItems} _totalPublicPrice={_totalPublicPrice}
-                _totalUpdatedCost = {_totalUpdatedCost} _totalPublicPriceSet = {_totalPublicPriceSet} _totalUpdatedCostSet = {_totalUpdatedCostSet}/>
-        );
+        return(<RenderClassTotals userLogin={userLogin} listCatalogItems = {listCatalogItems}
+                _totalPublicPrice={_totalPublicPrice} _totalUpdatedCost = {_totalUpdatedCost}
+                _totalPublicPriceSet = {_totalPublicPriceSet} _totalUpdatedCostSet = {_totalUpdatedCostSet}
+                />);
     }
 
     renderAlertmsg = _=> {
-        const message = 'Page is invalid.';
-        const title = 'ADD TO CATALOG';
+      const message = 'Page is invalid.';
+      const title = 'ADD TO CATALOG';
 
-        return(
-            <Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg} props={this.props} message={message}  title={title}/>
-        );
+      return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
+          props={this.props} message={message}  title={title}/>);
     }
 
     handleClosemsgShareCatalog = _=> {
@@ -597,11 +606,10 @@ class MyCatalog extends Component {
     }
 
     renderAlertmsgPdf = _=> {
-        const message = 'Please check your email for printing files.';
-        const title = 'MY CATALOG';
-        return(
-            <Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg} props={this.props} message={message}  title={title}/>
-        );
+      const message = 'Please check your email for printing files.';
+      const title = 'MY CATALOG';
+      return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
+          props={this.props} message={message}  title={title}/>);
     }
 
     shareMyCatalog = _=>{
@@ -611,7 +619,9 @@ class MyCatalog extends Component {
     handleSubmitShareCatalog = (e)=>{
         e.preventDefault();
         const { catalogId } = this.props;
-        const { fields: { shareTo } } = this.props;
+        const { fields: {
+                  shareTo
+              } } = this.props;
         let emails = [];
         let paramEmails = [];
         let params = {};
@@ -642,10 +652,9 @@ class MyCatalog extends Component {
 
     renderShareMyCatalog = _=> {
         const { submitting } = this.props;
-        return(
-            <ModalShareMyCatalog onSubmit={this.handleSubmitShareCatalog} isOpen={this.state.isOpenShareMyCatalog}
-                isClose={this.handleCloseShareMyCatalog} props={this.props}/>
-        );
+        return(<ModalShareMyCatalog onSubmit={this.handleSubmitShareCatalog}
+            isOpen={this.state.isOpenShareMyCatalog}
+            isClose={this.handleCloseShareMyCatalog} props={this.props}/>);
     }
 
     selectedPageSize = e =>{
@@ -664,7 +673,8 @@ class MyCatalog extends Component {
         this.props.setCatalogCurrentPage(getPage);
         this.props.setPageSize(pageSize);
         if (catalogId != null) {
-            this.props.getCatalogItemsWithSetItem(parasm).then((value) => {});
+            this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
+            });
         }
     }
 
@@ -676,119 +686,129 @@ class MyCatalog extends Component {
         this.setState({activePage: getPage});
         this.setState({showLoading: true});
         let parasm = {
-            id: catalogId, page: getPage, size: pageSize,
-            sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
-            order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
-        };
+                id: catalogId, page: getPage, size: pageSize,
+                sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
+                order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
+            };
         this.props.setCatalogCurrentPage(getPage);
         if (catalogId != null) {
-            this.props.getCatalogItemsWithSetItem(parasm).then((value) => {});
+            this.props.getCatalogItemsWithSetItem(parasm).then((value) => {
+            });
         }
     }
 
     render() {
-        const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared, ViewAsSet } = this.props;
-        let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1;
-        let catalogSortDirection = (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1;
-        let style = {
-            style: {
-                background: 'rgba(0,0,0,.8)',
-                padding: 20,
-                boxShadow: '5px 5px 3px rgba(0,0,0,.5)'
-            },
-            arrowStyle: {
-                color: 'rgba(0,0,0,.8)',
-                borderColor: false
+            const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared, ViewAsSet } = this.props;
+            let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1;
+            let catalogSortDirection = (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1;
+            let style = {
+                style: {
+                    background: 'rgba(0,0,0,.8)',
+                    padding: 20,
+                    boxShadow: '5px 5px 3px rgba(0,0,0,.5)'
+                },
+                arrowStyle: {
+                    color: 'rgba(0,0,0,.8)',
+                    borderColor: false
+                }
             }
-        }
 
-        let items = this.props.listCatalogName != undefined ?
-                        this.props.listCatalogName.length != 0 ?
-                            this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [] :
-                        [] :
-                    [];
-        return(
-            <form role="form">
-                {/* Header Search */}
-                <div className="col-sm-12 col-xs-12 padding-b10 bg-hearder-mycatalog">
-                    <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
-                    <div className="col-md-12 col-sm-12 col-xs-12">
-                        <div className="col-lg-7 col-md-6 col-sm-12 col-xs-12 nopadding">
-                            <div className="col-lg-7 col-md-7 col-sm-6 col-xs-12 nopadding">
-                                <div className="col-lg-3 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
-                                <div className="col-lg-8 col-md-6 col-sm-7 col-xs-12 nopadding margin-l15">
-                                    <div className="styled-select-black">
-                                        <select onChange={this.selectedCatalog}  value={catalogId} ref="catalog">
-                                            {
-                                                this.props.listCatalogName.length != 0 ?
-                                                this.props.listCatalogName.map((cat) => {
-                                                    return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
-                                                }) : <option value="">Please select</option>
-                                            }
+            let items = this.props.listCatalogName != undefined ?
+                            this.props.listCatalogName.length != 0 ?
+                                this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [] :
+                            [] :
+                        [];
+            return(
+                <form role="form">
+                  {/* Header Search */}
+                  <div className="col-sm-12 col-xs-12 padding-b10 bg-hearder-mycatalog">
+                      <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
+                      <div className="col-md-12 col-sm-12 col-xs-12">
+                            <div className="col-lg-7 col-md-6 col-sm-12 col-xs-12 nopadding">
+                                <div className="col-lg-7 col-md-7 col-sm-6 col-xs-12 nopadding">
+                                  <div className="col-lg-3 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
+                                  <div className="col-lg-8 col-md-6 col-sm-7 col-xs-12 nopadding margin-l15">
+                                      <div className="styled-select-black">
+                                        <select onChange={this.selectedCatalog}  value={catalogId}
+                                            ref="catalog">
+                                          {
+                                              this.props.listCatalogName.length != 0 ?
+                                              this.props.listCatalogName.map((cat) => {
+                                                  return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
+                                              }) : <option value="">Please select</option>
+                                          }
                                         </select>
-                                    </div>
+                                      </div>
+                                  </div>
                                 </div>
-                            </div>
-                            <div className="col-lg-5 col-md-5 col-sm-6 col-xs-12 nopadding"  >
-                                <a><div className={`${isCatalogShared ? 'disabled' : 'icon-edit'}`} id="edit" onMouseEnter={this.showTooltip}
-                                    onMouseLeave={this.hideTooltip} ></div></a>
-                                <ToolTip active={this.state.isTooltipActive} position="bottom" arrow="center" parent="#edit">
-                                    <div className="cat-tooltip form-inline">
-                                        <p>Edit Catalog Name</p>
-                                        <div className="form-group">
-                                            <input type="text" className="form-control" onChange={this.changeCatalogName}
-                                                placeholder={catalogName} ref="catalogName"/>
+                                <div className="col-lg-5 col-md-5 col-sm-6 col-xs-12 nopadding"  >
+                                    <a><div className={`${isCatalogShared ? 'disabled' : 'icon-edit'}`} id="edit" onMouseEnter={this.showTooltip}
+                                        onMouseLeave={this.hideTooltip} ></div></a>
+                                    <ToolTip active={this.state.isTooltipActive} position="bottom"
+                                        arrow="center" parent="#edit">
+                                        <div className="cat-tooltip form-inline">
+                                          <p>Edit Catalog Name</p>
+                                          <div className="form-group">
+                                            <input type="text" className="form-control"
+                                                onChange={this.changeCatalogName}  placeholder={catalogName}
+                                                 ref="catalogName"/>
+                                          </div>
+                                            <button type="button" className="btn btn-default"
+                                                onClick={this.saveCatalogName}>
+                                                save
+                                            </button>
                                         </div>
-                                        <button type="button" className="btn btn-default" onClick={this.saveCatalogName}>
-                                            save
-                                        </button>
-                                    </div>
-                                </ToolTip>
-                                <a><div className={`${isCatalogShared ? 'hidden' : 'icon-del'}`} onClick={this.deleteCatalog}></div></a>
-                                <a><div className={`${items.length == 0 ? 'hidden' : 'icon-print'}`} id="printproduct"
-                                    onClick={ this.showDialogPrintOptions }></div></a>
-                                <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`} onClick={ this.shareMyCatalog }></div></a>
-                            </div>
-                        </div>
-                        <div className="col-lg-5 col-md-6 col-sm-12 col-xs-12 nopadding pull-right">
-                            <div className="cat-sort col-xs-12 margin-t5">
+                                    </ToolTip>
+                                    <a><div className={`${isCatalogShared ? 'hidden' : 'icon-del'}`} onClick={this.deleteCatalog}></div></a>
+                                    <a><div className={`${items.length == 0 ? 'hidden' : 'icon-print'}`} id="printproduct"
+                                        onClick={ this.showDialogPrintOptions }></div></a>
+                                      <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`}
+                                        onClick={ this.shareMyCatalog }></div></a>
+                                </div>
+                              </div>
+                            <div className="col-lg-5 col-md-6 col-sm-12 col-xs-12 nopadding pull-right">
+                              <div className="cat-sort col-xs-12 margin-t5">
                                 <ControlLabel>Sort By : </ControlLabel>
-                            </div>
-                            <div className="col-md-5 col-sm-3 col-xs-12 nopadding m-bottom-5">
+                              </div>
+                              <div className="col-md-5 col-sm-3 col-xs-12 nopadding m-bottom-5">
                                 <div className="styled-select-black">
-                                    <select onChange={this.changeSortingBy} value={catalogSortingBy} ref="sortingBy">
-                                        <option key={1} value={1}>{'Updated Date'}</option>
-                                        <option key={2} value={2}>{'Price'}</option>
-                                        <option key={3} value={3}>{'Item Reference'}</option>
-                                        <option key={4} value={4}>{'Description'}</option>
-                                        <option key={5} value={5}>{'Set Reference Number'}</option>
+                                  <select onChange={this.changeSortingBy} value={catalogSortingBy}
+                                    ref="sortingBy">
+                                    <option key={1} value={1}>{'Updated Date'}</option>
+                                    <option key={2} value={2}>{'Price'}</option>
+                                    <option key={3} value={3}>{'Item Reference'}</option>
+                                    <option key={4} value={4}>{'Description'}</option>
+                                    <option key={5} value={5}>{'Set Reference Number'}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div className="col-md-5 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
+                                <div className="styled-select-black">
+                                    <select onChange={this.changeSortingDirection} value={catalogSortDirection}
+                                        ref="sortingDirection">
+                                      <option key={-1} value={-1}>{'Descending'}</option>
+                                      <option key={1} value={1}>{'Ascending'}</option>
                                     </select>
                                 </div>
+                              </div>
                             </div>
-                            <div className="col-md-5 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
-                                <div className="styled-select-black">
-                                    <select onChange={this.changeSortingDirection} value={catalogSortDirection} ref="sortingDirection">
-                                        <option key={-1} value={-1}>{'Descending'}</option>
-                                        <option key={1} value={1}>{'Ascending'}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="dvTotal">
+                      </div>
+                  </div>
+                  <div id="dvTotal">
                     {this.renderTotals()}
-                </div>
-                {/* End Header Search */}
-                {/* Util&Pagination */}
-                <div className="row">
+                  </div>
+                  {/* End Header Search */}
+                  {/* Util&Pagination */}
+                  <div className="row">
                     <div className="col-sm-12 col-xs-12">
-                        <div className={`${items.length == 0  ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
+                      <div className={`${items.length == 0  ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
                             <div className={`${isCatalogShared ? 'hidden' : 'checkbox checkbox-warning '}`}>
-                                <input type="checkbox" id="checkbox1" className="styled" ref="selectAllItems"
-                                    checked={this.state.checkAllItems} onChange={this.onCheckedAllItemMyCatalog}/>
+                                <input type="checkbox" id="checkbox1"
+                                    className="styled" ref="selectAllItems"
+                                    checked={this.state.checkAllItems}
+                                    onChange={this.onCheckedAllItemMyCatalog}/>
                                 <label className="checkbox1 select"></label>
-                                <span className="margin-l10 text-vertical margin-t5">Select All</span>
+                              <span className="margin-l10 text-vertical margin-t5">Select All</span>
                             </div>
                             <div className={`${isCatalogShared ? 'hidden' : ''}`}>
                                 {this.state.enabledMyCatalog?
@@ -798,22 +818,22 @@ class MyCatalog extends Component {
                                 <span className="margin-l5 text-del">Delete Items</span>
                             </div>
                             <div className="pull-right maring-b10">
-                                <div className="pull-left padding-r10 margin-t7">View</div>
-                                <div className="pull-left">
-                                    <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
+                                  <div className="pull-left padding-r10 margin-t7">View</div>
+                                  <div className="pull-left">
+                                      <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
                                         <option key="16" value="16">16</option>
                                         <option key="32" value="32">32</option>
                                         <option key="60" value="60">60</option>
-                                    </select>
-                                </div>
-                                <div className="pull-left padding-l10 margin-t7 margin-r10">
+                                      </select>
+                                  </div>
+                                  <div className="pull-left padding-l10 margin-t7 margin-r10">
                                     per page
-                                </div>
-                                <div className="searchresult-navi cat-go">
-                                    {this.renderPagination()}
-                                </div>
+                                  </div>
+                                  <div className="searchresult-navi cat-go">
+                                      {this.renderPagination()}
+                                  </div>
                             </div>
-                        </div>
+                      </div>
                         <div className="panel panel-default">
                             <div className="panel-body padding-ft0">
                                 <div className={'search-product' }>
@@ -824,33 +844,33 @@ class MyCatalog extends Component {
                                         ViewAsSet={ViewAsSet} listMyCatalog={listMyCatalog}/>
                                 </div>
                                 <div id="dvGridview" className="search-product hidden">
-                                    <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
-                                      onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                      onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
-                                      isCatalogShared={isCatalogShared}
-                                      ViewAsSet={ViewAsSet}/>
+                                  <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
+                                    onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
+                                    isCatalogShared={isCatalogShared}
+                                    ViewAsSet={ViewAsSet}/>
                                 </div>
                                 {/* Pagination */}
                                 <div className="col-sm-12 pagenavi maring-t20">
-                                    <div className="searchresult-navi cat-go">
-                                        {this.renderPagination()}
-                                    </div>
+                                  <div className="searchresult-navi cat-go">
+                                    {this.renderPagination()}
+                                  </div>
                                 </div>
                                 {/* End Pagination */}
                             </div>
                         </div>
                     </div>
-                </div>
-                {this.renderModalConfirmDelete()}
-                {this.renderModalConfirmDeleteCatalog()}
-                {this.renderModalConfirmDeleteAllItem()}
-                {this.renderAlertmsg()}
-                {this.renderAlertmsgPdf()}
-                {this.renderShareMyCatalog()}
-                {this.renderAlertmsgShareCatalog()}
-                {this.renderDialogPrintOptions()}
-            </form>
-        );
+                  </div>
+                  {this.renderModalConfirmDelete()}
+                  {this.renderModalConfirmDeleteCatalog()}
+                  {this.renderModalConfirmDeleteAllItem()}
+                  {this.renderAlertmsg()}
+                  {this.renderAlertmsgPdf()}
+                  {this.renderShareMyCatalog()}
+                  {this.renderAlertmsgShareCatalog()}
+                  {this.renderDialogPrintOptions()}
+                </form>
+            );
     }
 }
 function mapStateToProps(state) {
