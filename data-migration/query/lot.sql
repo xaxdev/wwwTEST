@@ -1,4 +1,4 @@
-SELECT item.[Reference] AS 'reference'
+SELECT UPPER(item.[Reference]) AS 'reference'
     , item.[Name] AS 'name'
     , item.[DESCRIPTION] AS 'description'
     , UPPER(item.[Company]) AS 'company'

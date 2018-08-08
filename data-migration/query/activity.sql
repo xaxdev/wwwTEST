@@ -1,5 +1,5 @@
 SELECT movement.[Id] AS 'id'
-	  ,movement.[ItemReference] AS 'reference'
+	  ,UPPER(movement.[ItemReference]) AS 'reference'
       ,movement.[Sku] AS 'sku'
       ,ISNULL(movement.[Company], '') AS 'company'
       ,ISNULL(movement.[FromWareHouse], '') AS 'fromWareHouse'

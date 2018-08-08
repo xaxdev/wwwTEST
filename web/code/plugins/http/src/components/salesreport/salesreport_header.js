@@ -243,7 +243,7 @@ class SalesReportHeader extends Component {
                             ));
                         });
                     }
-                    if (userLogin.permission.salesWarehouse.type == 'All'){
+                    if (userLogin.permission.salesWarehouse.type == 'AllSalesWarehouse'){
                         dataDropDowntLocations.forEach(function(location){
                             newDate.push(_.filter(that.props.props.warehouseSales,
                                 function(warehouse)

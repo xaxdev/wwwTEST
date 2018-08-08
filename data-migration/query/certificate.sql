@@ -1,7 +1,7 @@
 SELECT [ITORAMA].[dbo].[CertificateMaster].[RecId] AS 'id'
       ,[ITORAMA].[dbo].[CertificateMaster].[Name] AS 'name'
       ,[ITORAMA].[dbo].[CertificateMaster].[SKU] AS 'sku'
-      ,[ITORAMA].[dbo].[CertificateMaster].[Item] AS 'reference'
+      ,UPPER([ITORAMA].[dbo].[CertificateMaster].[Item]) AS 'reference'
       ,ISNULL(cert.[AGENCYID], '') AS 'agency'
       ,'CER' AS 'type'
       ,[ITORAMA].[dbo].[CertificateMaster].[Site] AS 'site'

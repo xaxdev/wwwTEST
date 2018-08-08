@@ -2,7 +2,7 @@ USE [ITORAMA]
 
 SELECT [Id] AS 'id'
       ,[SetReference] AS 'setReference'
-      ,[Reference] AS 'reference'
+      ,UPPER([Reference]) AS 'reference'
 	  ,[ItemType] AS 'itemType'
       ,[Priority] AS 'priority'
       ,[Description] AS 'description'
