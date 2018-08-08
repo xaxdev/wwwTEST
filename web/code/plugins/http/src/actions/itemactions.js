@@ -9,7 +9,8 @@ import {
     GET_SETCATALOGITEMS, SET_RENAMESETCATALOG, SET_NEWSETCATALOGNAME, DELETE_SETCATALOG, SET_SHARESETCATALOG, SET_CLOSEALERTMSGSET, SET_SETCATALOGSORTBY,
     SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG, FETCH_EXPORTITEMS,POST_SALESSAVESEARCH,SET_SALESPARAMS,SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS,
     SET_SALESSORTBY, SET_SALESSORTDIRECTION, SET_SALESPAGESIZE, SET_SALESSHOWGRIDVIEW, SET_SALESSHOWLISTVIEW, NEWSALESSEARCH, MODIFY_SALESSEARCH,
-    SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER, FETCH_EXPORTSALESITEMS, FETCH_SALESALLPDF, SET_CURRENTSALESPAGE
+    SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER, FETCH_EXPORTSALESITEMS, FETCH_SALESALLPDF, SET_CURRENTSALESPAGE, FETCH_ALLSALESSETREFERENCE,
+    FIRSTSEARCH
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
@@ -587,6 +588,25 @@ export function getSalesItems(params){
     }
 }
 
+export function getSalesSetReferences(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/items/salessetreference`;
+
+    return {
+        type: FETCH_ALLSALESSETREFERENCE,
+        promise: fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(params),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        }),
+        currPage: params.page
+    }
+}
+
 export function exportDatas(params){
     const token = sessionStorage.token;
     let url = `${ROOT_URL}/api/items/export`;
@@ -697,5 +717,12 @@ export function setSalesPageSize(value){
     return {
         type: SET_SALESPAGESIZE,
         salesPageSize: value
+    }
+}
+export function setFirstSearch(value){
+    const token = sessionStorage.token;
+    return {
+        type: FIRSTSEARCH,
+        value: value
     }
 }

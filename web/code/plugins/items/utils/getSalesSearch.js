@@ -478,7 +478,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                             "constant_score": {
                                 "query": {
                                     "bool": {
-                                          "must": ${JSON.stringify(internals.filters)}
+                                        "must": ${JSON.stringify(internals.filters)}
                                     }
                                 }
                             }

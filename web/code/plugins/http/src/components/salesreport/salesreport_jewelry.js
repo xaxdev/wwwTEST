@@ -12,6 +12,7 @@ import SearchSalesHierarchy from './utils/search_hierarchy';
 import * as xls from '../../utils/xlsSetReference';
 import * as inventoryActions from '../../actions/inventoryactions';
 
+DeleteSalesHierarchy([TreeData]);
 let X = XLSX;
 let hiTreeData = TreeData;
 

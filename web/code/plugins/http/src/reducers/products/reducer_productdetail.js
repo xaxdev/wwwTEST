@@ -1,7 +1,7 @@
 import {
     FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,FETCH_SETREFERENCE,ADD_CATALOG,ADD_CATALOG_SUCCESS,GET_LOTNUMBER,GET_LOTNUMBERPAGE,
     GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS, GET_SETCATALOGITEMSLIST,FETCH_SETCATALOGDETAILS,FETCH_SALESPRODUCTDETAIL,FETCH_SALESPRODUCTRELETED,
-    FETCH_SALESSETDETAILS
+    FETCH_SALESSETDETAILS,FETCH_SALESVIEWASSETDETAILS, FETCH_SALESVIEWASSETPRODUCTDETAIL
 } from '../../constants/productdetailconstants';
 import { GET_CATALOGNAME} from '../../constants/itemconstants';
 const INITIAL_STATE = {
@@ -13,8 +13,20 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE,action){
 
     switch (action.type) {
+        case FETCH_SALESVIEWASSETPRODUCTDETAIL:
+            return { ...state,detail:action.data,index:action.productlist?findproductindex(action.productlist,action.productid):0
+                ,indexplus:action.productlist?findproductindexplus(action.productlist,action.productid):0
+                ,pagego:action.productlist?findproductindexplus(action.productlist,action.productid):0
+                ,productlist:action.productlist,lotNumbers:!!action.data.lotNumbers ? filterLotNumbers(action.data.lotNumbers) : []
+                ,totalpage:Math.ceil(!!action.data.lotNumbers ? filterLotNumbers(action.data.lotNumbers).length/20 : action.data.length/20)
+            }
+        case FETCH_SALESVIEWASSETDETAILS:
+            return {...state,detail:action.data, salessetindex:action.productlist?findSetIndex(action.productlist,action.productid):0
+                ,salessetindexplus:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
+                ,salessetpagego:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
+                ,salessetproductlist:action.productlist, salessettotalpage: Math.ceil(action.data.length/20)}
         case FETCH_SALESSETDETAILS:
-            return {...state,salessetdetail:action.data, salessetindex:action.productlist?findSetIndex(action.productlist,action.productid):0
+            return {...state,detail:action.data, salessetindex:action.productlist?findSetIndex(action.productlist,action.productid):0
                 ,salessetindexplus:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
                 ,salessetpagego:action.productlist?findSetIndexPlus(action.productlist,action.productid):0
                 ,salessetproductlist:action.productlist, salessettotalpage: Math.ceil(action.data.length/20)}

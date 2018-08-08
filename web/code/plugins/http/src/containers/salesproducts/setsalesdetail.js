@@ -60,9 +60,17 @@ class SetSalesDetail extends Component {
 
         this.setState({ productdetailLoading: true });
 
-        this.props.getSalesSetDetails(setReferenceId,setReferencelist).then(()=>{
-            this.setState({ productdetailLoading: false });
-        });
+        if (this.props.viewAsSet) {
+            this.props.getSalesViewAsSetDetails(setReferenceId,setReferencelist).then(()=>{
+                this.setState({ productdetailLoading: false });
+            });
+        }else{
+            this.props.getSalesSetDetails(setReferenceId,setReferencelist).then(()=>{
+                this.setState({ productdetailLoading: false });
+            });
+        }
+
+
     }
 
     componentDidMount = _ => {
@@ -163,9 +171,15 @@ class SetSalesDetail extends Component {
 
             this.setState({ productdetailLoading: true });
 
-            this.props.getSalesSetDetails(setReferenceId,setReferencelist).then(()=>{
-                this.setState({ productdetailLoading: false });
-            });
+            if (this.props.viewAsSet) {
+                this.props.getSalesViewAsSetDetails(setReferenceId,setReferencelist).then(()=>{
+                    this.setState({ productdetailLoading: false });
+                });
+            }else{
+                this.props.getSalesSetDetails(setReferenceId,setReferencelist).then(()=>{
+                    this.setState({ productdetailLoading: false });
+                });
+            }
         }
     }
 
@@ -890,7 +904,7 @@ SetSalesDetail.contextTypes = {
 function mapStateToProps(state) {
     return {
         initialValues: state.productdetail,
-        productdetail: state.productdetail.salessetdetail,
+        productdetail: state.productdetail.detail,
         productindex: state.productdetail.salessetindex,
         productindexplus: state.productdetail.salessetindexplus,
         productrelete: state.productdetail.relete,

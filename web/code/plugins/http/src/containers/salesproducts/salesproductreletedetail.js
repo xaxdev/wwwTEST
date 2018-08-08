@@ -62,17 +62,31 @@ class SalesProductReleteDetail extends Component {
         const productlist = this.props.productlist;
         this.setState({ productdetailLoading: true });
 
-        this.props.getSalesProductDetail(productId).then(()=>{
-            const  Detail  = this.props.productdetail;
-            if(Detail.type != 'STO' || Detail.type != 'CER'){
-                const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-                const currency = logindata.currency;
-                if(Detail.dominant){
-                    this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+        if (this.props.ViewAsSet) {
+            this.props.getSalesViewAsSetProductDetail(productId).then(()=>{
+                const  Detail  = this.props.productdetail;
+                if(Detail.type != 'STO' || Detail.type != 'CER'){
+                    const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+                    const currency = logindata.currency;
+                    if(Detail.dominant){
+                        this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                    }
                 }
-            }
-            this.setState({ productdetailLoading: false });
-        });
+                this.setState({ productdetailLoading: false });
+            });
+        }else{
+            this.props.getSalesProductDetail(productId).then(()=>{
+                const  Detail  = this.props.productdetail;
+                if(Detail.type != 'STO' || Detail.type != 'CER'){
+                    const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+                    const currency = logindata.currency;
+                    if(Detail.dominant){
+                        this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                    }
+                }
+                this.setState({ productdetailLoading: false });
+            });
+        }
 
         jQuery('#zoomimg').magnificPopup({
             key: 'my-popup',
@@ -136,15 +150,31 @@ class SalesProductReleteDetail extends Component {
             const productId = nextProps.params.id;
             this.setState({ productdetailLoading: true });
             const productlist = this.props.productlist;
-            this.props.getSalesProductDetail(productId).then(()=>{
-                const  Detail  = this.props.productdetail;
-                const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-                const currency = logindata.currency;
-                if(Detail.dominant){
-                    this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency])
-                }
-                this.setState({ productdetailLoading: false });
-            });
+            if (this.props.ViewAsSet) {
+                this.props.getSalesViewAsSetProductDetail(productId).then(()=>{
+                    const  Detail  = this.props.productdetail;
+                    if(Detail.type != 'STO' || Detail.type != 'CER'){
+                        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+                        const currency = logindata.currency;
+                        if(Detail.dominant){
+                            this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                        }
+                    }
+                    this.setState({ productdetailLoading: false });
+                });
+            }else{
+                this.props.getSalesProductDetail(productId).then(()=>{
+                    const  Detail  = this.props.productdetail;
+                    if(Detail.type != 'STO' || Detail.type != 'CER'){
+                        const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+                        const currency = logindata.currency;
+                        if(Detail.dominant){
+                            this.props.getSalesProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                        }
+                    }
+                    this.setState({ productdetailLoading: false });
+                });
+            }
         }
     }
 
@@ -390,14 +420,9 @@ class SalesProductReleteDetail extends Component {
                         <h2>SET DETAILS</h2>
                         <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
                             <input id="totalsetprice" type="hidden" value={parseInt(setReferenceData.totalprice['USD'])} />
-                            <ReactImageFallback
-                            id="imgset"
-                            src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                            fallbackImage="/images/blank.gif"
-                            initialImage="/images/blank.gif"
-                            width={120}
-                            height={120}
-                            className="img-responsive" />
+                            <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                                fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={120} height={120}
+                                className="img-responsive" />
                         </div>
                         <Setreference productset={setReferenceData}/>
                     </div>
@@ -713,7 +738,7 @@ class SalesProductReleteDetail extends Component {
         } else {
             return(
                 <div>
-                     <a style={styles.displaynone}><div className="icon-coa margin-l10" id="imagesCOA"></div></a>
+                    <a style={styles.displaynone}><div className="icon-coa margin-l10" id="imagesCOA"></div></a>
                 </div>
             );
         }
@@ -736,7 +761,7 @@ class SalesProductReleteDetail extends Component {
         } else {
             return(
                 <div>
-                     <a style={styles.displaynone}><div className="icon-dbc margin-l10" id="imagesDBC"></div></a>
+                    <a style={styles.displaynone}><div className="icon-dbc margin-l10" id="imagesDBC"></div></a>
                 </div>
             );
         }

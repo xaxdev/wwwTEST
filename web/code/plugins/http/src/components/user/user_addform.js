@@ -70,6 +70,8 @@ export const fields = [
     'salesChannel','salesChannelValue', 'salesChannelType'
 ];
 
+export let countFirst = 0;
+
 class UsersNewFrom extends Component {
     constructor(props) {
         super(props);
@@ -154,7 +156,7 @@ class UsersNewFrom extends Component {
             selectedOnHandAll: (this.props.user != undefined)?(!this.props.user.onhandLocation && !this.props.user.onhandWarehouse)? true: false: false,
             genPass:'',
             selectedStatus: true,
-            changedOnHandLocation:false,
+            changedOnHandLocation:true,
             clickAllLocarion: true,
             clickAllWarehouse: true,
             value: 0,
@@ -162,7 +164,7 @@ class UsersNewFrom extends Component {
             selectedSalesWarehouse: true,
             selectedSalesLocation: true,
             selectedSalesAll: (this.props.user != undefined)?(!this.props.user.salesLocation && !this.props.user.salesWarehouse)? true: false: false,
-            changedSalesLocation: false,
+            changedSalesLocation: true,
             clickAllSalesLocarion: true,
             clickAllSalesWarehouse: true,
             userNotUseSalesHierarchy: (this.props.user != undefined)?JSON.parse(this.props.user.permission.notUseSalesHierarchy):{},
@@ -310,69 +312,71 @@ class UsersNewFrom extends Component {
     }
 
     changedOnHandLocationChecked  = e => {
-          let el = e.target;
-          let name = 'chkLocation';
-          let nameObj = el.name;
-          let type = el.type;
-          let stateChange = {};
+        let el = e.target;
+        let name = 'chkLocation';
+        let nameObj = el.name;
+        let type = el.type;
+        let stateChange = {};
 
-          let { fields: { onhandLocationValue,onhandWarehouseValue,onhand,onhandAll } } = this.props;
+        let { fields: { onhandLocationValue,onhandWarehouseValue,onhand,onhandAll } } = this.props;
 
-          let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
-          let checkCompany = jQuery('input[name="checkbox-allCompany"]');
-          let valuesAllCompany = [].filter.call(checkCompany, function(o) {
-              return o.checked || !o.checked;
-          }).map(function(o) {
-              return o.value;
-          });
+        let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
+        let checkCompany = jQuery('input[name="checkbox-allCompany"]');
+        let valuesAllCompany = [].filter.call(checkCompany, function(o) {
+            return o.checked || !o.checked;
+        }).map(function(o) {
+            return o.value;
+        });
 
-          if (objType == '[object RadioNodeList]' || objType == '[object NodeList]' || objType == '[object HTMLCollection]') {
-              let checkedBoxes = (Array.isArray(this.state[name]) ? this.state[name].slice() : []);
-              if (el.checked) {
-                  checkedBoxes.push(el.value);
-                  if (checkedBoxes.length == valuesAllCompany.length) {
-                      this.setState({selectedOnHandLocation: true});
-                      this.setState({clickAllLocarion: true});
-                      onhand.onChange('All');
-                      onhandAll.onChange(true);
-                  }
-              }else {
-                  if (this.state.clickAllLocarion) {
-                    checkedBoxes = valuesAllCompany;
-                    onhand.onChange('Location');
-                    onhandAll.onChange(false);
+        if (objType == '[object RadioNodeList]' || objType == '[object NodeList]' || objType == '[object HTMLCollection]') {
+            let checkedBoxes = (Array.isArray(this.state[name]) ? this.state[name].slice() : []);
+            if (el.checked) {
+                checkedBoxes.push(el.value);
+                if (checkedBoxes.length == valuesAllCompany.length) {
+                    this.setState({selectedOnHandLocation: true});
+                    this.setState({clickAllLocarion: true});
+                    onhand.onChange('All');
+                    onhandAll.onChange(true);
                 }
-                checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
-                this.setState({selectedOnHandLocation: false});
-                this.setState({clickAllLocarion: false});
+                this.setState({changedOnHandLocation: true});
+            }else {
+                if (this.state.clickAllLocarion) {
+                  checkedBoxes = valuesAllCompany;
+                  onhand.onChange('Location');
+                  onhandAll.onChange(false);
               }
-              stateChange[name] = checkedBoxes;
-          } else {
-              stateChange[name] = el.checked;
-          }
-          this.setState(stateChange);
+              checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
+              this.setState({selectedOnHandLocation: false});
+              this.setState({clickAllLocarion: false});
+              this.setState({changedOnHandLocation: false});
+            }
+            stateChange[name] = checkedBoxes;
+        } else {
+            stateChange[name] = el.checked;
+        }
+        this.setState(stateChange);
 
-          onhandLocationValue.onChange(stateChange.chkLocation);
+        onhandLocationValue.onChange(stateChange.chkLocation);
 
-          this.props.optionsActions.getOnHandWarehouse(stateChange.chkLocation).then((value) => {
-              let valuesCompany = [].filter.call(checkCompany, function(o) {
-                  return o.checked;
-              }).map(function(o) {
-                  return o.value;
-              });
+        this.props.optionsActions.getOnHandWarehouse(stateChange.chkLocation).then((value) => {
+            let valuesCompany = [].filter.call(checkCompany, function(o) {
+                return o.checked;
+            }).map(function(o) {
+                return o.value;
+            });
 
-              if (valuesAllCompany.length != valuesCompany.length) {
-                  let checkWarehouse = jQuery('input[name="checkbox-allWarehouse"]');
-                  let valuesAllWarehouse = [].filter.call(checkWarehouse, function(o) {
-                      return o.checked;
-                  }).map(function(o) {
-                      return o.value;
-                  });
-                  onhandWarehouseValue.onChange(valuesAllWarehouse);
-              } else {
-                  onhandWarehouseValue.onChange([]);
-              }
-          });
+            if (valuesAllCompany.length != valuesCompany.length) {
+                let checkWarehouse = jQuery('input[name="checkbox-allWarehouse"]');
+                let valuesAllWarehouse = [].filter.call(checkWarehouse, function(o) {
+                    return o.checked;
+                }).map(function(o) {
+                    return o.value;
+                });
+                onhandWarehouseValue.onChange(valuesAllWarehouse);
+            } else {
+                onhandWarehouseValue.onChange([]);
+            }
+        });
     }
 
     changedSalesLocationChecked  = e => {
@@ -401,6 +405,7 @@ class UsersNewFrom extends Component {
                     sales.onChange('All');
                     salesAll.onChange(true);
                 }
+                this.setState({changedSalesLocation: true});
             }else {
                 if (this.state.clickAllSalesLocarion) {
                     checkedBoxes = valuesAllSalesCompany;
@@ -410,6 +415,7 @@ class UsersNewFrom extends Component {
                 checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
                 this.setState({selectedSalesLocation: false});
                 this.setState({clickAllSalesLocarion: false});
+                this.setState({changedSalesLocation: false});
             }
             stateChange[name] = checkedBoxes;
         } else {
@@ -565,7 +571,11 @@ class UsersNewFrom extends Component {
     }
 
     selectedOnHandWarehouse(e) {
+        countFirst++;
         let { fields: { onhand, onhandAll, onhandWarehouseValue, onhandLocationValue }} = this.props;
+        if (countFirst != 1) {
+            this.setState({ firstloading: false });
+        }
         if (e.target.checked) {
             this.setState({
                 selectedOnHandWarehouse: true,
@@ -828,7 +838,7 @@ class UsersNewFrom extends Component {
                 selectedSalesWarehouse: true,
                 selectedSalesLocation: true,
                 selectedSalesAll: true,
-                changedOnHandLocation: true,
+                changedSalesLocation: true,
                 clickAllSalesLocarion: true,
                 firstloading: false
             });

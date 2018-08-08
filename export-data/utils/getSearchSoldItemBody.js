@@ -51,6 +51,8 @@ module.exports = (obj, fromRecord, sizeRecord) => {
     let valToMargin = 0;
     let valFromDiscount = 0;
     let valToDiscount = 0;
+    let valFromInvoiceDate = '';
+    let valToInvoiceDate = '';
     let valFromSalesPrice = 0;
     let valToSalesPrice = 0;
 

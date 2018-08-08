@@ -9,8 +9,9 @@ import TreeData from '../../utils/treeview/salesstone.json';
 import RemoveSalesHierarchy from './utils/remove_hierarchy';
 import ClearSalesHierarchy from './utils/clear_hierarchy';
 import SearchSalesHierarchy from './utils/search_hierarchy';
-import DeleteHierarchy from './utils/delete_hierarchy_attr';
+import DeleteSalesHierarchy from './utils/delete_hierarchy_attr';
 
+DeleteSalesHierarchy([TreeData]);
 let hiTreeData = TreeData;
 
 class SalesReportStone extends Component {
@@ -586,7 +587,7 @@ class SalesReportStone extends Component {
         }
         if (ArticleSelectedValue == '') {
             let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, hiTreeData, 'STO');
-            DeleteHierarchy(salesHierarchyData)
+            DeleteSalesHierarchy(salesHierarchyData)
         }else{
             let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, hiTreeData, 'STO');
             ClearSalesHierarchy(salesHierarchyData);
