@@ -233,17 +233,18 @@ export function getProductDetail(productId,productlist){
     }
 }
 
-export function getSalesProductDetail(productId,productlist){
+export function getSalesProductDetail(productId,productlist,params){
     const token = sessionStorage.token;
     return {
         type: FETCH_SALESPRODUCTDETAIL,
         promise: fetch(`${ROOT_URL}api/items/salesitem/${productId}`,{
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': token
             },
+            body: JSON.stringify(params)
         }),
         productid:productId,
         productlist:productlist
