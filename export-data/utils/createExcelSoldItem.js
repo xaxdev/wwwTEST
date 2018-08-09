@@ -275,79 +275,77 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                         ws.cell(row,column).string((data[i][j] != undefined) ? data[i][j].toString() : '').style(style);
                     }else{
                         if (obj.fields.showImages){
-                            console.log('isIngredients-->',isIngredients);
                             if(isIngredients){
                                 if(data[i][j] != undefined){
                                     let price = obj.price;
                                     let bitwisePriceSales = Number(price).toString(2);
                                     let checkbitsPriceSales = bitwisePriceSales.split('');
                                     let numberDiitPriceSales = checkbitsPriceSales.length;
-                                    let columnMain = 12;
+                                    let columnMain = 10;
                                     checkbitsPriceSales.map(function(value,key){
                                         switch (numberDiitPriceSales) {
                                             case 1:
-                                                columnMain = ++columnMain;
+                                                columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 break;
                                             case 2:
                                                 if(key == 0){
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 1) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }
                                                 break;
                                             case 3:
                                                 if(key == 0){
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 1) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 2) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }
                                                 break;
                                             case 4:
                                                 if(key == 0){
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 1) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 2) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 3) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }
                                                 break;
                                             case 5:
                                                 if(key == 0){
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? columnMain+2 :columnMain+0;
                                                 }else if (key == 1) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 2) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 3) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 4) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }
                                                 break;
                                             case 6:
                                                 if(key == 0){
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? columnMain+2 :columnMain+0;
                                                 }else if (key == 1) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? columnMain+2 :columnMain+0;
                                                 }else if (key == 2) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 3) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 4) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }else if (key == 5) {
-                                                    columnMain = ++columnMain;
+                                                    columnMain = (value == 1) ? ++columnMain :columnMain+0;
                                                 }
                                                 break;
                                           default:
                                             break;
                                         }
                                     });
-                                    console.log('columnMain-->',columnMain);
                                     if(data[i][columnMain] == 'Main'){
                                         let pathImage = '';
 

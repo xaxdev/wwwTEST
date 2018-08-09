@@ -133,6 +133,8 @@ export default {
 
                         response.push(...itemsSetitem)
                     }
+                    console.log('sort-->',sort);
+                    console.log('order-->',order);
                     response.sort(sortBy(sort,order != 1));
 
                     return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page,
