@@ -124,7 +124,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
                             <form>
                                 <div style="${styleBodyWrapper}">
                                     <div>
-                                        <div style="${styleTotal + !!dvTotalItems?'':'hidden'}">
+                                        <div style="${styleTotal}">
                                             ${dvTotalItems}
                                         </div>
                                         <div style="${styleTotal}">
