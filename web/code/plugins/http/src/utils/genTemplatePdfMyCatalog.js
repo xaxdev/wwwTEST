@@ -46,13 +46,33 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
         case 'public':
             dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="spItemsUpdated "/g,'style="display: none !important;visibility: hidden !important;"'):'';
             dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsUpdated "/g,'style="display: none !important;visibility: hidden !important;"');
+            if (userLogin.permission.price.toLowerCase() == 'public') {
+                dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="spItemsUpdated hidden"/g,'style="display: none !important;visibility: hidden !important;"'):'';
+                dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsUpdated hidden"/g,'style="display: none !important;visibility: hidden !important;"');
+            }else if (userLogin.permission.price.toLowerCase() == 'updated') {
+                dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="spItemsPublicPrice hidden"/g,'style="display: none !important;visibility: hidden !important;"'):'';
+                dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsPublicPrice hidden"/g,'style="display: none !important;visibility: hidden !important;"');
+            }
             break;
         case 'updated':
             dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="spItemsPublicPrice "/g,'style="display: none !important;visibility: hidden !important;"'):'';
             dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsPublicPrice "/g,'style="display: none !important;visibility: hidden !important;"');
+            if (userLogin.permission.price.toLowerCase() == 'public') {
+                dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="spItemsUpdated hidden"/g,'style="display: none !important;visibility: hidden !important;"'):'';
+                dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsUpdated hidden"/g,'style="display: none !important;visibility: hidden !important;"');
+            }else if (userLogin.permission.price.toLowerCase() == 'updated') {
+                dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="spItemsPublicPrice hidden"/g,'style="display: none !important;visibility: hidden !important;"'):'';
+                dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsPublicPrice hidden"/g,'style="display: none !important;visibility: hidden !important;"');
+            }
             break;
         default:
-
+            if (userLogin.permission.price.toLowerCase() == 'public') {
+                dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="spItemsUpdated hidden"/g,'style="display: none !important;visibility: hidden !important;"'):'';
+                dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsUpdated hidden"/g,'style="display: none !important;visibility: hidden !important;"');
+            }else if (userLogin.permission.price.toLowerCase() == 'updated') {
+                dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="spItemsPublicPrice hidden"/g,'style="display: none !important;visibility: hidden !important;"'):'';
+                dvTotalSetItems = dvTotalSetItems.replace(/class="spSetItemsPublicPrice hidden"/g,'style="display: none !important;visibility: hidden !important;"');
+            }
     }
     dvTotalSetItems = dvTotalSetItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotalSetItems = dvTotalSetItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"');
