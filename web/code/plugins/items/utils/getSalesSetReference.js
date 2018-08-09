@@ -88,8 +88,8 @@ module.exports = async (records, cb) => {
                         priority: record.priority,
                         description: record.description,
                         image: {
-                            original: `${record.gallery[0].original}`,
-                            thumbnail: `${record.gallery[0].thumbnail}`
+                            original: `${!!record.gallery[0] ? record.gallery[0].original: ''}`,
+                            thumbnail: `${!!record.gallery[0] ? record.gallery[0].thumbnail: ''}`
                         },
                         price: {},
                         actualCost: {},
@@ -181,8 +181,8 @@ module.exports = async (records, cb) => {
                             priority: record.priority,
                             description: record.description,
                             image: {
-                                original: `${record.gallery[0].original}`,
-                                thumbnail: `${record.gallery[0].thumbnail}`
+                                original: `${!!record.gallery[0] ? record.gallery[0].original: ''}`,
+                                thumbnail: `${!!record.gallery[0] ? record.gallery[0].thumbnail: ''}`
                             },
                             price: {},
                             actualCost: {},

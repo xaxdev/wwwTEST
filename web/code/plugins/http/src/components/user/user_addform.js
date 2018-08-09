@@ -253,6 +253,7 @@ class UsersNewFrom extends Component {
     }
 
     changedSalesWarehouseChecked = e => {
+        console.log('changedSalesWarehouseChecked-->');
         let el = e.target;
         let name = 'chkSalesWarehouse';
         let nameObj = el.name;

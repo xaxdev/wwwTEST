@@ -142,31 +142,41 @@ module.exports = {
                     productResult.gallery.push(...certificateImages)
                 }
 
-                let setReferenceData = setReference.hits.hits.map((element) => element._source);
-                setReferenceData = setReferenceData.sort(compareBy('setReference','asc'));
-                let [setSalesReferences] = await getSalesSetReference(setReferenceData);
+                if (productResult.setReference != '') {
+                    let setReferenceData = setReference.hits.hits.map((element) => element._source);
+                    setReferenceData = setReferenceData.sort(compareBy('setReference','asc'));
+                    setReferenceData = setReferenceData.filter((item) => {
+                        return item.setReference == productResult.setReference;
+                    })
+                    // console.log('setReferenceData-->',setReferenceData);
+                    let [setSalesReferences] = await getSalesSetReference(setReferenceData);
 
-                if(typeof setSalesReferences === 'undefined'){
-                    productResult.setReferenceData = '';
-                } else {
-                    let len = setSalesReferences.items.length;
+                    if(typeof setSalesReferences === 'undefined'){
+                        productResult.setReferenceData = '';
+                    } else {
+                        let len = setSalesReferences.items.length;
 
-                    let productdata = [];
-                    for (let i = 0; i < len; i++) {
-                        if(productResult.id !== setSalesReferences.items[i].id){
-                            productdata.push({
-                                id: setSalesReferences.items[i].id,
-                                image:setSalesReferences.items[i].image
-                            });
+                        let productdata = [];
+                        for (let i = 0; i < len; i++) {
+                            if(productResult.id !== setSalesReferences.items[i].id){
+                                productdata.push({
+                                    id: setSalesReferences.items[i].id,
+                                    image:setSalesReferences.items[i].image
+                                });
+                            }
                         }
+                        const responseSetData = {
+                            totalprice:setSalesReferences.totalPrice,
+                            setimage: (!!setSalesReferences.image) ? setSalesReferences.image.length != 0 ?setSalesReferences.image[0].original : null : null,
+                            products:productdata
+                        }
+                        productResult.setReferenceData = responseSetData;
                     }
-                    const responseSetData = {
-                        totalprice:setSalesReferences.totalPrice,
-                        setimage: (!!setSalesReferences.image) ? setSalesReferences.image.length != 0 ?setSalesReferences.image[0].original : null : null,
-                        products:productdata
-                    }
-                    productResult.setReferenceData = responseSetData;
+                }else{
+                    productResult.setReferenceData = '';
                 }
+
+
                 let movement = movements.hits.hits.map((element) => element._source);
                 // console.log(movement);
                 movement = movement.filter((item) => {
