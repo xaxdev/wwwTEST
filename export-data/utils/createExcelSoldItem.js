@@ -1,6 +1,7 @@
 import { Client as elasticsearch } from 'elasticsearch'
 import xl from 'excel4node'
 import moment from 'moment-timezone';
+import GetSalesPricePermission from './getSalesPricePermission';
 
 const Promise = require('bluebird');
 
@@ -37,6 +38,7 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
 
     const client = new elasticsearch({ host: config.elasticsearch.host });
     try {
+
         if (!!obj.viewAsSet) {
             let sortBy = obj.sortBy;
             let sortDirections = obj.sortDirections;
@@ -247,7 +249,7 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                 "body": body
             });
             const data = await utils.getSoldItemIngredients(result, obj);
-            // console.log('data 249-->',JSON.stringify(data, null, 2));
+            // console.log('data -->',JSON.stringify(data, null, 2));
             const rounds = Math.ceil(data.length/sizeWrite);
             console.log(`User Name --> ${obj.userName}`);
             console.log(`Number of Item&Ingredients --> ${data.length}`);
@@ -272,33 +274,80 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                     if (column != 1) {
                         ws.cell(row,column).string((data[i][j] != undefined) ? data[i][j].toString() : '').style(style);
                     }else{
-                        // console.log('showImages-->',obj.fields.showImages);
                         if (obj.fields.showImages){
+                            console.log('isIngredients-->',isIngredients);
                             if(isIngredients){
                                 if(data[i][j] != undefined){
                                     let price = obj.price;
-                                    let columnMain = 0;
-                                    if (obj.userCurrency != 'USD') {
-                                        if (price == 'All') {
-                                            columnMain = 17;
+                                    let bitwisePriceSales = Number(price).toString(2);
+                                    let checkbitsPriceSales = bitwisePriceSales.split('');
+                                    let numberDiitPriceSales = checkbitsPriceSales.length;
+                                    let columnMain = 12;
+                                    checkbitsPriceSales.map(function(value,key){
+                                        switch (numberDiitPriceSales) {
+                                            case 1:
+                                                columnMain = ++columnMain;
+                                                break;
+                                            case 2:
+                                                if(key == 0){
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 1) {
+                                                    columnMain = ++columnMain;
+                                                }
+                                                break;
+                                            case 3:
+                                                if(key == 0){
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 1) {
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 2) {
+                                                    columnMain = ++columnMain;
+                                                }
+                                                break;
+                                            case 4:
+                                                if(key == 0){
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 1) {
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 2) {
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 3) {
+                                                    columnMain = ++columnMain;
+                                                }
+                                                break;
+                                            case 5:
+                                                if(key == 0){
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 1) {
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 2) {
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 3) {
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 4) {
+                                                    columnMain = ++columnMain;
+                                                }
+                                                break;
+                                            case 6:
+                                                if(key == 0){
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 1) {
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 2) {
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 3) {
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 4) {
+                                                    columnMain = ++columnMain;
+                                                }else if (key == 5) {
+                                                    columnMain = ++columnMain;
+                                                }
+                                                break;
+                                          default:
+                                            break;
                                         }
-                                        if (price == 'Updated') {
-                                            columnMain = 15;
-                                        }
-                                        if (price == 'Public') {
-                                            columnMain = 13;
-                                        }
-                                    } else {
-                                        if (price == 'All') {
-                                            columnMain = 14;
-                                        }
-                                        if (price == 'Updated') {
-                                            columnMain = 13;
-                                        }
-                                        if (price == 'Public') {
-                                            columnMain = 12;
-                                        }
-                                    }
+                                    });
+                                    console.log('columnMain-->',columnMain);
                                     if(data[i][columnMain] == 'Main'){
                                         let pathImage = '';
 
