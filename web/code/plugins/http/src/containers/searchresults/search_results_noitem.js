@@ -12,7 +12,6 @@ class SearchResultOnItem extends Component {
             props, state, onClickNewSearch, onClickModifySearch, onChangedSortingBy, onChangedSortingDirection, onClickGridViewResults, onClickListViewResults,
             hideModalNoResults, onClickHideModalNoResults
         } = this.props;
-        console.log(this);
         return(
             <form role="form">
                 {/* Header Search */}

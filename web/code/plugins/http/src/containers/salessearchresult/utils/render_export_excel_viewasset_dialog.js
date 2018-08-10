@@ -76,15 +76,27 @@ class RenderSalesExportExcelViewAsSetDialog extends Component {
                                             selectedNoAllFieldsViewAsSet
                                         }
                                         if (showField) {
-                                            return(
-                                                <div className="col-md-6 col-sm-6 col-xs-12 checkbox checkbox-warning check-detail" key={index}>
-                                                    <label key={index}>
-                                                        <input id={index} type="checkbox" checked={that.state[field]}
-                                                            onChange={event => { that.setState({ [field]: event.target.checked }) }}/>
-                                                        {labelsViewAsSet[ field ]}
-                                                    </label>
-                                                </div>
-                                            );
+                                            if (field == 'markup') {
+                                                return(
+                                                    <div className={`col-md-6 col-sm-6 col-xs-12 checkbox checkbox-warning check-detail ${(priceSalesUCP) ? '':'hidden'}`} key={index}>
+                                                        <label key={index}>
+                                                            <input id={index} type="checkbox" checked={that.state[field]}
+                                                                onChange={event => { that.setState({ [field]: event.target.checked }) }}/>
+                                                            {labelsViewAsSet[ field ]}
+                                                        </label>
+                                                    </div>
+                                                );
+                                            }else{
+                                                return(
+                                                    <div className="col-md-6 col-sm-6 col-xs-12 checkbox checkbox-warning check-detail" key={index}>
+                                                        <label key={index}>
+                                                            <input id={index} type="checkbox" checked={that.state[field]}
+                                                                onChange={event => { that.setState({ [field]: event.target.checked }) }}/>
+                                                            {labelsViewAsSet[ field ]}
+                                                        </label>
+                                                    </div>
+                                                );
+                                            }
                                         } else {
                                             return('');
                                         }

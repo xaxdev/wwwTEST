@@ -78,6 +78,7 @@ class productdetail extends Component {
             if(Detail.type != 'STO' || Detail.type != 'CER'){
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
                 const currency = logindata.currency;
+                console.log('Detail.dominant-->',Detail.dominant);
                 if(Detail.dominant){
                     this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
                 }

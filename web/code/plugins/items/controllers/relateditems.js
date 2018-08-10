@@ -25,52 +25,54 @@ module.exports = {
 
         internals.query = JSON.parse(
             `{
-              "size": ${itemperpage},
-              "from": ${offset},
-              "sort" : [
-                   { "reference" : "desc" }
+                "size": ${itemperpage},
+                "from": ${offset},
+                "sort" : [
+                    { "reference" : "desc" }
                 ],
                 "query": {
                     "constant_score": {
-                      "filter": {
-                        "bool": {
-                          "must": [
-                            {
-                              "match": {
-                                "dominant": "${dominant}"
-                              }
-                            },
-                            {
-                              "match": {
-                                "subType": "${collection}"
-                              }
-                            },
-                            {
-                              "range" : {
-                                   "${price}" : {
-                                      "gte" : "${pricegte}",
-                                      "lt"  : "${pricelt}"
-                                  }
-                                }
+                        "filter": {
+                            "bool": {
+                                "must": [
+                                    {
+                                        "match": {
+                                            "dominant": "${dominant}"
+                                        }
+                                    },
+                                    {
+                                        "match": {
+                                            "subType": "${collection}"
+                                        }
+                                    },
+                                    {
+                                        "range" : {
+                                            "${price}" : {
+                                                "gte" : "${pricegte}",
+                                                "lt"  : "${pricelt}"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "must_not": [
+                                    {
+                                        "match": {
+                                            "id": "${productId}"
+                                        }
+                                    },
+                                    {
+                                        "match": {
+                                            "warehouse": {
+                                                "query": "MME.CONS"
+                                            }
+                                        }
+                                    }
+                                ]
                             }
-                          ],
-                          "must_not": [
-                            {
-                              "match": {
-                                  "id": "${productId}"
-                              },
-                              "match": {
-                                  "warehouse": {
-                                      "query": "MME.CONS"
-                                  }
-                              }
-                            }
-                          ]
                         }
-                      }
                     }
-                  }
-              }`
+                }
+            }`
         );
         elastic
         .search({

@@ -43,8 +43,12 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
             }
 
             if(fields.allFieldsViewAsSet){
+                if (price == 'Updated' || price == 'All') {
+                    arrayItems.push(
+                        (item.markup != undefined) ? item.markup : ''
+                    );
+                }
                 arrayItems.push(
-                    (item.markup != undefined) ? item.markup : '',
                     (item.companyName != undefined) ? item.companyName : '',
                     (item.warehouseName != undefined) ? item.warehouseName : '',
                     (item.createdDate != undefined) ? convertDate(item.createdDate) : ''
@@ -176,8 +180,14 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 }
                 arrayItems.push(
                     stoneQty,
-                    (item.dominantStoneName != undefined) ? item.dominantStoneName : '',
-                    (item.markup != undefined) ? item.markup : '',
+                    (item.dominantStoneName != undefined) ? item.dominantStoneName : ''
+                )
+                if (price == 'Updated' || price == 'All') {
+                    arrayItems.push(
+                        (item.markup != undefined) ? item.markup : ''
+                    );
+                }
+                arrayItems.push(
                     '',
                     '',
                     (item.vendor != undefined) ? item.vendor : '',
@@ -321,7 +331,11 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                             if(fields.netWeight || fields.allFields) arrayItems.push(''); // Gold weight (Grams)
                             if(fields.stoneQty || fields.allFields) arrayItems.push(0); // Stone Qty
                             if(fields.dominantStone || fields.allFields) arrayItems.push(''); // Dominant Stone
-                            if(fields.markup || fields.allFields) arrayItems.push(''); // Markup%
+                            if(fields.markup || fields.allFields){
+                                if (price == 'Updated' || price == 'All') {
+                                    arrayItems.push(''); // Markup%
+                                }
+                            }
                             if(fields.certificatedNumber || fields.allFields) arrayItems.push((gemstone.certificate != undefined) ? gemstone.certificate.number : ''); // Certificate Number
                             if(fields.certificateDate || fields.allFields) arrayItems.push((gemstone.certificate != undefined) ? convertDate(gemstone.certificate.issuedDate) : ''); // Certificate Date
                             if(fields.vendorCode || fields.allFields) arrayItems.push(''); // Vendor Code
