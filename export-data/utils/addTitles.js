@@ -37,7 +37,10 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 titles.push('Total Price (USD)');
             }
             if(fields.allFieldsViewAsSet){
-                titles.push('Markup (Times)', 'Company','Location', 'Created Date');
+                if (price == 'Updated' || price == 'All') {
+                    titles.push('Markup (Times)');
+                }
+                titles.push('Company','Location', 'Created Date');
             }else{
                 if(fields.totalActualCost) titles.push('Total Cost Price (USD)');
                 if(fields.totalUpdatedCost) titles.push('Total Updated Cost (USD)');
@@ -88,9 +91,14 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 titles.push(
                     'Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color',
                     'Clarity','Carat Wt', 'Unit', 'Qty','Origin','Symmetry','Flourance','Batch','Gold weight (Grams)',
-                    'Stone Qty','Dominant Stone', 'Markup%','Certificate Number','Certificate Date', 'Vendor Code',
-                    'Vendor Name', 'Metal Colour', 'Metal','Brand','Complication','Strap Type','Strap Color',
-                    'Buckle Type','Dial Index','Dial Color','Movement','Serial #','Limited Edition',
+                    'Stone Qty','Dominant Stone'
+                );
+                if (price == 'Updated' || price == 'All') {
+                    titles.push('Markup%');
+                }
+                titles.push(
+                    'Certificate Number','Certificate Date', 'Vendor Code','Vendor Name', 'Metal Colour', 'Metal','Brand','Complication',
+                    'Strap Type','Strap Color','Buckle Type','Dial Index','Dial Color','Movement','Serial #','Limited Edition',
                     'Limited Edition #','Created Date'
                 );
             }else{

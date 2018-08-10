@@ -56,18 +56,33 @@ class RenderSalesExportExcelDialog extends Component {
                                     }else{
                                         selectedNoAllFields
                                     }
-                                    return(
-                                        <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
-                                            <label key={index}>
-                                                <input id={index} type="checkbox" checked={state[field]}
-                                                    onChange={event => {
-                                                        that.setState({ [field]: event.target.checked });
-                                                        that.setState({ allFields:false });
-                                                    }} />
-                                                {labels[ field ]}
-                                            </label>
-                                        </div>
-                                    );
+                                    if (field == 'markup') {
+                                        return(
+                                            <div className={`col-md-3 checkbox checkbox-warning check-detail ${(priceSalesUCP) ? '':'hidden'}`} key={index}>
+                                                <label key={index}>
+                                                    <input id={index} type="checkbox" checked={state[field]}
+                                                        onChange={event => {
+                                                            that.setState({ [field]: event.target.checked });
+                                                            that.setState({ allFields:false });
+                                                        }} />
+                                                    {labels[ field ]}
+                                                </label>
+                                            </div>
+                                        );
+                                    }else{
+                                        return(
+                                            <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
+                                                <label key={index}>
+                                                    <input id={index} type="checkbox" checked={state[field]}
+                                                        onChange={event => {
+                                                            that.setState({ [field]: event.target.checked });
+                                                            that.setState({ allFields:false });
+                                                        }} />
+                                                    {labels[ field ]}
+                                                </label>
+                                            </div>
+                                        );
+                                    }
                                 })
                             }
                         </div>

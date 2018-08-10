@@ -46,7 +46,10 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             }
 
             if(fields.allFieldsViewAsSet){
-                titles.push('Markup (Times)', 'Company','Location', 'Posted Date');
+                if (priceSalesUCP) {
+                    titles.push('Markup (Times)');
+                }
+                titles.push('Company','Location', 'Posted Date');
             }else{
                 if(fields.totalActualCost) titles.push('Total Cost Price (USD)');
                 if(fields.totalUpdatedCost) titles.push('Total Updated Cost (USD)');
@@ -89,9 +92,15 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             if(fields.allFields){
                 titles.push(
                     'Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color', 'Clarity','Carat Wt', 'Unit',
-                    'Qty','Origin','Symmetry','Flourance','Batch','Gold weight (Grams)', 'Stone Qty','Dominant Stone', 'Markup%','Certificate Number','Certificate Date',
-                    'Vendor Code', 'Vendor Name', 'Metal Colour', 'Metal','Brand','Complication','Strap Type','Strap Color', 'Buckle Type','Dial Index',
-                    'Dial Color','Movement','Serial #','Limited Edition', 'Limited Edition #','Created Date','Posted Date', 'Sales Id','Sales Person Name',
+                    'Qty','Origin','Symmetry','Flourance','Batch','Gold weight (Grams)', 'Stone Qty','Dominant Stone'
+                );
+                if (priceSalesUCP) {
+                    titles.push('Markup%');
+                }
+                titles.push(
+                    'Certificate Number','Certificate Date','Vendor Code', 'Vendor Name', 'Metal Colour', 'Metal','Brand','Complication',
+                    'Strap Type','Strap Color', 'Buckle Type','Dial Index','Dial Color','Movement','Serial #','Limited Edition',
+                    'Limited Edition #','Created Date','Posted Date', 'Sales Id','Sales Person Name',
                     'Sales Channel Type', 'Customer','Customer Name','Invoiced Id', 'Invoice Date','Size'
                 );
             }else{

@@ -51,8 +51,12 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
             }
 
             if(fields.allFieldsViewAsSet){
+                if (priceSalesUCP) {
+                    arrayItems.push(
+                        (item.markup != undefined) ? item.markup : ''
+                    );
+                }
                 arrayItems.push(
-                    (item.markup != undefined) ? item.markup : '',
                     (item.companyName != undefined) ? item.companyName : '',
                     (item.warehouseName != undefined) ? item.warehouseName : '',
                     (item.postedDate != undefined) ? convertDate(item.postedDate) : ''
@@ -187,8 +191,12 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 }
                 arrayItems.push(
                     stoneQty,
-                    (item.dominantStoneName != undefined) ? item.dominantStoneName : '',
-                    (item.markupPercentage != undefined) ? item.markupPercentage : '',
+                    (item.dominantStoneName != undefined) ? item.dominantStoneName : ''
+                );
+                if (priceSalesUCP) {
+                    arrayItems.push((item.markup != undefined) ? item.markup : '');
+                }
+                arrayItems.push(
                     '',
                     '',
                     (item.vendor != undefined) ? item.vendor : '',
@@ -246,7 +254,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 }
                 if(fields.stoneQty) arrayItems.push((stoneQty != 0) ? stoneQty : 0);
                 if(fields.dominantStone) arrayItems.push((item.dominantStoneName != undefined) ? item.dominantStoneName : '');
-                if(fields.markup) arrayItems.push((item.markupPercentage != undefined) ? item.markupPercentage : '');
+                if(fields.markup) arrayItems.push((item.markup != undefined) ? item.markup : '');
                 if(fields.certificatedNumber) arrayItems.push('');
                 if(fields.certificateDate) arrayItems.push('');
                 if(fields.vendorCode) arrayItems.push((item.vendor != undefined) ? item.vendor : '');
@@ -342,7 +350,11 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                             if(fields.netWeight || fields.allFields) arrayItems.push(''); // Gold weight (Grams)
                             if(fields.stoneQty || fields.allFields) arrayItems.push(0); // Stone Qty
                             if(fields.dominantStone || fields.allFields) arrayItems.push(''); // Dominant Stone
-                            if(fields.markup || fields.allFields) arrayItems.push(''); // Markup%
+                            if(fields.markup || fields.allFields){
+                                if (priceSalesUCP) {
+                                    arrayItems.push(''); // Markup%
+                                }
+                            }
                             if(fields.certificatedNumber || fields.allFields) arrayItems.push((gemstone.certificate != undefined) ? gemstone.certificate.number : ''); // Certificate Number
                             if(fields.certificateDate || fields.allFields) arrayItems.push((gemstone.certificate != undefined) ? convertDate(gemstone.certificate.issuedDate) : ''); // Certificate Date
                             if(fields.vendorCode || fields.allFields) arrayItems.push(''); // Vendor Code
