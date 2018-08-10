@@ -106,11 +106,11 @@ class SearchResult extends Component {
         let sortingBy = '';
         switch (this.props.sortingBy) {
             case 'price':
-              sortingBy = 'price.' + userLogin.currency;
-              break;
+                sortingBy = 'price.' + userLogin.currency;
+                break;
             default:
-              sortingBy = this.props.sortingBy;
-              break;
+                sortingBy = this.props.sortingBy;
+                break;
         }
         let params = {
             'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': this.props.sortDirection,
@@ -1149,7 +1149,7 @@ class SearchResult extends Component {
             );
         }
     }
-    
+
     render() {
         const { fields: { oldCatalogName, newCatalogName, validateCatalogName },
               totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize,exportItems,
@@ -1187,7 +1187,7 @@ class SearchResult extends Component {
                     <SearchResultOnItem props={this.props} onClickNewSearch={this.newSearch} onClickModifySearch={this.modifySearch}
                         onChangedSortingBy={this.sortingBy} onChangedSortingDirection={this.sortingDirection} onClickGridViewResults={this.gridViewResults}
                         onClickListViewResults={this.listViewResults} hideModalNoResults={this.hideModalNoResults}
-                        onClickHideModalNoResults={this.hideModalNoResults}/>
+                        onClickHideModalNoResults={this.hideModalNoResults} state={this.state}/>
                 );
             }else{
                 return(

@@ -12,6 +12,7 @@ class SearchResultOnItem extends Component {
             props, state, onClickNewSearch, onClickModifySearch, onChangedSortingBy, onChangedSortingDirection, onClickGridViewResults, onClickListViewResults,
             hideModalNoResults, onClickHideModalNoResults
         } = this.props;
+        console.log(this);
         return(
             <form role="form">
                 {/* Header Search */}
@@ -23,10 +24,10 @@ class SearchResultOnItem extends Component {
                         <div className="m-width-100 text-right maring-t15 float-r ip-font ipp-margin m-pt">
                             <div className="col-sm-4 col-xs-12 nopadding">
                                 <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                    <button className="btn btn-searchresult" disabled={submitting} onClick={onClickNewSearch}>New Search</button>
+                                    <button className="btn btn-searchresult" onClick={onClickNewSearch}>New Search</button>
                                 </div>
                                 <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                    <button className="btn btn-searchresult" disabled={submitting} onClick={onClickModifySearch}>Modify Search</button>
+                                    <button className="btn btn-searchresult" onClick={onClickModifySearch}>Modify Search</button>
                                 </div>
                             </div>
                             <div className="col-sm-2 col-xs-12 ft-white margin-t5">
@@ -52,10 +53,10 @@ class SearchResultOnItem extends Component {
                                 </div>
                             </div>
                             <div className="col-sm-2 ft-white nopadding pd-10">
-                                <div disabled={submitting} onClick={ onClickGridViewResults }>
+                                <div onClick={ onClickGridViewResults }>
                                     <div className="bd-white m-pt-mgl"></div>
                                 </div>
-                                <div disabled={submitting} onClick={ onClickListViewResults } >
+                                <div onClick={ onClickListViewResults } >
                                     <div className="bd-white m-pt-mgl"></div>
                                 </div>
                             </div>

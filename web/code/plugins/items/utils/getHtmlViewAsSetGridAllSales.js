@@ -26,22 +26,22 @@ export default function GetHTMLViewASSetGridAllSales(datas,currency,isViewAsSet,
                                     <div style="background-color: #debe6b;float: left;width: 100%;padding: 15px 0;margin: 0px 0 1px 0;text-align: center; font-family: 'Open Sans', sans-serif; font-size: 10px;">
                                         <span>
                                             <span style="font-weight: bold; color: #000;" >Total Items :</span>
-                                            <span class="font-w9" >
+                                            <span style="font-weight: 900;" >
                                                 <span>${datas.summary.count}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'Sets' : 'Items'}</span>
                                                 <span> </span>
                                             </span>
                                         </span>
-                                        <span class="${(priceSalesNSP) ? '' : 'hidden'}">
+                                        <span style="${(priceSalesNSP) ? '' : 'display: none !important;visibility: hidden !important;'}">
                                             <span style="padding: 0 15px;">|</span>
                                             <span style="font-weight: bold; color: #000;">Total Net Sales :</span>
-                                            <span class="font-w9">${numberFormat(datas.summary.netAmount) }</span>
+                                            <span style="font-weight: 900;">${numberFormat(datas.summary.netAmount) }</span>
                                         </span>
-                                        <span class="${(priceSalesUCP) ? '' : 'hidden'}">
+                                        <span style="${(priceSalesUCP) ? '' : 'display: none !important;visibility: hidden !important;'}">
                                             <span style="padding: 0 15px;">|</span>
                                             <span style="font-weight: bold; color: #000;">Total Updated Cost :</span>
-                                            <span class="font-w9">
+                                            <span style="font-weight: 900;">
                                                 <span>${numberFormat(datas.summary.cost)}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
@@ -49,39 +49,39 @@ export default function GetHTMLViewASSetGridAllSales(datas,currency,isViewAsSet,
                                         </span>
                                     </div>
                                     <div style="background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family:'Open Sans', sans-serif; font-size: 10px;">
-                                        <span class="${(priceSalesNSP) ? '' : 'hidden'}">
+                                        <span style="${(priceSalesNSP) ? '' : 'display: none !important;visibility: hidden !important;'}">
                                             <span style="font-weight: bold; color: #000;">Highest Net Sales :</span>
-                                            <span class="font-w9">
+                                            <span style="font-weight: 900;">
                                                 <span>${numberFormat(datas.summary.maxPrice)}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
                                                 <span> </span>
                                             </span>
                                         </span>
-                                        <span class="${(priceSalesNSP) ? '' : 'hidden'}">
+                                        <span style="${(priceSalesNSP) ? '' : 'display: none !important;visibility: hidden !important;'}">
                                             <span style="padding: 0 15px;">|</span>
                                             <span style="font-weight: bold; color: #000;">Lowest Net Sales :</span>
-                                            <span class="font-w9">
+                                            <span style="font-weight: 900;">
                                                 <span>${numberFormat(datas.summary.minPrice)}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
                                                 <span> </span>
                                             </span>
                                         </span>
-                                        <span class="${(priceSalesMGP) ? '' : 'hidden'}">
+                                        <span style="${(priceSalesMGP) ? '' : 'display: none !important;visibility: hidden !important;'}">
                                             <span style="padding: 0 15px;">|</span>
                                             <span style="font-weight: bold; color: #000;">Average Margin % :</span>
-                                            <span class="font-w9">
+                                            <span style="font-weight: 900;">
                                                 <span>${numberFormat((datas.summary.margin/datas.summary.netAmount)*100)} %</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
                                                 <span> </span>
                                             </span>
                                         </span>
-                                        <span class="${(priceSalesDSP) ? '' : 'hidden'}">
+                                        <span style="${(priceSalesDSP) ? '' : 'display: none !important;visibility: hidden !important;'}">
                                             <span style="padding: 0 15px;">|</span>
                                             <span style="font-weight: bold; color: #000;">Average Discount % :</span>
-                                            <span class="font-w9">
+                                            <span style="font-weight: 900;">
                                                 <span>${numberFormat((datas.summary.disconst/datas.summary.price)*100)} %</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>

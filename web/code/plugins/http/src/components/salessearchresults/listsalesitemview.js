@@ -164,7 +164,6 @@ class ListSalesItemsView extends Component {
                     } else {
                         jewelsWeight = '';
                     }
-
                     col.jewelsWeight = numberFormat2digit(jewelsWeight);
                     col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 

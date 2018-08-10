@@ -22,7 +22,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                     <div style="background-color: #debe6b;float: left;width: 100%;padding: 15px 0;margin: 0px 0 1px 0;text-align: center; font-family: 'Open Sans', sans-serif; font-size: 10px;">
                                         <span>
                                             <span style="font-weight: bold; color: #000;" >Total Items :</span>
-                                            <span class="font-w9" >
+                                            <span style="font-weight: 900;" >
                                                 <span>${datas.summary.count}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'Sets' : 'Items'}</span>
@@ -30,19 +30,19 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                             </span>
                                             <span style="padding: 0 15px;">|</span>
                                         </span>
-                                        <span class="${(userPermissionPrice == 'Public' || userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ?
-                                            '' : 'hidden'}">
+                                        <span style="${(userPermissionPrice == 'Public' || userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ?
+                                            '' : 'display: none !important;visibility: hidden !important;'}">
                                             <span style="font-weight: bold; color: #000;">Total Price :</span>
-                                            <span class="font-w9">
+                                            <span style="font-weight: 900;" >
                                                 <span>${numberFormat(datas.summary.price)}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
                                             </span>
                                         </span>
-                                        <span class="${(userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ? '' : 'hidden'}">
+                                        <span style="${(userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ? '' : 'display: none !important;visibility: hidden !important;'}">
                                             <span style="padding: 0 15px;">|</span>
                                             <span style="font-weight: bold; color: #000;">Total Updated Cost :</span>
-                                            <span class="font-w9">
+                                            <span style="font-weight: 900;" >
                                                 <span>${numberFormat(datas.summary.cost)}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
@@ -52,7 +52,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                     <div style="background-color: #dddddd;float: left;width: 100%;padding: 10px 0px;text-align: center; font-family:'Open Sans', sans-serif; font-size: 10px;">
                                         <span>
                                             <span style="font-weight: bold; color: #000;">Highest Price :</span>
-                                            <span class="font-w9">
+                                            <span style="font-weight: 900;" >
                                                 <span>${numberFormat(datas.summary.maxPrice)}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
@@ -62,7 +62,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                         </span>
                                         <span>
                                             <span style="font-weight: bold; color: #000;">Lowest Price :</span>
-                                            <span class="font-w9">
+                                            <span style="font-weight: 900;" >
                                                 <span>${numberFormat(datas.summary.minPrice)}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>
@@ -72,7 +72,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                         </span>
                                         <span>
                                             <span style="font-weight: bold; color: #000;">Average Price :</span>
-                                            <span class="font-w9">
+                                            <span style="font-weight: 900;" >
                                                 <span>${numberFormat(datas.summary.avrgPrice)}</span>
                                                 <span> </span>
                                                 <span>${isViewAsSet ? 'USD' : currency}</span>

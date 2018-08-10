@@ -73,9 +73,9 @@ class GridItemsViewPrint extends Component {
                         let lblPrice = '';
                         let lblUpdatedCost = '';
                         if (item.id != null) {
-                            lblActualCost = `Cost Price (${userLogin.currency})`;
-                            lblPrice = `Price (${userLogin.currency})`;
-                            lblUpdatedCost = `Update Cost (${userLogin.currency})`;
+                            lblActualCost = `Cost Price (USD)`;
+                            lblPrice = `Price (USD)`;
+                            lblUpdatedCost = `Update Cost (USD)`;
                             imagesProduct = (item.authorization)
                               ? (item.gallery.length) != 0
                                     ? item.gallery[0].original

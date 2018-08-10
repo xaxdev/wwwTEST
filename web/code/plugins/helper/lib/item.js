@@ -107,6 +107,9 @@ const applyPermission = (user, item) => {
             id: item.id,
             reference: item.reference,
             description: item.description,
+            priceInUSD: item.priceInUSD,
+            setReference: item.setReference,
+            lastModified: item.lastModified,
             availability: item.availability,
             authorization: item.authorization
         }
