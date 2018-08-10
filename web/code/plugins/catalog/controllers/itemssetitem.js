@@ -133,9 +133,8 @@ export default {
 
                         response.push(...itemsSetitem)
                     }
-                    console.log('sort-->',sort);
-                    console.log('order-->',order);
-                    response.sort(sortBy(sort,order != 1));
+                    
+                    response = response.sort(compareBy(sort,order == -1?'desc':'asc'));
 
                     return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page,
                         total_items, total_pages, total_setitems, 'items': response, 'allItems': responseAllItems })
@@ -188,4 +187,36 @@ function sortBy(key, reverse) {
          }
          return 0;
      };
+}
+
+const compareBy = (property, order = 'asc') => (a, b) => {
+    if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
+        return 0;
+    }
+    let priceA = 0;
+    let priceB = 0;
+    const first = (property.toLowerCase().indexOf('priceInUSD') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? a[property] != undefined
+                        ? a[property] != undefined ? a[property] : 0
+                        : 0
+                    : a[property]
+    const second = (property.toLowerCase().indexOf('priceInUSD') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? b[property] != undefined
+                        ? b[property] != undefined ? b[property] : 0
+                        : 0
+                    : b[property]
+    if (typeof first !== typeof second) {
+        return 0
+    }
+
+    let comparison = 0
+    if (first > second) {
+        comparison = 1
+    }
+
+    if (first < second) {
+        comparison = -1
+    }
+
+    return (order === 'desc')? (comparison * -1) : comparison
 }

@@ -17,9 +17,9 @@ export default function MyCatalogPrintAll(items, userLogin){
         let lblPrice = '';
         let lblUpdatedCost = '';
         if (item.id != null) {
-            lblActualCost = `Cost Price (${userLogin.currency})`;
-            lblPrice = `Price (${userLogin.currency})`;
-            lblUpdatedCost = `Update Cost (${userLogin.currency})`;
+            lblActualCost = `Cost Price (USD)`;
+            lblPrice = `Price (USD)`;
+            lblUpdatedCost = `Update Cost (USD)`;
             imagesProduct = (item.authorization)
                 ? (item.gallery.length) != 0
                     ? item.gallery[0].original
@@ -33,14 +33,14 @@ export default function MyCatalogPrintAll(items, userLogin){
                 ? (item.type != 'CER') ? 'Created Date:' : 'Certificate Date:'
                 : '';
             price = (item.authorization)
-                ? (item.price != -1)? numberFormat(item.price) + ' ' + item.userCurrency: '- ' + userLogin.currency
-                : '- ' + userLogin.currency;
+                ? (item.price != -1)? numberFormat(item.price) + ' ' + 'USD': '- ' + 'USD'
+                : '- ' + 'USD';
             actualCost = (item.authorization)
-                ? (item.actualCost != -1)? numberFormat(item.actualCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
-                : '- ' + userLogin.currency;
+                ? (item.actualCost != -1)? numberFormat(item.actualCost) + ' ' + 'USD': '- ' + 'USD'
+                : '- ' + 'USD';
             updatedCost = (item.authorization)
-                ? (item.updatedCost != -1)? numberFormat(item.updatedCost) + ' ' + item.userCurrency: '- ' + userLogin.currency
-                : '- ' + userLogin.currency;
+                ? (item.updatedCost != -1)? numberFormat(item.updatedCost) + ' ' + item.userCurrency: '- ' + 'USD'
+                : '- ' + 'USD';
             itemName = (item.authorization)
                 ? (item.type != 'CER')?
                     (item.description != undefined) ?
