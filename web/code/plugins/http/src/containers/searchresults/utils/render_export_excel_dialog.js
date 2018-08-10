@@ -50,28 +50,45 @@ class RenderExportExcelDialog extends Component {
                             <div className="col-sm-3"> </div>
                         </div>
                         <div className="col-md-12">
-                          {
-                              checkFields.map(function(field, index){
-                                  checkAll = checkAll && that.state[field];
-                                  if (checkAll) {
-                                      selectedAllFields
-                                  }else{
-                                      selectedNoAllFields
-                                  }
-                                  return(
-                                      <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
-                                          <label key={index}>
-                                              <input id={index} type="checkbox" checked={that.state[field]}
-                                                  onChange={event => {
-                                                      that.setState({ [field]: event.target.checked });
-                                                      that.setState({ allFields:false });
-                                                  }} />
-                                              {labels[ field ]}
-                                          </label>
-                                      </div>
-                                  );
-                              })
-                          }
+                            {
+                                checkFields.map(function(field, index){
+                                    checkAll = checkAll && that.state[field];
+                                    if (checkAll) {
+                                        selectedAllFields
+                                    }else{
+                                        selectedNoAllFields
+                                    }
+                                    {
+                                        if (field == 'markup') {
+                                            return(
+                                                <div className={`col-md-3 checkbox checkbox-warning check-detail ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? '':'hidden'}`} key={index}>
+                                                    <label key={index}>
+                                                        <input id={index} type="checkbox" checked={that.state[field]}
+                                                            onChange={event => {
+                                                                that.setState({ [field]: event.target.checked });
+                                                                that.setState({ allFields:false });
+                                                            }} />
+                                                        {labels[ field ]}
+                                                    </label>
+                                                </div>
+                                            );
+                                        }else{
+                                            return(
+                                                <div className="col-md-3 checkbox checkbox-warning check-detail" key={index}>
+                                                    <label key={index}>
+                                                        <input id={index} type="checkbox" checked={that.state[field]}
+                                                            onChange={event => {
+                                                                that.setState({ [field]: event.target.checked });
+                                                                that.setState({ allFields:false });
+                                                            }} />
+                                                        {labels[ field ]}
+                                                    </label>
+                                                </div>
+                                            );
+                                        }
+                                    }
+                                })
+                            }
                         </div>
                     </div>
                     <div className="modal-footer">
