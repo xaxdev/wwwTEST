@@ -184,6 +184,20 @@
                     }
                 },
                 {
+                    "master_gemstones_carat_multiple": {
+                        "match_mapping_type": "string",
+                        "match": "gemstones_carat",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
                     "master_color_multiple": {
                         "match_mapping_type": "string",
                         "match": "color",
