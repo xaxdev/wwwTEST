@@ -63,9 +63,8 @@ class InventoryHeader extends Component {
         jQuery('#file').hide();
         jQuery('#btn-browsefile').click(function(){
             jQuery('#file').click();
-              });
+        });
         jQuery('#file').change(function() {
-
             let filename =jQuery('#file')[0].files[0];
             //alert(filename.name);
             jQuery('#fileName').text(filename.name);
@@ -87,12 +86,12 @@ class InventoryHeader extends Component {
       		let reader = new FileReader();
       		let name = f.name;
       		reader.onload = function(e) {
-                  let data = e.target.result;
-                  let arr = xls.fixdata(data);
-                  let wb = X.read(btoa(arr), {type: 'base64'});
-                  let items = xls.process_wb(wb);
-                  reference.onChange(items.item);
-                  that.props.setItemsOrder(items.AllData);
+                let data = e.target.result;
+                let arr = xls.fixdata(data);
+                let wb = X.read(btoa(arr), {type: 'base64'});
+                let items = xls.process_wb(wb);
+                reference.onChange(items.item);
+                that.props.setItemsOrder(items.AllData);
       		}
             if(rABS) reader.readAsBinaryString(f);
             else reader.readAsArrayBuffer(f);
@@ -102,8 +101,8 @@ class InventoryHeader extends Component {
         const { props } = this.props;
         let {
             fields: {
-                reference,description,venderReference,vendorName,certificatedNumber,sku,location,warehouse,attachment,
-                totalCostFrom, totalCostTo,totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo
+                reference,description,venderReference,vendorName,certificatedNumber,sku,location,warehouse,attachment,totalCostFrom,totalCostTo,
+                totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,publicPriceTo, specialDiscount
             }
         } = this.props.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
@@ -130,7 +129,7 @@ class InventoryHeader extends Component {
             if (this.props.props.options.dominantStones) {
                 dataDropDowntDominantStone.push(this.props.props.options.dominantStones.map(dominantStone =>{
                     return ({value: dominantStone.code,label:dominantStone.name});
-                  }))
+                }))
                 dataDropDowntDominantStone = dataDropDowntDominantStone[0];
             }
 
@@ -143,7 +142,7 @@ class InventoryHeader extends Component {
                             newDate.push(_.filter(that.props.props.options.warehouses,
                                 function(warehouse){
                                     if(warehouse.code != undefined){
-                                      return warehouse.code.toString() == settingWarehouse;
+                                        return warehouse.code.toString() == settingWarehouse;
                                     }
                                 }
                             ));
@@ -152,8 +151,8 @@ class InventoryHeader extends Component {
                     if (userLogin.permission.onhandWarehouse.type == 'All'){
                         dataDropDowntLocations.forEach(function(location){
                             newDate.push(_.filter(that.props.props.options.warehouses,
-                              function(warehouse)
-                              { return warehouse.comid == location.value})
+                                function(warehouse)
+                                { return warehouse.comid == location.value})
                             );
                         });
                     }
@@ -161,7 +160,7 @@ class InventoryHeader extends Component {
                 let subdata = [];
                 newDate.forEach(newdata =>{
                     newdata.forEach(subdata =>{
-                      data.push(subdata);
+                        data.push(subdata);
                     })
                 });
 
@@ -238,7 +237,14 @@ class InventoryHeader extends Component {
                                             <label className="col-sm-4 control-label">Dominant Stone</label>
                                             <div className="col-sm-7">
                                                 <Select multi simpleValue value={props.DominantStoneValue} placeholder="Select your Dominant Stone"
-                                                  options={dataDropDowntDominantStone} onChange={this.handleDominantStoneSelectChange} />
+                                                    options={dataDropDowntDominantStone} onChange={this.handleDominantStoneSelectChange} />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Special Discount</label>
+                                            <div className="col-sm-7">
+                                                <input type="checkbox" value="Discount" {...specialDiscount} checked={props.SpecialDiscount}
+                                                    onChange={this.selectedSpecialDiscount} />
                                             </div>
                                         </div>
                                         <div className={`form-group ${(userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
