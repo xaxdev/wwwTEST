@@ -825,7 +825,8 @@ function mapStateToProps(state) {
         ProductionDateTo: state.searchResult.ProductionDateTo,
         SaveSearchHierarchy: state.searchResult.saveSearchHierarchy,
         ViewAsSet: state.searchResult.viewAsSet,
-        ArticleValue: state.searchResult.ArticleValue
+        ArticleValue: state.searchResult.ArticleValue,
+        SpecialDiscount: state.searchResult.specialDiscount,
     };
 }
 function mapDispatchToProps(dispatch) {

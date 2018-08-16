@@ -1252,12 +1252,13 @@ class GridItemsView extends Component {
             let lblPrice = '';
             let lblUpdatedCost = '';
             let checkItem = listMyCatalog.find((myItem) => {
-                                    if (ViewAsSet) {
-                                        return myItem.reference == item.reference
-                                    }else{
-                                        return myItem.id == item.id
-                                    }
-                                });
+                if (ViewAsSet) {
+                    return myItem.reference == item.reference
+                }else{
+                    return myItem.id == item.id
+                }
+            });
+            let isSpecialDisc = false;
             checkItem = !checkItem ? false : true;  //if undefined checked false else true
             // console.log('checkItem-->',checkItem);
             if (ViewAsSet) {
@@ -1305,6 +1306,7 @@ class GridItemsView extends Component {
                             ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
                             : '-'
                 itemNameCat = (item.type != 'CER')? item.description: item.name;
+                isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
             }
            return (
               <div key={ViewAsSet ? item.reference : item.id}
@@ -1398,7 +1400,7 @@ class GridItemsView extends Component {
                           </span>
                     </div>
                     <div className="thumbnaillgrid">
-                      {/*<img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/>*/}
+                      <span className={`${(isSpecialDisc)?'tagbar-soldout':''}`}></span>
                       <ReactImageFallback
                              src={imagesProduct }
                              fallbackImage="/images/blank.gif"

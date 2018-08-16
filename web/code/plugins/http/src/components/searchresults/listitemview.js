@@ -75,13 +75,17 @@ class ListItemsView extends Component {
     }
 
     renderImage = (val,row) => {
+        const isSpecialDisc = row.specialDiscount != undefined ? row.specialDiscount == 1?true:false : false;
         return (
-            <ReactImageFallback
-                 src={row.imageThumbnail}
-                 fallbackImage="/images/blank.gif"
-                 initialImage="/images/blank.gif"
-                 width="60"
-                 />
+            <div className="list-tagbar-soldout">
+                <span className={`${(isSpecialDisc)?'tagbar-soldout':''}`}></span>
+                <ReactImageFallback
+                     src={row.imageThumbnail}
+                     fallbackImage="/images/blank.gif"
+                     initialImage="/images/blank.gif"
+                     width="60"
+                     />
+            </div>
         );
     }
 
@@ -283,9 +287,9 @@ class ListItemsView extends Component {
             }else{
                 return (
                     <div>
-                        <DataTable 
+                        <DataTable
                             className="col-sm-12"
-                            keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight', 
+                            keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight',
                                     'stoneDetail','priceUSD','' ]}
                             columns={tableColumns}
                             initialData={items}

@@ -59,6 +59,24 @@ class InventoryHeader extends Component {
         props.inventoryActions.setDataDominantStone(DominantStoneSelectValue);
     }
 
+    selectedSpecialDiscount = e => {
+        const { props } = this.props;
+        let { fields: { specialDiscount }, searchResult } = props;
+
+        let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
+
+        if(paramsSearch != null)
+            paramsSearch.specialDiscount = e.target.checked? 1: 0;
+
+        if (e.target.checked) {
+            specialDiscount.onChange(1);
+        }else{
+            specialDiscount.onChange(0);
+        }
+
+        props.inventoryActions.setSpecialDiscount(e.target.checked? 1: 0);
+    }
+
     componentDidMount() {
         jQuery('#file').hide();
         jQuery('#btn-browsefile').click(function(){
@@ -243,7 +261,7 @@ class InventoryHeader extends Component {
                                         <div className="form-group">
                                             <label className="col-sm-4 control-label">Special Discount</label>
                                             <div className="col-sm-7">
-                                                <input type="checkbox" value="Discount" {...specialDiscount} checked={props.SpecialDiscount}
+                                                <input type="checkbox" value="Discount" {...specialDiscount} checked={(props.SpecialDiscount==1)?true:false}
                                                     onChange={this.selectedSpecialDiscount} />
                                             </div>
                                         </div>

@@ -11,6 +11,13 @@ const init = async _ => {
     try {
         console.log(`Start migrating data at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
         const index = `mol_${moment().format('YYYYMMDD_HHmm')}`;
+        
+        const index_solditems = `mol_solditems_${moment().format('YYYYMMDD_HHmm')}`;
+        const name_solditems = 'mol_solditems';
+
+        await migration.soldItems(index_solditems);
+        await migration.alias(index_solditems, name_solditems);
+
         await migration.migrate(index);
         await migration.alias(index, name);
         await migration.productHierarchy()

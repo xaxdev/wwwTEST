@@ -13,7 +13,8 @@ import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CU
     SET_BUCKLETYPE, SET_STRAPTYPE, SET_STRAPCOLOR, SET_COMPLICATION, SELECTED_TABCATEGORY, SET_ADVANCE,SET_ACCESSORYTYPE,SET_SPAREPARTTYPE, SET_HIERARCHY,
     SET_GEMS_CERTIFICATE_DATE_FROM, SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM, SET_STONE_CERTIFICATE_DATE_TO, SET_PRODUCTION_DATE_FROM,
     SET_PRODUCTION_DATE_TO,SET_SUBMITACTION, SET_SAVESEARCHHIERARCHY, SET_VIEWASSET, SET_ITEMSORDER,SET_SETREFERENCEORDER, SET_ARTICLE, SET_SALESCHANNEL,
-    SET_SALESHIERARCHY, SET_SALESADVANCE, SELECTED_TABSALESCATEGORY, SET_SAVESEARCHSALESHIERARCHY, SET_GEMS_STONE_TYPE, SET_INVOICE_DATE_FROM, SET_INVOICE_DATE_TO
+    SET_SALESHIERARCHY, SET_SALESADVANCE, SELECTED_TABSALESCATEGORY, SET_SAVESEARCHSALESHIERARCHY, SET_GEMS_STONE_TYPE, SET_INVOICE_DATE_FROM,
+    SET_INVOICE_DATE_TO, SET_SPECIALDISCOUNT
 } from '../../constants/inventoryConstants';
 
 const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, currentPage:1, totalpage:null, totalpublicprice:null, totalupdatedcost:null,
@@ -31,11 +32,15 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
     nameEditSalesSaveSearch: null, criteriaSalesSaveSearch: null, paramsSalesSearch:null, saveSalesSearchStatus: false, msgSales: '',
     saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, saveSearchSalesHierarchy: null, SalesSortingBy:'postedDate', SalesSortDirection:'desc',
     currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, SalesShowGridView: true, SalesShowListView: false,
-    totalnetamount: null,totaldiscount: null,totalmargin:null, GemStoneTypeValue:[], InvoiceDateFrom:null, InvoiceDateTo:null, firstSearch: null
+    totalnetamount: null,totaldiscount: null,totalmargin:null, GemStoneTypeValue:[], InvoiceDateFrom:null, InvoiceDateTo:null, firstSearch: null,
+    specialDiscount: 0
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case SET_SPECIALDISCOUNT:
+            return {...state,  specialDiscount: action.specialDiscount};
+            break;
         case FIRSTSEARCH :
             return {...state, firstSearch: action.value };
             break;

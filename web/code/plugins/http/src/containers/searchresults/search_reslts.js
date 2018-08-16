@@ -818,7 +818,6 @@ class SearchResult extends Component {
 
         this.props.setShowGridView(false);
         this.props.setShowListView(false);
-
         this.props.exportDatas(params).then((value) => {
             if(girdView){
                 that.props.setShowGridView(true);
