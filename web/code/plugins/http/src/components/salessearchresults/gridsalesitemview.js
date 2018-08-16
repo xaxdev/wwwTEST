@@ -28,13 +28,13 @@ class GridSalesItemsView extends Component {
         this.onMouseOutGrid = this.onMouseOutGrid.bind(this);
 
         this.state = {
-          isOpen0: false, isOpen1: false, isOpen2: false, isOpen3: false, isOpen4: false, isOpen5: false, isOpen6: false, isOpen7: false, isOpen8: false,
-          isOpen9: false, isOpen10: false, isOpen11: false, isOpen12: false, isOpen13: false, isOpen14: false, isOpen15: false, isOpen16: false, isOpen17: false,
-          isOpen18: false, isOpen19: false, isOpen20: false, isOpen21: false, isOpen22: false, isOpen23: false, isOpen24: false, isOpen25: false, isOpen26: false,
-          isOpen27: false, isOpen28: false, isOpen29: false, isOpen30: false, isOpen31: false, isOpen32: false, isOpen33: false, isOpen34: false, isOpen35: false,
-          isOpen36: false, isOpen37: false, isOpen38: false, isOpen39: false, isOpen40: false, isOpen41: false, isOpen42: false, isOpen43: false, isOpen44: false,
-          isOpen45: false, isOpen46: false, isOpen47: false, isOpen48: false, isOpen49: false, isOpen50: false, isOpen51: false, isOpen52: false, isOpen53: false,
-          isOpen54: false, isOpen55: false, isOpen56: false, isOpen57: false, isOpen58: false, isOpen59: false, isOpen60: false, toggleQuickView: false
+            isOpen0: false, isOpen1: false, isOpen2: false, isOpen3: false, isOpen4: false, isOpen5: false, isOpen6: false, isOpen7: false, isOpen8: false,
+            isOpen9: false, isOpen10: false, isOpen11: false, isOpen12: false, isOpen13: false, isOpen14: false, isOpen15: false, isOpen16: false, isOpen17: false,
+            isOpen18: false, isOpen19: false, isOpen20: false, isOpen21: false, isOpen22: false, isOpen23: false, isOpen24: false, isOpen25: false, isOpen26: false,
+            isOpen27: false, isOpen28: false, isOpen29: false, isOpen30: false, isOpen31: false, isOpen32: false, isOpen33: false, isOpen34: false, isOpen35: false,
+            isOpen36: false, isOpen37: false, isOpen38: false, isOpen39: false, isOpen40: false, isOpen41: false, isOpen42: false, isOpen43: false, isOpen44: false,
+            isOpen45: false, isOpen46: false, isOpen47: false, isOpen48: false, isOpen49: false, isOpen50: false, isOpen51: false, isOpen52: false, isOpen53: false,
+            isOpen54: false, isOpen55: false, isOpen56: false, isOpen57: false, isOpen58: false, isOpen59: false, isOpen60: false, toggleQuickView: false
         };
     }
     shouldComponentUpdate(nextProps, nextState) {
