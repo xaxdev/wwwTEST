@@ -1400,7 +1400,7 @@ class GridItemsView extends Component {
                           </span>
                     </div>
                     <div className="thumbnaillgrid">
-                      <span className={`${(isSpecialDisc)?'tagbar-soldout':''}`}></span>
+                      <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
                       <ReactImageFallback
                              src={imagesProduct }
                              fallbackImage="/images/blank.gif"

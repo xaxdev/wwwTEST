@@ -78,7 +78,7 @@ class ListItemsView extends Component {
         const isSpecialDisc = row.specialDiscount != undefined ? row.specialDiscount == 1?true:false : false;
         return (
             <div className="list-tagbar-soldout">
-                <span className={`${(isSpecialDisc)?'tagbar-soldout':''}`}></span>
+                <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
                 <ReactImageFallback
                      src={row.imageThumbnail}
                      fallbackImage="/images/blank.gif"
