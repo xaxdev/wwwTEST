@@ -1330,8 +1330,8 @@ class GridItemsView extends Component {
                                                 onClick={showDetails}/>
                                         </span>
                                     </div>
+                                    <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
                                     <div className="thumbnaillgrid">
-                                        <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
                                         <ReactImageFallback src={imagesProduct } fallbackImage="/images/blank.gif" initialImage="/images/blank.gif"
                                             name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id} onClick={btnEvent}
                                             />

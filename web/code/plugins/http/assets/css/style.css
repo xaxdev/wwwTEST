@@ -1280,11 +1280,11 @@ select.form-searchresult option{
 .list-tagbar-special .tagbar-special{
   background:url(../images/img_special_discount_list.png)left top no-repeat;
   position: absolute;
-  top: -10px;
-  left: -10px;
-  z-index: 9;
-  width: 88px;
-  height: 93px;
+     top: -5px;
+     left: -5px;
+     z-index: 9;
+     width: 30px;
+     height: 32px;
 }
 .tagbar-soldout{
   background:url(../images/img_sold_out.png)right top no-repeat;
