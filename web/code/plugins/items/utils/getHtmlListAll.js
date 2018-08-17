@@ -157,6 +157,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                     : env == 'staging'
                                                                         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
                                                                         :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                                                let tagbarspeciallist = `position: absolute;top: -10px;left: -10px;z-index: 9;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
                                                                 if(item.price != undefined){
                                                                     price = (item.price[currency] != undefined) ? numberFormat(item.price[currency]) : '- ';
                                                                 }else{
@@ -200,9 +201,10 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
 
                                                                 return (`<tr>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>
+                                                                                <div style="position: relative;">
+                                                                                    <span style="${tagbarspeciallist}"></span>
                                                                                     <img src="${imagesProduct}" width="60">
-                                                                                </span>
+                                                                                </div>
                                                                             </td>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${item.reference}</span>

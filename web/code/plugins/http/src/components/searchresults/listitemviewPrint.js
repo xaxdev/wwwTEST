@@ -34,35 +34,31 @@ class ListItemsViewPrint extends Component {
         const { ViewAsSet } = this.props;
         if (ViewAsSet) {
             return(
-              <div className="searchresult-list-icon">
-              <div className="hidden">
-                <button type="button"
-                    onClick={
-                      (eventKey) => {
-                        // console.log('eventKey-->',item.id);
-                      }
-                    }
-                > <img src="/images/icon-add.png" width="30"/></button>
-                <br/>
-              </div>
-              <button type="button" name={row.reference} id={row.reference} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
-              </div>
+                <div className="searchresult-list-icon">
+                    <div className="hidden">
+                        <button type="button">
+                            <img src="/images/icon-add.png" width="30"/>
+                        </button>
+                        <br/>
+                    </div>
+                    <button type="button" name={row.reference} id={row.reference} onClick={this.onClickGrid}>
+                        <img src="/images/icon-search-30.png" width="30" />
+                    </button>
+                </div>
             );
         }else{
             return(
-              <div className="searchresult-list-icon">
-              <div className="hidden">
-                <button type="button"
-                    onClick={
-                      (eventKey) => {
-                        // console.log('eventKey-->',item.id);
-                      }
-                    }
-                > <img src="/images/icon-add.png" width="30"/></button>
-                <br/>
-              </div>
-              <button type="button" name={row.id} id={row.id} onClick={this.onClickGrid}><img src="/images/icon-search-30.png" width="30" /></button>
-              </div>
+                <div className="searchresult-list-icon">
+                    <div className="hidden">
+                        <button type="button">
+                            <img src="/images/icon-add.png" width="30"/>
+                        </button>
+                        <br/>
+                    </div>
+                    <button type="button" name={row.id} id={row.id} onClick={this.onClickGrid}>
+                        <img src="/images/icon-search-30.png" width="30" />
+                    </button>
+                </div>
             );
         }
     }
@@ -73,20 +69,19 @@ class ListItemsViewPrint extends Component {
     }
 
     renderImage = (val,row) => {
+        const isSpecialDisc = row.specialDiscount != undefined ? row.specialDiscount == 1?true:false : false;
         return (
-            <ReactImageFallback
-                   src={row.imageThumbnail}
-                   fallbackImage="/images/blank.gif"
-                   initialImage="/images/blank.gif"
-                   width="60"
-                   />
+            <div className="list-tagbar-special">
+                <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
+                <ReactImageFallback src={row.imageThumbnail} fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width="60" />
+            </div>
         );
     }
 
     renderCheckItem = (val, row) => {
         return(
             <div>
-              <input type="checkbox" />
+                <input type="checkbox" />
             </div>
         );
     }
@@ -189,65 +184,63 @@ class ListItemsViewPrint extends Component {
             let tableColumns = [];
             if (isCompany) {
                 tableColumns = [
-                  { title: 'Images', render: this.renderImage },
-                  { title: 'Item Reference', prop: 'reference' },
-                  { title: 'Description', prop: 'itemName' },
-                  { title: 'SKU', prop: 'sku' },
-                  { title: 'Company', prop: 'companyName' },
-                  { title: 'Location', prop: 'warehouseName' },
-                  { title: 'Size', prop: 'size' },
-                  { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                  { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                  { title: 'Stone Detail', prop: 'stoneDetail' },
-                  { title: 'Price', prop: 'priceUSD' },
+                    { title: 'Images', render: this.renderImage },
+                    { title: 'Item Reference', prop: 'reference' },
+                    { title: 'Description', prop: 'itemName' },
+                    { title: 'SKU', prop: 'sku' },
+                    { title: 'Company', prop: 'companyName' },
+                    { title: 'Location', prop: 'warehouseName' },
+                    { title: 'Size', prop: 'size' },
+                    { title: 'Jewelry Weight', prop: 'jewelsWeight' },
+                    { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                    { title: 'Stone Detail', prop: 'stoneDetail' },
+                    { title: 'Price', prop: 'priceUSD' },
                 ];
             }else{
                 tableColumns = [
-                  { title: 'Images', render: this.renderImage },
-                  { title: 'Item Reference', prop: 'reference' },
-                  { title: 'Description', prop: 'itemName' },
-                  { title: 'SKU', prop: 'sku' },
-                  { title: 'Company', prop: 'company' },
-                  { title: 'Location', prop: 'warehouse' },
-                  { title: 'Size', prop: 'size' },
-                  { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                  { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                  { title: 'Stone Detail', prop: 'stoneDetail' },
-                  { title: 'Price', prop: 'priceUSD' },
+                    { title: 'Images', render: this.renderImage },
+                    { title: 'Item Reference', prop: 'reference' },
+                    { title: 'Description', prop: 'itemName' },
+                    { title: 'SKU', prop: 'sku' },
+                    { title: 'Company', prop: 'company' },
+                    { title: 'Location', prop: 'warehouse' },
+                    { title: 'Size', prop: 'size' },
+                    { title: 'Jewelry Weight', prop: 'jewelsWeight' },
+                    { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                    { title: 'Stone Detail', prop: 'stoneDetail' },
+                    { title: 'Price', prop: 'priceUSD' },
                 ];
             }
             if (ViewAsSet) {
                 return (
                     <div key={'listViewPrint'} id={'listViewPrint'}>
-                        <table key={'listViewPrint'} id={'listViewPrint'}
-                              className="table table-bordered table-searchresult">
+                        <table key={'listViewPrint'} id={'listViewPrint'} className="table table-bordered table-searchresult">
                             <thead key={'listViewPrint'} id={'listViewPrint'}>
-                                  <tr>
-                                      <th><span>Images</span></th>
-                                      <th><span>Set Product Number</span></th>
-                                      <th><span>Item Reference</span></th>
-                                      <th><span>Description</span></th>
-                                      <th><span>SKU</span></th>
-                                      <th><span>Category Name</span></th>
-                                      <th><span>Company</span></th>
-                                      <th><span>Location</span></th>
-                                      <th><span>Item Weight (Grams)</span></th>
-                                      <th><span>Stone Detail</span></th>
-                                      <th className={`${(userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
-                                      <th className={`${(userLogin.permission.price == 'Updated'
-                                          || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
-                                      <th className={`${(userLogin.permission.price == 'Public'
-                                          || userLogin.permission.price == 'Updated'
-                                          || userLogin.permission.price == 'All') ?
-                                          '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
-                                  </tr>
+                                <tr>
+                                    <th><span>Images</span></th>
+                                    <th><span>Set Product Number</span></th>
+                                    <th><span>Item Reference</span></th>
+                                    <th><span>Description</span></th>
+                                    <th><span>SKU</span></th>
+                                    <th><span>Category Name</span></th>
+                                    <th><span>Company</span></th>
+                                    <th><span>Location</span></th>
+                                    <th><span>Item Weight (Grams)</span></th>
+                                    <th><span>Stone Detail</span></th>
+                                    <th className={`${(userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Public'
+                                        || userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
+                                </tr>
                             </thead>
                             {items.map((item) => {
                                 return(
-                                    <ListItemsViewASSetPrint key={item.reference} id={item.reference}
-                                          item={item} ViewAsSet={ViewAsSet}/>
+                                    <ListItemsViewASSetPrint key={item.reference} id={item.reference} item={item} ViewAsSet={ViewAsSet}/>
                                 );
                             })}
                         </table>
@@ -255,25 +248,20 @@ class ListItemsViewPrint extends Component {
                 );
             }else{
                 return (
-                  <div>
-                    <DataTable
-                      className="col-sm-12"
-                      keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight', 'stoneDetail','priceUSD' ]}
-                      columns={tableColumns}
-                      initialData={items}
-                      initialPageLength={this.state.initialPageLength}
-                      initialSortBy={{ prop: 'reference', order: 'ascending' }}
-                      pageLengthOptions={[ 5, 20, 50 ]}
-                    />
-                  </div>
+                    <div>
+                        <DataTable className="col-sm-12"
+                            keys={['image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', '', 'grossWeight', 'stoneDetail','priceUSD' ]}
+                            columns={tableColumns} initialData={items} initialPageLength={this.state.initialPageLength}
+                            initialSortBy={{ prop: 'reference', order: 'ascending' }} pageLengthOptions={[ 5, 20, 50 ]} />
+                    </div>
                 );
             }
         }else{
             items = {...this.props.items};
             return (
-              <div>
-                Loading...
-              </div>
+                <div>
+                    Loading...
+                </div>
             );
         }
     }
