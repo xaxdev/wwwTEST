@@ -1274,8 +1274,8 @@ select.form-searchresult option{
   top: 0;
   left: 0;
   z-index: 9;
-  width: 88px;
-  height: 93px;
+  width: 50px;
+  height: 53px;
 }
 .list-tagbar-special .tagbar-special{
   background:url(../images/img_special_discount_list.png)left top no-repeat;

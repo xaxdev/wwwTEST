@@ -46,8 +46,8 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
                                 ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
                                 :'file:///home/dev/www/mol/web/code/plugins/http/public';
 
-    let tagbarspecialgrid = `position: absolute;top: 8px;left: 15px;z-index: 9;width: 88px;height: 93px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_grid.png)right top no-repeat;`
-    let tagbarspeciallist = `position: absolute;top: -10px;left: -10px;z-index: 9;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
+    let tagbarspecialgrid = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 50px;height: 53px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_pdf.png)right top no-repeat;`
+    let tagbarspeciallist = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
 
     dvTotal1 = dvTotal1.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotal1 = dvTotal1.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
