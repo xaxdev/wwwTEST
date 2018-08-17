@@ -157,6 +157,11 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                     : env == 'staging'
                                                                         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
                                                                         :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                                                let imgPathPublic = env == 'production'
+                                                                    ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
+                                                                    : env == 'staging'
+                                                                        ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public';
                                                                 let tagbarspeciallist = `position: absolute;top: -10px;left: -10px;z-index: 9;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
                                                                 if(item.price != undefined){
                                                                     price = (item.price[currency] != undefined) ? numberFormat(item.price[currency]) : '- ';

@@ -567,8 +567,8 @@ class GridItemsView extends Component {
                                                (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                                 ''}>
 
+                                    <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
                                     <div className="thumbnaillgrid">
-                                        <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
                                         <ReactImageFallback width="160" src={imagesProduct } fallbackImage="/images/blank.gif"
                                             initialImage="/images/blank.gif" name={ViewAsSet ? item.reference : item.id}
                                             id={ViewAsSet ? item.reference : item.id} onClick={btnEvent} />
