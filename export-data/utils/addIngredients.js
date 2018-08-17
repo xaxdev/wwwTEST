@@ -142,6 +142,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
             }
 
             arrayItems.push(
+                (item.specialDiscount != undefined) ? item.specialDiscount : 0,
                 (item.grossWeight != undefined) ? item.grossWeight : '',
                 (item.size != undefined) ? item.size : '',
                 jewelsWeight,
@@ -305,6 +306,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                 }
                             }
                             arrayItems.push(
+                                '', //special Discount
                                 '', // Item Weight(Grams)
                                 '', // Ring Size
                                 '', // Jewels Weight
