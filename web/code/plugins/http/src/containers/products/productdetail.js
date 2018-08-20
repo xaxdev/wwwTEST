@@ -185,7 +185,6 @@ class productdetail extends Component {
             styleprint +='</style>';
 
             const divContents = jQuery('#dvContainer').html();
-            console.log('divContents-->',divContents);
             let printWindow = window.open('', '', 'height=800,width=800');
             printWindow.document.write('<html><head><title>Mouawad online</title>'+styleprint);
             printWindow.document.write('</head><body class="landScape">');

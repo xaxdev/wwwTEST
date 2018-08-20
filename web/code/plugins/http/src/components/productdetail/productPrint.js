@@ -239,12 +239,11 @@ class productprint extends Component {
                                     :'file:///home/dev/www/mol/web/code/plugins/http/public';
         const tagbarspecial = {
             'position': 'absolute',
-            'top': '0px',
-            'left': '0px',
-            'width': '50px',
-            'height': '53px',
-            'z-index': 9,
-            'background':`url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_pdf.png)left top no-repeat`
+            'top': '82px',
+            'left': '8px',
+            'width': '90px',
+            'height': '93px',
+            'z-index': '9'
         }
         let isSpecialDisc = specialDiscount != undefined ? specialDiscount == 1?true:false : false;
         if(!gallery){
@@ -256,7 +255,7 @@ class productprint extends Component {
                     gallery.map( (data,index)=>{
                         return (
                             <div key={`imgprint${index}`}>
-                                <span style={tagbarspecial}></span>
+                                <span style={tagbarspecial}><img src='/images/img_special_discount_grid.png'/></span>
                                 <img style={styles.imgwidth} src={data.original}/>
                             </div>
                         );
