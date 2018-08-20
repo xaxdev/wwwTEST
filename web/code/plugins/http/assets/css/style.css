@@ -1268,7 +1268,7 @@ select.form-searchresult option{
   width: 88px;
   height: 93px;
 }
-.tagbar-special-detail{
+.tagbar-special-detail-gallery{
   background:url(../images/img_special_discount_grid.png)left top no-repeat;
   position: absolute;
   top: 0px;
