@@ -231,38 +231,58 @@ class productprint extends Component {
         }
     }
     renderImagegallery(){
-        const { gallery,specialDiscount } = this.props.productdetail;
+        const { gallery, specialDiscount } = this.props.productdetail;
         let imgPathPublic = ENVIRONMENT == 'production'
                                 ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
                                 : ENVIRONMENT == 'staging'
                                     ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
                                     :'file:///home/dev/www/mol/web/code/plugins/http/public';
-        const tagbarspecial = {
-            'position': 'absolute',
-            'top': '82px',
-            'left': '8px',
-            'width': '90px',
-            'height': '93px',
-            'z-index': '9'
-        }
+
         let isSpecialDisc = specialDiscount != undefined ? specialDiscount == 1?true:false : false;
+        let tagbarspecial = {};
         if(!gallery){
             return(<div><img src="/images/blank.gif" width="100%"/></div>);
         }
-        return(
-            <div>
-                {
-                    gallery.map( (data,index)=>{
-                        return (
-                            <div key={`imgprint${index}`}>
-                                <span style={tagbarspecial}><img src='/images/img_special_discount_grid.png'/></span>
-                                <img style={styles.imgwidth} src={data.original}/>
-                            </div>
-                        );
-                    })
-                }
-            </div>
-        );
+        if (isSpecialDisc) {
+            tagbarspecial = {
+                'position': 'absolute',
+                'top': '82px',
+                'left': '8px',
+                'width': '90px',
+                'height': '93px',
+                'z-index': '9'
+            }
+            return(
+                <div>
+                    {
+                        gallery.map( (data,index)=>{
+                            return (
+                                <div key={`imgprint${index}`}>
+                                    <span style={tagbarspecial}><img src='/images/img_special_discount_grid.png'/></span>
+                                    <img style={styles.imgwidth} src={data.original}/>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            );
+        }else{
+            return(
+                <div>
+                    {
+                        gallery.map( (data,index)=>{
+                            return (
+                                <div key={`imgprint${index}`}>
+                                    <img style={styles.imgwidth} src={data.original}/>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            );
+        }
+
+
     }
     render(){
         const styles ={

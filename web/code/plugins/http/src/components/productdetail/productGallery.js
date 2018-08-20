@@ -25,10 +25,11 @@ class Gallery extends Component {
     }
 
     render() {
-        const { gallery } = this.props.productdetail;
+        const { gallery, specialDiscount } = this.props.productdetail;
+        let isSpecialDisc = specialDiscount != undefined ? specialDiscount == 1?true:false : false;
         return (
             <div className="tagbar-special-detail">
-                <span className="tagbar-special-detail-gallery"></span>
+                <span className={`${(isSpecialDisc)?'tagbar-special-detail-gallery':'hidden'}`}></span>
                 <ImageGallery ref={i => this._imageGallery = i} items={gallery} lazyLoad={false} infinite={this.state.infinite}
                     showBullets={this.state.showBullets} showThumbnails={this.state.showThumbnails} showIndex={this.state.showIndex}
                     showNav={this.state.showNav} defaultImage={'/images/blank.gif'} slideInterval={parseInt(this.state.slideInterval)}
