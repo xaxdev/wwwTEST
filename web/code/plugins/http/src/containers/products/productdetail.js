@@ -92,6 +92,7 @@ class productdetail extends Component {
             items: {
                 src: jQuery(
                     `<div class="white-popup m-pt">
+                        <span class="tagbar-special-detail-gallery"></span>
                         <div class="white-popup-left">
                             <img id="galleryimg"/>
                         </div>
@@ -133,7 +134,18 @@ class productdetail extends Component {
         jQuery('#popupset').magnificPopup({
             key: 'my-popup',
             items: {
-                src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimgset"/></div><div class="white-popup-right"><button id="btnupset" class="btn btn-primary btn-radius">Up</button><button id="btndownset" class="btn btn-primary btn-radius">Down</button><button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button></div></div>'),
+                src: jQuery(
+                    `<div class="white-popup m-pt">
+                        <div class="white-popup-left">
+                            <img id="galleryimgset"/>
+                        </div>
+                        <div class="white-popup-right">
+                            <button id="btnupset" class="btn btn-primary btn-radius">Up</button>
+                            <button id="btndownset" class="btn btn-primary btn-radius">Down</button>
+                            <button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button>
+                        </div>
+                    </div>`
+                ),
                 type: 'inline'
             },
             callbacks: {
@@ -173,6 +185,7 @@ class productdetail extends Component {
             styleprint +='</style>';
 
             const divContents = jQuery('#dvContainer').html();
+            console.log('divContents-->',divContents);
             let printWindow = window.open('', '', 'height=800,width=800');
             printWindow.document.write('<html><head><title>Mouawad online</title>'+styleprint);
             printWindow.document.write('</head><body class="landScape">');
