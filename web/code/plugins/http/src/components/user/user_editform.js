@@ -284,13 +284,28 @@ class UserDetailsFrom extends Component {
                 }).map(function(o) {
                     return o.value;
                 });
-                if (checkedBoxes.length == values.length) {
+                let valuesCheckedTrue = [].filter.call(checkWarehouse, function(o) {
+                    return o.checked;
+                }).map(function(o) {
+                    return o.value;
+                });
+                if (checkedBoxes.length == values.length) {  // if amount of all warehouse equal amount selected
                     this.setState({selectedSalesWarehouse: true});
                     this.setState({clickAllWarehouse: true});
                     sales.onChange('All');
                     salesAll.onChange(true);
+                }else{
+                    this.setState({selectedSalesWarehouse: false});
+                    this.setState({clickAllWarehouse: false});
                 }
             }else{
+                if (this.state.selectedSalesWarehouse) {
+                    this.setState({selectedSalesWarehouse: false});
+                    this.setState({clickAllSalesWarehouse: false});
+                    sales.onChange('SalesWarehouse');
+                    salesAll.onChange(false);
+                }
+
                 if (this.state.clickAllSalesWarehouse) {
                     let checkSalesWarehouse = jQuery('input[name="checkbox-allSalesWarehouse"]');
                     let values = [].filter.call(checkSalesWarehouse, function(o) {
@@ -299,12 +314,26 @@ class UserDetailsFrom extends Component {
                         return o.value;
                     });
                     checkedBoxes = values;
-                    sales.onChange('SalesWarehouse');
-                    salesAll.onChange(false);
+                }else{
+                    let checkSalesWarehouse = jQuery('input[name="checkbox-allSalesWarehouse"]');
+                    let values = [].filter.call(checkSalesWarehouse, function(o) {
+                        return o.checked;
+                    }).map(function(o) {
+                        return o.value;
+                    });
+                    checkedBoxes = values;
+                    _.each(checkSalesWarehouse,function (o) {
+                        values.map(function(warehouse) {
+                            if (warehouse == o.value) {
+                                o.checked = true;
+                            }
+                        });
+                    });
                 }
-                checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
-                this.setState({selectedSalesWarehouse: false});
-                this.setState({clickAllSalesWarehouse: false});
+                if (checkedBoxes.indexOf(el.value) != -1) {
+                    checkedBoxes.splice(checkedBoxes.indexOf(el.value), 1);
+                }
+
                 if (salesLocation) {
                     let checkSalesCompany = jQuery('input[name="checkbox-allSalesCompany"]');
                     let values = [].filter.call(checkSalesCompany, function(o) {

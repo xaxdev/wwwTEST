@@ -108,16 +108,117 @@ export default function FindLocationWareHouse(that){
                             }
                         }
                     }
+                }else{
                 }
             }
 
             if (that.state.changedSalesLocation) {
                 if (typeof (that.props.warehouseSales) !== 'undefined')  {
-                    dataDropDownSalesWareHouse.push(that.props.warehouseSales.map(warehouse =>{
-                        return ({value: warehouse.code,name:warehouse.name});
-                    }))
-                    dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
-                    dataDropDownSalesWareHouse = dataDropDownSalesWareHouse.sortBy('value','asc');
+                    if (that.state.clickAllSalesWarehouse) {
+                        dataDropDownSalesWareHouse.push(that.props.warehouseSales.map(warehouse =>{
+                            return ({value: warehouse.code,name:warehouse.name});
+                        }))
+                        dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
+                        dataDropDownSalesWareHouse = dataDropDownSalesWareHouse.sortBy('value','asc');
+                    }else{
+                        if (that.props.warehouseSales) {
+                            let newDate = [];
+                            let data = [];
+                            if(dataDropDownSalesLocations.length != 0){
+                                dataDropDownSalesLocations.forEach(function(location){
+                                    newDate.push(_.filter(that.props.warehouseSales,
+                                        function(warehouse)
+                                        { return warehouse.comid == location.value}
+                                    ));
+                                });
+                            }else{
+                                if(that.props.user.permission.salesWarehouse != undefined){
+                                    if (that.props.user.permission.salesWarehouse.type == 'SalesWarehouse'
+                                    || that.props.user.permission.salesWarehouse.type == 'All'
+                                    || that.props.user.permission.salesWarehouse.type == 'AllSalesWarehouse'){
+                                        if (that.props.user.permission.salesWarehouse.type == 'AllSalesWarehouse') {
+                                            that.props.user.permission.salesWarehouse.places.forEach(function(settingWarehouse){
+                                                newDate.push(_.filter(that.props.warehouseSales,
+                                                    function(warehouse){
+                                                        if(warehouse.code != undefined){
+                                                            return warehouse.code.toString() == settingWarehouse;
+                                                        }
+                                                    }
+                                                ));
+                                            });
+                                            let subdata = [];
+                                            newDate.forEach(newdata =>{
+                                                newdata.forEach(subdata =>{
+                                                  data.push(subdata);
+                                                })
+                                            });
+
+                                            dataDropDownSalesWareHouse.push(data.map(warehouse =>{
+                                                return ({value: warehouse.code,name:warehouse.name});
+                                            }))
+                                            dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
+                                        } else if(that.props.user.permission.salesWarehouse.type == 'SalesWarehouse') {
+                                            if (that.props.user.permission.salesLocation.places.length == 0 && that.props.user.permission.salesWarehouse.places.length != 0 ) {
+                                                that.props.locationsales.forEach(function(settingLocation){
+                                                    newDate.push(_.filter(that.props.warehouseSales,
+                                                        function(warehouse){
+                                                            if(warehouse.code != undefined){
+                                                                return warehouse.comid.toString() == settingLocation.code.toString();
+                                                            }
+                                                        }
+                                                    ));
+                                                });
+                                                let subdata = [];
+                                                newDate.forEach(newdata =>{
+                                                    newdata.forEach(subdata =>{
+                                                      data.push(subdata);
+                                                    })
+                                                });
+                                                dataDropDownSalesWareHouse.push(data.map(warehouse =>{
+                                                    return ({value: warehouse.code,name:warehouse.name});
+                                                }))
+                                                dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
+                                            } else{
+                                                that.props.user.permission.salesLocation.places.forEach(function(settingLocation){
+                                                    newDate.push(_.filter(that.props.warehouseSales,
+                                                        function(warehouse){
+                                                            if(warehouse.code != undefined){
+                                                                return warehouse.comid.toString() == settingLocation;
+                                                            }
+                                                        }
+                                                    ));
+                                                });
+                                                let subdata = [];
+                                                newDate.forEach(newdata =>{
+                                                    newdata.forEach(subdata =>{
+                                                      data.push(subdata);
+                                                    })
+                                                });
+                                                dataDropDownSalesWareHouse.push(data.map(warehouse =>{
+                                                    return ({value: warehouse.code,name:warehouse.name});
+                                                }))
+                                                dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
+                                            }
+                                        }else if(that.props.user.permission.salesWarehouse.type == 'All') {
+                                            if (typeof (that.props.warehouseSales) !== 'undefined')  {
+                                                dataDropDownSalesWareHouse.push(that.props.warehouseSales.map(warehouse =>{
+                                                    return ({value: warehouse.code,name:warehouse.name});
+                                                }))
+                                                dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
+                                            }
+                                        }
+                                    }
+                                }else{
+                                    if (typeof (that.props.warehouseSales) !== 'undefined')  {
+                                        dataDropDownSalesWareHouse.push(that.props.warehouseSales.map(warehouse =>{
+                                            return ({value: warehouse.code,name:warehouse.name});
+                                        }))
+                                        dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }else{
                 if (that.props.warehouseSales) {
