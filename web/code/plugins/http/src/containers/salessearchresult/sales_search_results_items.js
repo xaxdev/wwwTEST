@@ -808,6 +808,7 @@ class SalesSearchResultOnItem extends Component {
 
     hideModalDownload = (e) => {
         e.preventDefault();
+        const { props } = this.props;
         const { salesShowGridView,salesShowListView } = this.props;
 
         this.setState({ isOpenDownload: false });
@@ -815,13 +816,13 @@ class SalesSearchResultOnItem extends Component {
         let girdView = salesShowGridView;
         let listView = salesShowListView;
 
-        this.props.setSalesShowGridView(false);
-        this.props.setSalesShowListView(false);
+        props.setSalesShowGridView(false);
+        props.setSalesShowListView(false);
 
         if(girdView){
-            this.props.setSalesShowGridView(true);
+            props.setSalesShowGridView(true);
         }else if (listView) {
-            this.props.setSalesShowListView(true);
+            props.setSalesShowListView(true);
         }
     }
 
@@ -975,7 +976,7 @@ class SalesSearchResultOnItem extends Component {
                                     <div className="col-md-3 col-sm-12 col-xs-12 nopadding">
                                         {
                                             ViewAsSet
-                                            ? <a><div className="icon-excel hidden" disabled={submitting}
+                                            ? <a><div className="icon-excel" disabled={submitting}
                                                   onClick={ this.exportExcelViewAsSet }></div></a>
                                             : <a><div className="icon-excel" disabled={submitting}
                                                   onClick={ this.exportExcel }></div></a>
