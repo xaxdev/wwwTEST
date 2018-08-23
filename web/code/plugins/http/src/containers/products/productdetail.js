@@ -92,7 +92,6 @@ class productdetail extends Component {
             items: {
                 src: jQuery(
                     `<div class="white-popup m-pt">
-                        <span class="tagbar-special-detail-gallery"></span>
                         <div class="white-popup-left">
                             <img id="galleryimg"/>
                         </div>

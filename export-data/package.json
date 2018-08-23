@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node bootstrap.js --max_old_space_size=4096"
+    "start": "node --max_old_space_size=4096 bootstrap.js"
   },
   "keywords": [],
   "author": "",
