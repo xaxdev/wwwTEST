@@ -170,7 +170,7 @@ class MyCatalog extends Component {
                 }
                 // console.log(value);
             });
-          this.setState({isOpenPrintOptions: false});
+        this.setState({isOpenPrintOptions: false});
     }
 
     showDialogPrintOptions = _ =>{

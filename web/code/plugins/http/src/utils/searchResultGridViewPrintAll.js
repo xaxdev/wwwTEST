@@ -17,6 +17,7 @@ export default function SearchResultListViewPrintAll(items, userLogin, ViewAsSet
         let lblActualCost = '';
         let lblPrice = '';
         let lblUpdatedCost = '';
+        let isSpecialDisc = false;
 
         if (ViewAsSet) {
             lblActualCost = 'Total Cost Price (USD)';
@@ -56,6 +57,7 @@ export default function SearchResultListViewPrintAll(items, userLogin, ViewAsSet
                 ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
                 : '-'
             itemNameCat = (item.type != 'CER')? item.description: item.name;
+            isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
         }
         temPlate = temPlate + `
             <div class="col-md-3 col-sm-3 nopadding">

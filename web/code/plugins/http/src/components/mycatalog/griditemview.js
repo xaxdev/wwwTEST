@@ -22,7 +22,6 @@ class GridItemsView extends Component {
         this.onClickGrid = this.onClickGrid.bind(this);
         this.onMouseOverGrid = this.onMouseOverGrid.bind(this);
         this.onMouseOutGrid = this.onMouseOutGrid.bind(this);
-        this.onClickQuickView = this.onClickQuickView.bind(this);
 
         this.state = {
             isOpen0: false, isOpen1: false, isOpen2: false, isOpen3: false, isOpen4: false, isOpen5: false
@@ -48,10 +47,7 @@ class GridItemsView extends Component {
         event.preventDefault();
         this.props.onClickGrid(event.currentTarget.id);
     }
-    onClickQuickView(event) {
-        event.preventDefault();
-        // this.props.onClickGrid(event.currentTarget.id);
-    }
+
     onMouseOverGrid(e){
         this.setState({isOpen0:false});
         this.setState({isOpen1:false});
@@ -1176,7 +1172,6 @@ class GridItemsView extends Component {
     render(){
         const { submitting, onCheckedOneItemMyCatalog, onDeleteOneItemMyCatalog, isCatalogShared, listMyCatalog } = this.props;
         let btnEvent = this.onClickGrid;
-        let btnQuickView = this.onClickQuickView;
         let showDetails = this.onMouseOverGrid;
         let hideDetails = this.onMouseOutGrid;
         let that = this;
@@ -1197,6 +1192,7 @@ class GridItemsView extends Component {
                         let lblActualCost = '';
                         let lblPrice = '';
                         let lblUpdatedCost = '';
+                        let isSpecialDisc = false;
                         let checkItem = listMyCatalog.find((myItem) => { return myItem.reference == item.reference });
                         checkItem = !checkItem ? false : true;  //if undefined checked false else true
                         if (item.id != null) {
@@ -1240,6 +1236,7 @@ class GridItemsView extends Component {
                             itemNameCat = (item.authorization)
                                 ? (item.type != 'CER')? item.description: item.name
                                 : '';
+                            isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                         }else{
                             lblActualCost = 'Total Cost Price (USD)';
                             lblPrice = 'Total Price (USD)';
@@ -1283,6 +1280,7 @@ class GridItemsView extends Component {
                             itemNameCat = (item.authorization)
                                 ? (item.type != 'CER')? item.description: item.name
                                 : '';
+                            isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                         }
 
                         return (
@@ -1369,6 +1367,7 @@ class GridItemsView extends Component {
                                             name={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
                                             id={index} onClick={item.authorization ? showDetails:''}/></span>
                                     </div>
+                                    <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
                                     <div className="thumbnaillgrid">
                                         {/*<img  src={imagesProduct} responsive name={item.id} id={item.id} onClick={btnEvent}/>*/}
                                         <ReactImageFallback src={imagesProduct } fallbackImage="/images/blank.gif"

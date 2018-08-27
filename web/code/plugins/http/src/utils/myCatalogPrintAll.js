@@ -16,6 +16,7 @@ export default function MyCatalogPrintAll(items, userLogin){
         let lblActualCost = '';
         let lblPrice = '';
         let lblUpdatedCost = '';
+        let isSpecialDisc = false;
         if (item.id != null) {
             lblActualCost = `Cost Price (USD)`;
             lblPrice = `Price (USD)`;
@@ -51,6 +52,7 @@ export default function MyCatalogPrintAll(items, userLogin){
             itemNameCat = (item.authorization)
                 ? (item.type != 'CER')? item.description: item.name
                 : '';
+            isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
         }else{
             lblActualCost = 'Total Cost Price (USD)';
             lblPrice = 'Total Price (USD)';
@@ -84,11 +86,20 @@ export default function MyCatalogPrintAll(items, userLogin){
             itemNameCat = (item.authorization)
                 ? (item.type != 'CER')? item.description: item.name
                 : '';
+            isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
         }
         temPlate = temPlate + `
         <div class="col-md-3 col-sm-3 nopadding">
-            <div class="searchresult-prodcut ">
-                <div className="thumbnaillgrid">
+            <div class="searchresult-prodcut ">`
+            if (isSpecialDisc) {
+                temPlate = temPlate +
+                `<span class="tagbar-special"></span>`
+            }else{
+                temPlate = temPlate +
+                `<span class=""></span>`
+            }
+        temPlate = temPlate + `
+                <div class="thumbnaillgrid">
                     <img  src="${imagesProduct}" />
                 </div>
                 <p class="font-b fc-000">
