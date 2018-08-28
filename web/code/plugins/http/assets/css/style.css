@@ -202,7 +202,7 @@ select:focus::-ms-value {background: none;}
 .fc-ae8f3b{color:#ae8f3b}
 .font-b{font-weight: bold; font-family: 'open_sanssemibold';}
 .font-w9{font-weight: 900;}
-.bd-img {margin-top: 5px; height:120px; overflow: hidden;}
+.bd-img {margin-top: 5px; height:120px; overflow: hidden; cursor: pointer;}
 .bd-img img{border:1px solid #efefef;}
 .form-horizontal .control-label.font-nor{font-family: 'open_sanslight';}
 .font-detail{font-size:13px;}
@@ -1276,6 +1276,12 @@ select.form-searchresult option{
   z-index: 9;
   width: 88px;
   height: 93px;
+}
+.special-detail-set{
+  left: -4px;
+  background-size: 100%;
+  width: 55px;
+  height: 52px;
 }
 .tagbar-special-pdf{
   background:url(../images/img_special_discount_pdf.png)left top no-repeat;

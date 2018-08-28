@@ -491,10 +491,13 @@ class productdetail extends Component {
                 return(
                     <div>
                         <h2>SET DETAILS</h2>
-                        <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-                            <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
-                            <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                                fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={120} height={120} className="img-responsive" />
+                        <div className="tagbar-special-detail">
+                            <span className="tagbar-special-detail-gallery special-detail-set"></span>
+                            <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
+                                <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
+                                <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                                    fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={120} height={120} className="img-responsive" />
+                            </div>
                         </div>
                         <Setreference productset={setReferenceData}/>
                     </div>
