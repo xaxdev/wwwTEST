@@ -488,11 +488,12 @@ class productdetail extends Component {
             if(setReferenceData.products.length > 0){
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
                 const currency = logindata.currency;
+                const isSpecialDisc = setReferenceData.specialDiscount != undefined ? setReferenceData.specialDiscount == 1?true:false : false;
                 return(
                     <div>
                         <h2>SET DETAILS</h2>
                         <div className="tagbar-special-detail">
-                            <span className="tagbar-special-detail-gallery special-detail-set"></span>
+                            <span className={`${isSpecialDisc?'tagbar-special-detail-gallery special-detail-set':''}`}></span>
                             <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
                                 <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
                                 <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }

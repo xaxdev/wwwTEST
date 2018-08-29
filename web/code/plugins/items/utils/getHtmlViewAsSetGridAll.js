@@ -1,5 +1,6 @@
 import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
+import config from './config';
 
 export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userPermissionPrice){
 
@@ -88,12 +89,12 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                                                     : env == 'staging'
                                                         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public/images/`;
                                                 let imgPathPublic = env == 'production'
                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
                                                     : env == 'staging'
                                                         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
-                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public';
+                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public`;
                                                 let tagbarspecialgrid = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 50px;height: 53px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_pdf.png)right top no-repeat;`
                                                 let isSpecialDisc = false;
                                                 if(isViewAsSet){
@@ -108,6 +109,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                             ? item.image[0].original
                                                             : '/images/blank.gif'
                                                         : '/images/blank.gif';
+                                                    isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                                                 }else{
                                                     price = GetPriceWithCurrency(item,'price',currency);
                                                     itemName = (item.description != undefined)

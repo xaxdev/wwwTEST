@@ -1,5 +1,6 @@
 import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
+import config from './config';
 
 export default function GetHTMLViewASSetGridAllSales(datas,currency,isViewAsSet,env,userPermissionPrice){
     const priceSalesRTP = userPermissionPrice.priceSalesRTP;
@@ -99,12 +100,12 @@ export default function GetHTMLViewASSetGridAllSales(datas,currency,isViewAsSet,
                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                                                     : env == 'staging'
                                                         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public/images/`;
                                                 let imgPathPublic = env == 'production'
                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
                                                     : env == 'staging'
                                                         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
-                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public';
+                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public`;
                                                 let tagbarsoldoutgrid = `position: absolute;top: 0;right: 0;z-index: 9999;width: 88px;height: 93px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out_pdf.png)right top no-repeat;`
                                                 if(isViewAsSet){
                                                     price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';

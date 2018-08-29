@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import MyCatalogPrintAll from './myCatalogPrintAll';
+import { FULLPATH_LOCALFILE } from '../constants/productdetailconstants';
 
 export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     const items = dv.items;
@@ -37,12 +38,12 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
                             ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                             : env == 'staging'
                                 ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-                                :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                :`file:///${FULLPATH_LOCALFILE}web/code/plugins/http/public/images/`;
     let imgPathPublic = env == 'production'
                             ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
                             : env == 'staging'
                                 ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
-                                :'file:///home/dev/www/mol/web/code/plugins/http/public';
+                                :`file:///${FULLPATH_LOCALFILE}web/code/plugins/http/public`;
 
     let tagbarspecialgrid = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 50px;height: 53px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_pdf.png)right top no-repeat;`
 

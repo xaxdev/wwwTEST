@@ -54,7 +54,7 @@ module.exports = {
                             let { original, thumbnail } = item.image;
                             return {...images, original, thumbnail};
                         });
-                        
+
                         productResult.gallery.push(...images);
 
                         let len = productResult.items.length;

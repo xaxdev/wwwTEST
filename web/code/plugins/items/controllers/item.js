@@ -145,9 +145,10 @@ module.exports = {
                         totalprice: setReferenceData.totalPrice,
                         setimage: (!!setReferenceData.image)
                                   ? setReferenceData.image.length != 0
-                                      ?setReferenceData.image[0].original
+                                      ? setReferenceData.image[0].original
                                       : null
                                   : null,
+                        specialDiscount:setReferenceData.specialDiscount,
                         products:productdata
                     }
                     productResult.setReferenceData = responseSetData;
