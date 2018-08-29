@@ -22,7 +22,7 @@ module.exports = {
             `{
               "query":
                 {
-                 "match": {"id": "${id}"}
+                    "match": {"id": "${id}"}
                 }
             }`
         );
@@ -39,22 +39,22 @@ module.exports = {
                 }
                 const query = JSON.parse(
                     `{
-                      "query":{
-                           "constant_score": {
-                             "filter": {
-                               "bool": {
-                                 "must": [
-                                   {
-                                     "match": {
-                                       "reference": "${productResult.setReference}"
-                                     }
-                                   }
-                                 ]
-                               }
-                             }
-                           }
+                        "query":{
+                            "constant_score": {
+                                "filter": {
+                                    "bool": {
+                                        "must": [
+                                            {
+                                                "match": {
+                                                    "reference": "${productResult.setReference}"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
                         }
-                      }`
+                    }`
                 );
 
                 return elastic.search({
@@ -133,12 +133,13 @@ module.exports = {
 
                     let productdata = [];
                     for (let i = 0; i < len; i++) {
-                       if(productResult.id !== setReferenceData.items[i].id){
-                          productdata.push({
-                              id: setReferenceData.items[i].id,
-                              image:setReferenceData.items[i].image
-                          });
-                       }
+                        if(productResult.id !== setReferenceData.items[i].id){
+                            productdata.push({
+                                id: setReferenceData.items[i].id,
+                                image:setReferenceData.items[i].image,
+                                specialDiscount:setReferenceData.items[i].specialDiscount
+                            });
+                        }
                     }
                     const responseSetData = {
                         totalprice: setReferenceData.totalPrice,

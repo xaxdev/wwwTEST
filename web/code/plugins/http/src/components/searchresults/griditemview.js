@@ -1193,7 +1193,6 @@ class GridItemsView extends Component {
                         let lblActualCost = '';
                         let lblPrice = '';
                         let lblUpdatedCost = '';
-                        console.log('listMyCatalog-->',listMyCatalog);
                         let checkItem = listMyCatalog.find((myItem) => {
                             if (ViewAsSet) {
                                 return myItem.reference == item.reference
@@ -1205,7 +1204,6 @@ class GridItemsView extends Component {
 
                         if (ViewAsSet) {
                             checkItem = !checkItem ? false : true;  //if undefined checked false else true
-                            console.log('ViewAsSet checkItem-->',checkItem);
                             lblActualCost = 'Total Cost Price (USD)';
                             lblPrice = 'Total Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
@@ -1229,7 +1227,6 @@ class GridItemsView extends Component {
                                               ;
                         }else{
                             checkItem = !checkItem ? false : true;  //if undefined checked false else true
-                            console.log('Items checkItem-->',checkItem);
                             lblActualCost = `Cost Price (${userLogin.currency})`;
                             lblPrice = `Price (${userLogin.currency})`;
                             lblUpdatedCost = `Update Cost (${userLogin.currency})`;
