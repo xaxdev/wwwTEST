@@ -1277,6 +1277,14 @@ select.form-searchresult option{
   width: 88px;
   height: 93px;
 }
+.tagbar-special-setcatalog-detail-gallery{
+  background:url(../images/img_special_discount_grid.png)left top no-repeat;
+  position: absolute;
+  top: 0px;
+  z-index: 9;
+  width: 88px;
+  height: 93px;
+}
 .special-detail-set{
   left: -4px;
   background-size: 100%;
