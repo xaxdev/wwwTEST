@@ -25,7 +25,7 @@ class Gallery extends Component {
         const { gallery } = this.props.productdetail;
         return (
             <div className="tagbar-soldout-detail">
-             <span className="tagbar-soldout"></span>
+                <span className="tagbar-soldout"></span>
                 <ImageGallery  ref={i => this._imageGallery = i} items={gallery} lazyLoad={false} infinite={this.state.infinite}
                     showBullets={this.state.showBullets} showThumbnails={this.state.showThumbnails} showIndex={this.state.showIndex} showNav={this.state.showNav}
                     defaultImage={'/images/blank.gif'} slideInterval={parseInt(this.state.slideInterval)} autoPlay={this.state.isPlaying}

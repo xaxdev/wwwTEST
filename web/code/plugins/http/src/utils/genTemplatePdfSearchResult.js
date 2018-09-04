@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import SearchResultGridViewPrintAll from './searchResultGridViewPrintAll';
+import { FULLPATH_LOCALFILE } from '../constants/productdetailconstants';
 
 export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv){
     const items = dv.items;
@@ -35,11 +36,20 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     let thumbnaillgrid = 'margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:123px;';
     let thumbnaillgridimg = 'width:120px;margin: 0 auto;';
     // let imgPath = 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/';
+
     let imgPath = env == 'production'
                             ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                             : env == 'staging'
                                 ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-                                :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                :`file:///${FULLPATH_LOCALFILE}web/code/plugins/http/public/images/`;
+    let imgPathPublic = env == 'production'
+                            ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
+                            : env == 'staging'
+                                ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                :`file:///${FULLPATH_LOCALFILE}web/code/plugins/http/public`;
+
+    let tagbarspecialgrid = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 50px;height: 53px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_pdf.png)right top no-repeat;`
+    let tagbarspeciallist = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
 
     dvTotal1 = dvTotal1.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"');
     dvTotal1 = dvTotal1.replace(/class="padding-lf15"/g,'style="padding: 0 15px;"');
@@ -63,7 +73,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridview = dvGridview.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
     dvGridview = dvGridview.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
-    // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
+    dvGridview = dvGridview.replace(/class="tagbar-special"/g,`style="${tagbarspecialgrid}"`);
 
     dvGridviewAll = dvGridviewAll.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     dvGridviewAll = dvGridviewAll.replace(/\/images\//g,imgPath);
@@ -80,7 +90,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvGridviewAll = dvGridviewAll.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridviewAll = dvGridviewAll.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
     dvGridviewAll = dvGridviewAll.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
-    // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
+    dvGridviewAll = dvGridviewAll.replace(/class="tagbar-special"/g,`style="${tagbarspecialgrid}"`);
 
     dvListview = dvListview.replace(/\/images\//g,imgPath);
     // dvListview = dvListview.replace(/\/images\/products\/original\//g,'file:///media/mol/MME/');
@@ -99,6 +109,8 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvListview = dvListview.replace(/class="font-b fc-000 text-right bg-eb"/g,`style="text-align:right;font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 5px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"`);
     dvListview = dvListview.replace(/class="font-b fc-000 text-right bg-eb hidden"/g,`style="text-align:right;font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 5px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;display: none !important;visibility: hidden !important;"`);
     dvListview = dvListview.replace(/class="bd-tblr-white"/g,'style="border-left: 1px solid #fff;border-right: 1px solid #fff;border-bottom: transparent;"');
+    dvListview = dvListview.replace(/class="list-tagbar-special"/g,'style="position: relative;"');
+    dvListview = dvListview.replace(/class="tagbar-special"/g,`style="${tagbarspeciallist}"`);
 
     // dvListview = dvListview.replace(/\/original\//g,'/thumbnail/');
 
@@ -119,6 +131,8 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvListviewAll = dvListviewAll.replace(/class="font-b fc-000 text-right bg-eb"/g,`style="text-align:right;font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 5px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"`);
     dvListviewAll = dvListviewAll.replace(/class="font-b fc-000 text-right bg-eb hidden"/g,`style="text-align:right;font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 5px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;display: none !important;visibility: hidden !important;"`);
     dvListviewAll = dvListviewAll.replace(/class="bd-tblr-white"/g,'style="border-left: 1px solid #fff;border-right: 1px solid #fff;border-bottom: transparent;"');
+    dvListviewAll = dvListviewAll.replace(/class="list-tagbar-special"/g,'style="position: relative;"');
+    dvListviewAll = dvListviewAll.replace(/class="tagbar-special"/g,`style="${tagbarspeciallist}"`);
 
     let htmlTemplate = '';
 

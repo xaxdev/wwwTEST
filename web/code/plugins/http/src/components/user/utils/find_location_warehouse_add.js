@@ -108,17 +108,6 @@ export default function FindLocationWareHouse(that){
             dataDropDownWareHouse = dataDropDownWareHouse.sortBy('value','asc');
             dataDropDownSalesLocations = dataDropDownSalesLocations.sortBy('value','asc');
             dataDropDownSalesWareHouse = dataDropDownSalesWareHouse.sortBy('value','asc');
-
-            // dataDropDownLocations = dataDropDownLocations.sortBy('value','asc');
-            // dataDropDownSalesLocations = dataDropDownSalesLocations.sortBy('value','asc');
-            //
-            // if (typeof(that.props.warehouseOnHand) !== 'undefined') {
-            //     dataDropDownSalesWareHouse.push(that.props.warehouseOnHand.map(warehouse => {
-            //         return ({ value: warehouse.code, name: warehouse.name });
-            //     }))
-            //     dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
-            // }
-            // dataDropDownSalesWareHouse = dataDropDownSalesWareHouse.sortBy('value','asc');
         }
     }
 

@@ -78,7 +78,6 @@ class productdetail extends Component {
             if(Detail.type != 'STO' || Detail.type != 'CER'){
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
                 const currency = logindata.currency;
-                console.log('Detail.dominant-->',Detail.dominant);
                 if(Detail.dominant){
                     this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
                 }
@@ -134,7 +133,18 @@ class productdetail extends Component {
         jQuery('#popupset').magnificPopup({
             key: 'my-popup',
             items: {
-                src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimgset"/></div><div class="white-popup-right"><button id="btnupset" class="btn btn-primary btn-radius">Up</button><button id="btndownset" class="btn btn-primary btn-radius">Down</button><button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button></div></div>'),
+                src: jQuery(
+                    `<div class="white-popup m-pt">
+                        <div class="white-popup-left">
+                            <img id="galleryimgset"/>
+                        </div>
+                        <div class="white-popup-right">
+                            <button id="btnupset" class="btn btn-primary btn-radius">Up</button>
+                            <button id="btndownset" class="btn btn-primary btn-radius">Down</button>
+                            <button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button>
+                        </div>
+                    </div>`
+                ),
                 type: 'inline'
             },
             callbacks: {
@@ -478,13 +488,17 @@ class productdetail extends Component {
             if(setReferenceData.products.length > 0){
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
                 const currency = logindata.currency;
+                const isSpecialDisc = setReferenceData.specialDiscount != undefined ? setReferenceData.specialDiscount == 1?true:false : false;
                 return(
                     <div>
                         <h2>SET DETAILS</h2>
-                        <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-                            <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
-                            <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                                fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={120} height={120} className="img-responsive" />
+                        <div className="tagbar-special-detail">
+                            <span className={`${isSpecialDisc?'tagbar-special-detail-gallery special-detail-set':''}`}></span>
+                            <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
+                                <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
+                                <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                                    fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={120} height={120} className="img-responsive" />
+                            </div>
                         </div>
                         <Setreference productset={setReferenceData}/>
                     </div>

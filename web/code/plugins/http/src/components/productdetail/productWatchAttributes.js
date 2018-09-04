@@ -13,22 +13,25 @@ const Watchattr =  (props) =>{
     let totalDiamondCarat = 0;
     let totalStoneQty = 0;
     let totalStoneCarat = 0;
-    if(gemstoneAttr.length > 0){
-        gemstoneAttr.map(function(data, index){
-            if(checkInarray(allowDiamond, data.type)){
-                totalDiamondQty = totalDiamondQty + data.quantity
-                totalDiamondCarat = totalDiamondCarat + data.carat
-            }
-        });
+    if (!!gemstoneAttr) {
+        if(gemstoneAttr.length > 0){
+            gemstoneAttr.map(function(data, index){
+                if(checkInarray(allowDiamond, data.type)){
+                    totalDiamondQty = totalDiamondQty + data.quantity
+                    totalDiamondCarat = totalDiamondCarat + data.carat
+                }
+            });
+        }
+        if(gemstoneAttr.length > 0){
+            gemstoneAttr.map(function(data, index){
+                if(checkInarray(allowGemstone, data.type)){
+                    totalStoneQty = totalStoneQty + data.quantity
+                    totalStoneCarat = totalStoneCarat + data.carat
+                }
+            });
+        }
     }
-    if(gemstoneAttr.length > 0){
-        gemstoneAttr.map(function(data, index){
-            if(checkInarray(allowGemstone, data.type)){
-                totalStoneQty = totalStoneQty + data.quantity
-                totalStoneCarat = totalStoneCarat + data.carat
-            }
-        });
-    }
+    
     return (
         <div className="line-h">
             <div className="col-sm-6 nopadding">

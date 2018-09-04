@@ -18,7 +18,6 @@ import ModalSetCatalog from '../../components/productdetail/modalSetCatalog';
 import Modalalertmsg from '../../components/productdetail/modalalertmsg';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
-import SetPrint from '../../components/productdetail/setPrint';
 import ProductObaAttributes from '../../components/productdetail/productObaAttributes';
 import ProductAccAttributes from '../../components/productdetail/productAccAttributes';
 import ProductSpaAttributes from '../../components/productdetail/productSppAttributes';
@@ -34,6 +33,7 @@ import ModalalertMsgObj from '../../utils/modalalertmsg';
 import Movementlist from '../../components/productdetail/productmovement.js';
 import Goclist from '../../components/productdetail/productgoc.js'
 import ViewDetailSetCatalog from './viewdetailsetcatalog';
+import ViewDetailSetCatalogPrint from './viewdetailsetcatalogprint';
 import SetCatalogGallery from './setcataloggallery';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
@@ -139,6 +139,7 @@ class productdetail extends Component {
             let styleprint = '<style type="text/css" media="print">';
             styleprint +='.landScape';
             styleprint +='{ ';
+            styleprint +='-webkit-print-color-adjust : exact;';
             styleprint +='width: 100%;';
             styleprint +='height: 100%;';
             styleprint +='margin: 0% 0% 0% 0%;';
@@ -531,49 +532,167 @@ class productdetail extends Component {
     }
 
     renderSetDetailTable = _ => {
-        const {items,reference,image} = this.props.productdetail;
+        const {items,reference,image,specialDiscount} = this.props.productdetail;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const imagesProduct = (image) != undefined
                                 ? image.length != 0
                                     ?image[0].original
                                     : '/images/blank.gif'
                                 : '/images/blank.gif';
+        const isSpecialDisc = specialDiscount != undefined ? specialDiscount == 1?true:false : false;
         if (items != undefined) {
             return (
                 <div key={'listView'} id={'listView'} className="col-sm-12  panel panel-default">
-                <div className="panel-body">
-                    <table key={'listView'} id={'listView'}
-                        className="table table-bordered table-searchresult table-searchset">
-                        <thead key={'listView'} id={'listView'}>
-                              <tr>
-                                  <th><span>Item Reference</span></th>
-                                  <th><span>Location</span></th>
-                                  <th><span>Description</span></th>
-                                  <th><span>Stone Detail</span></th>
-                                  <th className={`${(userLogin.permission.price == 'All') ?
-                                      '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
-                                  <th className={`${(userLogin.permission.price == 'Updated'
-                                      || userLogin.permission.price == 'All') ?
-                                      '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
-                                  <th className={`${(userLogin.permission.price == 'Public'
-                                      || userLogin.permission.price == 'Updated'
-                                      || userLogin.permission.price == 'All') ?
-                                      '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
-                              </tr>
-                        </thead>
-                        <ViewDetailSetCatalog key={reference} id={reference} setDetail={this.props.productdetail}
-                            items={items} set onCheckedOneItemMyCatalog={this.handleSubmitSetCatalog}/>
-                    </table>
-                    <div id="imgset" className="img-center">
-
-                        <ReactImageFallback
-                               src={imagesProduct }
-                               fallbackImage="/images/blank.gif"
-                               initialImage="/images/blank.gif"
-                               name={reference} id={reference}
-                               />
+                    <div className="panel-body">
+                        <table key={'listView'} id={'listView'} className="table table-bordered table-searchresult table-searchset">
+                            <thead key={'listView'} id={'listView'}>
+                                <tr>
+                                    <th><span>Item Reference</span></th>
+                                    <th><span>Location</span></th>
+                                    <th><span>Description</span></th>
+                                    <th><span>Stone Detail</span></th>
+                                    <th className={`${(userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
+                                    <th className={`${(userLogin.permission.price == 'Public'
+                                        || userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?
+                                        '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
+                                </tr>
+                            </thead>
+                            <ViewDetailSetCatalog key={reference} id={reference} setDetail={this.props.productdetail}
+                                items={items} set onCheckedOneItemMyCatalog={this.handleSubmitSetCatalog}/>
+                        </table>
+                        <div id="imgset" className="img-center tagbar-special-detail">
+                            <span className={`${(isSpecialDisc)?'tagbar-special-setcatalog-detail-gallery':'hidden'}`}></span>
+                            <ReactImageFallback src={imagesProduct } fallbackImage="/images/blank.gif" initialImage="/images/blank.gif"
+                                name={reference} id={reference} />
+                        </div>
                     </div>
                 </div>
+            );
+        }
+    }
+
+    renderSetDetailTablePrint = _ => {
+        const styles ={
+
+            colsm12Panel:{
+                'width':'100%',
+                'borderRadius': '0',
+                'marginBottom': '0 !important',
+                'border': '0',
+                'boxShadow': 'none',
+            },
+            panelbody:{
+                'padding': '15px',
+                'fontFamily': `'${'Open Sans'}', sans-serif`,
+                'color': '#383735'
+            },
+            table:{
+                'borderSpacing': '0',
+                'borderCollapse': 'collapse',
+                'backgroundColor': 'transparent',
+                'border': '1px solid #ddd',
+                'width': '100%',
+                'maxWidth': '100%',
+                'marginBottom': '20px'
+            },
+            thead:{
+                'backgroundColor': '#383735',
+                'color': '#ffffff',
+                'borderTop': '1px solid #383735'
+            },
+            tableth:{
+                'border': '1px solid #5c5954',
+                'verticalAlign': 'middle',
+                'padding': '5px',
+                'fontSize': '14px'
+            },
+            hidden:{
+                'display': 'none !important',
+                'visibility': 'hidden !important'
+            },
+            span:{
+                'float': 'left',
+                'margin': '0 auto',
+                'textAlign': 'center',
+                'width': '100%',
+                'fontWeight': 'normal',
+                'fontSize': '14px'
+            },
+            tabletd:{
+                'border': '1px solid #5c5954',
+                'verticalAlign': 'middle',
+                'padding': '5px',
+                'fontSize': '14px',
+                'wordBreak': 'break-word',
+                'lineHeight': '1'
+            },
+            imgCenterTagbarSpecialDetail:{
+                'margin': '0 auto',
+                'textAlign': 'center',
+                'position': 'relative'
+            },
+            tagbarSpecialSetcatalogDetailGallery:{
+                'position': 'absolute',
+                'top': '0px',
+                'zIndex': '9',
+                'width': '88px',
+                'height': '93px'
+            },
+            blank:{}
+        };
+
+        const {items,reference,image,specialDiscount} = this.props.productdetail;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const imagesProduct = (image) != undefined
+                                ? image.length != 0
+                                    ?image[0].original
+                                    : '/images/blank.gif'
+                                : '/images/blank.gif';
+        const isSpecialDisc = specialDiscount != undefined ? specialDiscount == 1?true:false : false;
+
+        if (items != undefined) {
+            return (
+                <div key={'listView'} id={'listView'} style={styles.colsm12Panel} >
+                    <div style={styles.panelbody}>
+                        <table key={'listView'} id={'listView'} style={styles.table}>
+                            <thead key={'listView'} id={'listView'} style={styles.thead}>
+                                <tr>
+                                    <th style={styles.tableth}><span>Item Reference</span></th>
+                                    <th style={styles.tableth}><span>Location</span></th>
+                                    <th style={styles.tableth}><span>Description</span></th>
+                                    <th style={styles.tableth}><span>Stone Detail</span></th>
+                                    <th style={(userLogin.permission.price == 'All')?styles.tableth:styles.hidden}>
+                                        <span style={styles.span}>Group Cost Price (USD)</span>
+                                    </th>
+                                    <th style={(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')
+                                        ?styles.tableth:styles.hidden}>
+                                        <span style={styles.span}>Updated Cost Price (USD)</span>
+                                    </th>
+                                    <th style={(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                        || userLogin.permission.price == 'All') ?styles.tableth:styles.hidden}>
+                                        <span style={styles.span}>Selling Cost Price (USD)</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <ViewDetailSetCatalogPrint key={reference} id={reference} setDetail={this.props.productdetail} items={items}/>
+                        </table>
+                        <div id="imgset" style={styles.imgCenterTagbarSpecialDetail}>
+                            {
+                                (isSpecialDisc)?
+                                    <span style={styles.tagbarSpecialSetcatalogDetailGallery}>
+                                        <img src='/images/img_special_discount_grid.png'/>
+                                    </span> :
+                                    <span></span>
+                            }
+                            <ReactImageFallback src={imagesProduct } fallbackImage="/images/blank.gif" initialImage="/images/blank.gif"
+                                name={reference} id={reference} />
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -925,8 +1044,11 @@ class productdetail extends Component {
                                       <a><div className=""></div></a>
                                     }
                                 </div>
-                                <div id="dvContainer">
+                                <div>
                                     {this.renderSetDetailTable()}
+                                </div>
+                                <div id="dvContainer" className="hidden">
+                                    {this.renderSetDetailTablePrint()}
                                 </div>
                             </div>
                         </div>

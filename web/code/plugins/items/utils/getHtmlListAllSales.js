@@ -2,6 +2,7 @@ import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 import numberFormat2digit from './convertNumberformatwithcomma2digit';
 import convertDate from './convertDate';
+import config from './config';
 
 export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userPermissionPrice){
     const priceSalesRTP = userPermissionPrice.priceSalesRTP;
@@ -167,12 +168,12 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                                                                     : env == 'staging'
                                                                         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-                                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public/images/`;
                                                                 let imgPathPublic = env == 'production'
                                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
                                                                     : env == 'staging'
                                                                         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
-                                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public';
+                                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public`;
                                                                 let tagbarsoldoutlist = `position: absolute;top: -5px;right: -5px;z-index: 9999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out_list.png)right top no-repeat;`
                                                                 if (priceSalesRTP) {
                                                                     if(item.price != undefined){

@@ -72,6 +72,7 @@ class GridItemsViewPrint extends Component {
                         let lblActualCost = '';
                         let lblPrice = '';
                         let lblUpdatedCost = '';
+                        let isSpecialDisc = false;
                         if (item.id != null) {
                             lblActualCost = `Cost Price (USD)`;
                             lblPrice = `Price (USD)`;
@@ -113,6 +114,7 @@ class GridItemsViewPrint extends Component {
                             itemNameCat = (item.authorization)
                               ? (item.type != 'CER')? item.description: item.name
                               : '';
+                            isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                         }else{
                             lblActualCost = 'Total Cost Price (USD)';
                             lblPrice = 'Total Price (USD)';
@@ -153,6 +155,7 @@ class GridItemsViewPrint extends Component {
                             itemNameCat = (item.authorization)
                               ? (item.type != 'CER')? item.description: item.name
                               : '';
+                            isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                         }
                         return (
                             <div key={item.id != null ? `id=${item.id}` : `reference=${item.reference}`}
@@ -219,6 +222,7 @@ class GridItemsViewPrint extends Component {
                                                 (index==59)? `searchresult-prodcut ${that.state.isOpen59? 'searchresult-border': ''}`:
                                                 (index==60)? `searchresult-prodcut ${that.state.isOpen60? 'searchresult-border': ''}`:
                                                 ''}>
+                                    <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
                                     <div className="thumbnaillgrid">
                                         <img  src={imagesProduct} />
                                     </div>

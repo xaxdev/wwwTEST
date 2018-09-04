@@ -202,7 +202,7 @@ select:focus::-ms-value {background: none;}
 .fc-ae8f3b{color:#ae8f3b}
 .font-b{font-weight: bold; font-family: 'open_sanssemibold';}
 .font-w9{font-weight: 900;}
-.bd-img {margin-top: 5px; height:120px; overflow: hidden;}
+.bd-img {margin-top: 5px; height:120px; overflow: hidden; cursor: pointer;}
 .bd-img img{border:1px solid #efefef;}
 .form-horizontal .control-label.font-nor{font-family: 'open_sanslight';}
 .font-detail{font-size:13px;}
@@ -1256,15 +1256,58 @@ select.form-searchresult option{
   width: 100%;
   height: auto;
 }
+.list-tagbar-soldout, .tagbar-soldout-detail,.list-tagbar-special, .tagbar-special-detail{
+  position: relative;
+}
 .tagbar-special{
-  background:url(../images/img_special_discount.png)left top no-repeat;
+  background:url(../images/img_special_discount_grid.png)left top no-repeat;
+  position: absolute;
+  top: 8px;
+  left: 15px;
+  z-index: 9;
+  width: 88px;
+  height: 93px;
+}
+.tagbar-special-detail-gallery{
+  background:url(../images/img_special_discount_grid.png)left top no-repeat;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 9;
+  width: 88px;
+  height: 93px;
+}
+.tagbar-special-setcatalog-detail-gallery{
+  background:url(../images/img_special_discount_grid.png)left top no-repeat;
+  position: absolute;
+  top: 0px;
+  z-index: 9;
+  width: 88px;
+  height: 93px;
+}
+.special-detail-set{
+  left: -4px;
+  background-size: 100%;
+  width: 55px;
+  height: 52px;
+}
+.tagbar-special-pdf{
+  background:url(../images/img_special_discount_pdf.png)left top no-repeat;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 9999;
-  width: 123px;
-  height: 119px;
-  background-size: 80%;
+  z-index: 9;
+  width: 50px;
+  height: 53px;
+}
+.list-tagbar-special .tagbar-special{
+  background:url(../images/img_special_discount_list.png)left top no-repeat;
+  position: absolute;
+     top: -5px;
+     left: -5px;
+     z-index: 9;
+     width: 30px;
+     height: 32px;
 }
 .tagbar-soldout{
   background:url(../images/img_sold_out.png)right top no-repeat;
@@ -1283,9 +1326,6 @@ select.form-searchresult option{
   z-index: 9;
   width: 50px;
   height: 53px;
-}
-.list-tagbar-soldout, .tagbar-soldout-detail{
-  position: relative;
 }
 .list-tagbar-soldout .tagbar-soldout {
     background: url(../images/img_sold_out_list.png)right top no-repeat;

@@ -825,7 +825,8 @@ function mapStateToProps(state) {
         ProductionDateTo: state.searchResult.ProductionDateTo,
         SaveSearchHierarchy: state.searchResult.saveSearchHierarchy,
         ViewAsSet: state.searchResult.viewAsSet,
-        ArticleValue: state.searchResult.ArticleValue
+        ArticleValue: state.searchResult.ArticleValue,
+        SpecialDiscount: state.searchResult.specialDiscount,
     };
 }
 function mapDispatchToProps(dispatch) {
@@ -858,7 +859,7 @@ module.exports = reduxForm(
         'markupFrom','markupTo','grossWeightFrom','grossWeightTo','proDateFrom','proDateTo','caseDimensionFrom',
         'caseDimensionTo','dialMetal','preciousMetalWeightFrom','preciousMetalWeightTo','buckleType','strapType',
         'strapColor','accessoryProductHierarchy','accessoryType','obaProductHierarchy','obaDimension','searchName',
-        'sparePartProductHierarchy','sparePartType','validateSearchName','viewAsSet','article'
+        'sparePartProductHierarchy','sparePartType','validateSearchName','viewAsSet','article','specialDiscount'
         ],
         validate: ValidateSaveSearch
     },mapStateToProps,mapDispatchToProps

@@ -89,27 +89,27 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                     `{
                         "timeout": "5s",
                         "from": 0,
-                      "size": 10000,
-                      "sort" : [
-                          ${missing}
-                          {"${sortBy}" : "${sortDirections}"}
-                       ],
-                      "query":{
-                           "constant_score": {
-                             "filter": {
-                               "bool": {
-                                 "must": [
-                                   {
-                                     "match": {
-                                       "reference": "${setReferenceUniq.join(' ')}"
-                                     }
-                                   }
-                                 ]
-                               }
-                             }
-                           }
+                        "size": 10000,
+                        "sort" : [
+                            ${missing}
+                            {"${sortBy}" : "${sortDirections}"}
+                        ],
+                        "query":{
+                            "constant_score": {
+                                "filter": {
+                                    "bool": {
+                                        "must": [
+                                            {
+                                                "match": {
+                                                    "reference": "${setReferenceUniq.join(' ')}"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
                         }
-                      }`
+                    }`
                 );
                 return client.search({
                     index: config.elasticsearch.index,
@@ -277,23 +277,23 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                                    let columnMain = 0;
                                    if (obj.userCurrency != 'USD') {
                                        if (price == 'All') {
-                                           columnMain = 17;
+                                           columnMain = 18;
                                        }
                                        if (price == 'Updated') {
-                                           columnMain = 15;
+                                           columnMain = 16;
                                        }
                                        if (price == 'Public') {
-                                           columnMain = 13;
+                                           columnMain = 14;
                                        }
                                    } else {
                                        if (price == 'All') {
-                                           columnMain = 14;
+                                           columnMain = 15;
                                        }
                                        if (price == 'Updated') {
-                                           columnMain = 13;
+                                           columnMain = 14;
                                        }
                                        if (price == 'Public') {
-                                           columnMain = 12;
+                                           columnMain = 13;
                                        }
                                    }
                                    if(data[i][columnMain] == 'Main'){

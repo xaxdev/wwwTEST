@@ -25,6 +25,7 @@ class ModalPrintOptions extends Component {
         const { props, isOpen, isClose, onSubmit } = this.props;
         const { fields: { printPage, printPrice }, listSetCatalogItems } = props;
         const totalPages = numberFormat(!!listSetCatalogItems?listSetCatalogItems.total_pages:0);
+        const userLogin = JSON.parse(sessionStorage.logindata);
         return(
               <div  className="addMyCatalog">
                 <Modal isOpen={isOpen} >
@@ -74,17 +75,15 @@ class ModalPrintOptions extends Component {
                                 <label className="select"></label>
                                 <span className="margin-l10 text-vertical">All</span>
                             </div>
-                            <div className="radio">
-                                <input type="radio" {...printPrice} value="updated"
-                                    checked={printPrice.value === 'updated'}
-                                />
+                            <div className={`radio ${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
+                                '' : 'hidden'}`}>
+                                <input type="radio" {...printPrice} value="updated" checked={printPrice.value === 'updated'} />
                                 <label className="select"></label>
                                 <span className="margin-l10 text-vertical">Updated Cost</span>
                             </div>
-                            <div className="radio">
-                                <input type="radio" {...printPrice} value="public"
-                                    checked={printPrice.value === 'public'}
-                                />
+                            <div className={`radio ${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
+                                || userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
+                                <input type="radio" {...printPrice} value="public" checked={printPrice.value === 'public'} />
                                 <label className="select"></label>
                                 <span className="margin-l10 text-vertical">Price</span>
                             </div>

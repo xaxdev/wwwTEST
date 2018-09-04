@@ -112,6 +112,9 @@ export default function GetFilterSearch(that, data, userLogin, filters, jlyHiera
                 case 'totalCaratWeightTo':
                     propname = {...GetLotNumber(valueKeys, keycat)};
                     break;
+                case 'specialDiscount':
+                    propname[keycat]= valueKeys?1:0;
+                    break;
                 default:
                     if(keycat.indexOf('gemstone_') != -1){
                         propname['gemstones.'+keycat.replace('gemstone_', '')]= valueKeys;

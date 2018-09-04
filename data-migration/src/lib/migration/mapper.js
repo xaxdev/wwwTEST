@@ -222,6 +222,7 @@ const mapSalesProperties = (item, record, exchangeRates) => {
         delete item.CertificateImageType;
     }
 }
+
 const mapProperties = (item, record, exchangeRates) => {
     // add gemstone, if not existed
     if (!!record.gemstone_id && item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {

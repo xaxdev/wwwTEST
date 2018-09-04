@@ -3,63 +3,41 @@ import ImageGallery from 'react-image-gallery';
 import { connect } from 'react-redux';
 
 class Gallery extends Component {
+    constructor() {
+        super();
 
-  constructor() {
-    super();
-
-    this.state = {
-      isPlaying: false,
-      showIndex: false,
-      slideOnThumbnailHover: false,
-      showBullets: false,
-      infinite: false,
-      showThumbnails: true,
-      showNav: true,
-      slideInterval: 2000,
-      fullscreen: false,
-      startIndex:0
-    };
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    this._imageGallery.slideToIndex(0);
-    if (this.state.slideInterval !== prevState.slideInterval) {
-      // refresh setInterval
-
+        this.state = {
+            isPlaying: false,
+            showIndex: false,
+            slideOnThumbnailHover: false,
+            showBullets: false,
+            infinite: false,
+            showThumbnails: true,
+            showNav: true,
+            slideInterval: 2000,
+            fullscreen: false,
+            startIndex:0
+        };
     }
-  }
 
-  handleImageLoad(event) {
-  }
+    componentDidUpdate(prevProps, prevState) {
+        this._imageGallery.slideToIndex(0);
+    }
 
-  // _slideToIndex() {
-  //   this._imageGallery.pause();
-  //   this.setState({isPlaying: false});
-  // }
-
-  render() {
-    const { gallery } = this.props.productdetail;
-
-    return (
-        <div>
-            <ImageGallery
-              ref={i => this._imageGallery = i}
-              items={gallery}
-              lazyLoad={false}
-              infinite={this.state.infinite}
-              showBullets={this.state.showBullets}
-              showThumbnails={this.state.showThumbnails}
-              showIndex={this.state.showIndex}
-              showNav={this.state.showNav}
-              defaultImage={'/images/blank.gif'}
-              slideInterval={parseInt(this.state.slideInterval)}
-              autoPlay={this.state.isPlaying}
-              startIndex={this.state.startIndex}
-              slideOnThumbnailHover={this.state.slideOnThumbnailHover}
-            />
-        </div>
-    );
-  }
+    render() {
+        const { gallery, specialDiscount } = this.props.productdetail;
+        let isSpecialDisc = specialDiscount != undefined ? specialDiscount == 1?true:false : false;
+        return (
+            <div className="tagbar-special-detail">
+                <span className={`${(isSpecialDisc)?'tagbar-special-detail-gallery':'hidden'}`}></span>
+                <ImageGallery ref={i => this._imageGallery = i} items={gallery} lazyLoad={false} infinite={this.state.infinite}
+                    showBullets={this.state.showBullets} showThumbnails={this.state.showThumbnails} showIndex={this.state.showIndex}
+                    showNav={this.state.showNav} defaultImage={'/images/blank.gif'} slideInterval={parseInt(this.state.slideInterval)}
+                    autoPlay={this.state.isPlaying} startIndex={this.state.startIndex} slideOnThumbnailHover={this.state.slideOnThumbnailHover}
+                />
+            </div>
+        );
+    }
 }
 
 function mapStateToProps(state) {
@@ -68,9 +46,8 @@ function mapStateToProps(state) {
 	}
 }
 
-
 Gallery.propTypes = {
-  imagegallery: PropTypes.array.isRequired
+    imagegallery: PropTypes.array.isRequired
 }
 
 module.exports = connect(mapStateToProps, null)(Gallery);
