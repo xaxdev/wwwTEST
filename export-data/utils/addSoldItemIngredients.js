@@ -13,12 +13,11 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
         let userName = request.userName;
         let listFileName = [];
         let ROOT_URL = request.ROOT_URL;
-        let data = responseData.hits.hits.map((element) => element._source);
+        let data = responseData;
 
         exportData = data;
 
         let newdata = [];
-
         let items = 0;
 
         const priceSalesRTP = GetSalesPricePermission(price).priceSalesRTP;
@@ -30,14 +29,12 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
 
         data.forEach(function(item){
             items = items+1;
-            // console.log('item-->',item);
             let arrayItems = [];
             let itemReference = item.reference;
 
             if (fields.showImagesViewAsSet){
                 arrayItems.push((item.image.length) != 0 ? item.image[0].thumbnail : '');
             }
-            // console.log(`items: ${items}--> reference: ${item.reference}`);
             arrayItems.push(item.reference,item.description);
 
             if (priceSalesCTP) {
@@ -95,7 +92,6 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
         exportData = data;
 
         let newdata = [];
-
         let items = 0;
 
         const priceSalesRTP = GetSalesPricePermission(price).priceSalesRTP;
@@ -107,7 +103,6 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
 
         data.forEach(function(item){
             items = items+1;
-            // console.log('item-->',item);
             let arrayItems = [];
             let itemReference = item.reference;
 
