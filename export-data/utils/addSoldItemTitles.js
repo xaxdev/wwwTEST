@@ -14,9 +14,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
         let listFileName = [];
         let ROOT_URL = request.ROOT_URL;
         let viewAsSet = request.viewAsSet;
-        console.log('viewAsSet-->',!!viewAsSet);
-
-        let data = responseData.hits.hits.map((element) => element._source);
+        let data = responseData;
 
         exportData = data;
 

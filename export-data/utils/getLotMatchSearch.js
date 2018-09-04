@@ -1,17 +1,17 @@
 module.exports = (field, value, cb) => {
-  let lotFilter = '';
+    let lotFilter = '';
 
-  if (field == 'color' || field == 'cut' || field == 'clarity' ) {
-      value = `${value}`
-      value = value.replace(/,/gi, ' ');
-  }
+    if (field == 'color' || field == 'cut' || field == 'clarity' ) {
+        value = `${value}`
+        value = value.replace(/,/gi, ' ');
+    }
 
-  lotFilter =
+    lotFilter =
     `{
-      "match": {
-        "lotNumbers.${field}": "${value}"
-      }
+        "match": {
+            "lotNumbers.${field}": "${value}"
+        }
     }`;
 
-  return lotFilter;
+    return lotFilter;
 }

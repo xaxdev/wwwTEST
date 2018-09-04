@@ -4,9 +4,8 @@ const get =  async (document, config) => {
     const client = new elasticsearch.Client({
         host: config.host
     });
-  
+
     try {
-        // console.log(JSON.stringify(document, null, 2));
         return await client.search({
             index: config.index,
             type: config.type,

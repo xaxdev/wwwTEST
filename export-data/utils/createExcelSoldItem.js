@@ -3,6 +3,7 @@ import xl from 'excel4node'
 import moment from 'moment-timezone';
 import GetSalesPricePermission from './getSalesPricePermission';
 
+const getSalesSetReference = require('./getSalesSetReference');
 const Promise = require('bluebird');
 
 module.exports = async (obj, config, parameter, body, utils, userEmail, channel, msg) => {
@@ -52,81 +53,17 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                 "body": body
             });
 
-            const getSetReference = getAllItems.then((response) => {
-                const setReferenceResult = response.hits.hits.map((element) => element._source);
-                const setReferenceFilter = setReferenceResult.filter((item) => {
-                    return item.setReference != undefined && item.setReference != '';
+            Promise.all([getAllItems]).then(async (allItems) =>  {
+                let data = [];
+                await allItems.map((all) => {
+                    data.push(...all.hits.hits.map((element) => element._source))
                 })
-                const setReferenceArray = setReferenceFilter.map((item) => {
-                    return item.setReference;
-                })
-                const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
-                    return !pos || item != ary[pos - 1];
-                })
-                if (obj.sortBy.indexOf('price') != -1) {
-                    sortBy = 'totalPrice.USD';
-                }else if (obj.sortBy.indexOf('Date') != -1) {
-                    sortBy = 'postedDate';
-                }else if (obj.sortBy.indexOf('Date') != -1) {
-                    sortBy = 'postedDate';
-                }else if (obj.sortBy.indexOf('setReference') != -1) {
-                    sortBy = 'reference';
-                }else if (sortBy.indexOf('netAmount') != -1) {
-                    sortBy = 'totalNetAmount.USD';
-                }else{
-                    sortBy = sortBy;
-                }
-
-                let missing = '';
-
-                switch (sortDirections) {
-                    case 'asc':
-                        missing = '"missing" : "_first"';
-                        missing = `{"${sortBy}" : {${missing}}},`;
-                        break;
-                    default:
-                        break;
-                }
-
-                const query = JSON.parse(
-                    `{
-                        "timeout": "5s",
-                        "from": 0,
-                        "size": 10000,
-                        "sort" : [
-                            ${missing}
-                            {"${sortBy}" : "${sortDirections}"}
-                        ],
-                        "query":{
-                            "constant_score": {
-                                "filter": {
-                                    "bool": {
-                                        "must": [
-                                            {
-                                                "match": {
-                                                    "reference": "${setReferenceUniq.join(' ')}"
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }`
-                );
-                return client.search({
-                    index: config.elasticsearch.indexSoldItems,
-                    type: config.elasticsearch.typeSetItem,
-                    body: query
-                })
-            });
-
-            Promise.all([getAllItems, getSetReference]).spread(async (allItems, setReferences) =>  {
-                const allItemsResult = allItems.hits.hits.map((element) => element._source);
-                const setReferenceData = setReferences.hits.hits.map((element) => element._source);
+                data = data.sort(compareBy('setReference','asc'));
+                let setSalesReferences = await getSalesSetReference(data);
+                setSalesReferences = setSalesReferences.sort(compareBy(sortBy,sortDirections));
                 client.close();
 
-                const count = setReferenceData.length;
+                const count = setSalesReferences.length;
                 const sizeWrite = config.excel.bufferSize;
                 const rounds = Math.ceil(count/sizeWrite);
                 console.log(`User Name --> ${obj.userName}`);
@@ -138,8 +75,7 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                     const from = sizeWrite * i;
                     console.log(`round --> ${chkRounds}`);
 
-                    const titles = await utils.getSoldItemTitles(setReferences, obj);
-                    console.log('titles-->',JSON.stringify(titles, null, 2));
+                    const titles = await utils.getSoldItemTitles(setSalesReferences, obj);
 
                     titles.forEach(function(title){
                         cell++;
@@ -150,7 +86,7 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                         ws.cell(1,cell).string(title).style(style);
                     });
 
-                    const data = await utils.getSoldSetItems(setReferences, obj);
+                    const data = await utils.getSoldSetItems(setSalesReferences, obj);
                     console.log(`write rows --> ${data.length}`);
                     totalRecord = totalRecord + data.length;
 
@@ -473,4 +409,35 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
     } catch (e) {
         console.log(e);
     }
+}
+const compareBy = (property, order = 'asc') => (a, b) => {
+    if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
+        return 0;
+    }
+    let priceA = 0;
+    let priceB = 0;
+    const first = (property.toLowerCase().indexOf('price') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? a[property] != undefined
+                        ? a[property] != undefined ? a[property]: 0
+                        : 0
+                    : a[property]
+    const second = (property.toLowerCase().indexOf('price') != -1 || property.toLowerCase().indexOf('netamount') != -1)
+                    ? b[property] != undefined
+                        ? b[property] != undefined ? b[property] : 0
+                        : 0
+                    : b[property]
+    if (typeof first !== typeof second) {
+        return 0
+    }
+
+    let comparison = 0
+    if (first > second) {
+        comparison = 1
+    }
+
+    if (first < second) {
+        comparison = -1
+    }
+
+    return (order === 'desc')? (comparison * -1) : comparison
 }

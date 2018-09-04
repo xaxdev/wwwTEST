@@ -22,14 +22,12 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
 
         data.forEach(function(item){
             items = items+1;
-            // console.log('item-->',item);
             let arrayItems = [];
             let itemReference = item.reference;
 
             if (fields.showImagesViewAsSet){
                 arrayItems.push((item.image.length) != 0 ? item.image[0].thumbnail : '');
             }
-            // console.log(`items: ${items}--> reference: ${item.reference}`);
             arrayItems.push(item.reference,item.description);
 
             if (price == 'All') {

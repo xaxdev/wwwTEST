@@ -1,12 +1,12 @@
 module.exports = (fiels, value, cb) => {
-  let gemstoneFilter = '';
+    let gemstoneFilter = '';
 
-  gemstoneFilter =
+    gemstoneFilter =
     `{
-      "match": {
-        "gemstones.${fiels}": "${value}"
-      }
+        "match": {
+            "gemstones.${fiels}": "${value}"
+        }
     }`;
 
-  return gemstoneFilter;
+    return gemstoneFilter;
 }
