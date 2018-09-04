@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import numberFormat from '../../../utils/convertNumberformat';
+import { FULLPATH_LOCALFILE } from '../../../constants/productdetailconstants';
 
 export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPriceSet, _totalUpdatedCostSet, _totalSetItems, _totalPages){
     const userLogin = JSON.parse(sessionStorage.logindata);
@@ -9,7 +10,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
 
     const listView = 'width: 100%;border-radius: 0;margin-bottom: 0 !important;border: 0;box-shadow: none;';
     const tableStyle = 'width: 100%;max-width: 100%;margin-bottom: 20px;border: 1px solid #ddd;background-color: transparent;border-spacing: 0;border-collapse: collapse;';
-    const imgCenter = 'margin: 0 auto;text-align: center;width: 500px;';
+    const imgCenter = 'margin: 0 auto;text-align: center;width: 500px;position: relative;';
     const divTotal = `background-color: #dddddd;float: left;width: 100%;padding: 10px 10px;text-align: center;font-family: '${'Open Sans'}', sans-serif;font-size: 14px;`
     const fontbfc000  = `font-weight: bold;font-family: '${'Open Sans'}';color: #000;margin: 0 0 10px;`;
     const fontw9 = `font-weight: 900;text-align: center;color: #383735;font-family: '${'Open Sans'}', sans-serif;font-size: 14px;`
@@ -94,12 +95,16 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                     ? item.image[0].original
                                     : '/images/blank.gif'
                                 : '/images/blank.gif';
-        // const imgPath = env == 'production'
-        //                         ? `file:///var/www/mol/web/code/plugins/http/public${imagesProduct}`
-        //                         : `file:///home/dev/www/mol/web/code/plugins/http/public${imagesProduct}`;
         const imgPath = env == 'production'
                                 ? `${ROOT_URL}${imagesProduct}`
                                 : `${ROOT_URL}${imagesProduct}`;
+        let imgPathPublic = env == 'production'
+                                ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
+                                : env == 'staging'
+                                    ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                    :`file:///${FULLPATH_LOCALFILE}web/code/plugins/http/public`;
+        let tagbarspecialgrid = `position: absolute;top: 0px;z-index: 999;width: 88px;height: 93px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_grid.png)right top no-repeat;`
+        const isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
         htmlTemplate = htmlTemplate + `<div style="padding: 15px;position: relative;">
                                         <table id="listView" style="${tableStyle}" >
                                             <thead id="listView" style="${thead}">
@@ -163,6 +168,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                             </tbody>
                                         </table>
                                         <div id="imgset" style="${imgCenter}">
+                                            <span style="${(isSpecialDisc)? tagbarspecialgrid:''}"></span>
                                             <img src="${imgPath}" name="${item.setReference}" id="${item.setReference}" style="${imgCenter}">
                                         </div>
                                     </div>`

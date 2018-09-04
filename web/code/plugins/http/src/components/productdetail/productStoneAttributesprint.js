@@ -4,17 +4,18 @@ import convertDate from '../../utils/convertDate';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
 import { DataTable } from '../../utils/DataTableStone/index';
 import numberFormat from '../../utils/convertNumberformat';
-    var styles ={
-      colmd12:{
+
+const styles ={
+    colmd12:{
         width:'100%',
         float:'left'
-      },
-      colmd5:{
+    },
+    colmd5:{
         width: '50%',
         float:'left',
         lineHeight:'26px'
-      }
-    };
+    }
+};
 const Stoneattr =  (props) =>{
     let lots = null;
     const { onClickPage, activePage, pageSize, submitting, stonepage } = props;
@@ -42,77 +43,77 @@ const Stoneattr =  (props) =>{
     }
 
     const tableColumns = [
-      { title: 'Stone Type', prop: 'stoneTypeName' },
-      { title: 'Cut', prop: 'cutName' },
-      { title: 'Color', prop: 'colorName' },
-      { title: 'Clarity', prop: 'clarityName' },
-      { title: 'Lot Number', prop: 'lotNumber' },
-      { title: 'Lot Quantity', prop: 'lotQty' },
-      { title: 'Total Carat Weight', prop: 'carat' },
-      { title: 'Certificate Number', prop: 'certificateNo' },
-      { title: 'Certificate Lab', prop: 'laboratory' },
-      { title: 'Certificate Date', prop: 'certifiiedDate' },
-      { title: 'Origin', prop: 'origin' },
-      { title: 'Symmetry', prop: 'symmetry' },
-      { title: 'Fluorescence', prop: 'fluorescence' },
+        { title: 'Stone Type', prop: 'stoneTypeName' },
+        { title: 'Cut', prop: 'cutName' },
+        { title: 'Color', prop: 'colorName' },
+        { title: 'Clarity', prop: 'clarityName' },
+        { title: 'Lot Number', prop: 'lotNumber' },
+        { title: 'Lot Quantity', prop: 'lotQty' },
+        { title: 'Total Carat Weight', prop: 'carat' },
+        { title: 'Certificate Number', prop: 'certificateNo' },
+        { title: 'Certificate Lab', prop: 'laboratory' },
+        { title: 'Certificate Date', prop: 'certifiiedDate' },
+        { title: 'Origin', prop: 'origin' },
+        { title: 'Symmetry', prop: 'symmetry' },
+        { title: 'Fluorescence', prop: 'fluorescence' },
     ];
 
-    var styles ={
-      table_bordered_searchresult:{
-          'width': '100%',
-          'marginBottom' : '20px',
-          'border': '1px solid #ddd',
-          'borderSpacing': '0',
-          'borderCollapse': 'collapse'
-      },
-      table_thead:{
-          'backgroundColor': '#383735',
-          'color': '#ffffff',
-          'borderTop': '1px solid #383735'
-      },
-      thead_tr:{
-          'display': 'table-row',
-          'verticalAlign': 'inherit',
-          'borderColor': 'inherit',
-          'boxSizing': 'border-box',
-          'backgroundColor': '#383735',
-          'color': '#ffffff',
-          'borderTop': '1px solid #383735'
-      },
-      stoneType:{
-          'border': '1px solid #5c5954',
-          'verticalAlign': 'middle',
-          'padding': '5px',
-          'borderTop': '0',
-          'width': '74px',
-          'backgroundColor': '#383735',
-          'color': '#ffffff',
-          'borderTop': '1px solid #383735'
-      },
-      span_stoneType:{
-          'float': 'left',
-          'margin': '0 auto',
-          'textAlign': 'center',
-          'width': '100%',
-          'fontWeight': 'normal'
-      },
-      tbody:{
-          'display': 'table-row-group',
-          'verticalAlign': 'middle',
-          'borderColor': 'inherit',
-          'boxSizing': 'border-box'
-      },
-      tbody_tr:{
-          'border': '1px solid #5c5954',
-          'verticalAlign': 'middle',
-          'padding':'5px'
-      },
-      tbody_td:{
-          'border': '1px solid #5c5954',
-          'verticalAlign': 'middle',
-          'padding':'5px',
-          'wordBreak': 'break-word'
-      }
+    const styles ={
+        table_bordered_searchresult:{
+            'width': '100%',
+            'marginBottom' : '20px',
+            'border': '1px solid #ddd',
+            'borderSpacing': '0',
+            'borderCollapse': 'collapse'
+        },
+        table_thead:{
+            'backgroundColor': '#383735',
+            'color': '#ffffff',
+            'borderTop': '1px solid #383735'
+        },
+        thead_tr:{
+            'display': 'table-row',
+            'verticalAlign': 'inherit',
+            'borderColor': 'inherit',
+            'boxSizing': 'border-box',
+            'backgroundColor': '#383735',
+            'color': '#ffffff',
+            'borderTop': '1px solid #383735'
+        },
+        stoneType:{
+            'border': '1px solid #5c5954',
+            'verticalAlign': 'middle',
+            'padding': '5px',
+            'borderTop': '0',
+            'width': '74px',
+            'backgroundColor': '#383735',
+            'color': '#ffffff',
+            'borderTop': '1px solid #383735'
+        },
+        span_stoneType:{
+            'float': 'left',
+            'margin': '0 auto',
+            'textAlign': 'center',
+            'width': '100%',
+            'fontWeight': 'normal'
+        },
+        tbody:{
+            'display': 'table-row-group',
+            'verticalAlign': 'middle',
+            'borderColor': 'inherit',
+            'boxSizing': 'border-box'
+        },
+        tbody_tr:{
+            'border': '1px solid #5c5954',
+            'verticalAlign': 'middle',
+            'padding':'5px'
+        },
+        tbody_td:{
+            'border': '1px solid #5c5954',
+            'verticalAlign': 'middle',
+            'padding':'5px',
+            'wordBreak': 'break-word'
+        }
     };
 
   return (
@@ -162,8 +163,10 @@ const Stoneattr =  (props) =>{
                     </tr>
                 </thead>
                 <tbody style={styles.tbody}>
-                    {lots.map((lot) => {
-                        return(<tr style={styles.tbody_tr}>
+                    {
+                        lots.map((lot) => {
+                            return(
+                                <tr style={styles.tbody_tr}>
                                     <td style={styles.tbody_td}>
                                         <span>{lot.stoneTypeName}</span>
                                     </td>
@@ -203,8 +206,10 @@ const Stoneattr =  (props) =>{
                                     <td style={styles.tbody_td}>
                                         <span>{lot.fluorescence}</span>
                                     </td>
-                                </tr>);
-                    })}
+                                </tr>
+                            );
+                        })
+                    }
                 </tbody>
             </table>
 

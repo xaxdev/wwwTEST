@@ -396,13 +396,17 @@ class productreletedetail extends Component {
             if(setReferenceData.products.length > 0){
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
                 const currency = logindata.currency;
+                const isSpecialDisc = setReferenceData.specialDiscount != undefined ? setReferenceData.specialDiscount == 1?true:false : false;
                 return(
                     <div>
                         <h2>SET DETAILS</h2>
-                        <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
-                            <input id="totalsetprice" type="hidden" value={parseInt(setReferenceData.totalprice['USD'])} />
-                            <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
-                                fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={120} height={120} className="img-responsive" />
+                        <div className="tagbar-special-detail">
+                            <span className={`${isSpecialDisc?'tagbar-special-detail-gallery special-detail-set':''}`}></span>
+                            <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
+                                <input id="totalsetprice" type="hidden" value={parseInt(setReferenceData.totalprice['USD'])} />
+                                <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
+                                    fallbackImage="/images/blank.gif" initialImage="/images/blank.gif" width={120} height={120} className="img-responsive" />
+                            </div>
                         </div>
                         <Setreference productset={setReferenceData}/>
                     </div>

@@ -2,5 +2,6 @@
     "gallery": {
         "original": "/images/products/original",
         "thumbnail": "/images/products/thumbnail"
-    }
+    },
+    "fullpath_localfile": "D:/Projects/GitLab/mol2016/"
 }

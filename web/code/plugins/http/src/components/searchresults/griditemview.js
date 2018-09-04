@@ -1201,9 +1201,9 @@ class GridItemsView extends Component {
                             }
                         });
                         let isSpecialDisc = false;
-                        checkItem = !checkItem ? false : true;  //if undefined checked false else true
-                        // console.log('checkItem-->',checkItem);
+
                         if (ViewAsSet) {
+                            checkItem = !checkItem ? false : true;  //if undefined checked false else true
                             lblActualCost = 'Total Cost Price (USD)';
                             lblPrice = 'Total Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
@@ -1214,18 +1214,17 @@ class GridItemsView extends Component {
                                             : '/images/blank.gif';
                             itemDate = convertDate(item.createdDate);
                             lblDate = 'Created Date:';
-                            // itemDate = (itemDate.getDate() + '/' + (itemDate.getMonth()+1)) + '/' +  itemDate.getFullYear();
                             price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
                             actualCost = numberFormat(item.totalActualCost['USD']) + ' ' + 'USD';
                             updatedCost = numberFormat(item.totalUpdatedCost['USD']) + ' ' + 'USD';
 
                             itemName = (item.type != 'CER')?
-                                              (item.description != undefined) ?
-                                                  (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
-                                              : '-' :
-                                              item.name
-                                              ;
+                                (item.description != undefined) ?
+                                    (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
+                                : '-' : item.name ;
+                            isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                         }else{
+                            checkItem = !checkItem ? false : true;  //if undefined checked false else true
                             lblActualCost = `Cost Price (${userLogin.currency})`;
                             lblPrice = `Price (${userLogin.currency})`;
                             lblUpdatedCost = `Update Cost (${userLogin.currency})`;
@@ -1330,8 +1329,8 @@ class GridItemsView extends Component {
                                                 onClick={showDetails}/>
                                         </span>
                                     </div>
+                                    <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
                                     <div className="thumbnaillgrid">
-                                        <span className={`${(isSpecialDisc)?'tagbar-special':''}`}></span>
                                         <ReactImageFallback src={imagesProduct } fallbackImage="/images/blank.gif" initialImage="/images/blank.gif"
                                             name={ViewAsSet ? item.reference : item.id} id={ViewAsSet ? item.reference : item.id} onClick={btnEvent}
                                             />

@@ -1,48 +1,48 @@
 const Boom = require('boom');
 
 const internals = {
-  filters: []
+    filters: []
 };
 
 module.exports = {
-  auth: {
-      strategy: 'authentication'
-  },
-  handler: (request, reply) => {
+    auth: {
+        strategy: 'authentication'
+    },
+    handler: (request, reply) => {
+        (async _ => {
 
-      (async _ => {
-          const elastic = request.server.plugins.elastic.client;
-          const setReference = request.params.setReference.replace('-','/');
+            const elastic = request.server.plugins.elastic.client;
+            const setReference = request.params.setReference.replace('-','/');
 
-          internals.query = JSON.parse(
-            `{
-              "query":{
-                   "constant_score": {
-                     "filter": {
-                       "bool": {
-                         "must": [
-                           {
-                             "match": {
-                               "reference": "${setReference}"
-                             }
-                           }
-                         ]
-                       }
-                     }
-                   }
-                }
-              }`);
+            internals.query = JSON.parse(
+                `{
+                    "query":{
+                        "constant_score": {
+                            "filter": {
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "reference": "${setReference}"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }`
+            );
 
-          elastic
+            elastic
             .search({
-              index: 'mol',
-              type: 'setitems',
-              body: internals.query
+                index: 'mol',
+                type: 'setitems',
+                body: internals.query
             }).then(function (response) {
                 try {
                     let productdata = [];
                     const [productResult] = response.hits.hits.map((element) => element._source);
-                    // console.log(productResult);
                     if (!productResult.image) {
                         productResult.gallery = [];
                     }else{
@@ -51,10 +51,10 @@ module.exports = {
                     if (!!productResult.items) {
                         let images = {};
                         images = productResult.items.map((item) => {
-                                                let { original, thumbnail } = item.image;
-                                                return {...images, original, thumbnail};
-                                            });
-                        // console.log(images);
+                            let { original, thumbnail } = item.image;
+                            return {...images, original, thumbnail};
+                        });
+
                         productResult.gallery.push(...images);
 
                         let len = productResult.items.length;
@@ -62,20 +62,17 @@ module.exports = {
                         let productdata = {};
 
                         productdata = productResult.items.map((item) => {
-                                                let { id, image } = item;
-                                                return {...productdata, id, image};
-                                            });
+                            let { id, image, specialDiscount } = item;
+                            return {...productdata, id, image, specialDiscount};
+                        });
 
-                        // console.log('productdata-->',productdata);
                         const responseSetData = {
-                          totalprice:productResult.totalPrice,
-                          setimage: (!!productResult.image)? productResult.image.original:null,
-                          products:productdata
+                            totalprice:productResult.totalPrice,
+                            setimage: (!!productResult.image)? productResult.image.original:null,
+                            products:productdata
                         }
-
                         productResult.setReferenceData = responseSetData;
                     }
-                    // console.log('productResult-->',productResult);
 
                     elastic.close();
                     return reply(JSON.stringify(productResult, null, 4));
@@ -86,9 +83,9 @@ module.exports = {
                 }
             })
             .catch(function (error) {
-              elastic.close();
-              return reply(Boom.badImplementation(err));
+                elastic.close();
+                return reply(Boom.badImplementation(err));
             });
-      })()
-  }
+        })()
+    }
 };

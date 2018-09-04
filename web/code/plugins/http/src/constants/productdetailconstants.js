@@ -1,5 +1,6 @@
 const host = HOSTNAME || 'localhost';
 
+export const FULLPATH_LOCALFILE = 'D:/Projects/GitLab/mol2016/';
 export const ROOT_URL = `//${host}:${(ENVIRONMENT!='staging')?3002:4002}/`;
 export const FETCH_PRODUCTDETAIL = 'FETCH_PRODUCTDETAIL';
 export const FETCH_GEMATTRDETAIL = 'FETCH_GEMATTRDETAIL';

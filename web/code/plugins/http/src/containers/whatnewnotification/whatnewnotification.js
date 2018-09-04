@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [10,9,8,7,6,5,4,3,2,1];
+            const roundData = [11,10,9,8,7,6,5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -424,6 +424,24 @@ class WhatNewNotification extends Component {
                                                   <p>2. Search items at Sales Report Page.</p>
                                                   <p>3. Sold items will show at Sales Search Results.</p>
                                                       <div style="margin:15px 0px; text-align:center;"><img src="/images/Sale_Module.gif"/></div>
+                                                  </div>`
+                                              }
+                                            ]
+                                },
+                                {
+                                    'id': 11,
+                                    'round': 'August 2018',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Option to search and highlight special discount pieces in MOL',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">August 24, 2018</p>
+                                                  <h3 style="padding:17px 0px 0px 0px">How to search:</h3>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <p>1. Click check box "Special Discount" field at Inventory Report Page.</p>
+                                                  <p>2. Click search button.</p>
+                                                  <p>3. Items that have special discount will show at Search Result Page.</p>
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/Special-Discount.gif"/></div>
                                                   </div>`
                                               }
                                             ]

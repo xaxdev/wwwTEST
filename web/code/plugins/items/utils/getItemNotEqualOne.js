@@ -1,30 +1,36 @@
 import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 import numberFormat2digit from './convertNumberformatwithcomma2digit';
+import config from './config';
 
 export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPermissionPrice){
     let imgPath = env == 'production'
     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
     : env == 'staging'
         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-        :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+        :`file:///${config.fullpath_localfile}web/code/plugins/http/public/images/`;
     let imgPathPublic = env == 'production'
         ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
         : env == 'staging'
             ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
-            :'file:///home/dev/www/mol/web/code/plugins/http/public';
+            :`file:///${config.fullpath_localfile}web/code/plugins/http/public`;
     let imagesThumbnail = (item.image) != undefined
                       ?  item.image.length != 0
                           ? item.image[0].thumbnail
                           : '/images/blank.gif'
                       : '/images/blank.gif';
     let imagesProduct = imagesThumbnail.replace(/\/images\//g,imgPath);
+    const isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
+    let tagbarspeciallist = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
     let htmlViewAsSetAll = '';
     htmlViewAsSetAll =
     `<tbody>
         <tr>
             <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;" rowspan="${row}">
-                <img src="${imagesProduct}" width="60">
+                <div style="position: relative;">
+                    <span style="${(isSpecialDisc)?tagbarspeciallist:''}"></span>
+                    <img src="${imagesProduct}" width="60">
+                </div>
             </td>
             <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;" rowspan="${row}">${item.reference}</td>
         </tr>

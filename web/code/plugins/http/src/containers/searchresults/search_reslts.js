@@ -96,7 +96,8 @@ class SearchResult extends Component {
             dialIndex: false,dialColor: false, movement: false, serial: false, limitedEdition: false, limitedEditionNumber: false, itemCreatedDate:false,
             showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, createdDate: false,
             isOpenMsgPageInvalid: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
-            totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false, isOpenPrintOptions: false
+            totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false, isOpenPrintOptions: false,
+            isOpenCannotAddMyCatalogmsg: false
         };
     }
 
@@ -464,7 +465,15 @@ class SearchResult extends Component {
             listMyCatalog = [];
         }
         if (item.target.checked) {
-            listMyCatalog.push(objItem);
+            let isInList = 0;
+            if (ViewAsSet) {
+                isInList = listMyCatalog.filter(inItem => inItem.reference === itemReference).length;
+            }else{
+                isInList = listMyCatalog.filter(inItem => inItem.id === itemReference).length;
+            }
+            if (isInList == 0) {
+                listMyCatalog.push(objItem);
+            }
             this.setState({[itemIndexId]: true});
             this.setState({checkAllItems: (allItems.length == listMyCatalog.length) ? true : false});
         } else {
@@ -994,17 +1003,22 @@ class SearchResult extends Component {
             }
 
         } else {
-            this.props.addCatalog(catalogdata).then(async () =>{
-                newCatalogName.value = '';
-                oldCatalogName.value = '';
-                newCatalogName.onChange('');
-                oldCatalogName.onChange('');
+            if (!!oldCatalogName.value || !!newCatalogName.value) {
+                this.props.addCatalog(catalogdata).then(async () =>{
+                    newCatalogName.value = '';
+                    oldCatalogName.value = '';
+                    newCatalogName.onChange('');
+                    oldCatalogName.onChange('');
 
-                this.setState({isOpenAddMyCatalogmsg: true});
+                    this.setState({isOpenAddMyCatalogmsg: true});
+                    this.setState({enabledMyCatalog: false});
+                    await this.props.getCatalogNameSetItem();
+                    await this.props.getSetCatalogName();
+                })
+            }else{
+                this.setState({isOpenCannotAddMyCatalogmsg: true});
                 this.setState({enabledMyCatalog: false});
-                await this.props.getCatalogNameSetItem();
-                await this.props.getSetCatalogName();
-            })
+            }
         }
     }
 
@@ -1025,6 +1039,15 @@ class SearchResult extends Component {
         );
     }
 
+    renderAlertmsgNotAddToCatalog = _=> {
+        const message = 'Cannot add to catalog success';
+        const title = 'SEARCH RESULTS';
+        return(
+            <Modalalertmsg isOpen={this.state.isOpenCannotAddMyCatalogmsg} isClose={this.handleClosemsgCannotAddMyCatalog}
+                props={this.props} message={message}  title={title}/>
+        );
+    }
+
     renderAlertmsgPdf = _=> {
         const message = 'Please check your email for printing files.';
         const title = 'SEARCH RESULTS';
@@ -1041,6 +1064,10 @@ class SearchResult extends Component {
 
     handleClosemsg = _=>{
         this.setState({isOpenAddMyCatalogmsg: false});
+    }
+
+    handleClosemsgCannotAddMyCatalog = _=>{
+        this.setState({isOpenCannotAddMyCatalogmsg: false});
     }
 
     handleClosePdfmsg = _=>{
@@ -1358,6 +1385,7 @@ class SearchResult extends Component {
                         {this.renderExportExcelViewAsSetDialog()}
                         {this.renderAddMyCatalog()}
                         {this.renderAlertmsg()}
+                        {this.renderAlertmsgNotAddToCatalog()}
                         {this.renderAlertmsgPdf()}
                         {this.renderAlertmsgPageInvalid()}
                         {this.renderDialogPrintOptions()}

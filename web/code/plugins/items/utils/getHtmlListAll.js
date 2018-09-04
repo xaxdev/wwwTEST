@@ -1,6 +1,7 @@
 import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 import numberFormat2digit from './convertNumberformatwithcomma2digit';
+import config from './config';
 
 export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userPermissionPrice){
 
@@ -156,13 +157,20 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                                                                     : env == 'staging'
                                                                         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-                                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
-                                                                let tagbarspeciallist = `position: absolute;top: -10px;left: -10px;z-index: 9;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
+                                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public/images/`;
+                                                                let imgPathPublic = env == 'production'
+                                                                    ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
+                                                                    : env == 'staging'
+                                                                        ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public`;
+                                                                let tagbarspeciallist = `position: absolute;top: -5px;left: -5px;z-index: 9;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
                                                                 if(item.price != undefined){
                                                                     price = (item.price[currency] != undefined) ? numberFormat(item.price[currency]) : '- ';
                                                                 }else{
                                                                     price = '- ';
                                                                 }
+
+                                                                let isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
 
                                                                 switch (item.type) {
                                                                     case 'JLY':
@@ -202,7 +210,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                 return (`<tr>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <div style="position: relative;">
-                                                                                    <span style="${tagbarspeciallist}"></span>
+                                                                                    <span style="${(isSpecialDisc)? tagbarspeciallist:''}"></span>
                                                                                     <img src="${imagesProduct}" width="60">
                                                                                 </div>
                                                                             </td>

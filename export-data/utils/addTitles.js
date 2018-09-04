@@ -13,7 +13,6 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
         let listFileName = [];
         let ROOT_URL = request.ROOT_URL;
         let viewAsSet = request.viewAsSet;
-        console.log('viewAsSet-->',!!viewAsSet);
 
         let data = responseData.hits.hits.map((element) => element._source);
 
@@ -86,7 +85,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                     titles.push('Price (USD)');
                 }
             }
-            titles.push('Item Weight (Grams)','Ring Size', 'Jewels Weight (text)','Site','Company', 'Location');
+            titles.push('Special Discount','Item Weight (Grams)','Ring Size', 'Jewels Weight (text)','Site','Company', 'Location');
             if(fields.allFields){
                 titles.push(
                     'Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color',

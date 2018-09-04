@@ -1,5 +1,6 @@
 import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
+import config from './config';
 
 export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userPermissionPrice){
 
@@ -88,8 +89,14 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                                                     : env == 'staging'
                                                         ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-                                                        :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
-                                                let tagbarspecialgrid = `position: absolute;top: 8px;left: 15px;z-index: 9;width: 88px;height: 93px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_grid.png)right top no-repeat;`
+                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public/images/`;
+                                                let imgPathPublic = env == 'production'
+                                                    ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
+                                                    : env == 'staging'
+                                                        ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public`;
+                                                let tagbarspecialgrid = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 50px;height: 53px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_pdf.png)right top no-repeat;`
+                                                let isSpecialDisc = false;
                                                 if(isViewAsSet){
                                                     price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
                                                     itemName = (item.type != 'CER')
@@ -102,6 +109,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                             ? item.image[0].original
                                                             : '/images/blank.gif'
                                                         : '/images/blank.gif';
+                                                    isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                                                 }else{
                                                     price = GetPriceWithCurrency(item,'price',currency);
                                                     itemName = (item.description != undefined)
@@ -110,12 +118,13 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                     imagesProduct = (item.gallery) != undefined
                                                         ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
                                                         : '/images/blank.gif';
+                                                    isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                                                 }
                                                 imagesProduct = imagesProduct.replace(/\/images\//g,imgPath);
                                                 return (`<div name="${item.id}" id="${index}" style="width: 135px; padding: 0;float: left;height: 380px; margin: 0 auto;">
                                                             <div style="margin: 0 auto; text-align: center;font-size: 10px;position: relative;z-index: 2;padding: 15px 11px 0 11px;height: 380px;cursor: pointer;">
+                                                                <span style="${(isSpecialDisc)? tagbarspecialgrid:''}"></span>
                                                                 <div style="margin: 0 auto; height: 200px; overflow: hidden; position: relative; width:123px;">
-                                                                    <span style="${tagbarspecialgrid}"></span>
                                                                     <img style="width:120px;margin: 0 auto;" width="160" src="${imagesProduct}" name="${item.id}" id="${item.id}">
                                                                 </div>
                                                                 <p style="font-family: 'open_sanssemibold';color: #000;margin: 0 0 10px;">

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import MyCatalogPrintAll from './myCatalogPrintAll';
+import { FULLPATH_LOCALFILE } from '../constants/productdetailconstants';
 
 export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     const items = dv.items;
@@ -37,8 +38,14 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
                             ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
                             : env == 'staging'
                                 ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-                                :'file:///home/dev/www/mol/web/code/plugins/http/public/images/';
+                                :`file:///${FULLPATH_LOCALFILE}web/code/plugins/http/public/images/`;
+    let imgPathPublic = env == 'production'
+                            ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
+                            : env == 'staging'
+                                ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                :`file:///${FULLPATH_LOCALFILE}web/code/plugins/http/public`;
 
+    let tagbarspecialgrid = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 50px;height: 53px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_pdf.png)right top no-repeat;`
 
     dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="font-b fc-000"/g,'style="font-weight: bold; color: #000;"'):'';
     dvTotalItems = !!dvTotalItems?dvTotalItems.replace(/class="padding-lf15"/g,'style="padding: 0 5px;"'):'';
@@ -93,7 +100,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     dvGridview = dvGridview.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridview = dvGridview.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
     dvGridview = dvGridview.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
-    // dvGridview = dvGridview.replace(/\/original\//g,'/thumbnail/');
+    dvGridview = dvGridview.replace(/class="tagbar-special"/g,`style="${tagbarspecialgrid}"`);
 
     dvGridviewAll = dvGridviewAll.replace(/class="searchresult-prodcut "/g,`style="${styleSearchproductGride}"`);
     // dvGridview = dvGridview.replace(/\/images\//g,imagesReplace);
@@ -111,7 +118,7 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
     dvGridviewAll = dvGridviewAll.replace(/class="fc-ae8f3b font-b price "/g,`style="${stylePrice}"`);
     dvGridviewAll = dvGridviewAll.replace(/class="thumbnaillgrid"/g,`style="${thumbnaillgrid}"`);
     dvGridviewAll = dvGridviewAll.replace(/<img/g,`<img style="${thumbnaillgridimg}" `);
-
+    dvGridviewAll = dvGridviewAll.replace(/class="tagbar-special"/g,`style="${tagbarspecialgrid}"`);
 
     let htmlTemplate = '';
 
@@ -131,22 +138,20 @@ export default function GenTemplateHtml(ROOT_URL, imagesReplace, dv){
                                             ${dvTotalSetItems}
                                         </div>
                                         <div>
-                                          <div style="${styleColsm12}">
-                                              <div style="${stylePanel}">
-                                                  <div>
-                                                      <div style="${styleSearchproduct}">
-                                                          ${printPage == 'all'? dvGridviewAll: dvGridview}
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
+                                            <div style="${styleColsm12}">
+                                                <div style="${stylePanel}">
+                                                    <div>
+                                                        <div style="${styleSearchproduct}">
+                                                            ${printPage == 'all'? dvGridviewAll: dvGridview}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </body>
                     </html>`;
-
     return htmlTemplate;
-
 }
