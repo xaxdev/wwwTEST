@@ -2,7 +2,7 @@
     "elasticsearch": {
         "$filter": "env",
         "development": {
-            "host": "13.67.69.236:9200 ",
+            "host": "192.168.1.94:9200 ",
             "index": "mol",
             "typeItems": "items",
             "typeSetItem": "setitems",
