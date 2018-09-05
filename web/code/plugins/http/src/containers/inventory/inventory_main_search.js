@@ -104,44 +104,42 @@ class InventorySearch extends Component {
             default:
         }
     }
+    handleClosemsgSaveSearch = _=> {
+        this.props.setCloseAlertMsg(100);
+    }
 
-  handleClosemsgSaveSearch = _=> {
-      this.props.setCloseAlertMsg(100);
-  }
+    renderAlertmsgSaveSearch = _=> {
+        const { saveSearchStatus, saveSearchStatusCode, saveSearchMsgError} = this.props;
 
-  renderAlertmsgSaveSearch = _=> {
-      const { saveSearchStatus, saveSearchStatusCode, saveSearchMsgError} = this.props;
+        const title = 'SAVE SEARCHES';
+        let isOpen = saveSearchStatusCode >= 200 ? true : false;
 
-      const title = 'SAVE SEARCHES';
-      let isOpen = saveSearchStatusCode >= 200 ? true : false;
+        return(<Modalalertmsg isOpen={isOpen} isClose={this.handleClosemsgSaveSearch}
+            props={this.props} message={saveSearchMsgError}  title={title}/>);
+    }
 
-      return(<Modalalertmsg isOpen={isOpen} isClose={this.handleClosemsgSaveSearch}
-          props={this.props} message={saveSearchMsgError}  title={title}/>);
-  }
-
-  render(){
-      return (
-          <div>
-            <InventoryFilter onSubmit={this.handleSubmit}/>
-            {this.renderAlertmsgSaveSearch()}
-          </div>
-      );
-  }
+    render(){
+        return (
+            <div>
+                <InventoryFilter onSubmit={this.handleSubmit}/>
+                {this.renderAlertmsgSaveSearch()}
+            </div>
+        );
+    }
 }
 function mapStateToProps(state) {
-  // console.log('InventorySearch state-->',state);
-  return {
-    searchResult:state.searchResult,
-    activeTabCategory: state.searchResult.activeTabCategory,
-    isAdvance: state.searchResult.IsAdvance,
-    filters: state.searchResult.filters,
-    paramsSearch: state.searchResult.paramsSearch,
-    submitAction: state.searchResult.SubmitAction,
-    saveSearchStatus: state.searchResult.saveSearchStatus,
-    saveSearchMsgError: state.searchResult.msg,
-    saveSearchStatusCode: state.searchResult.saveSearchStatusCode,
-    IdEditSaveSearch: state.searchResult.idEditSaveSearch,
-  };
+    return {
+        searchResult:state.searchResult,
+        activeTabCategory: state.searchResult.activeTabCategory,
+        isAdvance: state.searchResult.IsAdvance,
+        filters: state.searchResult.filters,
+        paramsSearch: state.searchResult.paramsSearch,
+        submitAction: state.searchResult.SubmitAction,
+        saveSearchStatus: state.searchResult.saveSearchStatus,
+        saveSearchMsgError: state.searchResult.msg,
+        saveSearchStatusCode: state.searchResult.saveSearchStatusCode,
+        IdEditSaveSearch: state.searchResult.idEditSaveSearch,
+    };
 }
 
 module.exports = connect(mapStateToProps,itemactions)(InventorySearch);

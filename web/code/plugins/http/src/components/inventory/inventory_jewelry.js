@@ -233,7 +233,9 @@ class InventoryJewelry extends Component {
         const { props, handleArticleSelected } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
-        let { fields: { article, jewelryCategory, collection, brand, ringSize, dominantStone, metalType, metalColour }, searchResult } = props;
+        let { fields: {
+             article, jewelryCategory, collection, brand, ringSize, dominantStone, metalType, metalColour, jewelryProductHierarchy
+        }, searchResult } = props;
         let findFieldName = [];
 
         let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
@@ -407,9 +409,30 @@ class InventoryJewelry extends Component {
         if (ArticleSelectedValue == '') {
             let hierarchyData = RemoveHierarchy(notUseHierarchy, hiTreeData, 'JLY');
             DeleteHierarchy(hierarchyData)
+            jewelryProductHierarchy.onChange('');
         }else{
             let hierarchyData = RemoveHierarchy(notUseHierarchy, hiTreeData, 'JLY');
             ClearHierarchy(hierarchyData);
+            let hierarchyDataSearch = SearchHierarchy(hierarchyData, ArticleSelectedValue);
+            props.inventoryActions.setHierarchy(hierarchyDataSearch);
+            let treeSelected = [];
+            let selectedData = hierarchyDataSearch.filter(val => {
+                let checkAllNodes = function(node){
+                    if (node.children) {
+                        if(node.checked === true){treeSelected.push(node);}
+                        node.children.forEach(checkAllNodes);
+                    }else{
+                        if(node.checked === true){treeSelected.push(node);}
+                    }
+                }
+                if(val.checked === true){treeSelected.push(val);}
+
+                if(val.children){
+                    val.children.forEach(checkAllNodes);
+                }
+                return treeSelected;
+            });
+            jewelryProductHierarchy.onChange(treeSelected);
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
@@ -541,8 +564,9 @@ class InventoryJewelry extends Component {
         let hierarchyData = RemoveHierarchy(notUseHierarchy, TreeData, 'JLY');
         if (props.ArticleValue.length != 0) {
             hierarchyData = SearchHierarchy(hierarchyData, props.ArticleValue);
+        }else{
+            DeleteHierarchy(hierarchyData)
         }
-
         return(
             <div className="panel panel-default">
                 <div className="panel-body">
