@@ -333,6 +333,17 @@ class InventoryFilter extends Component {
 
         ResetFormMain(this);
         this.props.resetForm();
+        this.props.inventoryActions.setSpecialDiscount(0);
+        if(this.props.HierarchyValue != null){
+            if(this.props.SearchAction == 'New'){
+                if(this.props.HierarchyValue.length != 0){
+                    delete this.props.HierarchyValue[0].checked;
+                }
+                this.props.inventoryActions.setHierarchy(this.props.HierarchyValue);
+            }else{
+            }
+        }else{
+        }
         this.refs.jewelry.treeOnUnClick();
         this.refs.watch.treeOnUnClick();
         this.refs.stone.treeOnUnClick();
