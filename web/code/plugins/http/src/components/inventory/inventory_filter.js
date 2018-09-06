@@ -25,6 +25,7 @@ import InventoryOBA from './inventory_oba';
 import InventorySparePart from './inventory_sparepart';
 import ModalSaveSearch from './modalSaveSearch';
 import ValidateSaveSearch from './validatesavesearch';
+import DeleteHierarchy from './utils/delete_hierarchy_attr';
 import jQuery from 'jquery';
 import '../../../public/css/react-multi-select.css';
 import '../../../public/css/input-calendar.css';
@@ -334,16 +335,7 @@ class InventoryFilter extends Component {
         ResetFormMain(this);
         this.props.resetForm();
         this.props.inventoryActions.setSpecialDiscount(0);
-        if(this.props.HierarchyValue != null){
-            if(this.props.SearchAction == 'New'){
-                if(this.props.HierarchyValue.length != 0){
-                    delete this.props.HierarchyValue[0].checked;
-                }
-                this.props.inventoryActions.setHierarchy(this.props.HierarchyValue);
-            }else{
-            }
-        }else{
-        }
+        DeleteHierarchy(this.refs.jewelry.refs.treeview.props.data)
         this.refs.jewelry.treeOnUnClick();
         this.refs.watch.treeOnUnClick();
         this.refs.stone.treeOnUnClick();

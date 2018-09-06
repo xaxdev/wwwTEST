@@ -119,6 +119,9 @@ var Tree = React.createClass({
       					}
       				})
       			}
+                if (!this.state.data[0].checked) {
+                    delete this.state.data[0].checked
+                }
       		}
       	}
 
