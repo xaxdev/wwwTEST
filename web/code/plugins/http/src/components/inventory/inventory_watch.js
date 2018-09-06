@@ -65,7 +65,7 @@ class InventoryWatch extends Component {
             if(props.HierarchyValue != null){
                 if(nextProps.props.SearchAction == 'New'){
                     if(props.HierarchyValue.length != 0){
-                        props.HierarchyValue[0].checked = false;
+                        DeleteHierarchy(props.HierarchyValue)
                         props.HierarchyValue[0].key = props.HierarchyValue[0].code;
                         this.refs.treeview.handleChange(props.HierarchyValue[0]);
                     }
@@ -84,12 +84,14 @@ class InventoryWatch extends Component {
         }else{
             if(this.props.props.HierarchyValue != null){
                 if(this.props.props.SearchAction == 'New'){
-                    if(this.props.props.HierarchyValue.length != 0){
-                        this.props.props.HierarchyValue[0].checked = false;
-                        this.props.props.HierarchyValue[0].key = this.props.props.HierarchyValue[0].code;
-                        this.refs.treeview.handleChange(this.props.props.HierarchyValue[0]);
+                    if (this.props.props.HierarchyValue.length != undefined) {
+                        if(this.props.props.HierarchyValue.length != 0){
+                            DeleteHierarchy(this.props.props.HierarchyValue)
+                            this.props.props.HierarchyValue[0].key = this.props.props.HierarchyValue[0].code;
+                            this.refs.treeview.handleChange(this.props.props.HierarchyValue[0]);
+                        }
+                        this.props.props.inventoryActions.setHierarchy(null);
                     }
-                    this.props.props.inventoryActions.setHierarchy(null);
                 }
             }
         }
@@ -97,32 +99,45 @@ class InventoryWatch extends Component {
 
     treeOnClick(vals){
         this.setState({treeViewData:vals});
-        this.props.props.inventoryActions.setHierarchy(vals);
-        let treeSelected = [];
-        let selectedData = vals.filter(val => {
-            let checkAllNodes = function(node){
-                if (node.children) {
-                    if(node.checked === true){treeSelected.push(node);}
-                    node.children.forEach(checkAllNodes);
-                }else{
-                    if(node.checked === true){treeSelected.push(node);}
+        // if have selected
+        if (!!vals) {
+            // if values have attr checked
+            if (vals[0].checked != undefined) {
+                // if checked is false
+                if (!vals[0].checked) {
+                    DeleteHierarchy(vals)
                 }
             }
-            if(val.checked === true){treeSelected.push(val);}
+            this.props.props.inventoryActions.setHierarchy(vals);
+            let treeSelected = [];
+            let selectedData = vals.filter(val => {
+                let checkAllNodes = function(node){
+                    if (node.children) {
+                        if(node.checked === true){treeSelected.push(node);}
+                        node.children.forEach(checkAllNodes);
+                    }else{
+                        if(node.checked === true){treeSelected.push(node);}
+                    }
+                }
+                if(val.checked === true){treeSelected.push(val);}
 
-            if(val.children){
-                val.children.forEach(checkAllNodes);
-            }
-            return treeSelected;
-        });
-        const { props } = this.props;
-        let { fields: { watchProductHierarchy }, searchResult } = props;
+                if(val.children){
+                    val.children.forEach(checkAllNodes);
+                }
+                return treeSelected;
+            });
+            const { props } = this.props;
+            let { fields: { watchProductHierarchy }, searchResult } = props;
 
-        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
-        if(paramsSearch != null)
-            paramsSearch.watchProductHierarchy = treeSelected;
+            let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
+            if(paramsSearch != null)
+                paramsSearch.watchProductHierarchy = treeSelected;
 
-        watchProductHierarchy.onChange(treeSelected);
+            watchProductHierarchy.onChange(treeSelected);
+        }else {
+            DeleteHierarchy([TreeData])
+            this.props.props.inventoryActions.setHierarchy(TreeData);
+        }
     }
 
     handleWatchCategorySelectChange(watchCategorySelectValue){
@@ -370,9 +385,10 @@ class InventoryWatch extends Component {
         const { props, handleArticleSelected } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
-        let { fields: { article, watchCategory, collection, brand, metalType, metalColour, dominantStone,
-            limitedEdition, movement, dialIndex, dialColor, dialMetal, buckleType, strapType, strapColor,
-            complication }, searchResult } = props;
+        let { fields: {
+            article, watchCategory, collection, brand, metalType, metalColour, dominantStone, limitedEdition, movement, dialIndex, dialColor,
+            dialMetal, buckleType, strapType, strapColor, complication, watchProductHierarchy
+        }, searchResult } = props;
         let findFieldName = [];
 
         let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
@@ -709,6 +725,27 @@ class InventoryWatch extends Component {
         }else{
             let hierarchyData = RemoveHierarchy(notUseHierarchy, hiTreeData, 'WAT');
             ClearHierarchy(hierarchyData);
+
+            let hierarchyDataSearch = SearchHierarchy(hierarchyData, ArticleSelectedValue);
+            props.inventoryActions.setHierarchy(hierarchyDataSearch);
+            let treeSelected = [];
+            let selectedData = hierarchyDataSearch.filter(val => {
+                let checkAllNodes = function(node){
+                    if (node.children) {
+                        if(node.checked === true){treeSelected.push(node);}
+                        node.children.forEach(checkAllNodes);
+                    }else{
+                        if(node.checked === true){treeSelected.push(node);}
+                    }
+                }
+                if(val.checked === true){treeSelected.push(val);}
+
+                if(val.children){
+                    val.children.forEach(checkAllNodes);
+                }
+                return treeSelected;
+            });
+            watchProductHierarchy.onChange(treeSelected);
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
