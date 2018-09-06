@@ -22,6 +22,7 @@ import ResetSalesCategory from '../../utils/resetSalesCategory';
 import ResetFormSalesReport from '../../utils/resertFormSalesReport';
 import ModalSaveSearch from './modalSaveSearch';
 import ValidateSaveSearch from './validatesavesearch';
+import DeleteSalesHierarchy from './utils/delete_hierarchy_attr';
 import '../../../public/css/react-multi-select.css';
 import '../../../public/css/input-calendar.css';
 
@@ -319,6 +320,7 @@ class SalesReportMain extends Component {
 
         ResetFormSalesReport(this);
         this.props.resetForm();
+        DeleteSalesHierarchy(this.refs.jewelry.refs.treeview.props.data)
         this.refs.jewelry.treeOnUnClick();
         this.refs.watch.treeOnUnClick();
         this.refs.stone.treeOnUnClick();
@@ -625,6 +627,7 @@ function mapStateToProps(state) {
         SearchAction: state.searchResult.SearchAction,
         InvoiceDateFrom: state.searchResult.InvoiceDateFrom,
         InvoiceDateTo: state.searchResult.InvoiceDateTo,
+        SalesHierarchyValue: state.searchResult.SalesHierarchyValue,
     }
 }
 function mapDispatchToProps(dispatch) {

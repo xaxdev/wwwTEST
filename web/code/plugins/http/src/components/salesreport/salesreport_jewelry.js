@@ -63,7 +63,7 @@ class SalesReportJewelry extends Component {
             if(props.SalesHierarchyValue != null){
                 if(nextProps.props.SearchAction == 'New'){
                     if(props.SalesHierarchyValue.length != 0){
-                        props.SalesHierarchyValue[0].checked = false;
+                        DeleteSalesHierarchy(props.SalesHierarchyValue)
                         props.SalesHierarchyValue[0].key = props.SalesHierarchyValue[0].code;
                         this.refs.treeview.handleChange(props.SalesHierarchyValue[0]);
                     }
@@ -83,7 +83,7 @@ class SalesReportJewelry extends Component {
             if(this.props.props.SalesHierarchyValue != null){
                 if(this.props.props.SearchAction == 'New'){
                     if(this.props.props.SalesHierarchyValue.length != 0){
-                        this.props.props.SalesHierarchyValue[0].checked = false;
+                        DeleteSalesHierarchy(this.props.props.SalesHierarchyValue)
                         this.props.props.SalesHierarchyValue[0].key = this.props.props.SalesHierarchyValue[0].code;
                         this.refs.treeview.handleChange(this.props.props.SalesHierarchyValue[0]);
                     }
@@ -232,7 +232,8 @@ class SalesReportJewelry extends Component {
         const { props } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseSalesHierarchy = JSON.parse(userLogin.permission.notUseSalesHierarchy)
-        let { fields: { article, jewelryCategory, collection, brand, ringSize, dominantStone, metalType, metalColour
+        let { fields: {
+            article, jewelryCategory, collection, brand, ringSize, dominantStone, metalType, metalColour, jewelryProductSalesHierarchy
         }, searchResult } = props;
         let findFieldName = [];
 
@@ -396,6 +397,27 @@ class SalesReportJewelry extends Component {
         }else{
             let salesHierarchyData = RemoveSalesHierarchy(notUseSalesHierarchy, hiTreeData, 'JLY');
             ClearSalesHierarchy(salesHierarchyData);
+
+            let hierarchyDataSearch = SearchSalesHierarchy(salesHierarchyData, ArticleSelectedValue);
+            props.inventoryActions.setSalesHierarchy(hierarchyDataSearch);
+            let treeSelected = [];
+            let selectedData = hierarchyDataSearch.filter(val => {
+                let checkAllNodes = function(node){
+                    if (node.children) {
+                        if(node.checked === true){treeSelected.push(node);}
+                        node.children.forEach(checkAllNodes);
+                    }else{
+                        if(node.checked === true){treeSelected.push(node);}
+                    }
+                }
+                if(val.checked === true){treeSelected.push(val);}
+
+                if(val.children){
+                    val.children.forEach(checkAllNodes);
+                }
+                return treeSelected;
+            });
+            jewelryProductSalesHierarchy.onChange(treeSelected);
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);

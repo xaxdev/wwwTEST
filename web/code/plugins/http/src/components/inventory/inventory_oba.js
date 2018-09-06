@@ -53,7 +53,7 @@ class InventoryOBA extends Component {
             if(props.HierarchyValue != null){
                 if(nextProps.props.SearchAction == 'New'){
                     if(props.HierarchyValue.length != 0){
-                        props.HierarchyValue[0].checked = false;
+                        DeleteHierarchy(props.HierarchyValue)
                         props.HierarchyValue[0].key = props.HierarchyValue[0].code;
                         this.refs.treeview.handleChange(props.HierarchyValue[0]);
                     }
@@ -73,7 +73,7 @@ class InventoryOBA extends Component {
             if(this.props.props.HierarchyValue != null){
                 if(this.props.props.SearchAction == 'New'){
                     if(this.props.props.HierarchyValue.length != 0){
-                        this.props.props.HierarchyValue[0].checked = false;
+                        DeleteHierarchy(this.props.props.HierarchyValue)
                         this.props.props.HierarchyValue[0].key = this.props.props.HierarchyValue[0].code;
                         this.refs.treeview.handleChange(this.props.props.HierarchyValue[0]);
                     }
@@ -190,7 +190,8 @@ class InventoryOBA extends Component {
         const { props, handleArticleSelected } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const notUseHierarchy = JSON.parse(userLogin.permission.notUseHierarchy)
-        let { fields: { article, collection, brand, metalType, metalColour, dominantStone
+        let { fields: {
+            article, collection, brand, metalType, metalColour, dominantStone, obaProductHierarchy
         }, searchResult } = props;
         let findFieldName = [];
 
@@ -322,6 +323,27 @@ class InventoryOBA extends Component {
         }else{
             let hierarchyData = RemoveHierarchy(notUseHierarchy, hiTreeData, 'OBA');
             ClearHierarchy(hierarchyData);
+
+            let hierarchyDataSearch = SearchHierarchy(hierarchyData, ArticleSelectedValue);
+            props.inventoryActions.setHierarchy(hierarchyDataSearch);
+            let treeSelected = [];
+            let selectedData = hierarchyDataSearch.filter(val => {
+                let checkAllNodes = function(node){
+                    if (node.children) {
+                        if(node.checked === true){treeSelected.push(node);}
+                        node.children.forEach(checkAllNodes);
+                    }else{
+                        if(node.checked === true){treeSelected.push(node);}
+                    }
+                }
+                if(val.checked === true){treeSelected.push(val);}
+
+                if(val.children){
+                    val.children.forEach(checkAllNodes);
+                }
+                return treeSelected;
+            });
+            obaProductHierarchy.onChange(treeSelected);
         }
         article.onChange(ArticleSelectedValue);
         props.inventoryActions.setDataArticle(ArticleSelectedValue);
