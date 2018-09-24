@@ -24,6 +24,7 @@ import GenTemplateHtml from '../../utils/genTemplatePdfSearchResult';
 import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter';
 import RenderClassTotals from './utils/render_total';
 import RenderExportExcelDialog from './utils/render_export_excel_dialog';
+import RenderChangeTitleListBox from './utils/render_change_title_list_box';
 import RenderExportExcelViewAsSetDialog from './utils/render_export_excel_viewasset_dialog'
 import ModalPrintOptions from './utils/modalPrintOptions';
 import SearchResultLoader from './search_results_loader';
@@ -86,6 +87,7 @@ class SearchResult extends Component {
         this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
         this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
+        this.changeTitle = this.changeTitle.bind(this);
 
         this.state = {
             activePage: this.props.currentPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true, cut: false,
@@ -97,7 +99,7 @@ class SearchResult extends Component {
             showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, createdDate: false,
             isOpenMsgPageInvalid: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
             totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false, isOpenPrintOptions: false,
-            isOpenCannotAddMyCatalogmsg: false
+            isOpenCannotAddMyCatalogmsg: false, isOpenChangeTitle: false
         };
     }
 
@@ -769,6 +771,30 @@ class SearchResult extends Component {
         this.setState({ isOpen: true });
     }
 
+    changeTitle(){
+        // const that = this;
+        // checkFields.map(function(field, index){
+        //     that.setState({ [field]: false });
+        // });
+        // this.setState({ allFields: false });
+        // this.setState({ showImages: false });
+        console.log('this.state.isOpenChangeTitle-->',this.state.isOpenChangeTitle);
+        this.setState({ isOpenChangeTitle: true });
+    }
+    hideChangeTitle = (e) => {
+        e.preventDefault();
+        this.setState({ isOpenChangeTitle: false });
+    }
+
+    renderTitleDialog(){
+        const that = this;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        return(
+            <RenderChangeTitleListBox that={this} userLogin={userLogin} checkFields={checkFields} labels={labels} selectedAllFields={this.selectedAllFields}
+                selectedNoAllFields={this.selectedNoAllFields}/>
+        );
+    }
+
     exportExcelViewAsSet = _=> {
         const that = this;
         checkFieldsViewAsSet.map(function(field, index){
@@ -1302,6 +1328,9 @@ class SearchResult extends Component {
                                                         disabled={submitting} onClick={ this.showDialogPrintOptions }>
                                                     </div>
                                                 </a>
+                                                <a>
+                                                    <div className="icon-excel" disabled={submitting} onClick={ this.changeTitle }></div>
+                                                </a>
                                             </div>
                                             <div className="col-md-9 col-sm-12 col-xs-12 pagenavi">
                                                 <div className="searchresult-navi search-right">
@@ -1389,6 +1418,7 @@ class SearchResult extends Component {
                         {this.renderAlertmsgPdf()}
                         {this.renderAlertmsgPageInvalid()}
                         {this.renderDialogPrintOptions()}
+                        {this.renderTitleDialog()}
                     </form>
                 );
             }
