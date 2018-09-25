@@ -314,9 +314,10 @@ const mapProperties = (item, record, exchangeRates) => {
             const image = {
                 original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
                 thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`,
-                conpany: `${record.imageCompany}`
+                conpany: `${record.imageCompany}`,
+                defaultImage: `${record.defaultImage}`,
+                lastModifiedDateImage: `${record.lastModifiedDateImage}`
             };
-
             item.gallery.push(image);
         }
     }
@@ -328,7 +329,6 @@ const mapProperties = (item, record, exchangeRates) => {
                 original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
                 thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
             };
-
             item.imagesCOA.push(image);
         }
     }
@@ -340,7 +340,6 @@ const mapProperties = (item, record, exchangeRates) => {
                 original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
                 thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
             };
-
             item.imagesDBC.push(image);
         }
     }
@@ -352,7 +351,6 @@ const mapProperties = (item, record, exchangeRates) => {
                 original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
                 thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
             };
-
             item.filesMonograph.push(image);
         }
     }
@@ -361,7 +359,9 @@ const mapProperties = (item, record, exchangeRates) => {
     if (!!record.CertificateImageName) {
         const image = {
             original: `${config.gallery.original}/${record.CertificateImageName}.${record.CertificateImageType}`,
-            thumbnail: `${config.gallery.thumbnail}/${record.CertificateImageName}.${record.CertificateImageType}`
+            thumbnail: `${config.gallery.thumbnail}/${record.CertificateImageName}.${record.CertificateImageType}`,
+            defaultImage: `${record.certificateDefaultImage}`,
+            lastModifiedDateImage: `${record.certificateLastModifiedDateImage}`
         };
 
         if (record.type === 'STO') {
@@ -371,7 +371,6 @@ const mapProperties = (item, record, exchangeRates) => {
                 if (certificate.images === undefined) {
                     certificate.images = [];
                 }
-
                 if (certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${record.CertificateImageName}.${record.CertificateImageType}$`))) !== null) === -1) {
                     certificate.images.push(image);
                 }
@@ -383,7 +382,6 @@ const mapProperties = (item, record, exchangeRates) => {
                 if (gemstone.certificate.images === undefined) {
                     gemstone.certificate.images = [];
                 }
-
                 if (gemstone.certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${record.CertificateImageName}.${record.CertificateImageType}$`))) !== null) === -1) {
                     gemstone.certificate.images.push(image);
                 }
@@ -431,8 +429,6 @@ const mapProperties = (item, record, exchangeRates) => {
 };
 
 const mapPropertiesLotNumber = (item, record, exchangeRates) => {
-    // console.log(record);
-
     gemstoneProperties.forEach(property => {
         if (item[property] !== undefined) {
             delete item[property];

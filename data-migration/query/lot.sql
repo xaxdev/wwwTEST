@@ -57,11 +57,15 @@ SELECT UPPER(item.[Reference]) AS 'reference'
     , ISNULL(img.[FILETYPE], '') AS 'imageType'
     , ISNULL(img.[TYPEID], '') AS 'imageTypeId'
     , ISNULL(img.[Company], '') AS 'imageCompany'
+    , ISNULL(img.[DEFAULTIMAGE], 0) AS 'defaultImage'
+    , ISNULL(img.[LASTMODIFIEDDATE], '') AS 'lastModifiedDate'
     , ISNULL(cert.CERTIFICATIONNO, '') AS [CertificateNo]
     , ISNULL(cert.AGENCYID, '') AS [CertificateAgency]
     , ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
     , ISNULL(certimage.[FILENAME], '') AS [CertificateImageName]
     , ISNULL(certimage.[FILETYPE], '') AS [CertificateImageType]
+    , ISNULL(certimage.[DEFAULTIMAGE], 0) AS 'certificateDefaultImage'
+    , ISNULL(certimage.[LASTMODIFIEDDATE], '') AS 'certificateLastModifiedDate'
     , certmaster.[CertificateCreateDate] AS [CertifiedDate]
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone

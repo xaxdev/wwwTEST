@@ -1,5 +1,5 @@
 SELECT item.[Id] AS 'id'
-  , UPPER(item.[Reference]) AS 'reference'
+    , UPPER(item.[Reference]) AS 'reference'
     , item.[Name] AS 'name'
     , item.[DESCRIPTION] AS 'description'
     , UPPER(item.[Company]) AS 'company'
@@ -59,36 +59,50 @@ SELECT item.[Id] AS 'id'
     , ISNULL(img.[FILETYPE], '') AS 'imageType'
     , ISNULL(img.[TYPEID], '') AS 'imageTypeId'
     , ISNULL(img.[Company], '') AS 'imageCompany'
+    , ISNULL(img.[DEFAULTIMAGE], 0) AS 'defaultImage'
+    , ISNULL(img.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateImage'
+    , ISNULL(imgOther.[FILENAME], '') AS 'imageOtherName'
+    , ISNULL(imgOther.[FILETYPE], '') AS 'imageOtherType'
+    , ISNULL(imgOther.[TYPEID], '') AS 'imageOtherTypeId'
+    , ISNULL(imgOther.[Company], '') AS 'imageOtherCompany'
+    , ISNULL(imgOther.[DEFAULTIMAGE], 0) AS 'defaultImageOther'
+    , ISNULL(imgOther.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateImageOther'
     , ISNULL(cert.CERTIFICATIONNO, '') AS [CertificateNo]
     , ISNULL(cert.AGENCYID, '') AS [CertificateAgency]
     , ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
     , ISNULL(certimage.[FILENAME], '') AS [CertificateImageName]
     , ISNULL(certimage.[FILETYPE], '') AS [CertificateImageType]
+    , ISNULL(certimage.[DEFAULTIMAGE], 0) AS 'certificateDefaultImage'
+    , ISNULL(certimage.[LASTMODIFIEDDATE], '') AS 'certificateLastModifiedDateImage'
     , certmaster.[CertificateCreateDate] AS [CertifiedDate]
 FROM [ITORAMA].[dbo].[Items] item
 LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
-  ON item.[Reference] = gemstone.[ItemReference]
-  AND item.[Company] = gemstone.[Company]
+    ON item.[Reference] = gemstone.[ItemReference]
+    AND item.[Company] = gemstone.[Company]
 INNER JOIN [ITORAMA].[dbo].[Accessory] accessory
-  ON item.[Reference] = accessory.[ItemReference]
-  AND item.[Company] = accessory.[Company]
+    ON item.[Reference] = accessory.[ItemReference]
+    AND item.[Company] = accessory.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
-  ON item.[Reference] = img.[ITEMID]
-  --AND img.[Company] = item.[Company]
-  AND img.[TYPEID] in ('Image','COA','DBC','Monograph')
+    ON item.[Reference] = img.[ITEMID]
+    AND img.[Company] = item.[Company]
+    AND img.[TYPEID] in ('Image')
+LEFT JOIN [ITORAMA].[dbo].[ItemImages] imgOther
+    ON item.[Reference] = imgOther.[ITEMID]
+    AND item.[Company] = imgOther.[Company]
+    AND imgOther.[TYPEID] in ('COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
-  ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
-  AND item.[Company] = cert.[Company]
+    ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
+    AND item.[Company] = cert.[Company]
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
-  ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
-  AND certimage.[Company] = item.[Company]
-  AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
+    ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
+    AND certimage.[Company] = item.[Company]
+    AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
-  ON cert.[CERTIFICATIONNO] = certmaster.[Item]
-  AND item.[Company] = certmaster.[Company]
+    ON cert.[CERTIFICATIONNO] = certmaster.[Item]
+    AND item.[Company] = certmaster.[Company]
 LEFT JOIN [ITORAMA].[dbo].[DominantStone] dominantstone
-  ON dominantstone.[Code] = item.[DominantStone]
+    ON dominantstone.[Code] = item.[DominantStone]
 LEFT JOIN [ITORAMA].[dbo].[Company] company
-  ON item.[Company] = company.[Code]
+    ON item.[Company] = company.[Code]
 WHERE item.[Id] BETWEEN @from AND @to
 ORDER BY item.[Id]

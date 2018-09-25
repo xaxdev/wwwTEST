@@ -15,6 +15,8 @@ SELECT [ITORAMA].[dbo].[CertificateMaster].[RecId] AS 'id'
       , ISNULL(certimage.[FILETYPE], '') AS 'imageType'
       , ISNULL(certimage.[TYPEID], '') AS 'imageTypeId'
       , ISNULL(certimage.[Company], '') AS 'imageCompany'
+      , ISNULL(certimage.[DEFAULTIMAGE], 0) AS 'defaultImage'
+      , ISNULL(certimage.[LASTMODIFIEDDATE], '') AS 'lastModifiedDate'
 FROM [ITORAMA].[dbo].[CertificateMaster]
 LEFT JOIN [ITORAMA].[dbo].[ItemCertificates] cert
   ON [ITORAMA].[dbo].[CertificateMaster].[Item] = cert.[CERTIFICATIONNO]

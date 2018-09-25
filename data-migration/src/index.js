@@ -14,8 +14,8 @@ const init = async _ => {
         const index_solditems = `mol_solditems_${moment().format('YYYYMMDD_HHmm')}`;
         const name_solditems = 'mol_solditems';
 
-        await migration.soldItems(index_solditems);
-        await migration.alias(index_solditems, name_solditems);
+        // await migration.soldItems(index_solditems);
+        // await migration.alias(index_solditems, name_solditems);
 
         await migration.migrate(index);
         await migration.itemSets(index);
