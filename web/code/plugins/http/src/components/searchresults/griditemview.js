@@ -6,6 +6,7 @@ import ReactImageFallback from 'react-image-fallback';
 import GetPriceWithCurrency from '../../utils/getPriceWithCurrency';
 import convertDate from '../../utils/convertDate';
 import numberFormat from '../../utils/convertNumberformat';
+import compareBy from '../../utils/compare';
 
 function showDiv() {
    document.getElementById('searchresult-border').style.display = 'block';
@@ -1207,11 +1208,30 @@ class GridItemsView extends Component {
                             lblActualCost = 'Total Cost Price (USD)';
                             lblPrice = 'Total Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
-                            imagesProduct = (item.image) != undefined
-                                            ? item.image.length != 0
-                                                ?item.image[0].original
-                                                : '/images/blank.gif'
-                                            : '/images/blank.gif';
+
+                            let imagesGallery = [];
+                            let imagesOrder = [];
+
+                            if (item.image.length > 1) {
+                                // First checked defaultImage = 1
+                                imagesGallery = item.image.find((im) => {
+                                    return im.defaultSetImage == 1;
+                                })
+                                if (!!imagesGallery) {
+                                    // If has defaultImage = 1
+                                    imagesProduct = (imagesGallery) != undefined
+                                        ? imagesGallery.original : '/images/blank.gif';
+                                }else{
+                                    // checked lastModifiedDateImage by using lastModifiedDateImage
+                                    imagesOrder = item.image.sort(compareBy('lastModifiedDateSetImage','desc',null));
+                                    imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif';
+                                }
+                            }else{
+                                imagesProduct = (item.image) != undefined
+                                    ? item.image.length != 0 ?item.image[0].original : '/images/blank.gif'
+                                    : '/images/blank.gif';
+                            }
+
                             itemDate = convertDate(item.createdDate);
                             lblDate = 'Created Date:';
                             price = numberFormat(item.totalPrice['USD']) + ' ' + 'USD';
@@ -1228,9 +1248,30 @@ class GridItemsView extends Component {
                             lblActualCost = `Cost Price (${userLogin.currency})`;
                             lblPrice = `Price (${userLogin.currency})`;
                             lblUpdatedCost = `Update Cost (${userLogin.currency})`;
-                            imagesProduct = (item.gallery) != undefined
-                                                ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
-                                                : '/images/blank.gif';
+
+                            let imagesGallery = [];
+                            let imagesOrder = [];
+
+                            if (item.gallery.length > 1) {
+                                // First checked defaultImage = 1
+                                imagesGallery = item.gallery.find((gallery) => {
+                                    return gallery.defaultImage == 1;
+                                })
+                                if (!!imagesGallery) {
+                                    // If has defaultImage = 1
+                                    imagesProduct = (imagesGallery) != undefined
+                                        ? imagesGallery.original : '/images/blank.gif';
+                                }else{
+                                    // checked lastModifiedDateImage by using lastModifiedDateImage
+                                    imagesOrder = item.gallery.sort(compareBy('lastModifiedDateImage','desc',null));
+                                    imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif';
+                                }
+                            }else{
+                                imagesProduct = (item.gallery) != undefined
+                                    ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                    : '/images/blank.gif';
+                            }
+
                             itemDate = (item.type) != undefined
                                         ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
                                         : '-';

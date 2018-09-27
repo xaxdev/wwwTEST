@@ -51,8 +51,8 @@ module.exports = {
                     if (!!productResult.items) {
                         let images = {};
                         images = productResult.items.map((item) => {
-                            let { original, thumbnail } = item.image;
-                            return {...images, original, thumbnail};
+                            let { original, thumbnail, lastModifiedDateImage } = item.image;
+                            return {...images, original, thumbnail, defaultSetImage: "0", lastModifiedDateSetImage: lastModifiedDateImage};
                         });
 
                         productResult.gallery.push(...images);
