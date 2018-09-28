@@ -2,6 +2,7 @@ import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 import numberFormat2digit from './convertNumberformatwithcomma2digit';
 import config from './config';
+import compareBy from './compare';
 
 export default function GetItemEqualOne(item,currency,isViewAsSet,env,userPermissionPrice){
 
@@ -15,11 +16,31 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,userPermis
         : env == 'staging'
             ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
             :`file:///${config.fullpath_localfile}web/code/plugins/http/public`;
-    let imagesThumbnail = (item.image) != undefined
-                      ?  item.image.length != 0
-                          ? item.image[0].thumbnail
-                          : '/images/blank.gif'
-                      : '/images/blank.gif';
+
+    let imagesGallery = [];
+    let imagesOrder = [];
+    let imagesThumbnail =  '';
+
+    if (item.image.length > 1) {
+        // First checked defaultImage = 1
+        imagesGallery = item.image.find((im) => {
+            return im.defaultSetImage == 1;
+        })
+        if (!!imagesGallery) {
+            // If has defaultImage = 1
+            imagesThumbnail = (imagesGallery) != undefined
+                ? imagesGallery.thumbnail : '/images/blank.gif';
+        }else{
+            // checked lastModifiedDateImage by using lastModifiedDateImage
+            imagesOrder = item.image.sort(compareBy('lastModifiedDateSetImage','desc',null));
+            imagesThumbnail = (imagesOrder.length) != 0 ? imagesOrder[0].thumbnail : '/images/blank.gif';
+        }
+    }else{
+        imagesThumbnail = (item.image) != undefined
+            ? (item.image.length) != 0 ? item.image[0].thumbnail : '/images/blank.gif'
+            : '/images/blank.gif';
+    }
+
     let imagesProduct = imagesThumbnail.replace(/\/images\//g,imgPath);
     let tagbarspeciallist = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
     let htmlViewAsSetAll = '';

@@ -1,6 +1,7 @@
 import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 import config from './config';
+import compareBy from './compare';
 
 export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userPermissionPrice){
 
