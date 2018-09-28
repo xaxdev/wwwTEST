@@ -97,7 +97,9 @@ const mapSalesProperties = (item, record, exchangeRates) => {
             const image = {
                 original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
                 thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`,
-                conpany: `${record.imageCompany}`
+                conpany: `${record.imageCompany}`,
+                defaultImage: `${record.defaultImage}`,
+                lastModifiedDateImage: `${record.lastModifiedDateImage}`
             };
 
             item.gallery.push(image);
@@ -105,11 +107,11 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     }
 
     // add COA, if not existed
-    if (!!record.imageName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
-        if (record.imageTypeId == 'COA') {
+    if (!!record.imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageOtherName}.${record.imageOtherType}$`))) !== null) === -1) {
+        if (record.imageOtherTypeId == 'COA') {
             const image = {
-                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+                original: `${config.gallery.original}/${record.imageOtherName}.${record.imageOtherType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageOtherName}.${record.imageOtherType}`
             };
 
             item.imagesCOA.push(image);
@@ -117,11 +119,11 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     }
 
     // add DBC, if not existed
-    if (!!record.imageName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
-        if (record.imageTypeId == 'DBC') {
+    if (!!record.imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageOtherName}.${record.imageOtherType}$`))) !== null) === -1) {
+        if (record.imageOtherTypeId == 'DBC') {
             const image = {
-                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+                original: `${config.gallery.original}/${record.imageOtherName}.${record.imageOtherType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageOtherName}.${record.imageOtherType}`
             };
 
             item.imagesDBC.push(image);
@@ -129,11 +131,11 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     }
 
     // add Monograph, if not existed
-    if (!!record.imageName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
-        if (record.imageTypeId == 'Monograph') {
+    if (!!record.imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageOtherName}.${record.imageOtherType}$`))) !== null) === -1) {
+        if (record.imageOtherTypeId == 'Monograph') {
             const image = {
-                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+                original: `${config.gallery.original}/${record.imageOtherName}.${record.imageOtherType}`,
+                thumbnail: `${config.gallery.thumbnail}/${record.imageOtherName}.${record.imageOtherType}`
             };
 
             item.filesMonograph.push(image);
