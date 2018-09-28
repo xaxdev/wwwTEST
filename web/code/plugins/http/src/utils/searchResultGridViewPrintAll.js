@@ -19,7 +19,7 @@ export default function SearchResultListViewPrintAll(items, userLogin, ViewAsSet
         let lblPrice = '';
         let lblUpdatedCost = '';
         let isSpecialDisc = false;
-        console.log({item});
+
         if (ViewAsSet) {
             lblActualCost = 'Total Cost Price (USD)';
             lblPrice = 'Total Price (USD)';
