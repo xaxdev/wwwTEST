@@ -27,7 +27,7 @@
 			"production": {
 				"port": 3002
 			}
-        },
+    },
 		{
 			"$filter": "env",
 			"$base": {
@@ -45,18 +45,18 @@
 			"production": {
 				"port": 3005
 			}
-        }
-    ],
+    }
+  ],
 	"registrations": [
 		{
 			"plugin": "hapi-auth-jwt2"
-        },
+    },
 		{
 			"plugin": "inert",
 			"options": {
 				"select": "http"
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "hapi-mongodb",
@@ -82,7 +82,7 @@
 			"options": {
 				"select": "api"
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "./plugins/orm",
@@ -99,7 +99,9 @@
 							"development": {
 								"host": "192.168.1.91",
 								"database": "mol",
-								"user": "root"
+								"user": "root",
+								"port": 3306,
+								"connectionLimit": 0
 							},
 							"test": {
 								"host": "192.168.1.91",
@@ -125,7 +127,7 @@
 			"options": {
 				"select": "api"
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "./plugins/authentication",
@@ -136,7 +138,7 @@
 			"options": {
 				"select": "api"
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "./plugins/token",
@@ -147,7 +149,7 @@
 			"options": {
 				"select": "api"
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "./plugins/cryptography",
@@ -159,7 +161,7 @@
 			"options": {
 				"select": "api"
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "./plugins/email",
@@ -175,13 +177,13 @@
 			"options": {
 				"select": "api"
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/event",
 			"options": {
 				"select": "api"
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/users",
 			"options": {
@@ -190,13 +192,13 @@
 					"prefix": "/api/users"
 				}
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/permission",
 			"options": {
 				"select": "api"
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "./plugins/http",
@@ -208,7 +210,7 @@
 			"options": {
 				"select": "http"
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "good",
@@ -225,7 +227,7 @@
 								"path": "logs/response.log",
 								"rotate": "daily"
 							}
-                        },
+            },
 						{
 							"reporter": "good-file",
 							"events": {
@@ -235,18 +237,18 @@
 								"path": "logs/error.log",
 								"rotate": "daily"
 							}
-                        }
-                    ]
+            }
+          ]
 				}
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "./plugins/elastic",
 				"options": {
 					"$filter": "env",
 					"development": {
-						"host": "192.168.1.94:9200"
+						"host": "13.67.69.236:9200"
 					},
 					"test": {
 						"host": "192.168.1.94:9200"
@@ -259,7 +261,7 @@
 					}
 				}
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/items",
 			"options": {
@@ -268,7 +270,7 @@
 					"prefix": "/api/items"
 				}
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/masterdata",
 			"options": {
@@ -277,7 +279,7 @@
 					"prefix": "/api/masterdata"
 				}
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/history",
 			"options": {
@@ -286,7 +288,7 @@
 					"prefix": "/api/history"
 				}
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/mobile/items",
 			"options": {
@@ -295,7 +297,7 @@
 					"prefix": "/api/v2/items"
 				}
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/wishlist",
 			"options": {
@@ -304,7 +306,7 @@
 					"prefix": "/api/wishlist"
 				}
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/catalog",
 			"options": {
@@ -313,7 +315,7 @@
 					"prefix": "/api/catalog"
 				}
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/catalogwithsetitem",
 			"options": {
@@ -322,10 +324,10 @@
 					"prefix": "/api/catalogwithsetitem"
 				}
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/helper"
-        },
+    },
 		{
 			"plugin": "./plugins/ipad/comparison",
 			"options": {
@@ -334,7 +336,7 @@
 					"prefix": "/api/comparison"
 				}
 			}
-        },
+    },
 		{
 			"plugin": "./plugins/ipad/stat",
 			"options": {
@@ -343,7 +345,7 @@
 					"prefix": "/api/stat"
 				}
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "./plugins/pagination",
@@ -355,7 +357,7 @@
 			"options": {
 				"select": "api"
 			}
-        },
+    },
 		{
 			"plugin": {
 				"register": "./plugins/amqp",
@@ -387,6 +389,6 @@
 					}
 				}
 			}
-        }
-    ]
+    }
+  ]
 }
