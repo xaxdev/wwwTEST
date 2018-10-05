@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import numberFormat from '../../../utils/convertNumberformat';
 import { FULLPATH_LOCALFILE } from '../../../constants/productdetailconstants';
+import compareBy from '../../../utils/compare';
 
 export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPriceSet, _totalUpdatedCostSet, _totalSetItems, _totalPages){
     const userLogin = JSON.parse(sessionStorage.logindata);
@@ -90,11 +91,37 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
         const totalUpdatedCost = (item.totalUpdatedCost) != undefined ? numberFormat(item.totalUpdatedCost['USD']) : '-';
         const totalPrice = (item.totalPrice) != undefined ? numberFormat(item.totalPrice['USD']) : '-';
 
-        const imagesProduct = (item.image) != undefined
-                                ? item.image.length != 0
-                                    ? item.image[0].original
-                                    : '/images/blank.gif'
-                                : '/images/blank.gif';
+        let imagesProduct = '';
+
+        let imagesGallery = [];
+        let imagesOrder = [];
+        if (item.authorization) {
+            if (item.image.length > 1) {
+                // First checked defaultImage = 1
+                imagesGallery = item.image.find((im) => {
+                    return im.defaultSetImage == 1;
+                })
+                if (!!imagesGallery) {
+                    // If has defaultImage = 1
+                    imagesProduct = (imagesGallery) != undefined
+                        ? imagesGallery.original : '/images/blank.gif';
+                }else{
+                    // checked lastModifiedDateImage by using lastModifiedDateImage
+                    imagesOrder = item.image.sort(compareBy('lastModifiedDateSetImage','desc',null));
+                    imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif';
+                }
+            }else{
+                imagesProduct = (item.image) != undefined
+                    ? (item.image.length) != 0 ? item.image[0].original : '/images/blank.gif'
+                    : '/images/blank.gif';
+            }
+        }else{
+            imagesProduct = (item.authorization)
+                ? (item.image.length) != 0 ? item.image[0].original : '/images/blank.gif'
+                :'/images/blank.gif';
+        }
+
+
         const imgPath = env == 'production'
                                 ? `${ROOT_URL}${imagesProduct}`
                                 : `${ROOT_URL}${imagesProduct}`;

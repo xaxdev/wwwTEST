@@ -40,6 +40,7 @@ import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
 import '../../utils/magnific-popup.js';
+import compareBy from '../../utils/compare';
 
 const Loading = require('react-loading');
 
@@ -545,9 +546,24 @@ class productreletedetail extends Component {
         const { gallery } = this.props.productdetail;
         if(gallery !== undefined){
             if(gallery.length > 0) {
+                let imagesGallery = []
+                let galleryOrder = []
+                if (gallery.length > 1) {
+                    // First checked defaultImage = 1
+                    imagesGallery = gallery.find((gallery) => {
+                        return gallery.defaultImage == 1;
+                    })
+                    if (!!imagesGallery) {
+                        // If has defaultImage = 1
+                        galleryOrder = gallery.sort(compareBy('defaultImage','desc',null));
+                    }else{
+                        // checked lastModifiedDateImage by using lastModifiedDateImage
+                        galleryOrder = gallery.sort(compareBy('lastModifiedDateImage','desc',null));
+                    }
+                }
                 return(
                     <div>
-                        <ProductGallery imagegallery={gallery}/>
+                        <ProductGallery imagegallery={galleryOrder}/>
                     </div>
                 );
             } else {

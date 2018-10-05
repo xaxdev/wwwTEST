@@ -140,7 +140,7 @@ class MyCatalog extends Component {
                             this.props.listCatalogItems.allItems != undefined ? this.props.listCatalogItems.allItems : [] :
                         [] :
                     [];
-        // console.log('items-->',items);
+
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
         const env_web = ENVIRONMENT;
@@ -151,14 +151,11 @@ class MyCatalog extends Component {
         let dvTotalSetItems = jQuery('#dvTotalSetItems').html();
         let dvGridview = jQuery('#dvGridview').html();
         let dv = {
-                    'dvTotalItems': dvTotalItems, 'dvTotalSetItems': dvTotalSetItems, 'dvGridview': dvGridview,
-                    'printPage':printPage, 'printPrice': printPrice, 'items': items, 'userLogin': userLogin,
-                    'env': env_web
-                };
+            'dvTotalItems': dvTotalItems, 'dvTotalSetItems': dvTotalSetItems, 'dvGridview': dvGridview, 'printPage':printPage,
+            'printPrice': printPrice, 'items': items, 'userLogin': userLogin, 'env': env_web
+        };
         let htmlTemplate = '';
         htmlTemplate = GenTemplateHtml(ROOT_URL, imagesReplace, dv);
-
-        // console.log('htmlTemplate-->',htmlTemplate);
 
         let params = {
             'temp': htmlTemplate, 'userName': `${userLogin.username}_${exportDate}`, 'userEmail': userLogin.email, 'ROOT_URL': ROOT_URL, 'channel':'pdf'
@@ -176,9 +173,11 @@ class MyCatalog extends Component {
     showDialogPrintOptions = _ =>{
         this.setState({isOpenPrintOptions: true});
     }
+
     handleClosePrintOptions = _ =>{
         this.setState({isOpenPrintOptions: false});
     }
+
     renderDialogPrintOptions = _ =>{
         const { fields: {printPage, printPrice} } = this.props;
         if (printPage.value == undefined) {
@@ -359,6 +358,7 @@ class MyCatalog extends Component {
         let catalogName = this.refs.catalogName;
         this.setState({isTooltipActive: true})
     }
+
     hideTooltip = _=>{
         this.setState({isTooltipActive: false});
     }
@@ -526,22 +526,21 @@ class MyCatalog extends Component {
     }
 
     renderPagination(){
-      const { fields: { currPage }, currentPage, handleSubmit, resetForm, submitting } = this.props;
-      const page = this.state.activePage;
-      const totalPages = this.props.listCatalogItems.total_pages;
-      return(
-          <div>
-              <Pagination prev next first last ellipsis boundaryLinks items={totalPages} maxButtons={4}
-               activePage={this.state.activePage}
-               onSelect={this.handleSelect} />
-              <div>
-                <span>Page</span>
-                  <input type="number" placeholder={page} ref="reletego" {...currPage}/>
-                <span>of</span>
-                <span>{numberFormat(totalPages)}</span>
-                <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
-              </div>
-          </div>
+        const { fields: { currPage }, currentPage, handleSubmit, resetForm, submitting } = this.props;
+        const page = this.state.activePage;
+        const totalPages = this.props.listCatalogItems.total_pages;
+        return(
+            <div>
+                <Pagination prev next first last ellipsis boundaryLinks items={totalPages} maxButtons={4}
+                    activePage={this.state.activePage} onSelect={this.handleSelect} />
+                <div>
+                    <span>Page</span>
+                        <input type="number" placeholder={page} ref="reletego" {...currPage}/>
+                    <span>of</span>
+                    <span>{numberFormat(totalPages)}</span>
+                    <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
+                </div>
+            </div>
         );
     }
 
@@ -585,11 +584,11 @@ class MyCatalog extends Component {
     }
 
     renderAlertmsg = _=> {
-      const message = 'Page is invalid.';
-      const title = 'ADD TO CATALOG';
+        const message = 'Page is invalid.';
+        const title = 'ADD TO CATALOG';
 
-      return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
-          props={this.props} message={message}  title={title}/>);
+        return(<Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
+            props={this.props} message={message}  title={title}/>);
     }
 
     handleClosemsgShareCatalog = _=> {
@@ -606,10 +605,10 @@ class MyCatalog extends Component {
     }
 
     renderAlertmsgPdf = _=> {
-      const message = 'Please check your email for printing files.';
-      const title = 'MY CATALOG';
-      return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
-          props={this.props} message={message}  title={title}/>);
+        const message = 'Please check your email for printing files.';
+        const title = 'MY CATALOG';
+        return(<Modalalertmsg isOpen={this.state.isOpenPrintPdfmsg} isClose={this.handleClosePdfmsg}
+            props={this.props} message={message}  title={title}/>);
     }
 
     shareMyCatalog = _=>{
@@ -619,27 +618,27 @@ class MyCatalog extends Component {
     handleSubmitShareCatalog = (e)=>{
         e.preventDefault();
         const { catalogId } = this.props;
-        const { fields: {
-                  shareTo
-              } } = this.props;
+        const { fields: {shareTo} } = this.props;
         let emails = [];
         let paramEmails = [];
         let params = {};
+
         if (!!shareTo.value) {
             emails = shareTo.value.replace(/\s/g, '').split(/,|;/);
             paramEmails = emails.map((email) => {
                 return {'email':email};
             });
         }
+
         params.id = catalogId;
         params.users = paramEmails;
         this.props.shareCatalog(params)
-            .then((response)=>{
-                this.setState({isOpenShareMyCatalog: false});
-                this.props.setDataSendEmailTo('');
-                shareTo.onChange('');
-                shareTo.value = '';
-            })
+        .then((response)=>{
+            this.setState({isOpenShareMyCatalog: false});
+            this.props.setDataSendEmailTo('');
+            shareTo.onChange('');
+            shareTo.value = '';
+        })
     }
 
     handleCloseShareMyCatalog = _=> {
@@ -698,117 +697,111 @@ class MyCatalog extends Component {
     }
 
     render() {
-            const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared, ViewAsSet } = this.props;
-            let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1;
-            let catalogSortDirection = (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1;
-            let style = {
-                style: {
-                    background: 'rgba(0,0,0,.8)',
-                    padding: 20,
-                    boxShadow: '5px 5px 3px rgba(0,0,0,.5)'
-                },
-                arrowStyle: {
-                    color: 'rgba(0,0,0,.8)',
-                    borderColor: false
-                }
+        const {  fields:{ catalog }, catalogId, catalogName, isCatalogShared, ViewAsSet } = this.props;
+        let catalogSortingBy = (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1;
+        let catalogSortDirection = (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1;
+        let style = {
+            style: {
+                background: 'rgba(0,0,0,.8)',
+                padding: 20,
+                boxShadow: '5px 5px 3px rgba(0,0,0,.5)'
+            },
+            arrowStyle: {
+                color: 'rgba(0,0,0,.8)',
+                borderColor: false
             }
+        }
 
-            let items = this.props.listCatalogName != undefined ?
-                            this.props.listCatalogName.length != 0 ?
-                                this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [] :
-                            [] :
-                        [];
-            return(
-                <form role="form">
-                  {/* Header Search */}
-                  <div className="col-sm-12 col-xs-12 padding-b10 bg-hearder-mycatalog">
-                      <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
-                      <div className="col-md-12 col-sm-12 col-xs-12">
-                            <div className="col-lg-7 col-md-6 col-sm-12 col-xs-12 nopadding">
-                                <div className="col-lg-7 col-md-7 col-sm-6 col-xs-12 nopadding">
-                                  <div className="col-lg-3 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
-                                  <div className="col-lg-8 col-md-6 col-sm-7 col-xs-12 nopadding margin-l15">
-                                      <div className="styled-select-black">
-                                        <select onChange={this.selectedCatalog}  value={catalogId}
-                                            ref="catalog">
-                                          {
-                                              this.props.listCatalogName.length != 0 ?
-                                              this.props.listCatalogName.map((cat) => {
-                                                  return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
-                                              }) : <option value="">Please select</option>
-                                          }
+        let items = this.props.listCatalogName != undefined ?
+                        this.props.listCatalogName.length != 0 ?
+                            this.props.listCatalogItems.items != undefined ? this.props.listCatalogItems.items : [] :
+                        [] :
+                    [];
+        return(
+            <form role="form">
+                {/* Header Search */}
+                <div className="col-sm-12 col-xs-12 padding-b10 bg-hearder-mycatalog">
+                    <div className="cat-title"><h1 className="text-center">MY CATALOG</h1></div>
+                    <div className="col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-lg-7 col-md-6 col-sm-12 col-xs-12 nopadding">
+                            <div className="col-lg-7 col-md-7 col-sm-6 col-xs-12 nopadding">
+                                <div className="col-lg-3 col-md-5 col-sm-4 col-xs-12 nopadding margin-t5">Catalog Name</div>
+                                <div className="col-lg-8 col-md-6 col-sm-7 col-xs-12 nopadding margin-l15">
+                                    <div className="styled-select-black">
+                                        <select onChange={this.selectedCatalog}  value={catalogId} ref="catalog">
+                                        {
+                                            this.props.listCatalogName.length != 0 ?
+                                            this.props.listCatalogName.map((cat) => {
+                                                return (<option key={cat._id} value={cat._id}>{cat.catalog}</option>);
+                                            }) : <option value="">Please select</option>
+                                        }
                                         </select>
-                                      </div>
-                                  </div>
+                                    </div>
                                 </div>
-                                <div className="col-lg-5 col-md-5 col-sm-6 col-xs-12 nopadding"  >
-                                    <a><div className={`${isCatalogShared ? 'disabled' : 'icon-edit'}`} id="edit" onMouseEnter={this.showTooltip}
-                                        onMouseLeave={this.hideTooltip} ></div></a>
-                                    <ToolTip active={this.state.isTooltipActive} position="bottom"
-                                        arrow="center" parent="#edit">
-                                        <div className="cat-tooltip form-inline">
-                                          <p>Edit Catalog Name</p>
-                                          <div className="form-group">
+                            </div>
+                            <div className="col-lg-5 col-md-5 col-sm-6 col-xs-12 nopadding"  >
+                                <a><div className={`${isCatalogShared ? 'disabled' : 'icon-edit'}`} id="edit" onMouseEnter={this.showTooltip}
+                                    onMouseLeave={this.hideTooltip} ></div></a>
+                                <ToolTip active={this.state.isTooltipActive} position="bottom" arrow="center" parent="#edit">
+                                    <div className="cat-tooltip form-inline">
+                                        <p>Edit Catalog Name</p>
+                                        <div className="form-group">
                                             <input type="text" className="form-control"
-                                                onChange={this.changeCatalogName}  placeholder={catalogName}
-                                                 ref="catalogName"/>
-                                          </div>
-                                            <button type="button" className="btn btn-default"
-                                                onClick={this.saveCatalogName}>
-                                                save
-                                            </button>
+                                                onChange={this.changeCatalogName}  placeholder={catalogName} ref="catalogName"/>
                                         </div>
-                                    </ToolTip>
-                                    <a><div className={`${isCatalogShared ? 'hidden' : 'icon-del'}`} onClick={this.deleteCatalog}></div></a>
-                                    <a><div className={`${items.length == 0 ? 'hidden' : 'icon-print'}`} id="printproduct"
-                                        onClick={ this.showDialogPrintOptions }></div></a>
-                                      <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`}
-                                        onClick={ this.shareMyCatalog }></div></a>
-                                </div>
-                              </div>
-                            <div className="col-lg-5 col-md-6 col-sm-12 col-xs-12 nopadding pull-right">
-                              <div className="cat-sort col-xs-12 margin-t5">
+                                        <button type="button" className="btn btn-default" onClick={this.saveCatalogName}>
+                                            save
+                                        </button>
+                                    </div>
+                                </ToolTip>
+                                <a><div className={`${isCatalogShared ? 'hidden' : 'icon-del'}`} onClick={this.deleteCatalog}></div></a>
+                                <a><div className={`${items.length == 0 ? 'hidden' : 'icon-print'}`} id="printproduct"
+                                    onClick={ this.showDialogPrintOptions }></div>
+                                </a>
+                                <a><div className={`${isCatalogShared ? 'hidden' : 'icon-share'}`}
+                                    onClick={ this.shareMyCatalog }></div>
+                                </a>
+                            </div>
+                        </div>
+                        <div className="col-lg-5 col-md-6 col-sm-12 col-xs-12 nopadding pull-right">
+                            <div className="cat-sort col-xs-12 margin-t5">
                                 <ControlLabel>Sort By : </ControlLabel>
-                              </div>
-                              <div className="col-md-5 col-sm-3 col-xs-12 nopadding m-bottom-5">
+                            </div>
+                            <div className="col-md-5 col-sm-3 col-xs-12 nopadding m-bottom-5">
                                 <div className="styled-select-black">
-                                  <select onChange={this.changeSortingBy} value={catalogSortingBy}
-                                    ref="sortingBy">
-                                    <option key={1} value={1}>{'Updated Date'}</option>
-                                    <option key={2} value={2}>{'Price'}</option>
-                                    <option key={3} value={3}>{'Item Reference'}</option>
-                                    <option key={4} value={4}>{'Description'}</option>
-                                    <option key={5} value={5}>{'Set Reference Number'}</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div className="col-md-5 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
-                                <div className="styled-select-black">
-                                    <select onChange={this.changeSortingDirection} value={catalogSortDirection}
-                                        ref="sortingDirection">
-                                      <option key={-1} value={-1}>{'Descending'}</option>
-                                      <option key={1} value={1}>{'Ascending'}</option>
+                                    <select onChange={this.changeSortingBy} value={catalogSortingBy} ref="sortingBy">
+                                        <option key={1} value={1}>{'Updated Date'}</option>
+                                        <option key={2} value={2}>{'Price'}</option>
+                                        <option key={3} value={3}>{'Item Reference'}</option>
+                                        <option key={4} value={4}>{'Description'}</option>
+                                        <option key={5} value={5}>{'Set Reference Number'}</option>
                                     </select>
                                 </div>
-                              </div>
                             </div>
-                      </div>
-                  </div>
-                  <div id="dvTotal">
+                            <div className="col-md-5 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
+                                <div className="styled-select-black">
+                                    <select onChange={this.changeSortingDirection} value={catalogSortDirection} ref="sortingDirection">
+                                        <option key={-1} value={-1}>{'Descending'}</option>
+                                        <option key={1} value={1}>{'Ascending'}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="dvTotal">
                     {this.renderTotals()}
-                  </div>
-                  {/* End Header Search */}
-                  {/* Util&Pagination */}
-                  <div className="row">
+                </div>
+                {/* End Header Search */}
+                {/* Util&Pagination */}
+                <div className="row">
                     <div className="col-sm-12 col-xs-12">
-                      <div className={`${items.length == 0  ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
+                        <div className={`${items.length == 0  ? 'hidden' : 'col-sm-12 col-xs-12 pagenavi maring-t20 cat-line'}`} >
                             <div className={`${isCatalogShared ? 'hidden' : 'checkbox checkbox-warning '}`}>
-                                <input type="checkbox" id="checkbox1"
-                                    className="styled" ref="selectAllItems"
-                                    checked={this.state.checkAllItems}
+                                <input type="checkbox" id="checkbox1" className="styled" ref="selectAllItems" checked={this.state.checkAllItems}
                                     onChange={this.onCheckedAllItemMyCatalog}/>
                                 <label className="checkbox1 select"></label>
-                              <span className="margin-l10 text-vertical margin-t5">Select All</span>
+                                <span className="margin-l10 text-vertical margin-t5">Select All</span>
                             </div>
                             <div className={`${isCatalogShared ? 'hidden' : ''}`}>
                                 {this.state.enabledMyCatalog?
@@ -818,22 +811,22 @@ class MyCatalog extends Component {
                                 <span className="margin-l5 text-del">Delete Items</span>
                             </div>
                             <div className="pull-right maring-b10">
-                                  <div className="pull-left padding-r10 margin-t7">View</div>
-                                  <div className="pull-left">
-                                      <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
+                                <div className="pull-left padding-r10 margin-t7">View</div>
+                                <div className="pull-left">
+                                    <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
                                         <option key="16" value="16">16</option>
                                         <option key="32" value="32">32</option>
                                         <option key="60" value="60">60</option>
-                                      </select>
-                                  </div>
-                                  <div className="pull-left padding-l10 margin-t7 margin-r10">
+                                    </select>
+                                </div>
+                                <div className="pull-left padding-l10 margin-t7 margin-r10">
                                     per page
-                                  </div>
-                                  <div className="searchresult-navi cat-go">
-                                      {this.renderPagination()}
-                                  </div>
+                                </div>
+                                <div className="searchresult-navi cat-go">
+                                    {this.renderPagination()}
+                                </div>
                             </div>
-                      </div>
+                        </div>
                         <div className="panel panel-default">
                             <div className="panel-body padding-ft0">
                                 <div className={'search-product' }>
@@ -844,33 +837,33 @@ class MyCatalog extends Component {
                                         ViewAsSet={ViewAsSet} listMyCatalog={listMyCatalog}/>
                                 </div>
                                 <div id="dvGridview" className="search-product hidden">
-                                  <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
-                                    onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
-                                    onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
-                                    isCatalogShared={isCatalogShared}
-                                    ViewAsSet={ViewAsSet}/>
+                                    <GridItemsViewPrint  items={items} onClickGrid={this.onClickGrid}
+                                        onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
+                                        onDeleteOneItemMyCatalog={this.deleteOneItemMyCatalog}
+                                        isCatalogShared={isCatalogShared}
+                                        ViewAsSet={ViewAsSet}/>
                                 </div>
                                 {/* Pagination */}
                                 <div className="col-sm-12 pagenavi maring-t20">
-                                  <div className="searchresult-navi cat-go">
-                                    {this.renderPagination()}
-                                  </div>
+                                    <div className="searchresult-navi cat-go">
+                                        {this.renderPagination()}
+                                    </div>
                                 </div>
                                 {/* End Pagination */}
                             </div>
                         </div>
                     </div>
-                  </div>
-                  {this.renderModalConfirmDelete()}
-                  {this.renderModalConfirmDeleteCatalog()}
-                  {this.renderModalConfirmDeleteAllItem()}
-                  {this.renderAlertmsg()}
-                  {this.renderAlertmsgPdf()}
-                  {this.renderShareMyCatalog()}
-                  {this.renderAlertmsgShareCatalog()}
-                  {this.renderDialogPrintOptions()}
-                </form>
-            );
+                </div>
+                {this.renderModalConfirmDelete()}
+                {this.renderModalConfirmDeleteCatalog()}
+                {this.renderModalConfirmDeleteAllItem()}
+                {this.renderAlertmsg()}
+                {this.renderAlertmsgPdf()}
+                {this.renderShareMyCatalog()}
+                {this.renderAlertmsgShareCatalog()}
+                {this.renderDialogPrintOptions()}
+            </form>
+        );
     }
 }
 function mapStateToProps(state) {

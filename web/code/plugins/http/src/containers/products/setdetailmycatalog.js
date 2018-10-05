@@ -32,7 +32,8 @@ import ProductRawmatirialAttributes from  '../../components/productdetail/produc
 import validateCatalog from '../../utils/validatecatalogproductdetail';
 import ModalalertMsgObj from '../../utils/modalalertmsg';
 import Movementlist from '../../components/productdetail/productmovement.js';
-import Goclist from '../../components/productdetail/productgoc.js'
+import Goclist from '../../components/productdetail/productgoc.js';
+import compareBy from '../../utils/compare';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
 import '../../../public/css/magnific-popup.css';
@@ -540,8 +541,23 @@ class productdetail extends Component {
 
         if(gallery !== undefined){
             if(gallery.length > 0) {
+                let imagesGallery = []
+                let galleryOrder = []
+                if (gallery.length > 1) {
+                    // First checked defaultImage = 1
+                    imagesGallery = gallery.find((gallery) => {
+                        return gallery.defaultSetImage == 1;
+                    })
+                    if (!!imagesGallery) {
+                        // If has defaultImage = 1
+                        galleryOrder = gallery.sort(compareBy('defaultSetImage','desc',null));
+                    }else{
+                        // checked lastModifiedDateImage by using lastModifiedDateImage
+                        galleryOrder = gallery.sort(compareBy('lastModifiedDateSetImage','desc',null));
+                    }
+                }
                 return(
-                    <div> <ProductGallery imagegallery={gallery}/> </div>
+                    <div> <ProductGallery imagegallery={galleryOrder}/> </div>
                 );
             } else {
                 return(

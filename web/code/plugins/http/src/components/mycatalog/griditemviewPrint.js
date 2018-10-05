@@ -6,6 +6,7 @@ import numberFormat from '../../utils/convertNumberformat';
 import convertDate from '../../utils/convertDate';
 import ReactImageFallback from 'react-image-fallback';
 import {ReactPageClick} from 'react-page-click';
+import compareBy from '../../utils/compare';
 
 function showDiv() {
     document.getElementById('searchresult-border').style.display = 'block';
@@ -77,12 +78,43 @@ class GridItemsViewPrint extends Component {
                             lblActualCost = `Cost Price (USD)`;
                             lblPrice = `Price (USD)`;
                             lblUpdatedCost = `Update Cost (USD)`;
-                            imagesProduct = (item.authorization)
-                              ? (item.gallery.length) != 0
-                                    ? item.gallery[0].original
-                                    : '/images/blank.gif'
-                              :'/images/login-logo@2x.png';
-                              imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
+
+                            let imagesGallery = [];
+                            let imagesOrder = [];
+
+                            if (item.authorization) {
+                                if (item.gallery.length > 1) {
+                                    // First checked defaultImage = 1
+                                    imagesGallery = item.gallery.find((gallery) => {
+                                        return gallery.defaultImage == 1;
+                                    })
+                                    if (!!imagesGallery) {
+                                        // If has defaultImage = 1
+                                        imagesProduct = (imagesGallery) != undefined
+                                            ? imagesGallery.original : '/images/blank.gif';
+                                        imagesProduct = (item.authorization)
+                                            ? (item.gallery.length) != 0 ? imagesGallery.original : '/images/blank.gif'
+                                            :'/images/login-logo@2x.png';
+                                    }else{
+                                        // checked lastModifiedDateImage by using lastModifiedDateImage
+                                        imagesOrder = item.gallery.sort(compareBy('lastModifiedDateImage','desc',null));
+                                        imagesProduct = (item.authorization)
+                                            ? (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif'
+                                            :'/images/login-logo@2x.png';
+                                    }
+                                }else{
+                                    imagesProduct = (item.authorization)
+                                        ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                        :'/images/login-logo@2x.png';
+                                }
+                            }else{
+                                imagesProduct = (item.authorization)
+                                    ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                    :'/images/login-logo@2x.png';
+                            }
+
+                            imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
+
                             itemDate = (item.authorization)
                               ? (item.type != 'CER') ? convertDate(item.itemCreatedDate) : convertDate(item.itemCreatedDate)
                               : '';
@@ -119,11 +151,41 @@ class GridItemsViewPrint extends Component {
                             lblActualCost = 'Total Cost Price (USD)';
                             lblPrice = 'Total Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
-                            imagesProduct = (item.image) != undefined
-                                ? item.image.length != 0
-                                    ?item.image[0].original
-                                    : '/images/blank.gif'
-                                : '/images/login-logo@2x.png';
+
+                            let imagesGallery = [];
+                            let imagesOrder = [];
+
+                            if (item.authorization) {
+                                if (item.image.length > 1) {
+                                    // First checked defaultImage = 1
+                                    imagesGallery = item.image.find((im) => {
+                                        return im.defaultSetImage == 1;
+                                    })
+                                    if (!!imagesGallery) {
+                                        // If has defaultImage = 1
+                                        imagesProduct = (imagesGallery) != undefined
+                                            ? imagesGallery.original : '/images/blank.gif';
+                                        imagesProduct = (item.authorization)
+                                            ? (item.image.length) != 0 ? imagesGallery.original : '/images/blank.gif'
+                                            :'/images/login-logo@2x.png';
+                                    }else{
+                                        // checked lastModifiedDateImage by using lastModifiedDateImage
+                                        imagesOrder = item.image.sort(compareBy('lastModifiedDateSetImage','desc',null));
+                                        imagesProduct = (item.authorization)
+                                            ? (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif'
+                                            :'/images/login-logo@2x.png';
+                                    }
+                                }else{
+                                    imagesProduct = (item.authorization)
+                                        ? (item.image.length) != 0 ? item.image[0].original : '/images/blank.gif'
+                                        :'/images/login-logo@2x.png';
+                                }
+                            }else{
+                                imagesProduct = (item.authorization)
+                                    ? (item.image.length) != 0 ? item.image[0].original : '/images/blank.gif'
+                                    :'/images/login-logo@2x.png';
+                            }
+                            
                             imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
 
                             itemDate = (item.authorization)

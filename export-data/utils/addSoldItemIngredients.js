@@ -31,10 +31,33 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
             items = items+1;
             let arrayItems = [];
             let itemReference = item.reference;
+            let imagesProduct = '';
+            let imagesGallery = [];
+            let imagesOrder = [];
+
+            if (item.image.length > 1) {
+                // First checked defaultImage = 1
+                imagesGallery = item.image.find((im) => {
+                    return im.defaultSetImage == 1;
+                })
+                if (!!imagesGallery) {
+                    // If has defaultImage = 1
+                    imagesProduct = (imagesGallery) != undefined ? imagesGallery.thumbnail : '';
+                }else{
+                    // checked lastModifiedDateImage by using lastModifiedDateImage
+                    imagesOrder = item.image.sort(compareBy('lastModifiedDateSetImage','desc',null));
+                    imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].thumbnail : '';
+                }
+            }else{
+                imagesProduct = (item.image) != undefined
+                    ? (item.image.length) != 0 ? item.image[0].thumbnail : ''
+                    : '';
+            }
 
             if (fields.showImagesViewAsSet){
-                arrayItems.push((item.image.length) != 0 ? item.image[0].thumbnail : '');
+                arrayItems.push((item.image.length) != 0 ? imagesProduct : '');
             }
+
             arrayItems.push(item.reference,item.description);
 
             if (priceSalesCTP) {
@@ -105,9 +128,31 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
             items = items+1;
             let arrayItems = [];
             let itemReference = item.reference;
+            let imagesProduct = '';
+            let imagesGallery = [];
+            let imagesOrder = [];
+
+            if (item.gallery.length > 1) {
+                // First checked defaultImage = 1
+                imagesGallery = item.gallery.find((gallery) => {
+                    return gallery.defaultImage == 1;
+                })
+                if (!!imagesGallery) {
+                    // If has defaultImage = 1
+                    imagesProduct = (imagesGallery) != undefined ? imagesGallery.thumbnail : '';
+                }else{
+                    // checked lastModifiedDateImage by using lastModifiedDateImage
+                    imagesOrder = item.gallery.sort(compareBy('lastModifiedDateImage','desc',null));
+                    imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].thumbnail : '';
+                }
+            }else{
+                imagesProduct = (item.gallery) != undefined
+                    ? (item.gallery.length) != 0 ? item.gallery[0].thumbnail : ''
+                    : '';
+            }
 
             if (fields.showImages){
-                arrayItems.push((item.gallery.length) != 0 ? item.gallery[0].thumbnail : '');
+                arrayItems.push((item.gallery.length) != 0 ? imagesProduct : '');
             }
 
             arrayItems.push(item.reference,item.description,item.sku);
