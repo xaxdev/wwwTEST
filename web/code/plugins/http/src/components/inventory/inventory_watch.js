@@ -398,8 +398,10 @@ class InventoryWatch extends Component {
                 if (props.options.watchCategories) {
                     findFieldName = []
                     findFieldName = props.options.watchCategories.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
                     if (findFieldName.length != 0) {
@@ -413,8 +415,10 @@ class InventoryWatch extends Component {
                 if (props.options.collections) {
                     findFieldName = []
                     findFieldName = props.options.collections.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -429,8 +433,10 @@ class InventoryWatch extends Component {
                 if (props.options.brands) {
                     findFieldName = []
                     findFieldName = props.options.brands.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -445,8 +451,10 @@ class InventoryWatch extends Component {
                 if (props.options.metalTypes) {
                     findFieldName = []
                     findFieldName = props.options.metalTypes.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -461,8 +469,10 @@ class InventoryWatch extends Component {
                 if (props.options.metalColours) {
                     findFieldName = []
                     findFieldName = props.options.metalColours.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -477,8 +487,10 @@ class InventoryWatch extends Component {
                 if (props.options.dominantStones) {
                     findFieldName = []
                     findFieldName = props.options.dominantStones.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -493,8 +505,10 @@ class InventoryWatch extends Component {
                 if (props.options.movements) {
                     findFieldName = []
                     findFieldName = props.options.movements.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -509,8 +523,10 @@ class InventoryWatch extends Component {
                 if (props.options.dialIndexs) {
                     findFieldName = []
                     findFieldName = props.options.dialIndexs.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -525,8 +541,10 @@ class InventoryWatch extends Component {
                 if (props.options.dialColors) {
                     findFieldName = []
                     findFieldName = props.options.dialColors.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -541,8 +559,10 @@ class InventoryWatch extends Component {
                 if (props.options.dialMetals) {
                     findFieldName = []
                     findFieldName = props.options.dialMetals.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -557,8 +577,10 @@ class InventoryWatch extends Component {
                 if (props.options.buckleTypes) {
                     findFieldName = []
                     findFieldName = props.options.buckleTypes.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -573,8 +595,10 @@ class InventoryWatch extends Component {
                 if (props.options.strapTypes) {
                     findFieldName = []
                     findFieldName = props.options.strapTypes.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -589,8 +613,10 @@ class InventoryWatch extends Component {
                 if (props.options.strapColors) {
                     findFieldName = []
                     findFieldName = props.options.strapColors.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -605,8 +631,10 @@ class InventoryWatch extends Component {
                 if (props.options.complications) {
                     findFieldName = []
                     findFieldName = props.options.complications.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
