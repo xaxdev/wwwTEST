@@ -334,8 +334,10 @@ class InventoryStone extends Component {
                 if (props.options.stoneType) {
                     findFieldName = []
                     findFieldName = props.options.stoneType.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -350,8 +352,10 @@ class InventoryStone extends Component {
                 if (props.options.cut) {
                     findFieldName = []
                     findFieldName = props.options.cut.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -366,8 +370,10 @@ class InventoryStone extends Component {
                 if (props.options.cutGrades) {
                     findFieldName = []
                     findFieldName = props.options.cutGrades.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -382,8 +388,10 @@ class InventoryStone extends Component {
                 if (props.options.colors) {
                     findFieldName = []
                     findFieldName = props.options.colors.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -398,8 +406,10 @@ class InventoryStone extends Component {
                 if (props.options.colorGrades) {
                     findFieldName = []
                     findFieldName = props.options.colorGrades.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -414,8 +424,10 @@ class InventoryStone extends Component {
                 if (props.options.clarities) {
                     findFieldName = []
                     findFieldName = props.options.clarities.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -430,8 +442,10 @@ class InventoryStone extends Component {
                 if (props.options.certificateAgencys) {
                     findFieldName = []
                     findFieldName = props.options.certificateAgencys.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -446,8 +460,10 @@ class InventoryStone extends Component {
                 if (props.options.polishs) {
                     findFieldName = []
                     findFieldName = props.options.polishs.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -462,8 +478,10 @@ class InventoryStone extends Component {
                 if (props.options.symmetries) {
                     findFieldName = []
                     findFieldName = props.options.symmetries.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -478,8 +496,10 @@ class InventoryStone extends Component {
                 if (props.options.treatments) {
                     findFieldName = []
                     findFieldName = props.options.treatments.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -494,8 +514,10 @@ class InventoryStone extends Component {
                 if (props.options.fluorescences) {
                     findFieldName = []
                     findFieldName = props.options.fluorescences.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -510,8 +532,10 @@ class InventoryStone extends Component {
                 if (props.options.origins) {
                     findFieldName = []
                     findFieldName = props.options.origins.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
