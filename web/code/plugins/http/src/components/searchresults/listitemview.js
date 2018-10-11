@@ -4,6 +4,7 @@ import ReactImageFallback from 'react-image-fallback';
 import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat from '../../utils/convertNumberformat';
 import ListItemsViewASSet from './listitemview_view_as_set';
+import compareBy from '../../utils/compare';
 
 class ListItemsView extends Component {
     constructor(props) {
@@ -114,16 +115,34 @@ class ListItemsView extends Component {
                 let itemName = '';
                 isCompany = col.companyName != undefined ? true : false;
                 if (ViewAsSet) {
-                    imagesOriginal = (col.image) != undefined
-                                      ? col.image.length != 0
-                                          ? col.image[0].original
-                                          : '/images/blank.gif'
-                                      : '/images/blank.gif';
-                    imagesThumbnail = (col.image) != undefined
-                                      ?  col.image.length != 0
-                                          ? col.image[0].thumbnail
-                                          : '/images/blank.gif'
-                                      : '/images/blank.gif';
+                    let imagesGallery = [];
+                    let imagesOrder = [];
+
+                    if (col.image.length > 1) {
+                        // First checked defaultImage = 1
+                        imagesGallery = col.image.find((im) => {
+                            return im.defaultSetImage == 1;
+                        })
+                        if (!!imagesGallery) {
+                            // If has defaultImage = 1
+                            imagesOriginal = (imagesGallery) != undefined
+                                ? imagesGallery.original : '/images/blank.gif';
+                            imagesThumbnail = (imagesGallery) != undefined
+                                ? imagesGallery.thumbnail : '/images/blank.gif';
+                        }else{
+                            // checked lastModifiedDateImage by using lastModifiedDateImage
+                            imagesOrder = col.image.sort(compareBy('lastModifiedDateSetImage','desc',null));
+                            imagesOriginal = (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif';
+                            imagesThumbnail = (imagesOrder.length) != 0 ? imagesOrder[0].thumbnail : '/images/blank.gif';
+                        }
+                    }else{
+                        imagesOriginal = (col.image) != undefined
+                            ? (col.image.length) != 0 ? col.image[0].original : '/images/blank.gif'
+                            : '/images/blank.gif';
+                        imagesThumbnail = (col.image) != undefined
+                            ? (col.image.length) != 0 ? col.image[0].thumbnail : '/images/blank.gif'
+                            : '/images/blank.gif';
+                    }
 
                     if(col.totalPrice != undefined){
                         col.priceUSD = (col.totalPrice['USD'] != undefined)
@@ -140,12 +159,34 @@ class ListItemsView extends Component {
                     col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
 
                 }else{
-                    imagesOriginal = (col.gallery) != undefined
-                                      ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif'
-                                       : '/images/blank.gif';
-                    imagesThumbnail = (col.gallery) != undefined
-                                      ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
-                                      : '/images/blank.gif';
+                    let imagesGallery = [];
+                    let imagesOrder = [];
+
+                    if (col.gallery.length > 1) {
+                        // First checked defaultImage = 1
+                        imagesGallery = col.gallery.find((gallery) => {
+                            return gallery.defaultImage == 1;
+                        })
+                        if (!!imagesGallery) {
+                            // If has defaultImage = 1
+                            imagesOriginal = (imagesGallery) != undefined
+                                ? imagesGallery.original : '/images/blank.gif';
+                            imagesThumbnail = (imagesGallery) != undefined
+                                ? imagesGallery.thumbnail : '/images/blank.gif';
+                        }else{
+                            // checked lastModifiedDateImage by using lastModifiedDateImage
+                            imagesOrder = col.gallery.sort(compareBy('lastModifiedDateImage','desc',null));
+                            imagesOriginal = (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif';
+                            imagesThumbnail = (imagesOrder.length) != 0 ? imagesOrder[0].thumbnail : '/images/blank.gif';
+                        }
+                    }else{
+                        imagesOriginal = (col.gallery) != undefined
+                            ? (col.gallery.length) != 0 ? col.gallery[0].original : '/images/blank.gif'
+                            : '/images/blank.gif';
+                        imagesThumbnail = (col.gallery) != undefined
+                            ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
+                            : '/images/blank.gif';
+                    }
 
                     switch (col.type) {
                         case 'JLY':

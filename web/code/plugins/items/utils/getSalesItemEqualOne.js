@@ -21,11 +21,31 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,userPermis
             ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
             :'file:///home/dev/www/mol/web/code/plugins/http/public';
     let tagbarsoldoutlist = `position: absolute;top: -5px;right: -5px;z-index: 9999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_sold_out_list.png)right top no-repeat;`
-    let imagesThumbnail = (item.image) != undefined
-                      ?  item.image.length != 0
-                          ? item.image[0].thumbnail
-                          : '/images/blank.gif'
-                      : '/images/blank.gif';
+
+    let imagesGallery = [];
+    let imagesOrder = [];
+    let imagesThumbnail =  '';
+
+    if (item.image.length > 1) {
+        // First checked defaultImage = 1
+        imagesGallery = item.image.find((im) => {
+            return im.defaultSetImage == 1;
+        })
+        if (!!imagesGallery) {
+            // If has defaultImage = 1
+            imagesThumbnail = (imagesGallery) != undefined
+                ? imagesGallery.thumbnail : '/images/blank.gif';
+        }else{
+            // checked lastModifiedDateImage by using lastModifiedDateImage
+            imagesOrder = item.image.sort(compareBy('lastModifiedDateSetImage','desc',null));
+            imagesThumbnail = (imagesOrder.length) != 0 ? imagesOrder[0].thumbnail : '/images/blank.gif';
+        }
+    }else{
+        imagesThumbnail = (item.image) != undefined
+            ? (item.image.length) != 0 ? item.image[0].thumbnail : '/images/blank.gif'
+            : '/images/blank.gif';
+    }
+    
     let imagesProduct = imagesThumbnail.replace(/\/images\//g,imgPath);
     let htmlViewAsSetAll = '';
     htmlViewAsSetAll =

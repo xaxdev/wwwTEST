@@ -244,8 +244,10 @@ class SalesReportJewelry extends Component {
                 if (props.options.jewelryCategories) {
                     findFieldName = []
                     findFieldName = props.options.jewelryCategories.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -258,8 +260,10 @@ class SalesReportJewelry extends Component {
                 if (props.options.collections) {
                     findFieldName = []
                     findFieldName = props.options.collections.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -272,8 +276,10 @@ class SalesReportJewelry extends Component {
                 if (props.options.brands) {
                     findFieldName = []
                     findFieldName = props.options.brands.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -286,8 +292,10 @@ class SalesReportJewelry extends Component {
                 if (props.options.ringSizes) {
                     findFieldName = []
                     findFieldName = props.options.ringSizes.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -300,8 +308,10 @@ class SalesReportJewelry extends Component {
                 if (props.options.dominantStones) {
                     findFieldName = []
                     findFieldName = props.options.dominantStones.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -314,8 +324,10 @@ class SalesReportJewelry extends Component {
                 if (props.options.metalTypes) {
                     findFieldName = []
                     findFieldName = props.options.metalTypes.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -328,8 +340,10 @@ class SalesReportJewelry extends Component {
                 if (props.options.metalColours) {
                     findFieldName = []
                     findFieldName = props.options.metalColours.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 

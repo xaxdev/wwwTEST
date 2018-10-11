@@ -1,6 +1,7 @@
 import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 import config from './config';
+import compareBy from './compare';
 
 export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userPermissionPrice){
 
@@ -104,20 +105,57 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                             (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
                                                         : '-' :
                                                         item.name;
-                                                    imagesProduct = (item.image) != undefined
-                                                        ? item.image.length != 0
-                                                            ? item.image[0].original
-                                                            : '/images/blank.gif'
-                                                        : '/images/blank.gif';
+                                                    let imagesGallery = [];
+                                                    let imagesOrder = [];
+
+                                                    if (item.image.length > 1) {
+                                                        // First checked defaultImage = 1
+                                                        imagesGallery = item.image.find((im) => {
+                                                            return im.defaultSetImage == 1;
+                                                        })
+                                                        if (!!imagesGallery) {
+                                                            // If has defaultImage = 1
+                                                            imagesProduct = (imagesGallery) != undefined
+                                                                ? imagesGallery.original : '/images/blank.gif';
+                                                        }else{
+                                                            // checked lastModifiedDateImage by using lastModifiedDateImage
+                                                            imagesOrder = item.image.sort(compareBy('lastModifiedDateSetImage','desc',null));
+                                                            imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif';
+                                                        }
+                                                    }else{
+                                                        imagesProduct = (item.image) != undefined
+                                                            ? item.image.length != 0 ?item.image[0].original : '/images/blank.gif'
+                                                            : '/images/blank.gif';
+                                                    }
                                                     isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                                                 }else{
+                                                    let imagesGallery = [];
+                                                    let imagesOrder = [];
+
+                                                    if (item.gallery.length > 1) {
+                                                        // First checked defaultImage = 1
+                                                        imagesGallery = item.gallery.find((gallery) => {
+                                                            return gallery.defaultImage == 1;
+                                                        })
+                                                        if (!!imagesGallery) {
+                                                            // If has defaultImage = 1
+                                                            imagesProduct = (imagesGallery) != undefined
+                                                                ? imagesGallery.original : '/images/blank.gif';
+                                                        }else{
+                                                            // checked lastModifiedDateImage by using lastModifiedDateImage
+                                                            imagesOrder = item.gallery.sort(compareBy('lastModifiedDateImage','desc',null));
+                                                            imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif';
+                                                        }
+                                                    }else{
+                                                        imagesProduct = (item.gallery) != undefined
+                                                            ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                                            : '/images/blank.gif';
+                                                    }
+
                                                     price = GetPriceWithCurrency(item,'price',currency);
                                                     itemName = (item.description != undefined)
                                                         ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
                                                         : '-';
-                                                    imagesProduct = (item.gallery) != undefined
-                                                        ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
-                                                        : '/images/blank.gif';
                                                     isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                                                 }
                                                 imagesProduct = imagesProduct.replace(/\/images\//g,imgPath);

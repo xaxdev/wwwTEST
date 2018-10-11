@@ -58,7 +58,9 @@ const getSoldItemSets = async (index, exchangeRates) => {
 
                         setImages.push({
                             original: `${config.gallery.original}/${record.setImageName}.${record.setImageType}`,
-                            thumbnail: `${config.gallery.thumbnail}/${record.setImageName}.${record.setImageType}`
+                            thumbnail: `${config.gallery.thumbnail}/${record.setImageName}.${record.setImageType}`,
+                            defaultSetImage: `${record.defaultSetImage}`,
+                            lastModifiedDateSetImage: `${record.lastModifiedDateSetImage}`
                         });
 
                     }
@@ -78,7 +80,9 @@ const getSoldItemSets = async (index, exchangeRates) => {
                     description: record.description,
                     image: {
                         original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
-                        thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+                        thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`,
+                        defaultImage: `${record.defaultImage}`,
+                        lastModifiedDateImage: `${record.lastModifiedDateImage}`
                     },
                     price: {},
                     actualCost: {},
@@ -141,7 +145,9 @@ const getSoldItemSets = async (index, exchangeRates) => {
 
                         setImages.push({
                             original: `${config.gallery.original}/${record.setImageName}.${record.setImageType}`,
-                            thumbnail: `${config.gallery.thumbnail}/${record.setImageName}.${record.setImageType}`
+                            thumbnail: `${config.gallery.thumbnail}/${record.setImageName}.${record.setImageType}`,
+                            defaultSetImage: `${record.defaultSetImage}`,
+                            lastModifiedDateSetImage: `${record.lastModifiedDateSetImage}`
                         });
 
                     }
@@ -162,7 +168,9 @@ const getSoldItemSets = async (index, exchangeRates) => {
                         description: record.description,
                         image: {
                             original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
-                            thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`
+                            thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`,
+                            defaultImage: `${record.defaultImage}`,
+                            lastModifiedDateImage: `${record.lastModifiedDateImage}`
                         },
                         price: {},
                         actualCost: {},

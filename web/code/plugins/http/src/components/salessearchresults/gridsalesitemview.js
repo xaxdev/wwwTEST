@@ -9,6 +9,7 @@ import numberFormat from '../../utils/convertNumberformat';
 import OnMouseOverGrid from './onmouseovergrid';
 import OnMouseOutGrid from './onmouseoutgrid';
 import GetSalesPricePermission from '../../utils/getSalesPricePermission';
+import compareBy from '../../utils/compare';
 
 function showDiv() {
    document.getElementById('searchresult-border').style.display = 'block';
@@ -102,7 +103,30 @@ class GridSalesItemsView extends Component {
                             lblNetSales = 'Total Net Sales (USD)';
                             lblDiscount = 'Total Discount Amount (USD)';
                             lblMarginAmount = 'Total Margin Amount (USD)';
-                            imagesProduct = (item.image) != undefined ? item.image.length != 0 ?item.image[0].original : '/images/blank.gif' : '/images/blank.gif';
+
+                            let imagesGallery = [];
+                            let imagesOrder = [];
+
+                            if (item.image.length > 1) {
+                                // First checked defaultImage = 1
+                                imagesGallery = item.image.find((im) => {
+                                    return im.defaultSetImage == 1;
+                                })
+                                if (!!imagesGallery) {
+                                    // If has defaultImage = 1
+                                    imagesProduct = (imagesGallery) != undefined
+                                        ? imagesGallery.original : '/images/blank.gif';
+                                }else{
+                                    // checked lastModifiedDateImage by using lastModifiedDateImage
+                                    imagesOrder = item.image.sort(compareBy('lastModifiedDateSetImage','desc',null));
+                                    imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif';
+                                }
+                            }else{
+                                imagesProduct = (item.image) != undefined
+                                    ? item.image.length != 0 ?item.image[0].original : '/images/blank.gif'
+                                    : '/images/blank.gif';
+                            }
+
                             itemDate = convertDate(item.postedDate);
                             lblDate = 'Posted Date:';
                             price = numberFormat(item.totalPrice!=undefined?item.totalPrice['USD']:0) + ' ' + 'USD';
@@ -125,7 +149,30 @@ class GridSalesItemsView extends Component {
                             lblNetSales = 'Net Sales (USD)';
                             lblDiscount = 'Discount %';
                             lblMarginAmount = 'Margin Amount';
-                            imagesProduct = (item.gallery) != undefined ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif' : '/images/blank.gif';
+
+                            let imagesGallery = [];
+                            let imagesOrder = [];
+
+                            if (item.gallery.length > 1) {
+                                // First checked defaultImage = 1
+                                imagesGallery = item.gallery.find((gallery) => {
+                                    return gallery.defaultImage == 1;
+                                })
+                                if (!!imagesGallery) {
+                                    // If has defaultImage = 1
+                                    imagesProduct = (imagesGallery) != undefined
+                                        ? imagesGallery.original : '/images/blank.gif';
+                                }else{
+                                    // checked lastModifiedDateImage by using lastModifiedDateImage
+                                    imagesOrder = item.gallery.sort(compareBy('lastModifiedDateImage','desc',null));
+                                    imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].original : '/images/blank.gif';
+                                }
+                            }else{
+                                imagesProduct = (item.gallery) != undefined
+                                    ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
+                                    : '/images/blank.gif';
+                            }
+
                             itemDate = convertDate(item.invoiceDate);
                             lblDate = 'Invoice Date';
 

@@ -66,8 +66,18 @@ SELECT	SOL.[Id] AS 'id'
 		, ISNULL(img.[FILETYPE], '') AS 'imageType'
 		, ISNULL(img.[TYPEID], '') AS 'imageTypeId'
 		, ISNULL(img.[Company], '') AS 'imageCompany'
+		, ISNULL(img.[DEFAULTIMAGE], 0) AS 'defaultImage'
+		, ISNULL(img.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateImage'
+		, ISNULL(imgOther.[FILENAME], '') AS 'imageOtherName'
+		, ISNULL(imgOther.[FILETYPE], '') AS 'imageOtherType'
+		, ISNULL(imgOther.[TYPEID], '') AS 'imageOtherTypeId'
+		, ISNULL(imgOther.[Company], '') AS 'imageOtherCompany'
+		, ISNULL(imgOther.[DEFAULTIMAGE], 0) AS 'defaultImageOther'
+		, ISNULL(imgOther.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateImageOther'
 		, ISNULL(setimg.[FILENAME], '') AS 'setImageName'
 		, ISNULL(setimg.[FILETYPE], '') AS 'setImageType'
+		, ISNULL(setimg.[DEFAULTIMAGE], 0) AS 'defaultSetImage'
+		, ISNULL(setimg.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateSetImage'
 		, 'JLY' AS 'type'
 		, ISNULL(SOL.[SetReference], '') AS 'setReference'
 		, gemstone.[Id] AS 'gemstone_id'
@@ -93,6 +103,8 @@ SELECT	SOL.[Id] AS 'id'
 		, ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
 		, ISNULL(certimage.[FILENAME], '') AS [CertificateImageName]
 		, ISNULL(certimage.[FILETYPE], '') AS [CertificateImageType]
+		, ISNULL(certimage.[DEFAULTIMAGE], 0) AS 'certificateDefaultImage'
+		, ISNULL(certimage.[LASTMODIFIEDDATE], '') AS 'certificateLastModifiedDateImage'
 		, certmaster.[CertificateCreateDate] AS [CertifiedDate]
 FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
@@ -100,7 +112,12 @@ FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 			AND SOL.[DataAreaId] = gemstone.[Company]
         LEFT JOIN [ITORAMA].[dbo].[ItemImages] img
             ON SOL.[Reference] = img.[ITEMID]
-            AND img.[TYPEID] in ('Image','COA','DBC','Monograph')
+			AND SOL.[DataAreaId] = img.[Company]
+            AND img.[TYPEID] in ('Image')
+		LEFT JOIN [ITORAMA].[dbo].[ItemImages] imgOther
+		    ON SOL.[Reference] = imgOther.[ITEMID]
+		    AND SOL.[DataAreaId] = imgOther.[Company]
+		    AND imgOther.[TYPEID] in ('COA','DBC','Monograph')
 		LEFT JOIN [ITORAMA].[dbo].[JewelryType] AS JLYT
 			ON SOL.[ArticleCode] = JLYT.[Code]
 		LEFT JOIN [ITORAMA].[dbo].[SoldItemCertificates] cert

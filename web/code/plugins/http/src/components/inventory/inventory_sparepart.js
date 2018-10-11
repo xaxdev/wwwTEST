@@ -189,8 +189,10 @@ class InventorySparePart extends Component {
                 if (props.options.sparePartType) {
                     findFieldName = []
                     findFieldName = props.options.sparePartType.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -205,8 +207,10 @@ class InventorySparePart extends Component {
                 if (props.options.buckleTypes) {
                     findFieldName = []
                     findFieldName = props.options.buckleTypes.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -221,8 +225,10 @@ class InventorySparePart extends Component {
                 if (props.options.metalTypes) {
                     findFieldName = []
                     findFieldName = props.options.metalTypes.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -237,8 +243,10 @@ class InventorySparePart extends Component {
                 if (props.options.metalColours) {
                     findFieldName = []
                     findFieldName = props.options.metalColours.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
@@ -253,8 +261,10 @@ class InventorySparePart extends Component {
                 if (props.options.dominantStones) {
                     findFieldName = []
                     findFieldName = props.options.dominantStones.filter((item) => {
-                        if (item.name.toLowerCase().indexOf(expr) != -1) {
-                            return item.name
+                        if (item.name != null) {
+                            if (item.name.toLowerCase().indexOf(expr) != -1) {
+                                return item.name
+                            }
                         }
                     }).map((item) => { return item.code });
 
