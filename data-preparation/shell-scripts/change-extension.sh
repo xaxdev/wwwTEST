@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOURCE="/media/mol/"
+SOURCE="/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/"
 ORIGINAL="/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/original"
 THUMBNAIL="/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail"
 
@@ -16,9 +16,9 @@ if [ $PROCESS -le 2 ]; then
 
   find $SOURCE -iname "*.jpg" -or -iname "*.jpeg" -or -iname "*.JPG" -type f -ctime -2 | while read file
   do
-    echo "Resizing file"
-    mogrify -resize 120x -strip -compress jpeg -verbose -path $THUMBNAIL "$file"
-    mogrify -resize 500x -strip -compress jpeg -verbose -path $ORIGINAL "$file"
+    echo "Changing extension file"
+    #mogrify -resize 120x -strip -compress jpeg -verbose -path $THUMBNAIL "$file"
+    #mogrify -resize 500x -strip -compress jpeg -verbose -path $ORIGINAL "$file"
 
     fname=$(echo "$file" | awk -F'/' '{print $NF}')
     fbname="${fname%.*}"
