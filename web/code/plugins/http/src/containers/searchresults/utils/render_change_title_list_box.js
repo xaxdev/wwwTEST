@@ -1,25 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
+import { ColumnsNomal, ColumnsViewAsSet } from './columns'
 
 import DualListBox from 'react-dual-listbox';
 import 'react-dual-listbox/lib/react-dual-listbox.css';
-
-const options = [
-    { value: 'reference', label: 'Item Reference' },
-    { value: 'description', label: 'Item Description' },
-    { value: 'sku', label: 'SKU' },
-    { value: 'company', label: 'Company' },
-    { value: 'warehouse', label: 'Location' },
-    { value: 'size', label: 'Size' },
-    { value: 'jewelsWeight', label: 'Jewelry Weight' },
-    { value: 'grossWeight', label: 'Item Weight (Grams)' },
-    { value: 'stoneDetail', label: 'Stone Detail' },
-    { value: 'priceUSD', label: 'Price' },
-    { value: 'categoryName', label: 'Category Name' },
-    { value: 'category', label: 'Category' },
-    { value: 'article', label: 'Article' },
-];
 
 class RenderChangeTitleListBox extends Component {
     constructor() {
@@ -28,17 +13,25 @@ class RenderChangeTitleListBox extends Component {
         this.onChange = this.onChange.bind(this);
 
         this.state = {
-            selected: []
+            selected: [],
+            maxColumn: false
         };
 
     }
     onChange = (selected) => {
-        // handle selected values here
-        console.log('selectedValues-->',selected);
-        this.setState({ selected });
+        const { that } = this.props;
+        console.log(selected);
+        if (selected.length < 10) {
+            that.props.setTitleColumnTable(selected)
+            this.setState({ selected, maxColumn: false });
+        }else {
+            this.setState({maxColumn: true});
+        }
     }
     render(){
-        const { that, userLogin, checkFields, labels, selectedAllFields, selectedNoAllFields } = this.props;
+        const { that, userLogin, checkFields, labels, selectedAllFields, selectedNoAllFields, ViewAsSet } = this.props;
+        const { TitleColumn } = that.props
+        // console.log({TitleColumn});
         const { selected } = this.state;
         let checkAll = true;
 
@@ -51,11 +44,13 @@ class RenderChangeTitleListBox extends Component {
                     </div>
                     <div className="modal-body">
                         <h3>Please select field for title.</h3>
+                        <h5>(Normal column Images, Item Reference, Item Description, SKU, Company, Location, Size, Jewels Weight, Item Weight (Grams), Stone Detail, Price)</h5>
                         <br/>
-                        <DualListBox canFilter options={options} selected={selected} onChange={this.onChange} />
+                        <DualListBox canFilter options={ViewAsSet? ColumnsViewAsSet: ColumnsNomal} selected={TitleColumn} onChange={this.onChange} />
                     </div>
+                    <h5 className={`${this.state.maxColumn?'user-alert':'hidden'}`}>Cannot selected column more than 9 columns.</h5>
                     <div className="modal-footer">
-                        <button id="export" className="btn btn-default btn-radius" onClick={that.confirmExport}>
+                        <button id="export" className="btn btn-default btn-radius" onClick={that.changeTitleColumn}>
                             Changed
                         </button>
                         <button className="btn btn-default btn-radius" onClick={that.hideChangeTitle}>

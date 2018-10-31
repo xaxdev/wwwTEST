@@ -88,6 +88,7 @@ class SearchResult extends Component {
         this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
         this.changeTitle = this.changeTitle.bind(this);
+        this.changeTitleColumn = this.changeTitleColumn.bind(this);
 
         this.state = {
             activePage: this.props.currentPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true, cut: false,
@@ -358,7 +359,7 @@ class SearchResult extends Component {
     }
 
     renderPagination(){
-        const { fields: { currPage }, totalPages, currentPage, items, handleSubmit, resetForm, submitting
+        const { fields: { currPage }, totalPages, currentPage, items, handleSubmit, resetForm, submitting, showListView
         } = this.props;
         const page = this.state.activePage;
         return(
@@ -373,6 +374,7 @@ class SearchResult extends Component {
                     <span>of</span>
                     <span>{numberFormat(totalPages)}</span>
                     <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
+                    <button className={`${showListView ? '' : 'hidden'}`} type="button" disabled={submitting} onClick={this.changeTitle}>Edit Display</button>
                 </div>
             </div>
         );
@@ -772,26 +774,28 @@ class SearchResult extends Component {
     }
 
     changeTitle(){
-        // const that = this;
-        // checkFields.map(function(field, index){
-        //     that.setState({ [field]: false });
-        // });
-        // this.setState({ allFields: false });
-        // this.setState({ showImages: false });
-        console.log('this.state.isOpenChangeTitle-->',this.state.isOpenChangeTitle);
-        this.setState({ isOpenChangeTitle: true });
+        this.setState({ isOpenChangeTitle: true })
     }
     hideChangeTitle = (e) => {
-        e.preventDefault();
-        this.setState({ isOpenChangeTitle: false });
+        e.preventDefault()
+        this.setState({ isOpenChangeTitle: false })
+        this.props.setTitleColumnTable([])
+    }
+
+    changeTitleColumn = (e) => {
+        e.preventDefault()
+        console.log('Change')
+        this.setState({ isOpenChangeTitle: false })
     }
 
     renderTitleDialog(){
         const that = this;
+        const { ViewAsSet } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         return(
-            <RenderChangeTitleListBox that={this} userLogin={userLogin} checkFields={checkFields} labels={labels} selectedAllFields={this.selectedAllFields}
-                selectedNoAllFields={this.selectedNoAllFields}/>
+            <RenderChangeTitleListBox
+                that={this} userLogin={userLogin} checkFields={checkFields} labels={labels} selectedAllFields={this.selectedAllFields}
+                selectedNoAllFields={this.selectedNoAllFields} ViewAsSet={ViewAsSet}/>
         );
     }
 
@@ -1206,7 +1210,7 @@ class SearchResult extends Component {
         const { fields: { oldCatalogName, newCatalogName, validateCatalogName },
               totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize,exportItems,
               totalPublicPrice, totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsOrder,
-              sortingBy, sortDirection } = this.props;
+              sortingBy, sortDirection, TitleColumn } = this.props;
         const { isOpenMessage } = this.state;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { items } = this.props;
@@ -1328,9 +1332,6 @@ class SearchResult extends Component {
                                                         disabled={submitting} onClick={ this.showDialogPrintOptions }>
                                                     </div>
                                                 </a>
-                                                <a>
-                                                    <div className="icon-excel" disabled={submitting} onClick={ this.changeTitle }></div>
-                                                </a>
                                             </div>
                                             <div className="col-md-9 col-sm-12 col-xs-12 pagenavi">
                                                 <div className="searchresult-navi search-right">
@@ -1377,7 +1378,7 @@ class SearchResult extends Component {
                                                     items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
                                                     onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
-                                                    listMyCatalog={listMyCatalog}/>
+                                                    listMyCatalog={listMyCatalog} titleColumn={TitleColumn}/>
                                             </div>
                                             <div id="dvListview" className="col-sm-12 search-product hidden">
                                                 <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
@@ -1387,7 +1388,7 @@ class SearchResult extends Component {
                                             <div id="dvListviewAll" className="col-sm-12 search-product hidden">
                                                 <ListItemsViewPrint items={items} pageSize={exportItems.length}
                                                       onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
-                                                      chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
+                                                      chkAllItems={chkAllItems} listMyCatalog={listMyCatalog} titleColumn={TitleColumn}/>
                                             </div>
                                             <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                                                 <center>
@@ -1437,6 +1438,7 @@ function mapStateToProps(state) {
         showListView: state.searchResult.ShowListView, listCatalogName: state.myCatalog.ListCatalogName,
         ViewAsSet: state.searchResult.viewAsSet, ItemsOrder: state.searchResult.itemsOrder,
         SetReferencdOrder: state.searchResult.setReferenceOrder, listSetCatalogName: state.myCatalog.ListSetCatalogName,
+        TitleColumn: state.searchResult.titleColumn
     }
 }
 SearchResult.propTypes = {
