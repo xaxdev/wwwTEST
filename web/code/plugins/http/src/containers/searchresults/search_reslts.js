@@ -1,13 +1,15 @@
 import React, { Component, PropTypes }from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
-import { Button,FormControl,Pagination, ControlLabel, DropdownButton, MenuItem } from 'react-bootstrap';
+import { FormControl, Pagination, ControlLabel, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
 import jQuery from 'jquery';
 import Path from 'path';
 import moment from 'moment-timezone';
+import { Wrapper, Button, Menu, MenuItem, openMenu, closeMenu } from 'react-aria-menubutton'
+import CSSTransitionGroup from 'react-addons-css-transition-group'
 import * as itemactions from '../../actions/itemactions';
 import PureInput from '../../utils/PureInput';
 import GridItemsView from '../../components/searchresults/griditemview';
@@ -61,6 +63,8 @@ const labelsViewAsSet = {
     companyName: 'Company', warehouseName: 'Location', createdDate: 'Created Date'
 }
 let listMyCatalog = []
+
+const fancyStuff = ['Edit Display', 'Reset']
 
 class SearchResult extends Component {
     constructor(props) {
@@ -358,10 +362,53 @@ class SearchResult extends Component {
         }
     }
 
+    handleEditDisplay = (data) =>{
+        switch (data.activity.toLowerCase()) {
+            case 'reset':
+                this.props.setTitleColumnTable([])
+                break;
+            default:
+                this.changeTitle();
+                break;
+        }
+    }
+
     renderPagination(){
         const { fields: { currPage }, totalPages, currentPage, items, handleSubmit, resetForm, submitting, showListView
         } = this.props;
         const page = this.state.activePage;
+
+        const fancyMenuItems = fancyStuff.map((activity, i) => (
+            <MenuItem
+                value={{
+                  activity,
+                  somethingArbitrary: 'arbitrary',
+                }}
+                text={activity}
+                key={i}
+                className="FancyMB-menuItem" >
+                <span className="FancyMB-keyword">
+                    {activity}
+                </span>
+            </MenuItem>
+        ));
+
+        const menuInnards = menuState => {
+            const menu = (!menuState.isOpen) ? false : (
+                <div className="FancyMB-menu" key="menu">
+                    {fancyMenuItems}
+                </div>
+            );
+            return (
+                <CSSTransitionGroup
+                    transitionName="is"
+                    transitionEnterTimeout={200}
+                    transitionLeaveTimeout={200} >
+                    {menu}
+                </CSSTransitionGroup>
+            );
+        };
+
         return(
             <div>
                 <Pagination prev next first last ellipsis boundaryLinks
@@ -374,7 +421,19 @@ class SearchResult extends Component {
                     <span>of</span>
                     <span>{numberFormat(totalPages)}</span>
                     <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
-                    <button className={`${showListView ? '' : 'hidden'}`} type="button" disabled={submitting} onClick={this.changeTitle}>Edit Display</button>
+                    <Wrapper onSelection={this.handleEditDisplay.bind(this)}
+                        className={`FancyMB ${showListView ? '' : 'hidden'}`} id="foo" >
+                        <Button className="FancyMB-trigger btn-radius">
+                            <span className="FancyMB-triggerInnards">
+                                <span className="FancyMB-triggerText">
+                                    Edit Display
+                                </span>
+                            </span>
+                        </Button>
+                        <Menu>
+                            {menuInnards}
+                        </Menu>
+                    </Wrapper>
                 </div>
             </div>
         );
@@ -779,13 +838,19 @@ class SearchResult extends Component {
     hideChangeTitle = (e) => {
         e.preventDefault()
         this.setState({ isOpenChangeTitle: false })
-        this.props.setTitleColumnTable([])
     }
 
     changeTitleColumn = (e) => {
         e.preventDefault()
-        console.log('Change')
-        this.setState({ isOpenChangeTitle: false })
+        const { TitleColumn } = this.props;
+        let params = {
+            'titleColumn': TitleColumn
+        }
+        console.log({params});
+        this.props.saveTitleColumn(params)
+        .then(async (value) => {
+            this.setState({ isOpenChangeTitle: false })
+        })
     }
 
     renderTitleDialog(){
