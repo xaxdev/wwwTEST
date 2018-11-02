@@ -4,7 +4,7 @@ import numberFormat2digit from './convertNumberformatwithcomma2digit';
 import config from './config';
 import compareBy from './compare';
 
-export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPermissionPrice){
+export default function GetItemEqualOne(item, currency, isViewAsSet, env, row, userPermissionPrice, titleValue){
     let imgPath = env == 'production'
     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
     : env == 'staging'
@@ -59,13 +59,22 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPe
             return (
                     `<tr id="${index}">
                         <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.reference}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.description}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.sku}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.company}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.warehouse}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${numberFormat2digit(subitem.grossWeight)}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
+                        ${titleValue.map((title)=>{
+                            switch (title) {
+                                case 'stoneDetail':
+                                    return(`<td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem[title] == ''?'-':subitem[title]}</td>`)
+                                    break;
+                                case 'grossWeight':
+                                    return(`<td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${numberFormat2digit(subitem[title])}</td>`)
+                                    break;
+                                case 'hierarchy':
+                                    return(`<td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem[title] != undefined ? subitem[title].split('\\').slice(-1).pop():''}</td>`)
+                                    break;
+                                default:
+                                    return(`<td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem[title]}</td>`)
+                                    break;
+                            }
+                        }).join('')}
                         <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(userPermissionPrice == 'All') ?
                             '' : ' hidden'}">
                             ${numberFormat(subitem.actualCost['USD'])}

@@ -154,5 +154,15 @@ module.exports = [
         method: 'POST',
         path: '/export/sales',
         config: controllers.salesexport
+    },
+    {
+        method: 'POST',
+        path: '/savetitle',
+        config: controllers.savetitle
+    },
+    {
+        method: 'POST',
+        path: '/searchtitle',
+        config: controllers.searchtitle
     }
 ];

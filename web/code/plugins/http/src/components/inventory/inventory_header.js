@@ -115,6 +115,7 @@ class InventoryHeader extends Component {
             else reader.readAsArrayBuffer(f);
     	};
     }
+
     render() {
         const { props } = this.props;
         let {

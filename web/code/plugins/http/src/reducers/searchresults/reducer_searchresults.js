@@ -4,7 +4,7 @@ import {FETCH_ALLITEMS, FETCH_ITEM, FETCH_SORTING, NEWSEARCH, MODIFY_SEARCH, SET
     GET_SAVESALESCRITERIA, SET_SALESPARAMS, MODIFY_SALESSEARCH, SET_SALESSHAREDSAVESEARCH, SET_IDDELETESALESSAVESEARCH, DELETE_SALESSAVESEARCH,
     GET_SALESSAVECRITERIA, POST_SALESSAVESEARCH, SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS,SET_SALESSORTBY,SET_SALESSORTDIRECTION,SET_SALESPAGESIZE,
     SET_SALESSHOWGRIDVIEW, SET_SALESSHOWLISTVIEW, NEWSALESSEARCH, SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER,FETCH_EXPORTSALESITEMS,FETCH_SALESALLPDF,
-    SET_CURRENTSALESPAGE, FETCH_ALLSALESSETREFERENCE, FIRSTSEARCH
+    SET_CURRENTSALESPAGE, FETCH_ALLSALESSETREFERENCE, FIRSTSEARCH, SET_TITLECOLUMN, SAVE_TITLECOLUMN, FETCH_TITLECOLUMN
 } from '../../constants/itemconstants';
 
 import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CUTGRADE, SET_COLOR, SET_COLORGRADE, SET_CLARITY, SET_CERTIFICATELAB, SET_POLISH,
@@ -33,11 +33,20 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
     saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, saveSearchSalesHierarchy: null, SalesSortingBy:'postedDate', SalesSortDirection:'desc',
     currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, SalesShowGridView: true, SalesShowListView: false,
     totalnetamount: null,totaldiscount: null,totalmargin:null, GemStoneTypeValue:[], InvoiceDateFrom:null, InvoiceDateTo:null, firstSearch: null,
-    specialDiscount: 0
+    specialDiscount: 0, titleColumn:[]
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case FETCH_TITLECOLUMN:
+            return {...state,  titleColumn: action.data.titleColumn};
+            break;
+        case SAVE_TITLECOLUMN:
+            return {...state,  titleColumn: action.data.titleColumn};
+            break;
+        case SET_TITLECOLUMN:
+            return {...state,  titleColumn: action.titleColumn};
+            break;
         case SET_SPECIALDISCOUNT:
             return {...state,  specialDiscount: action.specialDiscount};
             break;
