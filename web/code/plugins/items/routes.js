@@ -159,5 +159,10 @@ module.exports = [
         method: 'POST',
         path: '/savetitle',
         config: controllers.savetitle
+    },
+    {
+        method: 'POST',
+        path: '/searchtitle',
+        config: controllers.searchtitle
     }
 ];

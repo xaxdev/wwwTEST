@@ -37,7 +37,7 @@ class ListItemsViewASSet extends Component {
     }
 
     render = _ => {
-        const { item } = this.props;
+        const { item, tableColumns } = this.props;
         const isItems = item.items != undefined ? item.items.length > 0 ? true : false : false;
         let row = item.items != undefined ? item.items.length + 1 : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
@@ -58,13 +58,22 @@ class ListItemsViewASSet extends Component {
                                 </td>
                                 <td><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
                                 <td>{subitem.reference}</td>
-                                <td>{subitem.description}</td>
-                                <td>{subitem.sku}</td>
-                                <td>{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                                <td>{subitem.company}</td>
-                                <td>{subitem.warehouse}</td>
-                                <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
-                                <td className="text-left">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
+                                {tableColumns.map((title)=>{
+                                    switch (title) {
+                                        case 'stoneDetail':
+                                            return(<td className="text-left">{subitem[title] == ''?'-':subitem[title]}</td>)
+                                            break;
+                                        case 'grossWeight':
+                                            return(<td className="text-right">{numberFormat2digit(subitem[title])}</td>)
+                                            break;
+                                        case 'hierarchy':
+                                            return(<td>{subitem[title] != undefined ? subitem[title].split('\\').slice(-1).pop():''}</td>)
+                                            break;
+                                        default:
+                                            return(<td>{subitem[title]}</td>)
+                                            break;
+                                    }
+                                })}
                                 <td className={`${(userLogin.permission.price == 'All') ?
                                     '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                 <td className={`${(userLogin.permission.price == 'Updated'
@@ -116,13 +125,22 @@ class ListItemsViewASSet extends Component {
                         return (
                             <tr key={index} id={index}>
                                 <td>{subitem.reference}</td>
-                                <td>{subitem.description}</td>
-                                <td>{subitem.sku}</td>
-                                <td>{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                                <td>{subitem.company}</td>
-                                <td>{subitem.warehouse}</td>
-                                <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
-                                <td className="text-left">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
+                                {tableColumns.map((title)=>{
+                                    switch (title) {
+                                        case 'stoneDetail':
+                                            return(<td className="text-left">{subitem[title] == ''?'-':subitem[title]}</td>)
+                                            break;
+                                        case 'grossWeight':
+                                            return(<td className="text-right">{numberFormat2digit(subitem[title])}</td>)
+                                            break;
+                                        case 'hierarchy':
+                                            return(<td>{subitem[title] != undefined ? subitem[title].split('\\').slice(-1).pop():''}</td>)
+                                            break;
+                                        default:
+                                            return(<td>{subitem[title]}</td>)
+                                            break;
+                                    }
+                                })}
                                 <td className={`${(userLogin.permission.price == 'All') ?
                                     '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                 <td className={`${(userLogin.permission.price == 'Updated'

@@ -10,11 +10,28 @@ import {
     SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG, FETCH_EXPORTITEMS,POST_SALESSAVESEARCH,SET_SALESPARAMS,SET_CLOSEALERTMSGSALES,FETCH_ALLSALESITEMS,
     SET_SALESSORTBY, SET_SALESSORTDIRECTION, SET_SALESPAGESIZE, SET_SALESSHOWGRIDVIEW, SET_SALESSHOWLISTVIEW, NEWSALESSEARCH, MODIFY_SALESSEARCH,
     SET_ITEMSSALESORDER, SET_SETREFERENCESALESORDER, FETCH_EXPORTSALESITEMS, FETCH_SALESALLPDF, SET_CURRENTSALESPAGE, FETCH_ALLSALESSETREFERENCE,
-    FIRSTSEARCH, SET_TITLECOLUMN, SAVE_TITLECOLUMN
+    FIRSTSEARCH, SET_TITLECOLUMN, SAVE_TITLECOLUMN, FETCH_TITLECOLUMN
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
 import urlCurrPage from '../utils/getUrlApiCurrPage';
+
+export function getTitleColumn(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/items/searchtitle`;
+    return {
+        type: FETCH_TITLECOLUMN,
+        promise: fetch(url,{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(params)
+        })
+    }
+}
 
 export function saveTitleColumn(params){
     const token = sessionStorage.token;

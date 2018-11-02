@@ -20,7 +20,6 @@ class RenderChangeTitleListBox extends Component {
     }
     onChange = (selected) => {
         const { that } = this.props;
-        console.log(selected);
         if (selected.length < 10) {
             that.props.setTitleColumnTable(selected)
             this.setState({ selected, maxColumn: false });
@@ -31,7 +30,6 @@ class RenderChangeTitleListBox extends Component {
     render(){
         const { that, userLogin, checkFields, labels, selectedAllFields, selectedNoAllFields, ViewAsSet } = this.props;
         const { TitleColumn } = that.props
-        // console.log({TitleColumn});
         const { selected } = this.state;
         let checkAll = true;
 

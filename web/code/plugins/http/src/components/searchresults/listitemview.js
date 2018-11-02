@@ -266,30 +266,36 @@ class ListItemsView extends Component {
             });
 
             let tableColumns = [];
+            let titleValue = [];
 
             if (ViewAsSet) {
                 if (titleColumn.length != 0) {
                     const getTitle = filterArray(ColumnsViewAsSet,titleColumn,'value')
                     getTitle.map((title) => {
                         tableColumns = [...tableColumns, title.label]
+                        titleValue = [...titleValue, title.value]
                     })
                 }else{
                     ColumnsViewAsSet.map((title) => {
                         tableColumns = [...tableColumns, title.label]
+                        titleValue = [...titleValue, title.value]
                     })
                 }
 
             }else{
                 if (titleColumn.length != 0) {
-                    tableColumns = [
-                        { title: '', render: this.renderCheckItem, className: 'text-center' },
-                        { title: 'Images', render: this.renderImage },
-                        { title: 'Item Reference', prop: 'reference' }
-                    ];
-                    const getTitle = filterArray(ColumnsNomal,titleColumn,'value')
-                    getTitle.map((title) => {
-                        tableColumns = [...tableColumns, { title: title.label, prop: title.value }]
-                    })
+                    (async _ =>{
+                        tableColumns = [
+                            { title: '', render: this.renderCheckItem, className: 'text-center' },
+                            { title: 'Images', render: this.renderImage },
+                            { title: 'Item Reference', prop: 'reference' }
+                        ];
+                        const getTitle = filterArray(ColumnsNomal,titleColumn,'value')
+                        await getTitle.map((title) => {
+                            tableColumns = [...tableColumns, { title: title.label, prop: title.value }]
+                        });
+                    })()
+                    tableColumns = [...tableColumns, { title: '', render: this.renderAction, className: 'text-center' }]
                 }else{
                     if (isCompany) {
                         tableColumns = [
@@ -355,9 +361,8 @@ class ListItemsView extends Component {
                             </thead>
                             {items.map((item) => {
                                 return(
-                                    <ListItemsViewASSet key={item.reference} id={item.reference}
-                                        item={item} ViewAsSet={ViewAsSet}
-                                        onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog}
+                                    <ListItemsViewASSet key={item.reference} id={item.reference} item={item} ViewAsSet={ViewAsSet}
+                                        onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog} tableColumns={titleValue}
                                         listMyCatalog={listMyCatalog} onClickList={this.onClickListSet}/>
                                 );
                             })}
@@ -366,17 +371,10 @@ class ListItemsView extends Component {
                 );
             }else{
                 const keys = ['', 'image','reference',...titleColumn]
-                console.log({keys});
-                console.log({tableColumns});
                 return (
                     <div>
-                        <DataTable
-                            className="col-sm-12"
-                            keys={[...keys ]}
-                            columns={tableColumns}
-                            initialData={items}
-                            initialPageLength={this.state.initialPageLength}
-                            initialSortBy={{ prop: 'reference', order: 'ascending' }}
+                        <DataTable className="col-sm-12" keys={[...keys ]} columns={tableColumns} initialData={items}
+                            initialPageLength={this.state.initialPageLength} initialSortBy={{ prop: 'reference', order: 'ascending' }}
                             pageLengthOptions={[ 5, 20, 50 ]}
                         />
                     </div>

@@ -35,17 +35,17 @@ module.exports = {
         const setReferencdOrder = request.payload.SetReferencdOrder;
         const amqpHost = request.server.plugins.amqp.host;
         const amqpChannel = request.server.plugins.amqp.channelPdf;
-    
+
         internals.query = GetSearch(request, 0, 100000);
-    
+
         // console.log(JSON.stringify(internals.query, null, 2));
-    
+
         const getAllItems =  elastic.search({
             index: 'mol',
             type: 'items',
             body: internals.query
         });
-    
+
         const getSetReference = getAllItems.then((response) => {
             const setReferenceResult = response.hits.hits.map((element) => element._source);
             const setReferenceFilter = setReferenceResult.filter((item) => {
@@ -67,9 +67,9 @@ module.exports = {
             }else{
                 sortBy = sortBy;
             }
-    
+
             let missing = '';
-    
+
             switch (sortDirections) {
                 case 'asc':
                     missing = '"missing" : "_first"';
@@ -109,7 +109,7 @@ module.exports = {
                 body: query
             })
         });
-    
+
         try {
             Promise.all([getAllItems, getSetReference]).spread((allItems, setReferences) => {
                 const allItemsResult = allItems.hits.hits.map((element) => element._source);
@@ -117,36 +117,33 @@ module.exports = {
                 const setReferenceData = setReferences.hits.hits.map((element) => element._source);
                 let itemsNotMMECONSResult =[{}];
                 let itemsMMECONSResult =[{}];
-    
+
                 let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-    
+
                 elastic.close();
                 console.log('writing html...');
                 let temp = '';
-                const userName =  request.payload.userName;
-                const env =  request.payload.env;
-                const viewType =  request.payload.viewType;
+                const { userName, env, viewType, titleColumn } =  request.payload
                 let datas = null;
-                let curr = isViewAsSet ? 'USD' : userCurrency
-                console.log('isViewAsSet-->',isViewAsSet);
+                let curr = isViewAsSet ? 'USD' : userCurrency;
                 (async _ => {
                     if (isViewAsSet) {
                         datas = await GetAllData(setReferences, sortDirections, sortBy, size, page, userCurrency, keys,
                             obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
-    
+
                         if (viewType == 'grid') {
                             temp = await GetHTMLViewASSetGridAll(datas,curr,isViewAsSet,env,userPermissionPrice);
                         } else {
-                            temp = await GetHtmlListViewAsSetAll(datas,curr,isViewAsSet,env,userPermissionPrice);
+                            temp = await GetHtmlListViewAsSetAll(datas,curr,isViewAsSet,env,userPermissionPrice,titleColumn);
                         }
                         const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
-    
+
                         await file.write(`${destination}/${userName}.html`, temp);
                         console.log('writing done!');
                         amqp.connect(amqpHost, function(err, conn) {
                             conn.createChannel(function(err, ch) {
                                 const q = amqpChannel;
-        
+
                                 ch.assertQueue(q);
                                 // Note: on Node 6 Buffer.from(msg) should be used
                                 let params = {
@@ -164,16 +161,16 @@ module.exports = {
                         if (viewType == 'grid') {
                             temp = await GetHTMLViewASSetGridAll(datas,curr,isViewAsSet,env,userPermissionPrice)
                         } else if (viewType == 'list') {
-                            temp = await GetHtmlListAll(datas,curr,isViewAsSet,env,userPermissionPrice)
+                            temp = await GetHtmlListAll(datas,curr,isViewAsSet,env,userPermissionPrice,titleColumn)
                         }
                         const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
-    
+
                         await file.write(`${destination}/${userName}.html`, temp);
                         console.log('writing done!');
                         amqp.connect(amqpHost, function(err, conn) {
                             conn.createChannel(function(err, ch) {
                                 const q = amqpChannel;
-        
+
                                 ch.assertQueue(q);
                                 // Note: on Node 6 Buffer.from(msg) should be used
                                 let params = {
@@ -188,7 +185,7 @@ module.exports = {
                         return reply({temp:'done!'});
                     }
                 })()
-    
+
             })
             .catch(function(err) {
                 elastic.close();

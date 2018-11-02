@@ -109,7 +109,7 @@ class SearchResult extends Component {
     }
 
     componentWillMount() {
-        const { ItemsOrder,SetReferencdOrder } = this.props;
+        const { ItemsOrder, SetReferencdOrder, ViewAsSet } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         let sortingBy = '';
         switch (this.props.sortingBy) {
@@ -132,6 +132,8 @@ class SearchResult extends Component {
         this.props.getItems(params).then(async (value) => {
             await this.props.getCatalogNameSetItem();
             await this.props.getSetCatalogName();
+            let titleParams = { 'isViewAsSet': ViewAsSet }
+            await this.props.getTitleColumn(titleParams);
         });
     }
 
@@ -226,7 +228,7 @@ class SearchResult extends Component {
             });
             this.setState({isOpenPrintOptions: false});
         } else {
-            const { showGridView,showListView,ItemsOrder,SetReferencdOrder,ViewAsSet } = this.props;
+            const { showGridView, showListView, ItemsOrder, SetReferencdOrder, ViewAsSet, TitleColumn } = this.props;
             let sortingBy = '';
             switch (this.refs.sortingBy.value) {
                 case 'price':
@@ -249,7 +251,7 @@ class SearchResult extends Component {
                 'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
                 'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`,
                 'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web, 'viewType': viewType,
-                'userPermissionPrice': userPermissionPrice
+                'userPermissionPrice': userPermissionPrice, 'titleColumn': TitleColumn
             };
             const filters =  JSON.parse(sessionStorage.filters);
             params = GetGemstoneLotnumberFilter(filters, params);
@@ -365,10 +367,10 @@ class SearchResult extends Component {
     handleEditDisplay = (data) =>{
         switch (data.activity.toLowerCase()) {
             case 'reset':
-                this.props.setTitleColumnTable([])
+                this.resetTitleColumn()
                 break;
             default:
-                this.changeTitle();
+                this.changeTitle()
                 break;
         }
     }
@@ -837,16 +839,29 @@ class SearchResult extends Component {
     }
     hideChangeTitle = (e) => {
         e.preventDefault()
+        this.props.setTitleColumnTable([])
         this.setState({ isOpenChangeTitle: false })
     }
 
     changeTitleColumn = (e) => {
         e.preventDefault()
-        const { TitleColumn } = this.props;
+        const { TitleColumn, ViewAsSet } = this.props;
         let params = {
-            'titleColumn': TitleColumn
+            'titleColumn': TitleColumn,
+            'isViewAsSet': ViewAsSet
         }
-        console.log({params});
+        this.props.saveTitleColumn(params)
+        .then(async (value) => {
+            this.setState({ isOpenChangeTitle: false })
+        })
+    }
+
+    resetTitleColumn = _=> {
+        const { ViewAsSet } = this.props;
+        let params = {
+            'titleColumn': [],
+            'isViewAsSet': ViewAsSet
+        }
         this.props.saveTitleColumn(params)
         .then(async (value) => {
             this.setState({ isOpenChangeTitle: false })
@@ -1448,7 +1463,7 @@ class SearchResult extends Component {
                                             <div id="dvListview" className="col-sm-12 search-product hidden">
                                                 <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
                                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
-                                                    listMyCatalog={listMyCatalog}/>
+                                                    listMyCatalog={listMyCatalog} titleColumn={TitleColumn}/>
                                             </div>
                                             <div id="dvListviewAll" className="col-sm-12 search-product hidden">
                                                 <ListItemsViewPrint items={items} pageSize={exportItems.length}
