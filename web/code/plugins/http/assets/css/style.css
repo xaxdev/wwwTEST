@@ -2348,6 +2348,22 @@ select.form-searchresult option{
   height: 32px;
 }
 
+.FancyMB-trigger-listView {
+  cursor: pointer;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background: #ddbe6a;
+  color: #000;
+  border-radius: 5px;
+  padding: 3px 5px;
+  transition: background-color 300ms ease-out;
+  font-size: 14px;
+  height: 32px;
+}
+
 .FancyMB-trigger:hover,
 .FancyMB-trigger:focus {
   color: #fff;
@@ -2459,6 +2475,12 @@ select.form-searchresult option{
   display: inline-block;
   line-height: 0;
   vertical-align: top;
+}
+
+.FancyMB-triggerText-listView {
+  display: inline-block;
+  line-height: 0;
+  font-family: 'open_sanssemibold';
 }
 
 .FancyMB-triggerSmallText {
