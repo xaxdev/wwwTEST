@@ -228,7 +228,7 @@ class SearchResult extends Component {
             });
             this.setState({isOpenPrintOptions: false});
         } else {
-            const { showGridView, showListView, ItemsOrder, SetReferencdOrder, ViewAsSet, TitleColumn } = this.props;
+            const { showGridView, showListView, ItemsOrder, SetReferencdOrder, ViewAsSet, TitleColumnDb } = this.props;
             let sortingBy = '';
             switch (this.refs.sortingBy.value) {
                 case 'price':
@@ -251,7 +251,7 @@ class SearchResult extends Component {
                 'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
                 'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`,
                 'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web, 'viewType': viewType,
-                'userPermissionPrice': userPermissionPrice, 'titleColumn': TitleColumn
+                'userPermissionPrice': userPermissionPrice, 'titleColumn': TitleColumnDb
             };
             const filters =  JSON.parse(sessionStorage.filters);
             params = GetGemstoneLotnumberFilter(filters, params);
@@ -840,19 +840,22 @@ class SearchResult extends Component {
     changeTitle(){
         this.setState({ isOpenChangeTitle: true })
     }
-    hideChangeTitle = (e) => {
+    hideChangeTitle = async (e) => {
         e.preventDefault()
-        this.props.setTitleColumnTable([])
+        const { TitleColumnDb, ViewAsSet, TitleColumn } = this.props;
+        this.props.setTitleColumnTable(TitleColumnDb)
         this.setState({ isOpenChangeTitle: false })
     }
 
     changeTitleColumn = (e) => {
         e.preventDefault()
-        const { TitleColumn, ViewAsSet } = this.props;
+        const { TitleColumnDb, TitleColumn, ViewAsSet } = this.props;
+
         let params = {
             'titleColumn': TitleColumn,
             'isViewAsSet': ViewAsSet
         }
+        
         this.props.saveTitleColumn(params)
         .then(async (value) => {
             this.setState({ isOpenChangeTitle: false })
@@ -1293,7 +1296,7 @@ class SearchResult extends Component {
         const { fields: { oldCatalogName, newCatalogName, validateCatalogName },
               totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize,exportItems,
               totalPublicPrice, totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsOrder,
-              sortingBy, sortDirection, TitleColumn } = this.props;
+              sortingBy, sortDirection, TitleColumnDb } = this.props;
         const { isOpenMessage } = this.state;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { items } = this.props;
@@ -1461,17 +1464,17 @@ class SearchResult extends Component {
                                                     items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
                                                     onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
-                                                    listMyCatalog={listMyCatalog} titleColumn={TitleColumn}/>
+                                                    listMyCatalog={listMyCatalog} titleColumn={TitleColumnDb}/>
                                             </div>
                                             <div id="dvListview" className="col-sm-12 search-product hidden">
                                                 <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
                                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
-                                                    listMyCatalog={listMyCatalog} titleColumn={TitleColumn}/>
+                                                    listMyCatalog={listMyCatalog} titleColumn={TitleColumnDb}/>
                                             </div>
                                             <div id="dvListviewAll" className="col-sm-12 search-product hidden">
                                                 <ListItemsViewPrint items={items} pageSize={exportItems.length}
                                                       onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
-                                                      chkAllItems={chkAllItems} listMyCatalog={listMyCatalog} titleColumn={TitleColumn}/>
+                                                      chkAllItems={chkAllItems} listMyCatalog={listMyCatalog} titleColumn={TitleColumnDb}/>
                                             </div>
                                             <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                                                 <center>
@@ -1521,7 +1524,7 @@ function mapStateToProps(state) {
         showListView: state.searchResult.ShowListView, listCatalogName: state.myCatalog.ListCatalogName,
         ViewAsSet: state.searchResult.viewAsSet, ItemsOrder: state.searchResult.itemsOrder,
         SetReferencdOrder: state.searchResult.setReferenceOrder, listSetCatalogName: state.myCatalog.ListSetCatalogName,
-        TitleColumn: state.searchResult.titleColumn
+        TitleColumnDb: state.searchResult.titleColumnDb, TitleColumn: state.searchResult.titleColumn
     }
 }
 SearchResult.propTypes = {
