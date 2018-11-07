@@ -110,7 +110,8 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvListview = dvListview.replace(/class="font-b fc-000 text-right bg-eb hidden"/g,`style="text-align:right;font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:6px 5px;word-break: normal;font-size: 5px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;display: none !important;visibility: hidden !important;"`);
     dvListview = dvListview.replace(/class="bd-tblr-white"/g,'style="border-left: 1px solid #fff;border-right: 1px solid #fff;border-bottom: transparent;"');
     dvListview = dvListview.replace(/class="list-tagbar-special"/g,'style="position: relative;"');
-    dvListview = dvListview.replace(/class="text-left"/g,'style="text-align: left !important;"');
+    dvListview = dvListview.replace(/class="text-left"/g,'style="padding:6px 5px;word-break: normal;font-size: 5px; border: 1px solid #5c5954;text-align: left !important;"');
+    dvListview = dvListview.replace(/class="text-right"/g,'style="padding:6px 5px;word-break: normal;font-size: 5px; border: 1px solid #5c5954;text-align: right !important;"');
     dvListview = dvListview.replace(/class="tagbar-special"/g,`style="${tagbarspeciallist}"`);
 
     // dvListview = dvListview.replace(/\/original\//g,'/thumbnail/');
@@ -134,6 +135,7 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     dvListviewAll = dvListviewAll.replace(/class="bd-tblr-white"/g,'style="border-left: 1px solid #fff;border-right: 1px solid #fff;border-bottom: transparent;"');
     dvListviewAll = dvListviewAll.replace(/class="list-tagbar-special"/g,'style="position: relative;"');
     dvListviewAll = dvListviewAll.replace(/class="text-left"/g,'style="padding:6px 5px;word-break: normal;font-size: 5px; border: 1px solid #5c5954;text-align: left !important;"');
+    dvListviewAll = dvListviewAll.replace(/class="text-right"/g,'style="padding:6px 5px;word-break: normal;font-size: 5px; border: 1px solid #5c5954;text-align: right !important;"');
     dvListviewAll = dvListviewAll.replace(/class="tagbar-special"/g,`style="${tagbarspeciallist}"`);
 
     let htmlTemplate = '';
