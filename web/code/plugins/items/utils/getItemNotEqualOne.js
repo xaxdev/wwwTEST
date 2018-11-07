@@ -44,6 +44,7 @@ export default function GetItemEqualOne(item, currency, isViewAsSet, env, row, u
     const isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
     let tagbarspeciallist = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
     let htmlViewAsSetAll = '';
+    let colSpan = titleValue.length == 1 ? 3 : (3 + titleValue.length) - 1
     htmlViewAsSetAll =
     `<tbody>
         <tr>
@@ -91,7 +92,7 @@ export default function GetItemEqualOne(item, currency, isViewAsSet, env, row, u
             );
         }).join('')}
         <tr>
-            <td colspan="9" style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 4px;"></td>
+            <td colspan="${colSpan}" style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 4px;"></td>
             <td style="font-weight: bold; font-family:'open_sanssemibold';color:#000;text-align: center;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
                 Total
             </td>

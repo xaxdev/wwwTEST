@@ -1633,7 +1633,7 @@ select.form-searchresult option{
     .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
       border: 1px solid #5c5954;
       vertical-align: middle;
-      padding: 5px;
+      padding: 6px;
     }
     .table thead tr th span{
       float: left;
