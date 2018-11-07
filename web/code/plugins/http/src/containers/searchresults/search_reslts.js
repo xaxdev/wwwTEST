@@ -423,9 +423,12 @@ class SearchResult extends Component {
                     <span>of</span>
                     <span>{numberFormat(totalPages)}</span>
                     <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
+
+                </div>
+                <div>
                     <Wrapper onSelection={this.handleEditDisplay.bind(this)}
                         className={`FancyMB ${showListView ? '' : 'hidden'}`} id="foo" >
-                        <Button className="FancyMB-trigger-listView btn-radius">
+                        <Button className="pull-right FancyMB-trigger-listView btn-radius edit_display">
                             <span className="FancyMB-triggerInnards">
                                 <span className="FancyMB-triggerText-listView">
                                     Edit Display
