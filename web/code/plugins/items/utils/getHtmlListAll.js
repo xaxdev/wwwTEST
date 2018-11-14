@@ -2,8 +2,25 @@ import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 import numberFormat2digit from './convertNumberformatwithcomma2digit';
 import config from './config';
+import { ColumnsNomal } from './columns'
+import filterArray from './filterArray'
 
-export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userPermissionPrice){
+export default function GetHTMLViewASSetAll(datas, currency, isViewAsSet, env, userPermissionPrice, titleColumn){
+    let tableColumns = [];
+    let titleValue = [];
+
+    if (titleColumn.length != 0) {
+        const getTitle = filterArray(ColumnsNomal,titleColumn,'value')
+        getTitle.map((title) => {
+            tableColumns = [...tableColumns, title.label]
+            titleValue = [...titleValue, title.value]
+        })
+    }else{
+        ColumnsNomal.map((title) => {
+            tableColumns = [...tableColumns, title.label]
+            titleValue = [...titleValue, title.value]
+        })
+    }
 
     let htmlViewAsSetAll = '';
     htmlViewAsSetAll =
@@ -98,51 +115,15 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                     <span>Item Reference</span>
                                                                     <span class="sort-icon sort-ascending" aria-hidden="true"></span>
                                                                 </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col" tabindex="0"
-                                                                    aria-sort="none" aria-label="Description: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Description</span>
-                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
-                                                                </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col" tabindex="0"
-                                                                    aria-sort="none" aria-label="SKU: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>SKU</span>
-                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
-                                                                </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col" tabindex="0"
-                                                                    aria-sort="none" aria-label="Company: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Company</span>
-                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
-                                                                </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col" tabindex="0"
-                                                                    aria-sort="none" aria-label="Location: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Location</span>
-                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
-                                                                </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
-                                                                    tabindex="0" aria-sort="none" aria-label="Size: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Size</span>
-                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
-                                                                </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
-                                                                    tabindex="0" aria-sort="none" aria-label="Jewelry Weight: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Jewelry Weight</span>
-                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
-                                                                </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
-                                                                    tabindex="0" aria-sort="none" aria-label="Item Weight (Grams): activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Item Weight (Grams)</span>
-                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
-                                                                </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col"
-                                                                    tabindex="0" aria-sort="none" aria-label="Item Weight (Grams): activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Stone Detail</span>
-                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
-                                                                </th>
-                                                                <th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader"
-                                                                    scope="col" tabindex="0" aria-sort="none" aria-label="Price: activate to sort column ascending" style="width: 0px;">
-                                                                    <span>Price</span>
-                                                                    <span class="sort-icon sort-none" aria-hidden="true"></span>
-                                                                </th>
+                                                                ${tableColumns.map((title)=>{
+                                                                    return(
+                                                                        `<th style="padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;" role="columnheader" scope="col" tabindex="0"
+                                                                            aria-sort="none" aria-label="Description: activate to sort column ascending" style="width: 0px;">
+                                                                            <span>${title}</span>
+                                                                            <span class="sort-icon sort-none" aria-hidden="true"></span>
+                                                                        </th>`
+                                                                    )
+                                                                }).join('')}
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -217,33 +198,52 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${item.reference}</span>
                                                                             </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${itemName}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.sku}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.companyName}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.warehouseName}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${size}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${jewelsWeight}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${grossWeight}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.stoneDetail != ''? item.stoneDetail: '-'}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${price}</span>
-                                                                            </td>
+                                                                            ${titleValue.map((title)=>{
+                                                                                switch (title) {
+                                                                                    case 'stoneDetail':
+                                                                                        return(
+                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                                <span>${item[title] != ''? item[title]: '-'}</span>
+                                                                                            </td>`
+                                                                                        )
+                                                                                        break;
+                                                                                    case 'grossWeight':
+                                                                                        return(
+                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                                <span>${grossWeight}</span>
+                                                                                            </td>`
+                                                                                        )
+                                                                                        break;
+                                                                                    case 'description':
+                                                                                        return(
+                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                                <span>${itemName}</span>
+                                                                                            </td>`
+                                                                                        )
+                                                                                        break;
+                                                                                    case 'size':
+                                                                                        return(
+                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                                <span>${size}</span>
+                                                                                            </td>`
+                                                                                        )
+                                                                                        break;
+                                                                                    case 'jewelsWeight':
+                                                                                        return(
+                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                                <span>${jewelsWeight}</span>
+                                                                                            </td>`
+                                                                                        )
+                                                                                        break;
+                                                                                    default:
+                                                                                        return(
+                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                                <span>${item[title]}</span>
+                                                                                            </td>`
+                                                                                        )
+                                                                                        break;
+                                                                                }
+                                                                            }).join('')}
                                                                         </tr>`)
                                                             }).join('')}
                                                         </tbody>

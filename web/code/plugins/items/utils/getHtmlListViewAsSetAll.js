@@ -2,8 +2,25 @@ import numberFormat from './convertNumberformat';
 import GetPriceWithCurrency from './getPriceWithCurrency';
 import numberFormat2digit from './convertNumberformatwithcomma2digit';
 import GetListViewAsSetItem from './getListViewAsSetItem';
+import { ColumnsViewAsSet } from './columns'
+import filterArray from './filterArray'
 
-export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userPermissionPrice){
+export default function GetHTMLViewASSetAll(datas, currency, isViewAsSet, env, userPermissionPrice, titleColumn){
+    let tableColumns = [];
+    let titleValue = [];
+
+    if (titleColumn.length != 0) {
+        const getTitle = filterArray(ColumnsViewAsSet,titleColumn,'value')
+        getTitle.map((title) => {
+            tableColumns = [...tableColumns, title.label]
+            titleValue = [...titleValue, title.value]
+        })
+    }else{
+        ColumnsViewAsSet.map((title) => {
+            tableColumns = [...tableColumns, title.label]
+            titleValue = [...titleValue, title.value]
+        })
+    }
 
     let htmlViewAsSetAll = '';
     htmlViewAsSetAll =
@@ -91,13 +108,11 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                 <th><span>Images</span></th>
                                                                 <th><span>Set Product Number</span></th>
                                                                 <th><span>Item Reference</span></th>
-                                                                <th><span>Description</span></th>
-                                                                <th><span>SKU</span></th>
-                                                                <th><span>Category Name</span></th>
-                                                                <th><span>Company</span></th>
-                                                                <th><span>Location</span></th>
-                                                                <th><span>Item Weight (Grams)</span></th>
-                                                                <th><span>Stone Detail</span></th>
+                                                                ${tableColumns.map((title)=>{
+                                                                    return(
+                                                                        `<th><span>${title}</span></th>`
+                                                                    )
+                                                                }).join('')}
                                                                 <th><span style="${(userPermissionPrice == 'All') ? '' : 'hidden'}">Group Cost Price (USD)</span></th>
                                                                 <th><span style="${(userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ?
                                                                     '' : 'hidden'}">Updated Cost Price (USD)</span></th>
@@ -107,7 +122,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                             </tr>
                                                         </thead>
                                                         ${datas.exportData.map((item,index) => {
-                                                            return GetListViewAsSetItem(item,currency,isViewAsSet,env);
+                                                            return GetListViewAsSetItem(item, currency, isViewAsSet, env, userPermissionPrice, titleValue);
                                                         }).join('')}
                                                     </table>
                                                 </div>

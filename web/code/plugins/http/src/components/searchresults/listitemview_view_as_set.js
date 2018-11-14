@@ -37,10 +37,11 @@ class ListItemsViewASSet extends Component {
     }
 
     render = _ => {
-        const { item } = this.props;
+        const { item, tableColumns } = this.props;
         const isItems = item.items != undefined ? item.items.length > 0 ? true : false : false;
         let row = item.items != undefined ? item.items.length + 1 : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        let colSpan = tableColumns.length == 1 ? 4 : (4 + tableColumns.length) - 1
 
         if (item.items != undefined && item.items.length == 1) {
             return (
@@ -58,13 +59,22 @@ class ListItemsViewASSet extends Component {
                                 </td>
                                 <td><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
                                 <td>{subitem.reference}</td>
-                                <td>{subitem.description}</td>
-                                <td>{subitem.sku}</td>
-                                <td>{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                                <td>{subitem.company}</td>
-                                <td>{subitem.warehouse}</td>
-                                <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
-                                <td className="text-left">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
+                                {tableColumns.map((title)=>{
+                                    switch (title) {
+                                        case 'stoneDetail':
+                                            return(<td className="text-left">{subitem[title] == ''?'-':subitem[title]}</td>)
+                                            break;
+                                        case 'grossWeight':
+                                            return(<td className="text-right">{numberFormat2digit(subitem[title])}</td>)
+                                            break;
+                                        case 'hierarchy':
+                                            return(<td>{subitem[title] != undefined ? subitem[title].split('\\').slice(-1).pop():''}</td>)
+                                            break;
+                                        default:
+                                            return(<td>{subitem[title]}</td>)
+                                            break;
+                                    }
+                                })}
                                 <td className={`${(userLogin.permission.price == 'All') ?
                                     '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                 <td className={`${(userLogin.permission.price == 'Updated'
@@ -78,7 +88,7 @@ class ListItemsViewASSet extends Component {
                         );
                     })}
                     <tr>
-                        <td  colSpan="10" className="bd-lb-white"></td>
+                        <td colSpan={colSpan} className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
                         <td className={`font-b fc-000 bg-eb td-text
                             ${(userLogin.permission.price == 'All') ?
@@ -116,13 +126,22 @@ class ListItemsViewASSet extends Component {
                         return (
                             <tr key={index} id={index}>
                                 <td>{subitem.reference}</td>
-                                <td>{subitem.description}</td>
-                                <td>{subitem.sku}</td>
-                                <td>{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                                <td>{subitem.company}</td>
-                                <td>{subitem.warehouse}</td>
-                                <td className="text-right">{numberFormat2digit(subitem.grossWeight)}</td>
-                                <td className="text-left">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
+                                {tableColumns.map((title)=>{
+                                    switch (title) {
+                                        case 'stoneDetail':
+                                            return(<td className="text-left">{subitem[title] == ''?'-':subitem[title]}</td>)
+                                            break;
+                                        case 'grossWeight':
+                                            return(<td className="text-right">{numberFormat2digit(subitem[title])}</td>)
+                                            break;
+                                        case 'hierarchy':
+                                            return(<td>{subitem[title] != undefined ? subitem[title].split('\\').slice(-1).pop():''}</td>)
+                                            break;
+                                        default:
+                                            return(<td>{subitem[title]}</td>)
+                                            break;
+                                    }
+                                })}
                                 <td className={`${(userLogin.permission.price == 'All') ?
                                     '' : ' hidden'}`}>{numberFormat(subitem.actualCost['USD'])}</td>
                                 <td className={`${(userLogin.permission.price == 'Updated'
@@ -136,7 +155,7 @@ class ListItemsViewASSet extends Component {
                         );
                     })}
                     <tr>
-                        <td  colSpan="10" className="bd-lb-white"></td>
+                        <td colSpan={colSpan} className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
                         <td className={`font-b fc-000 text-right bg-eb td-text
                             ${(userLogin.permission.price == 'All') ?
@@ -171,7 +190,7 @@ class ListItemsViewASSet extends Component {
                         <td rowSpan={row}><span id={item.reference} onClick={this.onClickGrid}>{item.reference}</span></td>
                     </tr>
                     <tr>
-                        <td colSpan="10" className="bd-lb-white"></td>
+                        <td colSpan={colSpan} className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
                         <td className={`font-b fc-000 text-right bg-eb td-text
                             ${(userLogin.permission.price == 'All') ?

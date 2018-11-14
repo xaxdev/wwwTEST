@@ -8,14 +8,11 @@ class ListItemsViewASSetPrint extends Component {
         super(props);
     }
     render(){
-        const { item } = this.props;
-        const isItems = item.items != undefined
-                            ? item.items.length > 0 ? true : false
-                            : false;
-        let row = item.items != undefined
-                       ? item.items.length +1
-                       : 0;
+        const { item, tableColumns } = this.props;
+        const isItems = item.items != undefined ? item.items.length > 0 ? true : false : false;
+        let row = item.items != undefined ? item.items.length +1 : 0;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        let colSpan = tableColumns.length == 1 ? 3 : (3 + tableColumns.length) - 1
 
         if (item.items != undefined && item.items.length == 1) {
             return (
@@ -31,14 +28,22 @@ class ListItemsViewASSetPrint extends Component {
                                     </div>
                                 </td>
                                 <td className="tdd">{item.reference}</td>
-                                <td className="tdd">{subitem.reference}</td>
-                                <td className="tdd">{subitem.description}</td>
-                                <td className="tdd">{subitem.sku}</td>
-                                <td className="tdd">{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                                <td className="tdd">{subitem.company}</td>
-                                <td className="tdd">{subitem.warehouse}</td>
-                                <td className="tdd">{numberFormat2digit(subitem.grossWeight)}</td>
-                                <td className="tdd">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
+                                {tableColumns.map((title)=>{
+                                    switch (title) {
+                                        case 'stoneDetail':
+                                            return(<td className="text-left">{subitem[title] == ''?'-':subitem[title]}</td>)
+                                            break;
+                                        case 'grossWeight':
+                                            return(<td className="text-right">{numberFormat2digit(subitem[title])}</td>)
+                                            break;
+                                        case 'hierarchy':
+                                            return(<td className="tdd">{subitem[title] != undefined ? subitem[title].split('\\').slice(-1).pop():''}</td>)
+                                            break;
+                                        default:
+                                            return(<td className="tdd">{subitem[title]}</td>)
+                                            break;
+                                    }
+                                })}
                                 <td className={`tdd${(userLogin.permission.price == 'All') ? '' : ' hidden'}`}>
                                     {numberFormat(subitem.actualCost['USD'])}
                                 </td>
@@ -54,7 +59,7 @@ class ListItemsViewASSetPrint extends Component {
                         );
                     })}
                     <tr>
-                        <td colSpan="9" className="bd-lb-white"></td>
+                        <td colSpan={colSpan} className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
                         <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'All') ? '' : ' hidden'}`}>
                             {numberFormat(item.totalActualCost['USD'])}
@@ -90,13 +95,22 @@ class ListItemsViewASSetPrint extends Component {
                         return (
                             <tr key={index} id={index}>
                                 <td className="tdd">{subitem.reference}</td>
-                                <td className="tdd">{subitem.description}</td>
-                                <td className="tdd">{subitem.sku}</td>
-                                <td className="tdd">{subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                                <td className="tdd">{subitem.company}</td>
-                                <td className="tdd">{subitem.warehouse}</td>
-                                <td className="tdd">{numberFormat2digit(subitem.grossWeight)}</td>
-                                <td className="tdd">{subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
+                                {tableColumns.map((title)=>{
+                                    switch (title) {
+                                        case 'stoneDetail':
+                                            return(<td className="text-left">{subitem[title] == ''?'-':subitem[title]}</td>)
+                                            break;
+                                        case 'grossWeight':
+                                            return(<td className="text-right">{numberFormat2digit(subitem[title])}</td>)
+                                            break;
+                                        case 'hierarchy':
+                                            return(<td className="tdd">{subitem[title] != undefined ? subitem[title].split('\\').slice(-1).pop():''}</td>)
+                                            break;
+                                        default:
+                                            return(<td className="tdd">{subitem[title]}</td>)
+                                            break;
+                                    }
+                                })}
                                 <td className={`tdd${(userLogin.permission.price == 'All') ? '' : ' hidden'}`}>
                                     {numberFormat(subitem.actualCost['USD'])}
                                 </td>
@@ -112,7 +126,7 @@ class ListItemsViewASSetPrint extends Component {
                         );
                     })}
                     <tr>
-                        <td  colSpan="9" className="bd-lb-white"></td>
+                        <td colSpan={colSpan} className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
                         <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'All') ? '' : ' hidden'}`}>
                             {numberFormat(item.totalActualCost['USD'])}
@@ -145,7 +159,7 @@ class ListItemsViewASSetPrint extends Component {
                         <td className="tdd" rowSpan={row}>{item.reference}</td>
                     </tr>
                     <tr>
-                        <td  colSpan="9" className="bd-lb-white"></td>
+                        <td colSpan={colSpan} className="bd-lb-white"></td>
                         <td className="font-b fc-000 text-center bg-eb">Total</td>
                         <td className={`font-b fc-000 text-right bg-eb${(userLogin.permission.price == 'All') ? '' : ' hidden'}`}>
                             {numberFormat(!!item.totalActualCost?item.totalActualCost['USD']:0)}

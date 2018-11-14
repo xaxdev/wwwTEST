@@ -1,13 +1,15 @@
 import React, { Component, PropTypes }from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
-import { Button,FormControl,Pagination, ControlLabel, DropdownButton, MenuItem } from 'react-bootstrap';
+import { FormControl, Pagination, ControlLabel, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
 import jQuery from 'jquery';
 import Path from 'path';
 import moment from 'moment-timezone';
+import { Wrapper, Button, Menu, MenuItem, openMenu, closeMenu } from 'react-aria-menubutton'
+import CSSTransitionGroup from 'react-addons-css-transition-group'
 import * as itemactions from '../../actions/itemactions';
 import PureInput from '../../utils/PureInput';
 import GridItemsView from '../../components/searchresults/griditemview';
@@ -24,6 +26,7 @@ import GenTemplateHtml from '../../utils/genTemplatePdfSearchResult';
 import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter';
 import RenderClassTotals from './utils/render_total';
 import RenderExportExcelDialog from './utils/render_export_excel_dialog';
+import RenderChangeTitleListBox from './utils/render_change_title_list_box';
 import RenderExportExcelViewAsSetDialog from './utils/render_export_excel_viewasset_dialog'
 import ModalPrintOptions from './utils/modalPrintOptions';
 import SearchResultLoader from './search_results_loader';
@@ -61,6 +64,8 @@ const labelsViewAsSet = {
 }
 let listMyCatalog = []
 
+const fancyStuff = ['Edit Display', 'Reset']
+
 class SearchResult extends Component {
     constructor(props) {
         super(props);
@@ -86,6 +91,8 @@ class SearchResult extends Component {
         this.exportExcelViewAsSet = this.exportExcelViewAsSet.bind(this);
         this.confirmExportViewAsSet = this.confirmExportViewAsSet.bind(this);
         this.showDialogPrintOptions = this.showDialogPrintOptions.bind(this);
+        this.changeTitle = this.changeTitle.bind(this);
+        this.changeTitleColumn = this.changeTitleColumn.bind(this);
 
         this.state = {
             activePage: this.props.currentPage, isExport: false, isOpen: false, isOpenDownload: false, allFields: false, isOpenNoResults: true, cut: false,
@@ -97,12 +104,12 @@ class SearchResult extends Component {
             showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, createdDate: false,
             isOpenMsgPageInvalid: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
             totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false, isOpenPrintOptions: false,
-            isOpenCannotAddMyCatalogmsg: false
+            isOpenCannotAddMyCatalogmsg: false, isOpenChangeTitle: false
         };
     }
 
     componentWillMount() {
-        const { ItemsOrder,SetReferencdOrder } = this.props;
+        const { ItemsOrder, SetReferencdOrder, ViewAsSet } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         let sortingBy = '';
         switch (this.props.sortingBy) {
@@ -125,6 +132,8 @@ class SearchResult extends Component {
         this.props.getItems(params).then(async (value) => {
             await this.props.getCatalogNameSetItem();
             await this.props.getSetCatalogName();
+            let titleParams = { 'isViewAsSet': ViewAsSet }
+            await this.props.getTitleColumn(titleParams);
         });
     }
 
@@ -219,7 +228,7 @@ class SearchResult extends Component {
             });
             this.setState({isOpenPrintOptions: false});
         } else {
-            const { showGridView,showListView,ItemsOrder,SetReferencdOrder,ViewAsSet } = this.props;
+            const { showGridView, showListView, ItemsOrder, SetReferencdOrder, ViewAsSet, TitleColumnDb } = this.props;
             let sortingBy = '';
             switch (this.refs.sortingBy.value) {
                 case 'price':
@@ -242,7 +251,7 @@ class SearchResult extends Component {
                 'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
                 'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`,
                 'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web, 'viewType': viewType,
-                'userPermissionPrice': userPermissionPrice
+                'userPermissionPrice': userPermissionPrice, 'titleColumn': TitleColumnDb
             };
             const filters =  JSON.parse(sessionStorage.filters);
             params = GetGemstoneLotnumberFilter(filters, params);
@@ -355,10 +364,53 @@ class SearchResult extends Component {
         }
     }
 
+    handleEditDisplay = (data) =>{
+        switch (data.activity.toLowerCase()) {
+            case 'reset':
+                this.resetTitleColumn()
+                break;
+            default:
+                this.changeTitle()
+                break;
+        }
+    }
+
     renderPagination(){
-        const { fields: { currPage }, totalPages, currentPage, items, handleSubmit, resetForm, submitting
+        const { fields: { currPage }, totalPages, currentPage, items, handleSubmit, resetForm, submitting, showListView
         } = this.props;
         const page = this.state.activePage;
+
+        const fancyMenuItems = fancyStuff.map((activity, i) => (
+            <MenuItem
+                value={{
+                  activity,
+                  somethingArbitrary: 'arbitrary',
+                }}
+                text={activity}
+                key={i}
+                className="FancyMB-menuItem" >
+                <span className="FancyMB-keyword">
+                    {activity}
+                </span>
+            </MenuItem>
+        ));
+
+        const menuInnards = menuState => {
+            const menu = (!menuState.isOpen) ? false : (
+                <div className="FancyMB-menu" key="menu">
+                    {fancyMenuItems}
+                </div>
+            );
+            return (
+                <CSSTransitionGroup
+                    transitionName="is"
+                    transitionEnterTimeout={200}
+                    transitionLeaveTimeout={200} >
+                    {menu}
+                </CSSTransitionGroup>
+            );
+        };
+
         return(
             <div>
                 <Pagination prev next first last ellipsis boundaryLinks
@@ -371,6 +423,22 @@ class SearchResult extends Component {
                     <span>of</span>
                     <span>{numberFormat(totalPages)}</span>
                     <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
+
+                </div>
+                <div className="hidden">
+                    <Wrapper onSelection={this.handleEditDisplay.bind(this)}
+                        className={`FancyMB ${showListView ? '' : 'hidden'}`} id="foo" >
+                        <Button className="pull-right FancyMB-trigger-listView btn-radius edit_display">
+                            <span className="FancyMB-triggerInnards">
+                                <span className="FancyMB-triggerText-listView">
+                                    Edit Display
+                                </span>
+                            </span>
+                        </Button>
+                        <Menu>
+                            {menuInnards}
+                        </Menu>
+                    </Wrapper>
                 </div>
             </div>
         );
@@ -767,6 +835,54 @@ class SearchResult extends Component {
         this.setState({ allFields: false });
         this.setState({ showImages: false });
         this.setState({ isOpen: true });
+    }
+
+    changeTitle(){
+        this.setState({ isOpenChangeTitle: true })
+    }
+    hideChangeTitle = async (e) => {
+        e.preventDefault()
+        const { TitleColumnDb, ViewAsSet, TitleColumn } = this.props;
+        this.props.setTitleColumnTable(TitleColumnDb)
+        this.setState({ isOpenChangeTitle: false })
+    }
+
+    changeTitleColumn = (e) => {
+        e.preventDefault()
+        const { TitleColumnDb, TitleColumn, ViewAsSet } = this.props;
+
+        let params = {
+            'titleColumn': TitleColumn,
+            'isViewAsSet': ViewAsSet
+        }
+
+        this.props.saveTitleColumn(params)
+        .then(async (value) => {
+            this.setState({ isOpenChangeTitle: false })
+        })
+    }
+
+    resetTitleColumn = _=> {
+        const { ViewAsSet } = this.props;
+        let params = {
+            'titleColumn': [],
+            'isViewAsSet': ViewAsSet
+        }
+        this.props.saveTitleColumn(params)
+        .then(async (value) => {
+            this.setState({ isOpenChangeTitle: false })
+        })
+    }
+
+    renderTitleDialog(){
+        const that = this;
+        const { ViewAsSet } = this.props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        return(
+            <RenderChangeTitleListBox
+                that={this} userLogin={userLogin} checkFields={checkFields} labels={labels} selectedAllFields={this.selectedAllFields}
+                selectedNoAllFields={this.selectedNoAllFields} ViewAsSet={ViewAsSet}/>
+        );
     }
 
     exportExcelViewAsSet = _=> {
@@ -1180,7 +1296,7 @@ class SearchResult extends Component {
         const { fields: { oldCatalogName, newCatalogName, validateCatalogName },
               totalPages, showGridView, showListView, ViewAsSet, currentPage, allItems, pageSize,exportItems,
               totalPublicPrice, totalUpdatedCost, handleSubmit, resetForm, submitting, ItemsOrder,
-              sortingBy, sortDirection } = this.props;
+              sortingBy, sortDirection, TitleColumnDb } = this.props;
         const { isOpenMessage } = this.state;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { items } = this.props;
@@ -1348,17 +1464,17 @@ class SearchResult extends Component {
                                                     items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
                                                     onCheckedOneItemMyCatalog={this.checkedOneItemMyCatalog}
                                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
-                                                    listMyCatalog={listMyCatalog}/>
+                                                    listMyCatalog={listMyCatalog} titleColumn={TitleColumnDb}/>
                                             </div>
                                             <div id="dvListview" className="col-sm-12 search-product hidden">
                                                 <ListItemsViewPrint items={items} pageSize={pageSize} onClickGrid={this.onClickGrid}
                                                     ViewAsSet={ViewAsSet} stateItem={this.state} chkAllItems={chkAllItems}
-                                                    listMyCatalog={listMyCatalog}/>
+                                                    listMyCatalog={listMyCatalog} titleColumn={TitleColumnDb}/>
                                             </div>
                                             <div id="dvListviewAll" className="col-sm-12 search-product hidden">
                                                 <ListItemsViewPrint items={items} pageSize={exportItems.length}
                                                       onClickGrid={this.onClickGrid} ViewAsSet={ViewAsSet} stateItem={this.state}
-                                                      chkAllItems={chkAllItems} listMyCatalog={listMyCatalog}/>
+                                                      chkAllItems={chkAllItems} listMyCatalog={listMyCatalog} titleColumn={TitleColumnDb}/>
                                             </div>
                                             <div className={`${this.state.showLoading ? '' : 'hidden'}` }>
                                                 <center>
@@ -1389,6 +1505,7 @@ class SearchResult extends Component {
                         {this.renderAlertmsgPdf()}
                         {this.renderAlertmsgPageInvalid()}
                         {this.renderDialogPrintOptions()}
+                        {this.renderTitleDialog()}
                     </form>
                 );
             }
@@ -1407,6 +1524,7 @@ function mapStateToProps(state) {
         showListView: state.searchResult.ShowListView, listCatalogName: state.myCatalog.ListCatalogName,
         ViewAsSet: state.searchResult.viewAsSet, ItemsOrder: state.searchResult.itemsOrder,
         SetReferencdOrder: state.searchResult.setReferenceOrder, listSetCatalogName: state.myCatalog.ListSetCatalogName,
+        TitleColumnDb: state.searchResult.titleColumnDb, TitleColumn: state.searchResult.titleColumn
     }
 }
 SearchResult.propTypes = {

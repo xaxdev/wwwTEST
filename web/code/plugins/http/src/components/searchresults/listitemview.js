@@ -5,6 +5,9 @@ import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat from '../../utils/convertNumberformat';
 import ListItemsViewASSet from './listitemview_view_as_set';
 import compareBy from '../../utils/compare';
+import { ColumnsNomal, ColumnsViewAsSet } from '../../containers/searchresults/utils/columns'
+import filterArray from '../../utils/filterArray'
+import convertDate from '../../utils/convertDate'
 
 class ListItemsView extends Component {
     constructor(props) {
@@ -101,7 +104,7 @@ class ListItemsView extends Component {
 
     render = _ => {
         let items = null;
-        const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog } = this.props;
+        const { onCheckedOneItemMyCatalog, ViewAsSet, listMyCatalog, titleColumn } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const currency = userLogin.currency;
 
@@ -157,6 +160,7 @@ class ListItemsView extends Component {
                     itemName = (col.description != undefined) ? col.description: '-';
                     col.grossWeight = 0;
                     col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
+                    col.categoryName = col.hierarchy != undefined ? col.hierarchy.split('\\').slice(-1).pop():''
 
                 }else{
                     let imagesGallery = [];
@@ -210,6 +214,22 @@ class ListItemsView extends Component {
                         col.priceUSD = '- ';
                     }
 
+                    if(col.actualCost != undefined){
+                        col.actualCostUSD = (col.actualCost[currency] != undefined) ?
+                            numberFormat(col.actualCost[currency]) :
+                            '- ';
+                    }else{
+                        col.actualCostUSD = '- ';
+                    }
+
+                    if(col.updatedCost != undefined){
+                        col.updatedCostUSD = (col.updatedCost[currency] != undefined) ?
+                            numberFormat(col.updatedCost[currency]) :
+                            '- ';
+                    }else{
+                        col.updatedCostUSD = '- ';
+                    }
+
                     if (col.gemstones != undefined) {
                         col.gemstones.forEach(function(gemstone) {
                             if(gemstone.carat != undefined){
@@ -221,50 +241,98 @@ class ListItemsView extends Component {
                     }
 
                     col.jewelsWeight = numberFormat2digit(jewelsWeight);
-                    col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-');
-
+                    col.stoneDetail = (col.stoneDetail != ''? col.stoneDetail: '-')
+                    col.categoryName = (col.hierarchy != undefined) ? col.hierarchy.split('\\').pop() : ''
+                    col.category = (col.type == 'ACC' || col.type == 'OBA' || col.type == 'SPP') ? col.subTypeName : ''
+                    col.article = (col.type == 'JLY' || col.type == 'WAT' || col.type == 'STO') ? col.subTypeName : ''
+                    let stoneQty = 0;
+                    if(col.gemstones != undefined){
+                        col.gemstones.forEach(function(gemstone) {
+                            if(gemstone.quantity != undefined){
+                                stoneQty = stoneQty + gemstone.quantity;
+                            }
+                        });
+                    }
+                    col.stoneQty = (stoneQty != 0) ? stoneQty : 0
+                    col.limitedEdition = (col.limitedEdition != undefined) ? (col.limitedEdition) ? 'Yes' : 'No' : 'No'
+                    col.limitedEditionNumber = (col.limitedEditionNumber != undefined) ? col.limitedEditionNumber : ''
+                    col.itemCreatedDate = (col.itemCreatedDate != undefined) ? convertDate(col.itemCreatedDate) : ''
                     itemName = (col.type != 'CER')
                     ? (col.description != undefined) ? col.description: '-'
                     : col.name;
                 }
                 return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
-                    itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
+                    itemName: itemName, grossWeight:numberFormat2digit(col.grossWeight)}
             });
 
             let tableColumns = [];
-            if (isCompany) {
-                tableColumns = [
-                    { title: '', render: this.renderCheckItem, className: 'text-center' },
-                    { title: 'Images', render: this.renderImage },
-                    { title: 'Item Reference', prop: 'reference' },
-                    { title: 'Description', prop: 'itemName' },
-                    { title: 'SKU', prop: 'sku' },
-                    { title: 'Company', prop: 'companyName' },
-                    { title: 'Location', prop: 'warehouseName' },
-                    { title: 'Size', prop: 'size' },
-                    { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                    { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                    { title: 'Stone Detail', prop: 'stoneDetail' },
-                    { title: 'Price', prop: 'priceUSD' },
-                    { title: '', render: this.renderAction, className: 'text-center' },
-                ];
+            let titleValue = [];
+
+            if (ViewAsSet) {
+                if (titleColumn.length != 0) {
+                    const getTitle = filterArray(ColumnsViewAsSet,titleColumn,'value')
+                    getTitle.map((title) => {
+                        tableColumns = [...tableColumns, title.label]
+                        titleValue = [...titleValue, title.value]
+                    })
+                }else{
+                    ColumnsViewAsSet.map((title) => {
+                        tableColumns = [...tableColumns, title.label]
+                        titleValue = [...titleValue, title.value]
+                    })
+                }
+
             }else{
-                tableColumns = [
-                    { title: '', render: this.renderCheckItem, className: 'text-center' },
-                    { title: 'Images', render: this.renderImage },
-                    { title: 'Item Reference', prop: 'reference' },
-                    { title: 'Description', prop: 'itemName' },
-                    { title: 'SKU', prop: 'sku' },
-                    { title: 'Company', prop: 'company' },
-                    { title: 'Location', prop: 'warehouse' },
-                    { title: 'Size', prop: 'size' },
-                    { title: 'Jewelry Weight', prop: 'jewelsWeight' },
-                    { title: 'Item Weight (Grams)', prop: 'grossWeight' },
-                    { title: 'Stone Detail', prop: 'stoneDetail' },
-                    { title: 'Price', prop: 'priceUSD' },
-                    { title: '', render: this.renderAction, className: 'text-center' },
-                ];
+                if (titleColumn.length != 0) {
+                    (async _ =>{
+                        tableColumns = [
+                            { title: '', render: this.renderCheckItem, className: 'text-center' },
+                            { title: 'Images', render: this.renderImage },
+                            { title: 'Item Reference', prop: 'reference' }
+                        ];
+                        const getTitle = filterArray(ColumnsNomal,titleColumn,'value')
+                        await getTitle.map((title) => {
+                            tableColumns = [...tableColumns, { title: title.label, prop: title.value }]
+                        });
+                    })()
+                    tableColumns = [...tableColumns, { title: '', render: this.renderAction, className: 'text-center' }]
+                }else{
+                    if (isCompany) {
+                        tableColumns = [
+                            { title: '', render: this.renderCheckItem, className: 'text-center' },
+                            { title: 'Images', render: this.renderImage },
+                            { title: 'Item Reference', prop: 'reference' },
+                            { title: 'Description', prop: 'itemName' },
+                            { title: 'SKU', prop: 'sku' },
+                            { title: 'Company', prop: 'companyName' },
+                            { title: 'Location', prop: 'warehouseName' },
+                            { title: 'Size', prop: 'size' },
+                            { title: 'Jewelry Weight', prop: 'jewelsWeight' },
+                            { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                            { title: 'Stone Detail', prop: 'stoneDetail' },
+                            { title: 'Price', prop: 'priceUSD' },
+                            { title: '', render: this.renderAction, className: 'text-center' },
+                        ];
+                    }else{
+                        tableColumns = [
+                            { title: '', render: this.renderCheckItem, className: 'text-center' },
+                            { title: 'Images', render: this.renderImage },
+                            { title: 'Item Reference', prop: 'reference' },
+                            { title: 'Description', prop: 'itemName' },
+                            { title: 'SKU', prop: 'sku' },
+                            { title: 'Company', prop: 'company' },
+                            { title: 'Location', prop: 'warehouse' },
+                            { title: 'Size', prop: 'size' },
+                            { title: 'Jewelry Weight', prop: 'jewelsWeight' },
+                            { title: 'Item Weight (Grams)', prop: 'grossWeight' },
+                            { title: 'Stone Detail', prop: 'stoneDetail' },
+                            { title: 'Price', prop: 'priceUSD' },
+                            { title: '', render: this.renderAction, className: 'text-center' },
+                        ];
+                    }
+                }
             }
+
             if (ViewAsSet) {
                 return (
                     <div key={'listView'} id={'listView'}>
@@ -275,13 +343,11 @@ class ListItemsView extends Component {
                                     <th><span>Images</span></th>
                                     <th><span>Set Product Number</span></th>
                                     <th><span>Item Reference</span></th>
-                                    <th><span>Description</span></th>
-                                    <th><span>SKU</span></th>
-                                    <th><span>Category Name</span></th>
-                                    <th><span>Company</span></th>
-                                    <th><span>Location</span></th>
-                                    <th><span>Item Weight (Grams)</span></th>
-                                    <th><span>Stone Detail</span></th>
+                                    {tableColumns.map((title)=>{
+                                        return(
+                                            <th><span>{title}</span></th>
+                                        )
+                                    })}
                                     <th className={`${(userLogin.permission.price == 'All') ?
                                         '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
                                     <th className={`${(userLogin.permission.price == 'Updated'
@@ -295,9 +361,8 @@ class ListItemsView extends Component {
                             </thead>
                             {items.map((item) => {
                                 return(
-                                    <ListItemsViewASSet key={item.reference} id={item.reference}
-                                        item={item} ViewAsSet={ViewAsSet}
-                                        onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog}
+                                    <ListItemsViewASSet key={item.reference} id={item.reference} item={item} ViewAsSet={ViewAsSet}
+                                        onCheckedOneItemMyCatalog={onCheckedOneItemMyCatalog} tableColumns={titleValue}
                                         listMyCatalog={listMyCatalog} onClickList={this.onClickListSet}/>
                                 );
                             })}
@@ -305,16 +370,11 @@ class ListItemsView extends Component {
                     </div>
                 );
             }else{
+                const keys = ['', 'image','reference',...titleColumn]
                 return (
                     <div>
-                        <DataTable
-                            className="col-sm-12"
-                            keys={['', 'image','reference', 'description', 'sku', 'companyName', 'warehouseName', 'size', 'jewelsWeight', 'grossWeight',
-                                    'stoneDetail','priceUSD','' ]}
-                            columns={tableColumns}
-                            initialData={items}
-                            initialPageLength={this.state.initialPageLength}
-                            initialSortBy={{ prop: 'reference', order: 'ascending' }}
+                        <DataTable className="col-sm-12" keys={[...keys ]} columns={tableColumns} initialData={items}
+                            initialPageLength={this.state.initialPageLength} initialSortBy={{ prop: 'reference', order: 'ascending' }}
                             pageLengthOptions={[ 5, 20, 50 ]}
                         />
                     </div>

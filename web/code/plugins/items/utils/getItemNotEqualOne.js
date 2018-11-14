@@ -4,7 +4,7 @@ import numberFormat2digit from './convertNumberformatwithcomma2digit';
 import config from './config';
 import compareBy from './compare';
 
-export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPermissionPrice){
+export default function GetItemEqualOne(item, currency, isViewAsSet, env, row, userPermissionPrice, titleValue){
     let imgPath = env == 'production'
     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
     : env == 'staging'
@@ -44,6 +44,7 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPe
     const isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
     let tagbarspeciallist = `position: absolute;top: 0px;left: 0px;z-index: 999;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
     let htmlViewAsSetAll = '';
+    let colSpan = titleValue.length == 1 ? 3 : (3 + titleValue.length) - 1
     htmlViewAsSetAll =
     `<tbody>
         <tr>
@@ -59,13 +60,22 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPe
             return (
                     `<tr id="${index}">
                         <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.reference}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.description}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.sku}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.hierarchy != undefined ? subitem.hierarchy.split('\\').slice(-1).pop():''}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.company}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.warehouse}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${numberFormat2digit(subitem.grossWeight)}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
+                        ${titleValue.map((title)=>{
+                            switch (title) {
+                                case 'stoneDetail':
+                                    return(`<td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem[title] == ''?'-':subitem[title]}</td>`)
+                                    break;
+                                case 'grossWeight':
+                                    return(`<td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${numberFormat2digit(subitem[title])}</td>`)
+                                    break;
+                                case 'hierarchy':
+                                    return(`<td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem[title] != undefined ? subitem[title].split('\\').slice(-1).pop():''}</td>`)
+                                    break;
+                                default:
+                                    return(`<td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem[title]}</td>`)
+                                    break;
+                            }
+                        }).join('')}
                         <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(userPermissionPrice == 'All') ?
                             '' : ' hidden'}">
                             ${numberFormat(subitem.actualCost['USD'])}
@@ -82,7 +92,7 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPe
             );
         }).join('')}
         <tr>
-            <td colspan="9" style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 4px;"></td>
+            <td colspan="${colSpan}" style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 4px;"></td>
             <td style="font-weight: bold; font-family:'open_sanssemibold';color:#000;text-align: center;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
                 Total
             </td>

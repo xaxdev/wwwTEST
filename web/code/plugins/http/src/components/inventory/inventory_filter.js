@@ -867,9 +867,3 @@ module.exports = reduxForm(
         validate: ValidateSaveSearch
     },mapStateToProps,mapDispatchToProps
 )(InventoryFilter);
-
-// Pre-load the initially hidden SVGs
-fancyStuff.forEach(t => {
-    const x = new Image();
-    x.src = `images/${t}.svg`;
-});
