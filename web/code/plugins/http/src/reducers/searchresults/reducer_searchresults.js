@@ -33,16 +33,16 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
     saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, saveSearchSalesHierarchy: null, SalesSortingBy:'postedDate', SalesSortDirection:'desc',
     currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, SalesShowGridView: true, SalesShowListView: false,
     totalnetamount: null,totaldiscount: null,totalmargin:null, GemStoneTypeValue:[], InvoiceDateFrom:null, InvoiceDateTo:null, firstSearch: null,
-    specialDiscount: 0, titleColumn:[]
+    specialDiscount: 0, titleColumnDb:[], titleColumn:[]
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
         case FETCH_TITLECOLUMN:
-            return {...state,  titleColumn: action.data.titleColumn};
+            return {...state,  titleColumnDb: action.data.titleColumn};
             break;
         case SAVE_TITLECOLUMN:
-            return {...state,  titleColumn: action.data.titleColumn};
+            return {...state,  titleColumnDb: action.data.titleColumn};
             break;
         case SET_TITLECOLUMN:
             return {...state,  titleColumn: action.titleColumn};

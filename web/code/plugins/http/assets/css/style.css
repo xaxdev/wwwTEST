@@ -174,6 +174,7 @@ select:focus::-ms-value {background: none;}
 .margin-l30{margin-left:30px;}
 .margin-t-17{margin-top: -17px;}
 .nopadding{padding:0;}
+.padding-t6{padding-top:6px!important;}
 .padding-tb10{padding:10px 0px;}
 .padding-lf15{padding:0 15px;}
 .padding-lf20{padding:0 20px;}
@@ -971,7 +972,7 @@ select.form-searchresult option{
 .searchresult-navi span{padding:0 3px;}
 .searchresult-navi div, .searchresult-navi ul{float:left; margin-bottom:10px;}
 .relete ul{width:57%;}
-.searchresult-navi  button  {
+.searchresult-navi button, .searchresult-navi Button  {
     background-color: #ddbe6a;
     border-color: #ddbe6a;
     border-radius:5px;
@@ -1632,7 +1633,7 @@ select.form-searchresult option{
     .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
       border: 1px solid #5c5954;
       vertical-align: middle;
-      padding: 5px;
+      padding: 6px;
     }
     .table thead tr th span{
       float: left;
@@ -2348,6 +2349,22 @@ select.form-searchresult option{
   height: 32px;
 }
 
+.FancyMB-trigger-listView {
+  cursor: pointer;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background: #ddbe6a;
+  color: #000;
+  border-radius: 5px;
+  padding: 3px 5px;
+  transition: background-color 300ms ease-out;
+  font-size: 14px;
+  height: 32px;
+}
+
 .FancyMB-trigger:hover,
 .FancyMB-trigger:focus {
   color: #fff;
@@ -2384,6 +2401,7 @@ select.form-searchresult option{
   top: -12px;
   right: 10px;
   z-index: 89;
+  display: none;
 }
 
 .FancyMB-menu::after {
@@ -2398,12 +2416,15 @@ select.form-searchresult option{
   top: -14px;
   right: 9px;
   z-index: 88;
+  display: none;
 }
 
 .FancyMB-menuItem {
   cursor: pointer;
   color: #fff;
   padding:5px 5px;
+  width: 100%;
+  margin: 0 !important;
 }
 .FancyMB-menuItem:first-child{
   border-bottom: 1px solid #000;
@@ -2446,7 +2467,7 @@ select.form-searchresult option{
   font-size: 13px;
   font-weight: bold;
   padding: 5px 5px;
-  text-align: center;
+  text-align: left;
 }
 
 .FancyMB-triggerIcon {
@@ -2459,6 +2480,12 @@ select.form-searchresult option{
   display: inline-block;
   line-height: 0;
   vertical-align: top;
+}
+
+.FancyMB-triggerText-listView {
+  display: inline-block;
+  line-height: 0;
+  font-family: 'open_sanssemibold';
 }
 
 .FancyMB-triggerSmallText {
@@ -2498,6 +2525,11 @@ select.form-searchresult option{
 .FancyMB-menu.is-leave {
   -webkit-transform: scale(1);
   transform: scale(1);
+}
+.edit_display{
+  padding-top: 5px !important;
+  height: 29px;
+  margin-top: 2px;
 }
 @media (min-width:1280px){
   .popexport .modal-dialog {

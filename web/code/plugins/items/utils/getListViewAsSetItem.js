@@ -16,7 +16,7 @@ export default function GetListViewAsSetItem(item, currency, isViewAsSet, env, u
     }else if(item.items != undefined && item.items.length != 1){
         htmlViewAsSetAll = GetItemNotEqualOne(item, currency, isViewAsSet, env, row, userPermissionPrice, titleValue);
     }else{
-        htmlViewAsSetAll = GetItemNotEqualElse(item,currency,isViewAsSet,env,row,userPermissionPrice);
+        htmlViewAsSetAll = GetItemNotEqualElse(item, currency, isViewAsSet, env, row, userPermissionPrice, titleValue);
     }
 
     return htmlViewAsSetAll;
