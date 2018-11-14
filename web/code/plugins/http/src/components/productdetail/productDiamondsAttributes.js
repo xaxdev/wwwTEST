@@ -11,6 +11,7 @@ import numberFormat3 from '../../utils/convertNumberformatwithcomma3digit';
 import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 
 const Gemstoneattr =  (props) =>{
+    const { company } = props
     let newprops = props.gemstoneAttrData.sort(function(a, b) {
         let nameA = a.stoneTypeName.toUpperCase(); // ignore upper and lowercase
         let nameB = b.stoneTypeName.toUpperCase(); // ignore upper and lowercase
@@ -82,12 +83,12 @@ const Gemstoneattr =  (props) =>{
                                         isCer?
                                             !!data.certificate ?
                                                 !!data.certificate.images ?
-                                                     <td title="">
-                                                         <a href={`/original/${data.certificate.images[0].original.split('/').slice(-1).pop()}`} download><img src="/images/mol-certificates-2.jpg"/></a>
-                                                     </td> :
-                                                     <td title="" className=""></td>
-                                                     :
-                                                   <td title="" className=""></td>
+                                                    <td title="">
+                                                         <a href={`/original/${company}/${data.certificate.images[0].original.split('/').slice(-1).pop()}`} download><img src="/images/mol-certificates-2.jpg"/></a>
+                                                    </td> :
+                                                    <td title="" className=""></td>
+                                                    :
+                                                    <td title="" className=""></td>
                                             :<td title="" className="hidden"></td>
                                     }
                                 </tr>

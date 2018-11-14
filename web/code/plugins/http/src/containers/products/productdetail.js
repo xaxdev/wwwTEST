@@ -599,6 +599,7 @@ class productdetail extends Component {
         const Detail  = this.props.productdetail;
         const gemstoneAttr = Detail.gemstones;
         const subType = Detail.subType;
+        const { company } = Detail
         if(Detail.type == 'STO' || Detail.type == 'CER'){
         } else {
             if(!gemstoneAttr){
@@ -616,7 +617,7 @@ class productdetail extends Component {
                     return(
                         <div>
                             <h2>DIAMONDS ATTRIBUTES</h2>
-                            <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} onClick={this.downloadCer} />
+                            <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} company={company.toLowerCase()} onClick={this.downloadCer} />
                         </div>
                     );
                 }
@@ -1026,7 +1027,7 @@ class productdetail extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
         const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
-        const { gemstones } = this.props.productdetail;
+        const { gemstones, company } = this.props.productdetail;
         const productId = this.props.params.id;
 
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
@@ -1046,7 +1047,8 @@ class productdetail extends Component {
             'fileName': `${userLogin.username}_${exportDate}`,
             'userEmail': userLogin.email,
             'ROOT_URL': ROOT_URL,
-            'productId': productId
+            'productId': productId,
+            'company': company.toLowerCase()
         }
 
         this.props.getCertificate(params).then((value) => {
@@ -1074,7 +1076,7 @@ class productdetail extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
         const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
-        const { gemstones } = this.props.productdetail;
+        const { gemstones, company } = this.props.productdetail;
         const productId = this.props.params.id;
 
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
@@ -1097,7 +1099,8 @@ class productdetail extends Component {
             'fileName': `${userLogin.username}_${exportDate}`,
             'userEmail': userLogin.email,
             'ROOT_URL': ROOT_URL,
-            'productId': productId
+            'productId': productId,
+            'company': company.toLowerCase()
         }
 
         this.props.getCertificate(params).then((value) => {
@@ -1115,7 +1118,7 @@ class productdetail extends Component {
         const productId = this.props.params.id;
         const productIndex = this.props.productindex;
         const productindexplus = this.props.productindexplus;
-        const { type, setReference, gemstones,activities } = this.props.productdetail;
+        const { type, setReference, gemstones, activities, company } = this.props.productdetail;
         let { gallery } = this.props.productdetail;
         const { lotNumbers, stonePageSize, stonActivePage } = this.props;
         let isCertificate = false;
@@ -1136,7 +1139,7 @@ class productdetail extends Component {
                         countImages++;
 
                         if (countImages == 1) {
-                            imageCerDownload = `/original/${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
+                            imageCerDownload = `/original/${company.toLowerCase()}/${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
                             imageName = `${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
                         }
                     }
