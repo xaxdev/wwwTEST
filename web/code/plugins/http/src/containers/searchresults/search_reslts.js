@@ -425,7 +425,7 @@ class SearchResult extends Component {
                     <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
 
                 </div>
-                <div>
+                <div className="hidden">
                     <Wrapper onSelection={this.handleEditDisplay.bind(this)}
                         className={`FancyMB ${showListView ? '' : 'hidden'}`} id="foo" >
                         <Button className="pull-right FancyMB-trigger-listView btn-radius edit_display">
@@ -855,7 +855,7 @@ class SearchResult extends Component {
             'titleColumn': TitleColumn,
             'isViewAsSet': ViewAsSet
         }
-        
+
         this.props.saveTitleColumn(params)
         .then(async (value) => {
             this.setState({ isOpenChangeTitle: false })
