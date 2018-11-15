@@ -9,6 +9,7 @@ import numberFormat3 from '../../utils/convertNumberformatwithcomma3digit';
 import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 
 const allowGemstone = ["Loose Diamond","Diamond"];
+
 const styles ={
     colmd12:{
         width:'100%',
@@ -44,6 +45,7 @@ const styles ={
         textAlign:'center'
     }
 };
+
 const pructdetailurl = '/salesproductreletedetail/';
 
 const Gemstoneattr =  (props) =>{
