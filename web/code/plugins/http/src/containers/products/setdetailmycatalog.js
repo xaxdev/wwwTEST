@@ -478,8 +478,9 @@ class productdetail extends Component {
         const Detail  = this.props.productdetail;
         const gemstoneAttr = Detail.gemstones;
         const subType = Detail.subType;
-        if(Detail.type == 'STO' || Detail.type == 'CER'){
+        const { company } = Detail
 
+        if(Detail.type == 'STO' || Detail.type == 'CER'){
         } else {
             if(!gemstoneAttr){
                 return(
@@ -496,7 +497,7 @@ class productdetail extends Component {
                     return(
                         <div>
                             <h2>DIAMONDS ATTRIBUTES</h2>
-                            <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} onClick={this.downloadCer} />
+                            <ProductDiamonsAttributes gemstoneAttrData={gemstoneAttr} company={company.toLowerCase()} onClick={this.downloadCer} />
                         </div>
                     );
                 }

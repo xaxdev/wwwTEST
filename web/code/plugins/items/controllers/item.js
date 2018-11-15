@@ -114,12 +114,12 @@ module.exports = {
                         ? certificateImages.concat(gemstone.certificate.images)
                         : certificateImages, []
                     )
-
+                    
                     //change path original image of certificate by korakod
                     certificateImages = certificateImages.map((images) => {
                         let { original, thumbnail } = images;
-                        original = original.replace('/images/products/original','/original');
-                        thumbnail = thumbnail.replace('/images/products/thumbnail','/original');
+                        original = original.replace('/images/products/original','/original/' + productResult.company.toLowerCase());
+                        thumbnail = thumbnail.replace('/images/products/thumbnail','/original/' + productResult.company.toLowerCase());
                         return {...images, original, thumbnail};
                     });
                     productResult.gallery.push(...certificateImages)

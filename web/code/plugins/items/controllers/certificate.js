@@ -145,9 +145,7 @@ module.exports = {
             try {
                 const host = request.info.hostname;
                 const id = request.params.productId || '';
-                const userName = request.payload.userName;
-                const allCer = request.payload.allCer;
-                const ROOT_URL = request.payload.ROOT_URL;
+                const { userName, allCer, ROOT_URL, company } = request.payload;
                 const createTime = moment().format('YYYYMMDD_HHmmss');
 
                 const cerFolder = Path.resolve(__dirname, '../../http/public/export_files/certifacate/');
@@ -163,7 +161,7 @@ module.exports = {
                     allCer.map((img) => {
                         (async _ => {
                             source = '';
-                            source = Path.resolve(__dirname, `../../../../../../../../../../media/mol/MME${img}`);
+                            source = Path.resolve(__dirname, `../../../../../../../../../../media/mol/${company}${img}`);
                             console.log(source);
                             destination = userFolder + '/' + img.replace('/images/products/original/','');
                             await copyFile(source,destination);
@@ -176,7 +174,7 @@ module.exports = {
                     allCer.map((img) => {
                         (async _ => {
                             source = '';
-                            source = Path.resolve(__dirname, `../../../../../../../../../../media/mol/MME${img}`);
+                            source = Path.resolve(__dirname, `../../../../../../../../../../media/mol/${company}${img}`);
                             console.log(source);
                             destination = userFolder + '/' + img.replace('/images/products/original/','');
                             await copyFile(source,destination);
