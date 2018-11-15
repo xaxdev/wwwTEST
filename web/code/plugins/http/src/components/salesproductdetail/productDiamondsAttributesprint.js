@@ -113,11 +113,18 @@ const Gemstoneattr =  (props) =>{
                                         <td title="Certificate agency" style={styles.textcenter}>{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                                         <td title="Certificate Number," style={styles.textcenter}>{!!data.certificate ? data.certificate.number: '-'}</td>
                                         <td title="Certificate Date" style={styles.textcenter}>{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
-                                        {isCer?
-                                            !!data.certificate ?
-                                                <td title="" className="icon-certificate btn-primary btn-certificate-radius button-certificate"></td> :
-                                                <td title="" className=""></td>
-                                            :<td title="" className="hidden"></td>}
+                                        {
+                                            isCer?
+                                                !!data.certificate ?
+                                                    !!data.certificate.images ?
+                                                        <td title="icon-certificate btn-primary btn-certificate-radius button-certificate">
+                                                             <a href={`/original/${company}/${data.certificate.images[0].original.split('/').slice(-1).pop()}`} download><img src="/images/mol-certificates-2.jpg"/></a>
+                                                        </td> :
+                                                        <td title="" className=""></td>
+                                                        :
+                                                        <td title="" className=""></td>
+                                                :<td title="" className="hidden"></td>
+                                        }
                                     </tr>
                                 )
                             }
