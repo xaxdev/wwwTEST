@@ -181,6 +181,7 @@ select:focus::-ms-value {background: none;}
 .padding-lf30{padding:0 30px;}
 .padding-lf40{padding:0 40px;}
 .padding-l{padding-left:0;}
+.padding-l-20{padding-left:20px;}
 .padding-l-80{padding-left:63px;}
 .padding-ft0{padding:15px 0;}
 .padding-l10{padding-left: 10px;}

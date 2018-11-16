@@ -312,7 +312,27 @@ module.exports = (obj, fromRecord, sizeRecord, cb) => {
                             ]
                         }
                     }`;
-                }else if(key == 'hierarchy'){
+                } else if(key == 'setName'){
+                    let filterSplit = [];
+                    let vals = value.replace(',',' ');
+                    let mapField =
+                    `{
+                        "match": {
+                            "setName": {
+                                "query": "${vals.trim()}",
+                                "type": "phrase"
+                            }
+                        }
+                    }`;
+                    filter =
+                    `{
+                        "bool": {
+                            "must": [
+                                ${mapField}
+                            ]
+                        }
+                    }`;
+                } else if(key == 'hierarchy'){
                     let filterSplit = [];
                     let vals = value.split('|');
                     vals.forEach((val)=>{
