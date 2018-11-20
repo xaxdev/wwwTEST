@@ -317,6 +317,26 @@ module.exports = (obj, fromRecord, sizeRecord) => {
                             ]
                         }
                     }`;
+                } else if(key == 'setName'){
+                    let filterSplit = [];
+                    let vals = value.replace(',',' ');
+                    let mapField =
+                    `{
+                        "match": {
+                            "setName": {
+                                "query": "${vals.trim()}",
+                                "type": "phrase"
+                            }
+                        }
+                    }`;
+                    filter =
+                    `{
+                        "bool": {
+                            "must": [
+                                ${mapField}
+                            ]
+                        }
+                    }`;
                 } else if(key == 'notUseHierarchy'){
                     let filterSplit = [];
                     let vals = value.split('|');

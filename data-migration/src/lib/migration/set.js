@@ -16,6 +16,8 @@ const getitemSets = async (index, exchangeRates) => {
         let setImagesName = [];
         let setReference = '';
         let reference = '';
+        let setName = ''
+        let setRomanceNote = ''
         for (let record of records) {
             // for each set reference
             if (record.setReference !== setReference) {
@@ -26,6 +28,8 @@ const getitemSets = async (index, exchangeRates) => {
                 const itemSet = {
                     reference: record.setReference,
                     description: '',
+                    setName: record.setName,
+                    setRomanceNote: record.setRomanceNote,
                     items: [],
                     totalActualCost: {},
                     totalUpdatedCost: {},
@@ -63,7 +67,9 @@ const getitemSets = async (index, exchangeRates) => {
                 }
 
                 reference = record.reference
-                description.push(record.reference);
+                description.push(record.reference)
+                setName = record.setName
+                setRomanceNote = record.setRomanceNote
 
                 const current = itemSets[itemSets.length - 1]
                 const item = {
@@ -72,6 +78,8 @@ const getitemSets = async (index, exchangeRates) => {
                     itemType: record.itemType,
                     priority: record.priority,
                     description: record.description,
+                    setName: record.setName,
+                    setRomanceNote: record.setRomanceNote,
                     image: {
                         original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
                         thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`,
@@ -154,7 +162,9 @@ const getitemSets = async (index, exchangeRates) => {
 
                 if (record.reference !== reference) {
                     reference = record.reference
-                    description.push(record.reference);
+                    description.push(record.reference)
+                    setName = record.setName
+                    setRomanceNote = record.setRomanceNote
 
                     const current = itemSets[itemSets.length - 1]
                     const item = {
@@ -163,6 +173,8 @@ const getitemSets = async (index, exchangeRates) => {
                         itemType: record.itemType,
                         priority: record.priority,
                         description: record.description,
+                        setName: record.setName,
+                        setRomanceNote: record.setRomanceNote,
                         image: {
                             original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
                             thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`,

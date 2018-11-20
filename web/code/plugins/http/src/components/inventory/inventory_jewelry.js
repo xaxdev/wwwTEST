@@ -477,9 +477,14 @@ class InventoryJewelry extends Component {
 
     selectedViewAsSet = e => {
         const { props } = this.props;
-        let { fields: { viewAsSet }, searchResult } = props;
+        let { fields: { viewAsSet, setName }, searchResult } = props;
 
         let paramsSearch = (searchResult.paramsSearch != null) ? searchResult.paramsSearch : null;
+
+        if (!e.target.checked) {
+            setName.value = ''
+            setName.onChange('')
+        }
 
         if(paramsSearch != null)
             paramsSearch.viewAsSet = e.target.checked;
@@ -517,11 +522,12 @@ class InventoryJewelry extends Component {
     render() {
         const { props } = this.props;
         const musthaves = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
-        let {  fields: {
-                    collection, totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,
-                    publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo, setReference, brand, mustHave,
-                    ringSize, dominantStone, metalType, metalColour, viewAsSet
-                }
+        let {
+            fields: {
+                collection, totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,
+                publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo, setReference, brand, mustHave,
+                ringSize, dominantStone, metalType, metalColour, viewAsSet, setName
+            }, ViewAsSet
         } = props;
 
         let dataDropDowntJewelryCategory = [];
@@ -627,10 +633,17 @@ class InventoryJewelry extends Component {
                                 </label>
                                 <div className="col-lg-9 col-md-7 col-sm-7 bd-box">
                                     <Tree data={hierarchyData} onClick={this.treeOnClick} onUnClick={this.treeOnUnClick} ref="treeview"/>
-                                    <div className="col-sm-7">
+                                    <div className="col-sm-12 nopadding">
                                         <input type="checkbox" value="ViewAsSet" {...viewAsSet} checked={props.ViewAsSet}
                                             onChange={this.selectedViewAsSet} />
                                         <span className="control-label text-vertical-top">View as Set</span>
+                                        <div className={ViewAsSet?'':'hidden'}>
+                                            <label className="col-sm-2 control-label padding-l-20">Set Name
+                                            </label>
+                                            <div className="col-sm-10 nopadding">
+                                                <input type="text" className="form-control" {...setName}/>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

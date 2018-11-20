@@ -862,7 +862,7 @@ module.exports = reduxForm(
         'markupFrom','markupTo','grossWeightFrom','grossWeightTo','proDateFrom','proDateTo','caseDimensionFrom',
         'caseDimensionTo','dialMetal','preciousMetalWeightFrom','preciousMetalWeightTo','buckleType','strapType',
         'strapColor','accessoryProductHierarchy','accessoryType','obaProductHierarchy','obaDimension','searchName',
-        'sparePartProductHierarchy','sparePartType','validateSearchName','viewAsSet','article','specialDiscount'
+        'sparePartProductHierarchy','sparePartType','validateSearchName','viewAsSet','article','specialDiscount','setName'
         ],
         validate: ValidateSaveSearch
     },mapStateToProps,mapDispatchToProps

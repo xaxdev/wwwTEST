@@ -391,6 +391,11 @@ const mapProperties = (item, record, exchangeRates) => {
         }
     }
 
+    // add setName
+    if (record.type === 'JLY') {
+        item.setName = (record.romanceNote != '' || record.romanceNote != '') ? `${record.romanceNote} ${record.viewSetName}` : ''
+    }
+
     gemstoneProperties.forEach(property => {
         if (item[property] !== undefined) {
             delete item[property];
@@ -427,6 +432,14 @@ const mapProperties = (item, record, exchangeRates) => {
 
     if (item.CertificateImageType !== undefined) {
         delete item.CertificateImageType;
+    }
+
+    if (item.romanceNote !== undefined) {
+      delete item.romanceNote;
+    }
+
+    if (item.viewSetName !== undefined) {
+      delete item.viewSetName;
     }
 };
 
