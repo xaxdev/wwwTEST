@@ -27,6 +27,14 @@ const Detail = (props) =>{
                     <div className="col-md-4 col-sm-4 nopadding font-b">Description</div>
                     <div className="col-md-8 col-sm-8 text-wrap">{props.description != undefined ? props.description: '-'}</div>
                 </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Set Name</div>
+                    <div className="col-md-8 col-sm-8 text-wrap">{props.setName != undefined ? props.setName: '-'}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Set Romance Name</div>
+                    <div className="col-md-8 col-sm-8 text-wrap">{props.setRomanceNote != undefined ? props.setRomanceNote: '-'}</div>
+                </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
                     <div className="col-md-4 col-sm-4 nopadding font-b">Total Cost Price (USD)</div>
                     <div className="col-md-8 col-sm-8">{ actualCost }</div>

@@ -12,7 +12,7 @@ export default function InitModifyData(props) {
             strapType,strapColor,complication,gemstone_stoneType,gemstone_cut,gemstone_cutGrade,gemstone_color,gemstone_clarity,gemstone_certificatedNumber,
             gemstone_certificateAgency,gemstone_cerDateFrom,gemstone_cerDateTo,gemstone_stoneCostFrom,gemstone_stoneCostTo,gemstone_quantityFrom,gemstone_quantityTo,
             gemstone_totalCaratWeightFrom,gemstone_totalCaratWeightTo,gemstone_polish,gemstone_symmetry,gemstone_treatment,gemstone_fluorescence,gemstone_origin,
-            accessoryProductHierarchy,accessoryType,obaProductHierarchy,obaDimension,sparePartProductHierarchy,sparePartType,article
+            accessoryProductHierarchy,accessoryType,obaProductHierarchy,obaDimension,sparePartProductHierarchy,sparePartType,article,setName
         },
         searchResult
     } = props;
@@ -321,6 +321,11 @@ export default function InitModifyData(props) {
         article.value = InitData(paramsSearch,article.value,'article');
         if(paramsSearch != null)
             paramsSearch.article = article.value
+    }
+    if(setName != undefined){
+        setName.value = InitData(paramsSearch,setName.value,'setName');
+        if(paramsSearch != null)
+            paramsSearch.setName = setName.value
     }
     //
     // Gemstones Search
