@@ -20,8 +20,7 @@ module.exports = {
         const id = request.params.id;
         internals.query = JSON.parse(
             `{
-              "query":
-                {
+                "query":{
                     "match": {"id": "${id}"}
                 }
             }`
@@ -114,7 +113,7 @@ module.exports = {
                         ? certificateImages.concat(gemstone.certificate.images)
                         : certificateImages, []
                     )
-                    
+
                     //change path original image of certificate by korakod
                     certificateImages = certificateImages.map((images) => {
                         let { original, thumbnail } = images;
