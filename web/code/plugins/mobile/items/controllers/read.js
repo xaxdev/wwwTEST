@@ -16,9 +16,9 @@ export default {
         (async (request, reply) => {
 
             const client = new Elasticsearch.Client({
-                            host: request.elasticsearch.host,
-                            keepAlive: false
-                        })
+                host: request.elasticsearch.host,
+                keepAlive: false
+            })
             try {
                 const id = request.params.id
                 const responseItem = await client.search({
@@ -46,7 +46,18 @@ export default {
 
                     // add certificate images to item gallery
                     if (!!item.gemstones) {
-                        const certificateImages = item.gemstones.reduce((certificateImages, gemstone) => (gemstone.certificate && gemstone.certificate.images)? certificateImages.concat(gemstone.certificate.images) : certificateImages, [])
+                        let certificateImages = item.gemstones.reduce((certificateImages, gemstone) => (gemstone.certificate && gemstone.certificate.images)
+                            ? certificateImages.concat(gemstone.certificate.images)
+                            : certificateImages, []
+                        )
+
+                        //change path original image of certificate by korakod
+                        certificateImages = certificateImages.map((images) => {
+                            let { original, thumbnail } = images;
+                            original = original.replace('/images/products/original','/original/' + item.company.toLowerCase());
+                            thumbnail = thumbnail.replace('/images/products/thumbnail','/original/' + item.company.toLowerCase());
+                            return {...images, original, thumbnail};
+                        });
                         item.gallery.push(...certificateImages)
                     }
 

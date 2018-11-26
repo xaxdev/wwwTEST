@@ -104,6 +104,7 @@ class ListItemsViewPrint extends Component {
                 let size = '';
                 let jewelsWeight = 0;
                 let itemName = '';
+                let itemCreatedDate = ''
                 isCompany = col.companyName != undefined ? true : false;
                 if (ViewAsSet) {
                     let imagesGallery = [];
@@ -244,15 +245,14 @@ class ListItemsViewPrint extends Component {
                     col.stoneQty = (stoneQty != 0) ? stoneQty : 0
                     col.limitedEdition = (col.limitedEdition != undefined) ? (col.limitedEdition) ? 'Yes' : 'No' : 'No'
                     col.limitedEditionNumber = (col.limitedEditionNumber != undefined) ? col.limitedEditionNumber : ''
-                    col.itemCreatedDate = (col.itemCreatedDate != undefined) ? convertDate(col.itemCreatedDate) : ''
-
+                    itemCreatedDate = (col.itemCreatedDate != undefined) ? convertDate(col.itemCreatedDate) : ''
                     itemName = (col.type != 'CER')
                     ? (col.description != undefined) ? col.description: '-'
                     : col.name ;
 
                 }
                 return {...col,imageOriginal: imagesOriginal,imageThumbnail: imagesThumbnail,size: size,
-                    itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight)}
+                    itemName: itemName,grossWeight:numberFormat2digit(col.grossWeight), itemCreatedDate}
             });
 
             let tableColumns = [];

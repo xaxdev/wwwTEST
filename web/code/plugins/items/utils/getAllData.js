@@ -254,11 +254,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 }
             }
         });
-        // console.log('allData-->',allData[0]);
-        // if (itemsOrder == null && setReferencdOrder == null) {
-        //     allData = allData.sort(compareBy(sortBy, sortDirections, userCurrency));
-        // }
-        // console.log('allData-->',allData[0]);
 
         if (!isViewAsSet) {
             allData = allData.map((item) => {return {'id':item.id}})
@@ -296,7 +291,6 @@ module.exports = async (response, sortDirections, sortBy, size, page, userCurren
                 sumCost = sumCost+Math.round(cost);
             });
         }
-
         const sendData = {
             'data':pageData,
             'allData':allData,
