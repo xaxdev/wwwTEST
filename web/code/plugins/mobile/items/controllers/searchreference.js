@@ -38,6 +38,15 @@ module.exports = {
                                             {
                                                 "match": { "reference.raw": reference }
                                             }
+                                        ],
+                                        "must_not": [
+                                            {
+                                                "match": {
+                                                    "warehouse": {
+                                                        "query": "MME.CONS"
+                                                    }
+                                                }
+                                            }
                                         ]
                                     }
                                 }

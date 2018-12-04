@@ -34,6 +34,15 @@ export default {
                                             {
                                                 "match": { "id": id }
                                             }
+                                        ],
+                                        "must_not": [
+                                            {
+                                                "match": {
+                                                    "warehouse": {
+                                                        "query": "MME.CONS"
+                                                    }
+                                                }
+                                            }
                                         ]
                                     }
                                 }
