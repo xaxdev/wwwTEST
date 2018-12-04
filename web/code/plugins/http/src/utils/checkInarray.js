@@ -1,4 +1,4 @@
 
 export default (array, search)=> {
-  return array.indexOf(search) >= 0;
+    return array.indexOf(search) >= 0;
 }
