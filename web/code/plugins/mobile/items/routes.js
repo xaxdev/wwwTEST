@@ -7,8 +7,8 @@ export default [
         config: controllers.searchreference
     },
     {
-      method: 'GET',
-      path: '/{id}',
-      config: controllers.read
+        method: 'GET',
+        path: '/{id}',
+        config: controllers.read
     }
 ]
