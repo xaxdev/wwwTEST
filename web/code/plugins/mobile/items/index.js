@@ -4,7 +4,6 @@ import routes from './routes'
 const register = (server, options, next) => {
 
     server.route(routes)
-
     next()
 }
 
