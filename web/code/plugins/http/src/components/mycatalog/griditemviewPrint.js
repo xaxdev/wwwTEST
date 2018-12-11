@@ -185,7 +185,7 @@ class GridItemsViewPrint extends Component {
                                     ? (item.image.length) != 0 ? item.image[0].original : '/images/blank.gif'
                                     :'/images/login-logo@2x.png';
                             }
-                            
+
                             imagesProduct = (item.availability) ? imagesProduct : '/images/imagesoldout@2x.png';
 
                             itemDate = (item.authorization)

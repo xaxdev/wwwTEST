@@ -281,34 +281,42 @@ class SalesReportHeader extends Component {
                             <div className="panel-body">
                                 <div className="row margin-ft">
                                     <div className="col-md-12 col-sm-12 form-horizontal">
+                                        Period
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel-body">
+                                <div className="row margin-ft">
+                                    <div className="col-md-12 col-sm-12 form-horizontal">
                                         <div className="form-group">
-                                            <label className="col-md-2 col-sm-4 control-label">Item Reference</label>
-                                            <div className="col-md-10 col-sm-7 salesreport-input">
-                                                <input type="text" className="form-control"
-                                                   placeholder="Enter Multiple Item Ref separated with comma" {...reference}/>
+                                            <div className="row salesreport-bar"></div>
+                                            <label className="col-sm-4 control-label">Invoice Date</label>
+                                            <div className="col-sm-7">
+                                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                                                <div className="col-sm-10 nopadding">
+                                                    <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeStart}
+                                                        date={(paramsSalesSearch != null)? paramsSalesSearch.invoiceDateFrom: props.InvoiceDateFrom} />
+                                                </div>
+                                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                                                <div className="col-sm-10 nopadding">
+                                                    <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeEnd}
+                                                        date={(paramsSalesSearch != null)? paramsSalesSearch.invoiceDateTo: props.InvoiceDateTo} />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-6 col-sm-12 form-horizontal">
-                                        <div className="form-group">
-                                            <label className="col-sm-4 control-label">Item Description</label>
-                                            <div className="col-sm-7">
-                                                <input type="text" className="form-control" {...description}/>
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <label className="col-sm-4 control-label">Certificated Number</label>
-                                            <div className="col-sm-7">
-                                                <input type="text" className="form-control" {...certificatedNumber}/>
-                                            </div>
-                                        </div>
-                                        <div className="form-group">
-                                            <label className="col-sm-4 control-label">SKU</label>
-                                            <div className="col-sm-7">
-                                                <input type="text" className="form-control" {...sku}/>
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                            <div className="panel-body">
+                                <div className="row margin-ft">
+                                    <div className="col-md-12 col-sm-12 form-horizontal">
+                                        Location
                                     </div>
+                                </div>
+                            </div>
+                            <div className="panel-body">
+                                <div className="row margin-ft">
+                                    <div className="row salesreport-bar"></div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
                                         <div className={`form-group ${(userLogin.permission.salesLocation != undefined) ? '' : 'hidden'}` }>
                                             <label className="col-sm-4 control-label">Company</label>
@@ -318,21 +326,23 @@ class SalesReportHeader extends Component {
                                                     disabled={(userLogin.permission.salesLocation != undefined) ? false : true} ref="location"/>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className="col-md-6 col-sm-12 form-horizontal">
                                         <div className={`form-group ${(userLogin.permission.salesWarehouse != undefined) ?'' : 'hidden'}` }>
-                                            <label className="col-sm-4 control-label">Location</label>
+                                            <label className="col-sm-4 control-label">Boutiuqu</label>
                                             <div className="col-sm-7">
                                                 <Select multi simpleValue value={props.WarehouseValue} placeholder="Select your Location"
                                                     options={dataDropDowntWareHouse} onChange={this.handleWarehouseSelectChange}
                                                     disabled={(userLogin.permission.salesWarehouse != undefined) ? false : true}/>
                                             </div>
                                         </div>
-                                        <div className="form-group">
-                                            <label className="col-sm-4 control-label">Dominant Stone</label>
-                                            <div className="col-sm-7">
-                                                <Select multi simpleValue value={props.DominantStoneValue} placeholder="Select your Dominant Stone"
-                                                    options={dataDropDowntDominantStone} onChange={this.handleDominantStoneSelectChange} />
-                                            </div>
-                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel-body">
+                                <div className="row margin-ft">
+                                    <div className="col-md-12 col-sm-12 form-horizontal">
+                                        Customer
                                     </div>
                                 </div>
                             </div>
@@ -345,6 +355,15 @@ class SalesReportHeader extends Component {
                                             <div className="col-md-10 col-sm-7 salesreport-input">
                                                 <input type="text" className="form-control"
                                                    placeholder="Customer Name, ID, Email, Phone Number" {...customer}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-12 col-sm-12 form-horizontal">
+                                        <div className="form-group">
+                                            <label className="col-md-2 col-sm-4 control-label">Invoice No.</label>
+                                            <div className="col-md-10 col-sm-7 salesreport-input">
+                                                <input type="text" className="form-control"
+                                                   placeholder="" {...invoiceNo}/>
                                             </div>
                                         </div>
                                     </div>
@@ -369,33 +388,65 @@ class SalesReportHeader extends Component {
                             </div>
                             <div className="panel-body">
                                 <div className="row margin-ft">
-                                    <div className="row salesreport-bar">
+                                    <div className="col-md-12 col-sm-12 form-horizontal">
+                                        Inventory
                                     </div>
+                                </div>
+                            </div>
+                            <div className="panel-body">
+                                <div className="row margin-ft">
+                                    <div className="row salesreport-bar"></div>
                                     <div className="col-md-12 col-sm-12 form-horizontal">
                                         <div className="form-group">
-                                            <label className="col-md-2 col-sm-4 control-label">Invoice No.</label>
+                                            <label className="col-md-2 col-sm-4 control-label">Item Reference</label>
                                             <div className="col-md-10 col-sm-7 salesreport-input">
                                                 <input type="text" className="form-control"
-                                                   placeholder="" {...invoiceNo}/>
+                                                   placeholder="Enter Multiple Item Ref separated with comma" {...reference}/>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
                                         <div className="form-group">
-                                            <label className="col-sm-4 control-label">Invoice Date</label>
+                                            <label className="col-sm-4 control-label">Item Description</label>
                                             <div className="col-sm-7">
-                                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                                                <div className="col-sm-10 nopadding">
-                                                    <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeStart}
-                                                        date={(paramsSalesSearch != null)? paramsSalesSearch.invoiceDateFrom: props.InvoiceDateFrom} />
-                                                </div>
-                                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                                                <div className="col-sm-10 nopadding">
-                                                    <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeEnd}
-                                                        date={(paramsSalesSearch != null)? paramsSalesSearch.invoiceDateTo: props.InvoiceDateTo} />
-                                                </div>
+                                                <input type="text" className="form-control" {...description}/>
                                             </div>
                                         </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Certificate Number</label>
+                                            <div className="col-sm-7">
+                                                <input type="text" className="form-control" {...certificatedNumber}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6 col-sm-12 form-horizontal">
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">SKU</label>
+                                            <div className="col-sm-7">
+                                                <input type="text" className="form-control" {...sku}/>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Dominant Stone</label>
+                                            <div className="col-sm-7">
+                                                <Select multi simpleValue value={props.DominantStoneValue} placeholder="Select your Dominant Stone"
+                                                    options={dataDropDowntDominantStone} onChange={this.handleDominantStoneSelectChange} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel-body">
+                                <div className="row margin-ft">
+                                    <div className="col-md-12 col-sm-12 form-horizontal">
+                                        Value
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="panel-body">
+                                <div className="row margin-ft">
+                                    <div className="row salesreport-bar"></div>
+                                    <div className="col-md-6 col-sm-12 form-horizontal">
                                         <div className={`form-group ${(priceSalesCTP) ? '' : 'hidden'}`}>
                                             <label className="col-sm-4 control-label">Cost Price (USD)</label>
                                             <div className="col-sm-7">
@@ -406,21 +457,6 @@ class SalesReportHeader extends Component {
                                                 <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                                                 <div className="col-sm-4 nopadding">
                                                     <input type="number" className="form-control" {...totalCostTo}/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6 col-sm-12 form-horizontal">
-                                        <div className={`form-group ${(priceSalesUCP) ? '' : 'hidden'}`}>
-                                            <label className="col-sm-4 control-label">Updated Cost (USD)</label>
-                                            <div className="col-sm-7">
-                                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                                                <div className="col-sm-4 nopadding">
-                                                    <input type="number" className="form-control" {...totalUpdatedCostFrom}/>
-                                                </div>
-                                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                                                <div className="col-sm-4 nopadding">
-                                                    <input type="number" className="form-control" {...totalUpdatedCostTo}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -436,27 +472,6 @@ class SalesReportHeader extends Component {
                                                     <input type="number" className="form-control" {...retailPriceTo}/>
                                                 </div>
                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel-body">
-                                <div className="row margin-ft">
-                                    <div className="row salesreport-bar">
-                                    </div>
-                                    <div className="col-md-6 col-sm-12 form-horizontal">
-                                        <div className={`form-group ${(priceSalesNSP) ? '' : 'hidden'}`}>
-                                            <label className="col-sm-4 control-label">Net Sales (USD)</label>
-                                            <div className="col-sm-7">
-                                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
-                                                <div className="col-sm-4 nopadding">
-                                                    <input type="number" className="form-control" {...netSalesFrom}/>
-                                                </div>
-                                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
-                                                <div className="col-sm-4 nopadding">
-                                                    <input type="number" className="form-control" {...netSalesTo}/>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div className={`form-group ${(priceSalesMGP) ? '' : 'hidden'}`}>
                                             <label className="col-sm-4 control-label">Margin %</label>
@@ -486,6 +501,32 @@ class SalesReportHeader extends Component {
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
+                                        <div className={`form-group ${(priceSalesUCP) ? '' : 'hidden'}`}>
+                                            <label className="col-sm-4 control-label">Updated Cost (USD)</label>
+                                            <div className="col-sm-7">
+                                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                                                <div className="col-sm-4 nopadding">
+                                                    <input type="number" className="form-control" {...totalUpdatedCostFrom}/>
+                                                </div>
+                                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                                                <div className="col-sm-4 nopadding">
+                                                    <input type="number" className="form-control" {...totalUpdatedCostTo}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className={`form-group ${(priceSalesNSP) ? '' : 'hidden'}`}>
+                                            <label className="col-sm-4 control-label">Net Sales (USD)</label>
+                                            <div className="col-sm-7">
+                                                <label className="col-sm-2 control-label padding-l font-nor">From: </label>
+                                                <div className="col-sm-4 nopadding">
+                                                    <input type="number" className="form-control" {...netSalesFrom}/>
+                                                </div>
+                                                <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
+                                                <div className="col-sm-4 nopadding">
+                                                    <input type="number" className="form-control" {...netSalesTo}/>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div className="form-group">
                                             <label className="col-sm-4 control-label">Attachment</label>
                                             <div className="col-sm-7">

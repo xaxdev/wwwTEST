@@ -46,14 +46,14 @@ class RenderChangeTitleListBox extends Component {
                         <br/>
                         <DualListBox canFilter options={ViewAsSet? ColumnsViewAsSet: ColumnsNomal}
                             selected={TitleColumn} onChange={this.onChange} preserveSelectOrder />
-                   
+
                         <div className="col-xs-offset-3 col-sm-6">
                             <div className="text-center mg-tb">
                                 <span className={`${this.state.maxColumn?'user-alert':'hidden'}`}>Cannot selected column more than 9 columns.</span>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="modal-footer">
                         <div className="col-sm-12">
                             <button id="export" className="btn btn-default btn-radius" onClick={that.changeTitleColumn}>

@@ -1106,7 +1106,7 @@ class SalesProductDetail extends Component {
             <div id="page-wrapper">
                 <div className="col-sm-12 bg-hearder m-prodcutdetail">
                     <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding">
-                        <h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'PRODUCT DETAIL'}`}</h1>
+                        <h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'TRANSACTION DETAILS'}`}</h1>
                     </div>
                     {this.renderNavigation()}
                 </div>

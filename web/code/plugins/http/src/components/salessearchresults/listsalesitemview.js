@@ -177,7 +177,7 @@ class ListSalesItemsView extends Component {
                             ? (col.gallery.length) != 0 ? col.gallery[0].thumbnail : '/images/blank.gif'
                             : '/images/blank.gif';
                     }
-                    
+
                     switch (col.type) {
                         case 'JLY':
                             size = (col.size != undefined) ? col.size : '';
@@ -237,7 +237,7 @@ class ListSalesItemsView extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Item Weight (Grams)', prop: 'grossWeight' },
@@ -253,7 +253,7 @@ class ListSalesItemsView extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Net Amount', prop: 'netAmountUSD' },
@@ -269,7 +269,7 @@ class ListSalesItemsView extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Net Amount', prop: 'netAmountUSD' },
@@ -289,7 +289,7 @@ class ListSalesItemsView extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Item Weight (Grams)', prop: 'grossWeight' },
@@ -305,7 +305,7 @@ class ListSalesItemsView extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Net Amount', prop: 'netAmountUSD' },
@@ -321,7 +321,7 @@ class ListSalesItemsView extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Net Amount', prop: 'netAmountUSD' },
@@ -348,7 +348,7 @@ class ListSalesItemsView extends Component {
                                     <th><span>SKU</span></th>
                                     <th><span>Category Name</span></th>
                                     <th><span>Company</span></th>
-                                    <th><span>Location</span></th>
+                                    <th><span>Boutique</span></th>
                                     <th><span>Item Weight (Grams)</span></th>
                                     <th><span>Stone Detail</span></th>
                                     <th className={`${(priceSalesCTP) ? '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>

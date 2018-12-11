@@ -410,10 +410,20 @@ const getLotNumbers = async index => {
     }
 };
 
+const getRingSize = async index => {
+    try {
+        console.log('RingSize!!!');
+        const total = await core.get(await settings(index, 'ringsizes', constant.RINGSIZE_QUERY));
+        console.log(`${total} records were processed in total.`);
+    } catch (err) {
+        throw err;
+    }
+};
+
 export {
     getCompany, getLocation, getWarehouse, getCountry, getSoldCut, getSoldCutShap, getSoldColor, getSoldClarity, getSymmetry, getFluorescence,
     getSoldCollection, getSoldBrand, getSoldMetalType, getSoldMetalColor, getSoldCertificateAgency, getDialIndex, getSoldDialColor,
     getSoldDialMetal, getSoldBuckleType, getSoldStrapType, getSoldStrapColor, getSoldOrigin, getCurrency, getRole, getProductGroup,
     getJewelryCategory, getWatchCategory, getAccessoryType, getSparePartType, getDominantStones, getGemstoneStoneType, getStoneType,
-    getHierarchy, getLotNumbers, getArticle, getCustomer, getSaleChannel
+    getHierarchy, getLotNumbers, getArticle, getCustomer, getSaleChannel, getRingSize
 };

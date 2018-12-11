@@ -567,7 +567,7 @@ class InventoryJewelry extends Component {
             }
             if (props.options.ringSizes) {
                 dataDropDowntRingSize.push(props.options.ringSizes.map(ringSize =>{
-                    return ({value: ringSize.code,label:ringSize.name});
+                    return ({value: ringSize.name,label:ringSize.name});
                 }))
                 dataDropDowntRingSize = dataDropDowntRingSize[0];
             }
@@ -684,7 +684,7 @@ class InventoryJewelry extends Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label tooltiop-span">Must Have
+                                <label className="col-sm-4 control-label tooltiop-span">Must Have value
                                     <OverlayTrigger placement="top" overlay={tooltipMustHave}>
                                         <img src="/images/alphanumeric.png" />
                                     </OverlayTrigger>
@@ -701,7 +701,8 @@ class InventoryJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <input type="text" className="form-control" {...ringSize}/>
+                                    <Select multi simpleValue value={props.RingSizeValue} placeholder="Select your Ring Size"
+                                        options={dataDropDowntRingSize} onChange={this.handleRingSizeSelectChange} />
                                 </div>
                             </div>
                         </div>

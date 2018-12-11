@@ -223,7 +223,7 @@ class InventoryHeader extends Component {
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <label className="col-sm-4 control-label">Certificated Number</label>
+                                            <label className="col-sm-4 control-label">Certificate Number</label>
                                             <div className="col-sm-7">
                                                 <input type="text" className="form-control" {...certificatedNumber}/>
                                             </div>

@@ -40,7 +40,7 @@ const labels = {
 
 const labelsViewAsSet = {
     totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Price (USD)', markup: 'Markup (Times)',
-    companyName: 'Company', warehouseName: 'Location', postedDate: 'Posted Date'
+    companyName: 'Company', warehouseName: 'Boutique', postedDate: 'Posted Date'
 }
 class SalesSearchResultOnItem extends Component {
     constructor(props) {
@@ -940,7 +940,7 @@ class SalesSearchResultOnItem extends Component {
                                             <option key={'customer'} value={'customer'}>{'Customer ID'}</option>
                                             <option key={'customerName'} value={'customerName'}>{'Customer Name'}</option>
                                             <option key={'salesChannel'} value={'salesChannel'}>{'Channel'}</option>
-                                            <option key={'site'} value={'site'}>{'Location Code'}</option>
+                                            <option key={'site'} value={'site'}>{'Boutique Code'}</option>
                                         </select>
                                     }
 

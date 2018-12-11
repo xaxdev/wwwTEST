@@ -223,7 +223,7 @@ class ListSalesItemsViewPrint extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Item Weight (Grams)', prop: 'grossWeight' },
@@ -238,7 +238,7 @@ class ListSalesItemsViewPrint extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Net Amount', prop: 'netAmountUSD' },
@@ -253,7 +253,7 @@ class ListSalesItemsViewPrint extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Net Amount', prop: 'netAmountUSD' },
@@ -272,7 +272,7 @@ class ListSalesItemsViewPrint extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Item Weight (Grams)', prop: 'grossWeight' },
@@ -287,7 +287,7 @@ class ListSalesItemsViewPrint extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Net Amount', prop: 'netAmountUSD' },
@@ -302,7 +302,7 @@ class ListSalesItemsViewPrint extends Component {
                         { title: 'Item Reference', prop: 'reference' },
                         { title: 'Description', prop: 'itemName' },
                         { title: 'SKU', prop: 'sku' },
-                        { title: 'Location', prop: 'warehouseName' },
+                        { title: 'Boutique', prop: 'warehouseName' },
                         { title: 'Customer Name', prop: 'customerName' },
                         { title: 'Invoice Date', prop: 'invoiceDate' },
                         { title: 'Net Amount', prop: 'netAmountUSD' },
@@ -328,7 +328,7 @@ class ListSalesItemsViewPrint extends Component {
                                     <th><span>SKU</span></th>
                                     <th><span>Category Name</span></th>
                                     <th><span>Company</span></th>
-                                    <th><span>Location</span></th>
+                                    <th><span>Boutique</span></th>
                                     <th><span>Item Weight (Grams)</span></th>
                                     <th><span>Stone Detail</span></th>
                                     <th className={`${(priceSalesCTP) ? '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>

@@ -523,10 +523,11 @@ class SalesReportJewelry extends Component {
             }
             if (props.options.ringSizes) {
                 dataDropDowntRingSize.push(props.options.ringSizes.map(ringSize =>{
-                    return ({value: ringSize.code,label:ringSize.name});
+                    return ({value: ringSize.name,label:ringSize.name});
                 }))
                 dataDropDowntRingSize = dataDropDowntRingSize[0];
             }
+            console.log({dataDropDowntRingSize});
             if (props.options.dominantStones) {
                 dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
                     return ({value: dominantStone.code,label:dominantStone.name});
@@ -648,7 +649,8 @@ class SalesReportJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <input type="text" className="form-control" {...ringSize}/>
+                                    <Select multi simpleValue value={props.RingSizeValue} placeholder="Select your Ring Size"
+                                        options={dataDropDowntRingSize} onChange={this.handleRingSizeSelectChange} />
                                 </div>
                             </div>
                         </div>

@@ -455,7 +455,7 @@ class productdetail extends Component {
         const gemstoneAttr = Detail.gemstones;
         const subType = Detail.subType;
         const { company } = Detail
-        
+
         if(Detail.type == 'STO' || Detail.type == 'CER'){
         } else {
             if(!gemstoneAttr){

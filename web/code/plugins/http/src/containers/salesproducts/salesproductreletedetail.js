@@ -555,7 +555,7 @@ class SalesProductReleteDetail extends Component {
         const gemstoneAttr = Detail.gemstones;
         const subType = Detail.subType;
         const { company } = Detail
-        
+
         if(Detail.type == 'STO' || Detail.type == 'CER'){
         } else {
             if(!gemstoneAttr){
@@ -989,7 +989,7 @@ class SalesProductReleteDetail extends Component {
             <div id="page-wrapper">
                 <div className="col-sm-12 bg-hearder bg-hearder-rel">
                     <div className="col-md-5 col-sm-5 ft-white m-nopadding">
-                    <h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'PRODUCT DETAIL'}`}</h1>
+                    <h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'TRANSACTION DETAILS'}`}</h1>
                     </div>
                     {this.renderNavigation()}
                 </div>
