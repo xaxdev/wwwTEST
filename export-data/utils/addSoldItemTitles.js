@@ -47,14 +47,14 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 if (priceSalesUCP) {
                     titles.push('Markup (Times)');
                 }
-                titles.push('Company','Location', 'Posted Date');
+                titles.push('Company','Boutique', 'Posted Date');
             }else{
                 if(fields.totalActualCost) titles.push('Total Cost Price (USD)');
                 if(fields.totalUpdatedCost) titles.push('Total Updated Cost (USD)');
                 if(fields.totalPrice) titles.push('Total Price (USD)');
                 if(fields.markup) titles.push('Markup (Times)');
                 if(fields.companyName) titles.push('Company');
-                if(fields.warehouseName) titles.push('Location');
+                if(fields.warehouseName) titles.push('Boutique');
                 if(fields.postedDate) titles.push('Posted Date');
             }
         }else{
@@ -86,7 +86,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             if (priceSalesDSP) {
                 titles.push('Discount Amount');
             }
-            titles.push('Item Weight (Grams)','Ring Size', 'Jewels Weight (text)','Site','Company', 'Location');
+            titles.push('Item Weight (Grams)','Ring Size', 'Jewels Weight (text)','Site','Company', 'Boutique');
             if(fields.allFields){
                 titles.push(
                     'Ingredients','Category Name','Category', 'Article', 'Collection','Set Reference Number', 'Cut','Color', 'Clarity','Carat Wt', 'Unit',

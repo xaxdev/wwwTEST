@@ -72,7 +72,7 @@ const SetDetail = (props) =>{
                     <div className="col-md-8 col-sm-8">{props.companyName != undefined ? props.companyName: '-'}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Location</div>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Boutique</div>
                     <div className="col-md-8 col-sm-8">{props.warehouseName != undefined ? props.warehouseName: '-'}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">

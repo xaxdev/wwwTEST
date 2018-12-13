@@ -21,7 +21,7 @@ module.exports = {
         );
         let type = `roles,currencies,companies,locations,warehouses,countries,productGroups,stoneType,gemstoneStoneType,cut,cutShape,cutGrades,
         colors,colorGrades,clarities,certificateLabs,polishs,symmetries,treatments,fluorescences,origins,jewelryCategories,collections,brands,
-        ringSizes,dominantStones,metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,
+        ringsizes,dominantStones,metalTypes,metalColours,certificateAgencys,watchCategories,movements,dialIndexs,dialColors,dialMetals,
         buckleTypes,strapTypes,strapColors,complications,hierarchy,accessoryTypes,sparePartTypes,articles,salechannels`;
 
         const alldata = elastic.search({
@@ -104,7 +104,7 @@ module.exports = {
                 return element._type == 'brands';
             }})
             const ringSizesget = alldata.hits.hits.filter((element)=> {{
-                return element._type == 'ringSizes';
+                return element._type == 'ringsizes';
             }})
             const dominantStonesget = alldata.hits.hits.filter((element)=> {{
                 return element._type == 'dominantStones';

@@ -840,6 +840,7 @@ class SearchResult extends Component {
     changeTitle(){
         this.setState({ isOpenChangeTitle: true })
     }
+
     hideChangeTitle = async (e) => {
         e.preventDefault()
         const { TitleColumnDb, ViewAsSet, TitleColumn } = this.props;
@@ -1306,13 +1307,13 @@ class SearchResult extends Component {
             if (numbers.hasOwnProperty(i)) {
                 numbers[i].onkeydown = function(e) {
                     if(!((e.keyCode > 95 && e.keyCode < 106)
-                      || (e.keyCode > 47 && e.keyCode < 58)
-                      || e.keyCode == 8
-                      || e.keyCode == 37
-                      || e.keyCode == 39
-                      || e.keyCode == 46
-                      || e.keyCode == 110
-                      || e.keyCode == 190 )) {
+                        || (e.keyCode > 47 && e.keyCode < 58)
+                        || e.keyCode == 8
+                        || e.keyCode == 37
+                        || e.keyCode == 39
+                        || e.keyCode == 46
+                        || e.keyCode == 110
+                        || e.keyCode == 190 )) {
                         return false;
                     }
                 }
