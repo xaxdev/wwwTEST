@@ -14,7 +14,8 @@ import ProductJewelryAttributes from '../../components/productdetail/productJewa
 import ProductStoneAttributes from '../../components/productdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/productdetail/productWatchAttributes.js';
 import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
-import ModalShowImages from '../../components/productdetail/modalShowImages';
+import ModalShowImagesCOA from '../../components/productdetail/modalShowImagesCOA';
+import ModalShowImagesDBC from '../../components/productdetail/modalShowImagesDBC';
 import ModalShowFilesPDF from '../../components/productdetail/modalShowFilesPDF';
 import Modalalertmsg from '../../components/productdetail/modalalertmsg';
 import ProductGallery from '../../components/productdetail/productGallery';
@@ -691,29 +692,30 @@ class productdetail extends Component {
     }
 
     renderImageGalleryCOA = _ =>{
-        const { imagesCOA } = this.props.productdetail;
+        const { imagesCOA, company } = this.props.productdetail;
 
         return(
-            <ModalShowImages images={imagesCOA} isOpen={this.state.showCOA} isClose={this.handleCloseShowCOA} productId={this.props.params.id}
-                getCertificate={this.props.getCertificate}/>
+            <ModalShowImagesCOA images={imagesCOA} isOpen={this.state.showCOA} isClose={this.handleCloseShowCOA}
+                productId={this.props.params.id} getCertificate={this.props.getCertificate} company={company}/>
         );
 
     }
 
     renderImageGalleryDBC = _ => {
-        const { imagesDBC } = this.props.productdetail;
+        const { imagesDBC, company  } = this.props.productdetail;
 
         return(
-            <ModalShowImages images={imagesDBC} isOpen={this.state.showDBC} isClose={this.handleCloseShowDBC}
-               productId={this.props.params.id} getCertificate={this.props.getCertificate}/>
+            <ModalShowImagesDBC images={imagesDBC} isOpen={this.state.showDBC} isClose={this.handleCloseShowDBC}
+               productId={this.props.params.id} getCertificate={this.props.getCertificate} company={company}/>
         );
     }
 
     renderFilesMonograph = _ => {
-        const { filesMonograph } = this.props.productdetail;
+        const { filesMonograph, company } = this.props.productdetail;
 
         return(
-            <ModalShowFilesPDF files={filesMonograph} isOpen={this.state.showMonograph} isClose={this.handleCloseShowMonograph} />
+            <ModalShowFilesPDF files={filesMonograph} isOpen={this.state.showMonograph} isClose={this.handleCloseShowMonograph}
+                company={company}/>
         );
     }
 

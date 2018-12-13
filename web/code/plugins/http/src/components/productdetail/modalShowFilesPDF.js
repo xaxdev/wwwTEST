@@ -23,7 +23,7 @@ class ModalShowFilesPDF extends Component {
 
     render() {
         const { props } = this.props;
-        const { files, isOpen, isClose, onSubmit } = this.props;
+        const { files, company, isOpen, isClose, onSubmit } = this.props;
         const { pageNumber, numPages } = this.state;
         let file = [];
         let fileCerDownload = '';
@@ -37,9 +37,9 @@ class ModalShowFilesPDF extends Component {
                 }else if (ENVIRONMENT == 'test') {
                     fileCerDownload = `/images/products/original/${file[0].original.split('/').slice(-1).pop()}`;
                 }else if (ENVIRONMENT == 'staging') {
-                    fileCerDownload = `/original/${file[0].original.split('/').slice(-1).pop()}`;
+                    fileCerDownload = `/original/${company.toLowerCase()}/${file[0].original.split('/').slice(-1).pop()}`;
                 }else if (ENVIRONMENT == 'production') {
-                    fileCerDownload = `/original/${file[0].original.split('/').slice(-1).pop()}`;
+                    fileCerDownload = `/original/${company.toLowerCase()}/${file[0].original.split('/').slice(-1).pop()}`;
                 }
                 fileName = `${file[0].original.split('/').slice(-1).pop()}`;
             }
@@ -58,12 +58,10 @@ class ModalShowFilesPDF extends Component {
                                     Array.from(
                                         new Array(numPages),
                                         (el, index) => (
-                                          <Page
-                                            key={`page_${index + 1}`}
-                                            pageNumber={index + 1}
-                                            onRenderSuccess={this.onPageRenderSuccess}
-                                            width={Math.min(600, document.body.clientWidth - 52)}
-                                          />
+                                            <Page key={`page_${index + 1}`} pageNumber={index + 1}
+                                                onRenderSuccess={this.onPageRenderSuccess}
+                                                width={Math.min(600, document.body.clientWidth - 52)}
+                                            />
                                         ),
                                     )
                                 }

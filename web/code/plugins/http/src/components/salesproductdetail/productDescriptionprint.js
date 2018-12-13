@@ -53,6 +53,10 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>{convertBlanktodash(props.reference)}</div>
                 </div>
                 <div style={styles.colmd12}>
+                    <div style={styles.colmd5}>SKU</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.sku)}</div>
+                </div>
+                <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Description</div>
                     <div style={styles.colmd5}>{convertBlanktodash(props.description)}</div>
                 </div>
@@ -68,29 +72,29 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>Price ({ currency })</div>
                     <div style={styles.colmd5}>{ price }</div>
                 </div>
-                <div style={(priceSalesNSP) ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Net Sales ({ currency })</div>
-                    <div style={styles.colmd5}>{ netSales }</div>
-                </div>
-                <div style={(priceSalesMGP) ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Margin %</div>
-                    <div style={styles.colmd5}>{ marginPercent }</div>
-                </div>
-                <div style={(priceSalesMGP) ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Margin Amount ({ currency })</div>
-                    <div style={styles.colmd5}>{ marginAmount }</div>
-                </div>
-                <div style={(priceSalesDSP) ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Discount % </div>
-                    <div style={styles.colmd5}>{ discountPercent }</div>
+                <div style={(priceSalesUCP) ?styles.colmd12  : styles.colmdhide}>
+                    <div style={styles.colmd5}>Markup (Times)</div>
+                    <div style={styles.colmd5}>{markUp}</div>
                 </div>
                 <div style={(priceSalesDSP) ? styles.colmd12  : styles.colmdhide}>
                     <div style={styles.colmd5}>Discount Amount ({ currency })</div>
                     <div style={styles.colmd5}>{ discount }</div>
                 </div>
-                <div style={(priceSalesUCP) ?styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Markup (Times)</div>
-                    <div style={styles.colmd5}>{markUp}</div>
+                <div style={(priceSalesDSP) ? styles.colmd12  : styles.colmdhide}>
+                    <div style={styles.colmd5}>Discount % </div>
+                    <div style={styles.colmd5}>{ discountPercent }</div>
+                </div>
+                <div style={(priceSalesMGP) ? styles.colmd12  : styles.colmdhide}>
+                    <div style={styles.colmd5}>Margin Amount ({ currency })</div>
+                    <div style={styles.colmd5}>{ marginAmount }</div>
+                </div>
+                <div style={(priceSalesMGP) ? styles.colmd12  : styles.colmdhide}>
+                    <div style={styles.colmd5}>Margin %</div>
+                    <div style={styles.colmd5}>{ marginPercent }</div>
+                </div>
+                <div style={(priceSalesNSP) ? styles.colmd12  : styles.colmdhide}>
+                    <div style={styles.colmd5}>Net Sales ({ currency })</div>
+                    <div style={styles.colmd5}>{ netSales }</div>
                 </div>
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Company</div>
@@ -104,17 +108,10 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>Vendor Item Reference</div>
                     <div style={styles.colmd5}>{convertBlanktodash(props.venderReference)}</div>
                 </div>
-                <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>SKU</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(props.sku)}</div>
-                </div>
+
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Set Reference Number</div>
                     <div style={styles.colmd5}>{convertBlanktodash(setReference)}</div>
-                </div>
-                <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Date Created</div>
-                    <div style={styles.colmd5}>{dateCreate}</div>
                 </div>
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Channel</div>
@@ -135,6 +132,10 @@ const DetailDescriptionPrint = (props) => {
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Sales Person Name</div>
                     <div style={styles.colmd5}>{convertBlanktodash(props.salesPersonName)}</div>
+                </div>
+                <div style={styles.colmd12}>
+                    <div style={styles.colmd5}>Date Created</div>
+                    <div style={styles.colmd5}>{dateCreate}</div>
                 </div>
             </div>
         );
