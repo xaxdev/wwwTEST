@@ -42,7 +42,7 @@ const labelsViewAsSet = {
     totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Price (USD)', markup: 'Markup (Times)',
     companyName: 'Company', warehouseName: 'Boutique', postedDate: 'Posted Date'
 }
-class SalesSearchResultItems extends Component {
+class SalesSearchResultOnItem extends Component {
     constructor(props) {
         super(props);
 
@@ -900,36 +900,36 @@ class SalesSearchResultItems extends Component {
         return(
             <form role="form">
                 {/* Header Search */}
-                <div className="col-sm-12 bg-hearder bg-header-searchresult">
-                    <div className="col-md-4 col-sm-12 ft-white m-nopadding">
+                <div className="col-sm-12 bg_title_sale">
+                    <div className="col-md-4 col-sm-12  m-nopadding">
                         <h1>SALES SEARCH RESULTS</h1>
                     </div>
                     <div className="col-md-8 col-sm-12 nopadding">
                         <div className="m-width-100 text-right maring-t15 float-r ip-font m-pt">
                             <div className="col-sm-4 col-xs-12 nopadding">
-                                <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                    <button className="btn btn-searchresult" disabled={submitting} onClick={onClickNewSalesSearch}>New Search</button>
+                                <div className="col-sm-6 col-xs-6  nopad-ipl">
+                                    <button className="btn btn-salesearchresult" disabled={submitting} onClick={onClickNewSalesSearch}>New Search</button>
                                 </div>
-                                <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                    <button className="btn btn-searchresult" disabled={submitting} onClick={onClickModifySalesSearch}>Modify Search</button>
+                                <div className="col-sm-6 col-xs-6  nopad-ipl">
+                                    <button className="btn btn-salesearchresult" disabled={submitting} onClick={onClickModifySalesSearch}>Modify Search</button>
                                 </div>
                             </div>
-                            <div className="col-sm-2 col-xs-12 ft-white margin-t5">
+                            <div className="col-sm-2 col-xs-12  margin-t5">
                                 <ControlLabel> <span className="fc-ddbe6a m-none">|</span> Sort By: </ControlLabel>
                             </div>
                             <div className="col-sm-2 col-xs-12 nopadding">
-                                <div className="styled-select">
+                                <div className="styled-select-black">
                                     {
                                         ViewAsSet
                                         ?
-                                        <select className="form-searchresult" onChange={this.salesSortingBy} ref="salesSortingBy">
+                                        <select  onChange={this.salesSortingBy} ref="salesSortingBy">
                                             <option key={'postedDate'} value={'postedDate'}>{'Updated Date'}</option>
                                             <option key={'totalNetAmount'} value={'totalNetAmount'}>{'Net Sales'}</option>
                                             <option key={'description'} value={'description'}>{'Description'}</option>
                                             <option key={'reference'} value={'reference'}>{'Set Reference Number'}</option>
                                         </select>
                                         :
-                                        <select className="form-searchresult" onChange={this.salesSortingBy} ref="salesSortingBy">
+                                        <select  onChange={this.salesSortingBy} ref="salesSortingBy">
                                             <option key={'postedDate'} value={'postedDate'}>{'Updated Date'}</option>
                                             <option key={'netAmount'} value={'netAmount'}>{'Net Sales'}</option>
                                             <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
@@ -947,8 +947,8 @@ class SalesSearchResultItems extends Component {
                                 </div>
                             </div>
                             <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
-                                <div className="styled-select">
-                                    <select className="form-searchresult" onChange={this.salesSortingDirection}
+                            <div className="styled-select-black">
+                                    <select  onChange={this.salesSortingDirection}
                                         ref="salesSortingDirection">
                                         <option key={'desc'} value={'desc'}>{'Descending'}</option>
                                         <option key={'asc'} value={'asc'}>{'Ascending'}</option>
@@ -957,10 +957,10 @@ class SalesSearchResultItems extends Component {
                             </div>
                             <div className="col-sm-2 ft-white nopadding pd-10">
                                 <div disabled={submitting} onClick={ onClickGridViewResults } >
-                                    <div className={`icon-grid m-pt-mgl ${salesShowGridView ? 'icon-grid-active' : ''}` }></div>
+                                    <div className={`icon-sale-grid m-pt-mgl ${salesShowGridView ? 'icon-grid-active' : ''}` }></div>
                                 </div>
                                 <div disabled={submitting} onClick={ onClickListViewResults } >
-                                    <div className={`icon-list m-pt-mgl ${salesShowListView ? 'icon-list-active' : ''}` }></div>
+                                    <div className={`icon-sale-list m-pt-mgl ${salesShowListView ? 'icon-list-active' : ''}` }></div>
                                 </div>
                             </div>
                         </div>
@@ -1061,4 +1061,4 @@ class SalesSearchResultItems extends Component {
         )
     }
 }
-module.exports = SalesSearchResultItems;
+module.exports = SalesSearchResultOnItem;

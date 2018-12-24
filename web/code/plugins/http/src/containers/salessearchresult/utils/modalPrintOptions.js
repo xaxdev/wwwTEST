@@ -24,7 +24,7 @@ class ModalPrintOptions extends Component {
         return(
             <div  className="addMyCatalog">
                 <Modal isOpen={isOpen} >
-                    <div className="modal-header">
+                    <div className="modal-header bg_title_sale">
                         <ModalClose onClick={isClose}/>
                         <h1 className="modal-title">SALES SEARCH RESULTS</h1>
                     </div>
