@@ -18,7 +18,7 @@ class RenderSalesExportExcelDialog extends Component {
         return(
             <div  className="popexport">
                 <Modal isOpen={state.isOpen} onRequestHide={onClickHideModal}>
-                    <div className="modal-header">
+                    <div className="modal-header bg_title_sale">
                         <ModalClose onClick={onClickHideModal}/>
                         <h1 className="modal-title">Export</h1>
                     </div>

@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [11,10,9,8,7,6,5,4,3,2,1];
+            const roundData = [12,11,10,9,8,7,6,5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -445,6 +445,32 @@ class WhatNewNotification extends Component {
                                                   </div>`
                                               }
                                             ]
+                                },
+                                {
+                                    'id': 12,
+                                    'round': 'December 2018',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Set Name and Romance Note in MOL',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">December 24, 2018</p>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <p>- When user click check box at 'View As Set' it will show text box 'Set Name'.</p>
+                                                  <p>- User can type name of set or keyword at text box for searching set by 'Set Name'.</p>
+                                                  <p>- Set Detail Page will show the ‘Set Name’ and ‘Romance Note’ under description in Set Detail Page.</p>
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/Set1.gif"/></div>
+                                                  </div>`
+                                              },
+                                              {
+                                                'type':'new',
+                                                'title': 'Dynamic Addition or Removal of columns in List View',
+                                                'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">December 24, 2018</p>
+                                                <div style="padding:15px 20px 0 20px;">
+                                                  <p>- User can select 9 fields more to show in list view by clicking edit display.</p>
+                                                    <div style="margin:15px 0px; text-align:center;"><img src="/images/Dynamic_1.gif"/></div>
+                                                  </div>`
+                                                }
+                                        ]
                                 }
                             ];
             return(

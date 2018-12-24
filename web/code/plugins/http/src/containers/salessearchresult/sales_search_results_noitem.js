@@ -151,7 +151,7 @@ class SalesSearchResultOnItem extends Component {
         return(
             <form role="form">
                 {/* Header Search */}
-                <div className="col-sm-12 bg-hearder bg-header-searchresult">
+                <div className="col-sm-12 bg_title_sale">
                     <div className="col-md-4 col-sm-12 ft-white m-nopadding">
                         <h1>SALES SEARCH RESULTS</h1>
                     </div>
@@ -159,18 +159,18 @@ class SalesSearchResultOnItem extends Component {
                         <div className="m-width-100 text-right maring-t15 float-r ip-font ipp-margin m-pt">
                             <div className="col-sm-4 col-xs-12 nopadding">
                                 <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                    <button className="btn btn-searchresult" disabled={submitting} onClick={onClickNewSalesSearch}>New Search</button>
+                                    <button className="btn btn-salesearchresult" disabled={submitting} onClick={onClickNewSalesSearch}>New Search</button>
                                 </div>
                                 <div className="col-sm-6 col-xs-6 ft-white nopad-ipl">
-                                    <button className="btn btn-searchresult" disabled={submitting} onClick={onClickModifySalesSearch}>Modify Search</button>
+                                    <button className="btn btn-salesearchresult" disabled={submitting} onClick={onClickModifySalesSearch}>Modify Search</button>
                                 </div>
                             </div>
-                            <div className="col-sm-2 col-xs-12 ft-white margin-t5">
+                            <div className="col-sm-2 col-xs-12  margin-t5">
                                 <ControlLabel> <span className="fc-ddbe6a m-none">|</span> Sort By: </ControlLabel>
                             </div>
                             <div className="col-sm-2 col-xs-12 nopadding">
-                                <div className="styled-select">
-                                    <select className="form-searchresult" onChange={this.salesSortingBy} ref="salesSortingBy" >
+                                <div className="styled-select-black">
+                                    <select  onChange={this.salesSortingBy} ref="salesSortingBy" >
                                         <option key={'postedDate'} value={'postedDate'}>{'Updated Date'}</option>
                                         <option key={'netAmount'} value={'netAmount'}>{'Net Sales'}</option>
                                         <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
@@ -180,8 +180,8 @@ class SalesSearchResultOnItem extends Component {
                                 </div>
                             </div>
                             <div className="col-sm-2 col-xs-12 nopadding padding-l10 m-pt-select">
-                                <div className="styled-select">
-                                    <select className="form-searchresult" onChange={this.salesSortingDirection}
+                                <div className="styled-select-black">
+                                    <select  onChange={this.salesSortingDirection}
                                         ref="salesSortingDirection">
                                         <option key={'desc'} value={'desc'}>{'Descending'}</option>
                                         <option key={'asc'} value={'asc'}>{'Ascending'}</option>
@@ -201,7 +201,7 @@ class SalesSearchResultOnItem extends Component {
                 </div>
                 <div >
                     <Modal isOpen={this.state.isOpenNoResults} onRequestHide={this.hideModalNoResults}>
-                        <div className="modal-header">
+                        <div className="modal-header bg_title_sale">
                             <ModalClose onClick={this.hideModalNoResults}/>
                             <h1 className="modal-title">Message</h1>
                         </div>
