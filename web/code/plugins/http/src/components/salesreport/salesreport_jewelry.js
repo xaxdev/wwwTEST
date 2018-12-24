@@ -523,7 +523,7 @@ class SalesReportJewelry extends Component {
             }
             if (props.options.ringSizes) {
                 dataDropDowntRingSize.push(props.options.ringSizes.map(ringSize =>{
-                    return ({value: ringSize.code,label:ringSize.name});
+                    return ({value: ringSize.name,label:ringSize.name});
                 }))
                 dataDropDowntRingSize = dataDropDowntRingSize[0];
             }
@@ -631,7 +631,7 @@ class SalesReportJewelry extends Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label tooltiop-span">Must Have
+                                <label className="col-sm-4 control-label tooltiop-span">Must Have value
                                     <OverlayTrigger placement="top" overlay={tooltipMustHave}>
                                         <img src="/images/alphanumeric.png" />
                                     </OverlayTrigger>
@@ -648,7 +648,8 @@ class SalesReportJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <input type="text" className="form-control" {...ringSize}/>
+                                    <Select multi simpleValue value={props.RingSizeValue} placeholder="Select your Ring Size"
+                                        options={dataDropDowntRingSize} onChange={this.handleRingSizeSelectChange} />
                                 </div>
                             </div>
                         </div>
@@ -740,7 +741,7 @@ const tooltipHierarchy = (<Tooltip id="tooltip"><strong>Product Hierarchy</stron
 const tooltipJewelryCategory = (<Tooltip id="tooltip"><strong>Search By Type of the Product (eg. Ring, Pendent, Necklace etc.)</strong></Tooltip>);
 const tooltipCollection = (<Tooltip id="tooltip"><strong>Search By Collection (eg. Masterpiece, High Jewelry, Diamond Classics etc.) of the Product</strong></Tooltip>);
 const tooltipBrand = (<Tooltip id="tooltip"><strong>Seacrh By Brand (eg. Mouawad, Chopard, Cartier etc.) of the Product</strong></Tooltip>);
-const tooltipMustHave = (<Tooltip id="tooltip"><strong>Search By Must Have (yes/no)</strong></Tooltip>);
+const tooltipMustHave = (<Tooltip id="tooltip"><strong>Search By Must Have value (yes/no)</strong></Tooltip>);
 const tooltipRingSize = (<Tooltip id="tooltip"><strong>Search Product by Ring Size</strong></Tooltip>);
 const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>);
 const tooltipTotalUpdatedCost = (<Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>);

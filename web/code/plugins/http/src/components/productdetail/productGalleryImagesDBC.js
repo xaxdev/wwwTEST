@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ImageGallery from 'react-image-gallery';
 import jQuery from 'jquery';
 
-class Gallery extends Component {
+class GalleryDBC extends Component {
     constructor() {
         super();
 
@@ -26,7 +26,7 @@ class Gallery extends Component {
     }
 
     render() {
-        const { imagesCOA } = this.props.productdetail;
+        const { imagesDBC } = this.props.productdetail;
         const { imagesGallery } = this.props;
         let images = [];
         if (!!imagesGallery) {
@@ -62,8 +62,8 @@ function mapStateToProps(state) {
 }
 
 
-Gallery.propTypes = {
+GalleryDBC.propTypes = {
     imagegallery: PropTypes.array.isRequired
 }
 
-module.exports = connect(mapStateToProps, null)(Gallery);
+module.exports = connect(mapStateToProps, null)(GalleryDBC);

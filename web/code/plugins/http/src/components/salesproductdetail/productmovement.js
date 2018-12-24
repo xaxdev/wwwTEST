@@ -11,8 +11,8 @@ const Movement =  ({list}) => {
                 <thead>
                     <tr>
                         <th>Transfer Date</th>
-                        <th>Transferred From Location</th>
-                        <th>Transferred To Location</th>
+                        <th>Transferred From Boutique</th>
+                        <th>Transferred To Boutique</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,8 +21,8 @@ const Movement =  ({list}) => {
                             return (
                                 <tr key={index}>
                                     <td title="Transfer Date" className="text-center">{!!data.timeTo ? convertDate(data.timeTo) : '-'}</td>
-                                    <td title="Transferred From Location" className="text-center">{`[${data.fromWareHouse}] ${data.fromWarehouseName}`}</td>
-                                    <td title="Transferred To Location" className="text-center">{`[${data.toWareHouse}] ${data.toWareHouseName}`}</td>
+                                    <td title="Transferred From Boutique" className="text-center">{`[${data.fromWareHouse}] ${data.fromWarehouseName}`}</td>
+                                    <td title="Transferred To Boutique" className="text-center">{`[${data.toWareHouse}] ${data.toWareHouseName}`}</td>
                                 </tr>
                             )
                         })

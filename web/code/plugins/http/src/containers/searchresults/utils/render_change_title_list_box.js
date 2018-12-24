@@ -44,16 +44,16 @@ class RenderChangeTitleListBox extends Component {
                         <h3>Please select field for title.</h3>
                         <h5 className="text-center">(Normal column Images, Item Reference, Item Description, SKU, Company, Location, Size, Jewels Weight, Item Weight (Grams), Stone Detail, Price)</h5>
                         <br/>
-                        <DualListBox canFilter options={ViewAsSet? ColumnsViewAsSet: ColumnsNomal}
-                            selected={TitleColumn} onChange={this.onChange} preserveSelectOrder />
-                   
+                        <DualListBox name="moons" canFilter options={ViewAsSet? ColumnsViewAsSet: ColumnsNomal}
+                            selected={TitleColumn} onChange={this.onChange} preserveSelectOrder showOrderButtons />
+
                         <div className="col-xs-offset-3 col-sm-6">
                             <div className="text-center mg-tb">
                                 <span className={`${this.state.maxColumn?'user-alert':'hidden'}`}>Cannot selected column more than 9 columns.</span>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="modal-footer">
                         <div className="col-sm-12">
                             <button id="export" className="btn btn-default btn-radius" onClick={that.changeTitleColumn}>

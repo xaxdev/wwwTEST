@@ -33,7 +33,7 @@ class RenderSalesExportExcelDialog extends Component {
                               {`${(priceSalesMGP) ? 'Margin Amount (USD), ':''}`}
                               {`${(priceSalesDSP) ? 'Discount %, ':''}`}
                               {`${(priceSalesDSP) ? 'Discount Amount (USD), ':''}`}
-                              Item Weight (Grams), Ring Size, Jewels Weight (text), Site, Company, Location)</h5>
+                              Item Weight (Grams), Ring Size, Jewels Weight (text), Site, Company, Boutique)</h5>
                         <br/>
                         <div className="col-sm-12">
                             <div className="col-sm-3 checkbox checkbox-warning popexport">

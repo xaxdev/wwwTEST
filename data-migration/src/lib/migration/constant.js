@@ -63,6 +63,7 @@ export const HIERARCHY_QUERY = './query/master/hierarchy.sql';
 export const ARTICLE_QUERY = './query/master/article.sql';
 export const CUSTOMER_QUERY = './query/master/customer.sql';
 export const SALECHANNEL_QUERY = './query/master/saleChannel.sql';
+export const RINGSIZE_QUERY = './query/master/ringsize.sql';
 
 // Sold Master
 export const SOLD_BRAND_QUERY = './query/master/soldbrand.sql';

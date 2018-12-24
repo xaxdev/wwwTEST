@@ -54,6 +54,7 @@ const migrate = async index => {
         await master.getCurrency(index);
         await master.getRole(index);
         await master.getProductGroup(index);
+        await master.getRingSize(index);
 
         await master.getDominantStones(index);
         await master.getGemstoneStoneType(index);
@@ -140,6 +141,7 @@ const soldItems= async index => {
         await soldmaster.getSymmetry(index);
         await soldmaster.getWarehouse(index);
         await soldmaster.getWatchCategory(index);
+        await soldmaster.getRingSize(index);
 
     } catch (err) {
         throw err

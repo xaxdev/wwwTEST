@@ -567,7 +567,7 @@ class InventoryJewelry extends Component {
             }
             if (props.options.ringSizes) {
                 dataDropDowntRingSize.push(props.options.ringSizes.map(ringSize =>{
-                    return ({value: ringSize.code,label:ringSize.name});
+                    return ({value: ringSize.name,label:ringSize.name});
                 }))
                 dataDropDowntRingSize = dataDropDowntRingSize[0];
             }
@@ -637,8 +637,7 @@ class InventoryJewelry extends Component {
                                         <input type="checkbox" value="ViewAsSet" {...viewAsSet} checked={props.ViewAsSet}
                                             onChange={this.selectedViewAsSet} />
                                         <span className="control-label text-vertical-top">View as Set</span>
-                                        {/*<div className={ViewAsSet?'':'hidden'}>*/}
-                                        <div className="hidden">
+                                        <div className={ViewAsSet?'':'hidden'}>
                                             <label className="col-sm-2 control-label padding-l-20">Set Name
                                             </label>
                                             <div className="col-sm-10 nopadding">
@@ -701,7 +700,8 @@ class InventoryJewelry extends Component {
                                     </OverlayTrigger>
                                 </label>
                                 <div className="col-sm-7">
-                                    <input type="text" className="form-control" {...ringSize}/>
+                                    <Select multi simpleValue value={props.RingSizeValue} placeholder="Select your Ring Size"
+                                        options={dataDropDowntRingSize} onChange={this.handleRingSizeSelectChange} />
                                 </div>
                             </div>
                         </div>

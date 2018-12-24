@@ -369,7 +369,7 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                                 '', // Jewels Weight
                                 '', // Site
                                 '', // Company
-                                '' // Location
+                                '' // Boutique
                             );
                             arrayItems.push('Ingredient');
                             if(fields.categoryName || fields.allFields) arrayItems.push(''); // Category Name
