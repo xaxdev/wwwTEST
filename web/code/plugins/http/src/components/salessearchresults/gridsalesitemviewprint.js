@@ -316,7 +316,7 @@ class GridSalesItemsViewPrint extends Component {
                                         <span className={`width-f100 ${(priceSalesMGP) && (item.type != 'CER') ? '' : 'hidden'}`}>{marginAmount}</span>
                                         <span className={`fc-ddbe6a width-f100 font-b ${ViewAsSet ?'hidden':''}`}>Customer Name & ID : </span>
                                         <span className={`width-f100 ${ViewAsSet ?'hidden':''}`}>{item.customerName != undefined ? item.customerName : item.customerName} - {item.customer != undefined ? item.customer : item.customer}</span>
-                                        <span className="fc-ddbe6a width-f100 font-b">Boutiuqu: </span>
+                                        <span className="fc-ddbe6a width-f100 font-b">Boutique: </span>
                                         <span className="width-f100">{item.warehouseName != undefined ? item.warehouseName : item.warehouse}</span>
                                     </div>
                                 </div>

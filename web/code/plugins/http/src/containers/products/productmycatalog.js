@@ -22,7 +22,8 @@ import ProductSpaAttributes from '../../components/productdetail/productSppAttri
 import Setreference from '../../components/productdetail/productsetmycatalog.js';
 import numberFormat from '../../utils/convertNumberformatwithcomma';
 import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
-import ModalShowImages from '../../components/productdetail/modalShowImages';
+import ModalShowImagesCOA from '../../components/productdetail/modalShowImagesCOA';
+import ModalShowImagesDBC from '../../components/productdetail/modalShowImagesDBC';
 import ModalShowFilesPDF from '../../components/productdetail/modalShowFilesPDF';
 import Modalalertmsg from '../../components/productdetail/modalalertmsg';
 import validateCatalog from '../../utils/validatecatalogproductdetail';
@@ -492,7 +493,7 @@ class productreletedetail extends Component {
         const gemstoneAttr = Detail.gemstones;
         const subType = Detail.subType;
         const { company } = Detail
-        
+
         if(Detail.type == 'STO' || Detail.type == 'CER'){
         } else {
             if(!gemstoneAttr){
@@ -583,28 +584,29 @@ class productreletedetail extends Component {
     }
 
     renderImageGalleryCOA = _ =>{
-        const { imagesCOA } = this.props.productdetail;
+        const { imagesCOA, company } = this.props.productdetail;
 
         return(
-            <ModalShowImages images={imagesCOA} isOpen={this.state.showCOA} isClose={this.handleCloseShowCOA}
-               productId={this.props.params.id} getCertificate={this.props.getCertificate}/>
+            <ModalShowImagesCOA images={imagesCOA} isOpen={this.state.showCOA} isClose={this.handleCloseShowCOA}
+               productId={this.props.params.id} getCertificate={this.props.getCertificate} company={company}/>
         );
     }
 
     renderImageGalleryDBC = _ => {
-        const { imagesDBC } = this.props.productdetail;
+        const { imagesDBC, company } = this.props.productdetail;
 
         return(
-            <ModalShowImages images={imagesDBC} isOpen={this.state.showDBC} isClose={this.handleCloseShowDBC}
-               productId={this.props.params.id} getCertificate={this.props.getCertificate}/>
+            <ModalShowImagesDBC images={imagesDBC} isOpen={this.state.showDBC} isClose={this.handleCloseShowDBC}
+               productId={this.props.params.id} getCertificate={this.props.getCertificate} company={company}/>
         );
     }
 
     renderFilesMonograph = _ => {
-        const { filesMonograph } = this.props.productdetail;
+        const { filesMonograph, company  } = this.props.productdetail;
 
         return(
-            <ModalShowFilesPDF files={filesMonograph} isOpen={this.state.showMonograph} isClose={this.handleCloseShowMonograph} />
+            <ModalShowFilesPDF files={filesMonograph} isOpen={this.state.showMonograph} isClose={this.handleCloseShowMonograph}
+                company={company}/>
         );
     }
 
@@ -874,7 +876,7 @@ class productreletedetail extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
         const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
-        const { gemstones } = this.props.productdetail;
+        const { gemstones, company } = this.props.productdetail;
         const productId = this.props.params.id;
 
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
@@ -894,14 +896,14 @@ class productreletedetail extends Component {
             'fileName': `${userLogin.username}_${exportDate}`,
             'userEmail': userLogin.email,
             'ROOT_URL': ROOT_URL,
-            'productId': productId
+            'productId': productId,
+            'company': company.toLowerCase()
         }
 
         this.props.getCertificate(params).then((value) => {
             if (value) {
                 this.setState({isOpenDownloadCerMsg: true});
             }
-            console.log(value);
         });
     }
 
@@ -922,7 +924,7 @@ class productreletedetail extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
         const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
-        const { gemstones } = this.props.productdetail;
+        const { gemstones, company } = this.props.productdetail;
         const productId = this.props.params.id;
 
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
@@ -945,7 +947,8 @@ class productreletedetail extends Component {
             'fileName': `${userLogin.username}_${exportDate}`,
             'userEmail': userLogin.email,
             'ROOT_URL': ROOT_URL,
-            'productId': productId
+            'productId': productId,
+            'company': company.toLowerCase()
         }
 
         this.props.getCertificate(params).then((value) => {

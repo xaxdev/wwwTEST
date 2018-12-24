@@ -22,7 +22,7 @@ class ModalShowFilesPDF extends Component {
 
     render() {
         const { props } = this.props;
-        const { files, isOpen, isClose, onSubmit } = this.props;
+        const { files, company, isOpen, isClose, onSubmit } = this.props;
         const { pageNumber, numPages } = this.state;
         let file = [];
         let fileCerDownload = '';
@@ -36,9 +36,9 @@ class ModalShowFilesPDF extends Component {
                 }else if (ENVIRONMENT == 'test') {
                     fileCerDownload = `/images/products/original/${file[0].original.split('/').slice(-1).pop()}`;
                 }else if (ENVIRONMENT == 'staging') {
-                    fileCerDownload = `/original/${file[0].original.split('/').slice(-1).pop()}`;
+                    fileCerDownload = `/original/${company.toLowerCase()}/${file[0].original.split('/').slice(-1).pop()}`;
                 }else if (ENVIRONMENT == 'production') {
-                    fileCerDownload = `/original/${file[0].original.split('/').slice(-1).pop()}`;
+                    fileCerDownload = `/original/${company.toLowerCase()}/${file[0].original.split('/').slice(-1).pop()}`;
                 }
                 fileName = `${file[0].original.split('/').slice(-1).pop()}`;
             }

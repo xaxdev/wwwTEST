@@ -39,6 +39,10 @@ const DetailDescription = (props) => {
                     <div className="col-md-8 col-sm-8">{props.reference}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">SKU</div>
+                    <div className="col-md-8 col-sm-8">{props.sku}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Description</div>
                     <div className="col-md-8 col-sm-8 text-wrap">{props.description}</div>
                 </div>
@@ -54,29 +58,29 @@ const DetailDescription = (props) => {
                     <div className="col-md-4 col-sm-4 nopadding font-b">Price ({ currency })</div>
                     <div className="col-md-8 col-sm-8">{ price }</div>
                 </div>
-                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesNSP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Net Sales ({ currency })</div>
-                    <div className="col-md-8 col-sm-8">{ netSales }</div>
-                </div>
-                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesMGP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Margin %</div>
-                    <div className="col-md-8 col-sm-8">{ marginPercent }</div>
-                </div>
-                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesMGP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Margin Amount ({ currency })</div>
-                    <div className="col-md-8 col-sm-8">{ marginAmount }</div>
-                </div>
-                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesDSP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Discount % </div>
-                    <div className="col-md-8 col-sm-8">{ discountPercent }</div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesUCP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Markup (Times)</div>
+                    <div className="col-md-8 col-sm-8">{markUp}</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesDSP) ? '' : 'hidden'}`}>
                     <div className="col-md-4 col-sm-4 nopadding font-b">Discount Amount ({ currency })</div>
                     <div className="col-md-8 col-sm-8">{ discount }</div>
                 </div>
-                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesUCP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Markup (Times)</div>
-                    <div className="col-md-8 col-sm-8">{markUp}</div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesDSP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Discount % </div>
+                    <div className="col-md-8 col-sm-8">{ discountPercent }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesMGP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Margin Amount ({ currency })</div>
+                    <div className="col-md-8 col-sm-8">{ marginAmount }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesMGP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Margin %</div>
+                    <div className="col-md-8 col-sm-8">{ marginPercent }</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesNSP) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Net Sales ({ currency })</div>
+                    <div className="col-md-8 col-sm-8">{ netSales }</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Company</div>
@@ -91,16 +95,8 @@ const DetailDescription = (props) => {
                     <div className="col-md-8 col-sm-8">{props.venderReference}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">SKU</div>
-                    <div className="col-md-8 col-sm-8">{props.sku}</div>
-                </div>
-                <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Set Reference Number</div>
                     <div className="col-md-8 col-sm-8">{setReference}</div>
-                </div>
-                <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Date Created</div>
-                    <div className="col-md-8 col-sm-8">{dateCreate}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Channel</div>
@@ -121,6 +117,10 @@ const DetailDescription = (props) => {
                 <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Sales Person Name</div>
                     <div className="col-md-8 col-sm-8">{props.salesPersonName}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Date Created</div>
+                    <div className="col-md-8 col-sm-8">{dateCreate}</div>
                 </div>
             </div>
         );

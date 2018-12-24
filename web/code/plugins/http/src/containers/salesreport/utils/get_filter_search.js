@@ -205,8 +205,10 @@ export default function GetFilterSearch(that, data, userLogin, filters, jlySales
     }
 
     if (!findSalesChannel) {
-        if (userLogin.permission.salesChannel.places.length != 0) {
-            filters.push({'salesChannel':userLogin.permission.salesChannel.places});
+        if (!!userLogin.permission.salesChannel) {
+            if (userLogin.permission.salesChannel.places.length != 0) {
+                filters.push({'salesChannel':userLogin.permission.salesChannel.places});
+            }
         }
     }
     return filters;

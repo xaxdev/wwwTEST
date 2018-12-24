@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import { reduxForm } from 'redux-form';
 import jQuery from 'jquery';
-import ProductGalleryImages from './productGalleryImages';
+import ProductGalleryImages from './productGalleryImagesCOA';
 import ModalalertMsgObj from '../../utils/modalalertmsg';
 import moment from 'moment-timezone';
 let _ = require('lodash');
 
-class ModalShowImages extends Component {
+class ModalShowImagesCOA extends Component {
 
     constructor(props) {
         super(props);
@@ -41,7 +41,7 @@ class ModalShowImages extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
         const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
-        const { images, productId, getCertificate } = this.props;
+        const { images, productId, getCertificate, company } = this.props;
 
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
         let allCer = [];
@@ -59,7 +59,8 @@ class ModalShowImages extends Component {
             'fileName': `${userLogin.username}_${exportDate}`,
             'userEmail': userLogin.email,
             'ROOT_URL': ROOT_URL,
-            'productId': productId
+            'productId': productId,
+            'company': company.toLowerCase()
         }
 
         getCertificate(params)
@@ -67,7 +68,6 @@ class ModalShowImages extends Component {
             if (value) {
                 this.setState({isOpenDownloadCerMsg: true});
             }
-            console.log(value);
         });
     }
 
@@ -86,7 +86,7 @@ class ModalShowImages extends Component {
 
     render() {
         const { props } = this.props;
-        const { images, isOpen, isClose, handleSubmitCatalog, onSubmit } = this.props;
+        const { images, company, isOpen, isClose, handleSubmitCatalog, onSubmit } = this.props;
         let imgs = [];
         let imageCerDownload = '';
         let imageName = '';
@@ -94,15 +94,14 @@ class ModalShowImages extends Component {
         if (!!images) {
             images.map((img) => {
                 const image = {
-                    original: `/original/${img.original.split('/').slice(-1).pop()}`,
+                    original: `/original/${company.toLowerCase()}/${img.original.split('/').slice(-1).pop()}`,
                     thumbnail: `/images/products/thumbnail/${img.original.split('/').slice(-1).pop()}`,
                     sizes: '700px'
                 };
-                
                 imgs.push(image);
             });
             if(imgs.length>0){
-                imageCerDownload = `/original/${imgs[0].original.split('/').slice(-1).pop()}`;
+                imageCerDownload = `/original/${company.toLowerCase()}/${imgs[0].original.split('/').slice(-1).pop()}`;
                 imageName = `${imgs[0].original.split('/').slice(-1).pop()}`;
             }
         }
@@ -135,4 +134,4 @@ class ModalShowImages extends Component {
         );
     }
 }
-module.exports = ModalShowImages;
+module.exports = ModalShowImagesCOA;

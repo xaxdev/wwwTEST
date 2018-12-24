@@ -527,7 +527,6 @@ class SalesReportJewelry extends Component {
                 }))
                 dataDropDowntRingSize = dataDropDowntRingSize[0];
             }
-            console.log({dataDropDowntRingSize});
             if (props.options.dominantStones) {
                 dataDropDowntDominantStone.push(props.options.dominantStones.map(dominantStone =>{
                     return ({value: dominantStone.code,label:dominantStone.name});
@@ -632,7 +631,7 @@ class SalesReportJewelry extends Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label tooltiop-span">Must Have
+                                <label className="col-sm-4 control-label tooltiop-span">Must Have value
                                     <OverlayTrigger placement="top" overlay={tooltipMustHave}>
                                         <img src="/images/alphanumeric.png" />
                                     </OverlayTrigger>
@@ -742,7 +741,7 @@ const tooltipHierarchy = (<Tooltip id="tooltip"><strong>Product Hierarchy</stron
 const tooltipJewelryCategory = (<Tooltip id="tooltip"><strong>Search By Type of the Product (eg. Ring, Pendent, Necklace etc.)</strong></Tooltip>);
 const tooltipCollection = (<Tooltip id="tooltip"><strong>Search By Collection (eg. Masterpiece, High Jewelry, Diamond Classics etc.) of the Product</strong></Tooltip>);
 const tooltipBrand = (<Tooltip id="tooltip"><strong>Seacrh By Brand (eg. Mouawad, Chopard, Cartier etc.) of the Product</strong></Tooltip>);
-const tooltipMustHave = (<Tooltip id="tooltip"><strong>Search By Must Have (yes/no)</strong></Tooltip>);
+const tooltipMustHave = (<Tooltip id="tooltip"><strong>Search By Must Have value (yes/no)</strong></Tooltip>);
 const tooltipRingSize = (<Tooltip id="tooltip"><strong>Search Product by Ring Size</strong></Tooltip>);
 const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>);
 const tooltipTotalUpdatedCost = (<Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>);

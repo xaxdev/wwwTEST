@@ -42,7 +42,7 @@ const labelsViewAsSet = {
     totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Price (USD)', markup: 'Markup (Times)',
     companyName: 'Company', warehouseName: 'Boutique', postedDate: 'Posted Date'
 }
-class SalesSearchResultOnItem extends Component {
+class SalesSearchResultItems extends Component {
     constructor(props) {
         super(props);
 
@@ -1061,4 +1061,4 @@ class SalesSearchResultOnItem extends Component {
         )
     }
 }
-module.exports = SalesSearchResultOnItem;
+module.exports = SalesSearchResultItems;

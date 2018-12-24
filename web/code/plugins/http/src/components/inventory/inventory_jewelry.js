@@ -637,8 +637,7 @@ class InventoryJewelry extends Component {
                                         <input type="checkbox" value="ViewAsSet" {...viewAsSet} checked={props.ViewAsSet}
                                             onChange={this.selectedViewAsSet} />
                                         <span className="control-label text-vertical-top">View as Set</span>
-                                        {/*<div className={ViewAsSet?'':'hidden'}>*/}
-                                        <div className="hidden">
+                                        <div className={ViewAsSet?'':'hidden'}>
                                             <label className="col-sm-2 control-label padding-l-20">Set Name
                                             </label>
                                             <div className="col-sm-10 nopadding">
@@ -684,7 +683,7 @@ class InventoryJewelry extends Component {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-4 control-label tooltiop-span">Must Have value
+                                <label className="col-sm-4 control-label tooltiop-span">Must Have
                                     <OverlayTrigger placement="top" overlay={tooltipMustHave}>
                                         <img src="/images/alphanumeric.png" />
                                     </OverlayTrigger>

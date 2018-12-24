@@ -54,9 +54,20 @@ module.exports = {
                         }
                     }
                 })
+                const changePathImages = company => record => {
+                    const { original, thumbnail } = record
+                    let data = {
+                        original: original.replace('/images/products/original','/original/' + company.toLowerCase()),
+                        thumbnail
+                    }
+                    return data
+                }
+
                 if (responseItem.hits && responseItem.hits.hits.length > 0) {
                     const item = responseItem.hits.hits[0]._source
-
+                    const mapImagesCompany = (images, company) => {
+                        return images.map(changePathImages(company))
+                    }
                     // add certificate images to item gallery
                     if (!!item.gemstones) {
                         let certificateImages = item.gemstones.reduce((certificateImages, gemstone) => (gemstone.certificate && gemstone.certificate.images)
@@ -72,7 +83,15 @@ module.exports = {
                         });
                         item.gallery.push(...certificateImages)
                     }
-
+                    if (item.imagesCOA.length > 0) {
+                        item.imagesCOA = await Promise.all(mapImagesCompany(item.imagesCOA, item.company.toLowerCase()))
+                    }
+                    if (item.imagesDBC.length > 0) {
+                        item.imagesDBC = await Promise.all(mapImagesCompany(item.imagesDBC, item.company.toLowerCase()))
+                    }
+                    if (item.filesMonograph.length > 0) {
+                        item.filesMonograph = await Promise.all(mapImagesCompany(item.filesMonograph, item.company.toLowerCase()))
+                    }
                     const user = await request.user.getUserById(request, request.auth.credentials.id)
                     const response = { ...request.helper.item.authorization(user, item) }
                     if (response.authorization) {
