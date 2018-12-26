@@ -808,29 +808,29 @@ class SalesProductDetail extends Component {
 
         if(productlist.length != 0){
             return(
-                <div className="bar-title-detail maring-t15">
+                <div className="bar-title-detail maring-t10">
                     <div className="ft-white productdetail-search display-right">
-                        <Link to={'/salessearchresult'} className="btn btn-searchresult">Search Result</Link>
+                        <Link to={'/salessearchresult'} className="btn bg_sale_search">Search Result</Link>
                     </div>
                     <div className={`margin-t5 text-center m-none display-right padding-lf15 ${productIndex == 0?'hidden':''}`}>
                         <span className="bar-line">|</span>
                     </div>
                     <div className="display-right">
                     <div className={`float-l bar-detail-pre ${productIndex == 0?'hidden':''}`}>
-                        <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${(productlist[productIndex-1].id != undefined)? productlist[productIndex-1].id:''}`:''}}><span className="icon-back"></span></Link>
+                        <Link className={productIndex == 0?'disabled-link':''} to={{pathname: productIndex != 0 ?`${pructdetailurl}${(productlist[productIndex-1].id != undefined)? productlist[productIndex-1].id:''}`:''}}><span className="icon-sale-back"></span></Link>
                     </div>
                     <div className="float-l bar-detail-text">
-                        <div className="float-l productdetailpage text-center nopadding">
+                        <div className="float-l saleproductdetailpage text-center nopadding">
                             <form onSubmit={handleSubmit(this.handleKeyPressNavigation)} >
                                 <input type="number" {...pagego} />
                             </form>
                         </div>
-                        <div className="float-l fc-fff margin-t5 text-center nopadding">
+                        <div className="float-l margin-t5 text-center nopadding">
                             of {numberFormat(productlist.length)} items
                         </div>
                         </div>
                         <div className={`float-l bar-detail-pre ${productIndex+1 >= productlist.length?'hidden':''}`}>
-                            <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${(productlist[productIndex+1].id != undefined)? productlist[productIndex+1].id:''}` : ''}}><span className="icon-next"></span></Link>
+                            <Link className={productIndex+1 >= productlist.length?'disabled-link':''} to={{pathname: productIndex+1 < productlist.length ? `${pructdetailurl}${(productlist[productIndex+1].id != undefined)? productlist[productIndex+1].id:''}` : ''}}><span className="icon-sale-next"></span></Link>
                         </div>
                     </div>
                 </div>
@@ -1107,8 +1107,8 @@ class SalesProductDetail extends Component {
         let pructdetailurl = '/salesproductdetail/';
         return(
             <div id="page-wrapper">
-                <div className="col-sm-12 bg-hearder m-prodcutdetail">
-                    <div className="col-md-5 col-md-4 col-sm-5 ft-white m-nopadding">
+                <div className="col-sm-12 bg_title_sale m-prodcutdetail">
+                    <div className="col-md-5 col-md-4 col-sm-5  m-nopadding">
                         <h1>{`${ this.state.showmovement ? 'MOVEMENT ACTIVITY' : 'TRANSACTION DETAILS'}`}</h1>
                     </div>
                     {this.renderNavigation()}

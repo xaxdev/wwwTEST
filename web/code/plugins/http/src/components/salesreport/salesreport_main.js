@@ -503,16 +503,16 @@ class SalesReportMain extends Component {
         return (
             <form role="form">
                 <div id="page-wrapper">
-                    <div id="scroller" className="col-sm-12 bg-hearder bg-header-inventories">
-                        <div className="col-sm-6 m-width-60 ft-white m-nopadding">
+                    <div id="scroller" className="col-sm-12 bg-header-inventories bg_title_sale">
+                        <div className="col-sm-6 m-width-60  m-nopadding">
                             <h1>Sales Report</h1>
                         </div>
                         <div className="col-sm-6 m-width-40 m-nopadding">
                             <div className="text-right maring-t15">
-                                <button type="button" className="btn btn-primary btn-radius" onClick={this.handleSearch} >Search</button>
+                                <button type="button" className="btn bg_sale_search btn-radius" onClick={this.handleSearch} >Search</button>
                                 <Wrapper onSelection={this.handleSelection.bind(this)}
                                     className="FancyMB" id="foo" >
-                                    <Button className="FancyMB-trigger btn-radius">
+                                    <Button className="FancyMB-trigger-sale btn-radius">
                                         <span className="FancyMB-triggerInnards">
                                             <span className="FancyMB-triggerText">
                                                 ...

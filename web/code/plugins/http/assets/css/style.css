@@ -110,6 +110,16 @@ input[type=checkbox], input[type=radio]{margin: 9px 5px 0 0px;}
     background-color: transparent !important;
     border-color: #ddbe6a !important;
 }
+.btn-salesearchresult {
+  border-radius: 5px;
+  margin-left: 0px;
+  padding: 4px 10px;
+  color: #000 !important;
+  background-color: transparent !important;
+  border-color: #5b5959 !important;
+  font-family: 'open_sanslight';
+}
+.btn-salesearchresult:hover{color:#fff;}
 .btn-inventories{
   width:165px;
   border-radius: 5px !important;
@@ -377,7 +387,7 @@ select.form-searchresult option{
 
 .styled-select-black {
    background: url(/images/arrow-seaech-b.png) no-repeat 96%;
-   height: 35px;
+   height: 30px;
    overflow: hidden;
    width: 100%;
    border: 1px solid #5b5959;
@@ -388,8 +398,8 @@ select.form-searchresult option{
    background: transparent;
    border: none;
    font-size: 14px;
-   height: 33px;
-   padding: 5px 5px; /* If you add too much padding here, the options won't show in IE */
+   height: 28px;
+   padding: 4px 5px; /* If you add too much padding here, the options won't show in IE */
    width: 100%;
   -webkit-appearance:none;
   -moz-appearance:none;
@@ -816,6 +826,14 @@ select.form-searchresult option{
   cursor:pointer;
   margin-left: 10px;
 }
+.icon-sale-list{
+  background: url(/images/icon_sales_list.jpg) no-repeat center;
+  float: left;
+  width: 34px;
+  height: 30px;
+  cursor:pointer;
+  margin-left: 10px;
+}
 .icon-list-active{
   background: url(/images/active_list.jpg) no-repeat center;
   width:34px;
@@ -826,6 +844,14 @@ select.form-searchresult option{
 }
 .icon-grid{
   background: url(/images/icon_grid.jpg) no-repeat center;
+  float: left;
+  width: 34px;
+  height: 30px;
+  cursor:pointer;
+  margin-left: 15px;
+}
+.icon-sale-grid{
+  background: url(/images/icon_sales_grid.jpg) no-repeat center;
   float: left;
   width: 34px;
   height: 30px;
@@ -957,6 +983,20 @@ select.form-searchresult option{
   float: left;
   cursor:pointer;
 }
+.icon-sale-back{
+  background: url(/images/icon-sale-back.png) no-repeat center;
+  width:50px;
+  height: 34px;
+  float: left;
+  cursor:pointer;
+}
+.icon-sale-next{
+  background: url(/images/icon-sale-next.png) no-repeat center;
+  width:50px;
+  height: 34px;
+  float: left;
+  cursor:pointer;
+}
 .button-certificate{
   background-size: 80%;
   height: 35px;
@@ -989,6 +1029,25 @@ select.form-searchresult option{
     padding: 15px 0;
     margin: 0px 0 1px 0;
 }
+.bg_title_sale{
+  background-color: #debe6b !important;
+  width: 100%;
+}
+.bg_title_sale h1{color:#000!important;}
+.bg_sale_search{
+  background-color: #383735;
+  color:#fff;
+}
+.bg_title_sale .close{color:#000;}
+.bg_sale_search:hover{color:#debe6b;}
+.title_sales{
+  font-size: 18px;
+  color: #C3A045;
+  font-family: 'open_sanssemibold';
+  margin:0 !important;
+}
+.block_title_sale:first-child{padding:30px 15px 10px 15px;}
+.block_title_sale{padding:0px 15px 10px 15px;}
 .bg-f7d886{
     background-color: #dddddd;
     float: left;
@@ -1181,6 +1240,14 @@ select.form-searchresult option{
     border: none;
     text-align: center;
     margin-right: 5px;
+}
+.saleproductdetailpage input{
+  width: 50px;
+  float: left;
+  height: 34px;
+  border: none;
+  text-align: center;
+  margin-right: 5px;
 }
 .productdetail-search{
     padding: 0;
@@ -2341,7 +2408,7 @@ select.form-searchresult option{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background: #ddbe6a;
+  background: #debe6b;
   color: #000;
   border-radius: 5px;
   padding: 3px 5px;
@@ -2357,7 +2424,7 @@ select.form-searchresult option{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background: #ddbe6a;
+  background: #debe6b;
   color: #000;
   border-radius: 5px;
   padding: 3px 5px;
@@ -2375,7 +2442,25 @@ select.form-searchresult option{
   content: "";
   display: inline-block;
 }
-
+.FancyMB-trigger-sale {
+  cursor: pointer;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background: #464546;
+  color: #fff;
+  border-radius: 5px;
+  padding: 4px 5px;
+  transition: background-color 300ms ease-out;
+  font-size: 40px;
+  height: 34px;
+}
+.FancyMB-trigger-sale:hover,
+.FancyMB-trigger-sale:focus {
+  color: #debe6b;
+}
 .FancyMB-menu {
   background: #5b5959;
   border: 1px solid #464646;
