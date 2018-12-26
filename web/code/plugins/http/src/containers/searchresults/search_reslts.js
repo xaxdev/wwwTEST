@@ -425,7 +425,7 @@ class SearchResult extends Component {
                     <button type="button" disabled={submitting} onClick={this.handleGo}>Go</button>
 
                 </div>
-                <div className="hidden">
+                <div className="">
                     <Wrapper onSelection={this.handleEditDisplay.bind(this)}
                         className={`FancyMB ${showListView ? '' : 'hidden'}`} id="foo" >
                         <Button className="pull-right FancyMB-trigger-listView btn-radius edit_display">

@@ -2408,8 +2408,8 @@ select.form-searchresult option{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background: #383735;
-  color: #fff;
+  background: #debe6b;
+  color: #000;
   border-radius: 5px;
   padding: 3px 5px;
   transition: background-color 300ms ease-out;
@@ -2424,7 +2424,7 @@ select.form-searchresult option{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background: #383735;
+  background: #debe6b;
   color: #000;
   border-radius: 5px;
   padding: 3px 5px;
@@ -2435,14 +2435,32 @@ select.form-searchresult option{
 
 .FancyMB-trigger:hover,
 .FancyMB-trigger:focus {
-  color: #debe6b;
+  color: #fff;
 }
 
 .FancyMB-trigger::after {
   content: "";
   display: inline-block;
 }
-
+.FancyMB-trigger-sale {
+  cursor: pointer;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background: #464546;
+  color: #fff;
+  border-radius: 5px;
+  padding: 4px 5px;
+  transition: background-color 300ms ease-out;
+  font-size: 40px;
+  height: 34px;
+}
+.FancyMB-trigger-sale:hover,
+.FancyMB-trigger-sale:focus {
+  color: #debe6b;
+}
 .FancyMB-menu {
   background: #5b5959;
   border: 1px solid #464646;

@@ -512,7 +512,7 @@ class SalesReportMain extends Component {
                                 <button type="button" className="btn bg_sale_search btn-radius" onClick={this.handleSearch} >Search</button>
                                 <Wrapper onSelection={this.handleSelection.bind(this)}
                                     className="FancyMB" id="foo" >
-                                    <Button className="FancyMB-trigger btn-radius">
+                                    <Button className="FancyMB-trigger-sale btn-radius">
                                         <span className="FancyMB-triggerInnards">
                                             <span className="FancyMB-triggerText">
                                                 ...
