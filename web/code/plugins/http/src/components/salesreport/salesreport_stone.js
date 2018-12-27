@@ -219,10 +219,14 @@ class SalesReportStone extends Component {
             endDate = temp
         }else{
             if(startDate == undefined){
-                startDate = startDateM._i;
+                if (startDateM._isValid) {
+                    startDate = startDateM._i;
+                }
             }
             if(endDate == undefined){
-                endDate = endDateM._i;
+                if (endDateM._isValid) {
+                    endDate = endDateM._i;
+                }
             }
         }
 
@@ -764,6 +768,36 @@ class SalesReportStone extends Component {
             salesHierarchyData = SearchSalesHierarchy(salesHierarchyData, props.ArticleValue);
         }
 
+        let calendarDateFrom = null
+        if (paramsSalesSearch != null ) {
+            if (paramsSalesSearch.cerDateFrom != '' && paramsSalesSearch.cerDateFrom != null ) {
+                calendarDateFrom = moment(paramsSalesSearch.cerDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateFrom = ''
+            }
+        }else{
+            if (props.StoneCertificateDateFrom != null) {
+                calendarDateFrom = moment(props.StoneCertificateDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateFrom = props.StoneCertificateDateFrom
+            }
+        }
+
+        let calendarDateTo = null
+        if (paramsSalesSearch != null ) {
+            if (paramsSalesSearch.cerDateTo != '' && paramsSalesSearch.cerDateTo != null) {
+                calendarDateTo = moment(paramsSalesSearch.cerDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateTo = ''
+            }
+        }else{
+            if (props.StoneCertificateDateTo != null) {
+                calendarDateTo = moment(props.StoneCertificateDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateTo = props.StoneCertificateDateTo
+            }
+        }
+
         return (
             <div className="panel panel-default">
                 <div className="panel-body">
@@ -926,12 +960,12 @@ class SalesReportStone extends Component {
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar format="MM-DD-YYYY" date={(paramsSalesSearch != null)?paramsSalesSearch.cerDateFrom:props.StoneCertificateDateFrom}
+                                        <Calendar format="MM-DD-YYYY" date={calendarDateFrom}
                                             closeOnSelect = {true} onChange={this.handleChangeStart} />
                                     </div>
                                     <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar format="MM-DD-YYYY" date={(paramsSalesSearch != null)?paramsSalesSearch.cerDateTo:props.StoneCertificateDateTo}
+                                        <Calendar format="MM-DD-YYYY" date={calendarDateTo}
                                             closeOnSelect = {true} onChange={this.handleChangeEnd} />
                                     </div>
                                 </div>

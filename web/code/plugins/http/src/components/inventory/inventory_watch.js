@@ -259,10 +259,14 @@ class InventoryWatch extends Component {
             endDate = temp
         }else{
             if(startDate == undefined){
-                startDate = startDateM._i;
+                if (startDateM._isValid) {
+                    startDate = startDateM._i;
+                }
             }
             if(endDate == undefined){
-                endDate = endDateM._i;
+                if (endDateM._isValid) {
+                    endDate = endDateM._i;
+                }
             }
         }
 
@@ -913,6 +917,36 @@ class InventoryWatch extends Component {
             hierarchyData = SearchHierarchy(hierarchyData, props.ArticleValue);
         }
 
+        let calendarDateFrom = null
+        if (paramsSearch != null ) {
+            if (paramsSearch.proDateFrom != '' && paramsSearch.proDateFrom != null ) {
+                calendarDateFrom = moment(paramsSearch.proDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateFrom = ''
+            }
+        }else{
+            if (props.ProductionDateFrom != null) {
+                calendarDateFrom = moment(props.ProductionDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateFrom = props.ProductionDateFrom
+            }
+        }
+
+        let calendarDateTo = null
+        if (paramsSearch != null ) {
+            if (paramsSearch.proDateTo != '' && paramsSearch.proDateTo != null) {
+                calendarDateTo = moment(paramsSearch.proDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateTo = ''
+            }
+        }else{
+            if (props.ProductionDateTo != null) {
+                calendarDateTo = moment(props.ProductionDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateTo = props.ProductionDateTo
+            }
+        }
+
         return(
             <div className="panel panel-default">
                 <div className="panel-body">
@@ -1089,12 +1123,12 @@ class InventoryWatch extends Component {
                                     <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                                     <div className="col-sm-10 nopadding">
                                         <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeStart}
-                                            date={(paramsSearch != null)?paramsSearch.proDateFrom:props.ProductionDateFrom} />
+                                            date={calendarDateFrom} />
                                     </div>
                                     <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
                                     <div className="col-sm-10 nopadding">
                                         <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeEnd}
-                                            date={(paramsSearch != null)?paramsSearch.proDateTo:props.ProductionDateTo} />
+                                            date={calendarDateTo} />
                                     </div>
                                 </div>
                             </div>
