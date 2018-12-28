@@ -117,7 +117,7 @@ class ModalShowImagesCOA extends Component {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button id="btnzoom" className="btn btn-primary btn-radius" style="float:right">zoom</button>
+                        <button id="btnzoom" className="btn btn-primary btn-radius" >zoom</button>
                         {imgs.length > 1
                             ? <button type="button"
                                     className="btn btn-default btn-radius"
