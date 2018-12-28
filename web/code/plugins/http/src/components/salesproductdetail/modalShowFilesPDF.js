@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import { reduxForm } from 'redux-form';
 import { Document, Page } from 'react-pdf/build/entry.webpack';
