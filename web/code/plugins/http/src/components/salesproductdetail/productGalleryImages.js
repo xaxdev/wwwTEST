@@ -49,8 +49,4 @@ function mapStateToProps(state) {
 	}
 }
 
-Gallery.propTypes = {
-    imagegallery: PropTypes.array.isRequired
-}
-
 module.exports = connect(mapStateToProps, null)(Gallery);

@@ -100,7 +100,7 @@ class productdetail extends Component {
                         <div class="white-popup-right">
                             <button id="btnup" class="btn btn-primary btn-radius">Up</button>
                             <button id="btndown" class="btn btn-primary btn-radius">Down</button>
-                            <button id="btnzoom" class="btn btn-primary btn-radius" style="float:right">zoom</button>
+                            <button id="btnzoom" class="btn btn-primary btn-radius">zoom</button>
                         </div>
                     </div>`
                 ),
@@ -143,7 +143,7 @@ class productdetail extends Component {
                         <div class="white-popup-right">
                             <button id="btnupset" class="btn btn-primary btn-radius">Up</button>
                             <button id="btndownset" class="btn btn-primary btn-radius">Down</button>
-                            <button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button>
+                            <button id="btnzoomset" class="btn btn-primary btn-radius">zoom</button>
                         </div>
                     </div>`
                 ),
@@ -527,7 +527,7 @@ class productdetail extends Component {
                         <div class="white-popup-right">
                             <button id="btnupset" class="btn btn-primary btn-radius">Up</button>
                             <button id="btndownset" class="btn btn-primary btn-radius">Down</button>
-                            <button id="btnzoomset" class="btn btn-primary btn-radius" style="float:right">zoom</button>
+                            <button id="btnzoomset" class="btn btn-primary btn-radius" >zoom</button>
                         </div>
                     </div>`
                 ),
