@@ -244,10 +244,14 @@ class SalesReportWatch extends Component {
             endDate = temp
         }else{
             if(startDate == undefined){
-                startDate = startDateM._i;
+                if (startDateM._isValid) {
+                    startDate = startDateM._i;
+                }
             }
             if(endDate == undefined){
-                endDate = endDateM._i;
+                if (endDateM._isValid) {
+                    endDate = endDateM._i;
+                }
             }
         }
 
@@ -870,6 +874,36 @@ class SalesReportWatch extends Component {
             salesHierarchyData = SearchSalesHierarchy(salesHierarchyData, props.ArticleValue);
         }
 
+        let calendarDateFrom = null
+        if (paramsSalesSearch != null ) {
+            if (paramsSalesSearch.proDateFrom != '' && paramsSalesSearch.proDateFrom != null ) {
+                calendarDateFrom = moment(paramsSalesSearch.proDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateFrom = ''
+            }
+        }else{
+            if (props.ProductionDateFrom != null) {
+                calendarDateFrom = moment(props.ProductionDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateFrom = props.ProductionDateFrom
+            }
+        }
+
+        let calendarDateTo = null
+        if (paramsSalesSearch != null ) {
+            if (paramsSalesSearch.proDateTo != '' && paramsSalesSearch.proDateTo != null) {
+                calendarDateTo = moment(paramsSalesSearch.proDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateTo = ''
+            }
+        }else{
+            if (props.ProductionDateTo != null) {
+                calendarDateTo = moment(props.ProductionDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateTo = props.ProductionDateTo
+            }
+        }
+
         return(
             <div className="panel panel-default">
                 <div className="panel-body">
@@ -1064,12 +1098,12 @@ class SalesReportWatch extends Component {
                                 <div className="col-sm-7">
                                     <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar format="MM-DD-YYYY" date={(paramsSalesSearch != null)? paramsSalesSearch.proDateFrom: props.ProductionDateFrom}
+                                        <Calendar format="MM-DD-YYYY" date={calendarDateFrom}
                                             closeOnSelect = {true} onChange={this.handleChangeStart} />
                                     </div>
                                     <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
                                     <div className="col-sm-10 nopadding">
-                                        <Calendar format="MM-DD-YYYY" date={(paramsSalesSearch != null)? paramsSalesSearch.proDateTo: props.ProductionDateTo}
+                                        <Calendar format="MM-DD-YYYY" date={calendarDateTo}
                                             closeOnSelect = {true} onChange={this.handleChangeEnd} />
                                     </div>
                                 </div>
