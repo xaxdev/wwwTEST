@@ -219,10 +219,14 @@ class InventoryStone extends Component {
             endDate = temp
         }else{
             if(startDate == undefined){
-                startDate = startDateM._i;
+                if (startDateM._isValid) {
+                    startDate = startDateM._i;
+                }
             }
             if(endDate == undefined){
-                endDate = endDateM._i;
+                if (endDateM._isValid) {
+                    endDate = endDateM._i;
+                }
             }
         }
 
@@ -790,6 +794,36 @@ class InventoryStone extends Component {
             hierarchyData = SearchHierarchy(hierarchyData, props.ArticleValue);
         }
 
+        let calendarDateFrom = null
+        if (paramsSearch != null ) {
+            if (paramsSearch.cerDateFrom != '' && paramsSearch.cerDateFrom != null ) {
+                calendarDateFrom = moment(paramsSearch.cerDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateFrom = ''
+            }
+        }else{
+            if (props.StoneCertificateDateFrom != null) {
+                calendarDateFrom = moment(props.StoneCertificateDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateFrom = props.StoneCertificateDateFrom
+            }
+        }
+
+        let calendarDateTo = null
+        if (paramsSearch != null ) {
+            if (paramsSearch.cerDateTo != '' && paramsSearch.cerDateTo != null) {
+                calendarDateTo = moment(paramsSearch.cerDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateTo = ''
+            }
+        }else{
+            if (props.StoneCertificateDateTo != null) {
+                calendarDateTo = moment(props.StoneCertificateDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateTo = props.StoneCertificateDateTo
+            }
+        }
+
         return (
             <div className="panel panel-default">
                 <div className="panel-body">
@@ -954,12 +988,12 @@ class InventoryStone extends Component {
                                     <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                                     <div className="col-sm-10 nopadding">
                                         <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeStart}
-                                            date={(paramsSearch != null)?paramsSearch.cerDateFrom:props.StoneCertificateDateFrom} />
+                                            date={calendarDateFrom} />
                                     </div>
                                     <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
                                     <div className="col-sm-10 nopadding">
                                         <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeEnd}
-                                            date={(paramsSearch != null)?paramsSearch.cerDateTo:props.StoneCertificateDateTo} />
+                                            date={calendarDateTo} />
                                     </div>
                                 </div>
                             </div>

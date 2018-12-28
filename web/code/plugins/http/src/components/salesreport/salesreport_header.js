@@ -165,10 +165,14 @@ class SalesReportHeader extends Component {
             endDate = temp
         }else{
             if(startDate == undefined){
-                startDate = startDateM._i;
+                if (startDateM._isValid) {
+                    startDate = startDateM._i;
+                }
             }
             if(endDate == undefined){
-                endDate = endDateM._i;
+                if (endDateM._isValid) {
+                    endDate = endDateM._i;
+                }
             }
         }
 
@@ -273,6 +277,36 @@ class SalesReportHeader extends Component {
         const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
         const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
 
+        let calendarDateFrom = null
+        if (paramsSalesSearch != null ) {
+            if (paramsSalesSearch.invoiceDateFrom != '' && paramsSalesSearch.invoiceDateFrom != null ) {
+                calendarDateFrom = moment(paramsSalesSearch.invoiceDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateFrom = ''
+            }
+        }else{
+            if (props.InvoiceDateFrom != null) {
+                calendarDateFrom = moment(props.InvoiceDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateFrom = props.InvoiceDateFrom
+            }
+        }
+
+        let calendarDateTo = null
+        if (paramsSalesSearch != null ) {
+            if (paramsSalesSearch.invoiceDateTo != '' && paramsSalesSearch.invoiceDateTo != null) {
+                calendarDateTo = moment(paramsSalesSearch.invoiceDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateTo = ''
+            }
+        }else{
+            if (props.InvoiceDateTo != null) {
+                calendarDateTo = moment(props.InvoiceDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateTo = props.InvoiceDateTo
+            }
+        }
+
         return (
             <div>
                 <div className="row">
@@ -295,12 +329,12 @@ class SalesReportHeader extends Component {
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                                 <div className="col-sm-10 nopadding">
                                                     <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeStart}
-                                                        date={(paramsSalesSearch != null)? paramsSalesSearch.invoiceDateFrom: props.InvoiceDateFrom} />
+                                                        date={calendarDateFrom} />
                                                 </div>
                                                 <label className="col-sm-2 control-label font-nor m-margin-t10 m-nopadding">To: </label>
                                                 <div className="col-sm-10 nopadding">
                                                     <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeEnd}
-                                                        date={(paramsSalesSearch != null)? paramsSalesSearch.invoiceDateTo: props.InvoiceDateTo} />
+                                                        date={calendarDateTo} />
                                                 </div>
                                             </div>
                                         </div>

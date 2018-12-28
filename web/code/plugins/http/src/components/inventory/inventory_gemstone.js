@@ -106,13 +106,18 @@ class InventoryGemStone extends Component {
             endDate = temp
         }else{
             if(startDate == undefined){
-                startDate = startDateM._i;
+                if (startDateM._isValid) {
+                    startDate = startDateM._i;
+                }
             }
             if(endDate == undefined){
-                endDate = endDateM._i;
+                if (endDateM._isValid) {
+                    endDate = endDateM._i;
+                }
             }
         }
 
+        this.setState({ startDate, endDate })
         props.inventoryActions.setGemsCertificateDateFrom(startDate);
         props.inventoryActions.setGemsCertificateDateTo(endDate);
     }
@@ -293,6 +298,37 @@ class InventoryGemStone extends Component {
                 dataDropDowntCertificateAgency = dataDropDowntCertificateAgency[0];
             }
         }
+
+        let calendarDateFrom = null
+        if (paramsSearch != null ) {
+            if (paramsSearch.gemstone_cerDateFrom != '' && paramsSearch.gemstone_cerDateFrom != null ) {
+                calendarDateFrom = moment(paramsSearch.gemstone_cerDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateFrom = ''
+            }
+        }else{
+            if (props.GemCertificateDateFrom != null) {
+                calendarDateFrom = moment(props.GemCertificateDateFrom,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateFrom = props.GemCertificateDateFrom
+            }
+        }
+
+        let calendarDateTo = null
+        if (paramsSearch != null ) {
+            if (paramsSearch.gemstone_cerDateTo != '' && paramsSearch.gemstone_cerDateTo != null) {
+                calendarDateTo = moment(paramsSearch.gemstone_cerDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            }else{
+                calendarDateTo = ''
+            }
+        }else{
+            if (props.GemCertificateDateTo != null) {
+                calendarDateTo = moment(props.GemCertificateDateTo,'MM-DD-YYYY').format('MM/DD/YYYY')
+            } else {
+                calendarDateTo = props.GemCertificateDateTo
+            }
+        }
+
         return(
             <div className="maring-t30">
                 <div className="row margin-ft">
@@ -467,12 +503,12 @@ class InventoryGemStone extends Component {
                                 <label className="col-sm-2 padding-l font-nor margin-t7">From: </label>
                                 <div className="col-sm-10 nopadding">
                                     <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeStart}
-                                        date={(paramsSearch != null)?paramsSearch.gemstone_cerDateFrom:props.GemCertificateDateFrom} />
+                                        date={calendarDateFrom} />
                                 </div>
                                 <label className="col-sm-2 control-label padding-l font-nor m-margin-t10 m-nopadding">To: </label>
                                 <div className="col-sm-10 nopadding">
                                     <Calendar format="MM-DD-YYYY" closeOnSelect = {true} onChange={this.handleChangeEnd}
-                                        date={(paramsSearch != null)?paramsSearch.gemstone_cerDateTo:props.GemCertificateDateTo} />
+                                        date={calendarDateTo} />
                                 </div>
                             </div>
                         </div>

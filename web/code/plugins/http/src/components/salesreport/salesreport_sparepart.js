@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Select from 'react-select';
-import Calendar from 'react-input-calendar';
 import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/Tree';
