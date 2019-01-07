@@ -1,6 +1,19 @@
 import config from '../../../config';
 import * as item from './item';
+import fs from 'fs';
 import moment from 'moment-timezone';
+
+const exist = (file) => {
+    fs.stat(file, (err, stats) => {
+        if(err == null) {
+            //Exist
+            return true
+        } else if(err.code == 'ENOENT') {
+            // NO exist
+            return false
+        }
+    })
+}
 
 const sanitize = value => value.replace('(', '\\(').replace(')', '\\)').replace('.', '\\.');
 
@@ -92,14 +105,24 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     }
 
     // add image, if not existed
-    if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
+    const fileName = encodeURIComponent(`${record.imageName}.${record.imageType}`)
+    if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${fileName}`))) !== null) === -1) {
         if (record.imageTypeId == 'Image') {
+            let imagePathExsits = `${config.gallery.physicalpath}/${record.imageCompany.toUpperCase()}/${record.imageName}.${record.imageType}`
+            const hasFile = exist(imagePathExsits)
+            let physicalFile = `${config.gallery.physicalfile}/${record.imageCompany.toLowerCase()}/${fileName}`
+            if (!hasFile) {
+                physicalFile = `${config.gallery.physicalfile}/mme/${fileName}`
+            }
             const image = {
-                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`,
-                conpany: `${record.imageCompany}`,
+                original: `${config.gallery.original}/${fileName}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileName}`,
+                company: `${record.imageCompany}`,
                 defaultImage: `${record.defaultImage}`,
-                lastModifiedDateImage: `${record.lastModifiedDateImage}`
+                lastModifiedDateImage: `${record.lastModifiedDateImage}`,
+                physicalFile: physicalFile,
+                physicalCompany: !hasFile? 'mme': record.imageCompany.toLowerCase(),
+                originalFileName: `${record.imageName}.${record.imageType}`
             };
 
             item.gallery.push(image);
@@ -107,11 +130,14 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     }
 
     // add COA, if not existed
-    if (!!record.imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageOtherName}.${record.imageOtherType}$`))) !== null) === -1) {
+    const fileNameOther = encodeURIComponent(`${record.imageOtherName}.${record.imageOtherType}`)
+    if (!!record.imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
         if (record.imageOtherTypeId == 'COA') {
             const image = {
-                original: `${config.gallery.original}/${record.imageOtherName}.${record.imageOtherType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageOtherName}.${record.imageOtherType}`
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
+                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
             };
 
             item.imagesCOA.push(image);
@@ -119,11 +145,13 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     }
 
     // add DBC, if not existed
-    if (!!record.imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageOtherName}.${record.imageOtherType}$`))) !== null) === -1) {
+    if (!!record.imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
         if (record.imageOtherTypeId == 'DBC') {
             const image = {
-                original: `${config.gallery.original}/${record.imageOtherName}.${record.imageOtherType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageOtherName}.${record.imageOtherType}`
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
+                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
             };
 
             item.imagesDBC.push(image);
@@ -131,11 +159,13 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     }
 
     // add Monograph, if not existed
-    if (!!record.imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageOtherName}.${record.imageOtherType}$`))) !== null) === -1) {
+    if (!!record.imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
         if (record.imageOtherTypeId == 'Monograph') {
             const image = {
-                original: `${config.gallery.original}/${record.imageOtherName}.${record.imageOtherType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageOtherName}.${record.imageOtherType}`
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
+                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
             };
 
             item.filesMonograph.push(image);
@@ -143,11 +173,23 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     }
 
     // add certificate image, if not existed
+    const fileNameCertificate = encodeURIComponent(`${record.CertificateImageName}.${record.CertificateImageType}`)
     if (!!record.CertificateImageName) {
+        let imagePathExsits = `${config.gallery.physicalpath}/${record.CertificateImageCompany.toUpperCase()}/${fileNameCertificate}`
+        const hasFile = exist(imagePathExsits)
+        let physicalFile = `${config.gallery.physicalfile}/${record.CertificateImageCompany.toLowerCase()}/${fileNameCertificate}`
+        if (!hasFile) {
+            physicalFile = `${config.gallery.physicalfile}/mme/$${fileNameCertificate}`
+        }
         const image = {
-            original: `${config.gallery.original}/${record.CertificateImageName}.${record.CertificateImageType}`,
-            thumbnail: `${config.gallery.thumbnail}/${record.CertificateImageName}.${record.CertificateImageType}`
-        };
+            original: `${config.gallery.original}/${fileNameCertificate}`,
+            thumbnail: `${config.gallery.thumbnail}/${fileNameCertificate}`,
+            defaultImage: `${record.certificateDefaultImage}`,
+            lastModifiedDateImage: `${record.certificateLastModifiedDateImage}`,
+            physicalFile: physicalFile,
+            physicalCompany: !hasFile? 'mme': record.CertificateImageCompany.toLowerCase(),
+            originalFileName: `${record.CertificateImageName}.${record.CertificateImageType}`
+        }
 
         if (record.type === 'STO') {
             const certificate = item.certificates.find(certificate => certificate.number === record.CertificateNo);
@@ -157,7 +199,7 @@ const mapSalesProperties = (item, record, exchangeRates) => {
                     certificate.images = [];
                 }
 
-                if (certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${record.CertificateImageName}.${record.CertificateImageType}$`))) !== null) === -1) {
+                if (certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameCertificate}`))) !== null) === -1) {
                     certificate.images.push(image);
                 }
             }
@@ -169,7 +211,7 @@ const mapSalesProperties = (item, record, exchangeRates) => {
                     gemstone.certificate.images = [];
                 }
 
-                if (gemstone.certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${record.CertificateImageName}.${record.CertificateImageType}$`))) !== null) === -1) {
+                if (gemstone.certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameCertificate}`))) !== null) === -1) {
                     gemstone.certificate.images.push(image);
                 }
             }
@@ -311,60 +353,87 @@ const mapProperties = (item, record, exchangeRates) => {
     }
 
     // add image, if not existed
-    if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageName}.${record.imageType}$`))) !== null) === -1) {
+    const fileName = encodeURIComponent(`${record.imageName}.${record.imageType}`)
+    if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${fileName}`))) !== null) === -1) {
         if (record.imageTypeId == 'Image') {
+            let imagePathExsits = `${config.gallery.physicalpath}/${record.imageCompany.toUpperCase()}/${fileName}`
+            const hasFile = exist(imagePathExsits)
+            let physicalFile = `${config.gallery.physicalfile}/${record.imageCompany.toLowerCase()}/${fileName}`
+            if (!hasFile) {
+                physicalFile = `${config.gallery.physicalfile}/mme/${fileName}`
+            }
             const image = {
-                original: `${config.gallery.original}/${record.imageName}.${record.imageType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageName}.${record.imageType}`,
-                conpany: `${record.imageCompany}`,
+                original: `${config.gallery.original}/${fileName}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileName}`,
+                company: `${record.imageCompany}`,
                 defaultImage: `${record.defaultImage}`,
-                lastModifiedDateImage: `${record.lastModifiedDateImage}`
+                lastModifiedDateImage: `${record.lastModifiedDateImage}`,
+                physicalFile: physicalFile,
+                physicalCompany: !hasFile? 'mme': record.imageCompany.toLowerCase(),
+                originalFileName: `${record.imageName}.${record.imageType}`
             };
             item.gallery.push(image);
         }
     }
 
     // add COA, if not existed
-    if (!!record.imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageOtherName}.${record.imageOtherType}$`))) !== null) === -1) {
+    const fileNameOther = encodeURIComponent(`${record.imageOtherName}.${record.imageOtherType}`)
+    if (!!record.imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
         if (record.imageOtherTypeId == 'COA') {
             const image = {
-                original: `${config.gallery.original}/${record.imageOtherName}.${record.imageOtherType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageOtherName}.${record.imageOtherType}`
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
+                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
             };
             item.imagesCOA.push(image);
         }
     }
 
     // add DBC, if not existed
-    if (!!record.imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageOtherName}.${record.imageOtherType}$`))) !== null) === -1) {
+    if (!!record.imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
         if (record.imageOtherTypeId == 'DBC') {
             const image = {
-                original: `${config.gallery.original}/${record.imageOtherName}.${record.imageOtherType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageOtherName}.${record.imageOtherType}`
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
+                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
             };
             item.imagesDBC.push(image);
         }
     }
 
     // add Monograph, if not existed
-    if (!!record.imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${record.imageOtherName}.${record.imageOtherType}$`))) !== null) === -1) {
+    if (!!record.imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
         if (record.imageOtherTypeId == 'Monograph') {
             const image = {
-                original: `${config.gallery.original}/${record.imageOtherName}.${record.imageOtherType}`,
-                thumbnail: `${config.gallery.thumbnail}/${record.imageOtherName}.${record.imageOtherType}`
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
+                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
             };
             item.filesMonograph.push(image);
         }
     }
 
     // add certificate image, if not existed
+    const fileNameCertificate = encodeURIComponent(`${record.CertificateImageName}.${record.CertificateImageType}`)
     if (!!record.CertificateImageName) {
+        let imagePathExsits = `${config.gallery.physicalpath}/${record.CertificateImageCompany.toUpperCase()}/${fileNameCertificate}`
+        const hasFile = exist(imagePathExsits)
+        let physicalFile = `${config.gallery.physicalfile}/${record.CertificateImageCompany.toLowerCase()}/${fileNameCertificate}`
+        if (!hasFile) {
+            physicalFile = `${config.gallery.physicalfile}/mme/${fileNameCertificate}`
+        }
         const image = {
-            original: `${config.gallery.original}/${record.CertificateImageName}.${record.CertificateImageType}`,
-            thumbnail: `${config.gallery.thumbnail}/${record.CertificateImageName}.${record.CertificateImageType}`,
+            original: `${config.gallery.original}/${fileNameCertificate}`,
+            thumbnail: `${config.gallery.thumbnail}/${fileNameCertificate}`,
             defaultImage: `${record.certificateDefaultImage}`,
-            lastModifiedDateImage: `${record.certificateLastModifiedDateImage}`
-        };
+            lastModifiedDateImage: `${record.certificateLastModifiedDateImage}`,
+            physicalFile: physicalFile,
+            physicalCompany: !hasFile? 'mme': record.CertificateImageCompany.toLowerCase(),
+            originalFileName: `${record.CertificateImageName}.${record.CertificateImageType}`
+        }
 
         if (record.type === 'STO') {
             const certificate = item.certificates.find(certificate => certificate.number === record.CertificateNo);
@@ -373,7 +442,7 @@ const mapProperties = (item, record, exchangeRates) => {
                 if (certificate.images === undefined) {
                     certificate.images = [];
                 }
-                if (certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${record.CertificateImageName}.${record.CertificateImageType}$`))) !== null) === -1) {
+                if (certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameCertificate}`))) !== null) === -1) {
                     certificate.images.push(image);
                 }
             }
@@ -384,7 +453,7 @@ const mapProperties = (item, record, exchangeRates) => {
                 if (gemstone.certificate.images === undefined) {
                     gemstone.certificate.images = [];
                 }
-                if (gemstone.certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${record.CertificateImageName}.${record.CertificateImageType}$`))) !== null) === -1) {
+                if (gemstone.certificate.images.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameCertificate}`))) !== null) === -1) {
                     gemstone.certificate.images.push(image);
                 }
             }
@@ -547,11 +616,11 @@ const filterImages = (items) => {
     items.map((item) => {
 
         if (item.gallery.length > 1) {
-            const finndMME = item.gallery.findIndex(image => image.conpany === 'mme');
+            const finndMME = item.gallery.findIndex(image => image.company === 'mme');
             let image = [];
             // found MME in gallery
             if (finndMME !== -1) {
-                image = item.gallery.filter(image => image.conpany === 'mme');
+                image = item.gallery.filter(image => image.company === 'mme');
                 item.gallery = image;
             }
         }

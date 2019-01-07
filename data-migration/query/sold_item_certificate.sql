@@ -12,7 +12,7 @@ SELECT [ITORAMA].[dbo].[SoldCertificateMaster].[RecId] AS 'id'
       ,[ITORAMA].[dbo].[SoldCertificateMaster].[Company] AS 'company'
       , ISNULL(company.[Name], '') AS 'companyName'
       ,ISNULL(certimage.[FILENAME], '') AS [imageName]
-      ,ISNULL(certimage.[FILETYPE], '') AS [imageType]
+      ,ISNULL(certimage.[Company], '') AS [imageCompany]
 FROM [ITORAMA].[dbo].[SoldCertificateMaster]
 LEFT JOIN [ITORAMA].[dbo].[SoldItemCertificates] cert
   ON [ITORAMA].[dbo].[SoldCertificateMaster].[Item] = cert.[CERTIFICATIONNO]

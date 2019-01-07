@@ -1050,7 +1050,8 @@ class productdetail extends Component {
             'userEmail': userLogin.email,
             'ROOT_URL': ROOT_URL,
             'productId': productId,
-            'company': company.toLowerCase()
+            // 'company': company.toLowerCase()
+            'company': 'MME' // mme only 08/01/2019
         }
 
         this.props.getCertificate(params).then((value) => {
@@ -1141,7 +1142,7 @@ class productdetail extends Component {
                         countImages++;
 
                         if (countImages == 1) {
-                            imageCerDownload = `/original/${company.toLowerCase()}/${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
+                            imageCerDownload = `${item.certificate.images[0].physicalFile}`;
                             imageName = `${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
                         }
                     }
