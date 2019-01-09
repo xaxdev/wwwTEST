@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SOURCE="projects/products/"
-DESTINATION="projects/pd/"
+SOURCE="/media/mol"
+DESTINATION="/mnt/"
 
 PROCESS=0
 PROCESS=`ps | grep transfer_images.sh |grep -v grep |wc -l`
@@ -11,7 +11,7 @@ if [ $PROCESS -le 2 ]; then
 
   find $SOURCE -type f -ctime -2 | while read file
   do
-    rsync -au $SOURCE $DESTINATION
+    sudo rsync -au $SOURCE $DESTINATION
     sum1=`sum $SOURCE`
     sum2=`sum $DESTINATION`
 

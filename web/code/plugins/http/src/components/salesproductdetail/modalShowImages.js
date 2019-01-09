@@ -45,7 +45,7 @@ class ModalShowImages extends Component {
         if(images != undefined){
             images.map((img) => {
                 if (!!img) {
-                    allCer.push(img.original.replace('/images/products/original',''));
+                    allCer.push(img.originalFileName)
                 }
             })
         }
@@ -58,7 +58,7 @@ class ModalShowImages extends Component {
             'ROOT_URL': ROOT_URL,
             'productId': productId,
             // 'company': company.toLowerCase()
-            'company': 'MME' // mme only 08/01/2019
+            'company': 'mme' // mme only 08/01/2019
         }
 
         getCertificate(params)
