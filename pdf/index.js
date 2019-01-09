@@ -74,35 +74,35 @@ const Confidence = require('confidence');
                 console.log(err);
             });
     });
-    try {
-        const store = new Confidence.Store(require('./config'));
-        const config = store.get('/', { env: process.env.NODE_ENV || 'development' });
- 
-        const q = config.rabbit.channel;
-        const connection = await amqp.connect(config.rabbit.url);
-        const channel = await connection.createChannel();
-        let TotalQueue = await channel.assertQueue(q);
-        console.log('Total Queue-->',TotalQueue.messageCount);
- 
-        channel.prefetch(1);
- 
-        console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
-        channel.consume(q, async msg => {
+    const store = new Confidence.Store(require('./config'));
+    const config = store.get('/', { env: process.env.NODE_ENV || 'development' });
+
+    const q = config.rabbit.channel;
+    const connection = await amqp.connect(config.rabbit.url);
+    const channel = await connection.createChannel();
+    let TotalQueue = await channel.assertQueue(q);
+    console.log('Total Queue-->',TotalQueue.messageCount);
+
+    channel.prefetch(1);
+
+    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
+    channel.consume(q, async msg => {
+        try {
             let queue = await channel.assertQueue(q);
- 
+
             console.log('queue-->',queue.messageCount);
             // channel.ack(msg)
             if (msg !== null) {
-                
+
                 const obj = JSON.parse(msg.content.toString());
                 const userName = obj.userName;
                 userEmail = obj.userEmail;
- 
+
                 const html = fs.readFileSync(`./import_html/${userName}.html`, 'utf8');
                 const options = { format: 'A4', timeout: 30000 };
- 
+
                 let _pathDistFile = Path.resolve(__dirname, `../web/code/plugins/http/public/export_files/${userName}.pdf`);
- 
+
                 console.log(`user Email: ${userEmail}`);
                 await save(html, options, _pathDistFile);
                 console.log('writing pdf');
@@ -111,9 +111,10 @@ const Confidence = require('confidence');
                 await notify('');
                 channel.ack(msg)
             }
-        }, {noAck: false})
-    } catch (err) {
-        console.log(err)
-        notify(err);
-    }
+        } catch (err) {
+            console.log(err)
+            channel.reject(msg, false)
+            notify(err);
+        }
+    }, {noAck: false})
 })()

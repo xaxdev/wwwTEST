@@ -17,18 +17,19 @@ const Promise = require('bluebird');
     let userEmail = '';
     let typeFile = '';
 
-    try {
-        const store = new Confidence.Store(require('./config'));
-        const config = store.get('/', { env: process.env.NODE_ENV || 'development' });
-        const q = config.rabbit.channel;
-        const connection = await amqp.connect(config.rabbit.url);
-        const channel = await connection.createChannel();
-        let TotalQueue = await channel.assertQueue(q);
-        console.log('Total Queue-->',TotalQueue.messageCount);
+    const store = new Confidence.Store(require('./config'));
+    const config = store.get('/', { env: process.env.NODE_ENV || 'development' });
+    const q = config.rabbit.channel;
+    const connection = await amqp.connect(config.rabbit.url);
+    const channel = await connection.createChannel();
+    let TotalQueue = await channel.assertQueue(q);
+    console.log('Total Queue-->',TotalQueue.messageCount);
 
-        channel.prefetch(1);
-        console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
-        channel.consume(q, async msg => {
+    channel.prefetch(1);
+    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
+
+    channel.consume(q, async msg => {
+        try {
             let queue = await channel.assertQueue(q);
             console.log('queue-->',queue.messageCount);
             // channel.ack(msg)
@@ -58,9 +59,10 @@ const Promise = require('bluebird');
                     utils.excelSoldItem(obj, config, parameter, body, utils, userEmail, channel, msg);
                 }
             }
-        }, {noAck: false})
-    } catch (err) {
-        console.log(err)
-        utils.notifyFile(err, userEmail, emailBody);
-    }
+        } catch (err) {
+            console.log(err)
+            channel.reject(msg, false)
+            utils.notifyFile(err, userEmail, emailBody);
+        }
+    }, {noAck: false})
 })()
