@@ -745,7 +745,8 @@ class SetSalesDetail extends Component {
             'userEmail': userLogin.email,
             'ROOT_URL': ROOT_URL,
             'productId': productId,
-            'company': company.toLowerCase()
+            // 'company': company.toLowerCase()
+            'company': 'MME' // mme only 08/01/2019
         }
 
         this.props.getCertificate(params).then((value) => {

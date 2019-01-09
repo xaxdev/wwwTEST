@@ -64,6 +64,7 @@ SELECT UPPER(item.[Reference]) AS 'reference'
     , ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
     , ISNULL(certimage.[FILENAME], '') AS [CertificateImageName]
     , ISNULL(certimage.[FILETYPE], '') AS [CertificateImageType]
+    , ISNULL(certimage.[Company], '') AS [CertificateImageCompany]
     , ISNULL(certimage.[DEFAULTIMAGE], 0) AS 'certificateDefaultImage'
     , ISNULL(certimage.[LASTMODIFIEDDATE], '') AS 'certificateLastModifiedDate'
     , certmaster.[CertificateCreateDate] AS [CertifiedDate]
