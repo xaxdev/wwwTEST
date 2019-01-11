@@ -108,9 +108,9 @@ export default function GetHTMLListViewAsSetAllSales(datas,currency,isViewAsSet,
                                                                 <th><span>Location</span></th>
                                                                 <th><span>Item Weight (Grams)</span></th>
                                                                 <th><span>Stone Detail</span></th>
-                                                                <th><span style="${(priceSalesCTP) ? '' : 'hidden'}">Group Cost Price (USD)</span></th>
-                                                                <th><span style="${(priceSalesUCP) ? '' : 'hidden'}">Updated Cost Price (USD)</span></th>
-                                                                <th><span style="${(priceSalesRTP) ? '' : 'hidden'}">Selling Cost Price (USD)</span></th>
+                                                                <th style="${(priceSalesCTP) ? '' : 'display: none !important;visibility: hidden !important;'}"><span>Group Cost Price (USD)</span></th>
+                                                                <th style="${(priceSalesUCP) ? '' : 'display: none !important;visibility: hidden !important;'}"><span>Updated Cost Price (USD)</span></th>
+                                                                <th style="${(priceSalesRTP) ? '' : 'display: none !important;visibility: hidden !important;'}"><span>Selling Cost Price (USD)</span></th>
                                                             </tr>
                                                         </thead>
                                                         ${datas.exportData.map((item,index) => {
