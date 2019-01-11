@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import SearchResultGridViewPrintAll from './searchResultGridViewPrintAll';
+import { FULLPATH_LOCALFILE } from '../constants/productdetailconstants';
 
 export default function GenSalesTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv){
     const items = dv.items;
@@ -109,6 +110,7 @@ export default function GenSalesTemplateHtml(showGridView, showListView, ROOT_UR
         dvListview = dvListview.replace(/class="text-left"/g,`style="text-align: left !important;"`);
         dvListview = dvListview.replace(/class="font-b fc-000 text-center bg-eb"/g,`style="font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;text-align: center;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 5px; border: 1px solid #5c5954;border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"`);
         dvListview = dvListview.replace(/class="font-b fc-000 bg-eb td-text "/g,`style="word-break: initial !important;text-align:right;font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 5px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"`);
+        dvListview = dvListview.replace(/class="font-b fc-000 bg-eb td-text  hidden"/g,`style="word-break: initial !important;text-align:right;font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 5px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;display: none !important;visibility: hidden !important;"`);
         dvListview = dvListview.replace(/class="font-b fc-000 text-right bg-eb hidden"/g,`style="text-align:right;font-weight: bold; font-family:'${'open_sanssemibold'}';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 5px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;display: none !important;visibility: hidden !important;"`);
         dvListview = dvListview.replace(/class="bd-tblr-white"/g,'style="border-left: 1px solid #fff;border-right: 1px solid #fff;border-bottom: transparent;"');
         dvListview = dvListview.replace(/class="list-tagbar-soldout"/g,'style="position: relative;"');

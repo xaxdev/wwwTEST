@@ -28,6 +28,7 @@ class ListItemsViewASSetPrint extends Component {
                                     </div>
                                 </td>
                                 <td className="tdd">{item.reference}</td>
+                                <td className="tdd">{subitem.reference}</td>
                                 {tableColumns.map((title)=>{
                                     switch (title) {
                                         case 'stoneDetail':
