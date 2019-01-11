@@ -171,7 +171,7 @@ export default function GetHTMLViewASSetAll(datas,currency,isViewAsSet,env,userP
                                                                     <span ${isViewAsSet?'style="display:none;"':''} name="${item.id}" id="${item.id}" >${item.sku}</span>
                                                                 </p>
                                                                 <p style="height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;" name="${item.id}" id="${item.id}">${itemName}</p>
-                                                                <span style="color: #ae8f3b; font-weight: bold; ${(item.type != 'CER') ? '' : 'hidden'}">${price}</span>
+                                                                <span style="color: #ae8f3b; font-weight: bold; ${(item.type != 'CER') ? '' : 'display: none !important;visibility: hidden !important;'}">${price}</span>
                                                                 <span style="border-bottom: 1px solid #cacaca;width: 178px;margin: 0px auto;display: inline-block;position: absolute;bottom: 0;left: 0;right: 0;"></span>
                                                             </div>
                                                         </div>`)

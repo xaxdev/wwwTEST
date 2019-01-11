@@ -181,7 +181,7 @@ export default function GetHTMLViewASSetGridAllSales(datas,currency,isViewAsSet,
                                                                     <span ${isViewAsSet?'style="display:none;"':''} name="${item.id}" id="${item.id}" >${item.sku}</span>
                                                                 </p>
                                                                 <p style="height: 85px;overflow: hidden;word-wrap: break-word;margin: 0 0 10px;" name="${item.id}" id="${item.id}">${itemName}</p>
-                                                                <span style="color: #ae8f3b; font-weight: bold; ${(item.type != 'CER') ? '' : 'hidden'}">${price}</span>
+                                                                <span style="color: #ae8f3b; font-weight: bold; ${(item.type != 'CER') ? '' : 'display: none !important;visibility: hidden !important;'}">${price}</span>
                                                                 <span class="line"></span>
                                                             </div>
                                                         </div>`)
