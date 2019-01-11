@@ -113,12 +113,12 @@ export default function GetHTMLViewASSetAll(datas, currency, isViewAsSet, env, u
                                                                         `<th><span>${title}</span></th>`
                                                                     )
                                                                 }).join('')}
-                                                                <th><span style="${(userPermissionPrice == 'All') ? '' : 'hidden'}">Group Cost Price (USD)</span></th>
-                                                                <th><span style="${(userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ?
-                                                                    '' : 'hidden'}">Updated Cost Price (USD)</span></th>
-                                                                <th><span style="${(userPermissionPrice == 'Public' || userPermissionPrice == 'Updated'
+                                                                <th style="${(userPermissionPrice == 'All') ? '' : 'display: none !important;visibility: hidden !important;'}"><span>Group Cost Price (USD)</span></th>
+                                                                <th style="${(userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ?
+                                                                    '' : 'display: none !important;visibility: hidden !important;'}"><span>Updated Cost Price (USD)</span></th>
+                                                                <th style="${(userPermissionPrice == 'Public' || userPermissionPrice == 'Updated'
                                                                     || userPermissionPrice == 'All') ?
-                                                                    '' : 'hidden'}">Selling Cost Price (USD)</span></th>
+                                                                    '' : 'display: none !important;visibility: hidden !important;'}"><span>Selling Cost Price (USD)</span></th>
                                                             </tr>
                                                         </thead>
                                                         ${datas.exportData.map((item,index) => {

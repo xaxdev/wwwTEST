@@ -134,7 +134,7 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                     <span>Invoice Date</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
-                                                                <th style="${(priceSalesNSP) ? '' : 'hidden'} padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;width: 0px;" role="columnheader" scope="col"
+                                                                <th style="${(priceSalesNSP) ? '' : 'display: none !important;visibility: hidden !important;'} padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954;width: 0px;" role="columnheader" scope="col"
                                                                     tabindex="0" aria-sort="none" aria-label="Jewelry Weight: activate to sort column ascending " >
                                                                     <span>Net Amount</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
@@ -149,7 +149,7 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                     <span>Stone Detail</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
                                                                 </th>
-                                                                <th style="${(priceSalesRTP) ? '' : 'hidden'} padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954; width: 0px;" role="columnheader"
+                                                                <th style="${(priceSalesRTP) ? '' : 'display: none !important;visibility: hidden !important;'} padding:10px 10px; text-align:center; color:#fff; background-color: #383735;  font-weight: normal; font-size: 6px; border: 1px solid #5c5954; width: 0px;" role="columnheader"
                                                                     scope="col" tabindex="0" aria-sort="none" aria-label="Price: activate to sort column ascending ">
                                                                     <span>Price</span>
                                                                     <span class="sort-icon sort-none" aria-hidden="true"></span>
@@ -252,7 +252,7 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${convertDate(item.invoiceDate)}</span>
                                                                             </td>
-                                                                            <td style="${(priceSalesNSP) ? '' : 'hidden'} padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <td style="${(priceSalesNSP) ? '' : 'display: none !important;visibility: hidden !important;'} padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${item.netAmountUSD}</span>
                                                                             </td>
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
@@ -261,7 +261,7 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                             <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${item.stoneDetail != ''? item.stoneDetail: '-'}</span>
                                                                             </td>
-                                                                            <td style="${(priceSalesRTP) ? '' : 'hidden'} padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <td style="${(priceSalesRTP) ? '' : 'display: none !important;visibility: hidden !important;'} padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
                                                                                 <span>${price}</span>
                                                                             </td>
                                                                         </tr>`)

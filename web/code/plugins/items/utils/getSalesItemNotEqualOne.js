@@ -70,13 +70,13 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPe
                         <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.warehouse}</td>
                         <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${numberFormat2digit(subitem.grossWeight)}</td>
                         <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;">${subitem.stoneDetail == ''?'-':subitem.stoneDetail}</td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(priceSalesCTP) ? '' : ' hidden'}">
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(priceSalesCTP) ? '' : 'display: none !important;visibility: hidden !important;'}">
                             ${numberFormat(subitem.actualCost['USD'])}
                         </td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(priceSalesUCP) ? '' : ' hidden'}">
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(priceSalesUCP) ? '' : 'display: none !important;visibility: hidden !important;'}">
                             ${numberFormat(subitem.updatedCost['USD'])}
                         </td>
-                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(priceSalesRTP) ? '' : ' hidden'}">
+                        <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(priceSalesRTP) ? '' : 'display: none !important;visibility: hidden !important;'}">
                             ${numberFormat(subitem.price['USD'])}
                         </td>
                     </tr>`
@@ -86,13 +86,13 @@ export default function GetItemEqualOne(item,currency,isViewAsSet,env,row,userPe
             <td colspan="9" style="border-left: 1px solid #fff;border-bottom: 1px solid #fff;padding:5px 5px;word-break: normal;font-size: 4px;"></td>
             <td style="font-weight: bold; font-family:'open_sanssemibold';color:#000;text-align: center;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;"
                 >Total</td>
-            <td style="${(priceSalesCTP) ? '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
+            <td style="${(priceSalesCTP) ? '' : 'display: none !important;visibility: hidden !important;'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
                 ${numberFormat(item.totalActualCost['USD'])}
             </td>
-            <td style="${(priceSalesUCP) ? '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
+            <td style="${(priceSalesUCP) ? '' : 'display: none !important;visibility: hidden !important;'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
                 ${numberFormat(item.totalUpdatedCost['USD'])}
             </td>
-            <td style="${(priceSalesRTP) ? '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
+            <td style="${(priceSalesRTP) ? '' : 'display: none !important;visibility: hidden !important;'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
                 ${numberFormat(item.totalPrice['USD'])}
             </td>
         </tr>

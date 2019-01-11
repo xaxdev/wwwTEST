@@ -77,15 +77,15 @@ export default function GetItemEqualOne(item, currency, isViewAsSet, env, row, u
                             }
                         }).join('')}
                         <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(userPermissionPrice == 'All') ?
-                            '' : ' hidden'}">
+                            '' : 'display: none !important;visibility: hidden !important;'}">
                             ${numberFormat(subitem.actualCost['USD'])}
                         </td>
                         <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(userPermissionPrice == 'Updated'
-                            || userPermissionPrice == 'All') ? '' : ' hidden'}">
+                            || userPermissionPrice == 'All') ? '' : 'display: none !important;visibility: hidden !important;'}">
                             ${numberFormat(subitem.updatedCost['USD'])}
                         </td>
                         <td style="padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;${(userPermissionPrice == 'Public'
-                            || userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ? '' : ' hidden'}">
+                            || userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ? '' : 'display: none !important;visibility: hidden !important;'}">
                             ${numberFormat(subitem.price['USD'])}
                         </td>
                     </tr>`
@@ -96,15 +96,15 @@ export default function GetItemEqualOne(item, currency, isViewAsSet, env, row, u
             <td style="font-weight: bold; font-family:'open_sanssemibold';color:#000;text-align: center;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px; border: 1px solid #5c5954;border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
                 Total
             </td>
-            <td style="${(userPermissionPrice == 'All') ? '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
+            <td style="${(userPermissionPrice == 'All') ? '' : 'display: none !important;visibility: hidden !important;'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
                 ${numberFormat(item.totalActualCost['USD'])}
             </td>
             <td style="${(userPermissionPrice == 'Updated'
-                || userPermissionPrice == 'All') ? '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
+                || userPermissionPrice == 'All') ? '' : 'display: none !important;visibility: hidden !important;'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
                 ${numberFormat(item.totalUpdatedCost['USD'])}
             </td>
             <td style="${(userPermissionPrice == 'Public'
-                || userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ? '' : ' hidden'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
+                || userPermissionPrice == 'Updated' || userPermissionPrice == 'All') ? '' : 'display: none !important;visibility: hidden !important;'} text-align:right;font-weight: bold; font-family:'open_sanssemibold';color:#000;background-color: #ebd79a;padding:5px 5px;word-break: normal;font-size: 4px;border: 1px solid #5c5954; border-right: 1px solid #5c5954; border-bottom: 1px solid #5c5954;">
                 ${numberFormat(item.totalPrice['USD'])}
             </td>
         </tr>
