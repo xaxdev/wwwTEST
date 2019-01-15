@@ -37,9 +37,9 @@ class ModalShowFilesPDF extends Component {
                 }else if (ENVIRONMENT == 'test') {
                     fileCerDownload = `/images/products/original/${file[0].original.split('/').slice(-1).pop()}`;
                 }else if (ENVIRONMENT == 'staging') {
-                    fileCerDownload = `/original/${company.toLowerCase()}/${file[0].original.split('/').slice(-1).pop()}`;
+                    fileCerDownload = `${file[0].physicalFile}`;
                 }else if (ENVIRONMENT == 'production') {
-                    fileCerDownload = `/original/${company.toLowerCase()}/${file[0].original.split('/').slice(-1).pop()}`;
+                    fileCerDownload = `${file[0].physicalFile}`;
                 }
                 fileName = `${file[0].original.split('/').slice(-1).pop()}`;
             }
@@ -71,8 +71,7 @@ class ModalShowFilesPDF extends Component {
                         <div className="modal-footer">
                             {file.length > 1
                                 ? <button type="button"
-                                        className="btn btn-default btn-radius"
-                                        onClick={ this.downloadCertificateAll }>
+                                        className="btn btn-default btn-radius">
                                         Download
                                     </button>
                                 : <a href={fileCerDownload} download={fileName} className="btn btn-default btn-radius">Download</a>

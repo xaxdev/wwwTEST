@@ -76,7 +76,7 @@ const Gemstoneattr =  (props) =>{
             }
         }
     });
-    
+
     return (
         <div style={styles.tableresponsive}>
             <Table responsive style={styles.table}>
@@ -117,7 +117,7 @@ const Gemstoneattr =  (props) =>{
                                             !!data.certificate ?
                                                 !!data.certificate.images ?
                                                     <td title="icon-certificate btn-primary btn-certificate-radius button-certificate">
-                                                         <a href={`/original/${company}/${data.certificate.images[0].original.split('/').slice(-1).pop()}`} download><img src="/images/mol-certificates-2.jpg"/></a>
+                                                         <a href={data.certificate.images[0].physicalFile} download><img src="/images/mol-certificates-2.jpg"/></a>
                                                     </td> :
                                                     <td title="" className=""></td>
                                                     :

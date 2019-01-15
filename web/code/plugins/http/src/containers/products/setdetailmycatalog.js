@@ -743,7 +743,7 @@ class productdetail extends Component {
             gemstones.map((item) => {
                 if (!!item.certificate) {
                     item.certificate.images.map((img) => {
-                        allCer.push(img.original.replace('/images/products/original',''));
+                        allCer.push(img.originalFileName)
                     })
                 }
             })
@@ -755,7 +755,8 @@ class productdetail extends Component {
             'userEmail': userLogin.email,
             'ROOT_URL': ROOT_URL,
             'productId': productId,
-            'company': company.toLowerCase()
+            // 'company': company.toLowerCase()
+            'company': 'mme' // mme only 08/01/2019
         }
 
         this.props.getCertificate(params).then((value) => {

@@ -88,6 +88,7 @@ SELECT	SOL.[Id] AS 'id'
 		, ISNULL(cert.INVENTLOCATIONID, '') AS [CertificateWarehouse]
 		, ISNULL(certimage.[FILENAME], '') AS [CertificateImageName]
 		, ISNULL(certimage.[FILETYPE], '') AS [CertificateImageType]
+		, ISNULL(certimage.[Company], '') AS [CertificateImageCompany]
 		, certmaster.[CertificateCreateDate] AS [CertifiedDate]
 FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone

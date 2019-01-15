@@ -44,6 +44,7 @@ const styles ={
     }
 };
 const pructdetailurl = '/productreletedetail/';
+
 const Gemstoneattr =  (props) =>{
     let newprops = props.gemstoneAttrData.sort(function(a, b) {
         let nameA = a.stoneTypeName.toUpperCase(); // ignore upper and lowercase

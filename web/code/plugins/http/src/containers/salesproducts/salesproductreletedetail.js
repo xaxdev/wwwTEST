@@ -885,7 +885,7 @@ class SalesProductReleteDetail extends Component {
             gemstones.map((item) => {
                 if (!!item.certificate) {
                     item.certificate.images.map((img) => {
-                        allCer.push(img.original.replace('/images/products/original',''));
+                        allCer.push(img.originalFileName)
                     })
                 }
             })
@@ -897,7 +897,8 @@ class SalesProductReleteDetail extends Component {
             'userEmail': userLogin.email,
             'ROOT_URL': ROOT_URL,
             'productId': productId,
-            'company': company.toLowerCase()
+            // 'company': company.toLowerCase()
+            'company': 'mme' // mme only 08/01/2019
         }
 
         this.props.getCertificate(params).then((value) => {
@@ -979,7 +980,7 @@ class SalesProductReleteDetail extends Component {
                         countImages++;
 
                         if (countImages == 1) {
-                            imageCerDownload = `/original/${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
+                            imageCerDownload = `${item.certificate.images[0].physicalFile}`;
                             imageName = `${item.certificate.images[0].original.split('/').slice(-1).pop()}`;
                         }
                     }

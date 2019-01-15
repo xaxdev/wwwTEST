@@ -11,7 +11,7 @@ const init = async _ => {
     try {
         console.log(`Start migrating data at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
         const index = `mol_${moment().format('YYYYMMDD_HHmm')}`;
-        
+
         const index_solditems = `mol_solditems_${moment().format('YYYYMMDD_HHmm')}`;
         const name_solditems = 'mol_solditems';
 
@@ -69,7 +69,7 @@ const notify = err => {
 };
 
 new CronJob({
-  cronTime: '00 00 6 * * *',
+  cronTime: '00 00 8 * * *',
   onTick: _ => {
     init()
         .then(_ => {

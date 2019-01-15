@@ -59,7 +59,7 @@ module.exports = {
     },
     originalCSL: {
         handler: {
-            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/CSL') }
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/CSL') }
         },
         app: {
             name: 'originalCSL'
@@ -67,7 +67,7 @@ module.exports = {
     },
     originalMAM: {
         handler: {
-            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MAM') }
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MAM') }
         },
         app: {
             name: 'originalMAM'
@@ -75,7 +75,7 @@ module.exports = {
     },
     originalMAT: {
         handler: {
-            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MAT') }
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MAT') }
         },
         app: {
             name: 'originalMAT'
@@ -83,7 +83,7 @@ module.exports = {
     },
     originalMBS: {
         handler: {
-            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MBS') }
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MBS') }
         },
         app: {
             name: 'originalMBS'
@@ -91,7 +91,7 @@ module.exports = {
     },
     originalMDO: {
         handler: {
-            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MDO') }
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MDO') }
         },
         app: {
             name: 'originalMDO'
@@ -99,7 +99,7 @@ module.exports = {
     },
     originalMDT: {
         handler: {
-            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MDT') }
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MDT') }
         },
         app: {
             name: 'originalMDT'
@@ -107,7 +107,7 @@ module.exports = {
     },
     originalMJW: {
         handler: {
-            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MJW') }
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MJW') }
         },
         app: {
             name: 'originalMJW'
@@ -115,7 +115,7 @@ module.exports = {
     },
     originalMKU: {
         handler: {
-            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MKU') }
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MKU') }
         },
         app: {
             name: 'originalMKU'
@@ -123,7 +123,7 @@ module.exports = {
     },
     originalMME: {
       handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MME') }
+        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MME') }
       },
       app: {
         name: 'originalMME'
@@ -131,7 +131,7 @@ module.exports = {
     },
     originalMMF: {
       handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MMF') }
+        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MMF') }
       },
       app: {
         name: 'originalMMF'
@@ -139,7 +139,7 @@ module.exports = {
     },
     originalMMU: {
       handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/MMU') }
+        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MMU') }
       },
       app: {
         name: 'originalMMU'
@@ -147,7 +147,7 @@ module.exports = {
     },
     originalSTD: {
       handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/STD') }
+        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/STD') }
       },
       app: {
         name: 'originalSTD'
@@ -155,7 +155,7 @@ module.exports = {
     },
     originalSTS: {
       handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/STS') }
+        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/STS') }
       },
       app: {
         name: 'originalSTS'
@@ -163,7 +163,7 @@ module.exports = {
     },
     originalSTSA: {
       handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../media/mol/STSA') }
+        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/STSA') }
       },
       app: {
         name: 'originalSTSA'

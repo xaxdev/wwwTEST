@@ -9,6 +9,7 @@ import checkInarray from '../../utils/checkInarray';
 
 const pructdetailurl = '/productreletedetail/';
 const allowGemstone = ["Loose Diamond","Stone","Diamond"];
+
 const Gemstoneattr =  (props) =>{
     let newprops = props.gemstoneAttrData.sort(function(a, b) {
         let nameA = a.stoneTypeName.toUpperCase(); // ignore upper and lowercase

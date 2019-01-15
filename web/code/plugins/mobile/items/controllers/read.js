@@ -73,9 +73,11 @@ export default {
 
                         //change path original image of certificate by korakod
                         certificateImages = certificateImages.map((images) => {
-                            let { original, thumbnail } = images;
-                            original = original.replace('/images/products/original','/original/' + item.company.toLowerCase());
-                            thumbnail = thumbnail.replace('/images/products/thumbnail','/original/' + item.company.toLowerCase());
+                            let { original, thumbnail, physicalFile } = images;
+                            // original = original.replace('/images/products/original','/original/' + item.company.toLowerCase());
+                            // thumbnail = thumbnail.replace('/images/products/thumbnail','/original/' + item.company.toLowerCase());
+                            original = physicalFile
+                            thumbnail = physicalFile
                             return {...images, original, thumbnail};
                         });
                         item.gallery.push(...certificateImages)

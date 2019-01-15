@@ -74,6 +74,7 @@ const Confidence = require('confidence');
                 console.log(err);
             });
     });
+
     const store = new Confidence.Store(require('./config'));
     const config = store.get('/', { env: process.env.NODE_ENV || 'development' });
 

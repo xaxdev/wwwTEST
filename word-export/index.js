@@ -14,84 +14,85 @@ const Confidence = require('confidence');
     let userEmail = '';
     let emailBody = '';
 
-    try {
-        const save = (content, options, _pathDistFile) => new Promise((resolve, reject) => {
-            try {
-                fs.readFile(content, 'utf-8', function(err, html) {
+    const save = (content, options, _pathDistFile) => new Promise((resolve, reject) => {
+        try {
+            fs.readFile(content, 'utf-8', function(err, html) {
+                if (err) throw err;
+
+                var docx = htmlDocx.asBlob(html);
+                fs.writeFile(_pathDistFile, docx, function(err) {
                     if (err) throw err;
+                    else{
+                        console.log("Docx has been created");
+                        return resolve();
+                    }
+                });
+            });
+        } catch (err) {
+            console.log(err)
+            notify(err);
+        }
+    });
 
-                    var docx = htmlDocx.asBlob(html);
-                    fs.writeFile(_pathDistFile, docx, function(err) {
-                        if (err) throw err;
-                        else{
-                            console.log("Docx has been created");
-                            return resolve();
+    const notify = err => new Promise((resolve, reject) => {
+        const time = moment().tz('Asia/Bangkok').format()
+        const subject = (!!err)? `Failed print data to word  ${time}` : `Succeeded print data to word ${time}`
+        const sg = sendgrid(sendgridConfig.key)
+        const request = sg.emptyRequest()
+
+        request.method = 'POST'
+        request.path = '/v3/mail/send'
+        request.body = {
+            personalizations: [
+                {
+                    to: [
+                        {
+                            email: userEmail
                         }
-                    });
-                });
-            } catch (err) {
-                console.log(err)
-                notify(err);
-            }
-        });
+                    ],
+                    subject
+                }
+            ],
+            from: {
+                email: 'dev@itorama.com',
+                name: 'Mouawad Admin'
+            },
+            content: [
+                {
+                    type: 'text/plain',
+                    value: (!!err)? err.message : emailBody
+                }
+            ]
+        };
 
-        const notify = err => new Promise((resolve, reject) => {
-            const time = moment().tz('Asia/Bangkok').format()
-            const subject = (!!err)? `Failed print data to word  ${time}` : `Succeeded print data to word ${time}`
-            const sg = sendgrid(sendgridConfig.key)
-            const request = sg.emptyRequest()
+        sg
+            .API(request)
+            .then(response => {
+                console.log(response.statusCode)
+                console.log(response.body)
+                console.log(response.headers)
+                return resolve()
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    });
 
-            request.method = 'POST'
-            request.path = '/v3/mail/send'
-            request.body = {
-                personalizations: [
-                    {
-                        to: [
-                            {
-                                email: userEmail
-                            }
-                        ],
-                        subject
-                    }
-                ],
-                from: {
-                    email: 'dev@itorama.com',
-                    name: 'Mouawad Admin'
-                },
-                content: [
-                    {
-                        type: 'text/plain',
-                        value: (!!err)? err.message : emailBody
-                    }
-                ]
-            };
+    const store = new Confidence.Store(require('./config'));
+    const config = store.get('/', { env: process.env.NODE_ENV || 'development' });
 
-            sg
-                .API(request)
-                .then(response => {
-                    console.log(response.statusCode)
-                    console.log(response.body)
-                    console.log(response.headers)
-                    return resolve()
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        });
+    const q = config.rabbit.channel;
+    const connection = await amqp.connect(config.rabbit.url);
+    const channel = await connection.createChannel();
+    let TotalQueue = await channel.assertQueue(q);
+    console.log('Total Queue-->',TotalQueue.messageCount);
 
-        const store = new Confidence.Store(require('./config'));
-        const config = store.get('/', { env: process.env.NODE_ENV || 'development' });
+    channel.prefetch(1);
 
-        const q = config.rabbit.channel;
-        const connection = await amqp.connect(config.rabbit.url);
-        const channel = await connection.createChannel();
-        let TotalQueue = await channel.assertQueue(q);
-        console.log('Total Queue-->',TotalQueue.messageCount);
+    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
 
-        channel.prefetch(1);
-
-        console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
-        channel.consume(q, async msg => {
+    channel.consume(q, async msg => {
+        try {
             let queue = await channel.assertQueue(q);
 
             console.log('queue-->',queue.messageCount);
@@ -113,10 +114,9 @@ const Confidence = require('confidence');
                 await notify('');
                 channel.ack(msg)
             }
-
-        }, {noAck: false})
-
-    } catch (err) {
-        console.log(err)
-    }
+        } catch (err) {
+            console.log(err)
+            channel.reject(msg, false)
+        }
+    }, {noAck: false})
 })()

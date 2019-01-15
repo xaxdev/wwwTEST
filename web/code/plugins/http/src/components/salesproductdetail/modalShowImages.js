@@ -45,7 +45,7 @@ class ModalShowImages extends Component {
         if(images != undefined){
             images.map((img) => {
                 if (!!img) {
-                    allCer.push(img.original.replace('/images/products/original',''));
+                    allCer.push(img.originalFileName)
                 }
             })
         }
@@ -57,7 +57,8 @@ class ModalShowImages extends Component {
             'userEmail': userLogin.email,
             'ROOT_URL': ROOT_URL,
             'productId': productId,
-            'company': company.toLowerCase()
+            // 'company': company.toLowerCase()
+            'company': 'mme' // mme only 08/01/2019
         }
 
         getCertificate(params)
@@ -90,15 +91,15 @@ class ModalShowImages extends Component {
         if (!!images) {
             images.map((img) => {
                 const image = {
-                    original: `/original/${company.toLowerCase()}/${img.original.split('/').slice(-1).pop()}`,
-                    thumbnail: `/images/products/thumbnail/${img.original.split('/').slice(-1).pop()}`,
+                    original: `${img.physicalFile}`,
+                    thumbnail: `${img.thumbnail}`,
                     sizes: '700px'
                 };
 
                 imgs.push(image);
             });
             if(imgs.length>0){
-                imageCerDownload = `/original/${company.toLowerCase()}/${imgs[0].original.split('/').slice(-1).pop()}`;
+                imageCerDownload = `${imgs[0].original}`;
                 imageName = `${imgs[0].original.split('/').slice(-1).pop()}`;
             }
         }

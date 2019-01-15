@@ -6,7 +6,7 @@
       "requestTimeout": 200000
     },
     "elasticsearch": {
-        "host": "10.128.133.77:9200 ",
+        "host": "10.128.133.77:9200",
         "requestTimeout": 160000
     },
     "parallelization": {
@@ -14,6 +14,8 @@
     },
     "gallery": {
         "original": "/images/products/original",
-        "thumbnail": "/images/products/thumbnail"
+        "thumbnail": "/images/products/thumbnail",
+        "physicalfile": "/original",
+        "physicalpath": "/mnt/mol"
     }
 }
