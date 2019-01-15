@@ -67,7 +67,7 @@ class ModalShowFilesPDF extends Component {
                         </div>
                         <div className="modal-footer">
                             {file.length > 1
-                                ?   <button type="button" className="btn btn-default btn-radius" onClick={ this.downloadCertificateAll }>
+                                ?   <button type="button" className="btn btn-default btn-radius">
                                         Download
                                     </button>
                                 :   <a href={fileCerDownload} download={fileName} className="btn btn-default btn-radius">Download</a>
