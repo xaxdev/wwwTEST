@@ -161,7 +161,7 @@ module.exports = {
                     allCer.map((img) => {
                         (async _ => {
                             source = '';
-                            source = Path.resolve(__dirname, `../../../../../../../../../../mnt/mol/${company}/${img}`);
+                            source = Path.resolve(__dirname, `../../../../../../../../../../mnt/mol/${company.toUpperCase()}/${img}`);
                             console.log(source);
                             destination = userFolder + '/' + img.replace('/images/products/original/','');
                             await copyFile(source,destination);
@@ -174,7 +174,7 @@ module.exports = {
                     allCer.map((img) => {
                         (async _ => {
                             source = '';
-                            source = Path.resolve(__dirname, `../../../../../../../../../../mnt/mol/${company}/${img}`);
+                            source = Path.resolve(__dirname, `../../../../../../../../../../mnt/mol/${company.toUpperCase()}/${img}`);
                             console.log(source);
                             destination = userFolder + '/' + img.replace('/images/products/original/','');
                             await copyFile(source,destination);
