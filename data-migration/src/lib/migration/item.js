@@ -47,7 +47,7 @@ const settingsMovement = async (index, path, mapper, table, field) => ({
         type: 'activities',
         ...config.elasticsearch
     },
-    mapper,
+    mapper: await mapper,
     parallelization: {
         table: table,
         field: field,
@@ -69,7 +69,7 @@ const getExchangeRates = async _ => {
 const getAllExchangeRates = async _ => {
     try {
         console.log('All Exchange Rate!!!');
-        const query = await file.read(constant.ALL_EXCHANGE_RATE_QUERY);        
+        const query = await file.read(constant.ALL_EXCHANGE_RATE_QUERY);
         return await db.exec(query, config.db);;
     } catch (err) {
         throw err;
@@ -188,5 +188,5 @@ const getGOC = async (index) => {
     }
 };
 
-export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, getAccessory, getSpareParts, getLotNumbers, getMovementActivities, 
+export { getExchangeRates, getJewelry, getStones, getWatches, getOBA, getCertificates, getAccessory, getSpareParts, getLotNumbers, getMovementActivities,
     getGOC, getAllExchangeRates };
