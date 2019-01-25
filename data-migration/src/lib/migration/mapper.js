@@ -3,23 +3,31 @@ import * as item from './item';
 import fs from 'fs';
 import moment from 'moment-timezone';
 
-const exist = (file) => {
-    fs.stat(file, (err, stats) => {
-        if(err == null) {
-            //Exist
-            return true
-        } else if(err.code == 'ENOENT') {
-            // NO exist
-            return false
-        }
-    })
+const exist = async (file) => {
+    try {
+        return await new Promise((resolve, reject) => {
+            fs.stat(file, (err, stats) => {
+                if(err == null) {
+                    //Exist
+                    resolve(true)
+                    // return true
+                } else if(err.code == 'ENOENT') {
+                    // NO exist
+                    resolve(false)
+                    // return false
+                }
+            })
+        })
+    } catch (err) {
+        throw err
+    }
 }
 
 const sanitize = value => value.replace('(', '\\(').replace(')', '\\)').replace('.', '\\.');
 
 const gemstoneProperties = ['gemstone_id', 'gemstone_cut', 'gemstone_cutName', 'gemstone_color', 'gemstone_colorName', 'gemstone_clarity', 'gemstone_clarityName', 'gemstone_cost', 'gemstone_carat', 'gemstone_quantity', 'gemstone_origin', 'gemstone_symmetry', 'gemstone_fluorescence', 'gemstone_stoneTypeId', 'gemstone_stoneTypeName', 'gemstone_type', 'gemstone_unit'];
 
-const mapSalesProperties = (item, record, exchangeRates) => {
+const mapSalesProperties = async (item, record, exchangeRates) => {
     // add gemstone, if not existed
     if (!!record.gemstone_id && item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
         const gemstone = {};
@@ -109,7 +117,8 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${fileName}`))) !== null) === -1) {
         if (record.imageTypeId == 'Image') {
             let imagePathExsits = `${config.gallery.physicalpath}/${record.imageCompany.toUpperCase()}/${record.imageName}.${record.imageType}`
-            const hasFile = exist(imagePathExsits)
+            let hasFile = false;
+            hasFile = await exist(imagePathExsits)
             let physicalFile = `${config.gallery.physicalfile}/${record.imageCompany.toLowerCase()}/${fileName}`
             if (!hasFile) {
                 physicalFile = `${config.gallery.physicalfile}/mme/${fileName}`
@@ -176,7 +185,8 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     const fileNameCertificate = encodeURIComponent(`${record.CertificateImageName}.${record.CertificateImageType}`)
     if (!!record.CertificateImageName) {
         let imagePathExsits = `${config.gallery.physicalpath}/${record.CertificateImageCompany.toUpperCase()}/${fileNameCertificate}`
-        const hasFile = exist(imagePathExsits)
+        let hasFile = false;
+        hasFile = await exist(imagePathExsits)
         let physicalFile = `${config.gallery.physicalfile}/${record.CertificateImageCompany.toLowerCase()}/${fileNameCertificate}`
         if (!hasFile) {
             physicalFile = `${config.gallery.physicalfile}/mme/$${fileNameCertificate}`
@@ -267,7 +277,7 @@ const mapSalesProperties = (item, record, exchangeRates) => {
     }
 }
 
-const mapProperties = (item, record, exchangeRates) => {
+const mapProperties = async (item, record, exchangeRates) => {
     // add gemstone, if not existed
     if (!!record.gemstone_id && item.gemstones.findIndex(gemstone => gemstone.id === record.gemstone_id) === -1) {
         const gemstone = {};
@@ -356,8 +366,9 @@ const mapProperties = (item, record, exchangeRates) => {
     const fileName = encodeURIComponent(`${record.imageName}.${record.imageType}`)
     if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${fileName}`))) !== null) === -1) {
         if (record.imageTypeId == 'Image') {
-            let imagePathExsits = `${config.gallery.physicalpath}/${record.imageCompany.toUpperCase()}/${fileName}`
-            const hasFile = exist(imagePathExsits)
+            let imagePathExsits = `${config.gallery.physicalpath}/${record.imageCompany.toUpperCase()}/${fileName}`;
+            let hasFile = false;
+            hasFile = await exist(imagePathExsits)
             let physicalFile = `${config.gallery.physicalfile}/${record.imageCompany.toLowerCase()}/${fileName}`
             if (!hasFile) {
                 physicalFile = `${config.gallery.physicalfile}/mme/${fileName}`
@@ -420,7 +431,8 @@ const mapProperties = (item, record, exchangeRates) => {
     const fileNameCertificate = encodeURIComponent(`${record.CertificateImageName}.${record.CertificateImageType}`)
     if (!!record.CertificateImageName) {
         let imagePathExsits = `${config.gallery.physicalpath}/${record.CertificateImageCompany.toUpperCase()}/${fileNameCertificate}`
-        const hasFile = exist(imagePathExsits)
+        let hasFile = false;
+        hasFile = await exist(imagePathExsits)
         let physicalFile = `${config.gallery.physicalfile}/${record.CertificateImageCompany.toLowerCase()}/${fileNameCertificate}`
         if (!hasFile) {
             physicalFile = `${config.gallery.physicalfile}/mme/${fileNameCertificate}`
@@ -612,9 +624,8 @@ const calculateSalesPrices = (item, exchangeRates) => {
     item.discountPercent = discountPercent;
 };
 
-const filterImages = (items) => {
+const filterImages = async (items) => {
     items.map((item) => {
-
         if (item.gallery.length > 1) {
             const finndMME = item.gallery.findIndex(image => image.company === 'mme');
             let image = [];
@@ -627,7 +638,7 @@ const filterImages = (items) => {
     });
 };
 
-const mapItem = (recordset, exchangeRates) => {
+const mapItem = async (recordset, exchangeRates) => {
     const items = [];
     let id = 0;
 
@@ -646,15 +657,14 @@ const mapItem = (recordset, exchangeRates) => {
         }
 
         const latest = items[items.length - 1];
-        mapProperties(latest, record, exchangeRates);
+        await mapProperties(latest, record, exchangeRates)
     }
-
-    filterImages(items);
+    await filterImages(items);
 
     return items;
 };
 
-const mapMaster = recordset => {
+const mapMaster = async recordset => {
     const records = [];
     let id = 0;
 
@@ -670,7 +680,7 @@ const mapMaster = recordset => {
     return records;
 };
 
-const mapCertificate = recordset => {
+const mapCertificate = async recordset => {
     const items = []
     let id = 0
 
@@ -692,7 +702,7 @@ const mapCertificate = recordset => {
     return items
 }
 
-const mapStoneItem = (recordset, exchangeRates) => {
+const mapStoneItem = async (recordset, exchangeRates) => {
     const items = [];
     let id = 0;
 
@@ -717,7 +727,7 @@ const mapStoneItem = (recordset, exchangeRates) => {
     return items;
 };
 
-const mapStoneLotNumber = (recordset, exchangeRates) => {
+const mapStoneLotNumber = async (recordset, exchangeRates) => {
     const lotNumbers = [];
     let id = 0;
 
@@ -733,7 +743,7 @@ const mapStoneLotNumber = (recordset, exchangeRates) => {
     return lotNumbers;
 };
 
-const mapMovement = (recordset) => {
+const mapMovement = async (recordset) => {
     const movements = [];
 
     for (let record of recordset) {
@@ -744,7 +754,7 @@ const mapMovement = (recordset) => {
     return movements;
 };
 
-const mapSoldItem = (recordset, exchangeRates) => {
+const mapSoldItem = async (recordset, exchangeRates) => {
     const soldItems = [];
     let id = 0;
 
@@ -770,10 +780,10 @@ const mapSoldItem = (recordset, exchangeRates) => {
         }
 
         const latest = soldItems[soldItems.length - 1];
-        mapSalesProperties(latest, record, exchangeRates);
+        await mapSalesProperties(latest, record, exchangeRates);
     }
 
-    filterImages(soldItems);
+    await filterImages(soldItems);
 
     return soldItems;
 };
