@@ -11,19 +11,23 @@ const probe = async params => {
     }
 };
 
-const get = async params => {   
+const get = async params => {
     try {
         // query from db
+        // console.log('query from db-->');
         const recordset = await db.exec(params.query, params.db);
-
+        // console.log('records-->',recordset.length);
         if (recordset.length === 0) {
             return 0;
         }
 
+        // console.log('map record to document-->');
+        // console.log(params.mapper);
         // map record to document
-        const documents = params.mapper(recordset, params.exchangeRates);
-
+        const documents = await params.mapper(recordset, params.exchangeRates);
+        // console.log({documents});
         // upload documents to Elasticsearch
+        // console.log('upload documents to Elasticsearch-->');
         await es.upload(documents, params.elasticsearch);
 
         return documents.length;
