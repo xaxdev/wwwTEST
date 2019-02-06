@@ -466,7 +466,9 @@ const setnewprops = (data) => {
         salesWarehouseValue: (permission.salesWarehouse != null) ? permission.salesWarehouse.places : null,
         salesChannelValue: (permission.salesChannel != null) ? permission.salesChannel.places : null,
         notUseHierarchy: JSON.parse(permission.notUseHierarchy),
-        notUseSalesHierarchy: JSON.parse(permission.notUseSalesHierarchy)
+        notUseSalesHierarchy: JSON.parse(permission.notUseSalesHierarchy),
+        bomOnhand: permission.bomOnhand,
+        bomSales: permission.bomSales
     }
     return user
 }

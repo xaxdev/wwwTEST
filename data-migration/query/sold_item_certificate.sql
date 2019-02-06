@@ -10,7 +10,7 @@ SELECT [ITORAMA].[dbo].[SoldCertificateMaster].[RecId] AS 'id'
       ,[ITORAMA].[dbo].[SoldCertificateMaster].[WarehouseName] AS 'warehouseName'
       ,[ITORAMA].[dbo].[SoldCertificateMaster].[CertificateCreateDate] AS 'itemCreatedDate'
       ,[ITORAMA].[dbo].[SoldCertificateMaster].[Company] AS 'company'
-      , ISNULL(company.[Name], '') AS 'companyName'
+      ,ISNULL(company.[Name], '') AS 'companyName'
       ,ISNULL(certimage.[FILENAME], '') AS [imageName]
       ,ISNULL(certimage.[Company], '') AS [imageCompany]
 FROM [ITORAMA].[dbo].[SoldCertificateMaster]

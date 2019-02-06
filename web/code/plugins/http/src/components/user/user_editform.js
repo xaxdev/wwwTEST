@@ -66,7 +66,7 @@ export const fields = [
     'productGroupSalesACC','productGroupSalesOBA','productGroupSalesSPA','productGroupSalesErr','priceSalesRTP','priceSalesUCP','priceSalesCTP','priceSalesNSP',
     'priceSalesMGP','priceSalesDSP','salesLocation','salesLocationValue','salesWarehouse','salesWarehouseValue','salesAll','sales','categorySalesJLY',
     'categorySalesWAT','categorySalesSTO','categorySalesACC','categorySalesOBA','categorySalesSPP','notUseSalesHierarchy','salesChannel','salesChannelValue',
-    'salesChannelType'
+    'salesChannelType', 'bomOnhand', 'bomSales'
 ];
 
 export let countFirst = 0;
@@ -1226,7 +1226,7 @@ class UserDetailsFrom extends Component {
                   categorySPP,notUseHierarchy,userType,productGroupSales,productGroupSalesSTO,productGroupSalesJLY,productGroupSalesWAT,productGroupSalesACC,
                   productGroupSalesOBA,productGroupSalesSPA,productGroupSalesErr,priceSalesRTP,priceSalesUCP,priceSalesCTP,priceSalesNSP,priceSalesMGP,
                   priceSalesDSP,salesLocation,salesLocationValue,salesWarehouse,salesWarehouseValue,salesAll,categorySalesJLY,categorySalesWAT,
-                  categorySalesSTO,categorySalesACC,categorySalesOBA,categorySalesSPP,notUseSalesHierarchy
+                  categorySalesSTO,categorySalesACC,categorySalesOBA,categorySalesSPP,notUseSalesHierarchy,bomOnhand,bomSales
               },handleSubmit,submitting, CanNotUseHierarchy, userTypeValue, CanNotUseSalesHierarchy, HierarchyValue, SalesHierarchyValue } = this.props;
         let dataDropDowntLocations = [];
         let dataDropDowntWareHouse = [];

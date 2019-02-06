@@ -983,6 +983,35 @@ class SalesProductDetail extends Component {
         }
     }
 
+    filesBomIcon = _ => {
+        const userLogin = JSON.parse(sessionStorage.logindata)
+        const { bomSales } = userLogin.permission
+        const { filesBom } = this.props.productdetail
+        const styles ={
+            displaynone:{ display:'none' }
+        };
+
+        if(!!filesBom && filesBom.length > 0){
+            const [bom] = filesBom
+            const { physicalFile, originalFileName } = bom
+            return(
+                <div className={`${bomSales ? '' : 'hide'}`}>
+                    <a href={physicalFile} download={originalFileName} >
+                        <OverlayTrigger placement="bottom" overlay={tooltipBom}>
+                            <div className="icon-filesMonograph margin-l10" id="filesBom"/>
+                        </OverlayTrigger>
+                    </a>
+                </div>
+            );
+        } else {
+            return(
+                <div>
+                    <a style={styles.displaynone}><div className="icon-filesMonograph margin-l10" id="filesBom"></div></a>
+                </div>
+            );
+        }
+    }
+
     downloadCertificateAll = _=> {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
@@ -1154,6 +1183,7 @@ class SalesProductDetail extends Component {
                                     {this.imagesCOAIcon()}
                                     {this.imagesDBCIcon()}
                                     {this.filesMonographIcon()}
+                                    {this.filesBomIcon()}
                                     <a>
                                         <OverlayTrigger placement="bottom" overlay={tooltipMovement}>
                                             <div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }> </div>
@@ -1227,13 +1257,14 @@ class SalesProductDetail extends Component {
     }
 }
 
-const tooltipPrint = (<Tooltip id="tooltip"><strong>Preview & Print</strong></Tooltip>);
-const tooltipZoom = (<Tooltip id="tooltip"><strong>Zoom</strong></Tooltip>);
-const tooltipMovement = (<Tooltip id="tooltip"><strong>Movement & Activiy</strong></Tooltip>);
-const tooltipCertificate = (<Tooltip id="tooltip"><strong>Download Certificate</strong></Tooltip>);
-const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>);
-const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>);
-const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>);
+const tooltipPrint = (<Tooltip id="tooltip"><strong>Preview & Print</strong></Tooltip>)
+const tooltipZoom = (<Tooltip id="tooltip"><strong>Zoom</strong></Tooltip>)
+const tooltipMovement = (<Tooltip id="tooltip"><strong>Movement & Activiy</strong></Tooltip>)
+const tooltipCertificate = (<Tooltip id="tooltip"><strong>Download Certificate</strong></Tooltip>)
+const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>)
+const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>)
+const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>)
+const tooltipBom = (<Tooltip id="tooltip"><strong>BOM</strong></Tooltip>)
 
 SalesProductDetail.contextTypes = {
     router: PropTypes.object

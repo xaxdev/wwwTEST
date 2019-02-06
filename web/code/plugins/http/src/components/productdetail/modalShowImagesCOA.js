@@ -101,7 +101,6 @@ class ModalShowImagesCOA extends Component {
                 };
                 imgs.push(image);
             });
-            console.log({imgs});
             if(imgs.length>0){
                 imageCerDownload = `${imgs[0].original}`;
                 imageName = `${imgs[0].original.split('/').slice(-1).pop()}`;

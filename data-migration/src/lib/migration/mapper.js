@@ -139,14 +139,19 @@ const mapSalesProperties = async (item, record, exchangeRates) => {
     }
 
     // add COA, if not existed
-    const fileNameOther = encodeURIComponent(`${record.imageOtherName}.${record.imageOtherType}`)
-    if (!!record.imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
-        if (record.imageOtherTypeId == 'COA') {
+    const imageOtherName = !!record.imageOtherName? record.imageOtherName: record.imageOtherNameMME
+    const imageOtherType = !!record.imageOtherType? record.imageOtherType: record.imageOtherTypeMME
+    const imageOtherTypeId = !!record.imageOtherTypeId ? record.imageOtherTypeId: record.imageOtherTypeIdMME
+    const imageOtherCompany = !!record.imageOtherCompany? record.imageOtherCompany: record.imageOtherCompanyMME
+    const fileNameOtherDB = `${imageOtherName}.${imageOtherType}`
+    const fileNameOther =  encodeURIComponent(fileNameOtherDB)
+    if (!!imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'COA') {
             const image = {
                 original: `${config.gallery.original}/${fileNameOther}`,
                 thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
-                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
-                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
             };
 
             item.imagesCOA.push(image);
@@ -154,13 +159,13 @@ const mapSalesProperties = async (item, record, exchangeRates) => {
     }
 
     // add DBC, if not existed
-    if (!!record.imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
-        if (record.imageOtherTypeId == 'DBC') {
+    if (!!imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'DBC') {
             const image = {
                 original: `${config.gallery.original}/${fileNameOther}`,
                 thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
-                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
-                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
             };
 
             item.imagesDBC.push(image);
@@ -168,13 +173,13 @@ const mapSalesProperties = async (item, record, exchangeRates) => {
     }
 
     // add Monograph, if not existed
-    if (!!record.imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
-        if (record.imageOtherTypeId == 'Monograph') {
+    if (!!imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'Monograph') {
             const image = {
                 original: `${config.gallery.original}/${fileNameOther}`,
                 thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
-                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
-                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
             };
 
             item.filesMonograph.push(image);
@@ -388,42 +393,69 @@ const mapProperties = async (item, record, exchangeRates) => {
     }
 
     // add COA, if not existed
-    const fileNameOther = encodeURIComponent(`${record.imageOtherName}.${record.imageOtherType}`)
-    if (!!record.imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
-        if (record.imageOtherTypeId == 'COA') {
+    const imageOtherName = !!record.imageOtherName? record.imageOtherName: record.imageOtherNameMME
+    const imageOtherType = !!record.imageOtherType? record.imageOtherType: record.imageOtherTypeMME
+    const imageOtherTypeId = !!record.imageOtherTypeId ? record.imageOtherTypeId: record.imageOtherTypeIdMME
+    const imageOtherCompany = !!record.imageOtherCompany? record.imageOtherCompany: record.imageOtherCompanyMME
+    const fileNameOtherDB = `${imageOtherName}.${imageOtherType}`
+    const fileNameOther =  encodeURIComponent(fileNameOtherDB)
+
+    // const fileNameOther = encodeURIComponent(`${record.imageOtherName}.${record.imageOtherType}`)
+    if (!!imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'COA') {
             const image = {
                 original: `${config.gallery.original}/${fileNameOther}`,
                 thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
-                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
-                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
             };
             item.imagesCOA.push(image);
         }
     }
 
     // add DBC, if not existed
-    if (!!record.imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
-        if (record.imageOtherTypeId == 'DBC') {
+    if (!!imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'DBC') {
             const image = {
                 original: `${config.gallery.original}/${fileNameOther}`,
                 thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
-                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
-                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
             };
             item.imagesDBC.push(image);
         }
     }
 
     // add Monograph, if not existed
-    if (!!record.imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
-        if (record.imageOtherTypeId == 'Monograph') {
+    if (!!imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'Monograph') {
             const image = {
                 original: `${config.gallery.original}/${fileNameOther}`,
                 thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
-                physicalFile: `${config.gallery.physicalfile}/mme/${fileNameOther}`,
-                originalFileName: `${record.imageOtherName}.${record.imageOtherType}`
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
             };
             item.filesMonograph.push(image);
+        }
+    }
+
+    // add Bom, if not existed
+    const bomDocName = !!record.bomDocName? record.bomDocName: record.bomDocNameMME
+    const bomDocType = !!record.bomDocType? record.bomDocType: record.bomDocTypeMME
+    const bomDocTypeId = !!record.bomDocTypeId ? record.bomDocTypeId: record.bomDocTypeIdMME
+    const bomDocCompany = !!record.bomDocCompany? record.bomDocCompany: record.bomDocCompanyMME
+    const fileNameDB = `${bomDocName}.${bomDocType}`
+    const fileNameBom =  encodeURIComponent(fileNameDB)
+    // if (!!record.bomDocName && item.filesBom.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameBom}`))) !== null) === -1) {
+    if (!!bomDocName && item.filesBom.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameBom}`))) !== null) === -1) {
+        if (bomDocTypeId == 'File') {
+            const image = {
+                original: `${config.gallery.original}/${fileNameBom}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameBom}`,
+                physicalFile: `${config.gallery.physicalfile}/${bomDocCompany}/${fileNameBom}`,
+                originalFileName: `${bomDocName}.${bomDocType}`
+            };
+            item.filesBom.push(image);
         }
     }
 
@@ -652,6 +684,7 @@ const mapItem = async (recordset, exchangeRates) => {
             item.imagesCOA = [];
             item.imagesDBC = [];
             item.filesMonograph = [];
+            item.filesBom = [];
             calculatePrices(item, exchangeRates);
             items.push(item);
         }
@@ -692,6 +725,7 @@ const mapCertificate = async recordset => {
             item.imagesCOA = [];
             item.imagesDBC = [];
             item.filesMonograph = [];
+            item.filesBom = [];
             items.push(item)
         }
 
@@ -717,6 +751,7 @@ const mapStoneItem = async (recordset, exchangeRates) => {
             item.imagesCOA = [];
             item.imagesDBC = [];
             item.filesMonograph = [];
+            item.filesBom = [];
             calculatePrices(item, exchangeRates);
             items.push(item);
         }
@@ -773,6 +808,7 @@ const mapSoldItem = async (recordset, exchangeRates) => {
             soldItem.imagesCOA = [];
             soldItem.imagesDBC = [];
             soldItem.filesMonograph = [];
+            soldItem.filesBom = [];
             soldItem.customerNameFullTextSearch = record.customerName;
             soldItem.customerNameSplitTextSearch = record.customerName;
             calculateSalesPrices(soldItem, exchangeRates);
