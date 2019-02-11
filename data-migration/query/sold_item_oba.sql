@@ -74,6 +74,24 @@ SELECT	SOL.[Id] AS 'id'
 		, ISNULL(imgOther.[Company], '') AS 'imageOtherCompany'
 		, ISNULL(imgOther.[DEFAULTIMAGE], 0) AS 'defaultImageOther'
 		, ISNULL(imgOther.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateImageOther'
+		, ISNULL(imgOtherMME.[FILENAME], '') AS 'imageOtherNameMME'
+	    , ISNULL(imgOtherMME.[FILETYPE], '') AS 'imageOtherTypeMME'
+	    , ISNULL(imgOtherMME.[TYPEID], '') AS 'imageOtherTypeIdMME'
+	    , ISNULL(imgOtherMME.[Company], '') AS 'imageOtherCompanyMME'
+	    , ISNULL(imgOtherMME.[DEFAULTIMAGE], 0) AS 'defaultImageOtherMME'
+	    , ISNULL(imgOtherMME.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateImageOtherMME'
+		, ISNULL(bomDoc.[FILENAME], '') AS 'bomDocName'
+		, ISNULL(bomDoc.[FILETYPE], '') AS 'bomDocType'
+		, ISNULL(bomDoc.[TYPEID], '') AS 'bomDocTypeId'
+		, ISNULL(bomDoc.[Company], '') AS 'bomDocCompany'
+		, ISNULL(bomDoc.[DEFAULTIMAGE], 0) AS 'defaultBomDoc'
+		, ISNULL(bomDoc.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateBomDoc'
+		, ISNULL(bomDocMME.[FILENAME], '') AS 'bomDocNameMME'
+	    , ISNULL(bomDocMME.[FILETYPE], '') AS 'bomDocTypeMME'
+	    , ISNULL(bomDocMME.[TYPEID], '') AS 'bomDocTypeIdMME'
+	    , ISNULL(bomDocMME.[Company], '') AS 'bomDocCompanyMME'
+	    , ISNULL(bomDocMME.[DEFAULTIMAGE], 0) AS 'defaultBomDocMME'
+	    , ISNULL(bomDocMME.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateBomDocMME'
 		, 'OBA' AS 'type'
 		, ISNULL(oba.[Dimensions], '') AS 'dimensions'
 		, gemstone.[Id] AS 'gemstone_id'
@@ -117,6 +135,10 @@ FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 			ON SOL.[Reference] = imgOther.[ITEMID]
 			AND SOL.[DataAreaId] = imgOther.[Company]
 			AND imgOther.[TYPEID] in ('COA','DBC','Monograph')
+		LEFT JOIN [ITORAMA].[dbo].[ItemImages] imgOtherMME
+		    ON SOL.[Reference] = imgOtherMME.[ITEMID]
+		    AND imgOtherMME.[Company] = 'mme'
+		    AND imgOtherMME.[TYPEID] in ('COA','DBC','Monograph')
 		LEFT JOIN [ITORAMA].[dbo].[SoldItemCertificates] cert
 			ON gemstone.[Certificate] = cert.[CERTIFICATIONNO]
 			AND SOL.[DataAreaId] = cert.[Company]
@@ -124,6 +146,16 @@ FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 			ON cert.[CERTIFICATIONNO] = certimage.[ITEMID]
 			AND certimage.[Company] = SOL.[DataAreaId]
 			AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
+		LEFT JOIN [ITORAMA].[dbo].[ItemImages] bomDoc
+		    ON SOL.[Reference] = bomDoc.[ITEMID]
+		    AND SOL.[DataAreaId] = bomDoc.[Company]
+		    AND bomDoc.[TYPEID] in ('File')
+			AND bomDoc.[FILETYPE] in ('xls','xlsx')
+		LEFT JOIN [ITORAMA].[dbo].[ItemImages] bomDocMME
+		    ON SOL.[Reference] = bomDocMME.[ITEMID]
+		    AND bomDocMME.[Company] = 'mme'
+		    AND bomDocMME.[TYPEID] in ('File')
+			AND bomDocMME.[FILETYPE] in ('xls','xlsx')
 		LEFT JOIN [ITORAMA].[dbo].[CertificateMaster] certmaster
 			ON cert.[CERTIFICATIONNO] = certmaster.[Item]
 			AND SOL.[DataAreaId] = certmaster.[Company]

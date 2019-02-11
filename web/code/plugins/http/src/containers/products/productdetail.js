@@ -17,6 +17,7 @@ import ModalMyCatalog from '../../components/productdetail/modalMyCatalog';
 import ModalShowImagesCOA from '../../components/productdetail/modalShowImagesCOA';
 import ModalShowImagesDBC from '../../components/productdetail/modalShowImagesDBC';
 import ModalShowFilesPDF from '../../components/productdetail/modalShowFilesPDF';
+import ModalShowFilesBOM from '../../components/productdetail/modalShowFilesBOM';
 import Modalalertmsg from '../../components/productdetail/modalalertmsg';
 import ProductGallery from '../../components/productdetail/productGallery';
 import ProductRelete from '../../components/productdetail/productReleted';
@@ -61,7 +62,8 @@ class productdetail extends Component {
             showmovement: false,
             showCOA: false,
             showDBC: false,
-            showMonograph: false
+            showMonograph: false,
+            showBom: false
         };
     }
 
@@ -670,6 +672,7 @@ class productdetail extends Component {
                     imagesGallery = gallery.find((gallery) => {
                         return gallery.defaultImage == 1;
                     })
+                    console.log({imagesGallery});
                     if (!!imagesGallery) {
                         // If has defaultImage = 1
                         galleryOrder = gallery.sort(compareBy('defaultImage','desc',null));
@@ -715,6 +718,15 @@ class productdetail extends Component {
 
         return(
             <ModalShowFilesPDF files={filesMonograph} isOpen={this.state.showMonograph} isClose={this.handleCloseShowMonograph}
+                company={company}/>
+        );
+    }
+
+    renderFilesBom = _ => {
+        const { filesBom, company } = this.props.productdetail;
+
+        return(
+            <ModalShowFilesBOM files={filesBom} isOpen={this.state.showBom} isClose={this.handleCloseShowBom}
                 company={company}/>
         );
     }
@@ -950,6 +962,14 @@ class productdetail extends Component {
         this.setState({ showMonograph:false })
     }
 
+    showFilesBom = _=> {
+        this.setState({ showBom:true })
+    }
+
+    handleCloseShowBom = _=> {
+        this.setState({ showBom:false })
+    }
+
     imagesCOAIcon = _ => {
         const { imagesCOA } = this.props.productdetail;
         const styles ={
@@ -1020,6 +1040,35 @@ class productdetail extends Component {
             return(
                 <div>
                     <a style={styles.displaynone}><div className="icon-filesMonograph margin-l10" id="filesMonograph"></div></a>
+                </div>
+            );
+        }
+    }
+
+    filesBomIcon = _ => {
+        const userLogin = JSON.parse(sessionStorage.logindata)
+        const { bomOnhand } = userLogin.permission
+        const { filesBom } = this.props.productdetail
+        const styles ={
+            displaynone:{ display:'none' }
+        };
+
+        if(!!filesBom && filesBom.length > 0){
+            const [bom] = filesBom
+            const { physicalFile, originalFileName } = bom
+            return(
+                <div className={`${bomOnhand ? '' : 'hide'}`}>
+                    <a href={physicalFile} download={originalFileName} >
+                        <OverlayTrigger placement="bottom" overlay={tooltipBom}>
+                            <div className="icon-filesMonograph margin-l10" id="filesBom"/>
+                        </OverlayTrigger>
+                    </a>
+                </div>
+            );
+        } else {
+            return(
+                <div>
+                    <a style={styles.displaynone}><div className="icon-filesMonograph margin-l10" id="filesBom"></div></a>
                 </div>
             );
         }
@@ -1205,6 +1254,7 @@ class productdetail extends Component {
                                     {this.imagesCOAIcon()}
                                     {this.imagesDBCIcon()}
                                     {this.filesMonographIcon()}
+                                    {this.filesBomIcon()}
                                     <a>
                                         <OverlayTrigger placement="bottom" overlay={tooltipMovement}>
                                             <div className={`${ userLogin.movement ? 'icon-movement margin-l10' : 'hidden'}`} onClick={ this.showmovement }></div>
@@ -1215,6 +1265,7 @@ class productdetail extends Component {
                                 <div className="col-md-6 col-sm-12">{this.renderImageGalleryCOA()}</div>
                                 <div className="col-md-6 col-sm-12">{this.renderImageGalleryDBC()}</div>
                                 <div className="col-md-6 col-sm-12">{this.renderFilesMonograph()}</div>
+                                <div className="col-md-6 col-sm-12">{this.renderFilesBom()}</div>
                                 <div className="col-md-6 col-sm-12">
                                     <div className="col-md-12 col-sm-12"> {this.renderDesc()} </div>
                                     <div className={`${type != 'JLY' || !setReference ? 'hidden' : 'col-md-12 col-sm-12 top-line-detail'}`}>
@@ -1271,14 +1322,15 @@ class productdetail extends Component {
     }
 }
 
-const tooltipAddCatalog = (<Tooltip id="tooltip"><strong>Add to Catalog</strong></Tooltip>);
-const tooltipPrint = (<Tooltip id="tooltip"><strong>Preview & Print</strong></Tooltip>);
-const tooltipZoom = (<Tooltip id="tooltip"><strong>Zoom</strong></Tooltip>);
-const tooltipMovement = (<Tooltip id="tooltip"><strong>Movement & Activiy</strong></Tooltip>);
-const tooltipCertificate = (<Tooltip id="tooltip"><strong>Download Certificate</strong></Tooltip>);
-const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>);
-const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>);
-const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>);
+const tooltipAddCatalog = (<Tooltip id="tooltip"><strong>Add to Catalog</strong></Tooltip>)
+const tooltipPrint = (<Tooltip id="tooltip"><strong>Preview & Print</strong></Tooltip>)
+const tooltipZoom = (<Tooltip id="tooltip"><strong>Zoom</strong></Tooltip>)
+const tooltipMovement = (<Tooltip id="tooltip"><strong>Movement & Activiy</strong></Tooltip>)
+const tooltipCertificate = (<Tooltip id="tooltip"><strong>Download Certificate</strong></Tooltip>)
+const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>)
+const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>)
+const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>)
+const tooltipBom = (<Tooltip id="tooltip"><strong>BOM</strong></Tooltip>)
 
 productdetail.contextTypes = {
     router: PropTypes.object

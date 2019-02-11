@@ -223,7 +223,9 @@ class UserDetails extends Component {
             userType: data.userType,
             price: data.price,
             notUseHierarchy:JSON.stringify(data.notUseHierarchy),
-            notUseSalesHierarchy:JSON.stringify(data.notUseSalesHierarchy)
+            notUseSalesHierarchy:JSON.stringify(data.notUseSalesHierarchy),
+            bomOnhand: data.bomOnhand,
+            bomSales: data.bomSales
         }
 
         data = Object.assign({}, data, { permission:permission });
@@ -289,10 +291,13 @@ class UserDetails extends Component {
         delete data.categorySalesWAT;
         delete data.productGroupSales;
         delete data.userType;
+        delete data.bomOnhand;
+        delete data.bomSales;
 
         if(!data.password){
             delete data.password;
         }
+
         delete data.permissionId;
 
         this.props.updateUser(data).then(() => {
