@@ -6,11 +6,11 @@
       "requestTimeout": 200000
     },
     "elasticsearch": {
-        "host": "13.67.69.236:9200",
-        "requestTimeout": 160000
+        "host": "10.128.133.77:9200",
+        "requestTimeout": 220000
     },
     "parallelization": {
-        "size": 2000
+        "size": 1000
     },
     "gallery": {
         "original": "/images/products/original",

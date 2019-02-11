@@ -672,7 +672,6 @@ class productdetail extends Component {
                     imagesGallery = gallery.find((gallery) => {
                         return gallery.defaultImage == 1;
                     })
-                    console.log({imagesGallery});
                     if (!!imagesGallery) {
                         // If has defaultImage = 1
                         galleryOrder = gallery.sort(compareBy('defaultImage','desc',null));
@@ -1060,7 +1059,7 @@ class productdetail extends Component {
                 <div className={`${bomOnhand ? '' : 'hide'}`}>
                     <a href={physicalFile} download={originalFileName} >
                         <OverlayTrigger placement="bottom" overlay={tooltipBom}>
-                            <div className="icon-filesMonograph margin-l10" id="filesBom"/>
+                            <div className="icon-bom margin-l10" id="filesBom"/>
                         </OverlayTrigger>
                     </a>
                 </div>
@@ -1330,7 +1329,7 @@ const tooltipCertificate = (<Tooltip id="tooltip"><strong>Download Certificate</
 const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>)
 const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>)
 const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>)
-const tooltipBom = (<Tooltip id="tooltip"><strong>BOM</strong></Tooltip>)
+const tooltipBom = (<Tooltip id="tooltip"><strong>BILL OF MATERIAL</strong></Tooltip>)
 
 productdetail.contextTypes = {
     router: PropTypes.object

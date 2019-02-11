@@ -11,10 +11,10 @@ class RenderViewSalesProductGroup extends Component {
             productGroupSales, productGroupSalesJLY, productGroupSalesWAT, productGroupSalesSTO, productGroupSalesACC, productGroupSalesOBA,
             productGroupSalesSPA, productGroupSalesErr, bomSales
         }, userTypeValue } = props;
-        
+
         return(
-            <div>
-                <div className={`form-group ${userTypeValue != 'OnHand' && userTypeValue != null ?'':'hidden'}`}>
+            <div className={`${userTypeValue != 'OnHand' && userTypeValue != null ?'':'hidden'}`}>
+                <div className="form-group">
                     <label className="col-sm-2 control-label">View Sales Product Group</label>
                     <div className="col-sm-5">
                         <select className="form-control" {...productGroupSales}

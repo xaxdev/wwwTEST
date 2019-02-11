@@ -1,12 +1,13 @@
 export default function validate(values){
+    const { username, password } = values
+    const errors = {};
+    if(!username){
+        errors.username = 'Please input username';
+    }
 
-  const errors = {};
-  if(!values.username){
-    errors.username = 'Please input username';
-  }
+    if(!password){
+        errors.password = 'Please input password';
+    }
 
-  if(!values.password){
-    errors.password = 'Please input password';
-  }
-  return errors;
+    return errors;
 }

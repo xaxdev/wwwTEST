@@ -1147,7 +1147,7 @@ const tooltipCertificate = (<Tooltip id="tooltip"><strong>Download Certificate</
 const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>)
 const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>)
 const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>)
-const tooltipBom = (<Tooltip id="tooltip"><strong>BOM</strong></Tooltip>)
+const tooltipBom = (<Tooltip id="tooltip"><strong>BILL OF MATERIAL</strong></Tooltip>)
 
 function mapStateToProps(state) {
     return {
