@@ -65,6 +65,12 @@ module.exports = {
         notUseSalesHierarchy:{
             type: 'string'
         },
+        bomOnhand: {
+            type: 'boolean'
+        },
+        bomSales: {
+            type: 'boolean'
+        },
         toJSON: function () {
             var obj = this.toObject();
             delete obj.user;

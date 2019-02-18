@@ -937,6 +937,13 @@ select.form-searchresult option{
   float: left;
   cursor:pointer;
 }
+.icon-bom{
+  background: url(/images/BOM.png) no-repeat center;
+  width:40px;
+  height: 40px;
+  float: left;
+  cursor:pointer;
+}
 .fa{
     opacity:0.5;
 }

@@ -50,7 +50,9 @@ module.exports = {
                 notUseHierarchy: Joi.string(),
                 category: Joi.number().integer(),
                 salesCategory: Joi.number().integer(),
-                userType: Joi.string()
+                userType: Joi.string(),
+                bomOnhand: Joi.boolean(),
+                bomSales: Joi.boolean()
             }).required(),
             webOnly: Joi.boolean(),
             movement: Joi.boolean()

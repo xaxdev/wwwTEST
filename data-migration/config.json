@@ -7,10 +7,10 @@
     },
     "elasticsearch": {
         "host": "10.128.133.77:9200",
-        "requestTimeout": 160000
+        "requestTimeout": 220000
     },
     "parallelization": {
-        "size": 2000
+        "size": 500
     },
     "gallery": {
         "original": "/images/products/original",

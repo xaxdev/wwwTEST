@@ -855,6 +855,35 @@ class SalesProductReleteDetail extends Component {
         }
     }
 
+    filesBomIcon = _ => {
+        const userLogin = JSON.parse(sessionStorage.logindata)
+        const { bomSales } = userLogin.permission
+        const { filesBom } = this.props.productdetail
+        const styles ={
+            displaynone:{ display:'none' }
+        };
+
+        if(!!filesBom && filesBom.length > 0){
+            const [bom] = filesBom
+            const { physicalFile, originalFileName } = bom
+            return(
+                <div className={`${bomSales ? '' : 'hide'}`}>
+                    <a href={physicalFile} download={originalFileName} >
+                        <OverlayTrigger placement="bottom" overlay={tooltipBom}>
+                            <div className="icon-filesMonograph margin-l10" id="filesBom"/>
+                        </OverlayTrigger>
+                    </a>
+                </div>
+            );
+        } else {
+            return(
+                <div>
+                    <a style={styles.displaynone}><div className="icon-filesMonograph margin-l10" id="filesBom"></div></a>
+                </div>
+            );
+        }
+    }
+
     renderNavigation = _ => {
         return(
             <div className="width-50 productreletedetail-width maring-t15">
@@ -1037,6 +1066,7 @@ class SalesProductReleteDetail extends Component {
                                     {this.imagesCOAIcon()}
                                     {this.imagesDBCIcon()}
                                     {this.filesMonographIcon()}
+                                    {this.filesBomIcon()}
                                     <a>
                                         <OverlayTrigger placement="bottom" overlay={tooltipMovement}>
                                             <div className="icon-movement margin-l10" onClick={ this.showmovement }></div>
@@ -1110,13 +1140,14 @@ class SalesProductReleteDetail extends Component {
     }
 }
 
-const tooltipPrint = (<Tooltip id="tooltip"><strong>Preview & Print</strong></Tooltip>);
-const tooltipZoom = (<Tooltip id="tooltip"><strong>Zoom</strong></Tooltip>);
-const tooltipMovement = (<Tooltip id="tooltip"><strong>Movement & Activiy</strong></Tooltip>);
-const tooltipCertificate = (<Tooltip id="tooltip"><strong>Download Certificate</strong></Tooltip>);
-const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>);
-const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>);
-const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>);
+const tooltipPrint = (<Tooltip id="tooltip"><strong>Preview & Print</strong></Tooltip>)
+const tooltipZoom = (<Tooltip id="tooltip"><strong>Zoom</strong></Tooltip>)
+const tooltipMovement = (<Tooltip id="tooltip"><strong>Movement & Activiy</strong></Tooltip>)
+const tooltipCertificate = (<Tooltip id="tooltip"><strong>Download Certificate</strong></Tooltip>)
+const tooltipCOA = (<Tooltip id="tooltip"><strong>Certificate of Authencity</strong></Tooltip>)
+const tooltipDBC = (<Tooltip id="tooltip"><strong>Diamond Birth Certificate</strong></Tooltip>)
+const tooltipMonograph = (<Tooltip id="tooltip"><strong>Monograph</strong></Tooltip>)
+const tooltipBom = (<Tooltip id="tooltip"><strong>BILL OF MATERIAL</strong></Tooltip>)
 
 function mapStateToProps(state) {
     return {
