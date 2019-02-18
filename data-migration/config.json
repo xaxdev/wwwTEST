@@ -10,7 +10,7 @@
         "requestTimeout": 220000
     },
     "parallelization": {
-        "size": 1000
+        "size": 500
     },
     "gallery": {
         "original": "/images/products/original",
