@@ -42,6 +42,10 @@ const Jewelryattr = (props) =>{
                     <div className="col-md-8 col-sm-8">{convertBlanktodash(props.subTypeName)}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Hierarchy</div>
+                    <div className="col-md-8 col-sm-8">{convertBlanktodash(props.hierarchyName)}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Collection</div>
                     <div className="col-md-8 col-sm-8">{convertBlanktodash(props.collectionName)}</div>
                 </div>

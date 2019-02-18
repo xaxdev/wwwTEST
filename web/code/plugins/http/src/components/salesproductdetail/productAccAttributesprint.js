@@ -50,6 +50,10 @@ const accAttr = (props) =>{
                 <div style={styles.colmd5}>{convertBlanktodash(props.subTypeName)}</div>
             </div>
             <div style={styles.colmd12}>
+                <div style={styles.colmd5}>Hierarchy</div>
+                <div style={styles.colmd5}>{convertBlanktodash(props.hierarchyName)}</div>
+            </div>
+            <div style={styles.colmd12}>
                 <div style={styles.colmd5}>Collection</div>
                 <div style={styles.colmd5}>{convertBlanktodash(props.collectionName)}</div>
             </div>
