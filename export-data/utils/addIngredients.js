@@ -36,15 +36,15 @@ const setitems = (responseData, request) => new Promise((resolve, reject) => {
                 })
                 if (!!imagesGallery) {
                     // If has defaultImage = 1
-                    imagesProduct = (imagesGallery) != undefined ? imagesGallery.thumbnail : '';
+                    imagesProduct = (imagesGallery) != undefined ? '/images/products/thumbnail/'+imagesGallery.originalFileName : '';
                 }else{
                     // checked lastModifiedDateImage by using lastModifiedDateImage
                     imagesOrder = item.image.sort(compareBy('lastModifiedDateSetImage','desc',null));
-                    imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].thumbnail : '';
+                    imagesProduct = (imagesOrder.length) != 0 ? '/images/products/thumbnail/'+imagesOrder[0].originalFileName : '';
                 }
             }else{
                 imagesProduct = (item.image) != undefined
-                    ? (item.image.length) != 0 ? item.image[0].thumbnail : ''
+                    ? (item.image.length) != 0 ? '/images/products/thumbnail/'+item.image[0].originalFileName : ''
                     : '';
             }
 
@@ -126,15 +126,15 @@ const ingredient = (responseData, request) => new Promise((resolve, reject) => {
                 })
                 if (!!imagesGallery) {
                     // If has defaultImage = 1
-                    imagesProduct = (imagesGallery) != undefined ? imagesGallery.thumbnail : '';
+                    imagesProduct = (imagesGallery) != undefined ? '/images/products/thumbnail/'+imagesGallery.originalFileName : '';
                 }else{
                     // checked lastModifiedDateImage by using lastModifiedDateImage
                     imagesOrder = item.gallery.sort(compareBy('lastModifiedDateImage','desc',null));
-                    imagesProduct = (imagesOrder.length) != 0 ? imagesOrder[0].thumbnail : '';
+                    imagesProduct = (imagesOrder.length) != 0 ? '/images/products/thumbnail/'+imagesOrder[0].originalFileName : '';
                 }
             }else{
                 imagesProduct = (item.gallery) != undefined
-                    ? (item.gallery.length) != 0 ? item.gallery[0].thumbnail : ''
+                    ? (item.gallery.length) != 0 ? '/images/products/thumbnail/'+item.gallery[0].originalFileName : ''
                     : '';
             }
 
