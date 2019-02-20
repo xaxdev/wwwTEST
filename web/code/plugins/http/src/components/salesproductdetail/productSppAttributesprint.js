@@ -49,6 +49,10 @@ const spaAttr = (props) =>{
                 <div style={styles.colmd5}>{convertBlanktodash(props.subTypeName)}</div>
             </div>
             <div style={styles.colmd12}>
+                <div style={styles.colmd5}>Hierarchy</div>
+                <div style={styles.colmd5}>{convertBlanktodash(props.hierarchyName)}</div>
+            </div>
+            <div style={styles.colmd12}>
                 <div style={styles.colmd5}>Buckle Type</div>
                 <div style={styles.colmd5}>{convertBlanktodash(props.buckleTypeName)}</div>
             </div>
