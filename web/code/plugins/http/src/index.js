@@ -18,11 +18,12 @@ const location = `${pathname}${search}${hash}`;
 
 const Root = <Router routes={routes} history={history} />;
 
-const dest = document.querySelector('.body-wrapper');
-  match({ routes, location }, () => {
+const dest = document.querySelector('.body-wrapper')
+match({ routes, location }, () => {
     ReactDOM.render(
-      <Provider store={store} key="provider">
-        { Root }
-      </Provider>
-      , dest);
-  });
+        <Provider store={store} key="provider">
+            { Root }
+        </Provider>
+        , dest
+    )
+})
