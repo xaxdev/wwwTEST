@@ -10,7 +10,7 @@ const Goc =  ({list}) =>{
             <Table responsive className="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Transfer Date</th>
+                        <th>Date</th>
                         <th>Transferred From</th>
                         <th>Transferred To</th>
                     </tr>
@@ -29,7 +29,7 @@ const Goc =  ({list}) =>{
                         }
                         return (
                             <tr key={index}>
-                                <td title="Transfer Date" className="text-center">{!!data.date ? convertDate(data.date) : '-'}</td>
+                                <td title="Date" className="text-center">{!!data.date ? convertDate(data.date) : '-'}</td>
                                 <td title="Transferred from" className="text-center">{transferfrom}</td>
                                 <td title="Transferred to" className="text-center">{transferto}</td>
                             </tr>

@@ -21,7 +21,7 @@ export default function SearchResultListViewPrintAll(items, userLogin, ViewAsSet
         let isSpecialDisc = false;
 
         if (ViewAsSet) {
-            lblActualCost = 'Total Cost Price (USD)';
+            lblActualCost = 'Total Initial Cost (USD)';
             lblPrice = 'Total Price (USD)';
             lblUpdatedCost = 'Total Update Cost (USD)';
 
@@ -60,7 +60,7 @@ export default function SearchResultListViewPrintAll(items, userLogin, ViewAsSet
                 : '-' :
                 item.name ;
         }else{
-            lblActualCost = `Cost Price (${userLogin.currency})`;
+            lblActualCost = `Initial Cost (${userLogin.currency})`;
             lblPrice = `Price (${userLogin.currency})`;
             lblUpdatedCost = `Update Cost (${userLogin.currency})`;
 

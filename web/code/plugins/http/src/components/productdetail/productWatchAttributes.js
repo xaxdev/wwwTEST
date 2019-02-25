@@ -60,10 +60,6 @@ const Watchattr =  (props) =>{
                     <div className="col-md-8 col-sm-8">{convertBlanktodash(props.metalColorName)}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Limited Edition</div>
-                    <div className="col-md-8 col-sm-8">{convertBlanktodash(props.limitedEdition)}</div>
-                </div>
-                <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Limited Edition Number</div>
                     <div className="col-md-8 col-sm-8">{convertBlanktodash(props.limitedEditionNumber)}</div>
                 </div>
