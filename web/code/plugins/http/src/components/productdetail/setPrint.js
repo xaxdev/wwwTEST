@@ -36,74 +36,67 @@ class productprint extends Component {
     }
     renderDesc(){
         const  Detail  = this.props.productdetail;
-        let  Detailtitle  = '';
+        let  Detailtitle  = 'ITEM DETAILS';
         if(!Detail){
             return( <div>Loading...</div> );
         }
         switch (Detail.type) {
             case 'JLY':
-                Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'STO':
-                Detailtitle='STONE DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'WAT':
-                Detailtitle='WATCH DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'OBA':
-                Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'ACC':
-                Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'SPA':
-                Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptionBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
                     </div>
-                  );
+                );
             case 'CER':
                 Detailtitle='CERTIFICATE DETAILS';
                 return(
                     <div>
-                      <h2>{Detailtitle}</h2>
-                      <ProductDescriptioncerBlock {...Detail} />
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptioncerBlock {...Detail} />
                     </div>
-                  );
-          default:
-              Detailtitle='JEWELRY DETAILS';
-              return(
-                  <div>
-                    <h2>{Detailtitle}</h2>
-                    <ProductDescriptionBlock {...Detail} />
-                  </div>
+                );
+            default:
+                return(
+                    <div>
+                        <h2>{Detailtitle}</h2>
+                        <ProductDescriptionBlock {...Detail} />
+                    </div>
                 );
         }
     }
@@ -111,67 +104,60 @@ class productprint extends Component {
         const  Detail  = this.props.productdetail;
         const { lotNumbers, pageSize, activePage } = this.props;
 
-        let  Attrtitle  = '';
+        let  Attrtitle  = 'ITEM ATTRIBUTES';
         if(!Detail){
             return(<div>Loading...</div>);
         }
         switch (Detail.type) {
             case 'JLY':
-                  Attrtitle='JEWELRY ATTRIBUTES';
-                  return(
-                      <div>
-                        <h2>{Attrtitle}</h2>
-                           <ProductJewelryAttributes {...Detail} />
-                      </div>
-                    );
-            case 'STO':
-                   Attrtitle='STONE ATTRIBUTES';
-                   if (lotNumbers.length > 0) {
-                       return(
-                           <div>
-                             <h2>{Attrtitle}</h2>
-                                 <ProductStoneAttributes Detail={Detail} pageSize={pageSize}
-                                     lotNumbers={lotNumbers} activePage={activePage}/>
-                           </div>
-                         );
-                   }else{
-                       return(
-                           <div>
-                           </div>
-                         );
-                   }
-            case 'WAT':
-                   Attrtitle='WATCH ATTRIBUTES';
-                   return(
-                       <div>
-                         <h2>{Attrtitle}</h2>
-                             <ProductWatchAttributes {...Detail} />
-                       </div>
-                     );
-           case 'OBA':
-                  Attrtitle='OBJECT OF ART ATTRIBUTES';
-                  return(
-                      <div>
-                        <h2>{Attrtitle}</h2>
-                            <ProductObaAttributes {...Detail} />
-                      </div>
-                    );
-          case 'ACC':
-                 Attrtitle='ACCESSORY ATTRIBUTES';
-                 return(
-                     <div>
-                       <h2>{Attrtitle}</h2>
-                           <ProductAccAttributes {...Detail} />
-                     </div>
-                   );
-          case 'SPA':
-                Attrtitle='SPARE PARTS ATTRIBUTES';
                 return(
                     <div>
-                      <h2>{Attrtitle}</h2>
-                          <ProductSpaAttributes {...Detail} />
+                        <h2>{Attrtitle}</h2>
+                        <ProductJewelryAttributes {...Detail} />
                     </div>
-                  );
+                );
+            case 'STO':
+                if (lotNumbers.length > 0) {
+                    return(
+                        <div>
+                            <h2>{Attrtitle}</h2>
+                            <ProductStoneAttributes Detail={Detail} pageSize={pageSize}
+                                lotNumbers={lotNumbers} activePage={activePage}/>
+                        </div>
+                    );
+                }else{
+                    return(
+                        <div></div>
+                    );
+                }
+            case 'WAT':
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductWatchAttributes {...Detail} />
+                    </div>
+                );
+            case 'OBA':
+                return(
+                   <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductObaAttributes {...Detail} />
+                   </div>
+                );
+            case 'ACC':
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductAccAttributes {...Detail} />
+                    </div>
+                );
+            case 'SPA':
+                return(
+                    <div>
+                        <h2>{Attrtitle}</h2>
+                        <ProductSpaAttributes {...Detail} />
+                    </div>
+                );
         }
     }
     renderFooterAttr(){
@@ -297,7 +283,7 @@ class productprint extends Component {
                     const currency = logindata.currency;
                     return(
                         <div>
-                            <h2>SET DETAILS</h2>
+                            <h2>RELATED DETAILS</h2>
                             <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
                                 <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
                                 <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }

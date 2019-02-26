@@ -25,7 +25,7 @@ const Loading = require('react-loading');
 const checkFields = ['all','groupCost','updatedCost', 'sellingCost'];
 
 const labels = {
-    all: 'Select All', groupCost: 'Total Group Cost Price (USD)', updatedCost: 'Total Updated Cost Price (USD)',
+    all: 'Select All', groupCost: 'Total Initial Cost (USD)', updatedCost: 'Total Updated Cost Price (USD)',
     sellingCost: 'Total Selling Cost Price (USD)'
 }
 

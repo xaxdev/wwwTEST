@@ -9,7 +9,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
   titles.push('Item Reference', 'Item Description', 'SKU', 'Vendor Item Reference');
   if (userLogin.currency != 'USD') {
     if (userLogin.permission.price == 'All') {
-      titles.push('Cost Price (' + userLogin.currency + ')');
+      titles.push('Initial Cost (' + userLogin.currency + ')');
     }
     if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
       titles.push('Updated Price (' + userLogin.currency + ')');
@@ -20,7 +20,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }
 
     if (userLogin.permission.price == 'All') {
-      titles.push('Cost Price (USD)');
+      titles.push('Initial Cost (USD)');
     }
     if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
       titles.push('Updated Price (USD)');
@@ -31,7 +31,7 @@ export default (that, exportItems, userLogin, ROOT_URL)=> {
     }
   } else {
     if (userLogin.permission.price == 'All') {
-      titles.push('Cost Price (USD)');
+      titles.push('Initial Cost (USD)');
     }
     if (userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') {
       titles.push('Updated Price (USD)');

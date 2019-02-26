@@ -43,7 +43,7 @@ const Gemstoneattr =  (props) =>{
             }
         }
     });
-    
+
     return (
         <div className="table-responsive">
             <Table responsive className="table table-bordered">
@@ -55,11 +55,8 @@ const Gemstoneattr =  (props) =>{
                         <th>Color</th>
                         <th>QTY Of Stones</th>
                         <th>Total Carat Weight</th>
-                        <th>Origin</th>
-                        <th>Fluorescence</th>
                         <th>Laboratory</th>
                         <th>Certificate Number</th>
-                        <th>Certificate Date </th>
                         {isCer?<th></th>:<th className="hidden"></th>}
                     </tr>
                 </thead>
@@ -74,11 +71,8 @@ const Gemstoneattr =  (props) =>{
                                     <td title="Color" className="text-center">{convertBlanktodash(data.colorName)}</td>
                                     <td title="QTY Of Stones" className="text-center">{numberFormatComma(data.quantity)}</td>
                                     <td title="Total Carat Weight" className="text-center">{numberFormat3(data.carat)}</td>
-                                    <td title="Fluorescence" className="text-center">{convertBlanktodash(data.origin)}</td>
-                                    <td title="Fluorescence" className="text-center">{convertBlanktodash(data.fluorescence)}</td>
                                     <td title="Certificate agency" className="text-center">{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                                     <td title="Certificate Number," className="text-center">{!!data.certificate ? data.certificate.number: '-'}</td>
-                                    <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
                                     {
                                         isCer?
                                             !!data.certificate ?

@@ -16,10 +16,10 @@ class RenderExportExcelDialog extends Component {
                     <div className="modal-body">
                         <h3>Please choose additional fields for export.</h3>
                         <h5>(Normal export field Item Reference, Item Description, SKU, Item Vendor Reference,
-                            {`${(userLogin.permission.price == 'All') ? 'Cost Price, ':''}`}
+                            {`${(userLogin.permission.price == 'All') ? 'Initial Cost, ':''}`}
                             {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price, ':''}`}
                             {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Price, ':''}`}
-                            {`${(userLogin.permission.price == 'All') ? 'Cost Price (USD), ':''}`}
+                            {`${(userLogin.permission.price == 'All') ? 'Initial Cost (USD), ':''}`}
                             {`${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Updated Price (USD), ':''}`}
                             {`${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ? 'Price (USD), ':''}`}
                             Special Discount, Item Weight (Grams), Ring Size, Jewels Weight (text), Site, Company, Location)

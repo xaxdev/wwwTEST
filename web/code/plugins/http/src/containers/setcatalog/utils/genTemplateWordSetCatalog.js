@@ -142,7 +142,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                                     <th style="${th}"><span>Stone Detail</span></th>`
                                                     if (chkGroupCost) {
                                                         htmlTemplate = htmlTemplate + `<th style="${th}">
-                                                                                            <span>Group Cost Price (USD)</span></th>`
+                                                                                            <span>Initial Cost (USD)</span></th>`
                                                     }
                                                     if (chkUpdateCost) {
                                                         htmlTemplate = htmlTemplate + `<th style="${th}">

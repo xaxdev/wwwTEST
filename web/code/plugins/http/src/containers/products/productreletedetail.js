@@ -159,7 +159,7 @@ class productreletedetail extends Component {
     renderDesc = _ => {
         const { ViewAsSet } = this.props;
         const  Detail  = this.props.productdetail;
-        let  Detailtitle  = '';
+        let  Detailtitle  = 'ITEM DETAILS';
         if(!Detail){
             return(
                 <div>
@@ -173,7 +173,6 @@ class productreletedetail extends Component {
 
         switch (Detail.type) {
             case 'JLY':
-                Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -181,7 +180,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'STO':
-                Detailtitle='STONE DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -189,7 +187,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'WAT':
-                Detailtitle='WATCH DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -197,7 +194,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'OBA':
-                Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -205,7 +201,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'ACC':
-                Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -213,7 +208,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'SPA':
-                Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -239,7 +233,7 @@ class productreletedetail extends Component {
 
     renderDescmovement = _ => {
         const  Detail  = this.props.productdetail;
-        let  Detailtitle  = '';
+        let  Detailtitle  = 'ITEM DETAILS';
         if(!Detail){
             return(
                 <div>
@@ -252,7 +246,6 @@ class productreletedetail extends Component {
         }
         switch (Detail.type) {
             case 'JLY':
-                Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -260,7 +253,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'STO':
-                Detailtitle='STONE DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -268,7 +260,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'WAT':
-                Detailtitle='WATCH DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -276,7 +267,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'OBA':
-                Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -284,7 +274,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'ACC':
-                Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -292,7 +281,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'SPA':
-                Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -312,7 +300,7 @@ class productreletedetail extends Component {
 
     renderAttr = _ => {
         const  Detail  = this.props.productdetail;
-        let  Attrtitle  = '';
+        let  Attrtitle  = 'ITEM ATTRIBUTES';
         if(!Detail){
             return(
                 <div>
@@ -326,7 +314,6 @@ class productreletedetail extends Component {
 
         switch (Detail.type) {
             case 'JLY':
-                Attrtitle='JEWELRY ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -334,7 +321,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'STO':
-                Attrtitle='STONE ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -342,7 +328,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'WAT':
-                Attrtitle='WATCH ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -350,7 +335,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'OBA':
-                Attrtitle='OBJECT OF ART ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -358,7 +342,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'ACC':
-                Attrtitle='ACCESSORY ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -366,7 +349,6 @@ class productreletedetail extends Component {
                     </div>
                 );
             case 'SPA':
-                Attrtitle='SPARE PARTS ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -395,7 +377,7 @@ class productreletedetail extends Component {
                 const isSpecialDisc = setReferenceData.specialDiscount != undefined ? setReferenceData.specialDiscount == 1?true:false : false;
                 return(
                     <div>
-                        <h2>SET DETAILS</h2>
+                        <h2>RELATED ITEMS</h2>
                         <div className="tagbar-special-detail">
                             <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
                                 <span className={`${isSpecialDisc?'tagbar-special-detail-gallery special-detail-set':''}`}></span>
