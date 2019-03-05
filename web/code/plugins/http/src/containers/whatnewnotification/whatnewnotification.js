@@ -8,7 +8,7 @@ class WhatNewNotification extends Component {
             const host = HOSTNAME || 'localhost';
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
             const Title = 'What\'s news';
-            const roundData = [12,11,10,9,8,7,6,5,4,3,2,1];
+            const roundData = [13,12,11,10,9,8,7,6,5,4,3,2,1];
             const msgData = [
                                 {
                                     'id': 1,
@@ -468,6 +468,31 @@ class WhatNewNotification extends Component {
                                                 <div style="padding:15px 20px 0 20px;">
                                                   <p>- User can select 9 fields more to show in list view by clicking edit display.</p>
                                                     <div style="margin:15px 0px; text-align:center;"><img src="/images/Dynamic_1.gif"/></div>
+                                                  </div>`
+                                                }
+                                        ]
+                                },
+                                {
+                                    'id': 13,
+                                    'round': 'March 2019',
+                                    'datas': [
+                                              {
+                                                  'type':'new',
+                                                  'title': 'Develop an Option to Show BOM Documents in MOL',
+                                                  'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 05, 2019</p>
+                                                  <div style="padding:15px 20px 0 20px;">
+                                                  <p>- Users who have accessed will see BOM icon at Product Detail and Transaction Page.</p>
+                                                  <p>- When user click BOM icon, it will auto download BOM document.</p>
+                                                      <div style="margin:15px 0px; text-align:center;"><img src="/images/BOM.gif"/></div>
+                                                  </div>`
+                                              },
+                                              {
+                                                'type':'new',
+                                                'title': 'To Add Hierarchy in Product Specification & Transaction Detail page',
+                                                'msg': `<p style="margin:-20px 0 20px 0;font-size:12px;">March 05, 2019</p>
+                                                <div style="padding:15px 20px 0 20px;">
+                                                  <p>- User can see Hierarchy at Jewelry Attributes in Product Detail page.</p>
+                                                    <div style="margin:15px 0px; text-align:center;"><img src="/images/To-Add-Hierarchy.gif"/></div>
                                                   </div>`
                                                 }
                                         ]

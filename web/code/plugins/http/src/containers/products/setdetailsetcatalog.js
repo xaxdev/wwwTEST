@@ -399,7 +399,7 @@ class productdetail extends Component {
                 const currency = logindata.currency;
                 return(
                     <div>
-                        <h2>SET DETAILS</h2>
+                        <h2>RELATED ITEMS</h2>
                         <Setreference productset={setReferenceData}/>
                     </div>
                 );
@@ -577,7 +577,7 @@ class productdetail extends Component {
                                     <th><span>Description</span></th>
                                     <th><span>Stone Detail</span></th>
                                     <th className={`${(userLogin.permission.price == 'All') ?
-                                        '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                                        '' : 'hidden'}`}><span>Initial Cost (USD)</span></th>
                                     <th className={`${(userLogin.permission.price == 'Updated'
                                         || userLogin.permission.price == 'All') ?
                                         '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
@@ -692,7 +692,7 @@ class productdetail extends Component {
                                     <th style={styles.tableth}><span>Description</span></th>
                                     <th style={styles.tableth}><span>Stone Detail</span></th>
                                     <th style={(userLogin.permission.price == 'All')?styles.tableth:styles.hidden}>
-                                        <span style={styles.span}>Group Cost Price (USD)</span>
+                                        <span style={styles.span}>Initial Cost (USD)</span>
                                     </th>
                                     <th style={(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')
                                         ?styles.tableth:styles.hidden}>

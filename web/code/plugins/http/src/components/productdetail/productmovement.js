@@ -10,18 +10,18 @@ const Movement =  ({list}) =>{
         <Table responsive className="table table-bordered">
             <thead>
                 <tr>
-                    <th>Transfer Date</th>
-                    <th>Transferred From Location</th>
-                    <th>Transferred To Location</th>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>To</th>
                 </tr>
             </thead>
             <tbody>
                 {list.map(function(data, index){
                     return (
                         <tr key={index}>
-                            <td title="Transfer Date" className="text-center">{!!data.timeTo ? convertDate(data.timeTo) : '-'}</td>
-                            <td title="Transferred From Location" className="text-center">{`[${data.fromWareHouse}] ${data.fromWarehouseName}`}</td>
-                            <td title="Transferred To Location" className="text-center">{`[${data.toWareHouse}] ${data.toWareHouseName}`}</td>
+                            <td title="Date" className="text-center">{!!data.timeTo ? convertDate(data.timeTo) : '-'}</td>
+                            <td title="From" className="text-center">{`[${data.fromWareHouse}] ${data.fromWarehouseName}`}</td>
+                            <td title="To" className="text-center">{`[${data.toWareHouse}] ${data.toWareHouseName}`}</td>
                         </tr>
                     )
                 })}

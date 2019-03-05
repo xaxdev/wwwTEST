@@ -37,11 +37,19 @@ const Detail = (props) =>{
                     <div style={styles.colmd5}>{convertBlanktodash(props.reference)}</div>
                 </div>
                 <div style={styles.colmd12}>
+                    <div style={styles.colmd5}>SKU</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.sku)}</div>
+                </div>
+                <div style={styles.colmd12}>
+                    <div style={styles.colmd5}>Set Reference Number</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.setReference)}</div>
+                </div>
+                <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Description</div>
                     <div style={styles.colmd5}>{convertBlanktodash(props.description)}</div>
                 </div>
                 <div style={(userLogin.permission.price == 'All') ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Cost Price ({ currency })</div>
+                    <div style={styles.colmd5}>Initial Cost ({ currency })</div>
                     <div style={styles.colmd5}>{ actualCost }</div>
                 </div>
                 <div style={(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
@@ -51,7 +59,7 @@ const Detail = (props) =>{
                 </div>
                 <div style={(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                     || userLogin.permission.price == 'All') ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Price ({ currency })</div>
+                    <div style={styles.colmd5}>Retail Price ({ currency })</div>
                     <div style={styles.colmd5}>{ price }</div>
                 </div>
                 <div style={(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
@@ -60,23 +68,19 @@ const Detail = (props) =>{
                     <div style={styles.colmd5}>{markUp}</div>
                 </div>
                 <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Company</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(props.companyName)}</div>
-                </div>
-                <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Location</div>
                     <div style={styles.colmd5}>{convertBlanktodash(props.warehouseName)}</div>
+                </div>
+                <div style={styles.colmd12}>
+                    <div style={styles.colmd5}>Company</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.companyName)}</div>
                 </div>
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Vendor Item Reference</div>
                     <div style={styles.colmd5}>{convertBlanktodash(props.venderReference)}</div>
                 </div>
                 <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>SKU</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(props.sku)}</div>
-                </div>
-                <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Date Created</div>
+                    <div style={styles.colmd5}>Manufactory Date</div>
                     <div style={styles.colmd5}>{invoicedDate}</div>
                 </div>
             </div>
