@@ -6,7 +6,7 @@
       "requestTimeout": 800000
     },
     "elasticsearch": {
-        "host": "10.128.133.77:9200",
+        "host": "13.67.69.236:9200",
         "requestTimeout": 220000
     },
     "parallelization": {

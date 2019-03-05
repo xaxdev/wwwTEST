@@ -139,12 +139,13 @@ const mapSalesProperties = async (item, record, exchangeRates) => {
     }
 
     // add COA, if not existed
-    const imageOtherName = !!record.imageOtherName? record.imageOtherName: record.imageOtherNameMME
-    const imageOtherType = !!record.imageOtherType? record.imageOtherType: record.imageOtherTypeMME
-    const imageOtherTypeId = !!record.imageOtherTypeId ? record.imageOtherTypeId: record.imageOtherTypeIdMME
-    const imageOtherCompany = !!record.imageOtherCompany? record.imageOtherCompany: record.imageOtherCompanyMME
-    const fileNameOtherDB = `${imageOtherName}.${imageOtherType}`
+    const imageOtherName = record.imageOtherName
+    const imageOtherType = !!record.imageOtherType? record.imageOtherType: ''
+    const imageOtherTypeId = !!record.imageOtherTypeId ? record.imageOtherTypeId: ''
+    const imageOtherCompany = !!record.imageOtherCompany? record.imageOtherCompany: ''
+    const fileNameOtherDB = !!imageOtherName? `${imageOtherName}.${imageOtherType}`: ''
     const fileNameOther =  encodeURIComponent(fileNameOtherDB)
+
     if (!!imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
         if (imageOtherTypeId == 'COA') {
             const image = {
@@ -393,11 +394,11 @@ const mapProperties = async (item, record, exchangeRates) => {
     }
 
     // add COA, if not existed
-    const imageOtherName = !!record.imageOtherName? record.imageOtherName: record.imageOtherNameMME
-    const imageOtherType = !!record.imageOtherType? record.imageOtherType: record.imageOtherTypeMME
-    const imageOtherTypeId = !!record.imageOtherTypeId ? record.imageOtherTypeId: record.imageOtherTypeIdMME
-    const imageOtherCompany = !!record.imageOtherCompany? record.imageOtherCompany: record.imageOtherCompanyMME
-    const fileNameOtherDB = `${imageOtherName}.${imageOtherType}`
+    const imageOtherName = record.imageOtherName
+    const imageOtherType = !!record.imageOtherType? record.imageOtherType: ''
+    const imageOtherTypeId = !!record.imageOtherTypeId ? record.imageOtherTypeId: ''
+    const imageOtherCompany = !!record.imageOtherCompany? record.imageOtherCompany: ''
+    const fileNameOtherDB = !!imageOtherName? `${imageOtherName}.${imageOtherType}`: ''
     const fileNameOther =  encodeURIComponent(fileNameOtherDB)
 
     // const fileNameOther = encodeURIComponent(`${record.imageOtherName}.${record.imageOtherType}`)
@@ -440,11 +441,11 @@ const mapProperties = async (item, record, exchangeRates) => {
     }
 
     // add Bom, if not existed
-    const bomDocName = !!record.bomDocName? record.bomDocName: record.bomDocNameMME
-    const bomDocType = !!record.bomDocType? record.bomDocType: record.bomDocTypeMME
-    const bomDocTypeId = !!record.bomDocTypeId ? record.bomDocTypeId: record.bomDocTypeIdMME
-    const bomDocCompany = !!record.bomDocCompany? record.bomDocCompany: record.bomDocCompanyMME
-    const fileNameDB = `${bomDocName}.${bomDocType}`
+    const bomDocName = record.bomDocName
+    const bomDocType = !!record.bomDocType? record.bomDocType: ''
+    const bomDocTypeId = !!record.bomDocTypeId ? record.bomDocTypeId: ''
+    const bomDocCompany = !!record.bomDocCompany? record.bomDocCompany: ''
+    const fileNameDB = !!bomDocName? `${bomDocName}.${bomDocType}`: ''
     const fileNameBom =  encodeURIComponent(fileNameDB)
     // if (!!record.bomDocName && item.filesBom.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameBom}`))) !== null) === -1) {
     if (!!bomDocName && item.filesBom.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameBom}`))) !== null) === -1) {
@@ -545,6 +546,152 @@ const mapProperties = async (item, record, exchangeRates) => {
 
     if (item.CertificateImageType !== undefined) {
         delete item.CertificateImageType;
+    }
+
+    if (item.romanceNote !== undefined) {
+      delete item.romanceNote;
+    }
+
+    if (item.viewSetName !== undefined) {
+      delete item.viewSetName;
+    }
+};
+
+const mapPropertiesImagesMME = async (item, record, exchangeRates) => {
+
+    // add COA, if not existed
+    const imageOtherName = record.imageOtherNameMME
+    const imageOtherType = record.imageOtherTypeMME
+    const imageOtherTypeId = record.imageOtherTypeIdMME
+    const imageOtherCompany = record.imageOtherCompanyMME
+    const fileNameOtherDB = !!imageOtherName? `${imageOtherName}.${imageOtherType}`: ''
+    const fileNameOther =  encodeURIComponent(fileNameOtherDB)
+
+    // const fileNameOther = encodeURIComponent(`${record.imageOtherName}.${record.imageOtherType}`)
+    if (!!imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'COA') {
+            const image = {
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
+            };
+            item.imagesCOA.push(image);
+        }
+    }
+
+    // add DBC, if not existed
+    if (!!imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'DBC') {
+            const image = {
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
+            };
+            item.imagesDBC.push(image);
+        }
+    }
+
+    // add Monograph, if not existed
+    if (!!imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'Monograph') {
+            const image = {
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
+            };
+            item.filesMonograph.push(image);
+        }
+    }
+
+    // add Bom, if not existed
+    const bomDocName = record.bomDocNameMME
+    const bomDocType = record.bomDocTypeMME
+    const bomDocTypeId = record.bomDocTypeIdMME
+    const bomDocCompany = record.bomDocCompanyMME
+    const fileNameDB = !!bomDocName? `${bomDocName}.${bomDocType}`: ''
+    const fileNameBom =  encodeURIComponent(fileNameDB)
+    // if (!!record.bomDocName && item.filesBom.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameBom}`))) !== null) === -1) {
+    if (!!bomDocName && item.filesBom.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameBom}`))) !== null) === -1) {
+        if (bomDocTypeId == 'File') {
+            const image = {
+                original: `${config.gallery.original}/${fileNameBom}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameBom}`,
+                physicalFile: `${config.gallery.physicalfile}/${bomDocCompany}/${fileNameBom}`,
+                originalFileName: `${bomDocName}.${bomDocType}`
+            };
+            item.filesBom.push(image);
+        }
+    }
+
+    // add setName
+    if (record.type === 'JLY') {
+        item.setName = (record.romanceNote != '' || record.romanceNote != '') ? `${record.romanceNote} ${record.viewSetName}` : ''
+    }
+
+    if (item.romanceNote !== undefined) {
+      delete item.romanceNote;
+    }
+
+    if (item.viewSetName !== undefined) {
+      delete item.viewSetName;
+    }
+};
+
+const mapPropertiesImagesMMESoldItem = async (item, record, exchangeRates) => {
+
+    // add COA, if not existed
+    const imageOtherName = record.imageOtherNameMME
+    const imageOtherType = record.imageOtherTypeMME
+    const imageOtherTypeId = record.imageOtherTypeIdMME
+    const imageOtherCompany = record.imageOtherCompanyMME
+    const fileNameOtherDB = !!imageOtherName? `${imageOtherName}.${imageOtherType}`: ''
+    const fileNameOther =  encodeURIComponent(fileNameOtherDB)
+
+    // const fileNameOther = encodeURIComponent(`${record.imageOtherName}.${record.imageOtherType}`)
+    if (!!imageOtherName && item.imagesCOA.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'COA') {
+            const image = {
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
+            };
+            item.imagesCOA.push(image);
+        }
+    }
+
+    // add DBC, if not existed
+    if (!!imageOtherName && item.imagesDBC.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'DBC') {
+            const image = {
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
+            };
+            item.imagesDBC.push(image);
+        }
+    }
+
+    // add Monograph, if not existed
+    if (!!imageOtherName && item.filesMonograph.findIndex(image => image.original.match(new RegExp(sanitize(`${fileNameOther}`))) !== null) === -1) {
+        if (imageOtherTypeId == 'Monograph') {
+            const image = {
+                original: `${config.gallery.original}/${fileNameOther}`,
+                thumbnail: `${config.gallery.thumbnail}/${fileNameOther}`,
+                physicalFile: `${config.gallery.physicalfile}/${imageOtherCompany}/${fileNameOther}`,
+                originalFileName: `${imageOtherName}.${imageOtherType}`
+            };
+            item.filesMonograph.push(image);
+        }
+    }
+
+    // add setName
+    if (record.type === 'JLY') {
+        item.setName = (record.romanceNote != '' || record.romanceNote != '') ? `${record.romanceNote} ${record.viewSetName}` : ''
     }
 
     if (item.romanceNote !== undefined) {
@@ -824,4 +971,54 @@ const mapSoldItem = async (recordset, exchangeRates) => {
     return soldItems;
 };
 
-export { mapItem, mapMaster, mapCertificate, mapStoneItem, mapStoneLotNumber, mapMovement, mapSoldItem };
+const mapImage = async (recordset, exchangeRates) => {
+    const items = [];
+    let id = 0;
+
+    for (let record of recordset) {
+        if (id != record.id) {
+            id = Number(record.id);
+            const item = {...record};
+            item.gallery = [];
+            item.imagesCOA = [];
+            item.imagesDBC = [];
+            item.filesMonograph = [];
+            item.filesBom = [];
+            calculatePrices(item, exchangeRates);
+            items.push(item);
+        }
+
+        const latest = items[items.length - 1];
+        await mapPropertiesImagesMME(latest, record, exchangeRates)
+    }
+    await filterImages(items);
+
+    return items;
+};
+
+const mapImageSoldItem = async (recordset, exchangeRates) => {
+    const items = [];
+    let id = 0;
+
+    for (let record of recordset) {
+        if (id != record.id) {
+            id = Number(record.id);
+            const item = {...record};
+            item.gallery = [];
+            item.imagesCOA = [];
+            item.imagesDBC = [];
+            item.filesMonograph = [];
+            item.filesBom = [];
+            calculatePrices(item, exchangeRates);
+            items.push(item);
+        }
+
+        const latest = items[items.length - 1];
+        await mapPropertiesImagesMMESoldItem(latest, record, exchangeRates)
+    }
+    await filterImages(items);
+
+    return items;
+};
+
+export { mapItem, mapMaster, mapCertificate, mapStoneItem, mapStoneLotNumber, mapMovement, mapSoldItem, mapImage, mapImageSoldItem };
