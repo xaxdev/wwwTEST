@@ -18,7 +18,7 @@ module.exports = {
         const elastic = new Elasticsearch.Client({
             host: request.elasticsearch.host,
             keepAlive: false
-        });
+        })
         const id = request.params.id;
         let obj = request.payload;
         let sortBy = request.payload.sortBy;
@@ -33,7 +33,7 @@ module.exports = {
                 type: 'solditems',
                 body: query
             })
-        };
+        }
 
         if (!!keys.find((key) => {return key == 'gemstones'})) {
             const valusObj = obj['gemstones'];
@@ -64,12 +64,14 @@ module.exports = {
                     "match": {"id": "${id}"}
                 }
             }`
-        );
+        )
+
         const getProductDetail =  elastic.search({
             index: 'mol_solditems',
             type: 'solditems',
             body: internals.query
-        });
+        })
+
         const getSetreference = getProductDetail.then((response) => {
             try {
                 const [productResult] = response.hits.hits.map((element) => element._source);
@@ -86,7 +88,7 @@ module.exports = {
                 console.log(err);
                 return reply(Boom.badImplementation(err));
             }
-        });
+        })
 
         const getMovements = getProductDetail.then((response) => {
             try {
@@ -105,7 +107,7 @@ module.exports = {
                 console.log(err);
                 return reply(Boom.badImplementation(err));
             }
-        });
+        })
 
         const getGOCs = getProductDetail.then((response) => {
             try {
@@ -124,10 +126,75 @@ module.exports = {
                 console.log(err);
                 return reply(Boom.badImplementation(err));
             }
-        });
+        })
+
+        const getImageMME = getProductDetail.then((response) => {
+            const [productResult] = response.hits.hits.map((element) => element._source);
+            if (!productResult) {
+                return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
+            }
+            const query = JSON.parse(
+                `{
+                    "timeout": "5s",
+                    "from": 0,
+                    "size": 100,
+                    "query":{
+                        "constant_score": {
+                            "filter": {
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "id": "${productResult.id}"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }`
+            );
+            return elastic.search({
+                index: 'mol_images_other_mme_solditems',
+                type: 'imageothermmesolditem',
+                body: query
+            })
+        })
+
+        const mapImageMME = (item, imageMME) => {
+            if (item.imagesCOA.length == 0) {
+                if (imageMME.imagesCOA.length > 0) {
+                    item.imagesCOA.push(...imageMME.imagesCOA)
+                }
+            }
+            if (item.imagesDBC.length == 0) {
+                if (imageMME.imagesDBC.length > 0) {
+                    item.imagesDBC = imageMME.imagesDBC
+                }
+            }
+            if (item.filesMonograph.length == 0) {
+                if (imageMME.filesMonograph.length > 0) {
+                    item.filesMonograph = imageMME.filesMonograph
+                }
+            }
+            if (item.filesBom.length == 0) {
+                if (imageMME.filesBom.length > 0) {
+                    item.filesBom = imageMME.filesBom
+                }
+            }
+            return item
+        }
+
         try {
-            Promise.all([getProductDetail, getSetreference, getMovements, getGOCs]).spread(async (productDetail, setReference, movements, gocs) => {
-                const [productResult] = productDetail.hits.hits.map((element) => element._source);
+            Promise
+            .all([getProductDetail, getSetreference, getMovements, getGOCs, getImageMME])
+            .spread(async (productDetail, setReference, movements, gocs, imageMMESource) => {
+                let [productResult] = productDetail.hits.hits.map((element) => element._source);
+                const [imageMME] = imageMMESource.hits.hits.map((element) => element._source);
+
+                productResult = mapImageMME(productResult, imageMME)
+
                 // add certificate images to item gallery
                 if (!!productResult.gemstones) {
                     let certificateImages = productResult.gemstones.reduce((certificateImages, gemstone) => (gemstone.certificate && gemstone.certificate.images)? certificateImages.concat(gemstone.certificate.images) : certificateImages, [])
