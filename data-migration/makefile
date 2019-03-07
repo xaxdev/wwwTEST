@@ -1,5 +1,11 @@
-main: build restart chmodtransimage start
+main: fetch reset build restart chmodtransimage start
 
+fetch:
+	git fetch -avp
+
+reset:
+	git reset --hard origin master
+	
 build:
 	npm run build
 
