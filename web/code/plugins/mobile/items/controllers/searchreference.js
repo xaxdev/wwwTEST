@@ -24,7 +24,7 @@ module.exports = {
                 keepAlive: false
             })
             try {
-                const reference = request.params.reference
+                const reference = request.params.reference.toUpperCase()
                 const responseItem = await client.search({
                     "index": 'mol',
                     "type": 'items',
