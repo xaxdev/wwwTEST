@@ -8,6 +8,8 @@ import * as soldItem from './solditem';
 import * as constant from './constant';
 import * as setSold from './setSold';
 import * as soldmaster from './soldmaster';
+import * as image from './image';
+import * as imagesolditem from './imagesolditem';
 
 const migrate = async index => {
     try {
@@ -157,6 +159,38 @@ const soldItemsSets= async index => {
     }
 }
 
+const imagesOtherMmeOnhand = async index => {
+    try {
+        const exchangeRates = await item.getExchangeRates();
+
+        await image.getImageMMEJewelry(index, exchangeRates);
+        await image.getImageMMEStones(index, exchangeRates);
+        await image.getImageMMEWatches(index, exchangeRates);
+        await image.getImageMMEOBA(index, exchangeRates);
+        await image.getImageMMEAccessory(index, exchangeRates);
+        await image.getImageMMESpareParts(index, exchangeRates);
+
+    } catch (err) {
+        throw err;
+    }
+}
+
+const imagesOtherMmeSolditem = async index => {
+    try {
+        const exchangeRates = await item.getExchangeRates();
+
+        await imagesolditem.getImageMMEJewelrySolditem(index, exchangeRates);
+        await imagesolditem.getImageMMEStonesSolditem(index, exchangeRates);
+        await imagesolditem.getImageMMEWatchesSolditem(index, exchangeRates);
+        await imagesolditem.getImageMMEOBASolditem(index, exchangeRates);
+        await imagesolditem.getImageMMEAccessorySolditem(index, exchangeRates);
+        await imagesolditem.getImageMMESparePartsSolditem(index, exchangeRates);
+
+    } catch (err) {
+        throw err;
+    }
+}
+
 export {
-    alias, migrate, productHierarchy, itemSets, soldItems, soldItemsSets
+    alias, migrate, productHierarchy, itemSets, soldItems, soldItemsSets, imagesOtherMmeOnhand, imagesOtherMmeSolditem
 };

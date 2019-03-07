@@ -29,6 +29,21 @@ export const SOLDITEM_OBA_QUERY = './query/sold_item_oba.sql';
 export const SOLDITEM_ACCESSORY_QUERY = './query/sold_item_accessory.sql';
 export const SOLDITEM_SPARE_PARTS_QUERY = './query/sold_item_spare_part.sql';
 
+// Images
+export const IMAGE_JEWELRY_QUERY = './query/jewelry_image.sql';
+export const IMAGE_STONES_QUERY = './query/stones_image.sql';
+export const IMAGE_WATCHES_QUERY = './query/watches_image.sql';
+export const IMAGE_OBA_QUERY = './query/oba_image.sql';
+export const IMAGE_ACCESSORY_QUERY = './query/accessory_image.sql';
+export const IMAGE_SPARE_PARTS_QUERY = './query/spare_parts_image.sql';
+
+export const SOLDITEM_IMAGE_JEWELRY_QUERY = './query/sold_item_jewelry_image.sql';
+export const SOLDITEM_IMAGE_STONES_QUERY = './query/sold_item_stone_image.sql';
+export const SOLDITEM_IMAGE_WATCHES_QUERY = './query/sold_item_watch_image.sql';
+export const SOLDITEM_IMAGE_OBA_QUERY = './query/sold_item_oba_image.sql';
+export const SOLDITEM_IMAGE_ACCESSORY_QUERY = './query/sold_item_accessory_image.sql';
+export const SOLDITEM_IMAGE_SPARE_PARTS_QUERY = './query/sold_item_spare_part_image.sql';
+
 // Master
 export const COMPANY_QUERY = './query/master/company.sql';
 export const LOCATION_QUERY = './query/master/location.sql';
