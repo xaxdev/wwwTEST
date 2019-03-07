@@ -104,9 +104,74 @@ module.exports = {
                 return reply(Boom.badImplementation(err));
             }
         });
+
+        const getImageMME = getProductDetail.then((response) => {
+            const [productResult] = response.hits.hits.map((element) => element._source);
+            if (!productResult) {
+                return reply(Boom.badRequest('Couldn\'t found data of item:' + id));
+            }
+            const query = JSON.parse(
+                `{
+                    "timeout": "5s",
+                    "from": 0,
+                    "size": 100,
+                    "query":{
+                        "constant_score": {
+                            "filter": {
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "id": "${productResult.id}"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }`
+            );
+            return elastic.search({
+                index: 'mol_images_other_mme_onhand',
+                type: 'imageothermmeonhand',
+                body: query
+            })
+        })
+
+        const mapImageMME = (item, imageMME) => {
+            if (item.imagesCOA.length == 0) {
+                if (imageMME.imagesCOA.length > 0) {
+                    item.imagesCOA.push(...imageMME.imagesCOA)
+                }
+            }
+            if (item.imagesDBC.length == 0) {
+                if (imageMME.imagesDBC.length > 0) {
+                    item.imagesDBC = imageMME.imagesDBC
+                }
+            }
+            if (item.filesMonograph.length == 0) {
+                if (imageMME.filesMonograph.length > 0) {
+                    item.filesMonograph = imageMME.filesMonograph
+                }
+            }
+            if (item.filesBom.length == 0) {
+                if (imageMME.filesBom.length > 0) {
+                    item.filesBom = imageMME.filesBom
+                }
+            }
+            return item
+        }
+
         try {
-            Promise.all([getProductDetail, getSetreference, getMovements, getGOCs]).spread((productDetail, setReference, movements, gocs) => {
-                const [productResult] = productDetail.hits.hits.map((element) => element._source);
+            Promise
+            .all([getProductDetail, getSetreference, getMovements, getGOCs, getImageMME])
+            .spread((productDetail, setReference, movements, gocs, imageMMESource) => {
+                let [productResult] = productDetail.hits.hits.map((element) => element._source);
+                const [imageMME] = imageMMESource.hits.hits.map((element) => element._source);
+
+                productResult = mapImageMME(productResult, imageMME)
+
                 // add certificate images to item gallery
                 if (!!productResult.gemstones) {
                     let certificateImages = productResult.gemstones.reduce((certificateImages, gemstone) => (gemstone.certificate && gemstone.certificate.images)
