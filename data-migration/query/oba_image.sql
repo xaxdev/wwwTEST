@@ -36,6 +36,7 @@ SELECT item.[Id] AS 'id'
     , item.[Unit] AS 'unit'
     , item.[SpecialDisc] AS 'specialDiscount'
     , ISNULL(item.[HierarchyName], '') AS 'hierarchyName'
+    , ISNULL(item.[Article_Grouping], '') AS 'articleGrouping'
     , 'OBA' AS 'type'
     , ISNULL(oba.[Dimensions], '') AS 'dimensions'
     , ISNULL(imgOtherMME.[FILENAME], '') AS 'imageOtherNameMME'
@@ -60,7 +61,7 @@ LEFT JOIN [ITORAMA].[dbo].[ItemImages] imgOtherMME
     AND imgOtherMME.[Company] = 'mme'
     AND imgOtherMME.[TYPEID] in ('COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] bomDocMME
-    ON item.[Reference] = bomDocMME.[ITEMID]
+    ON item.[SKU] = bomDocMME.[ITEMID]
     AND bomDocMME.[Company] = 'mme'
     AND bomDocMME.[TYPEID] in ('File')
 	AND bomDocMME.[FILETYPE] in ('xls','xlsx')

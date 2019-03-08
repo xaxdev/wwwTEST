@@ -36,6 +36,7 @@ SELECT item.[Id] AS 'id'
     , item.[Unit] AS 'unit'
     , item.[SpecialDisc] AS 'specialDiscount'
     , ISNULL(item.[HierarchyName], '') AS 'hierarchyName'
+    , ISNULL(item.[Article_Grouping], '') AS 'articleGrouping'
     , gemstone.[Id] AS 'gemstone_id'
     , ISNULL(gemstone.[Cut], '') AS 'gemstone_cut'
     , ISNULL(gemstone.[CutName], '') AS 'gemstone_cutName'
@@ -105,7 +106,7 @@ LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
     AND certimage.[Company] = item.[Company]
     AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] bomDoc
-    ON item.[Reference] = bomDoc.[ITEMID]
+    ON item.[SKU] = bomDoc.[ITEMID]
     AND item.[Company] = bomDoc.[Company]
     AND bomDoc.[TYPEID] in ('File')
 	AND bomDoc.[FILETYPE] in ('xls','xlsx')
