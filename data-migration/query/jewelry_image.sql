@@ -38,6 +38,7 @@ SELECT item.[Id] AS 'id'
     , ISNULL(item.[RomanceNote], '') AS 'romanceNote'
     , ISNULL(item.[ViewSetName], '') AS 'viewSetName'
     , ISNULL(item.[HierarchyName], '') AS 'hierarchyName'
+    , ISNULL(item.[Article_Grouping], '') AS 'articleGrouping'
     , 'JLY' AS 'type'
     , ISNULL(jewelry.[Type], '') AS 'subType'
     , ISNULL(jewelry.[TypeName], '') AS 'subTypeName'
@@ -66,7 +67,7 @@ LEFT JOIN [ITORAMA].[dbo].[ItemImages] imgOtherMME
     AND imgOtherMME.[Company] = 'mme'
     AND imgOtherMME.[TYPEID] in ('COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] bomDocMME
-    ON item.[Reference] = bomDocMME.[ITEMID]
+    ON item.[SKU] = bomDocMME.[ITEMID]
     AND bomDocMME.[Company] = 'mme'
     AND bomDocMME.[TYPEID] in ('File')
 	AND bomDocMME.[FILETYPE] in ('xls','xlsx')

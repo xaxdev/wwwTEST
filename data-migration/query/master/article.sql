@@ -1,5 +1,5 @@
-SELECT 	[ARTICLE_GROUPING] AS name,
-		CASE [ARTICLE_GROUPING]
+SELECT 	[Article_Grouping] AS name,
+		CASE [Article_Grouping]
 		WHEN 'SET' THEN 'JLY'
 		WHEN 'Gents' THEN 'JLY'
 		WHEN 'Ladies' THEN 'JLY'
@@ -11,6 +11,6 @@ SELECT 	[ARTICLE_GROUPING] AS name,
 		WHEN 'Spareparts' THEN 'SPA'
 		ELSE ''
 		END AS catalog
-FROM 	[MWD_DB].[dbo].[INVENTTABLE]
-WHERE 	[ARTICLE_GROUPING] <> ''
-GROUP BY [ARTICLE_GROUPING]
+FROM 	[ITORAMA].[dbo].[Items]
+WHERE 	[Article_Grouping] <> ''
+GROUP BY [Article_Grouping]
