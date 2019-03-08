@@ -1,4 +1,4 @@
-main: fetch reset build gulp restart chmodtransimage
+main: fetch reset gulp build restart chmodtransimage
 
 fetch:
 	git fetch -avp
