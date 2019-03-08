@@ -4,12 +4,11 @@ import moment from 'moment-timezone';
 
 import * as migration from './lib/migration/';
 
-const index = `mol_${moment().format('YYYYMMDD_HHmm')}`;
-const name = 'mol';
-
 const init = async _ => {
     try {
         console.log(`Start migrating data at: ${moment().tz('Asia/Bangkok').format('HH:mm:ss')}`);
+        const index = `mol_${moment().format('YYYYMMDD_HHmm')}`;
+        const name = 'mol';
 
         const index_solditems = `mol_solditems_${moment().format('YYYYMMDD_HHmm')}`;
         const name_solditems = 'mol_solditems';
