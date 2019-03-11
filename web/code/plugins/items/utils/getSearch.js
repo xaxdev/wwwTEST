@@ -68,7 +68,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                 || key == 'brand' || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour'
                 || key == 'gemstones' || key == 'limitedEdition' || key == 'sku' || key == 'origin' || key == 'watchCategory' || key == 'movement'
                 || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'strapType' || key == 'strapColor' || key == 'complication'
-                || key == 'color' || key == 'setReference' || key == 'warehouse'
+                || key == 'color' || key == 'setReference' || key == 'warehouse' || key == 'article'
             ){
                 value = `${value}`
                 value = value.replace(/,/gi, ' ');
@@ -76,13 +76,14 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
 
             if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' && key != 'pageSize'
                 && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' && key != 'viewAsSet' && key != 'ItemsOrder' && key != 'SetReferencdOrder'
-                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice' && key != 'article' && key != 'typeFile' && key != 'titleColumn'
+                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice' && key != 'typeFile' && key != 'titleColumn'
             ){
                 if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency' || key == 'polish' || key == 'origin'
                     || key == 'symmetry' || key == 'treatment' || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
                     || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour' || key == 'watchCategory'
                     || key == 'limitedEdition' || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'buckleType'
                     || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse' || key == 'location' || key=='certificatedNumber'
+                    || key == 'article'
                 ){
                     if(key == 'metalColour')
                         key = 'metalColor'
@@ -98,6 +99,8 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                         key = 'dominant'
                     if(key == 'stoneType')
                         key = 'subType'
+                    if(key == 'article')
+                        key = 'articleGrouping'
 
                     filter =
                     `{
