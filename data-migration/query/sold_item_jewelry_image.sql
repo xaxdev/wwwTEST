@@ -90,7 +90,7 @@ FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[JewelryType] AS JLYT
 			ON SOL.[ArticleCode] = JLYT.[Code]
 		LEFT JOIN [ITORAMA].[dbo].[ItemImages] bomDocMME
-		    ON SOL.[SKU] = bomDocMME.[ITEMID]
+		    ON SOL.[Reference] = bomDocMME.[ITEMID]
 		    AND bomDocMME.[Company] = 'mme'
 		    AND bomDocMME.[TYPEID] in ('File')
 			AND bomDocMME.[FILETYPE] in ('xls','xlsx')
