@@ -5,7 +5,7 @@ import {
     FETCH_PRODUCTDETAIL,FETCH_PRODUCTRELETED,ROOT_URL,FETCH_SETREFERENCE,GET_CATALOGNAME,ADD_CATALOG,GET_CERTIFICATE,
     GET_LOTNUMBER,GET_LOTNUMBERPAGE, GET_MOVEMENT,FETCH_SETDETAILS,FETCH_ALLITEMS,ADD_NEWSETCATALOGITEM,GET_SETCATALOGNAME,
     GET_SETCATALOGITEMSLIST, FETCH_SETCATALOGDETAILS, FETCH_SALESPRODUCTDETAIL, FETCH_SALESPRODUCTRELETED, FETCH_SALESSETDETAILS,
-    FETCH_SALESVIEWASSETDETAILS, FETCH_SALESVIEWASSETPRODUCTDETAIL
+    FETCH_SALESVIEWASSETDETAILS, FETCH_SALESVIEWASSETPRODUCTDETAIL, GET_BOM
 } from '../constants/productdetailconstants';
 
 export function getItems(params){
@@ -204,6 +204,23 @@ export function getCertificate(params){
     let url = `${ROOT_URL}api/items/certificate/${params.productId}`;
     return {
         type: GET_CERTIFICATE,
+        promise: fetch(url,{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(params)
+        })
+    }
+}
+
+export function getBom(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}api/items/bom/${params.productId}`;
+    return {
+        type: GET_BOM,
         promise: fetch(url,{
             method: 'POST',
             headers: {
