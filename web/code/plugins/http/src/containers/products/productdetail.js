@@ -63,7 +63,8 @@ class productdetail extends Component {
             showCOA: false,
             showDBC: false,
             showMonograph: false,
-            showBom: false
+            showBom: false,
+            isOpenDownloadBomMsg: false
         };
     }
 
@@ -1037,15 +1038,25 @@ class productdetail extends Component {
         if(!!filesBom && filesBom.length > 0){
             const [bom] = filesBom
             const { physicalFile, originalFileName } = bom
-            return(
-                <div className={`${bomOnhand ? '' : 'hide'}`}>
-                    <a href={physicalFile} download={originalFileName} >
+            if (filesBom.length != 1) {
+                return(
+                    <a>
                         <OverlayTrigger placement="bottom" overlay={tooltipBom}>
-                            <div className="icon-bom margin-l10" id="filesBom"/>
+                            <div className="icon-bom margin-l10" onClick={ this.downloadBomAll }></div>
                         </OverlayTrigger>
                     </a>
-                </div>
-            );
+                )
+            }else{
+                return(
+                    <div className={`${bomOnhand ? '' : 'hide'}`}>
+                        <a href={physicalFile} download={originalFileName} >
+                            <OverlayTrigger placement="bottom" overlay={tooltipBom}>
+                                <div className="icon-bom margin-l10" id="filesBom"/>
+                            </OverlayTrigger>
+                        </a>
+                    </div>
+                )
+            }
         } else {
             return(
                 <div>
@@ -1053,6 +1064,40 @@ class productdetail extends Component {
                 </div>
             );
         }
+    }
+
+    downloadBomAll = _=> {
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const host = HOSTNAME || 'localhost';
+        const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
+        const { filesBom, company } = this.props.productdetail;
+        const productId = this.props.params.id;
+
+        let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
+        let allBom = [];
+        if(filesBom != undefined){
+            filesBom.map((item) => {
+                if (!!item.originalFileName) {
+                    allBom.push(item.originalFileName)
+                }
+            })
+        }
+        let params = {
+            'allBom': allBom,
+            'userName': `${userLogin.username}`,
+            'fileName': `${userLogin.username}_${exportDate}`,
+            'userEmail': userLogin.email,
+            'ROOT_URL': ROOT_URL,
+            'productId': productId,
+            // 'company': company.toLowerCase()
+            'company': 'mme' // mme only 08/01/2019
+        }
+
+        this.props.getBom(params).then((value) => {
+            if (value) {
+                this.setState({isOpenDownloadBomMsg: true});
+            }
+        });
     }
 
     downloadCertificateAll = _=> {
@@ -1088,7 +1133,6 @@ class productdetail extends Component {
             if (value) {
                 this.setState({isOpenDownloadCerMsg: true});
             }
-            console.log(value);
         });
     }
 
@@ -1101,8 +1145,21 @@ class productdetail extends Component {
         );
     }
 
+    renderAlertmsgBom = _ => {
+        const message = 'Please check your email for download BOM fils.';
+        const title = 'DOWNLOAD BOM';
+        return(
+            <ModalalertMsgObj isOpen={this.state.isOpenDownloadBomMsg} isClose={this.handleCloseDownloadBomMsg}
+                props={this.props} message={message}  title={title}/>
+        );
+    }
+
     handleCloseDownloadCerMsg = _=> {
         this.setState({ isOpenDownloadCerMsg: false });
+    }
+
+    handleCloseDownloadBomMsg = _=> {
+        this.setState({ isOpenDownloadBomMsg: false });
     }
 
     downloadCer = (id, e) => {
@@ -1269,6 +1326,7 @@ class productdetail extends Component {
                         </div>
                     </div>
                     {this.renderAlertmsgCer()}
+                    {this.renderAlertmsgBom()}
                 </div>
                 <div className={`row ${!this.state.showmovement ? 'hide' : ''}`}>
                     <div className="col-sm-12">
