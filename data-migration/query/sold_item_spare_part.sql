@@ -133,7 +133,7 @@ FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 			AND certimage.[Company] = SOL.[DataAreaId]
 			AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
 		LEFT JOIN [ITORAMA].[dbo].[ItemImages] bomDoc
-		    ON SOL.[SKU] = bomDoc.[ITEMID]
+		    ON SOL.[Reference] = bomDoc.[ITEMID]
 		    AND SOL.[DataAreaId] = bomDoc.[Company]
 		    AND bomDoc.[TYPEID] in ('File')
 			AND bomDoc.[FILETYPE] in ('xls','xlsx')

@@ -69,7 +69,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                 || key == 'brand' || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour'
                 || key == 'gemstones' || key == 'limitedEdition' || key == 'sku' || key == 'origin' || key == 'watchCategory' || key == 'movement'
                 || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'strapType' || key == 'strapColor' || key == 'complication'
-                || key == 'color' || key == 'setReference' || key == 'warehouse' || key == 'salesChannel'
+                || key == 'color' || key == 'setReference' || key == 'warehouse' || key == 'salesChannel' || key == 'article'
             ){
                 value = `${value}`
                 value = value.replace(/,/gi, ' ');
@@ -77,14 +77,14 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
 
             if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' && key != 'pageSize'
                 && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' && key != 'viewAsSet' && key != 'ItemsSalesOrder' && key != 'SetReferenceSalesOrder'
-                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice' && key != 'article' && key != 'typeFile'
+                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice' && key != 'typeFile'
             ){
                 if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency' || key == 'polish' || key == 'mustHave'
                     || key == 'symmetry' || key == 'treatment' || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
                     || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour' || key == 'origin' || key == 'watchCategory'
                     || key == 'limitedEdition' || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'buckleType'
                     || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse' || key == 'location' || key=='certificatedNumber'
-                    || key == 'invoiceNo' || key == 'dominant'
+                    || key == 'invoiceNo' || key == 'dominant' || key == 'article'
                 ){
                     if(key == 'metalColour')
                         key = 'metalColor'
@@ -104,6 +104,8 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                         key = 'invoicedId'
                     if(key == 'dominant')
                         key = 'dominantStone'
+                    if(key == 'article')
+                        key = 'articleGrouping'
 
                     filter =
                     `{

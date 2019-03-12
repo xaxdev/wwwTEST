@@ -390,121 +390,6 @@ class InventoryFilter extends Component {
         }
     }
 
-    handleArticleSelected = (data) =>{
-        const { fields: { gemstone_stoneType,gemstone_cut,gemstone_color,gemstone_clarity,gemstone_symmetry,gemstone_origin,gemstone_certificateAgency }, searchResult } = this.props;
-        let findFieldName = [];
-        const expr = data.toLowerCase();
-        let paramsSearch = (searchResult.paramsSearch != null)? searchResult.paramsSearch : null;
-
-        if(this.props.options != undefined){
-            if (this.props.options.gemstoneStoneType) {
-                findFieldName = []
-                findFieldName = this.props.options.gemstoneStoneType.filter((item) => {
-                    if (item.name.toLowerCase().indexOf(expr) != -1) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
-                if (findFieldName.length != 0) {
-                    if(paramsSearch != null)
-                        paramsSearch.gemstone_stoneType = data;
-
-                    gemstone_stoneType.onChange(data);
-                    this.props.inventoryActions.setDatastoneType(data);
-                }
-            }
-            if (this.props.options.cut) {
-                findFieldName = []
-                findFieldName = this.props.options.cut.filter((item) => {
-                    if (item.name.toLowerCase().indexOf(expr) != -1) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
-                if (findFieldName.length != 0) {
-                    if(paramsSearch != null)
-                        paramsSearch.gemstone_cut = data;
-
-                    gemstone_cut.onChange(data);
-                    this.props.inventoryActions.setDataCut(data);
-                }
-            }
-            if (this.props.options.colors) {
-                findFieldName = []
-                findFieldName = this.props.options.colors.filter((item) => {
-                    if (item.name.toLowerCase().indexOf(expr) != -1) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
-                if (findFieldName.length != 0) {
-                    if(paramsSearch != null)
-                        paramsSearch.gemstone_color = data;
-
-                    gemstone_color.onChange(data);
-                    this.props.inventoryActions.setDataColor(data);
-                }
-            }
-            if (this.props.options.clarities) {
-                findFieldName = []
-                findFieldName = this.props.options.clarities.filter((item) => {
-                    if (item.name.toLowerCase().indexOf(expr) != -1) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
-                if (findFieldName.length != 0) {
-                    if(paramsSearch != null)
-                        paramsSearch.gemstone_clarity = data;
-
-                    gemstone_clarity.onChange(data);
-                    this.props.inventoryActions.setDataClarity(data);
-                }
-            }
-            if (this.props.options.symmetries) {
-                findFieldName = []
-                findFieldName = this.props.options.symmetries.filter((item) => {
-                    if (item.name.toLowerCase().indexOf(expr) != -1) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
-                if (findFieldName.length != 0) {
-                    if(paramsSearch != null)
-                        paramsSearch.gemstone_symmetry = data;
-
-                    gemstone_symmetry.onChange(data);
-                    this.props.inventoryActions.setDataSymmetry(data);
-                }
-            }
-            if (this.props.options.origins) {
-                findFieldName = []
-                findFieldName = this.props.options.origins.filter((item) => {
-                    if (item.name.toLowerCase().indexOf(expr) != -1) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
-                if (findFieldName.length != 0) {
-                    if(paramsSearch != null)
-                        paramsSearch.gemstone_origin = data;
-
-                    gemstone_origin.onChange(data);
-                    this.props.inventoryActions.setDataOrigin(data);
-                }
-            }
-            if (this.props.options.certificateAgencys) {
-                findFieldName = []
-                findFieldName = this.props.options.certificateAgencys.filter((item) => {
-                    if (item.name.toLowerCase().indexOf(expr) != -1) {
-                        return item.name
-                    }
-                }).map((item) => { return item.code });
-                if (findFieldName.length != 0) {
-                    if(paramsSearch != null)
-                        paramsSearch.gemstone_certificateAgency = data;
-
-                    gemstone_certificateAgency.onChange(data);
-                    this.props.inventoryActions.setDataCertificateAgency(data);
-                }
-            }
-        }
-    }
-
     render() {
         let { handleSubmit, resetForm, submitting, reset, activeTabCategory } = this.props;
 
@@ -689,7 +574,7 @@ class InventoryFilter extends Component {
                                             activeKey={this.props.activeTabCategory}
                                             onSelect={this.tabsSelected}>
                                             <Tab eventKey={1} title="Jewelry" disabled={!productGroupJLY}>
-                                                <InventoryJewelry props={this.props} ref="jewelry" handleArticleSelected={this.handleArticleSelected}/>
+                                                <InventoryJewelry props={this.props} ref="jewelry"/>
                                                     <div className="panel-body">
                                                     <div className="row gemstone-bar">
                                                         <h2 disabled={submitting} onClick={this.gemStoneSearchClick}>
@@ -702,7 +587,7 @@ class InventoryFilter extends Component {
                                                 </div>
                                             </Tab>
                                             <Tab eventKey={2} title="Watch" disabled={!productGroupWAT}>
-                                                <InventoryWatch props={this.props} ref="watch" handleArticleSelected={this.handleArticleSelected}/>
+                                                <InventoryWatch props={this.props} ref="watch"/>
                                                 <div className="panel-body">
                                                     <div className="row gemstone-bar">
                                                         <h2 disabled={submitting} onClick={this.gemStoneSearchClick}>
@@ -715,10 +600,10 @@ class InventoryFilter extends Component {
                                                 </div>
                                             </Tab>
                                             <Tab eventKey={3} title="Stone" disabled={!productGroupSTO}>
-                                                <InventoryStone props={this.props} ref="stone" handleArticleSelected={this.handleArticleSelected}/>
+                                                <InventoryStone props={this.props} ref="stone"/>
                                             </Tab>
                                             <Tab eventKey={4} title="ACCESSORY" disabled={!productGroupACC}>
-                                                <InventoryAcc props={this.props} ref="accessory" handleArticleSelected={this.handleArticleSelected}/>
+                                                <InventoryAcc props={this.props} ref="accessory"/>
                                                 <div className="panel-body">
                                                     <div className="row gemstone-bar">
                                                         <h2 disabled={submitting} onClick={this.gemStoneSearchClick}>
@@ -731,7 +616,7 @@ class InventoryFilter extends Component {
                                                 </div>
                                             </Tab>
                                             <Tab eventKey={5} title="OBJECT OF ART" disabled={!productGroupOBA}>
-                                                <InventoryOBA props={this.props}  ref="oba" handleArticleSelected={this.handleArticleSelected}/>
+                                                <InventoryOBA props={this.props}  ref="oba"/>
                                                 <div className="panel-body">
                                                     <div className="row gemstone-bar">
                                                         <h2 disabled={submitting} onClick={this.gemStoneSearchClick}>
@@ -744,7 +629,7 @@ class InventoryFilter extends Component {
                                                 </div>
                                             </Tab>
                                             <Tab eventKey={6} title="SPARE PART" disabled={!productGroupSPA}>
-                                                <InventorySparePart props={this.props}  ref="sparepart" handleArticleSelected={this.handleArticleSelected}/>
+                                                <InventorySparePart props={this.props}  ref="sparepart"/>
                                                 <div className="panel-body">
                                                     <div className="row gemstone-bar">
                                                         <h2 disabled={submitting} onClick={this.gemStoneSearchClick}>

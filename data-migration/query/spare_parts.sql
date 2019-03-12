@@ -109,7 +109,7 @@ LEFT JOIN [ITORAMA].[dbo].[ItemImages] certimage
     AND certimage.[Company] = item.[Company]
     AND certimage.[TYPEID] in ('Image','COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] bomDoc
-    ON item.[SKU] = bomDoc.[ITEMID]
+    ON item.[Reference] = bomDoc.[ITEMID]
     AND item.[Company] = bomDoc.[Company]
     AND bomDoc.[TYPEID] in ('File')
 	AND bomDoc.[FILETYPE] in ('xls','xlsx')

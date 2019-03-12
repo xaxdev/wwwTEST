@@ -54,6 +54,14 @@
                         "lowercase",
                         "unique"
                     ]
+                },
+                "article_analyzer": {
+                    "type": "custom",
+                    "tokenizer": "whitespace",
+                    "filter" : [
+                        "remove_space_filter",
+                        "lowercase"
+                    ]
                 }
             },
             "tokenizer": {
@@ -326,6 +334,20 @@
                             "type": "string",
                             "analyzer": "email_analyzer",
                             "search_analyzer": "whitespace_analyzer",
+                            "norms": {
+                                "enabled": false
+                            }
+                        }
+                    }
+                },
+                {
+                    "articleGrouping": {
+                        "match_mapping_type": "string",
+                        "match": "articleGrouping",
+                        "mapping": {
+                            "type": "string",
+                            "analyzer": "forward_slash_analyzer",
+                            "search_analyzer": "forward_slash_analyzer",
                             "norms": {
                                 "enabled": false
                             }

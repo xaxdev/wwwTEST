@@ -101,7 +101,7 @@ LEFT JOIN [ITORAMA].[dbo].[ItemImages] imgOther
     AND item.[Company] = imgOther.[Company]
     AND imgOther.[TYPEID] in ('COA','DBC','Monograph')
 LEFT JOIN [ITORAMA].[dbo].[ItemImages] bomDoc
-    ON item.[SKU] = bomDoc.[ITEMID]
+    ON item.[Reference] = bomDoc.[ITEMID]
     AND item.[Company] = bomDoc.[Company]
     AND bomDoc.[TYPEID] in ('File')
 	AND bomDoc.[FILETYPE] in ('xls','xlsx')

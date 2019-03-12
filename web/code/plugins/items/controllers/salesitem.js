@@ -163,24 +163,26 @@ module.exports = {
         })
 
         const mapImageMME = (item, imageMME) => {
-            if (item.imagesCOA.length == 0) {
-                if (imageMME.imagesCOA.length > 0) {
-                    item.imagesCOA.push(...imageMME.imagesCOA)
+            if (!!imageMME) {
+                if (item.imagesCOA.length == 0) {
+                    if (imageMME.imagesCOA.length > 0) {
+                        item.imagesCOA.push(...imageMME.imagesCOA)
+                    }
                 }
-            }
-            if (item.imagesDBC.length == 0) {
-                if (imageMME.imagesDBC.length > 0) {
-                    item.imagesDBC = imageMME.imagesDBC
+                if (item.imagesDBC.length == 0) {
+                    if (imageMME.imagesDBC.length > 0) {
+                        item.imagesDBC = imageMME.imagesDBC
+                    }
                 }
-            }
-            if (item.filesMonograph.length == 0) {
-                if (imageMME.filesMonograph.length > 0) {
-                    item.filesMonograph = imageMME.filesMonograph
+                if (item.filesMonograph.length == 0) {
+                    if (imageMME.filesMonograph.length > 0) {
+                        item.filesMonograph = imageMME.filesMonograph
+                    }
                 }
-            }
-            if (item.filesBom.length == 0) {
-                if (imageMME.filesBom.length > 0) {
-                    item.filesBom = imageMME.filesBom
+                if (item.filesBom.length == 0) {
+                    if (imageMME.filesBom.length > 0) {
+                        item.filesBom = imageMME.filesBom
+                    }
                 }
             }
             return item
