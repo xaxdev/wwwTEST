@@ -9,7 +9,6 @@ const fs = require('fs');
 const Path = require('path');
 const archiver = require('archiver');
 
-
 module.exports = {
     auth: {
         strategy: 'authentication'
@@ -98,7 +97,7 @@ module.exports = {
 
             const notify = (err, mailBody, toEmail) => new Promise((resolve, reject) => {
                 const time = moment().tz('Asia/Bangkok').format();
-                const subject = (!!err)? `Failed download certificate  ${time}` : `Succeeded download certificate ${time}`;
+                const subject = (!!err)? `Failed download bom  ${time}` : `Succeeded download bom ${time}`;
                 const sg = sendgrid(sendgridConfig.key);
                 const request = sg.emptyRequest();
 
