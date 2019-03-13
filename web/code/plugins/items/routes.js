@@ -164,5 +164,10 @@ module.exports = [
         method: 'POST',
         path: '/searchtitle',
         config: controllers.searchtitle
+    },
+    {
+        method: 'POST',
+        path: '/bom/{productId}',
+        config: controllers.bom
     }
 ];
