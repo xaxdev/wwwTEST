@@ -42,7 +42,7 @@ class RenderChangeTitleListBox extends Component {
                     </div>
                     <div className="modal-body">
                         <h3>Please select field for title.</h3>
-                        <h5 className="text-center">(Normal column Images, Item Reference, Item Description, SKU, Company, Location, Size, Jewels Weight, Item Weight (Grams), Stone Detail, Price)</h5>
+                        <h5 className="text-center">(Normal column Images, Item Reference, Item Description, SKU, Company, Location, Size, Jewels Weight, Item Weight (Grams), Stone Detail, Retail Price)</h5>
                         <br/>
                         <DualListBox name="moons" canFilter options={ViewAsSet? ColumnsViewAsSet: ColumnsNomal}
                             selected={TitleColumn} onChange={this.onChange} preserveSelectOrder showOrderButtons />
