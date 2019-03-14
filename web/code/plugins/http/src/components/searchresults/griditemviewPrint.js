@@ -457,8 +457,8 @@ class GridItemsView extends Component {
                         let isSpecialDisc = false;
 
                         if (ViewAsSet) {
-                            lblActualCost = 'Total Cost Price (USD)';
-                            lblPrice = 'Total Price (USD)';
+                            lblActualCost = 'Total Initial Cost (USD)';
+                            lblPrice = 'Total Retail Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
 
                             let imagesGallery = [];
@@ -496,8 +496,8 @@ class GridItemsView extends Component {
                                 : '-' : item.name ;
                             isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                         }else{
-                            lblActualCost = `Cost Price (${userLogin.currency})`;
-                            lblPrice = `Price (${userLogin.currency})`;
+                            lblActualCost = `Initial Cost (${userLogin.currency})`;
+                            lblPrice = `Retail Price (${userLogin.currency})`;
                             lblUpdatedCost = `Update Cost (${userLogin.currency})`;
 
                             let imagesGallery = [];

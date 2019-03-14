@@ -1202,8 +1202,8 @@ class GridItemsView extends Component {
                         let checkItem = listMyCatalog.find((myItem) => { return myItem.reference == item.reference });
                         checkItem = !checkItem ? false : true;  //if undefined checked false else true
                         if (item.id != null) {
-                            lblActualCost = `Cost Price (USD)`;
-                            lblPrice = `Price (USD)`;
+                            lblActualCost = `Initial Cost (USD)`;
+                            lblPrice = `Retail Price (USD)`;
                             lblUpdatedCost = `Update Cost (USD)`;
 
                             let imagesGallery = [];
@@ -1274,8 +1274,8 @@ class GridItemsView extends Component {
                                 : '';
                             isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                         }else{
-                            lblActualCost = 'Total Cost Price (USD)';
-                            lblPrice = 'Total Price (USD)';
+                            lblActualCost = 'Total Initial Cost (USD)';
+                            lblPrice = 'Total Retail Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
 
                             let imagesGallery = [];

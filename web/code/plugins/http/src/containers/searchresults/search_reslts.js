@@ -59,7 +59,7 @@ const labels = {
 
 }
 const labelsViewAsSet = {
-    totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Price (USD)', markup: 'Markup (Times)',
+    totalActualCost: 'Total Initial Cost (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Retail Price (USD)', markup: 'Markup (Times)',
     companyName: 'Company', warehouseName: 'Location', createdDate: 'Created Date'
 }
 let listMyCatalog = []
@@ -1358,7 +1358,7 @@ class SearchResult extends Component {
                                             <select className="form-searchresult" onChange={this.sortingBy}
                                                 ref="sortingBy">
                                                 <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                                <option key={'price'} value={'price'}>{'Price'}</option>
+                                                <option key={'price'} value={'price'}>{'Retail Price'}</option>
                                                 <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                                 <option key={'description'} value={'description'}>{'Description'}</option>
                                                 <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>

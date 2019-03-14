@@ -36,7 +36,7 @@ class SearchResultOnItem extends Component {
                                 <div className="styled-select">
                                     <select className="form-searchresult" onChange={onChangedSortingBy} ref="sortingBy" >
                                         <option key={'itemCreatedDate'} value={'itemCreatedDate'}>{'Updated Date'}</option>
-                                        <option key={'price'} value={'price'}>{'Price'}</option>
+                                        <option key={'price'} value={'price'}>{'Retail Price'}</option>
                                         <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                         <option key={'description'} value={'description'}>{'Description'}</option>
                                     </select>

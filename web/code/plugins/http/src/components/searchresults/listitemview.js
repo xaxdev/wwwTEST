@@ -311,7 +311,7 @@ class ListItemsView extends Component {
                             { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                             { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                             { title: 'Stone Detail', prop: 'stoneDetail' },
-                            { title: 'Price', prop: 'priceUSD' },
+                            { title: 'Retail Price', prop: 'priceUSD' },
                             { title: '', render: this.renderAction, className: 'text-center' },
                         ];
                     }else{
@@ -327,7 +327,7 @@ class ListItemsView extends Component {
                             { title: 'Jewelry Weight', prop: 'jewelsWeight' },
                             { title: 'Item Weight (Grams)', prop: 'grossWeight' },
                             { title: 'Stone Detail', prop: 'stoneDetail' },
-                            { title: 'Price', prop: 'priceUSD' },
+                            { title: 'Retail Price', prop: 'priceUSD' },
                             { title: '', render: this.renderAction, className: 'text-center' },
                         ];
                     }
@@ -350,7 +350,7 @@ class ListItemsView extends Component {
                                         )
                                     })}
                                     <th className={`${(userLogin.permission.price == 'All') ?
-                                        '' : 'hidden'}`}><span>Group Cost Price (USD)</span></th>
+                                        '' : 'hidden'}`}><span>Initial Cost Price (USD)</span></th>
                                     <th className={`${(userLogin.permission.price == 'Updated'
                                         || userLogin.permission.price == 'All') ?
                                         '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>

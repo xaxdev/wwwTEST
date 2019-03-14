@@ -1238,15 +1238,16 @@ class UsersNewFrom extends Component {
     }
 
     render() {
-        const { fields: {
-                  firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,productGroup,onhand,price,productGroupSTO,
-                  productGroupJLY,productGroupWAT, productGroupACC,productGroupOBA,productGroupSPA,onhandValue,webOnly,onhandLocation,onhandAll,permissionId,
-                  onhandWarehouse,onhandWarehouseValue,onhandLocationValue,productGroupErr,movement,categoryJLY,categoryWAT,categorySTO,categoryACC,categoryOBA,
-                  categorySPP,notUseHierarchy,userType,productGroupSales,productGroupSalesSTO,productGroupSalesJLY,productGroupSalesWAT,productGroupSalesACC,
-                  productGroupSalesOBA,productGroupSalesSPA,productGroupSalesErr,priceSalesRTP,priceSalesUCP,priceSalesCTP,priceSalesNSP,priceSalesMGP,
-                  priceSalesDSP,salesLocation,salesLocationValue,salesWarehouse,salesWarehouseValue,salesAll,categorySalesJLY,categorySalesWAT,categorySalesSTO,
-                  categorySalesACC,categorySalesOBA,categorySalesSPP,notUseSalesHierarchy,bomOnhand,bomSales
-              },handleSubmit,invalid,submitting, CanNotUseHierarchy, userTypeValue, CanNotUseSalesHierarchy, HierarchyValue, SalesHierarchyValue
+        const {
+            fields: {
+                firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,productGroup,onhand,price,productGroupSTO,
+                productGroupJLY,productGroupWAT, productGroupACC,productGroupOBA,productGroupSPA,onhandValue,webOnly,onhandLocation,onhandAll,permissionId,
+                onhandWarehouse,onhandWarehouseValue,onhandLocationValue,productGroupErr,movement,categoryJLY,categoryWAT,categorySTO,categoryACC,categoryOBA,
+                categorySPP,notUseHierarchy,userType,productGroupSales,productGroupSalesSTO,productGroupSalesJLY,productGroupSalesWAT,productGroupSalesACC,
+                productGroupSalesOBA,productGroupSalesSPA,productGroupSalesErr,priceSalesRTP,priceSalesUCP,priceSalesCTP,priceSalesNSP,priceSalesMGP,
+                priceSalesDSP,salesLocation,salesLocationValue,salesWarehouse,salesWarehouseValue,salesAll,categorySalesJLY,categorySalesWAT,categorySalesSTO,
+                categorySalesACC,categorySalesOBA,categorySalesSPP,notUseSalesHierarchy,bomOnhand,bomSales
+            },handleSubmit,invalid,submitting, CanNotUseHierarchy, userTypeValue, CanNotUseSalesHierarchy, HierarchyValue, SalesHierarchyValue
         } = this.props;
 
         let dataDropDowntLocations = [];

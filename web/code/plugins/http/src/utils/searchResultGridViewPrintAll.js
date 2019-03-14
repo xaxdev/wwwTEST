@@ -22,7 +22,7 @@ export default function SearchResultListViewPrintAll(items, userLogin, ViewAsSet
 
         if (ViewAsSet) {
             lblActualCost = 'Total Initial Cost (USD)';
-            lblPrice = 'Total Price (USD)';
+            lblPrice = 'Total Retail Price (USD)';
             lblUpdatedCost = 'Total Update Cost (USD)';
 
             let imagesGallery = [];
@@ -61,7 +61,7 @@ export default function SearchResultListViewPrintAll(items, userLogin, ViewAsSet
                 item.name ;
         }else{
             lblActualCost = `Initial Cost (${userLogin.currency})`;
-            lblPrice = `Price (${userLogin.currency})`;
+            lblPrice = `Retail Price (${userLogin.currency})`;
             lblUpdatedCost = `Update Cost (${userLogin.currency})`;
 
             let imagesGallery = [];

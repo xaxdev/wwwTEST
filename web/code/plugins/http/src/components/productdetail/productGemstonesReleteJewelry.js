@@ -18,7 +18,7 @@ const GemstoneReleteJewelry =  (props) =>{
                             <th>Metal Type</th>
                             <th>Metal Color</th>
                             <th>Location</th>
-                            <th>Price</th>
+                            <th>Retail Price</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -31,7 +31,7 @@ const GemstoneReleteJewelry =  (props) =>{
                                     <td title="Metal Type" className="text-center">{convertBlanktodash(data.metalType)}</td>
                                     <td title="Metal Color" className="text-center">{convertBlanktodash(data.metalColor)}</td>
                                     <td title="Location" className="text-center">{convertBlanktodash(data.location)}</td>
-                                    <td title="Price" className="text-center">{currency == 'USD'? data.priceUSD:data.priceNonUSD}</td>
+                                    <td title="Retail Price" className="text-center">{currency == 'USD'? data.priceUSD:data.priceNonUSD}</td>
                                     <td title="View" className="text-center"><Link to={{pathname: `${pructdetailurl}${data.id}`}}><span className="icon-search search-icon"></span></Link></td>
                                 </tr>
                             )

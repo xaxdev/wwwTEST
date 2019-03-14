@@ -75,8 +75,8 @@ class GridItemsViewPrint extends Component {
                         let lblUpdatedCost = '';
                         let isSpecialDisc = false;
                         if (item.id != null) {
-                            lblActualCost = `Cost Price (USD)`;
-                            lblPrice = `Price (USD)`;
+                            lblActualCost = `Initial Cost (USD)`;
+                            lblPrice = `Retail Price (USD)`;
                             lblUpdatedCost = `Update Cost (USD)`;
 
                             let imagesGallery = [];
@@ -148,8 +148,8 @@ class GridItemsViewPrint extends Component {
                               : '';
                             isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
                         }else{
-                            lblActualCost = 'Total Cost Price (USD)';
-                            lblPrice = 'Total Price (USD)';
+                            lblActualCost = 'Total Initial Cost (USD)';
+                            lblPrice = 'Total Retail Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
 
                             let imagesGallery = [];

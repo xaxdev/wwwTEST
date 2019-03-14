@@ -21,7 +21,7 @@ export default function MyCatalogPrintAll(items, userLogin){
 
         if (item.id != null) {
             lblActualCost = `Initial Cost (USD)`;
-            lblPrice = `Price (USD)`;
+            lblPrice = `Retail Price (USD)`;
             lblUpdatedCost = `Update Cost (USD)`;
 
             let imagesGallery = [];
@@ -87,7 +87,7 @@ export default function MyCatalogPrintAll(items, userLogin){
             isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
         }else{
             lblActualCost = 'Total Initial Cost (USD)';
-            lblPrice = 'Total Price (USD)';
+            lblPrice = 'Total Retail Price (USD)';
             lblUpdatedCost = 'Total Update Cost (USD)';
 
             let imagesGallery = [];

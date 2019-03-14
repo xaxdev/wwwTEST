@@ -18,7 +18,7 @@ class RenderClassTotals extends Component {
                     || userLogin.permission.price == 'Updated'
                     || userLogin.permission.price == 'All') ?
                     '' : 'hidden'}`}>
-                    <span className="font-b fc-000">Total Price :</span>
+                    <span className="font-b fc-000">Total Retail Price :</span>
                     <span className="font-w9">{ _totalPublicPrice } { ViewAsSet ? 'USD' : userLogin.currency }</span>
                 </span>
                 <span className={`${(userLogin.permission.price == 'Updated'
@@ -31,17 +31,17 @@ class RenderClassTotals extends Component {
             </div>
             <div id="dvTotalsub2" className="bg-f7d886 text-center">
                 <span>
-                    <span className="font-b fc-000">Highest Price :</span>
+                    <span className="font-b fc-000">Highest Retail Price :</span>
                     <span className="font-w9">{ numberFormat(maxPrice) } { ViewAsSet ? 'USD' : userLogin.currency } </span>
                     <span className="padding-lf15">|</span>
                 </span>
                 <span>
-                    <span className="font-b fc-000">Lowest Price :</span>
+                    <span className="font-b fc-000">Lowest Retail Price :</span>
                     <span className="font-w9">{ numberFormat(minPrice) } { ViewAsSet ? 'USD' : userLogin.currency } </span>
                     <span className="padding-lf15">|</span>
                 </span>
                 <span>
-                    <span className="font-b fc-000">Average Price :</span>
+                    <span className="font-b fc-000">Average Retail Price :</span>
                     <span className="font-w9">{ numberFormat(avrgPrice) } { ViewAsSet ? 'USD' : userLogin.currency } </span>
                 </span>
             </div>

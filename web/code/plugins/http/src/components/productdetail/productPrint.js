@@ -33,13 +33,12 @@ class productprint extends Component {
     }
     renderDesc(){
         const  Detail  = this.props.productdetail;
-        let  Detailtitle  = '';
+        let  Detailtitle  = 'ITEM DETAILS';
         if(!Detail){
             return(<div>Loading...</div>);
         }
         switch (Detail.type) {
             case 'JLY':
-                Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -47,7 +46,6 @@ class productprint extends Component {
                     </div>
                 );
             case 'STO':
-                Detailtitle='STONE DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -55,7 +53,6 @@ class productprint extends Component {
                     </div>
                 );
             case 'WAT':
-                Detailtitle='WATCH DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -63,7 +60,6 @@ class productprint extends Component {
                     </div>
                 );
             case 'OBA':
-                Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -71,7 +67,6 @@ class productprint extends Component {
                     </div>
                 );
             case 'ACC':
-                Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -79,7 +74,6 @@ class productprint extends Component {
                     </div>
                 );
             case 'SPA':
-                Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>

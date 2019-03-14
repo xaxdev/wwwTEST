@@ -27,13 +27,13 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             titles.push('Item Reference', 'Description');
 
             if (price == 'All') {
-                titles.push('Total Cost Price (USD)');
+                titles.push('Total Initial Cost (USD)');
             }
             if (price == 'Updated' || price == 'All') {
                 titles.push('Total Updated Cost (USD)');
             }
             if (price == 'Public' || price == 'Updated' || price == 'All') {
-                titles.push('Total Price (USD)');
+                titles.push('Total Retail Price (USD)');
             }
             if(fields.allFieldsViewAsSet){
                 if (price == 'Updated' || price == 'All') {
@@ -41,9 +41,9 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 }
                 titles.push('Company','Location', 'Created Date');
             }else{
-                if(fields.totalActualCost) titles.push('Total Cost Price (USD)');
+                if(fields.totalActualCost) titles.push('Total Initial Cost (USD)');
                 if(fields.totalUpdatedCost) titles.push('Total Updated Cost (USD)');
-                if(fields.totalPrice) titles.push('Total Price (USD)');
+                if(fields.totalPrice) titles.push('Total Retail Price (USD)');
                 if(fields.markup) titles.push('Markup (Times)');
                 if(fields.companyName) titles.push('Company');
                 if(fields.warehouseName) titles.push('Location');
@@ -56,33 +56,33 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
             titles.push('Item Reference', 'Item Description', 'SKU', 'Vendor Item Reference');
             if (userCurrency != 'USD') {
                 if (price == 'All') {
-                    titles.push('Cost Price (' + userCurrency + ')');
+                    titles.push('Initial Cost (' + userCurrency + ')');
                 }
                 if (price == 'Updated' || price == 'All') {
                     titles.push('Updated Cost (' + userCurrency + ')');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                    titles.push('Price (' + userCurrency + ')');
+                    titles.push('Retail Price (' + userCurrency + ')');
                 }
 
                 if (price == 'All') {
-                    titles.push('Cost Price (USD)');
+                    titles.push('Initial Cost (USD)');
                 }
                 if (price == 'Updated' || price == 'All') {
                     titles.push('Updated Cost (USD)');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                    titles.push('Price (USD)');
+                    titles.push('Retail Price (USD)');
                 }
             } else {
                 if (price == 'All') {
-                    titles.push('Cost Price (USD)');
+                    titles.push('Initial Cost (USD)');
                 }
                 if (price == 'Updated' || price == 'All') {
                     titles.push('Updated Cost (USD)');
                 }
                 if (price == 'Public' || price == 'Updated' || price == 'All') {
-                    titles.push('Price (USD)');
+                    titles.push('Retail Price (USD)');
                 }
             }
             titles.push('Special Discount','Item Weight (Grams)','Ring Size', 'Jewels Weight (text)','Site','Company', 'Location');

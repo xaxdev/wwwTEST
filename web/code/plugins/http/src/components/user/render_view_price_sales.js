@@ -31,7 +31,7 @@ class RenderViewPriceSales extends Component {
                             checked={priceSalesCTP.value === 'CTP'}
                             {...priceSalesCTP}
                             onChange={onChangedPriceSales}/>
-                        <span>Cost Price</span>
+                        <span>Initial Cost</span>
                     </div>
                 </div>
                 <label className="col-sm-2 control-label"> </label>

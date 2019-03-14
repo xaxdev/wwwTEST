@@ -21,7 +21,7 @@ class RenderClassTotals extends Component {
                     <span className={`spSetItemsPublicPrice${(userLogin.permission.price == 'Public' || userLogin.permission.price == 'Updated'
                             || userLogin.permission.price == 'All') ?
                             '' : ' hidden'}`}>
-                        <span className="font-b fc-000">Total Price(Set) :</span>
+                        <span className="font-b fc-000">Total Retail Price (Set) :</span>
                         <span className="font-w9">{ _totalPublicPriceSet } USD</span>
                     </span>
                     <span className={`spSetItemsUpdated${(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All') ?
