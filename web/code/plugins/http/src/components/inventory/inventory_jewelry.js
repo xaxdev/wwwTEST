@@ -601,13 +601,13 @@ const tooltipRingSize = (
     <Tooltip id="tooltip"><strong>Search Product by Ring Size</strong></Tooltip>
 );
 const tooltipTotalCost = (
-    <Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>
+    <Tooltip id="tooltip"><strong>Initial Cost (USD)!</strong></Tooltip>
 );
 const tooltipTotalUpdatedCost = (
     <Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>
 );
 const tooltipPublicPrice = (
-    <Tooltip id="tooltip"><strong>Price (USD)!</strong></Tooltip>
+    <Tooltip id="tooltip"><strong>Retail Price (USD)!</strong></Tooltip>
 );
 const tooltipMarkup = (
     <Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>

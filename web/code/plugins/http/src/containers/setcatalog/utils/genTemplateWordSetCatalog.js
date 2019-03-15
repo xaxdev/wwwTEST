@@ -66,7 +66,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                                 if (chkSellingCost) {
                                                     htmlTemplate = htmlTemplate + `<span>
                                                                                         <span style="${paddinglf15}">|</span>
-                                                                                        <span style="${fontbfc000}">Total Price(Set) :</span>
+                                                                                        <span style="${fontbfc000}">Total Retail Price (Set) :</span>
                                                                                         <span style="${fontw9}">
                                                                                             <span>${_totalPublicPriceSet}</span>
                                                                                             <span> USD</span>
@@ -142,7 +142,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
                                                     <th style="${th}"><span>Stone Detail</span></th>`
                                                     if (chkGroupCost) {
                                                         htmlTemplate = htmlTemplate + `<th style="${th}">
-                                                                                            <span>Initial Cost (USD)</span></th>`
+                                                                                            <span>Initial Cost Price (USD)</span></th>`
                                                     }
                                                     if (chkUpdateCost) {
                                                         htmlTemplate = htmlTemplate + `<th style="${th}">

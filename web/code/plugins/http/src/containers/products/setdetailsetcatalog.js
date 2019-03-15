@@ -179,7 +179,7 @@ class productdetail extends Component {
 
     renderDesc = _ => {
         const  Detail  = this.props.productdetail;
-        let  Detailtitle  = 'JEWELRY DETAILS';
+        let  Detailtitle  = 'ITEM DETAILS';
         if(!Detail){
             return(
                 <div>
@@ -200,7 +200,7 @@ class productdetail extends Component {
 
     renderDescmovement = _ => {
         const  Detail  = this.props.productdetail;
-        let  Detailtitle  = '';
+        let  Detailtitle  = 'ITEM DETAILS';
         if(!Detail){
             return(
                 <div>
@@ -213,7 +213,6 @@ class productdetail extends Component {
         }
         switch (Detail.type) {
             case 'JLY':
-                Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
                       <h2>{Detailtitle}</h2>
@@ -221,8 +220,6 @@ class productdetail extends Component {
                     </div>
                   );
             case 'STO':
-
-                Detailtitle='STONE DETAILS';
                 return(
                     <div>
                       <h2>{Detailtitle}</h2>
@@ -230,7 +227,6 @@ class productdetail extends Component {
                     </div>
                   );
             case 'WAT':
-                Detailtitle='WATCH DETAILS';
                 return(
                     <div>
                       <h2>{Detailtitle}</h2>
@@ -238,7 +234,6 @@ class productdetail extends Component {
                     </div>
                   );
             case 'OBA':
-                Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
                       <h2>{Detailtitle}</h2>
@@ -246,7 +241,6 @@ class productdetail extends Component {
                     </div>
                   );
             case 'ACC':
-                Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
                       <h2>{Detailtitle}</h2>
@@ -254,7 +248,6 @@ class productdetail extends Component {
                     </div>
                   );
             case 'SPA':
-                Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
                       <h2>{Detailtitle}</h2>
@@ -577,7 +570,7 @@ class productdetail extends Component {
                                     <th><span>Description</span></th>
                                     <th><span>Stone Detail</span></th>
                                     <th className={`${(userLogin.permission.price == 'All') ?
-                                        '' : 'hidden'}`}><span>Initial Cost (USD)</span></th>
+                                        '' : 'hidden'}`}><span>Initial Cost Price (USD)</span></th>
                                     <th className={`${(userLogin.permission.price == 'Updated'
                                         || userLogin.permission.price == 'All') ?
                                         '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
@@ -692,7 +685,7 @@ class productdetail extends Component {
                                     <th style={styles.tableth}><span>Description</span></th>
                                     <th style={styles.tableth}><span>Stone Detail</span></th>
                                     <th style={(userLogin.permission.price == 'All')?styles.tableth:styles.hidden}>
-                                        <span style={styles.span}>Initial Cost (USD)</span>
+                                        <span style={styles.span}>Initial Cost Price (USD)</span>
                                     </th>
                                     <th style={(userLogin.permission.price == 'Updated' || userLogin.permission.price == 'All')
                                         ?styles.tableth:styles.hidden}>

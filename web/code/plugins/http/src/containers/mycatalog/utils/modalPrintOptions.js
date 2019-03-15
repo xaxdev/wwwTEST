@@ -79,7 +79,7 @@ class ModalPrintOptions extends Component {
                                             || userLogin.permission.price == 'All') ? '' : 'hidden'}`}>
                                         <input type="radio" {...printPrice} value="public" checked={printPrice.value === 'public'} />
                                         <label className="select"></label>
-                                        <span className="margin-l10 text-vertical">Price</span>
+                                        <span className="margin-l10 text-vertical">Retail Price</span>
                                     </div>
                                 </div>
                             </div>

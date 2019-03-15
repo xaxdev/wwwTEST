@@ -80,7 +80,7 @@ class ModalPrintOptions extends Component {
                                         }
                                     }
                                 }/>
-                                <label className="control-label-word checkbox1">Total Initial Cost (USD)</label>
+                                <label className="control-label-word checkbox1">Total Initial Cost Price (USD)</label>
                             </div>
                             </div>
                             <div className="maring-b10">
