@@ -1202,9 +1202,9 @@ class GridItemsView extends Component {
                         let checkItem = listMyCatalog.find((myItem) => { return myItem.reference == item.reference });
                         checkItem = !checkItem ? false : true;  //if undefined checked false else true
                         if (item.id != null) {
-                            lblActualCost = `Initial Cost (USD)`;
-                            lblPrice = `Retail Price (USD)`;
-                            lblUpdatedCost = `Update Cost (USD)`;
+                            lblActualCost = 'Initial Cost (USD)';
+                            lblPrice = 'Retail Price (USD)';
+                            lblUpdatedCost = 'Update Cost (USD)';
 
                             let imagesGallery = [];
                             let imagesOrder = [];
@@ -1554,6 +1554,8 @@ class GridItemsView extends Component {
                                             </div>
                                                 : ''
                                         }
+                                        <span className={`width-f100 fc-ddbe6a font-b ${(isSpecialDisc) ? '' : 'hidden'}`}>Special Discount %: </span>
+                                        <span className={`width-f100 ${(isSpecialDisc) ? '' : 'hidden'}`}>{item.specialDiscountPercent}</span>
                                         <span className="width-f100 fc-ddbe6a font-b">Company : </span>
                                         <span className="width-f100">{(item.authorization) ?item.companyName:''}</span>
                                         <span className="fc-ddbe6a width-f100 font-b">Location: </span>

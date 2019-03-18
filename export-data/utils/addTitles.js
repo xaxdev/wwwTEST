@@ -98,7 +98,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 titles.push(
                     'Certificate Number','Certificate Date', 'Vendor Code','Vendor Name', 'Metal Colour', 'Metal','Brand','Complication',
                     'Strap Type','Strap Color','Buckle Type','Dial Index','Dial Color','Movement','Serial #','Limited Edition',
-                    'Limited Edition #','Created Date'
+                    'Limited Edition #','Special Discount %','Created Date'
                 );
             }else{
                 if(fields.ingredients) titles.push('Ingredients');
@@ -138,6 +138,7 @@ const title = (responseData, request) => new Promise((resolve, reject) => {
                 if(fields.serial) titles.push('Serial #');
                 if(fields.limitedEdition) titles.push('Limited Edition');
                 if(fields.limitedEditionNumber) titles.push('Limited Edition #');
+                if(fields.specialDiscountPercent) titles.push('Special Discount %');
                 if(fields.itemCreatedDate) titles.push('Created Date');
             }
         }

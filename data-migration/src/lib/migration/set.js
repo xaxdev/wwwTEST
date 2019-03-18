@@ -41,6 +41,7 @@ const getitemSets = async (index, exchangeRates) => {
                     warehouseName: record.warehouseName,
                     type: record.type,
                     specialDiscount: record.specialDiscount,
+                    specialDiscountPercent: record.specialDiscountPercent,
                     createdDate: record.createdDate,
                     image:[]
                 }
@@ -96,6 +97,7 @@ const getitemSets = async (index, exchangeRates) => {
                     warehouseName: record.warehouseName,
                     venderReference: record.venderReference,
                     specialDiscount: record.specialDiscount,
+                    specialDiscountPercent: record.specialDiscountPercent,
                     sku: record.sku,
                     type: record.type,
                     hierarchy: record.hierarchy,
@@ -191,6 +193,7 @@ const getitemSets = async (index, exchangeRates) => {
                         warehouseName: record.warehouseName,
                         venderReference: record.venderReference,
                         specialDiscount: record.specialDiscount,
+                        specialDiscountPercent: record.specialDiscountPercent,
                         sku: record.sku,
                         type: record.type,
                         hierarchy: record.hierarchy,
