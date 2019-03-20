@@ -17,6 +17,9 @@ const Detail = (props) =>{
         const userLogin = JSON.parse(sessionStorage.logindata);
         let setReference = (props.setReference != undefined ) ? props.setReference : '-';
         setReference = (setReference != '' ) ? setReference : '-';
+        let isSpecialDisc = props.specialDiscount != undefined ? props.specialDiscount == 1?true:false : false
+        let specialDiscountPercent = props.specialDiscountPercent
+        
         return (
             <div className="line-h">
                 <div className="col-md-12 col-sm-12 nopadding">
@@ -53,6 +56,10 @@ const Detail = (props) =>{
                     '' : 'hidden'}`}>
                     <div className="col-md-4 col-sm-4 nopadding font-b">Markup (Times)</div>
                     <div className="col-md-8 col-sm-8">{markUp}</div>
+                </div>
+                <div className={`col-md-12 col-sm-12 nopadding ${(isSpecialDisc) ? '' : 'hidden'}`}>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Special Discount %</div>
+                    <div className="col-md-8 col-sm-8">{specialDiscountPercent}%</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Company</div>

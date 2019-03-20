@@ -39,7 +39,7 @@ const sortBy = require('lodash.sortby');
 const checkFields = ['ingredients', 'categoryName', 'category', 'article', 'collection', 'setReferenceNumber', 'cut', 'color','clarity', 'caratWt', 'unit',
     'qty', 'origin', 'symmetry', 'flourance', 'batch', 'netWeight', 'stoneQty','markup', 'certificatedNumber', 'certificateDate', 'vendorCode', 'vendorName',
     'metalColor', 'metalType','dominantStone','brand', 'complication', 'strapType', 'strapColor', 'buckleType','dialIndex', 'dialColor','movement','serial',
-    'limitedEdition','limitedEditionNumber','itemCreatedDate'
+    'limitedEdition','limitedEditionNumber','itemCreatedDate','specialDiscountPercent'
 ];
 
 const checkFieldsViewAsSet = ['totalActualCost','totalUpdatedCost','totalPrice', 'markup', 'companyName', 'warehouseName', 'createdDate'];
@@ -55,7 +55,7 @@ const labels = {
     certificatedNumber: 'Certificate Number', certificateDate: 'Certificate Date', vendorCode: 'Vendor Code', vendorName: 'Vendor Name', metalType: 'Metal Type',
     metalColor: 'Metal Colour', brand: 'Brand', complication: 'Complication', strapType: 'Strap Type', strapColor: 'Strap Color', buckleType: 'Buckle Type',
     dialIndex: 'Dial Index', dialColor: 'Dial Color', movement: 'Movement', serial: 'Serial #', limitedEdition: 'Limited Edition', itemCreatedDate: 'Created Date',
-    limitedEditionNumber: 'Limited Edition #'
+    limitedEditionNumber: 'Limited Edition #', specialDiscountPercent: 'Special Discount %'
 
 }
 const labelsViewAsSet = {
@@ -104,7 +104,7 @@ class SearchResult extends Component {
             showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, createdDate: false,
             isOpenMsgPageInvalid: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
             totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false, isOpenPrintOptions: false,
-            isOpenCannotAddMyCatalogmsg: false, isOpenChangeTitle: false
+            isOpenCannotAddMyCatalogmsg: false, isOpenChangeTitle: false, specialDiscountPercent: false
         };
     }
 
@@ -926,7 +926,8 @@ class SearchResult extends Component {
             complication: this.state.complication, strapType: this.state.strapType, strapColor: this.state.strapColor,
             buckleType: this.state.buckleType, dialIndex: this.state.dialIndex, dialColor: this.state.dialColor,
             movement: this.state.movement, serial: this.state.serial, limitedEdition: this.state.limitedEdition,
-            limitedEditionNumber: this.state.limitedEditionNumber, itemCreatedDate: this.state.itemCreatedDate
+            limitedEditionNumber: this.state.limitedEditionNumber, itemCreatedDate: this.state.itemCreatedDate,
+            specialDiscountPercent: this.state.specialDiscountPercent
         };
         let params = {
             'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : this.props.pageSize, 'fields': fields,
@@ -1362,6 +1363,7 @@ class SearchResult extends Component {
                                                 <option key={'reference'} value={'reference'}>{'Item Reference'}</option>
                                                 <option key={'description'} value={'description'}>{'Description'}</option>
                                                 <option key={'setReference'} value={'setReference'}>{'Set Reference Number'}</option>
+                                                <option key={'specialDiscountPercent'} value={'specialDiscountPercent'}>{'Special Discount %'}</option>
                                             </select>
                                         </div>
                                     </div>

@@ -1168,7 +1168,7 @@ select.form-searchresult option{
 }
 .over-searchresult:hover ,
 .over-searchresult-left:hover {display:block;}
-.over-searchresult span, .over-searchresult-left span{line-height: 22px;}
+.over-searchresult span, .over-searchresult-left span{line-height: 21px;}
 .over-salessearchresult-left {
   font-size:13px;
   margin:0px auto;

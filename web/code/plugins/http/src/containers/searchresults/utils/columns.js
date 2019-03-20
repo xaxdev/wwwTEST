@@ -7,6 +7,7 @@ export const ColumnsNomal = [
     { value: 'stoneDetail', label: 'Stone Detail' },
     { value: 'priceUSD', label: 'Retail Price (USD)' },
     { value: 'specialDiscount', label: 'Special Discount' },
+    { value: 'specialDiscountPercent', label: 'Special Discount %' },
     { value: 'grossWeight', label: 'Item Weight (Grams)' },
     { value: 'size', label: 'Size' },
     { value: 'jewelsWeight', label: 'Jewelry Weight' },
