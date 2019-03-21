@@ -1,9 +1,7 @@
 import React,{ Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Button, FormControl, Pagination, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { reduxForm, reset } from 'redux-form';
-import { Modal, ModalClose } from 'react-modal-bootstrap';
+import { Pagination, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { reduxForm } from 'redux-form';
 import jQuery from 'jquery';
 import moment from 'moment-timezone';
 import * as productdetailaction from '../../actions/productdetailaction';
@@ -390,7 +388,7 @@ class productdetail extends Component {
     }
 
     renderAttr = _ => {
-        const { fields:{ stonepage }, lotNumbers, stonActivePage, submitting, totalpage, stonePageSize,filterSearch } = this.props;
+        const { fields:{ stonepage }, lotNumbers, stonActivePage, totalpage, stonePageSize } = this.props;
         const  Detail  = this.props.productdetail;
 
         let  Attrtitle  = 'ITEM ATTRIBUTES';
@@ -473,8 +471,6 @@ class productdetail extends Component {
 
         if (!!setReferenceData.products) {
             if(setReferenceData.products.length > 0){
-                const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-                const currency = logindata.currency;
                 const isSpecialDisc = setReferenceData.specialDiscount != undefined ? setReferenceData.specialDiscount == 1?true:false : false;
                 return(
                     <div>
@@ -523,9 +519,6 @@ class productdetail extends Component {
                     let activegallery = jQuery('#imgset').attr('src');
                     let totalprice = jQuery('#totalsetprice').val();
 
-                    const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-                    const currency = logindata.currency;
-
                     jQuery('#galleryimgset').attr('src',activegallery);
                     jQuery('#showtotal').text('Total Retail Price (Set): '+numberFormat(totalprice)+' '+'USD');
                     let rotatecount = 0;
@@ -553,7 +546,6 @@ class productdetail extends Component {
     renderFooterAttr = _ => {
         const Detail  = this.props.productdetail;
         const gemstoneAttr = Detail.gemstones;
-        const subType = Detail.subType;
 
         if(Detail.type == 'STO' || Detail.type == 'CER'){
         } else {
@@ -584,8 +576,8 @@ class productdetail extends Component {
     renderFooterDiamondsAttr = _ => {
         const Detail  = this.props.productdetail;
         const gemstoneAttr = Detail.gemstones;
-        const subType = Detail.subType;
         const { company } = Detail
+
         if(Detail.type == 'STO' || Detail.type == 'CER'){
         } else {
             if(!gemstoneAttr){
@@ -615,7 +607,6 @@ class productdetail extends Component {
     renderFooterRawmatirialAttr = _ => {
         const Detail  = this.props.productdetail;
         const gemstoneAttr = Detail.gemstones;
-        const subType = Detail.subType;
 
         if(Detail.type == 'STO' || Detail.type == 'CER'){
 
@@ -646,6 +637,7 @@ class productdetail extends Component {
 
     renderImagegallery = _ => {
         const { gallery } = this.props.productdetail;
+
         if(gallery !== undefined){
             if(gallery.length > 0) {
                 let imagesGallery = []
@@ -714,9 +706,9 @@ class productdetail extends Component {
     }
 
     renderReleteproduct = _ => {
-        const { totalpage,products,page } = this.props.productrelete;
+        const { totalpage, products } = this.props.productrelete;
         const productId = this.props.params.id;
-        const { type,collection,subType,price,dominant } = this.props.productdetail;
+        const { type, subType, price, dominant } = this.props.productdetail;
         const { fields: { reletepage },handleSubmit} = this.props;
 
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
@@ -754,10 +746,7 @@ class productdetail extends Component {
 
     renderNavigation = _ => {
         const productlist = this.props.productlist;
-        const productId = this.props.params.id;
         const productIndex = this.props.productindex;
-        const productindexplus = this.props.productindexplus;
-        const { type} = this.props.productdetail;
         let pructdetailurl = '/productdetail/';
         const { fields: { pagego },handleSubmit} = this.props;
 
@@ -806,7 +795,7 @@ class productdetail extends Component {
 
     addMyCatalog = _=> {
         this.props.getCatalogNameSetItem().then(() =>{
-            const { fields: { oldCatalogName,newCatalogName,validateCatalogName } } = this.props;
+            const { fields: { oldCatalogName, newCatalogName } } = this.props;
 
             this.setState({isOpenAddMyCatalog: true});
             oldCatalogName.value = '';
@@ -829,7 +818,7 @@ class productdetail extends Component {
     handleSubmitCatalog = (e) => {
         e.preventDefault();
         this.setState({isOpenAddMyCatalog: false});
-        const { fields: { oldCatalogName,newCatalogName,validateCatalogName } } = this.props;
+        const { fields: { oldCatalogName, newCatalogName } } = this.props;
         const  Detail  = this.props.productdetail;
         const  listCatalogName  = this.props.listCatalogName;
         let oldCatalogTitle = ''
@@ -839,7 +828,7 @@ class productdetail extends Component {
 
         const catalogdata = {
             id:!!oldCatalogName.value ? oldCatalogName.value:null,
-            catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog:newCatalogName.value,
+            catalog: !!oldCatalogName.value ? oldCatalogTitle.catalog: newCatalogName.value,
             items:[
                 {
                     id:Detail.id,
@@ -858,7 +847,7 @@ class productdetail extends Component {
     }
 
     renderAddMyCatalog = _ =>{
-        const { listCatalogName, submitting } = this.props;
+        const { listCatalogName } = this.props;
 
         return(
             <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName}
@@ -878,7 +867,7 @@ class productdetail extends Component {
         const productId = this.props.params.id;
         const { totalpage} = this.props.productrelete;
         const getPage = parseInt(data.reletepage);
-        const { collection,subType,price,dominant } = this.props.productdetail;
+        const { subType, price, dominant } = this.props.productdetail;
         if((getPage <= totalpage) && (getPage != 0)){
             const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
             const currency = logindata.currency;
@@ -1104,7 +1093,7 @@ class productdetail extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const host = HOSTNAME || 'localhost';
         const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `http://${host}`;
-        const { gemstones, company } = this.props.productdetail;
+        const { gemstones } = this.props.productdetail;
         const productId = this.props.params.id;
 
         let exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
@@ -1202,13 +1191,7 @@ class productdetail extends Component {
 
     render = _ => {
         const userLogin = JSON.parse(sessionStorage.logindata);
-        const { totalpage,products,page } = this.props.productrelete;
-        const reletepage = this.props.productreletepage;
-        const productlist = this.props.productlist;
-        const productId = this.props.params.id;
-        const productIndex = this.props.productindex;
-        const productindexplus = this.props.productindexplus;
-        const { type, setReference, gemstones, activities, company } = this.props.productdetail;
+        const { type, setReference, gemstones, activities } = this.props.productdetail;
         let { gallery } = this.props.productdetail;
         const { lotNumbers, stonePageSize, stonActivePage } = this.props;
         let isCertificate = false;
@@ -1236,7 +1219,7 @@ class productdetail extends Component {
                 }
             });
         }
-        let pructdetailurl = '/productdetail/';
+
         return(
             <div id="page-wrapper">
                 <div className="col-sm-12 bg-hearder m-prodcutdetail">

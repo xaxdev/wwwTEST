@@ -1,10 +1,11 @@
-import React,{PropTypes} from 'react';
+import React from 'react';
 import numberFormat from '../../utils/convertNumberformat';
 import convertDate from '../../utils/convertDate';
-import percentformatFormat from '../../utils/convertMarkpercent';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertMarkpercent from '../../utils/convertMarkpercent';
+
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
+
 const styles ={
     colmd12:{
         width:'100%',
@@ -66,6 +67,10 @@ const Detail = (props) =>{
                     styles.colmd12  : styles.colmdhide}>
                     <div style={styles.colmd5}>Markup (Times)</div>
                     <div style={styles.colmd5}>{markUp}</div>
+                </div>
+                <div style={styles.colmd12}>
+                    <div style={styles.colmd5}>Special Discount %</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.specialDiscountPercent)}%</div>
                 </div>
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Location</div>

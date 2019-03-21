@@ -1,9 +1,8 @@
-import React,{PropTypes} from 'react';
+import React from 'react';
 import numberFormat from '../../utils/convertNumberformat';
-import percentformatFormat from '../../utils/convertMarkpercent';
 import convertDate from '../../utils/convertDate';
-import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertMarkpercent from '../../utils/convertMarkpercent';
+
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
 
 const Detail = (props) =>{
