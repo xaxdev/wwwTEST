@@ -68,7 +68,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                 || key == 'brand' || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour'
                 || key == 'gemstones' || key == 'limitedEdition' || key == 'sku' || key == 'origin' || key == 'watchCategory' || key == 'movement'
                 || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'strapType' || key == 'strapColor' || key == 'complication'
-                || key == 'color' || key == 'setReference' || key == 'warehouse' || key == 'article'
+                || key == 'color' || key == 'setReference' || key == 'warehouse' || key == 'article' || key == 'specialDiscountPercent'
             ){
                 value = `${value}`
                 value = value.replace(/,/gi, ' ');

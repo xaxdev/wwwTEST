@@ -1,10 +1,6 @@
-import React,{ Component,PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import { reduxForm, reset } from 'redux-form';
-import { Button,FormControl,Pagination } from 'react-bootstrap';
+import React,{ Component } from 'react';
+import { reduxForm } from 'redux-form';
 import ReactImageFallback from 'react-image-fallback';
-import * as productdetailaction from '../../actions/productdetailaction';
 import ProductDescriptionBlock from '../../components/productdetail/setDescription';
 import ProductDescriptioncerBlock from '../../components/productdetail/productDescriptionprintcer';
 import ProductJewelryAttributes from '../../components/productdetail/productJewalryAttributesprint';
@@ -14,7 +10,6 @@ import ProductObaAttributes from '../../components/productdetail/productObaAttri
 import ProductAccAttributes from '../../components/productdetail/productAccAttributesprint';
 import ProductSpaAttributes from '../../components/productdetail/productSppAttributesprint';
 import ProductGemstoneAttributes from '../../components/productdetail/productGemstonesAttributesprint';
-import ProductGemstonesReleteJewelry from '../../components/productdetail/productGemstonesReleteJewelryprint';
 import ProductDiamonsAttributes from  '../../components/productdetail/productDiamondsAttributesprint';
 import ProductRawmatirialAttributes from  '../../components/productdetail/productRawmaterialAttributesprint';
 import Setreference from '../../components/productdetail/productset';
@@ -34,6 +29,7 @@ class productprint extends Component {
     constructor(props) {
         super(props);
     }
+
     renderDesc(){
         const  Detail  = this.props.productdetail;
         let  Detailtitle  = 'ITEM DETAILS';
@@ -100,6 +96,7 @@ class productprint extends Component {
                 );
         }
     }
+
     renderAttr(){
         const  Detail  = this.props.productdetail;
         const { lotNumbers, pageSize, activePage } = this.props;
@@ -160,6 +157,7 @@ class productprint extends Component {
                 );
         }
     }
+
     renderFooterAttr(){
         const Detail  = this.props.productdetail;
         const gemstoneAttr = Detail.gemstones;
@@ -185,10 +183,10 @@ class productprint extends Component {
             }
         }
     }
+
     renderFooterDiamondsAttr(){
         const Detail  = this.props.productdetail;
         const gemstoneAttr = Detail.gemstones;
-        const subType = Detail.subType;
         const { company } = Detail
 
         if(Detail.type == 'STO' || Detail.type == 'CER'){
@@ -209,10 +207,11 @@ class productprint extends Component {
             }
         }
     }
+
     renderFooterRawmatirialAttr(){
         const Detail  = this.props.productdetail;
         const gemstoneAttr = Detail.gemstones;
-        const subType = Detail.subType;
+        
         if(Detail.type == 'STO' || Detail.type == 'CER'){
         } else {
             if(!gemstoneAttr){
@@ -231,6 +230,7 @@ class productprint extends Component {
             }
         }
     }
+
     renderImagegallery(){
         const { gallery, specialDiscount } = this.props.productdetail;
         let isSpecialDisc = specialDiscount != undefined ? specialDiscount == 1?true:false : false;
@@ -254,7 +254,7 @@ class productprint extends Component {
                         gallery.map( (data,index)=>{
                             return (
                                 <div key={`imgprint${index}`}>
-                                    <span style={tagbarspecial}><img src='/images/img_special_discount_grid.png'/></span>
+                                    <span style={tagbarspecial}><img src="/images/img_special_discount_grid.png"/></span>
                                     <img style={styles.imgwidth} src={data.original}/>
                                 </div>
                             );
@@ -274,13 +274,12 @@ class productprint extends Component {
             );
         }
     }
+
     renderSetreference(){
         const { setReferenceData } = this.props.productdetail;
         if (setReferenceData != undefined) {
             if (!!setReferenceData.products) {
                 if(setReferenceData.products.length > 0){
-                    const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
-                    const currency = logindata.currency;
                     return(
                         <div>
                             <h2>RELATED DETAILS</h2>
@@ -300,6 +299,7 @@ class productprint extends Component {
             }
         }
     }
+
     render(){
         const styles ={
             colmd12:{
@@ -338,6 +338,7 @@ class productprint extends Component {
         }
 
         currentDate = dd+' '+monthNames[currentDate.getMonth()]+' '+yyyy;
+        
         return(
             <div>
                 <div style={styles.colmd12}>
@@ -377,7 +378,6 @@ function mapStateToProps(state) {
     return { productdetail: state.productdetail.detail }
 }
 
-// module.exports = connect(mapStateToProps,null)(productprint)
 module.exports = reduxForm({ // <----- THIS IS THE IMPORTANT PART!
     form: 'Printform',
     fields: ['pagego','reletepage','oldCatalogName','newCatalogName','validateCatalogName','stonepage'],
