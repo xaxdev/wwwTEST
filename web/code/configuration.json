@@ -98,8 +98,8 @@
 							},
 							"development": {
 								"host": "10.128.133.76",
-								"database": "mol",
-								"user": "root",
+								"database": "mol_staging",
+								"user": "mol",
 								"password": "P@ssw0rd#431"
 							},
 							"test": {
@@ -344,6 +344,15 @@
 					"prefix": "/api/stat"
 				}
 			}
+		},
+		{
+			"plugin": "./plugins/relateditem",
+			"options": {
+				"select": "api",
+				"routes": {
+					"prefix": "/api/relateditem"
+				}
+			}
         },
 		{
 			"plugin": {
@@ -366,25 +375,29 @@
 						"host": "amqp://dev:P@ssw0rd@192.168.1.92:5672",
 						"channelExcel": "mol",
 						"channelPdf": "pdf",
-						"channelWord": "word"
+						"channelWord": "word",
+						"channelRelatedExcel": "related"
 					},
 					"test": {
 						"host": "amqp://dev:P@ssw0rd@192.168.1.92:5672",
 						"channelExcel": "mol",
 						"channelPdf": "pdf",
-						"channelWord": "word"
+						"channelWord": "word",
+						"channelRelatedExcel": "related"
 					},
 					"staging": {
 						"host": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
 						"channelExcel": "mol-staging",
 						"channelPdf": "pdf-staging",
-						"channelWord": "word-staging"
+						"channelWord": "word-staging",
+						"channelRelatedExcel": "related-staging"
 					},
 					"production": {
 						"host": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
 						"channelExcel": "mol",
 						"channelPdf": "pdf",
-						"channelWord": "word"
+						"channelWord": "word",
+						"channelRelatedExcel": "related"
 					}
 				}
 			}

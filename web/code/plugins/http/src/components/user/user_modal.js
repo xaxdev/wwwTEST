@@ -1,61 +1,54 @@
 import React, { Component } from 'react';
 import {Modal, ModalClose} from 'react-modal-bootstrap';
 class UsersModal extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.openModal = this.openModal.bind(this);
-    this.state = {
-      isOpen: false
+        this.openModal = this.openModal.bind(this);
+        
+        this.state = {
+            isOpen: false
+        };
+    }
+    openModal(){
+        this.setState({ isOpen: true });
     };
-  }
-  openModal(){
 
-    this.setState({
-      isOpen: true
-    });
-  };
+    hideModal = () => {
+        this.setState({ isOpen: false });
+    };
 
-  hideModal = () => {
-    this.setState({
-      isOpen: false
-    });
-  };
-  confirmDisableModal = () => {
-    // console.log('this.props.user-->',this.props.user);
-    this.setState({
-      isOpen: false
-    });
-      this.props.disableUser(this.props.user.id,!this.props.user.status)
-  };
-  render (){
-    // console.log('this.props.user-->',this.props.user);
-    return(
-      <div key={this.props.user.id}>
-      <button className="btn btn-primary pull-xs-right btn-radius" onClick={this.openModal}>
-                { this.props.user.status ? 'Disable User ':'Active User ' }
-              </button>
-                    <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
-                      <div className="modal-header">
+    confirmDisableModal = () => {
+        this.setState({ isOpen: false });
+        this.props.disableUser(this.props.user.id,!this.props.user.status)
+    };
+
+    render (){
+        return(
+            <div key={this.props.user.id}>
+                <button className="btn btn-primary pull-xs-right btn-radius" onClick={this.openModal}>
+                    { this.props.user.status ? 'Disable User ':'Active User ' }
+                </button>
+                <Modal isOpen={this.state.isOpen} onRequestHide={this.hideModal}>
+                    <div className="modal-header">
                         <ModalClose onClick={this.hideModal}/>
                         <h1 className="modal-title">{ this.props.user.status ? 'Disable User ':'Active User ' }</h1>
-                      </div>
-                      <div className="modal-body">
+                    </div>
+                    <div className="modal-body">
                         <h3>Are you sure!</h3>
-                      </div>
-                      <div className="modal-footer">
+                    </div>
+                    <div className="modal-footer">
                         <button className="btn btn-default btn-radius" onClick={this.hideModal}>
-                          No
+                            No
                         </button>
                         <button className="btn btn-primary btn-radius" onClick={this.confirmDisableModal } key={this.props.user.id}>
-                          Yes
+                            Yes
                         </button>
-                      </div>
-                    </Modal>
-      </div>
-    );
-  }
-
+                    </div>
+                </Modal>
+            </div>
+        );
+    }
 }
 
 module.exports = UsersModal

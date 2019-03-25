@@ -37,7 +37,7 @@ export function setIdDeleteSalesSaveSearch(id) {
 }
 export function deleteSaveSearch(params) {
     const token = sessionStorage.token;
-    var url = `${ROOT_URL}/api/items/search/remove`;
+    const url = `${ROOT_URL}/api/items/search/remove`;
     return {
         type: DELETE_SAVESEARCH,
         promise: fetch(url,{
@@ -53,7 +53,7 @@ export function deleteSaveSearch(params) {
 }
 export function deleteSalesSaveSearch(params) {
     const token = sessionStorage.token;
-    var url = `${ROOT_URL}/api/items/salessearch/remove`;
+    const url = `${ROOT_URL}/api/items/salessearch/remove`;
     return {
         type: DELETE_SALESSAVESEARCH,
         promise: fetch(url,{
@@ -83,7 +83,7 @@ export function setSalesParams(params){
 }
 export function getSaveCriteria(params) {
     const token = sessionStorage.token;
-    var url = `${ROOT_URL}/api/items/search/view/${params.id}`;
+    const url = `${ROOT_URL}/api/items/search/view/${params.id}`;
     return {
         type: GET_SAVECRITERIA,
         promise: fetch(url,{
@@ -98,7 +98,7 @@ export function getSaveCriteria(params) {
 }
 export function getSalesSaveCriteria(params) {
     const token = sessionStorage.token;
-    var url = `${ROOT_URL}/api/items/salessearch/view/${params.id}`;
+    const url = `${ROOT_URL}/api/items/salessearch/view/${params.id}`;
     return {
         type: GET_SALESSAVECRITERIA,
         promise: fetch(url,{
@@ -113,7 +113,7 @@ export function getSalesSaveCriteria(params) {
 }
 export function shareSaveSearch(params) {
     const token = sessionStorage.token;
-    var url = `${ROOT_URL}/api/items/search/share`;
+    const url = `${ROOT_URL}/api/items/search/share`;
     return {
         type: SET_SHAREDSAVESEARCH,
         promise: fetch(url,{
@@ -130,7 +130,7 @@ export function shareSaveSearch(params) {
 
 export function shareSalesSaveSearch(params) {
     const token = sessionStorage.token;
-    var url = `${ROOT_URL}/api/items/salessearch/share`;
+    const url = `${ROOT_URL}/api/items/salessearch/share`;
     return {
         type: SET_SALESSHAREDSAVESEARCH,
         promise: fetch(url,{
@@ -147,7 +147,7 @@ export function shareSalesSaveSearch(params) {
 
 export function getListsSaveSearch(params) {
     const token = sessionStorage.token;
-    var url = `${ROOT_URL}/api/items/search/list`;
+    const url = `${ROOT_URL}/api/items/search/list`;
     return {
         type: GET_LISTSAVESEARCH,
         promise: fetch(url,{
@@ -163,7 +163,7 @@ export function getListsSaveSearch(params) {
 
 export function saveSearchCriteria(params) {
     const token = sessionStorage.token;
-    var url = `${ROOT_URL}/api/items/search/save`;
+    const url = `${ROOT_URL}/api/items/search/save`;
     return {
         type: POST_SAVESEARCH,
         promise: fetch(url,{

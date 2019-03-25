@@ -7,16 +7,18 @@ import { reducer as formReducer } from 'redux-form';
 import productdetailReducer from '../reducers/products/reducer_productdetail';
 import searchResultReducer from '../reducers/searchresults/reducer_searchresults';
 import myCatalogReducer from '../reducers/mycatalog/reducer_mycatalog';
+import relatedItemReducer from '../reducers/relateditem/reducer_relateditem';
 
 const rootReducer = combineReducers({
     routing: routerReducer,
     users: UsersReducer,
     form: formReducer,
-    login:loginReducer,
-    forgot:forgotReducer,
-    productdetail:productdetailReducer,
+    login: loginReducer,
+    forgot: forgotReducer,
+    productdetail: productdetailReducer,
     searchResult: searchResultReducer,
-    myCatalog: myCatalogReducer
+    myCatalog: myCatalogReducer,
+    relatedItem: relatedItemReducer
 });
 
 export default rootReducer;

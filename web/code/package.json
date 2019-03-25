@@ -10,7 +10,7 @@
     "build:test": "NODE_ENV=test webpack --progress --color --define HOSTNAME='\"192.168.1.92\"' --define ENVIRONMENT='\"test\"'",
     "build:staging": "NODE_ENV=staging webpack --progress --color --define HOSTNAME='\"10.128.133.76\"' --define ENVIRONMENT='\"staging\"'",
     "build:watch": "webpack --progress --color --watch --define HOSTNAME='\"localhost\"' --define ENVIRONMENT='\"development\"'",
-    "start": "node --max_old_space_size=4096 bootstrap.js"
+    "start": "node --max_old_space_size=5120 bootstrap.js"
   },
   "author": "",
   "license": "ISC",

@@ -66,7 +66,7 @@ export const fields = [
     'productGroupSalesACC','productGroupSalesOBA','productGroupSalesSPA','productGroupSalesErr','priceSalesRTP','priceSalesUCP','priceSalesCTP','priceSalesNSP',
     'priceSalesMGP','priceSalesDSP','salesLocation','salesLocationValue','salesWarehouse','salesWarehouseValue','salesAll','sales','categorySalesJLY',
     'categorySalesWAT','categorySalesSTO','categorySalesACC','categorySalesOBA','categorySalesSPP','notUseSalesHierarchy','salesChannel','salesChannelValue',
-    'salesChannelType', 'bomOnhand', 'bomSales'
+    'salesChannelType', 'bomOnhand', 'bomSales', 'relatedItemOnhand'
 ];
 
 export let countFirst = 0;
@@ -210,7 +210,6 @@ class UserDetailsFrom extends Component {
         let el = e.target;
         let name = 'chkWarehouse';
         let nameObj = el.name;
-        let type = el.type;
         let stateChange = {};
         let { fields: { onhandLocationValue,onhandWarehouseValue,onhand,onhandAll,onhandLocation }} = this.props;
         let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
@@ -269,7 +268,6 @@ class UserDetailsFrom extends Component {
         let el = e.target;
         let name = 'chkSalesWarehouse';
         let nameObj = el.name;
-        let type = el.type;
         let stateChange = {};
         let { fields: { salesLocationValue,salesWarehouseValue,sales,salesAll,salesLocation }} = this.props;
         let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
@@ -357,7 +355,6 @@ class UserDetailsFrom extends Component {
         let el = e.target;
         let name = 'chkLocation';
         let nameObj = el.name;
-        let type = el.type;
         let stateChange = {};
         let { fields: { onhandLocationValue,onhandWarehouseValue,onhand,onhandAll }} = this.props;
         let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
@@ -424,7 +421,6 @@ class UserDetailsFrom extends Component {
         let el = e.target;
         let name = 'chkSalesLocation';
         let nameObj = el.name;
-        let type = el.type;
         let stateChange = {};
         let { fields: { salesLocationValue,salesWarehouseValue,sales,salesAll }} = this.props;
         let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
@@ -491,7 +487,6 @@ class UserDetailsFrom extends Component {
         let el = e.target;
         let name = 'chkSalesChannel';
         let nameObj = el.name;
-        let type = el.type;
         let stateChange = {};
         let { fields: { salesChannelValue, salesChannel, salesChannelType }} = this.props;
         let objType = Object.prototype.toString.call(el.form.elements[nameObj]);
@@ -941,7 +936,7 @@ class UserDetailsFrom extends Component {
     }
 
     selectedSalesChannel = e =>{
-        let { fields: { sales, salesChannel, salesChannelValue, salesChannelType }} = this.props;
+        let { fields: { salesChannelValue, salesChannelType }} = this.props;
         if (e.target.checked) {
             this.setState({
                 selectedSalesChannel: true,
@@ -984,7 +979,7 @@ class UserDetailsFrom extends Component {
     }
 
     selectedOnHandAll(e){
-        let {fields: { onhand, onhandAll }} = this.props;
+        let {fields: { onhand }} = this.props;
         if(e.target.checked){
             this.setState({
                 selectedOnHandWarehouse: false, selectedOnHandLocation: false, selectedOnHandAll: true
@@ -1218,7 +1213,6 @@ class UserDetailsFrom extends Component {
     }
 
     render() {
-        const userLogin = JSON.parse(sessionStorage.logindata);
         const {
             fields: {
                 id,firstName,lastName,username,email,password,role,currency,status,company,location,warehouse,productGroup,onhand,price,productGroupSTO,
