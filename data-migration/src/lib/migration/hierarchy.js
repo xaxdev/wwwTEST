@@ -5,7 +5,6 @@ import * as constant from './constant'
 import { db } from '../utils/db'
 
 const delimiter = '\\\\\\\\'
-const root = `Mouawad Inventory${delimiter}Merchandise${delimiter}`
 
 const getSources = async _ => {
     try {

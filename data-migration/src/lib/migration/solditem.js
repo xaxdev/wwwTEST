@@ -3,7 +3,6 @@ import * as file from '../utils/file';
 import * as core from './core';
 import * as constant from './constant';
 import * as mapper from './mapper';
-import { db } from '../utils/db';
 
 const settingsSoldItem = async (index, exchangeRates, path, mapper) => ({
     ...config,
