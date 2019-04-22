@@ -87,6 +87,7 @@ SELECT	SOL.[Id] AS 'id'
 		, ISNULL(stone.[Quantity],0) AS 'quantity'
 		, ISNULL(stone.[GemstoneType],'') AS 'gemstoneType'
 		, ISNULL(SOL.[SetReference], '') AS 'setReference'
+		, SOL.[OldData] AS 'isOldData'
 FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[ItemImages] imgOtherMME
 		    ON SOL.[Reference] = imgOtherMME.[ITEMID]
