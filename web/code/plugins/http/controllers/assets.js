@@ -122,51 +122,67 @@ module.exports = {
         }
     },
     originalMME: {
-      handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MME') }
-      },
-      app: {
-        name: 'originalMME'
-      }
+        handler: {
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MME') }
+        },
+        app: {
+            name: 'originalMME'
+        }
     },
     originalMMF: {
-      handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MMF') }
-      },
-      app: {
-        name: 'originalMMF'
-      }
+        handler: {
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MMF') }
+        },
+        app: {
+            name: 'originalMMF'
+        }
     },
     originalMMU: {
-      handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MMU') }
-      },
-      app: {
-        name: 'originalMMU'
-      }
+        handler: {
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/MMU') }
+        },
+        app: {
+            name: 'originalMMU'
+        }
     },
     originalSTD: {
-      handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/STD') }
-      },
-      app: {
-        name: 'originalSTD'
-      }
+        handler: {
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/STD') }
+        },
+        app: {
+            name: 'originalSTD'
+        }
     },
     originalSTS: {
-      handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/STS') }
-      },
-      app: {
-        name: 'originalSTS'
-      }
+        handler: {
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/STS') }
+        },
+        app: {
+            name: 'originalSTS'
+        }
     },
     originalSTSA: {
-      handler: {
-        directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/STSA') }
-      },
-      app: {
-        name: 'originalSTSA'
-      }
+        handler: {
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/mol/STSA') }
+        },
+        app: {
+            name: 'originalSTSA'
+        }
+    },
+    originalOLD: {
+        handler: {
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/oldmol/Images') }
+        },
+        app: {
+            name: 'originalOLD'
+        }
+    },
+    imagesProduct: {
+        handler: {
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/u01/mol/images') }
+        },
+        app: {
+            name: 'imagesProduct'
+        }
     }
 };

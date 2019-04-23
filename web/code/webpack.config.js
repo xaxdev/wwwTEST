@@ -30,7 +30,7 @@ module.exports =  {
             {
                 test: /\.css$/,
                 loader: 'style!css',
-                exclude: [ path.resolve(__dirname, 'plugins/http/public/images/products') ],
+                exclude: [ path.resolve(__dirname, 'plugins/http/assets/css') ],
                 // loader: ExtractTextPlugin.extract('css-loader')
             },
             {
@@ -40,7 +40,7 @@ module.exports =  {
             {
                 test: /\.(png|jpg|woff|woff2|eot|ttf|svg)$/,
                 loader: require.resolve('file-loader') + '?name=[path][name].[ext]',
-                exclude: [ path.resolve(__dirname, 'plugins/http/public/images/products') ],
+                exclude: [ path.resolve(__dirname, 'plugins/http/assets/images') ],
             },
         ]
     },

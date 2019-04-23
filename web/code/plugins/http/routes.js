@@ -27,6 +27,11 @@ module.exports = [
     },
     {
         method: 'GET',
+        path: '/images/product/{path*}',
+        config: controller.assets.imagesProduct
+    },
+    {
+        method: 'GET',
         path: '/upload_file/{path*}',
         config: controller.assets.uploadFile
     },
@@ -111,10 +116,15 @@ module.exports = [
         config: controller.assets.originalSTSA
     },
     {
-      method: 'GET',
-      path: '/{path*}',
-      handler: {
-        file: Path.join(__dirname, 'index.htm')
-      }
+        method: 'GET',
+        path: '/original/old/{path*}',
+        config: controller.assets.originalOLD
+    },
+    {
+        method: 'GET',
+        path: '/{path*}',
+        handler: {
+            file: Path.join(__dirname, 'index.htm')
+        }
     }
 ];
