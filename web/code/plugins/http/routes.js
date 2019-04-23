@@ -27,7 +27,7 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/images/product/{path*}',
+        path: '/images/products/{path*}',
         config: controller.assets.imagesProduct
     },
     {

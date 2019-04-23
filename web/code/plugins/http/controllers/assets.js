@@ -179,7 +179,7 @@ module.exports = {
     },
     imagesProduct: {
         handler: {
-            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/u01/mol/images') }
+            directory:   { path: Path.resolve(__dirname, '../../../../../../../../../../mnt/u01/mol/images/products') }
         },
         app: {
             name: 'imagesProduct'
