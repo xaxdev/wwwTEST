@@ -113,14 +113,29 @@ const mapSalesProperties = async (item, record, exchangeRates) => {
     }
 
     // add image, if not existed
-    const fileName = encodeURIComponent(`${record.imageName}.${record.imageType}`)
+    let fileName = encodeURIComponent(`${record.imageName}.${record.imageType}`)
     if (!!record.imageName && item.gallery.findIndex(image => image.original.match(new RegExp(sanitize(`${fileName}`))) !== null) === -1) {
         if (record.imageTypeId == 'Image') {
             if (record.isOldData == 1) {
                 let imagePathExsits = `${config.gallery.oldPhysicalPath}/${record.imageName}.${record.imageType}`
                 let hasFile = false;
                 hasFile = await exist(imagePathExsits)
-                let physicalFile = `${config.gallery.oldPhysicalFile}/${fileName}`
+                let physicalFile = ''
+                let originalFileName = ''
+                // not found file
+                if (!hasFile) {
+                    if (record.imageType == 'JPG') {
+                        fileName = encodeURIComponent(`${record.imageName}.jpg`)
+                        originalFileName = `${record.imageName}.jpg`
+                    } else if (record.imageType == 'jpg') {
+                        fileName = encodeURIComponent(`${record.imageName}.JPG`)
+                        originalFileName = `${record.imageName}.JPG`
+                    }
+                }else{
+                    originalFileName = `${record.imageName}.${record.imageType}`
+                }
+                
+                physicalFile = `${config.gallery.oldPhysicalFile}/${fileName}`
 
                 const image = {
                     original: `${config.gallery.original}/${fileName}`,
@@ -130,7 +145,7 @@ const mapSalesProperties = async (item, record, exchangeRates) => {
                     lastModifiedDateImage: `${record.lastModifiedDateImage}`,
                     physicalFile: physicalFile,
                     physicalCompany: !hasFile? 'mme': record.imageCompany.toLowerCase(),
-                    originalFileName: `${record.imageName}.${record.imageType}`
+                    originalFileName: originalFileName
                 };
                 item.gallery.push(image);
             } else {
