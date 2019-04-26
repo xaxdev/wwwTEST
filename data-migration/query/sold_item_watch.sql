@@ -129,6 +129,7 @@ SELECT	SOL.[Id] AS 'id'
 		, ISNULL(certimage.[DEFAULTIMAGE], 0) AS 'certificateDefaultImage'
 		, ISNULL(certimage.[LASTMODIFIEDDATE], '') AS 'certificateLastModifiedDateImage'
 		, certmaster.[CertificateCreateDate] AS [CertifiedDate]
+		, SOL.[OldData] AS 'isOldData'
 FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[ItemGemstones] gemstone
 			ON SOL.[Reference] = gemstone.[ItemReference]

@@ -76,6 +76,7 @@ SELECT	SOL.[Id] AS 'id'
 	    , ISNULL(bomDocMME.[DEFAULTIMAGE], 0) AS 'defaultBomDocMME'
 	    , ISNULL(bomDocMME.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateBomDocMME'
 		, 'ACC' AS 'type'
+		, SOL.[OldData] AS 'isOldData'
 FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[ItemImages] imgOtherMME
 		    ON SOL.[Reference] = imgOtherMME.[ITEMID]

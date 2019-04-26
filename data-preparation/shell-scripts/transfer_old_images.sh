@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOURCE="/media/mol"
+SOURCE="/media/oldmol"
 DESTINATION="/mnt/"
 
 PROCESS=0

@@ -82,6 +82,7 @@ SELECT	SOL.[Id] AS 'id'
 		, 'JLY' AS 'type'
 		, ISNULL(SOL.[SetReference], '') AS 'setReference'
 		, ISNULL(JLYT.[Priority], '') AS 'priority'
+		, SOL.[OldData] AS 'isOldData'
 FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[ItemImages] imgOtherMME
 		    ON SOL.[Reference] = imgOtherMME.[ITEMID]

@@ -125,7 +125,7 @@ class SalesProductDetail extends Component {
                         <div class="white-popup-right">
                             <button id="btnup" class="btn btn-primary btn-radius">Up</button>
                             <button id="btndown" class="btn btn-primary btn-radius">Down</button>
-                            <button id="btnzoom" class="btn btn-primary btn-radius" >zoom</button>
+                            <button id="btnzoom" class="btn btn-primary btn-radius">zoom</button>
                         </div>
                     </div>`
                 ),
@@ -160,13 +160,24 @@ class SalesProductDetail extends Component {
         jQuery('#popupset').magnificPopup({
             key: 'my-popup',
             items: {
-                src: jQuery('<div class="white-popup m-pt"><div class="white-popup-left"><img id="galleryimgset"/></div><div class="white-popup-right"><button id="btnupset" class="btn btn-primary btn-radius">Up</button><button id="btndownset" class="btn btn-primary btn-radius">Down</button><button id="btnzoomset" class="btn btn-primary btn-radius" >zoom</button></div></div>'),
+                src: jQuery(
+                    `<div class="white-popup m-pt">
+                        <div class="white-popup-left">
+                            <img id="galleryimgset"/>
+                        </div>
+                        <div class="white-popup-right">
+                            <button id="btnupset" class="btn btn-primary btn-radius">Up</button>
+                            <button id="btndownset" class="btn btn-primary btn-radius">Down</button>
+                            <button id="btnzoomset" class="btn btn-primary btn-radius">zoom</button>
+                        </div>
+                    </div>`
+                ),
                 type: 'inline'
             },
             callbacks: {
                 open: function() {
                     let activegallery = jQuery('#popupset img').attr('src');
-                    jQuery('#galleryimg').attr('src',activegallery);
+                    jQuery('#galleryimgset').attr('src',activegallery);
                     let rotatecount = 0;
                     jQuery('#btnupset').click(function(){
                         jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});
