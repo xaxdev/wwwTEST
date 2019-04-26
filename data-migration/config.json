@@ -16,6 +16,8 @@
         "original": "/images/products/original",
         "thumbnail": "/images/products/thumbnail",
         "physicalfile": "/original",
-        "physicalpath": "/mnt/mol"
+        "physicalpath": "/mnt/mol",
+        "oldPhysicalFile": "/original/old",
+        "oldPhysicalPath": "/mnt/oldmol/Images"
     }
 }

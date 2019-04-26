@@ -97,6 +97,7 @@ SELECT	SOL.[Id] AS 'id'
 		, ISNULL(watch.[LimitedEdition], '') AS 'limitedEditionNumber'
 		, ISNULL(watch.[ProductionDate], '') AS 'productionDate'
 		, ISNULL(SOL.[SetReference], '') AS 'setReference'
+		, SOL.[OldData] AS 'isOldData'
 FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[ItemImages] imgOtherMME
 		    ON SOL.[Reference] = imgOtherMME.[ITEMID]

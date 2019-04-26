@@ -77,6 +77,7 @@ SELECT	SOL.[Id] AS 'id'
 	    , ISNULL(bomDocMME.[LASTMODIFIEDDATE], '') AS 'lastModifiedDateBomDocMME'
 		, 'OBA' AS 'type'
 		, ISNULL(oba.[Dimensions], '') AS 'dimensions'
+		, SOL.[OldData] AS 'isOldData'
 FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[OBA] oba
 		    ON SOL.[Reference] = oba.[ItemReference]

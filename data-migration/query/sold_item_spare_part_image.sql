@@ -78,6 +78,7 @@ SELECT	SOL.[Id] AS 'id'
 		, 'SPA' AS 'type'
 		, ISNULL(spareparts.[BuckleType], '') AS 'buckleType'
 		, ISNULL(spareparts.[BuckleTypeName], '') AS 'buckleTypeName'
+		, SOL.[OldData] AS 'isOldData'
 FROM	[ITORAMA].[dbo].[SoldItems] AS SOL
 		LEFT JOIN [ITORAMA].[dbo].[SparePart] spareparts
 		    ON SOL.[Reference] = spareparts.[ItemReference]

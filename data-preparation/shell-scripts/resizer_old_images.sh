@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOURCE="/media/mol/"
+SOURCE="/media/oldmol/"
 ORIGINAL="/mnt/u01/mol/images/products/original"
 THUMBNAIL="/mnt/u01/mol/images/products/thumbnail"
 
