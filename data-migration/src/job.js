@@ -48,8 +48,7 @@ const notify = err => {
         personalizations: [
             {
                 to: [
-                    { email: 'suwannapa.limwandee@itorama.com' },
-                    { email: 'korakod.chaisongkram@itorama.com' }
+                    { email: 'korakod.c@mouawad.com' }
                 ],
                 subject
             }
