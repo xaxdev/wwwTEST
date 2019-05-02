@@ -1,5 +1,4 @@
 import numberFormat from './convertNumberformat';
-import GetPriceWithCurrency from './getPriceWithCurrency';
 import numberFormat2digit from './convertNumberformatwithcomma2digit';
 import convertDate from './convertDate';
 import config from './config';
@@ -165,10 +164,10 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                 let jewelsWeight = 0;
                                                                 let grossWeight = 0;
                                                                 let imgPath = env == 'production'
-                                                                    ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
+                                                                    ? `file:///${config.images.production.path}`
                                                                     : env == 'staging'
-                                                                        ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-                                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public/images/`;
+                                                                        ? `file:///${config.images.staging.path}`
+                                                                        : `file:///${config.fullpath_localfile}web/code/plugins/http/public/images/`;
                                                                 let imgPathPublic = env == 'production'
                                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
                                                                     : env == 'staging'

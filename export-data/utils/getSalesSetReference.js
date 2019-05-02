@@ -58,7 +58,8 @@ module.exports = async (records, cb) => {
                                 original: `${config.gallery.original}/${record.setImageName}.${record.setImageType}`,
                                 thumbnail: `${config.gallery.thumbnail}/${record.setImageName}.${record.setImageType}`,
                                 defaultSetImage: `${record.defaultSetImage}`,
-                                lastModifiedDateSetImage: `${record.lastModifiedDateSetImage}`
+                                lastModifiedDateSetImage: `${record.lastModifiedDateSetImage}`,
+                                originalFileName: `${record.setImageName}.${record.setImageType}`
                             });
 
                         }
@@ -93,7 +94,8 @@ module.exports = async (records, cb) => {
                             original: `${!!record.gallery[0] ? record.gallery[0].original: ''}`,
                             thumbnail: `${!!record.gallery[0] ? record.gallery[0].thumbnail: ''}`,
                             defaultImage: `${record.defaultImage}`,
-                            lastModifiedDateImage: `${record.lastModifiedDateImage}`
+                            lastModifiedDateImage: `${record.lastModifiedDateImage}`,
+                            originalFileName: ''
                         },
                         price: {},
                         actualCost: {},
@@ -154,7 +156,8 @@ module.exports = async (records, cb) => {
                                 original: `${config.gallery.original}/${record.setImageName}.${record.setImageType}`,
                                 thumbnail: `${config.gallery.thumbnail}/${record.setImageName}.${record.setImageType}`,
                                 defaultSetImage: `${record.defaultSetImage}`,
-                                lastModifiedDateSetImage: `${record.lastModifiedDateSetImage}`
+                                lastModifiedDateSetImage: `${record.lastModifiedDateSetImage}`,
+                                originalFileName: `${record.setImageName}.${record.setImageType}`
                             });
 
                         }
@@ -190,7 +193,8 @@ module.exports = async (records, cb) => {
                                 original: `${!!record.gallery[0] ? record.gallery[0].original: ''}`,
                                 thumbnail: `${!!record.gallery[0] ? record.gallery[0].thumbnail: ''}`,
                                 defaultImage: `${record.defaultImage}`,
-                                lastModifiedDateImage: `${record.lastModifiedDateImage}`
+                                lastModifiedDateImage: `${record.lastModifiedDateImage}`,
+                                originalFileName: ''
                             },
                             price: {},
                             actualCost: {},

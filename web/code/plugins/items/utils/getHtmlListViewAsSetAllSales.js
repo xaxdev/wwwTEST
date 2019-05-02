@@ -1,6 +1,4 @@
 import numberFormat from './convertNumberformat';
-import GetPriceWithCurrency from './getPriceWithCurrency';
-import numberFormat2digit from './convertNumberformatwithcomma2digit';
 import GetListViewAsSetSalesItem from './getListViewAsSetSalesItem';
 
 export default function GetHTMLListViewAsSetAllSales(datas,currency,isViewAsSet,env,userPermissionPrice){
