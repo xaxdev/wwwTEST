@@ -1,6 +1,3 @@
-import numberFormat from './convertNumberformat';
-import GetPriceWithCurrency from './getPriceWithCurrency';
-import numberFormat2digit from './convertNumberformatwithcomma2digit';
 import GetItemEqualOne from './getItemEqualOne';
 import GetItemNotEqualOne from './getItemNotEqualOne';
 import GetItemNotEqualElse from './getItemNotEqualElse';

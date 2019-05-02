@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import SearchResultGridViewPrintAll from './searchResultGridViewPrintAll';
-import { FULLPATH_LOCALFILE } from '../constants/productdetailconstants';
+import { FULLPATH_LOCALFILE, PATH_IMAGES_PRODUCTION, PATH_IMAGES_STAGING } from '../constants/productdetailconstants';
 
 export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, imagesReplace, dv){
     const items = dv.items;
@@ -38,9 +38,9 @@ export default function GenTemplateHtml(showGridView, showListView, ROOT_URL, im
     // let imgPath = 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/';
 
     let imgPath = env == 'production'
-                            ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
+                            ? `file:///${PATH_IMAGES_PRODUCTION}`
                             : env == 'staging'
-                                ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
+                                ? `file:///${PATH_IMAGES_STAGING}`
                                 :`file:///${FULLPATH_LOCALFILE}web/code/plugins/http/public/images/`;
     let imgPathPublic = env == 'production'
                             ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'

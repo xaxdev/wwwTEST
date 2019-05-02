@@ -355,7 +355,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     filter = GetSearchLotNumber(key, obj, userCurrency);
                 } else if (key == 'customer') {
                     let filterSplit = [];
-                    let hasSpace = value.indexOf(" ") != -1 ? true : false;
+                    let hasSpace = value.indexOf(' ') != -1 ? true : false;
                     if (hasSpace) {
                         let mapField =
                         `{
