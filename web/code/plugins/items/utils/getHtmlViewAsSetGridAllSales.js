@@ -97,10 +97,10 @@ export default function GetHTMLViewASSetGridAllSales(datas,currency,isViewAsSet,
                                                 let itemName = '';
                                                 let price = '';
                                                 let imgPath = env == 'production'
-                                                    ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public/images/'
+                                                    ? `file:///${config.images.production.path}`
                                                     : env == 'staging'
-                                                        ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public/images/'
-                                                        :`file:///${config.fullpath_localfile}web/code/plugins/http/public/images/`;
+                                                        ? `file:///${config.images.staging.path}`
+                                                        : `file:///${config.fullpath_localfile}web/code/plugins/http/public/images/`;
                                                 let imgPathPublic = env == 'production'
                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
                                                     : env == 'staging'
