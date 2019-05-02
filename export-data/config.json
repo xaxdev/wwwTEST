@@ -71,5 +71,20 @@
             "bufferSize": 500,
             "maxRow": 5000
         }
+    },
+    "images": {
+        "$filter": "env",
+        "development": {
+            "path": "../../../../../../../../../../mnt/u01/mol/images/products"
+        },
+        "test": {
+            "path": "../../../../../../../../../../mnt/u01/mol/images/products"
+        },
+        "production": {
+            "path": "../../../../../../../../../../mnt/u01/mol/images/products"
+        },
+        "staging": {
+            "path": "../../../../../../../../../../mnt/u01/mol/images/products"
+        }
     }
 }
