@@ -104,7 +104,7 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                                             let arrImages = item[0].split("/").slice(-1).pop();
                                             // pathImage = '/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
                                             // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                            pathImage = `${config.images.path}/thumbnail/'`+ arrImages;
+                                            pathImage = `${config.images.path}/thumbnail/`+ arrImages;
                                         }else{
                                             pathImage = './images/blank.gif';
                                         }
@@ -287,7 +287,7 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
 
                                         if (data[i][0] != '') {
                                             let arrImages = data[i][0].split("/").slice(-1).pop();
-                                            pathImage = `${config.images.path}/thumbnail/'`+ arrImages;
+                                            pathImage = `${config.images.path}/thumbnail/`+ arrImages;
                                         }else{
                                             pathImage = './images/blank.gif';
                                         }
@@ -321,7 +321,7 @@ module.exports = async (obj, config, parameter, body, utils, userEmail, channel,
                                         let arrImages = data[i][0].split("/").slice(-1).pop();
                                         //   pathImage = '/home/mol/www/projects/mol/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
                                         // pathImage = 'D:/Projects/GitLab/mol2016/web/code/plugins/http/public/images/products/thumbnail/' + arrImages
-                                        pathImage = `${config.images.path}/thumbnail/'`+ arrImages;
+                                        pathImage = `${config.images.path}/thumbnail/`+ arrImages;
                                     }else{
                                         pathImage = './images/blank.gif';
                                     }
