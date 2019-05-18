@@ -302,12 +302,10 @@ export function getSalesViewAsSetProductDetail(productId,productlist){
 // }
 
 export function getProductRelete(reference,page){
-    console.log({reference});
-    
     const token = sessionStorage.token;
     return {
         type: FETCH_PRODUCTRELETED,
-        promise: fetch( `${ROOT_URL}api/items/relateditems/${reference}/${page}`,{
+        promise: fetch( `${ROOT_URL}api/items/relateditems/${reference.replace('/','|')}/${page}`,{
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',

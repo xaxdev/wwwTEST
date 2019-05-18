@@ -559,7 +559,7 @@ class productdetail extends Component {
     renderReleteproduct = _ => {
         const { totalpage,products,page } = this.props.productrelete;
         const productId = this.props.params.id;
-        const { type,collection,subType,price,dominant } = this.props.productdetail;
+        const { type, collection, subType, price, dominant, reference } = this.props.productdetail;
         const { fields: { reletepage },handleSubmit} = this.props;
 
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
@@ -576,7 +576,7 @@ class productdetail extends Component {
                     <div className="searchresult-navi pagenavi relete col-md-12 col-sm-12 nopadding">
                         <Pagination prev next first last ellipsis boundaryLinks items={totalpage} maxButtons={3}
                             activePage={reletepage.defaultValue} onSelect={(eventKey) => {
-                                this.props.getProductRelete(subType,eventKey,productId,dominant,currency,price[currency]);
+                                this.props.getProductRelete(reference, eventKey);
                             }}/>
                         <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
                             <span>Page</span>
@@ -724,11 +724,11 @@ class productdetail extends Component {
         const productId = this.props.params.id;
         const { totalpage} = this.props.productrelete;
         const getPage = parseInt(data.reletepage);
-        const { collection,subType,price,dominant } = this.props.productdetail;
+        const { collection, subType, price, dominant, reference } = this.props.productdetail;
         if((getPage <= totalpage) && (getPage != 0)){
             const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
             const currency = logindata.currency;
-            this.props.getProductRelete(subType,getPage,productId,dominant,currency,price[currency]);
+            this.props.getProductRelete(reference, getPage);
         }
     }
 

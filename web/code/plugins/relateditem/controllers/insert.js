@@ -41,7 +41,8 @@ export default {
                         'id': countRelatedItem + 1,
                         'name': name,
                         'items': items,
-                        'lastModified': new Date()
+                        'lastModified': new Date(),
+                        'status': true
                     }
                 },
                 {
