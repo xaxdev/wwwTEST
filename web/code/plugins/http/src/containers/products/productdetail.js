@@ -74,7 +74,7 @@ class productdetail extends Component {
 
         this.props.getProductDetail(productId,productlist).then(()=>{
             const  Detail  = this.props.productdetail;
-            const { lotNumbers } = this.props.productdetail;
+            const { lotNumbers, reference } = this.props.productdetail;
             const { stonePageSize } = this.props;
             const params = { datas: lotNumbers, page: 1, size: !!stonePageSize ? stonePageSize : 20 };
             this.props.getLotNaumberPerPage(params);
@@ -82,7 +82,7 @@ class productdetail extends Component {
                 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
                 const currency = logindata.currency;
                 if(Detail.dominant){
-                    this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                    this.props.getProductRelete(reference,1);
                 }
             }
             this.setState({ productdetailLoading: false });
@@ -212,7 +212,7 @@ class productdetail extends Component {
 
             this.props.getProductDetail(productId,productlist).then(()=>{
                 const  Detail  = this.props.productdetail;
-                const { lotNumbers } = this.props.productdetail;
+                const { lotNumbers, reference } = this.props.productdetail;
                 const { stonePageSize } = this.props;
                 const params = {
                     datas: lotNumbers, page: 1, size: !!stonePageSize ? stonePageSize : 20
@@ -222,7 +222,7 @@ class productdetail extends Component {
                 const currency = logindata.currency;
 
                 if(Detail.dominant){
-                    this.props.getProductRelete(Detail.subType,1,productId,Detail.dominant,currency,Detail.price[currency]);
+                    this.props.getProductRelete(reference,1);
                 }
 
                 this.setState({ productdetailLoading: false });
@@ -708,7 +708,7 @@ class productdetail extends Component {
     renderReleteproduct = _ => {
         const { totalpage, products } = this.props.productrelete;
         const productId = this.props.params.id;
-        const { type, subType, price, dominant } = this.props.productdetail;
+        const { type, subType, price, dominant, reference } = this.props.productdetail;
         const { fields: { reletepage },handleSubmit} = this.props;
 
         const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
@@ -725,7 +725,7 @@ class productdetail extends Component {
                     <div className="searchresult-navi pagenavi relete col-md-12 col-sm-12 nopadding">
                         <Pagination prev next first last ellipsis boundaryLinks items={totalpage} maxButtons={3} activePage={reletepage.defaultValue}
                             onSelect={(eventKey) => {
-                                this.props.getProductRelete(subType,eventKey,productId,dominant,currency,price[currency]);
+                                this.props.getProductRelete(reference,eventKey);
                             }} />
                         <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 nopadding">
                             <span>Page</span>
@@ -867,11 +867,11 @@ class productdetail extends Component {
         const productId = this.props.params.id;
         const { totalpage} = this.props.productrelete;
         const getPage = parseInt(data.reletepage);
-        const { subType, price, dominant } = this.props.productdetail;
+        const { subType, price, dominant, reference } = this.props.productdetail;
         if((getPage <= totalpage) && (getPage != 0)){
             const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
             const currency = logindata.currency;
-            this.props.getProductRelete(subType,getPage,productId,dominant,currency,price[currency]);
+            this.props.getProductRelete(reference, getPage);
         }
     }
 

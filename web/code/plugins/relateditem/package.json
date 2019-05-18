@@ -1,0 +1,5 @@
+{
+  "name": "relateditem",
+  "version": "1.0.0",
+  "dependencies": "hapi-mongodb"
+}

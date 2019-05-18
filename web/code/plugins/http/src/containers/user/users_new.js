@@ -225,7 +225,8 @@ class UsersNew extends Component {
             notUseHierarchy:JSON.stringify(data.notUseHierarchy),
             notUseSalesHierarchy:JSON.stringify(data.notUseSalesHierarchy),
             bomOnhand: data.bomOnhand,
-            bomSales: data.bomSales
+            bomSales: data.bomSales,
+            relatedItemOnhand: data.relatedItemOnhand
         }
 
         data = Object.assign({}, data, { permission:permission });
@@ -294,6 +295,7 @@ class UsersNew extends Component {
         delete data.userType;
         delete data.bomOnhand;
         delete data.bomSales;
+        delete data.relatedItemOnhand;
 
         if (!data.webOnly) {
             data = {...data, webOnly: false };

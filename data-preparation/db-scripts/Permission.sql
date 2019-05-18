@@ -1,0 +1,29 @@
+CREATE TABLE mol.Permission (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  productGroup INT(11) DEFAULT NULL,
+  onhandLocation INT(11) DEFAULT NULL,
+  onhandWarehouse INT(11) DEFAULT NULL,
+  price VARCHAR(255) DEFAULT NULL,
+  user INT(11) DEFAULT NULL,
+  createdAt DATETIME DEFAULT NULL,
+  updatedAt DATETIME DEFAULT NULL,
+  category INT(11) DEFAULT NULL,
+  notUseHierarchy TEXT DEFAULT NULL,
+  userType VARCHAR(10) DEFAULT NULL,
+  productGroupSales INT(11) DEFAULT NULL,
+  salesLocation INT(11) DEFAULT NULL,
+  salesWarehouse INT(11) DEFAULT NULL,
+  priceSales INT(11) DEFAULT NULL,
+  salesCategory INT(11) DEFAULT NULL,
+  notUseSalesHierarchy TEXT DEFAULT NULL,
+  salesChannel INT(11) DEFAULT NULL,
+  bomSales TINYINT(1) DEFAULT 0,
+  bomOnhand TINYINT(1) DEFAULT 0,
+  relatedItemOnhand TINYINT(1) DEFAULT 0,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB
+AUTO_INCREMENT = 158
+AVG_ROW_LENGTH = 631
+CHARACTER SET latin1
+COLLATE latin1_swedish_ci;

@@ -1,6 +1,3 @@
-import React from 'react';
-import { Route, IndexRoute } from 'react-router';
-
 if (typeof require.ensure !== 'function') require.ensure = function(d, c) {
     c(require);
 };
@@ -67,6 +64,24 @@ export default ({ dispatch,getState}) => {
                         state: { nextPathname: nextState.location.pathname }
                     })
                 }
+            }
+        }
+    };
+    const  requirePermissionRelatedItem = (nextState, replace) => {
+        const token = sessionStorage.token;
+        if (!token) {
+            replace({
+                pathname: '/',
+                state: { nextPathname: nextState.location.pathname }
+            })
+        } else {
+            const { role, permission } = JSON.parse(sessionStorage.logindata);
+
+            if (!permission.relatedItemOnhand) {
+                replace({
+                    pathname: '/accessdenied',
+                    state: { nextPathname: nextState.location.pathname }
+                })
             }
         }
     };
@@ -269,6 +284,14 @@ export default ({ dispatch,getState}) => {
                     require.ensure([], (require) => {
                         cb(null, require('./containers/salesproducts/salesproductreletedetail'));
                     }, 'salesproductreletedetail');
+                }
+            },{
+                onEnter: requirePermissionRelatedItem,
+                path: 'relateditem',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/relateditem/relateditem_main'));
+                    }, 'relateditem');
                 }
             },{
                 path: '*',

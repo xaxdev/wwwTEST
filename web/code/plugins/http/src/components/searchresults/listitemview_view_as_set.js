@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import ReactImageFallback from 'react-image-fallback';
+import React, { Component } from 'react';
 import numberFormat2digit from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat from '../../utils/convertNumberformat';
 

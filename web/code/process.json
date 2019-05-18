@@ -2,9 +2,7 @@
   "apps" : [{
     "name": "mol",
     "script": "bootstrap.js",
-    "instances": 4,
-    "exec_mode": "cluster",
-    "node_args": "--max_old_space_size=2048",
+    "node_args": "--max_old_space_size=4096",
     "watch": false,
     "env_production": {
         "NODE_ENV": "production"

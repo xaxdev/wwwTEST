@@ -285,11 +285,29 @@ export function getSalesViewAsSetProductDetail(productId,productlist){
     }
 }
 
-export function getProductRelete(collection,page,productId,dominant,currency,price){
+// export function getProductRelete(collection,page,productId,dominant,currency,price){
+//     const token = sessionStorage.token;
+//     return {
+//         type: FETCH_PRODUCTRELETED,
+//         promise: fetch( `${ROOT_URL}api/items/relateditems/${collection}/${page}/${productId}/${dominant}/${currency}/${price}`,{
+//             headers: {
+//                 'Accept': 'application/json',
+//                 'Content-Type': 'application/json',
+//                 'Authorization': token
+//             },
+//             method:'GET'
+//         }),
+//         page:page
+//     }
+// }
+
+export function getProductRelete(reference,page){
+    console.log({reference});
+    
     const token = sessionStorage.token;
     return {
         type: FETCH_PRODUCTRELETED,
-        promise: fetch( `${ROOT_URL}api/items/relateditems/${collection}/${page}/${productId}/${dominant}/${currency}/${price}`,{
+        promise: fetch( `${ROOT_URL}api/items/relateditems/${reference}/${page}`,{
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',

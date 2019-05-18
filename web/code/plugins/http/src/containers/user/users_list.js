@@ -5,7 +5,6 @@ import { Link } from 'react-router';
 import UsersListItem  from '../../components/user/user_list_item';
 let Loading = require('react-loading');
 
-
 class UsersList extends Component {
     componentDidMount(){
         this.props.fetchUsers();
@@ -47,8 +46,7 @@ class UsersList extends Component {
 }
 
 function mapStateToProps(state) {
-  // console.log('state list form-->',state);
-  return { users: state.users.datas};
+    return { users: state.users.datas};
 }
 
 module.exports = connect(mapStateToProps, usersActions)(UsersList)

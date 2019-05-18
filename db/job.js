@@ -136,7 +136,7 @@ const notify = err => {
         personalizations: [
             {
                 to: [
-                    { email: 'korakod.chaisongkram@itorama.com' }
+                    { email: 'korakod.c@mouawad.com' }
                 ],
                 subject
             }

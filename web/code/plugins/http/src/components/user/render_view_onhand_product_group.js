@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 class RenderViewOnHandProductGroup extends Component {
     constructor(props) {
@@ -8,7 +8,7 @@ class RenderViewOnHandProductGroup extends Component {
     render(){
         const { props, state, onChangedSelectedProductGroup, onChangedHandleInputChange } = this.props;
         const { fields: {
-            productGroup, productGroupJLY, productGroupWAT, productGroupSTO, productGroupACC, productGroupOBA, productGroupSPA, bomOnhand
+            productGroup, productGroupJLY, productGroupWAT, productGroupSTO, productGroupACC, productGroupOBA, productGroupSPA, bomOnhand, relatedItemOnhand
         }, userTypeValue } = props;
 
         return(
@@ -75,6 +75,12 @@ class RenderViewOnHandProductGroup extends Component {
                     <label className="col-sm-2 control-label">View BOM On Hand</label>
                     <div className="col-sm-7">
                         <input type="checkbox" {...bomOnhand}/>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label className="col-sm-2 control-label">View Related Items On Hand</label>
+                    <div className="col-sm-7">
+                        <input type="checkbox" {...relatedItemOnhand}/>
                     </div>
                 </div>
             </div>
