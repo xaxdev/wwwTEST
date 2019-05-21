@@ -12,17 +12,6 @@ export default {
         const amqpChannel = request.server.plugins.amqp.channelRelatedExcel;
 
         try {
-            const db = request.mongo.db
-            const { page, pageSize, name, reference} = request.query
-            const size = pageSize
-            
-            let data = await db.collection('RelatedItem').find({
-                'name': {'$regex' : `.*${name}.*`},
-                'items': {'$elemMatch': {'reference': {'$regex' : `.*${reference}.*`}}}
-            }).toArray()
-
-            const { relatedItem, countAll, allRelatedItem } = await transform(data, page, size)
-
             amqp.connect(amqpHost, function(err, conn) {
                 conn.createChannel(function(err, ch) {
                     const q = amqpChannel;
@@ -34,7 +23,6 @@ export default {
                 });
             });
 
-            // return reply({relatedItem, countAll, allRelatedItem, message:'', statusCode: 200});
             return reply.success()
         } catch (err) {
             elastic.close();

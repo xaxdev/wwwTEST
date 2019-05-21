@@ -95,29 +95,26 @@ class RenderAddRelatedItem extends Component {
                         <h1 className="modal-title">Add Related Details</h1>
                     </div>
                     <div className="modal-body">
-                        <div className="col-md-5 relete_item col-sm-6  m-nopadding">
-                            <label><b>List Name</b></label>
-                            <input type="text" className="form-control" {...relatedListName}/>
-                        </div>
-                        <div className="col-md-12 relete_item maring-t10 nopadding">
-                            <div className="col-md-5 col-sm-6  m-nopadding">
-                                <label><b>Please Enter Item Reference</b></label>
-                                <input type="text" className="form-control" onKeyPress={this.keyItem} {...relatedItemInput}/>
+                        <div className="row">
+                            <div className="col-md-5 relete_item col-sm-6  m-nopadding">
+                                <label><b>List Name</b></label>
+                                <input type="text" className="form-control" {...relatedListName}/>
                             </div>
-                        </div>
-                        <div className="col-md-12 maring-t10">
-                            <DualListBox name="moons" canFilter options={relatedItemSource} onChange={this.onChange} selected={relatedItem}
-                                preserveSelectOrder showOrderButtons />
-                        </div>
-                        <div className="col-xs-offset-3 col-sm-6">
-                            <div className="text-center mg-tb">
-                                <span className={`${this.state.maxColumn?'user-alert':'hidden'}`}>Cannot selected column more than 9 columns.</span>
+                            <div className="col-md-12 relete_item maring-t10 nopadding">
+                                <div className="col-md-5 col-sm-6  m-nopadding">
+                                    <label><b>Please Enter Item Reference</b></label>
+                                    <input type="text" className="form-control" onKeyPress={this.keyItem} {...relatedItemInput}/>
+                                </div>
+                            </div>
+                            <div className="col-md-12 maring-t10">
+                                <DualListBox name="moons" canFilter options={relatedItemSource} onChange={this.onChange} selected={relatedItem}
+                                    preserveSelectOrder showOrderButtons />
                             </div>
                         </div>
                     </div>
-                    <div className="form-group">
-                        <label className="col-sm-4 control-label">Attachment</label>
-                        <div className="col-sm-6">
+                    <div className="form-group relete_item">
+                        <label className="col-sm-2"><b>Attachment</b></label>
+                        <div className="col-sm-8">
                             <input id="file" type="file" field={relatedItemInput} onChange={this.readFile}/>
                             <span id="fileName"></span>
                             <input type="button" id="btn-browsefile" value=" "/>

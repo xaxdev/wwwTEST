@@ -19,7 +19,7 @@ module.exports = {
             const offset = (page-1) * itemPerPage;
     
             let data = await db.collection('RelatedItem').find({
-                'items': {'$elemMatch': {'reference': {'$regex' : `.*${reference}.*`}}}
+                'items': {'$elemMatch': {'reference': {'$regex' : `.*${reference.replace('|','/')}.*`}}}
             }).toArray()
     
             const { relatedItem } = await transform(data, 1, itemPerPage)            
@@ -43,7 +43,7 @@ module.exports = {
                                     "must_not": [
                                         {
                                             "match": {
-                                                "reference": "${reference}"
+                                                "reference": "${reference.replace('|','/')}"
                                             }
                                         },
                                         {
