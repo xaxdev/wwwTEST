@@ -42,7 +42,7 @@ module.exports = [
     },
     {
         method: 'GET',
-        path: '/relateditems/{collection}/{page}/{productId}/{dominant}/{currency}/{price}',
+        path: '/relateditems/{reference}/{page}',
         config: controllers.relateditems
     },
     {

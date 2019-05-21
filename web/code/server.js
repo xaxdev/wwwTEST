@@ -7,6 +7,7 @@ const internals = {};
 
 internals.store = new Confidence.Store(require('./configuration'));
 internals.manifest = internals.store.get('/', { env: process.env.NODE_ENV || 'development' });
+
 internals.options = {
     relativeTo: __dirname
 };

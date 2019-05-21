@@ -52,7 +52,8 @@ module.exports = {
                 salesCategory: Joi.number().integer(),
                 userType: Joi.string(),
                 bomOnhand: Joi.boolean(),
-                bomSales: Joi.boolean()
+                bomSales: Joi.boolean(),
+                relatedItemOnhand: Joi.boolean()
             }).required(),
             webOnly: Joi.boolean(),
             movement: Joi.boolean()

@@ -468,7 +468,8 @@ const setnewprops = (data) => {
         notUseHierarchy: JSON.parse(permission.notUseHierarchy),
         notUseSalesHierarchy: JSON.parse(permission.notUseSalesHierarchy),
         bomOnhand: permission.bomOnhand,
-        bomSales: permission.bomSales
+        bomSales: permission.bomSales,
+        relatedItemOnhand: permission.relatedItemOnhand
     }
     return user
 }

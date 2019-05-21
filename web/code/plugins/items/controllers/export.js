@@ -77,36 +77,36 @@ module.exports = {
 
             switch (sortDirections) {
                 case 'asc':
-                  missing = '"missing" : "_first"';
-                  missing = `{"${sortBy}" : {${missing}}},`;
-                  break;
+                    missing = '"missing" : "_first"';
+                    missing = `{"${sortBy}" : {${missing}}},`;
+                    break;
                 default:
             }
             const query = JSON.parse(
                 `{
                     "timeout": "5s",
                     "from": 0,
-                  "size": 10000,
-                  "sort" : [
-                      ${missing}
-                      {"${sortBy}" : "${sortDirections}"}
-                   ],
-                  "query":{
-                       "constant_score": {
-                         "filter": {
-                           "bool": {
-                             "must": [
-                               {
-                                 "match": {
-                                   "reference": "${setReferenceUniq.join(' ')}"
-                                 }
-                               }
-                             ]
-                           }
-                         }
-                       }
+                    "size": 10000,
+                    "sort" : [
+                        ${missing}
+                        {"${sortBy}" : "${sortDirections}"}
+                    ],
+                    "query":{
+                        "constant_score": {
+                            "filter": {
+                                "bool": {
+                                    "must": [
+                                        {
+                                            "match": {
+                                                "reference": "${setReferenceUniq.join(' ')}"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     }
-                  }`
+                }`
             );
             //   console.log(JSON.stringify(query, null, 2));
             return elastic.search({
