@@ -14,7 +14,7 @@ import { RESET_FORM, SET_LOCATION, SET_WAREHOUSE, SET_STONETYPE, SET_CUT, SET_CU
     SET_GEMS_CERTIFICATE_DATE_FROM, SET_GEMS_CERTIFICATE_DATE_TO,SET_STONE_CERTIFICATE_DATE_FROM, SET_STONE_CERTIFICATE_DATE_TO, SET_PRODUCTION_DATE_FROM,
     SET_PRODUCTION_DATE_TO,SET_SUBMITACTION, SET_SAVESEARCHHIERARCHY, SET_VIEWASSET, SET_ITEMSORDER,SET_SETREFERENCEORDER, SET_ARTICLE, SET_SALESCHANNEL,
     SET_SALESHIERARCHY, SET_SALESADVANCE, SELECTED_TABSALESCATEGORY, SET_SAVESEARCHSALESHIERARCHY, SET_GEMS_STONE_TYPE, SET_INVOICE_DATE_FROM,
-    SET_INVOICE_DATE_TO, SET_SPECIALDISCOUNT
+    SET_INVOICE_DATE_TO, SET_SPECIALDISCOUNT, SET_CUSTOMER_SEARCH, SET_CUSTOMER_TYPE
 } from '../../constants/inventoryConstants';
 
 const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, currentPage:1, totalpage:null, totalpublicprice:null, totalupdatedcost:null,
@@ -33,11 +33,17 @@ const INITIAL_STATE = { datas:null, item: null, options:[], errors: null, curren
     saveSalesSearchStatusCode: 100, idDeleteSalesSaveSearch: null, saveSearchSalesHierarchy: null, SalesSortingBy:'postedDate', SalesSortDirection:'desc',
     currentSalesPage: 1, SalesPageSize: 16, itemsSalesOrder:null, setReferenceSalesOrder:null, SalesShowGridView: true, SalesShowListView: false,
     totalnetamount: null,totaldiscount: null,totalmargin:null, GemStoneTypeValue:[], InvoiceDateFrom:null, InvoiceDateTo:null, firstSearch: null,
-    specialDiscount: 0, titleColumnDb:[], titleColumn:[]
+    specialDiscount: 0, titleColumnDb:[], titleColumn:[], customerType: 'name', customerSearch:''
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case SET_CUSTOMER_TYPE:
+            return {...state,  customerType: action.customerType};
+            break;
+        case SET_CUSTOMER_SEARCH:
+            return {...state,  customerSearch: action.customer};
+            break;
         case FETCH_TITLECOLUMN:
             return {...state,  titleColumnDb: action.data.titleColumn};
             break;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import Calendar from 'react-input-calendar';
 import moment from 'moment';
-import InitDataSalesLocation from '../../utils/initDataSalesLocation';
+import Autosuggest from 'react-autosuggest';
 import InitDataSalesCompany from '../../utils/initDataSalesCompany';
 import InitDataSalesChannel from '../../utils/initDataSalesChannel';
 import InitModifySalesData from '../../utils/initModifySalesData';
@@ -25,15 +25,21 @@ class SalesReportHeader extends Component {
         this.handleChangeStart = this.handleChangeStart.bind(this);
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
         this.readFile = this.readFile.bind(this);
+        this.selectedCustomerSearch = this.selectedCustomerSearch.bind(this);
 
         this.state = {
             startDate: null,
             endDate: null,
-            treeViewData:null
+            treeViewData: null,
+            suggestions: []
         }
     }
 
     componentDidMount() {
+        const { props } = this.props;
+        let { fields: { customer }, CustomerSelectedType } = props
+        props.salesActions.setCustomerSearch(customer.value)
+        
         jQuery('#file').hide();
         jQuery('#btn-browsefile').click(function(){
             jQuery('#file').click();
@@ -181,6 +187,34 @@ class SalesReportHeader extends Component {
         props.inventoryActions.setInvoiceDateTo(endDate);
     }
 
+    selectedCustomerSearch(e){
+        const { props } = this.props;
+        let { fields: { customerSearch } } = props
+        const { value } = e.target
+        
+        props.salesActions.setCustomerSearch('')
+        this.setState({ suggestions: [] });
+        customerSearch.onChange(value)
+        props.salesActions.setCustomerType(value)
+    }
+
+    onChangeTypeSuggest = (event, { newValue }) => {
+        const { props } = this.props;
+        let { fields: { customer } } = props
+        customer.onChange(newValue)
+        props.salesActions.setCustomerSearch(newValue)
+    };
+
+    onSuggestionsFetchRequested = ({ value }) => {
+        const { CustomerSelectedType } = this.props.props
+        const { customers } = this.props.props.options;
+        this.setState({ suggestions: getSuggestions(value, customers, CustomerSelectedType)});
+    };
+
+    onSuggestionsClearRequested = () => {
+        this.setState({ suggestions: [] });
+    };
+
     render() {
         const { props } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
@@ -189,11 +223,13 @@ class SalesReportHeader extends Component {
 
         let {
             fields: {
-                reference, description, certificatedNumber, sku, customer, salesPersonName, invoiceNo, invoiceDateFrom, invoiceDateTo, totalCostFrom,
+                reference, description, certificatedNumber, sku, salesPersonName, invoiceNo, totalCostFrom,
                 totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo, retailPriceFrom, retailPriceTo, netSalesFrom, netSalesTo, marginFrom, marginTo,
-                discountFrom, discountTo
-            }, searchResult
+                discountFrom, discountTo, customerSearch
+            }, searchResult, CustomerSelectedType, CustomerSearchValue
         } = props;
+
+        const { suggestions } = this.state
 
         InitModifySalesData(this.props.props);
 
@@ -307,6 +343,17 @@ class SalesReportHeader extends Component {
             }
         }
 
+        // Autosuggest will pass through all these props to the input.
+        const inputProps = {
+            placeholder: 
+                CustomerSelectedType=='name'?'Customer Name':
+                CustomerSelectedType=='id'?'Customer Id':
+                CustomerSelectedType=='email'?'Customer Email':
+                CustomerSelectedType=='phone'?'Customer Phone Number':'',
+            value: CustomerSearchValue,
+            onChange: this.onChangeTypeSuggest
+        };
+
         return (
             <div>
                 <div className="row">
@@ -383,12 +430,55 @@ class SalesReportHeader extends Component {
                             <div className="panel-body">
                                 <div className="row margin-ft">
                                     <div className="row salesreport-bar"></div>
-                                    <div className="col-md-12 col-sm-12 form-horizontal">
+                                    <div className="col-md-6 col-sm-12 form-horizontal">
                                         <div className="form-group">
-                                            <label className="col-md-2 col-sm-4 control-label">Customer Search</label>
-                                            <div className="col-md-10 col-sm-7 salesreport-input">
-                                                <input type="text" className="form-control"
-                                                   placeholder="Customer Name, ID, Email, Phone Number" {...customer}/>
+                                            <label className="col-sm-4 control-label">Customer Search</label>
+                                            <div className="col-sm-7 salesreport-input">
+                                                <div className={`${(CustomerSelectedType != 'name') ? 'hidden' : ''}` }>
+                                                    <Autosuggest  id="name" suggestions={suggestions} 
+                                                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                                        getSuggestionValue={getSuggestionValueName}
+                                                        renderSuggestion={renderSuggestionName}
+                                                        inputProps={inputProps}/>
+                                                </div>
+                                                <div className={`${(CustomerSelectedType != 'id') ? 'hidden' : ''}` }>
+                                                    <Autosuggest id="id" suggestions={suggestions} 
+                                                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                                        getSuggestionValue={getSuggestionValueId}
+                                                        renderSuggestion={renderSuggestionId}
+                                                        inputProps={inputProps}/>
+                                                </div>
+                                                <div className={`${(CustomerSelectedType != 'email') ? 'hidden' : ''}` }>
+                                                    <Autosuggest id="email" suggestions={suggestions} 
+                                                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                                        getSuggestionValue={getSuggestionValueEmail}
+                                                        renderSuggestion={renderSuggestionEmail}
+                                                        inputProps={inputProps}/>
+                                                </div>
+                                                <div className={`${(CustomerSelectedType != 'phone') ? 'hidden' : ''}` }>
+                                                    <Autosuggest id="phone" suggestions={suggestions} 
+                                                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                                        getSuggestionValue={getSuggestionValuePhone}
+                                                        renderSuggestion={renderSuggestionPhone}
+                                                        inputProps={inputProps}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6 col-sm-12 form-horizontal">
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Select Customer Search</label>
+                                            <div className="col-sm-7">
+                                            <select className="form-control" {...customerSearch} onChange={this.selectedCustomerSearch} ref="customerSearch">
+                                                <option key={'name'} value={'name'}>{'Name'}</option>
+                                                <option key={'id'} value={'id'}>{'Id'}</option>
+                                                <option key={'email'} value={'email'}>{'Email'}</option>
+                                                <option key={'phone'} value={'phone'}>{'Phone Number'}</option>
+                                            </select>
                                             </div>
                                         </div>
                                     </div>
@@ -582,3 +672,43 @@ class SalesReportHeader extends Component {
 }
 
 module.exports = connect(null,inventoryActions)(SalesReportHeader);
+
+// Teach Autosuggest how to calculate suggestions for any given input value.
+const getSuggestions = (value, customers, type) => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    switch (type) {
+        case 'phone':
+            return inputLength === 0 ? [] : customers.filter(cus =>        
+                cus.retailMobilePrimary.toLowerCase().slice(0, inputLength) === inputValue
+            );
+        case 'email':
+            return inputLength === 0 ? [] : customers.filter(cus =>        
+                cus.email.toLowerCase().slice(0, inputLength) === inputValue
+            );
+        case 'id':
+            return inputLength === 0 ? [] : customers.filter(cus =>        
+                cus.accountNumber.toLowerCase().slice(0, inputLength) === inputValue
+            );
+        case 'name':
+            return inputLength === 0 ? [] : customers.filter(cus =>        
+                cus.customerName.toLowerCase().slice(0, inputLength) === inputValue
+            );
+        default:
+            break;
+    }  
+};
+// When suggestion is clicked, Autosuggest needs to populate the input
+// based on the clicked suggestion. Teach Autosuggest how to calculate the
+// input value for every given suggestion.
+const getSuggestionValueName = suggestion => suggestion.customerName;
+const getSuggestionValueId = suggestion => suggestion.accountNumber;
+const getSuggestionValueEmail = suggestion => suggestion.email;
+const getSuggestionValuePhone = suggestion => suggestion.retailMobilePrimary;
+
+// Use your imagination to render suggestions.
+const renderSuggestionName = suggestion => (<div>{suggestion.customerName}</div>);
+const renderSuggestionId = suggestion => (<div>{suggestion.accountNumber}</div>);
+const renderSuggestionEmail = suggestion => (<div>{suggestion.email}</div>);
+const renderSuggestionPhone = suggestion => (<div>{suggestion.retailMobilePrimary}</div>);

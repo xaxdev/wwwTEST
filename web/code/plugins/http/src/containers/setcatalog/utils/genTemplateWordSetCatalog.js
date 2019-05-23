@@ -128,7 +128,7 @@ export default function GenTemplateHtml(that, dataSet, ROOT_URL, _totalPublicPri
         let imgPathPublic = env == 'production'
                                 ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
                                 : env == 'staging'
-                                    ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                    ?'file:///home/mol/www/projects/staging/mol/web/code/plugins/http/public'
                                     :`file:///${FULLPATH_LOCALFILE}web/code/plugins/http/public`;
         let tagbarspecialgrid = `position: absolute;top: 0px;z-index: 999;width: 88px;height: 93px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_grid.png)right top no-repeat;`
         const isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
