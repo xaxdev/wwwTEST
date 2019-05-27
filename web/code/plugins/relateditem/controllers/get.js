@@ -15,7 +15,7 @@ exports.all = {
 
             const { allRelatedItem, countAll, pageRelatedItem } = await findAll(db, page, size)
             
-            return reply({relatedItem: pageRelatedItem, countAll, allRelatedItem});
+            return reply({relatedItem: pageRelatedItem, countAll, allRelatedItem, message:'', statusCode: 200});
         } catch (error) {
             return reply(Boom.badImplementation('', error))
         }
