@@ -320,6 +320,10 @@ class RelatedItem extends Component {
                                 <h3>No Data</h3>
                             </div>
                        </div>
+                        {this.renderTitleDialog()}
+                        {this.renderDialogAddedSuccess(statusCode)}
+                        {this.renderDialogExport()}
+                        {this.renderDialogExportSuccess()}
                     </div>
                 );
             } else {
