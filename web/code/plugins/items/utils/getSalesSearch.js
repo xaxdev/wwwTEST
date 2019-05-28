@@ -59,6 +59,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
     let valToSalesPrice = 0;
 
     internals.filters = [];
+    let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
     if (keys.length != 3 ){
         keys.forEach((key) => {
@@ -142,8 +143,10 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     if(key == 'totalCostTo'){
                         valToCost = value;
                     }
-                    let objLength = objRange.length +1;
-                    objRange = {...objRange,'actualCost.USD':{'from':valFromCost,'to':valToCost},'length':objLength};
+                    if (!isViewAsSet) {
+                        let objLength = objRange.length +1;
+                        objRange = {...objRange,'actualCost.USD':{'from':valFromCost,'to':valToCost},'length':objLength};    
+                    }
                 } else if(key == 'totalUpdatedCostFrom' || key == 'totalUpdatedCostTo'){
                     keyFromUpdatedCost = 'updatedCostUSD';
                     if(key == 'totalUpdatedCostFrom'){
@@ -152,8 +155,10 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     if(key == 'totalUpdatedCostTo'){
                         valToUpdatedCost = value;
                     }
-                    let objLength = objRange.length +1;
-                    objRange = {...objRange,'updatedCost.USD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                    if (!isViewAsSet) {
+                        let objLength = objRange.length +1;
+                        objRange = {...objRange,'updatedCost.USD':{'from':valFromUpdatedCost,'to':valToUpdatedCost},'length':objLength};
+                    }
                 } else if(key == 'publicPriceFrom' || key == 'publicPriceTo'){
                     keyFromPPP = 'priceUSD';
                     if(key == 'publicPriceFrom'){
@@ -162,8 +167,10 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     if(key == 'publicPriceTo'){
                         valToPPP = value;
                     }
-                    let objLength = objRange.length +1;
-                    objRange = {...objRange,'price.USD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                    if (!isViewAsSet) {
+                        let objLength = objRange.length +1;
+                        objRange = {...objRange,'price.USD':{'from':valFromPPP,'to':valToPPP},'length':objLength};
+                    }
                 } else if(key == 'retailPriceFrom' || key == 'retailPriceTo'){
                     if(key == 'retailPriceFrom'){
                         valFromSalesPrice = value;
@@ -171,8 +178,10 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     if(key == 'retailPriceTo'){
                         valToSalesPrice = value;
                     }
-                    let objLength = objRange.length +1;
-                    objRange = {...objRange,'price.USD':{'from':valFromSalesPrice,'to':valToSalesPrice},'length':objLength};
+                    if (!isViewAsSet) {
+                        let objLength = objRange.length +1;
+                        objRange = {...objRange,'price.USD':{'from':valFromSalesPrice,'to':valToSalesPrice},'length':objLength};
+                    }
                 }  else if(key == 'netSalesFrom' || key == 'netSalesTo'){
                     if(key == 'netSalesFrom'){
                         valFromNetSales = value;
@@ -180,8 +189,10 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     if(key == 'netSalesTo'){
                         valToNetSales = value;
                     }
-                    let objLength = objRange.length +1;
-                    objRange = {...objRange,'netAmount.USD':{'from':valFromNetSales,'to':valToNetSales},'length':objLength};
+                    if (!isViewAsSet) {
+                        let objLength = objRange.length +1;
+                        objRange = {...objRange,'netAmount.USD':{'from':valFromNetSales,'to':valToNetSales},'length':objLength};
+                    }
                 } else if(key == 'marginFrom' || key == 'marginTo'){
                     if(key == 'marginFrom'){
                         valFromMargin = value;
@@ -189,8 +200,10 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     if(key == 'marginTo'){
                         valToMargin = value;
                     }
-                    let objLength = objRange.length +1;
-                    objRange = {...objRange,'marginPercent':{'from':valFromMargin,'to':valToMargin},'length':objLength};
+                    if (!isViewAsSet) {
+                        let objLength = objRange.length +1;
+                        objRange = {...objRange,'marginPercent':{'from':valFromMargin,'to':valToMargin},'length':objLength};
+                    }
                 } else if(key == 'discountFrom' || key == 'discountTo'){
                     if(key == 'discountFrom'){
                         valFromDiscount = value;
@@ -198,8 +211,10 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     if(key == 'discountTo'){
                         valToDiscount = value;
                     }
-                    let objLength = objRange.length +1;
-                    objRange = {...objRange,'discountPercent':{'from':valFromDiscount,'to':valToDiscount},'length':objLength};
+                    if (!isViewAsSet) {
+                        let objLength = objRange.length +1;
+                        objRange = {...objRange,'discountPercent':{'from':valFromDiscount,'to':valToDiscount},'length':objLength};
+                    }
                 } else if(key == 'markupFrom' || key == 'markupTo'){
                     keyFromMarkup = 'markup';
                     if(key == 'markupFrom'){

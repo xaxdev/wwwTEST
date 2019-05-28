@@ -1,12 +1,10 @@
-import Elasticsearch from 'elasticsearch'
 const Boom = require('boom');
-const Hoek = require('hoek');
-const Joi = require('joi');
 const Promise = require('bluebird');
 const GetSalesSearch = require('../utils/getSalesSearch');
 const getAllSalesData = require('../utils/getAllSalesData');
 const getSalesSetReference = require('../utils/getSalesSetReference');
 const saveSalesSetReferenceData =  require('../utils/saveSalesSetReferenceData');
+const FilterSalesSetReference =  require('../utils/filterSalesSetReference');
 
 const internals = {
     filters: []
@@ -61,11 +59,6 @@ module.exports = {
         }
 
         // console.log(JSON.stringify(internals.query, null, 2));
-        const getAllSalesItems =  elastic.search({
-            index: 'mol_solditems',
-            type: 'solditems',
-            body: internals.query
-        });
 
         try {
             Promise.all(ps).then(async (allItems) => {
@@ -80,7 +73,7 @@ module.exports = {
 
                 if (isViewAsSet) {
                     data = data.sort(compareBy('setReference','asc'));
-                    let setSalesReferences = await getSalesSetReference(data);
+                    let setSalesReferences = await FilterSalesSetReference(await getSalesSetReference(data), keys, obj)
                     setSalesReferences = setSalesReferences.sort(compareBy(sortBy,sortDirections));
                     await saveSalesSetReferenceData(request,setSalesReferences);
                     return reply(getAllSalesData(setSalesReferences, sortDirections, sortBy, size, page, userCurrency, keys, obj, request, itemsOrder,
