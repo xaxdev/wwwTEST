@@ -12,6 +12,7 @@ export default function ResetFormMain(that){
 
     // resetForm();
     that.props.salesActions.resetForm();
+    that.props.salesActions.setCustomerSearch('');
     reference.value = '';
     description.value = '';
     certificatedNumber.value = '';

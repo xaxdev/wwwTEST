@@ -141,7 +141,7 @@ export default function GetHTMLViewASSetAll(datas, currency, isViewAsSet, env, u
                                                                 let imgPathPublic = env == 'production'
                                                                     ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
                                                                     : env == 'staging'
-                                                                        ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                                                        ?'file:///home/mol/www/projects/staging/mol/web/code/plugins/http/public'
                                                                         :`file:///${config.fullpath_localfile}web/code/plugins/http/public`;
                                                                 let tagbarspeciallist = `position: absolute;top: -5px;left: -5px;z-index: 9;width: 30px;height: 32px;background: url(${imgPathPublic}/js/plugins/http/public/images/img_special_discount_list.png)right top no-repeat;`
                                                                 if(item.price != undefined){

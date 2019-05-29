@@ -57,6 +57,7 @@
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-shallow-compare": "^15.1.0",
     "react-aria-menubutton": "^4.3.0",
+    "react-autosuggest": "^9.4.3",
     "react-bootstrap": "^0.29.3",
     "react-bootstrap-multiselect": "^2.0.0",
     "react-checkbox-list": "0.0.2",

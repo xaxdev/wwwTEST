@@ -11,7 +11,7 @@ export default function GetItemEqualOne(item, currency, isViewAsSet, env, row, u
     let imgPathPublic = env == 'production'
         ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
         : env == 'staging'
-            ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+            ?'file:///home/mol/www/projects/staging/mol/web/code/plugins/http/public'
             :`file:///${config.fullpath_localfile}web/code/plugins/http/public`;
 
     let imagesGallery = [];

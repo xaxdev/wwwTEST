@@ -628,6 +628,8 @@ function mapStateToProps(state) {
         InvoiceDateFrom: state.searchResult.InvoiceDateFrom,
         InvoiceDateTo: state.searchResult.InvoiceDateTo,
         SalesHierarchyValue: state.searchResult.SalesHierarchyValue,
+        CustomerSelectedType: state.searchResult.customerType,
+        CustomerSearchValue: state.searchResult.customerSearch
     }
 }
 function mapDispatchToProps(dispatch) {
@@ -651,6 +653,7 @@ module.exports = reduxForm({
             , 'setReference', 'searchName', 'jewelryProductSalesHierarchy', 'markupFrom', 'markupTo', 'grossWeightFrom', 'grossWeightTo', 'watchProductSalesHierarchy'
             , 'limitedEditionNumber', 'serialNumber', 'proDateFrom', 'proDateTo', 'caseDimensionFrom', 'caseDimensionTo', 'preciousMetalWeightFrom'
             , 'preciousMetalWeightTo', 'article', 'viewAsSet', 'cerDateFrom', 'cerDateTo', 'totalCaratWeightFrom', 'totalCaratWeightTo', 'validateSearchName'
+            , 'customerSearch'
             ],
             validate: ValidateSaveSearch
 },mapStateToProps,mapDispatchToProps)(SalesReportMain);
