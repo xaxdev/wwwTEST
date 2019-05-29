@@ -230,7 +230,7 @@ class productprint extends Component {
         let imgPathPublic = ENVIRONMENT == 'production'
                                 ? 'file:///home/mol/www/projects/mol/web/code/plugins/http/public'
                                 : ENVIRONMENT == 'staging'
-                                    ?'file:///home/mol/www/projects/staging_mol/web/code/plugins/http/public'
+                                    ?'file:///home/mol/www/projects/staging/mol/web/code/plugins/http/public'
                                     :'file:///home/dev/www/mol/web/code/plugins/http/public';
 
         let isSpecialDisc = specialDiscount != undefined ? specialDiscount == 1?true:false : false;

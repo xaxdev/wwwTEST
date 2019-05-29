@@ -11,15 +11,13 @@ export default function InitModifySalesData(props) {
             accessoryProductSalesHierarchy, accessoryType, obaProductSalesHierarchy, obaDimension, sparePartProductSalesHierarchy, sparePartType, attachment,
             setReference, searchName, jewelryProductSalesHierarchy, markupFrom, markupTo, grossWeightFrom, grossWeightTo, watchProductSalesHierarchy, article,
             limitedEditionNumber, serialNumber, proDateFrom, proDateTo, caseDimensionFrom, caseDimensionTo, preciousMetalWeightFrom, preciousMetalWeightTo,
-            viewAsSet, cerDateFrom, cerDateTo, totalCaratWeightFrom, totalCaratWeightTo, validateSearchName
+            viewAsSet, cerDateFrom, cerDateTo, totalCaratWeightFrom, totalCaratWeightTo, validateSearchName, customerSearch
         },
         searchResult
     } = props;
 
     // Header Search
-    let paramsSalesSearch = (searchResult.paramsSalesSearch != null)?
-                          searchResult.paramsSalesSearch:
-                          null;
+    let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
 
     if(reference != undefined){
         reference.value = InitData(paramsSalesSearch,reference.value,'reference');
@@ -113,6 +111,11 @@ export default function InitModifySalesData(props) {
         discountTo.value = InitData(paramsSalesSearch,discountTo.value,'discountTo');
         if(paramsSalesSearch != null)
             paramsSalesSearch.discountTo = discountTo.value
+    }
+    if(customerSearch != undefined){
+        customerSearch.value = InitData(paramsSalesSearch,customerSearch.value,'customerSearch');
+        if(paramsSalesSearch != null)
+            paramsSalesSearch.customerSearch = customerSearch.value
     }
 
     // Stone Search
