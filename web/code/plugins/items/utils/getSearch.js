@@ -404,7 +404,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                 }
                 if(filter != ''){
                     internals.filters.push(JSON.parse(filter));
-                     filter = '';
+                    filter = '';
                 }
             }
         });
@@ -476,7 +476,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                             "constant_score": {
                                 "query": {
                                     "bool": {
-                                          "must": ${JSON.stringify(internals.filters)}
+                                        "must": ${JSON.stringify(internals.filters)}
                                     }
                                 }
                             }

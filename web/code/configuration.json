@@ -66,7 +66,7 @@
 						"decorate": true
 					},
 					"development": {
-						"url": "mongodb://192.168.1.93:27017/mol_development"
+						"url": "mongodb://10.128.133.78:27017/mol_staging"
 					},
 					"test": {
 						"url": "mongodb://192.168.1.93:27017/mol_test"

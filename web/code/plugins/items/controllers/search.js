@@ -5,6 +5,7 @@ const Joi = require('joi');
 const Promise = require('bluebird');
 const GetSearch = require('../utils/getSearch');
 const GetAllData = require('../utils/getAllData');
+const GetSetReference = require('../utils/getSetReference');
 
 const internals = {
     filters: []
@@ -58,173 +59,37 @@ module.exports = {
 
         // console.log(JSON.stringify(internals.query, null, 2));
 
-        const getAllItems =  elastic.search({
-            index: 'mol',
-            type: 'items',
-            body: internals.query
-        });
-
-        const getSetReference = getAllItems.then((response) => {
-            const setReferenceResult = response.hits.hits.map((element) => element._source);
-            const setReferenceFilter = setReferenceResult.filter((item) => {
-                return item.setReference != undefined && item.setReference != '';
-            })
-            const setReferenceArray = setReferenceFilter.map((item) => {
-                return item.setReference;
-            })
-            const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
-                return !pos || item != ary[pos - 1];
-            })
-            let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-            if (sortBy.indexOf('price') != -1) {
-                sortBy = 'totalPrice.USD';
-            }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'createdDate';
-            }else if (sortBy.indexOf('setReference') != -1) {
-                sortBy = 'reference';
-            }else{
-                sortBy = sortBy;
-            }
-
-            let missing = '';
-
-            switch (sortDirections) {
-                case 'asc':
-                    missing = '"missing" : "_first"';
-                    missing = `{"${sortBy}" : {${missing}}},`;
-                    break;
-                default:
-                    break;
-            }
-
-            const query = JSON.parse(
-                `{
-                    "timeout": "5s",
-                    "from": 0,
-                    "size": 10000,
-                    "sort" : [
-                        ${missing}
-                        {"${sortBy}" : "${sortDirections}"}
-                    ],
-                    "query":{
-                        "constant_score": {
-                            "filter": {
-                                "bool": {
-                                    "must": [
-                                        {
-                                            "match": {
-                                                "reference": "${setReferenceUniq.join(' ')}"
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }`
-            );
-
-            return elastic.search({
-                index: 'mol',
-                type: 'setitems',
-                body: query
-            })
-        });
-
-        const getSetReferenceData = (data) => {
-            const setReferenceResult = data;
-            const setReferenceFilter = setReferenceResult.filter((item) => {
-                return item.setReference != undefined && item.setReference != '';
-            })
-            const setReferenceArray = setReferenceFilter.map((item) => {
-                return item.setReference;
-            })
-            const setReferenceUniq = setReferenceArray.sort().filter(function(item, pos, ary) {
-                return !pos || item != ary[pos - 1];
-            })
-            let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
-            if (sortBy.indexOf('price') != -1) {
-                sortBy = 'totalPrice.USD';
-            }else if (sortBy.indexOf('Date') != -1) {
-                sortBy = 'createdDate';
-            }else if (sortBy.indexOf('setReference') != -1) {
-                sortBy = 'reference';
-            }else{
-                sortBy = sortBy;
-            }
-
-            let missing = '';
-
-            switch (sortDirections) {
-                case 'asc':
-                    missing = '"missing" : "_first"';
-                    missing = `{"${sortBy}" : {${missing}}},`;
-                    break;
-                default:
-                    break;
-            }
-
-            const query = JSON.parse(
-                `{
-                    "timeout": "5s",
-                    "from": 0,
-                    "size": 10000,
-                    "sort" : [
-                        ${missing}
-                        {"${sortBy}" : "${sortDirections}"}
-                    ],
-                    "query":{
-                        "constant_score": {
-                            "filter": {
-                                "bool": {
-                                    "must": [
-                                        {
-                                            "match": {
-                                                "reference": "${setReferenceUniq.join(' ')}"
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    }
-                }`
-            );
-
-            return elastic.search({
-                index: 'mol',
-                type: 'setitems',
-                body: query
-            })
-        };
-
         try {
             Promise.all(ps).then(async (allItems) => {
                 let data = [];
                 await allItems.map((all) => {
                     data.push(...all.hits.hits.map((element) => element._source))
                 })
-                const setReferences = await getSetReferenceData(data);
-                const setReferenceData = setReferences.hits.hits.map((element) => element._source);
 
                 let itemsNotMMECONSResult =[{}];
                 let itemsMMECONSResult =[{}];
 
                 let isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
 
-                elastic.close();
-
                 if (isViewAsSet) {
+                    const params = {
+                        sortBy, sortDirections, keys, obj
+                    }
+                    const setReferences = await GetSetReference(data, params, elastic);
+                    
+                    const setReferenceData = setReferences.hits.hits.map((element) => element._source);
+
+                    elastic.close();
                     return reply(GetAllData(setReferenceData, sortDirections, sortBy, size, page, userCurrency, keys,
-                        obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult,
+                        obj, request, itemsOrder, setReferencdOrder, itemsNotMMECONSResult, itemsMMECONSResult,
                         isSetReference
                     ));
                 }else {
+                    elastic.close();
                     return reply(GetAllData(data, sortDirections, sortBy, size, page, userCurrency, keys, obj,
-                        request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult, isSetReference
+                        request, itemsOrder, setReferencdOrder, itemsNotMMECONSResult, itemsMMECONSResult, isSetReference
                     ));
                 }
-
             })
             .catch(function(err) {
                 elastic.close();
