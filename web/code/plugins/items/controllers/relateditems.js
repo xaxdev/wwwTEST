@@ -22,44 +22,51 @@ module.exports = {
                 'items': {'$elemMatch': {'reference': {'$regex' : `.*${reference.replace('|','/')}.*`}}}
             }).toArray()
     
-            const { relatedItem } = await transform(data, 1, itemPerPage)            
-            const { items } = relatedItem[0]
-            const references = items.reduce(reduce, [])
-    
-            const query = JSON.parse(
-                `{
-                    "size": 1000,
-                    "query": {
-                        "constant_score": {
-                            "filter": {
-                                "bool": {
-                                    "must": [
-                                        {
-                                            "match": {
-                                                "reference": "${references.join(' ')}"
-                                            }
-                                        }
-                                    ],
-                                    "must_not": [
-                                        {
-                                            "match": {
-                                                "reference": "${reference.replace('|','/')}"
-                                            }
-                                        },
-                                        {
-                                            "match": {
-                                                "warehouse": {
-                                                    "query": "MME.CONS"
+            const { relatedItem } = await transform(data, 1, itemPerPage)
+            let query = ''
+            let relatedItems = []
+
+            if (relatedItem.length > 0) {
+                const { items } = relatedItem[0]
+                relatedItems = items
+                const references = items.reduce(reduce, [])
+        
+                query = JSON.parse(
+                    `{
+                        "size": 1000,
+                        "query": {
+                            "constant_score": {
+                                "filter": {
+                                    "bool": {
+                                        "must": [
+                                            {
+                                                "match": {
+                                                    "reference": "${references.join(' ')}"
                                                 }
                                             }
-                                        }
-                                    ]
+                                        ],
+                                        "must_not": [
+                                            {
+                                                "match": {
+                                                    "reference": "${reference.replace('|','/')}"
+                                                }
+                                            },
+                                            {
+                                                "match": {
+                                                    "warehouse": {
+                                                        "query": "MME.CONS"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
                                 }
                             }
                         }
-                    }
-                }`
-            );
+                    }`
+                );
+            } 
+            
             // console.log(JSON.stringify(query, null, 2));
             const getDataEs = (query) =>{
                 return elastic.search({
@@ -76,26 +83,29 @@ module.exports = {
                 })
                 return item
             }
-            let productData = [];
-            const response = await getDataEs(query)
-            const result = await Promise.all(response.hits.hits.map((element) => element._source).map(mapOrderBy(items)))
-
-            let len = result.length;
-            
-            for (let i = 0; i < len; i++) {
-                productData.push({
-                    id: result[i].id,
-                    reference: result[i].reference,
-                    image: result[i].gallery,
-                    order: result[i].order,
-                });
+            let products = []
+            let totalpage = 0
+            if (relatedItem.length > 0) {
+                const response = await getDataEs(query)
+                const result = await Promise.all(response.hits.hits.map((element) => element._source).map(mapOrderBy(relatedItems)))
+    
+                let len = result.length;
+                
+                for (let i = 0; i < len; i++) {
+                    products.push({
+                        id: result[i].id,
+                        reference: result[i].reference,
+                        image: result[i].gallery,
+                        order: result[i].order,
+                    });
+                }
+                products = products.sort(compareBy('order','asc'))
+                products = products.slice( (page - 1) * itemPerPage, page * itemPerPage );    
+            } else {
+                products = []
             }
-            productData = productData.sort(compareBy('order','asc'))
-            productData = productData.slice( (page - 1) * itemPerPage, page * itemPerPage );
-            const responeData = {
-                totalpage:Math.ceil(response.hits.total / itemPerPage),
-                products:productData
-            };
+            
+            const responeData = { totalpage, products };
             elastic.close();
             return reply(JSON.stringify(responeData, null, 4));
             // return reply({})
