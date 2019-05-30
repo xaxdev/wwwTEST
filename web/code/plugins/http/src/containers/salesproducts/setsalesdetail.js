@@ -1,16 +1,13 @@
 import React,{ Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Button, FormControl, Pagination } from 'react-bootstrap';
-import { Modal, ModalClose } from 'react-modal-bootstrap';
-import { reduxForm, reset } from 'redux-form';
+import { Pagination } from 'react-bootstrap';
+import { reduxForm } from 'redux-form';
 import jQuery from 'jquery';
 import moment from 'moment-timezone';
 import ReactImageFallback from 'react-image-fallback';
 import * as productdetailaction from '../../actions/productdetailaction';
 import ProductDescriptionBlock from '../../components/salesproductdetail/setDescription';
 import ProductDescriptionmovementBlock from '../../components/salesproductdetail/productDescmovement'
-import ProductDescriptioncerBlock from '../../components/salesproductdetail/productDescriptioncer';
 import ProductJewelryAttributes from '../../components/salesproductdetail/productJewalryAttributes';
 import ProductStoneAttributes from '../../components/salesproductdetail/productStoneAttributes';
 import ProductWatchAttributes from '../../components/salesproductdetail/productWatchAttributes.js';
@@ -29,8 +26,6 @@ import ProductDiamonsAttributes from  '../../components/salesproductdetail/produ
 import ProductRawmatirialAttributes from  '../../components/salesproductdetail/productRawmaterialAttributes';
 import validateCatalog from '../../utils/validatecatalogproductdetail';
 import ModalalertMsgObj from '../../utils/modalalertmsg';
-import Movementlist from '../../components/salesproductdetail/productmovement.js';
-import Goclist from '../../components/salesproductdetail/productgoc.js'
 import compareBy from '../../utils/compare';
 import '../../../public/css/image-gallery.css';
 import '../../../public/css/productdetail.css';
@@ -186,7 +181,7 @@ class SetSalesDetail extends Component {
 
     renderDesc = _ => {
         const  Detail  = this.props.productdetail;
-        let  Detailtitle  = 'JEWELRY DETAILS';
+        let  Detailtitle  = 'ITEM DETAILS';
         if(!Detail){
             return(
                 <div>
@@ -207,7 +202,7 @@ class SetSalesDetail extends Component {
 
     renderDescmovement = _ => {
         const  Detail  = this.props.productdetail;
-        let  Detailtitle  = '';
+        let  Detailtitle  = 'ITEM DETAILS';
         if(!Detail){
             return(
                 <div>
@@ -220,7 +215,6 @@ class SetSalesDetail extends Component {
         }
         switch (Detail.type) {
             case 'JLY':
-                Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -228,7 +222,6 @@ class SetSalesDetail extends Component {
                     </div>
                 );
             case 'STO':
-                Detailtitle='STONE DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -236,7 +229,6 @@ class SetSalesDetail extends Component {
                     </div>
                 );
             case 'WAT':
-                Detailtitle='WATCH DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -244,7 +236,6 @@ class SetSalesDetail extends Component {
                     </div>
                 );
             case 'OBA':
-                Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -252,7 +243,6 @@ class SetSalesDetail extends Component {
                     </div>
                 );
             case 'ACC':
-                Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -260,7 +250,6 @@ class SetSalesDetail extends Component {
                     </div>
                 );
             case 'SPA':
-                Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -268,7 +257,6 @@ class SetSalesDetail extends Component {
                     </div>
                 );
             case 'CER':
-                Detailtitle='CERTIFICATE DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -308,8 +296,8 @@ class SetSalesDetail extends Component {
     renderAttr = _ => {
         const  Detail  = this.props.productdetail;
         const { fields:{ stonepage }, lotNumbers, stonActivePage, submitting, totalpage, stonePageSize,filterSearch } = this.props;
+        let  Attrtitle  = 'ITEM ATTRIBUTES';
 
-        let  Attrtitle  = '';
         if(!Detail){
             return(
                 <div>
@@ -322,7 +310,6 @@ class SetSalesDetail extends Component {
         }
         switch (Detail.type) {
             case 'JLY':
-                Attrtitle='JEWELRY ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -330,7 +317,6 @@ class SetSalesDetail extends Component {
                     </div>
                 );
             case 'STO':
-                Attrtitle='STONE ATTRIBUTES';
                 if (lotNumbers.length > 0) {
                     return(
                         <div>
@@ -343,7 +329,6 @@ class SetSalesDetail extends Component {
                     return(<div></div>);
                 }
             case 'WAT':
-                Attrtitle='WATCH ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -351,7 +336,6 @@ class SetSalesDetail extends Component {
                     </div>
                 );
             case 'OBA':
-                Attrtitle='OBJECT OF ART ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -359,7 +343,6 @@ class SetSalesDetail extends Component {
                     </div>
                 );
             case 'ACC':
-                Attrtitle='ACCESSORY ATTRIBUTES';
                 return(
                     <div>
                        <h2>{Attrtitle}</h2>
@@ -367,7 +350,6 @@ class SetSalesDetail extends Component {
                     </div>
                 );
             case 'SPA':
-                Attrtitle='SPARE PARTS ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -397,7 +379,7 @@ class SetSalesDetail extends Component {
                 const currency = logindata.currency;
                 return(
                     <div>
-                        <h2>SET DETAILS</h2>
+                        <h2>RELATED DETAILS</h2>
                         <Setreference productset={setReferenceData}/>
                     </div>
                 );
@@ -426,7 +408,7 @@ class SetSalesDetail extends Component {
                     const currency = logindata.currency;
 
                     jQuery('#galleryimgset').attr('src',activegallery);
-                    jQuery('#showtotal').text('Total Price (Set): '+numberFormat(totalprice)+' '+'USD');
+                    jQuery('#showtotal').text('Total Retail Price (Set): '+numberFormat(totalprice)+' '+'USD');
                     let rotatecount = 0;
                     jQuery('#btnupset').click(function(){
                         jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});

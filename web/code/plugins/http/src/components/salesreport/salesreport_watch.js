@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Select from 'react-select';
 import Calendar from 'react-input-calendar';
@@ -6,7 +6,6 @@ import moment from 'moment';
 import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/TreeArticle';
 import TreeData from '../../utils/treeview/saleswatch.json';
-import ClearSalesHierarchy from './utils/clear_hierarchy';
 import RemoveSalesHierarchy from './utils/remove_hierarchy';
 import SearchSalesHierarchy from './utils/search_hierarchy';
 import DeleteSalesHierarchy from './utils/delete_hierarchy_attr';
@@ -17,8 +16,6 @@ let hiTreeData = TreeData;
 class SalesReportWatch extends Component {
     constructor(props) {
         super(props);
-        let dateToday = new Date();
-        let fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
 
         this.treeOnClick = this.treeOnClick.bind(this);
         this.treeOnUnClick = this.treeOnUnClick.bind(this);
@@ -862,9 +859,9 @@ const tooltipLimitedEdition = (<Tooltip id="tooltip"><strong>Search Limited Edit
 const tooltipLimitedEditionNumber = (<Tooltip id="tooltip"><strong>Limited Edition Number!</strong></Tooltip>);
 const tooltipSerialNumber = (<Tooltip id="tooltip"><strong>Serial Number!</strong></Tooltip>);
 const tooltipMovement = (<Tooltip id="tooltip"><strong>Search By Movement of the Watch (eg. Quartz, Automatic, Manual etc.) </strong></Tooltip>);
-const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>);
+const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Initial Cost (USD)!</strong></Tooltip>);
 const tooltipTotalUpdatedCost = (<Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>);
-const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Price (USD)!</strong></Tooltip>);
+const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Retail Price (USD)!</strong></Tooltip>);
 const tooltipMarkup = (<Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>);
 const tooltipGrossWeight = (<Tooltip id="tooltip"><strong>Item Weight (Grams)!</strong></Tooltip>);
 const tooltipProductionDate = (<Tooltip id="tooltip"><strong>Production Date</strong></Tooltip>);

@@ -25,9 +25,9 @@ class RenderSalesExportExcelDialog extends Component {
                     <div className="modal-body">
                         <h3>Please choose additional fields for export.</h3>
                         <h5>(Normal export field Item Reference, Description, SKU,
-                              {`${(priceSalesCTP) ? 'Cost Price (USD), ':''}`}
+                              {`${(priceSalesCTP) ? 'Initial Cost (USD), ':''}`}
                               {`${(priceSalesUCP) ? 'Updated Price (USD), ':''}`}
-                              {`${(priceSalesRTP) ? 'Price (USD), ':''}`}
+                              {`${(priceSalesRTP) ? 'Retail Price (USD), ':''}`}
                               {`${(priceSalesNSP) ? 'Net Sales (USD), ':''}`}
                               {`${(priceSalesMGP) ? 'Margin %, ':''}`}
                               {`${(priceSalesMGP) ? 'Margin Amount (USD), ':''}`}

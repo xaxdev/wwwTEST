@@ -63,8 +63,8 @@ class GridSalesItemsViewPrint extends Component {
                         let lblMarginAmount = '';
 
                         if (ViewAsSet) {
-                            lblActualCost = 'Total Cost Price (USD)';
-                            lblPrice = 'Total Price (USD)';
+                            lblActualCost = 'Total Initial Cost (USD)';
+                            lblPrice = 'Total Retail Price (USD)';
                             lblUpdatedCost = 'Total Update Cost (USD)';
                             lblNetSales = 'Total Net Sales (USD)';
                             lblDiscount = 'Total Discount Amount (USD)';
@@ -108,8 +108,8 @@ class GridSalesItemsViewPrint extends Component {
                                             : '-'
                                         : item.name ;
                         }else{
-                            lblActualCost = 'Cost Price (USD)';
-                            lblPrice = 'Price (USD)';
+                            lblActualCost = 'Initial Cost (USD)';
+                            lblPrice = 'Retail Price (USD)';
                             lblUpdatedCost = 'Update Cost (USD)';
                             lblNetSales = 'Net Sales (USD)';
                             lblDiscount = 'Discount %';

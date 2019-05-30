@@ -57,11 +57,15 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>{convertBlanktodash(props.sku)}</div>
                 </div>
                 <div style={styles.colmd12}>
+                    <div style={styles.colmd5}>Set Reference Number</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(setReference)}</div>
+                </div>
+                <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Description</div>
                     <div style={styles.colmd5}>{convertBlanktodash(props.description)}</div>
                 </div>
                 <div style={(priceSalesCTP) ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Cost Price ({ currency })</div>
+                    <div style={styles.colmd5}>Initial Cost ({ currency })</div>
                     <div style={styles.colmd5}>{ actualCost }</div>
                 </div>
                 <div style={(priceSalesUCP) ? styles.colmd12  : styles.colmdhide}>
@@ -69,7 +73,7 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>{ updatedCost }</div>
                 </div>
                 <div style={(priceSalesRTP) ? styles.colmd12  : styles.colmdhide}>
-                    <div style={styles.colmd5}>Price ({ currency })</div>
+                    <div style={styles.colmd5}>Retail Price ({ currency })</div>
                     <div style={styles.colmd5}>{ price }</div>
                 </div>
                 <div style={(priceSalesUCP) ?styles.colmd12  : styles.colmdhide}>
@@ -97,21 +101,16 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>{ netSales }</div>
                 </div>
                 <div style={styles.colmd12}>
+                    <div style={styles.colmd5}>Location</div>
+                    <div style={styles.colmd5}>{convertBlanktodash(props.warehouseName)}</div>
+                </div>
+                <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Company</div>
                     <div style={styles.colmd5}>{convertBlanktodash(props.companyName)}</div>
                 </div>
                 <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Boutique</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(props.warehouseName)}</div>
-                </div>
-                <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Vendor Item Reference</div>
                     <div style={styles.colmd5}>{convertBlanktodash(props.venderReference)}</div>
-                </div>
-
-                <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Set Reference Number</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(setReference)}</div>
                 </div>
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Channel</div>
@@ -134,7 +133,7 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>{convertBlanktodash(props.salesPersonName)}</div>
                 </div>
                 <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Date Created</div>
+                    <div style={styles.colmd5}>Manufactory Date</div>
                     <div style={styles.colmd5}>{dateCreate}</div>
                 </div>
             </div>

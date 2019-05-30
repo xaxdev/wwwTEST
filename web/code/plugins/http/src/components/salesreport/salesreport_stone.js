@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Select from 'react-select';
 import Calendar from 'react-input-calendar';
@@ -7,19 +7,14 @@ import InitModifyData from '../../utils/initModifyData';
 import Tree from '../../utils/treeview/TreeArticle';
 import TreeData from '../../utils/treeview/salesstone.json';
 import RemoveSalesHierarchy from './utils/remove_hierarchy';
-import ClearSalesHierarchy from './utils/clear_hierarchy';
 import SearchSalesHierarchy from './utils/search_hierarchy';
 import DeleteSalesHierarchy from './utils/delete_hierarchy_attr';
 
 DeleteSalesHierarchy([TreeData]);
-let hiTreeData = TreeData;
 
 class SalesReportStone extends Component {
     constructor(props) {
         super(props);
-
-        let dateToday = new Date();
-        let fromdate = `${dateToday.getMonth()+1}-${dateToday.getDate()}-${dateToday.getFullYear()}`;
 
         this.treeOnClick = this.treeOnClick.bind(this);
         this.treeOnUnClick = this.treeOnUnClick.bind(this);
@@ -96,7 +91,8 @@ class SalesReportStone extends Component {
         this.setState({treeViewData:vals});
         this.props.props.inventoryActions.setSalesHierarchy(vals);
         let treeSelected = [];
-        let selectedData = vals.filter(val => {
+        
+        vals.filter(val => {
             let checkAllNodes = function(node){
                 if (node.children) {
                     if(node.checked === true){treeSelected.push(node);}
@@ -112,6 +108,7 @@ class SalesReportStone extends Component {
             }
             return treeSelected;
         });
+
         const { props } = this.props;
 
         let { fields: { stoneProductSalesHierarchy }, searchResult} = props;
@@ -137,7 +134,7 @@ class SalesReportStone extends Component {
 
     handleCutSelectChange(CutSelectValue){
         const { props } = this.props;
-        let { fields: { cut, CutValue }, searchResult } = props;
+        let { fields: { cut }, searchResult } = props;
 
         let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
@@ -149,7 +146,7 @@ class SalesReportStone extends Component {
 
     handleCutGradeSelectChange(CutGradeSelectValue){
         const { props } = this.props;
-        let { fields: { cutGrade, CutGradeValue }, searchResult } = props;
+        let { fields: { cutGrade }, searchResult } = props;
 
         let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
@@ -161,7 +158,7 @@ class SalesReportStone extends Component {
 
     handleColorSelectChange(ColorSelectValue){
         const { props } = this.props;
-        let { fields: { color, ColorValue }, searchResult } = props;
+        let { fields: { color }, searchResult } = props;
 
         let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
@@ -173,7 +170,7 @@ class SalesReportStone extends Component {
 
     handleColorGradeSelectChange(ColorGradeSelectValue){
         const { props } = this.props;
-        let { fields: { colorGrade, ColorGradeValue }, searchResult } = props;
+        let { fields: { colorGrade }, searchResult } = props;
 
         let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
@@ -185,7 +182,7 @@ class SalesReportStone extends Component {
 
     handleClaritiesSelectChange(ClaritySelectValue){
         const { props } = this.props;
-        let { fields: { clarity, ClarityValue }, searchResult } = props;
+        let { fields: { clarity }, searchResult } = props;
 
         let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
@@ -197,7 +194,7 @@ class SalesReportStone extends Component {
 
     handleCertificateLabsSelectChange(CertificateLabSelectValue){
         const { props } = this.props;
-        let { fields: { certificateAgency, CertificateAgencyValue }, searchResult } = props;
+        let { fields: { certificateAgency }, searchResult } = props;
 
         let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
         if(paramsSalesSearch != null)
@@ -337,8 +334,7 @@ class SalesReportStone extends Component {
     render() {
         const { props } = this.props;
         let { fields: {
-            lotNumber, lotQuantityFrom, lotQuantityTo, totalCaratWeightFrom, totalCaratWeightTo, totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo,
-            publicPriceFrom,publicPriceTo, markupFrom, markupTo, certificatedNumber, cerDateFrom, cerDateTo, polish, symmetry, treatment, fluorescence, origin
+            lotNumber, lotQuantityFrom, lotQuantityTo, totalCaratWeightFrom, totalCaratWeightTo, markupFrom, markupTo, certificatedNumber
         }, searchResult } = props;
 
         let paramsSalesSearch = (searchResult.paramsSalesSearch != null)? searchResult.paramsSalesSearch: null;
@@ -715,9 +711,9 @@ const tooltipTotalCaratWeight = (<Tooltip id="tooltip"><strong>Total Carat Weigh
 const tooltipCertificateNumber = (<Tooltip id="tooltip"><strong>Certificate Number!</strong></Tooltip>);
 const tooltipCertificateAgency = (<Tooltip id="tooltip"><strong>Certificate Agency!</strong></Tooltip>);
 const tooltipCertificateDate = (<Tooltip id="tooltip"><strong>Certificate Date!</strong></Tooltip>);
-const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>);
+const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Initial Cost (USD)!</strong></Tooltip>);
 const tooltipTotalUpdatedCost = (<Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>);
-const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Price (USD)!</strong></Tooltip>);
+const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Retail Price (USD)!</strong></Tooltip>);
 const tooltipMarkup = (<Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>);
 
 module.exports = SalesReportStone;
