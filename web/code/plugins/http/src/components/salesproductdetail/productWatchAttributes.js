@@ -1,11 +1,10 @@
 import React from 'react';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
-import checkInarrayObject from '../../utils/checkInarrayObject';
 import checkInarray from '../../utils/checkInarray';
 import numberFormat3 from '../../utils/convertNumberformatwithcomma3digit';
 import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 const allowDiamond = ['Loose Diamond','Diamond'];
-const allowGemstone = ["Stone"];
+const allowGemstone = ['Stone'];
 
 const Watchattr =  (props) =>{
     const gemstoneAttr = props.gemstones;
@@ -57,10 +56,6 @@ const Watchattr =  (props) =>{
                     <div className="col-md-8 col-sm-8">{convertBlanktodash(props.metalColorName)}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Limited Edition</div>
-                    <div className="col-md-8 col-sm-8">{convertBlanktodash(props.limitedEdition)}</div>
-                </div>
-                <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Limited Edition Number</div>
                     <div className="col-md-8 col-sm-8">{convertBlanktodash(props.limitedEditionNumber)}</div>
                 </div>
@@ -76,12 +71,12 @@ const Watchattr =  (props) =>{
                     <div className="col-md-4 col-sm-4 nopadding font-b">Complication</div>
                     <div className="col-md-8 col-sm-8">{convertBlanktodash(props.complicationName)}</div>
                 </div>
-            </div>
-            <div className="col-sm-6 nopadding">
                 <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Strap Type</div>
                     <div className="col-md-8 col-sm-8">{convertBlanktodash(props.strapTypeName)}</div>
                 </div>
+            </div>
+            <div className="col-sm-6 nopadding">
                 <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Strap Color</div>
                     <div className="col-md-8 col-sm-8">{convertBlanktodash(props.strapColorName)}</div>

@@ -1,11 +1,10 @@
 import React from 'react';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
-import checkInarrayObject from '../../utils/checkInarrayObject';
 import checkInarray from '../../utils/checkInarray';
 import numberFormat3 from '../../utils/convertNumberformatwithcomma3digit';
 import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 const allowDiamond = ['Loose Diamond','Diamond'];
-const allowGemstone = ["Stone"];
+const allowGemstone = ['Stone'];
 
 const styles ={
     colmd12:{
@@ -67,10 +66,6 @@ const Watchattr =  (props) =>{
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Metal Colour</div>
                     <div style={styles.colmd5}>{convertBlanktodash(props.metalColorName)}</div>
-                </div>
-                <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Limited Edition</div>
-                    <div style={styles.colmd5}>{convertBlanktodash(props.limitedEdition)}</div>
                 </div>
                 <div style={styles.colmd12}>
                     <div style={styles.colmd5}>Limited Edition Number</div>

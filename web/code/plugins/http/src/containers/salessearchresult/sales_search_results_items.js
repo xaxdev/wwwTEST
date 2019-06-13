@@ -39,7 +39,7 @@ const labels = {
 }
 
 const labelsViewAsSet = {
-    totalActualCost: 'Total Cost Price (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Price (USD)', markup: 'Markup (Times)',
+    totalActualCost: 'Total Initial Cost (USD)', totalUpdatedCost: 'Total Updated Cost (USD)', totalPrice: 'Total Retail Price (USD)', markup: 'Markup (Times)',
     companyName: 'Company', warehouseName: 'Boutique', postedDate: 'Posted Date'
 }
 class SalesSearchResultOnItem extends Component {

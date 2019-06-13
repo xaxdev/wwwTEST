@@ -1,9 +1,7 @@
 import React,{ Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Button, FormControl, Pagination, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { reduxForm, reset } from 'redux-form';
-import { Modal, ModalClose } from 'react-modal-bootstrap';
+import { Pagination, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { reduxForm } from 'redux-form';
 import jQuery from 'jquery';
 import moment from 'moment-timezone';
 import ReactImageFallback from 'react-image-fallback';
@@ -278,7 +276,7 @@ class SalesProductDetail extends Component {
 
     renderDesc = _ => {
         const  Detail  = this.props.productdetail;
-        let  Detailtitle  = '';
+        let  Detailtitle  = 'ITEM DETAILS';
         if(!Detail){
             return(
                 <div>
@@ -291,7 +289,6 @@ class SalesProductDetail extends Component {
         }
         switch (Detail.type) {
             case 'JLY':
-                Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -299,7 +296,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'STO':
-                Detailtitle='STONE DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -307,7 +303,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'WAT':
-                Detailtitle='WATCH DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -315,7 +310,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'OBA':
-                Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -323,7 +317,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'ACC':
-                Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -331,7 +324,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'SPA':
-                Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -339,7 +331,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'CER':
-                Detailtitle='CERTIFICATE DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -351,7 +342,7 @@ class SalesProductDetail extends Component {
 
     renderDescmovement = _ => {
         const  Detail  = this.props.productdetail;
-        let  Detailtitle  = '';
+        let  Detailtitle  = 'ITEM DETAILS';
         if(!Detail){
             return(
                 <div>
@@ -364,7 +355,6 @@ class SalesProductDetail extends Component {
         }
         switch (Detail.type) {
             case 'JLY':
-                Detailtitle='JEWELRY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -372,7 +362,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'STO':
-                Detailtitle='STONE DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -380,7 +369,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'WAT':
-                Detailtitle='WATCH DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -388,7 +376,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'OBA':
-                Detailtitle='OBJECT OF ART DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -396,7 +383,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'ACC':
-                Detailtitle='ACCESSORY DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -404,7 +390,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'SPA':
-                Detailtitle='SPARE PARTS DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -412,7 +397,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'CER':
-                Detailtitle='CERTIFICATE DETAILS';
                 return(
                     <div>
                         <h2>{Detailtitle}</h2>
@@ -452,8 +436,8 @@ class SalesProductDetail extends Component {
     renderAttr = _ => {
         const { fields:{ stonepage }, lotNumbers, stonActivePage, submitting, totalpage, stonePageSize,filterSearch } = this.props;
         const  Detail  = this.props.productdetail;
+        let  Attrtitle  = 'ITEM ATTRIBUTES';
 
-        let  Attrtitle  = '';
         if(!Detail){
             return(
                 <div>
@@ -467,7 +451,6 @@ class SalesProductDetail extends Component {
 
         switch (Detail.type) {
             case 'JLY':
-                Attrtitle='JEWELRY ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -475,7 +458,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'STO':
-                Attrtitle='STONE ATTRIBUTES';
                 if (lotNumbers.length > 0) {
                     return(
                         <div>
@@ -488,7 +470,6 @@ class SalesProductDetail extends Component {
                     return(<div></div>);
                 }
             case 'WAT':
-                Attrtitle='WATCH ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -496,7 +477,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'OBA':
-                Attrtitle='OBJECT OF ART ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -504,7 +484,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'ACC':
-                Attrtitle='ACCESSORY ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -512,7 +491,6 @@ class SalesProductDetail extends Component {
                     </div>
                 );
             case 'SPA':
-                Attrtitle='SPARE PARTS ATTRIBUTES';
                 return(
                     <div>
                         <h2>{Attrtitle}</h2>
@@ -534,7 +512,7 @@ class SalesProductDetail extends Component {
                 const currency = 'USD';
                 return(
                     <div>
-                        <h2>SET DETAILS</h2>
+                        <h2>RELATED DETAILS</h2>
                         <div id="popupset" onClick={this.clickSet} className="col-md-3 col-sm-3 bd-img nopadding"  >
                             <input id="totalsetprice" type="hidden" value={setReferenceData.totalprice['USD'] ? parseInt(setReferenceData.totalprice['USD']) : '-'} />
                             <ReactImageFallback id="imgset" src={setReferenceData.setimage ? setReferenceData.setimage :'/images/blank.gif' }
@@ -580,7 +558,7 @@ class SalesProductDetail extends Component {
                     const currency = 'USD';
 
                     jQuery('#galleryimgset').attr('src',activegallery);
-                    jQuery('#showtotal').text('Total Price (Set): '+numberFormat(totalprice)+' '+'USD');
+                    jQuery('#showtotal').text('Total Retail Price (Set): '+numberFormat(totalprice)+' '+'USD');
                     let rotatecount = 0;
                     jQuery('#btnupset').click(function(){
                         jQuery('#galleryimgset').css({'-webkit-transform': 'rotate('+(rotatecount+=90)+'deg)'});

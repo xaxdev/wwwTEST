@@ -1,15 +1,14 @@
-import React,{PropTypes} from 'react';
+import React from 'react';
 import { Table } from 'react-bootstrap';
-import { Link } from 'react-router';
-import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertDate from '../../utils/convertDatemovement';
+
 const Goc = ({list}) => {
     return (
         <div className="table-responsive">
             <Table responsive className="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Transfer Date</th>
+                        <th>Date</th>
                         <th>Transferred From</th>
                         <th>Transferred To</th>
                     </tr>
@@ -28,7 +27,7 @@ const Goc = ({list}) => {
                             }
                             return (
                                 <tr key={index}>
-                                    <td title="Transfer Date" className="text-center">{!!data.date ? convertDate(data.date) : '-'}</td>
+                                    <td title="Date" className="text-center">{!!data.date ? convertDate(data.date) : '-'}</td>
                                     <td title="Transferred from" className="text-center">{transferfrom}</td>
                                     <td title="Transferred to" className="text-center">{transferto}</td>
                                 </tr>

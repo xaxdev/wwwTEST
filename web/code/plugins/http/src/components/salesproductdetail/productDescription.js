@@ -1,8 +1,6 @@
-import React,{PropTypes} from 'react';
+import React from 'react';
 import numberFormat from '../../utils/convertNumberformat';
-import percentformatFormat from '../../utils/convertMarkpercent';
 import convertDate from '../../utils/convertDate';
-import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertMarkpercent from '../../utils/convertMarkpercent';
 import GetSalesPricePermission from '../../utils/getSalesPricePermission';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
@@ -43,11 +41,15 @@ const DetailDescription = (props) => {
                     <div className="col-md-8 col-sm-8">{props.sku}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Set Reference Number</div>
+                    <div className="col-md-8 col-sm-8">{setReference}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Description</div>
                     <div className="col-md-8 col-sm-8 text-wrap">{props.description}</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesCTP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Cost Price ({ currency })</div>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Initial Cost ({ currency })</div>
                     <div className="col-md-8 col-sm-8">{ actualCost }</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesUCP) ? '' : 'hidden'}`}>
@@ -55,7 +57,7 @@ const DetailDescription = (props) => {
                     <div className="col-md-8 col-sm-8">{ updatedCost }</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesRTP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Price ({ currency })</div>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Retail Price ({ currency })</div>
                     <div className="col-md-8 col-sm-8">{ price }</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesUCP) ? '' : 'hidden'}`}>
@@ -83,20 +85,16 @@ const DetailDescription = (props) => {
                     <div className="col-md-8 col-sm-8">{ netSales }</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Location</div>
+                    <div className="col-md-8 col-sm-8">{props.warehouseName}</div>
+                </div>
+                <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Company</div>
                     <div className="col-md-8 col-sm-8">{props.companyName}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Boutique</div>
-                    <div className="col-md-8 col-sm-8">{props.warehouseName}</div>
-                </div>
-                <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Vendor Item Reference</div>
                     <div className="col-md-8 col-sm-8">{props.venderReference}</div>
-                </div>
-                <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Set Reference Number</div>
-                    <div className="col-md-8 col-sm-8">{setReference}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
                     <div className="col-md-4 col-sm-4 nopadding font-b">Channel</div>
@@ -119,7 +117,7 @@ const DetailDescription = (props) => {
                     <div className="col-md-8 col-sm-8">{props.salesPersonName}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Date Created</div>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Manufactory Date</div>
                     <div className="col-md-8 col-sm-8">{dateCreate}</div>
                 </div>
             </div>

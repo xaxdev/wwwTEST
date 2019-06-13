@@ -67,7 +67,7 @@ class ModalPrintOptions extends Component {
                                         }
                                     }
                                 }/>
-                                <label className="control-label-word checkbox1">Total Updated Cost Price (USD)</label>
+                                <label className="control-label-word checkbox1">Total Updated Cost (USD)</label>
                             </div>
                         </div>
                         <div className="col-sm-5 checkbox checkbox-warning">
@@ -80,7 +80,7 @@ class ModalPrintOptions extends Component {
                                         }
                                     }
                                 }/>
-                                <label className="control-label-word checkbox1">Total Initial Cost Price (USD)</label>
+                                <label className="control-label-word checkbox1">Total Initial Cost (USD)</label>
                             </div>
                             </div>
                             <div className="maring-b10">
@@ -93,7 +93,7 @@ class ModalPrintOptions extends Component {
                                         }
                                     }
                                 }/>
-                                <label className="control-label-word checkbox1">Total Selling Cost Price (USD)</label>
+                                <label className="control-label-word checkbox1">Total Retail Price (USD)</label>
                             </div>
                             </div>
                         </div>

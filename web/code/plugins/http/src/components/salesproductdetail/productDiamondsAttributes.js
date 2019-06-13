@@ -1,12 +1,8 @@
 import React,{PropTypes} from 'react';
 import { Table } from 'react-bootstrap';
-import { Link } from 'react-router';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
-import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
-const pructdetailurl = '/salesproductreletedetail/';
 const allowGemstone = ['Loose Diamond','Diamond'];
-import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat3 from '../../utils/convertNumberformatwithcomma3digit';
 import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 
@@ -55,11 +51,8 @@ const DiamondAttr =  (props) => {
                         <th>Color</th>
                         <th>QTY Of Stones</th>
                         <th>Total Carat Weight</th>
-                        <th>Origin</th>
-                        <th>Fluorescence</th>
                         <th>Laboratory</th>
                         <th>Certificate Number</th>
-                        <th>Certificate Date </th>
                         {isCer?<th></th>:<th className="hidden"></th>}
                     </tr>
                 </thead>
@@ -74,11 +67,8 @@ const DiamondAttr =  (props) => {
                                     <td title="Color" className="text-center">{convertBlanktodash(data.colorName)}</td>
                                     <td title="QTY Of Stones" className="text-center">{numberFormatComma(data.quantity)}</td>
                                     <td title="Total Carat Weight" className="text-center">{numberFormat3(data.carat)}</td>
-                                    <td title="Fluorescence" className="text-center">{convertBlanktodash(data.origin)}</td>
-                                    <td title="Fluorescence" className="text-center">{convertBlanktodash(data.fluorescence)}</td>
                                     <td title="Certificate agency" className="text-center">{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                                     <td title="Certificate Number," className="text-center">{!!data.certificate ? data.certificate.number: '-'}</td>
-                                    <td title="Certificate Date" className="text-center">{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
                                     {
                                         isCer?
                                             !!data.certificate ?
