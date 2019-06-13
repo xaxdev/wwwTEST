@@ -1,8 +1,6 @@
-import React,{PropTypes} from 'react';
+import React from 'react';
 import numberFormat from '../../utils/convertNumberformat';
-import percentformatFormat from '../../utils/convertMarkpercent';
 import convertDate from '../../utils/convertDate';
-import convertBlanktodash  from '../../utils/convertBlanktodash';
 import convertMarkpercent from '../../utils/convertMarkpercent';
 import GetSalesPricePermission from '../../utils/getSalesPricePermission';
 const logindata = sessionStorage.logindata ? JSON.parse(sessionStorage.logindata) : null;
@@ -16,7 +14,6 @@ const SetDetail = (props) =>{
         const priceSalesNSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesNSP;
         const priceSalesMGP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesMGP;
         const priceSalesDSP = GetSalesPricePermission(userLogin.permission.priceSales).priceSalesDSP;
-        const currency = 'USD';
 
         let invoicedDate = props.invoiceDate != undefined ? convertDate(props.invoiceDate): '-';
         let actualCost = props.totalActualCost != undefined ? numberFormat(props.totalActualCost['USD']): '-';
@@ -40,7 +37,7 @@ const SetDetail = (props) =>{
                     <div className="col-md-8 col-sm-8 text-wrap">{props.description != undefined ? props.description: '-'}</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesCTP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Total Cost Price (USD)</div>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Total Initial Cost (USD)</div>
                     <div className="col-md-8 col-sm-8">{ actualCost }</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesUCP) ? '' : 'hidden'}`}>
@@ -48,7 +45,7 @@ const SetDetail = (props) =>{
                     <div className="col-md-8 col-sm-8">{ updatedCost }</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesRTP) ? '' : 'hidden'}`}>
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Total Price (USD)</div>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Total Retail Price (USD)</div>
                     <div className="col-md-8 col-sm-8">{ price }</div>
                 </div>
                 <div className={`col-md-12 col-sm-12 nopadding ${(priceSalesNSP) ? '' : 'hidden'}`}>

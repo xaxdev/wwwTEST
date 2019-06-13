@@ -350,14 +350,14 @@ class ListItemsView extends Component {
                                         )
                                     })}
                                     <th className={`${(userLogin.permission.price == 'All') ?
-                                        '' : 'hidden'}`}><span>Initial Cost Price (USD)</span></th>
+                                        '' : 'hidden'}`}><span>Initial Cost (USD)</span></th>
                                     <th className={`${(userLogin.permission.price == 'Updated'
                                         || userLogin.permission.price == 'All') ?
-                                        '' : 'hidden'}`}><span>Updated Cost Price (USD)</span></th>
+                                        '' : 'hidden'}`}><span>Updated Cost (USD)</span></th>
                                     <th className={`${(userLogin.permission.price == 'Public'
                                         || userLogin.permission.price == 'Updated'
                                         || userLogin.permission.price == 'All') ?
-                                        '' : 'hidden'}`}><span>Selling Cost Price (USD)</span></th>
+                                        '' : 'hidden'}`}><span>Retail Price (USD)</span></th>
                                 </tr>
                             </thead>
                             {items.map((item) => {

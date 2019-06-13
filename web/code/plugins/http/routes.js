@@ -3,6 +3,7 @@
 const Path = require('path');
 
 const controller = require('require-all')(Path.normalize(__dirname + '/controllers'));
+const env = process.env.NODE_ENV
 
 module.exports = [
     {
@@ -28,7 +29,7 @@ module.exports = [
     {
         method: 'GET',
         path: '/images/products/{path*}',
-        config: controller.assets.imagesProduct
+        config: env == 'production'? controller.assets.imagesProduct: controller.assetsStaging.imagesProduct
     },
     {
         method: 'GET',
@@ -48,77 +49,77 @@ module.exports = [
     {
         method: 'GET',
         path: '/original/csl/{path*}',
-        config: controller.assets.originalCSL
+        config: env == 'production'? controller.assets.originalCSL: controller.assetsStaging.originalCSL
     },
     {
         method: 'GET',
         path: '/original/mam/{path*}',
-        config: controller.assets.originalMAM
+        config: env == 'production'? controller.assets.originalMAM: controller.assetsStaging.originalMAM
     },
     {
         method: 'GET',
         path: '/original/mat/{path*}',
-        config: controller.assets.originalMAT
+        config: env == 'production'? controller.assets.originalMAT: controller.assetsStaging.originalMAT
     },
     {
         method: 'GET',
         path: '/original/mbs/{path*}',
-        config: controller.assets.originalMBS
+        config: env == 'production'? controller.assets.originalMBS: controller.assetsStaging.originalMBS
     },
     {
         method: 'GET',
         path: '/original/mdo/{path*}',
-        config: controller.assets.originalMDO
+        config: env == 'production'? controller.assets.originalMDO: controller.assetsStaging.originalMDO
     },
     {
         method: 'GET',
         path: '/original/mdt/{path*}',
-        config: controller.assets.originalMDT
+        config: env == 'production'? controller.assets.originalMDT: controller.assetsStaging.originalMDT
     },
     {
         method: 'GET',
         path: '/original/mjw/{path*}',
-        config: controller.assets.originalMJW
+        config: env == 'production'? controller.assets.originalMJW: controller.assetsStaging.originalMJW
     },
     {
         method: 'GET',
         path: '/original/mku/{path*}',
-        config: controller.assets.originalMKU
+        config: env == 'production'? controller.assets.originalMKU: controller.assetsStaging.originalMKU
     },
     {
         method: 'GET',
         path: '/original/mme/{path*}',
-        config: controller.assets.originalMME
+        config: env == 'production'? controller.assets.originalMME: controller.assetsStaging.originalMME
     },
     {
         method: 'GET',
         path: '/original/mmf/{path*}',
-        config: controller.assets.originalMMF
+        config: env == 'production'? controller.assets.originalMMF: controller.assetsStaging.originalMMF
     },
     {
         method: 'GET',
         path: '/original/mmu/{path*}',
-        config: controller.assets.originalMMU
+        config: env == 'production'? controller.assets.originalMMU: controller.assetsStaging.originalMMU
     },
     {
         method: 'GET',
         path: '/original/std/{path*}',
-        config: controller.assets.originalSTD
+        config: env == 'production'? controller.assets.originalSTD: controller.assetsStaging.originalSTD
     },
     {
         method: 'GET',
         path: '/original/sts/{path*}',
-        config: controller.assets.originalSTS
+        config: env == 'production'? controller.assets.originalSTS: controller.assetsStaging.originalSTS
     },
     {
         method: 'GET',
         path: '/original/stsa/{path*}',
-        config: controller.assets.originalSTSA
+        config: env == 'production'? controller.assets.originalSTSA: controller.assetsStaging.originalSTSA
     },
     {
         method: 'GET',
         path: '/original/old/{path*}',
-        config: controller.assets.originalOLD
+        config: env == 'production'? controller.assets.originalOLD: controller.assetsStaging.originalOLD
     },
     {
         method: 'GET',

@@ -1,14 +1,11 @@
 import React,{PropTypes} from 'react';
 import { Table } from 'react-bootstrap';
-import { Link } from 'react-router';
 import convertBlanktodash  from '../../utils/convertBlanktodash';
-import convertDate from '../../utils/convertDate';
 import checkInarray from '../../utils/checkInarray';
-import numberFormat from '../../utils/convertNumberformatwithcomma2digit';
 import numberFormat3 from '../../utils/convertNumberformatwithcomma3digit';
 import numberFormatComma from '../../utils/convertNumberformatwithcomma';
 
-const allowGemstone = ["Loose Diamond","Diamond"];
+const allowGemstone = ['Loose Diamond','Diamond'];
 
 const styles ={
     colmd12:{
@@ -45,8 +42,6 @@ const styles ={
         textAlign:'center'
     }
 };
-
-const pructdetailurl = '/salesproductreletedetail/';
 
 const Gemstoneattr =  (props) =>{
     let newprops = props.gemstoneAttrData.sort(function(a, b) {
@@ -90,8 +85,6 @@ const Gemstoneattr =  (props) =>{
                         <th style={styles.border}>Color</th>
                         <th style={styles.border}>QTY Of Stones</th>
                         <th style={styles.border}>Total Carat Weight</th>
-                        <th style={styles.border}>Origin</th>
-                        <th style={styles.border}>Fluorescence</th>
                         <th style={styles.border}>Laboratory</th>
                         <th style={styles.border}>Certificate Number</th>
                         <th style={styles.border}>Certificate Date </th>
@@ -110,11 +103,8 @@ const Gemstoneattr =  (props) =>{
                                         <td title="Color" style={styles.textcenter}>{convertBlanktodash(data.colorName)}</td>
                                         <td title="QTY Of Stones" style={styles.textcenter}>{numberFormatComma(data.quantity)}</td>
                                         <td title="Total Carat Weight" style={styles.textcenter}>{numberFormat3(data.carat)}</td>
-                                        <td title="Origin" style={styles.textcenter}>{convertBlanktodash(data.origin)}</td>
-                                        <td title="Fluorescence" style={styles.textcenter}>{convertBlanktodash(data.fluorescence)}</td>
                                         <td title="Certificate agency" style={styles.textcenter}>{!!data.certificate ? convertBlanktodash(data.certificate.agency) : '-'}</td>
                                         <td title="Certificate Number," style={styles.textcenter}>{!!data.certificate ? data.certificate.number: '-'}</td>
-                                        <td title="Certificate Date" style={styles.textcenter}>{!!data.certificate ? convertDate(data.certificate.issuedDate) : '-'}</td>
                                         {
                                             isCer?
                                                 !!data.certificate ?

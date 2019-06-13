@@ -14,8 +14,8 @@
 	    "NODE_ENV": "staging"
 	},
     "merge_logs": true,
-    "error_file": "../logs/mol-err.log",
-    "out_file": "../logs/mol-out.log",
+    "error_file": "./logs/mol-err.log",
+    "out_file": "./logs/mol-out.log",
     "log_date_format": "YYYY-MM-DD HH:mm Z"
   }]
 }

@@ -13,8 +13,6 @@ import * as xls from '../../utils/xlsSetReference';
 import * as inventoryActions from '../../actions/inventoryactions';
 
 DeleteSalesHierarchy([TreeData]);
-let X = XLSX;
-let hiTreeData = TreeData;
 
 class SalesReportJewelry extends Component {
     constructor(props) {
@@ -258,15 +256,12 @@ class SalesReportJewelry extends Component {
         e.preventDefault();
         let { fields:{setReference }, inventoryActions} = this.props.props;
         let X = XLSX;
-        let that = this;
         let rABS = false;
-        let use_worker = false;
         let files = e.target.files;
 
         let f = files[0];
         {
       		let reader = new FileReader();
-      		let name = f.name;
       		reader.onload = function(e) {
                 let data = e.target.result;
                 let arr = xls.fixdata(data);
@@ -283,12 +278,7 @@ class SalesReportJewelry extends Component {
     render() {
         const { props } = this.props;
         const musthaves = [{value: 1,label:'Yes'},{value: 0,label:'No'}];
-        let {  fields: {
-                    collection, totalCostFrom, totalCostTo, totalUpdatedCostFrom, totalUpdatedCostTo, publicPriceFrom,
-                    publicPriceTo, markupFrom, markupTo, grossWeightFrom, grossWeightTo, setReference, brand, mustHave,
-                    ringSize, dominantStone, metalType, metalColour, viewAsSet
-                }
-        } = props;
+        let {  fields: { markupFrom, markupTo, grossWeightFrom, grossWeightTo, setReference, viewAsSet } } = props;
 
         let dataDropDowntJewelryCategory = [];
         let dataDropDowntCollection = [];
@@ -547,10 +537,6 @@ const tooltipCollection = (<Tooltip id="tooltip"><strong>Search By Collection (e
 const tooltipBrand = (<Tooltip id="tooltip"><strong>Seacrh By Brand (eg. Mouawad, Chopard, Cartier etc.) of the Product</strong></Tooltip>);
 const tooltipMustHave = (<Tooltip id="tooltip"><strong>Search By Must Have value (yes/no)</strong></Tooltip>);
 const tooltipRingSize = (<Tooltip id="tooltip"><strong>Search Product by Ring Size</strong></Tooltip>);
-const tooltipTotalCost = (<Tooltip id="tooltip"><strong>Cost Price (USD)!</strong></Tooltip>);
-const tooltipTotalUpdatedCost = (<Tooltip id="tooltip"><strong>Updated Cost (USD)!</strong></Tooltip>);
-const tooltipPublicPrice = (<Tooltip id="tooltip"><strong>Price (USD)!</strong></Tooltip>);
-const tooltipMarkup = (<Tooltip id="tooltip"><strong>Markup (Times)!</strong></Tooltip>);
 const tooltipGrossWeight = (<Tooltip id="tooltip"><strong>Search By Total Weight of the Product</strong></Tooltip>);
 const tooltipSetReferenceNumber = (<Tooltip id="tooltip"><strong>Search Sets By Set Reference Number</strong></Tooltip>);
 const tooltipMetalType = (<Tooltip id="tooltip"><strong>Search By Metal Type of the Product</strong></Tooltip>);

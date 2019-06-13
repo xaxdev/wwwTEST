@@ -25,8 +25,8 @@ const Loading = require('react-loading');
 const checkFields = ['all','groupCost','updatedCost', 'sellingCost'];
 
 const labels = {
-    all: 'Select All', groupCost: 'Total Initial Cost (USD)', updatedCost: 'Total Updated Cost Price (USD)',
-    sellingCost: 'Total Selling Cost Price (USD)'
+    all: 'Select All', groupCost: 'Total Initial Cost (USD)', updatedCost: 'Total Updated Cost (USD)',
+    sellingCost: 'Total Retail Price (USD)'
 }
 
 const chkAllItems = ['0','1','2','3', '4', '5','6','7','8','9', '10', '11', '12', '13', '14', '15', '16', '17',

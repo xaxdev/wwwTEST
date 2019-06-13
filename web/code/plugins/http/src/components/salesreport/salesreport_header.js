@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import Calendar from 'react-input-calendar';
@@ -37,7 +37,7 @@ class SalesReportHeader extends Component {
 
     componentDidMount() {
         const { props } = this.props;
-        let { fields: { customer }, CustomerSelectedType } = props
+        let { fields: { customer } } = props
         props.salesActions.setCustomerSearch(customer.value)
         
         jQuery('#file').hide();
@@ -113,14 +113,11 @@ class SalesReportHeader extends Component {
         let { fields:{reference }} = props;
         let X = XLSX;
         let rABS = false;
-        let use_worker = false;
-
         let files = e.target.files;
 
         let f = files[0];
         {
       		let reader = new FileReader();
-      		let name = f.name;
       		reader.onload = function(e) {
                 let data = e.target.result;
                 let arr = xls.fixdata(data);
@@ -572,7 +569,7 @@ class SalesReportHeader extends Component {
                                     <div className="row salesreport-bar"></div>
                                     <div className="col-md-6 col-sm-12 form-horizontal">
                                         <div className={`form-group ${(priceSalesCTP) ? '' : 'hidden'}`}>
-                                            <label className="col-sm-4 control-label">Cost Price (USD)</label>
+                                            <label className="col-sm-4 control-label">Initial Cost (USD)</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                                 <div className="col-sm-4 nopadding">
@@ -585,7 +582,7 @@ class SalesReportHeader extends Component {
                                             </div>
                                         </div>
                                         <div className={`form-group ${(priceSalesRTP) ? '' : 'hidden'}`}>
-                                            <label className="col-sm-4 control-label">Price (USD)</label>
+                                            <label className="col-sm-4 control-label">Retail Price (USD)</label>
                                             <div className="col-sm-7">
                                                 <label className="col-sm-2 control-label padding-l font-nor">From: </label>
                                                 <div className="col-sm-4 nopadding">
