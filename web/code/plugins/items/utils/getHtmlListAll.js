@@ -130,6 +130,8 @@ export default function GetHTMLViewASSetAll(datas, currency, isViewAsSet, env, u
                                                                 let imagesProduct = '';
                                                                 let itemName = '';
                                                                 let price = '';
+                                                                let updated = '';
+                                                                let actual = '';
                                                                 let size = '';
                                                                 let jewelsWeight = 0;
                                                                 let grossWeight = 0;
@@ -148,6 +150,18 @@ export default function GetHTMLViewASSetAll(datas, currency, isViewAsSet, env, u
                                                                     price = (item.price[currency] != undefined) ? numberFormat(item.price[currency]) : '- ';
                                                                 }else{
                                                                     price = '- ';
+                                                                }
+
+                                                                if(item.updatedCost != undefined){
+                                                                    updated = (item.updatedCost[currency] != undefined) ? numberFormat(item.updatedCost[currency]) : '- '
+                                                                }else{
+                                                                    updated = '- ';
+                                                                }
+
+                                                                if(item.actualCost != undefined){
+                                                                    actual = (item.actualCost[currency] != undefined) ? numberFormat(item.actualCost[currency]) : '- '
+                                                                }else{
+                                                                    actual = '- ';
                                                                 }
 
                                                                 let isSpecialDisc = item.specialDiscount != undefined ? item.specialDiscount == 1?true:false : false;
@@ -187,63 +201,86 @@ export default function GetHTMLViewASSetAll(datas, currency, isViewAsSet, env, u
                                                                 jewelsWeight = numberFormat2digit(jewelsWeight);
                                                                 grossWeight = numberFormat2digit(item.grossWeight)
 
-                                                                return (`<tr>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <div style="position: relative;">
-                                                                                    <span style="${(isSpecialDisc)? tagbarspeciallist:''}"></span>
-                                                                                    <img src="${imagesProduct}" width="60">
-                                                                                </div>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.reference}</span>
-                                                                            </td>
-                                                                            ${titleValue.map((title)=>{
-                                                                                switch (title) {
-                                                                                    case 'stoneDetail':
-                                                                                        return(
-                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                                <span>${item[title] != ''? item[title]: '-'}</span>
-                                                                                            </td>`
-                                                                                        )
-                                                                                        break;
-                                                                                    case 'grossWeight':
-                                                                                        return(
-                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                                <span>${grossWeight}</span>
-                                                                                            </td>`
-                                                                                        )
-                                                                                        break;
-                                                                                    case 'description':
-                                                                                        return(
-                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                                <span>${itemName}</span>
-                                                                                            </td>`
-                                                                                        )
-                                                                                        break;
-                                                                                    case 'size':
-                                                                                        return(
-                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                                <span>${size}</span>
-                                                                                            </td>`
-                                                                                        )
-                                                                                        break;
-                                                                                    case 'jewelsWeight':
-                                                                                        return(
-                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                                <span>${jewelsWeight}</span>
-                                                                                            </td>`
-                                                                                        )
-                                                                                        break;
-                                                                                    default:
-                                                                                        return(
-                                                                                            `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                                <span>${item[title]}</span>
-                                                                                            </td>`
-                                                                                        )
-                                                                                        break;
-                                                                                }
-                                                                            }).join('')}
-                                                                        </tr>`)
+                                                                return (
+                                                                    `<tr>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <div style="position: relative;">
+                                                                                <span style="${(isSpecialDisc)? tagbarspeciallist:''}"></span>
+                                                                                <img src="${imagesProduct}" width="60">
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${item.reference}</span>
+                                                                        </td>
+                                                                        ${titleValue.map((title)=>{
+                                                                            switch (title) {
+                                                                                case 'priceUSD':
+                                                                                    return(
+                                                                                        `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                            <span>${price}</span>
+                                                                                        </td>`
+                                                                                    )
+                                                                                    break;
+                                                                                case 'updatedCostUSD':
+                                                                                    return(
+                                                                                        `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                            <span>${updated}</span>
+                                                                                        </td>`
+                                                                                    )
+                                                                                    break;
+                                                                                case 'actualCostUSD':
+                                                                                    return(
+                                                                                        `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                            <span>${actual}</span>
+                                                                                        </td>`
+                                                                                    )
+                                                                                    break;
+                                                                                case 'stoneDetail':
+                                                                                    return(
+                                                                                        `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                            <span>${item[title] != ''? item[title]: '-'}</span>
+                                                                                        </td>`
+                                                                                    )
+                                                                                    break;
+                                                                                case 'grossWeight':
+                                                                                    return(
+                                                                                        `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                            <span>${grossWeight}</span>
+                                                                                        </td>`
+                                                                                    )
+                                                                                    break;
+                                                                                case 'description':
+                                                                                    return(
+                                                                                        `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                            <span>${itemName}</span>
+                                                                                        </td>`
+                                                                                    )
+                                                                                    break;
+                                                                                case 'size':
+                                                                                    return(
+                                                                                        `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                            <span>${size}</span>
+                                                                                        </td>`
+                                                                                    )
+                                                                                    break;
+                                                                                case 'jewelsWeight':
+                                                                                    return(
+                                                                                        `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                            <span>${jewelsWeight}</span>
+                                                                                        </td>`
+                                                                                    )
+                                                                                    break;
+                                                                                default:
+                                                                                    return(
+                                                                                        `<td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                                            <span>${item[title]}</span>
+                                                                                        </td>`
+                                                                                    )
+                                                                                    break;
+                                                                            }
+                                                                        }).join('')}
+                                                                    </tr>`
+                                                                )
                                                             }).join('')}
                                                         </tbody>
                                                     </table>

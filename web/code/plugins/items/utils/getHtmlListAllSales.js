@@ -224,46 +224,48 @@ export default function GetHTMLListAllSales(datas,currency,isViewAsSet,env,userP
                                                                 jewelsWeight = numberFormat2digit(jewelsWeight);
                                                                 grossWeight = numberFormat2digit(item.grossWeight)
 
-                                                                return (`<tr>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>
-                                                                                    <div style="position: relative;">
-                                                                                        <span style="${tagbarsoldoutlist}"></span>
-                                                                                        <img src="${imagesProduct}" width="60">
-                                                                                    </div>
-                                                                                </span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.reference}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${itemName}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.sku}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.warehouseName}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.customerName}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${convertDate(item.invoiceDate)}</span>
-                                                                            </td>
-                                                                            <td style="${(priceSalesNSP) ? '' : 'display: none !important;visibility: hidden !important;'} padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.netAmountUSD}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${grossWeight}</span>
-                                                                            </td>
-                                                                            <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${item.stoneDetail != ''? item.stoneDetail: '-'}</span>
-                                                                            </td>
-                                                                            <td style="${(priceSalesRTP) ? '' : 'display: none !important;visibility: hidden !important;'} padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
-                                                                                <span>${price}</span>
-                                                                            </td>
-                                                                        </tr>`)
+                                                                return (
+                                                                    `<tr>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>
+                                                                                <div style="position: relative;">
+                                                                                    <span style="${tagbarsoldoutlist}"></span>
+                                                                                    <img src="${imagesProduct}" width="60">
+                                                                                </div>
+                                                                            </span>
+                                                                        </td>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${item.reference}</span>
+                                                                        </td>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${itemName}</span>
+                                                                        </td>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${item.sku}</span>
+                                                                        </td>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${item.warehouseName}</span>
+                                                                        </td>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${item.customerName}</span>
+                                                                        </td>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${convertDate(item.invoiceDate)}</span>
+                                                                        </td>
+                                                                        <td style="${(priceSalesNSP) ? '' : 'display: none !important;visibility: hidden !important;'} padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${item.netAmountUSD}</span>
+                                                                        </td>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${grossWeight}</span>
+                                                                        </td>
+                                                                        <td style="padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${item.stoneDetail != ''? item.stoneDetail: '-'}</span>
+                                                                        </td>
+                                                                        <td style="${(priceSalesRTP) ? '' : 'display: none !important;visibility: hidden !important;'} padding:5px 5px;word-break: normal;font-size: 6px; border: 1px solid #5c5954;">
+                                                                            <span>${price}</span>
+                                                                        </td>
+                                                                    </tr>`
+                                                                )
                                                             }).join('')}
                                                         </tbody>
                                                     </table>
