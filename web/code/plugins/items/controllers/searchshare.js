@@ -34,17 +34,17 @@ module.exports = {
 
 
                 const sharedMe = await users.find(user => { return user.id === owner.id })
-                if (!!sharedMe) return reply(Boom.badRequest("Share yourself is denied."))
+                if (!!sharedMe) return reply(Boom.badRequest('Share yourself is denied.'))
 
                 const findShared = await db.collection('SearchCriteria').findOne(
                     {
-                        "_id": new ObjectID(searchId),
-                        "owner": owner.id
+                        '_id': new ObjectID(searchId),
+                        'owner': owner.id
                     })
 
                 if (findShared !== null) {
-                    const sharedUser = typeof(findShared.users) !== "undefined" ? findShared.users : []
-                    findShared.users = _.uniqBy(_.union(sharedUser, users), "id")
+                    const sharedUser = typeof(findShared.users) !== 'undefined' ? findShared.users : []
+                    findShared.users = _.uniqBy(_.union(sharedUser, users), 'id')
                 }
                 else {
                     findShared.users = users
@@ -52,11 +52,11 @@ module.exports = {
 
                 const updatedShared = await db.collection('SearchCriteria').updateOne(
                     {
-                        "_id": new ObjectID(searchId)
+                        '_id': new ObjectID(searchId)
                     },
                     {
                         $set: {
-                            "users": findShared.users
+                            'users': findShared.users
                         }
                     },
                     {

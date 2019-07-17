@@ -57,7 +57,7 @@ export default function GenTemplateHtml(items, userLogin){
                                                   <div>
                                                       <div style="${styleSearchproduct}">
 
-                                                          ${items.map(function(item, index){
+                                                        ${items.map(function(item, index){
                                                             //   console.log(item.authorization);
                                                               let imagesProduct = (item.authorization)
                                                                                     ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/login-logo@2x.png'

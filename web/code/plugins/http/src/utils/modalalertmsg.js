@@ -1,8 +1,7 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 
-class ModalAlertmsg extends Component {
+class ModalAlertMsg extends Component {
     constructor(props) {
         super(props);
     }
@@ -30,4 +29,4 @@ class ModalAlertmsg extends Component {
         );
     }
 }
-module.exports = ModalAlertmsg
+module.exports = ModalAlertMsg

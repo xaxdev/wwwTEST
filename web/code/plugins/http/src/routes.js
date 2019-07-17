@@ -105,7 +105,7 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/inventory/inventory_main_search'));
                     }, 'inventories');
                 }
-            }, {
+            },{
                 onEnter: requireAccess,
                 path: 'users',
                 getComponent: (location, cb) => {
@@ -113,7 +113,7 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/user/users_list'));
                     }, 'users');
                 }
-            }, {
+            },{
                 onEnter: requireAccess,
                 path: 'user/new',
                 getComponent: (location, cb) => {
@@ -121,7 +121,7 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/user/users_new'));
                     }, 'usernew');
                 }
-            }, {
+            },{
                 onEnter: requireAccess,
                 path: 'user/:id',
                 getComponent: (location, cb) => {
@@ -129,21 +129,21 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/user/users_details'));
                     }, 'usersdetail');
                 }
-            }, {
+            },{
                 path: 'forgotpassword',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
                         cb(null, require('./containers/login/forgotpassword'));
                     }, 'forgotpassword');
                 }
-            }, {
+            },{
                 path: 'resetpassword/:token',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
                         cb(null, require('./containers/login/resetpassword'));
                     }, 'resetpassword');
                 }
-            }, {
+            },{
                 onEnter: requirePermissionInventory,
                 path: 'searchresult',
                 getComponent: (location, cb) => {
@@ -151,7 +151,7 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/searchresults/search_reslts'));
                     }, 'searchresult');
                 }
-            }, {
+            },{
                 onEnter: requirePermissionInventory,
                 path: 'productdetail/:id',
                 getComponent: (location, cb) => {
@@ -183,21 +183,21 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/products/productreletedetail'));
                     }, 'productreletedetail');
                 }
-            }, {
+            },{
                 path: 'changepassword',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
                         cb(null, require('./containers/login/changepassword'));
                     }, 'changepassword');
                 }
-            }, {
+            },{
                 path: 'accessdenied',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
                         cb(null, require('./containers/accessdenied'));
                     }, 'accessdenied');
                 }
-            }, {
+            },{
                 onEnter: requirePermissionInventory,
                 path: 'mycatalog',
                 getComponent: (location, cb) => {
@@ -205,7 +205,7 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/mycatalog/mycatalog_list'));
                     }, 'mycatalog');
                 }
-            }, {
+            },{
                 onEnter: requirePermissionInventory,
                 path: '/productmycatalog/:id',
                 getComponent: (location, cb) => {
@@ -221,7 +221,7 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/whatnewnotification/whatnewnotification'));
                     }, 'whatnewnotification');
                 }
-            }, {
+            },{
                 onEnter: requireAuth,
                 path: 'savesearch',
                 getComponent: (location, cb) => {
@@ -229,13 +229,13 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/savesearch/list'));
                     }, 'savesearch');
                 }
-            }, {
+            },{
                 onEnter: requirePermissionInventory,
                 path: 'setcatalog',
                 getComponent: (location, cb) => {
                     require.ensure([], (require) => {
                         cb(null, require('./containers/setcatalog/setcatalog_list'));
-                    }, 'mycatalog');
+                    }, 'setcatalog');
                 }
             },{
                 onEnter: requirePermissionInventory,
@@ -277,7 +277,7 @@ export default ({ dispatch,getState}) => {
                         cb(null, require('./containers/salesproducts/setsalesdetail'));
                     }, 'setsalesdetail');
                 }
-            }, {
+            },{
                 onEnter: requirePermissionSalesReport,
                 path: '/salesproductreletedetail/:id',
                 getComponent: (location, cb) => {
@@ -292,6 +292,22 @@ export default ({ dispatch,getState}) => {
                     require.ensure([], (require) => {
                         cb(null, require('./containers/relateditem/relateditem_main'));
                     }, 'relateditem');
+                }
+            },{
+                onEnter: requirePermissionInventory,
+                path: 'yingcatalog',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/yingcatalog/yingcatalog_list'));
+                    }, 'yingcatalog');
+                }
+            },{
+                onEnter: requirePermissionInventory,
+                path: 'yingcatalog/detail/:id/:isShared',
+                getComponent: (location, cb) => {
+                    require.ensure([], (require) => {
+                        cb(null, require('./containers/yingcatalog/yingcatalog_detail'));
+                    }, 'yingcatalogdetail');
                 }
             },{
                 path: '*',
