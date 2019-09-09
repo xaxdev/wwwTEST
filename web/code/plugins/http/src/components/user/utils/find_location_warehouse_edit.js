@@ -159,25 +159,27 @@ export default function FindLocationWareHouse(that){
                                             dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
                                         } else if(that.props.user.permission.salesWarehouse.type == 'SalesWarehouse') {
                                             if (that.props.user.permission.salesLocation.places.length == 0 && that.props.user.permission.salesWarehouse.places.length != 0 ) {
-                                                that.props.locationsales.forEach(function(settingLocation){
-                                                    newDate.push(_.filter(that.props.warehouseSales,
-                                                        function(warehouse){
-                                                            if(warehouse.code != undefined){
-                                                                return warehouse.comid.toString() == settingLocation.code.toString();
+                                                if (that.props.locationsales != undefined) {
+                                                    that.props.locationsales.forEach(function(settingLocation){
+                                                        newDate.push(_.filter(that.props.warehouseSales,
+                                                            function(warehouse){
+                                                                if(warehouse.code != undefined){
+                                                                    return warehouse.comid.toString() == settingLocation.code.toString();
+                                                                }
                                                             }
-                                                        }
-                                                    ));
-                                                });
-                                                let subdata = [];
-                                                newDate.forEach(newdata =>{
-                                                    newdata.forEach(subdata =>{
-                                                      data.push(subdata);
-                                                    })
-                                                });
-                                                dataDropDownSalesWareHouse.push(data.map(warehouse =>{
-                                                    return ({value: warehouse.code,name:warehouse.name});
-                                                }))
-                                                dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
+                                                        ));
+                                                    });
+                                                    let subdata = [];
+                                                    newDate.forEach(newdata =>{
+                                                        newdata.forEach(subdata =>{
+                                                          data.push(subdata);
+                                                        })
+                                                    });
+                                                    dataDropDownSalesWareHouse.push(data.map(warehouse =>{
+                                                        return ({value: warehouse.code,name:warehouse.name});
+                                                    }))
+                                                    dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
+                                                }
                                             } else{
                                                 that.props.user.permission.salesLocation.places.forEach(function(settingLocation){
                                                     newDate.push(_.filter(that.props.warehouseSales,
@@ -259,25 +261,27 @@ export default function FindLocationWareHouse(that){
                                     dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
                                 } else if(that.props.user.permission.salesWarehouse.type == 'SalesWarehouse') {
                                     if (that.props.user.permission.salesLocation.places.length == 0 && that.props.user.permission.salesWarehouse.places.length != 0 ) {
-                                        that.props.locationsales.forEach(function(settingLocation){
-                                            newDate.push(_.filter(that.props.warehouseSales,
-                                                function(warehouse){
-                                                    if(warehouse.code != undefined){
-                                                        return warehouse.comid.toString() == settingLocation.code.toString();
+                                        if (that.props.locationsales != undefined) {
+                                            that.props.locationsales.forEach(function(settingLocation){
+                                                newDate.push(_.filter(that.props.warehouseSales,
+                                                    function(warehouse){
+                                                        if(warehouse.code != undefined){
+                                                            return warehouse.comid.toString() == settingLocation.code.toString();
+                                                        }
                                                     }
-                                                }
-                                            ));
-                                        });
-                                        let subdata = [];
-                                        newDate.forEach(newdata =>{
-                                            newdata.forEach(subdata =>{
-                                              data.push(subdata);
-                                            })
-                                        });
-                                        dataDropDownSalesWareHouse.push(data.map(warehouse =>{
-                                            return ({value: warehouse.code,name:warehouse.name});
-                                        }))
-                                        dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
+                                                ));
+                                            });
+                                            let subdata = [];
+                                            newDate.forEach(newdata =>{
+                                                newdata.forEach(subdata =>{
+                                                  data.push(subdata);
+                                                })
+                                            });
+                                            dataDropDownSalesWareHouse.push(data.map(warehouse =>{
+                                                return ({value: warehouse.code,name:warehouse.name});
+                                            }))
+                                            dataDropDownSalesWareHouse = dataDropDownSalesWareHouse[0];
+                                        }
                                     } else{
                                         that.props.user.permission.salesLocation.places.forEach(function(settingLocation){
                                             newDate.push(_.filter(that.props.warehouseSales,
