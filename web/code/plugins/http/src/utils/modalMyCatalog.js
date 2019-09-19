@@ -1,7 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
-import { reduxForm } from 'redux-form';
 import shallowCompare from 'react-addons-shallow-compare';
 let _ = require('lodash');
 
@@ -20,12 +18,25 @@ class ModalMyCatalog extends Component {
         isOpen = false;
     }
 
+    selectedYingCatalogName = (e) =>{
+        const { props, ViewAsSet } = this.props;
+        const { fields: { viewAsSet, oldYingCatalogName } } = props;
+        const params = {
+            id: e.target.value
+        }
+        viewAsSet.onChange(ViewAsSet)
+        oldYingCatalogName.onChange(e.target.value)
+        if (!ViewAsSet) {
+            props.getYingSetReference(params)    
+        }
+    }
+
     render() {
         const { props } = this.props;
         const { fields: {
-                  oldCatalogName,newCatalogName,validateCatalogName,oldSetCatalogName,newSetCatalogName
-              } } = props;
-        const { listCatalogName, listSetCatalogName,isOpen, isClose, handleSubmitCatalog, onSubmit } = this.props;
+                oldCatalogName, newCatalogName, validateCatalogName, oldSetCatalogName, newSetCatalogName, oldYingCatalogName, oldSetReference
+            } } = props;
+        const { listCatalogName, listSetCatalogName, listYingCatalogName, yingSetReference, isOpen, isClose, onSubmit, ViewAsSet } = this.props;
         let nameDisable = false;
         let nameSetDisable = false;
 
@@ -35,7 +46,7 @@ class ModalMyCatalog extends Component {
         if(oldSetCatalogName.value){
             nameSetDisable = true
         }
-
+        
         return(
             <div  className="addMyCatalog">
                 <Modal isOpen={isOpen} >
@@ -100,6 +111,65 @@ class ModalMyCatalog extends Component {
                                 <input type="text" className="form-control" {...newSetCatalogName} disabled={nameSetDisable}/>
                             </div>
                         </div>
+                        {
+                            ViewAsSet
+                            ? <div>
+                                <div className="col-sm-12 maring-b10 maring-t10">
+                                    <div className="col-sm-6">
+                                        <label className="col-sm-12 control-label">Ying Catalog</label>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <select className="form-control" {...oldYingCatalogName} onChange={this.selectedYingCatalogName}>
+                                            <option key={'0'} value={''}>{'Please selected'}</option>
+                                            {
+                                                listYingCatalogName.map(yingCatName =>{
+                                                    return(
+                                                        <option key={yingCatName.id} value={yingCatName.id}>{yingCatName.name}</option>
+                                                    );
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> 
+                            :<div>
+                                <div className="col-sm-12 maring-b10 maring-t10">
+                                    <div className="col-sm-6">
+                                        <label className="col-sm-12 control-label">Ying Catalog</label>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <select className="form-control" {...oldYingCatalogName} onChange={this.selectedYingCatalogName}>
+                                            <option key={'0'} value={''}>{'Please selected'}</option>
+                                            {
+                                                listYingCatalogName.map(yingCatName =>{
+                                                    return(
+                                                        <option key={yingCatName.id} value={yingCatName.id}>{yingCatName.name}</option>
+                                                    );
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="col-sm-12 maring-b10 maring-t10">
+                                    <div className="col-sm-6">
+                                        <label className="col-sm-12 control-label">Ying Set Reference</label>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <select className="form-control" {...oldSetReference} disabled={(yingSetReference.length != 0)? false: true}>
+                                            <option key={'0'} value={''}>{'Please selected'}</option>
+                                            {
+                                                yingSetReference.map(data =>{
+                                                    return(
+                                                        <option key={data._id} value={data._id}>{data.setReference}</option>
+                                                    );
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-default btn-radius" disabled={!validateCatalogName.error} onClick={onSubmit}>

@@ -56,7 +56,8 @@ module.exports = {
                 relatedItemOnhand: Joi.boolean()
             }).required(),
             webOnly: Joi.boolean(),
-            movement: Joi.boolean()
+            movement: Joi.boolean(),
+            yingCatalog: Joi.boolean()
         }
     },
     pre: [{ method: (request, reply) => {

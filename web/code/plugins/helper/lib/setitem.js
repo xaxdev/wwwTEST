@@ -1,15 +1,15 @@
 const parameters = setitems => {
     const parameters = {
-        "index": "mol",
-        "type": "setitems",
-        "size": setitems.length,
-        "filter_path": "**._source",
-        "body": {
-            "query": {
-                "constant_score": {
-                    "query": {
-                        "bool": {
-                            "should": []
+        'index': 'mol',
+        'type': 'setitems',
+        'size': setitems.length,
+        'filter_path': '**._source',
+        'body': {
+            'query': {
+                'constant_score': {
+                    'query': {
+                        'bool': {
+                            'should': []
                         }
                     }
                 }
@@ -17,7 +17,7 @@ const parameters = setitems => {
         }
     }
 
-    parameters.body.query.constant_score.query.bool.should.push(setitems.map(setitem => ({ "match": { "reference": String(setitem.reference) } })))
+    parameters.body.query.constant_score.query.bool.should.push(setitems.map(setitem => ({ 'match': { 'reference': String(setitem.reference) } })))
 
     return parameters
 }
@@ -86,7 +86,7 @@ const applyPermission = (user, item) => {
         }
 
         switch (user.permission.price.toUpperCase()) {
-            case "PUBLIC":
+            case 'PUBLIC':
             delete result.actualCost
             delete result.actualCostInUSD
             delete result.actualCostInHomeCurrency
@@ -95,7 +95,7 @@ const applyPermission = (user, item) => {
             delete result.updatedCostInHomeCurrency
             delete result.markup
             break;
-            case "UPDATED":
+            case 'UPDATED':
             delete result.actualCost
             delete result.actualCostInUSD
             delete result.actualCostInHomeCurrency

@@ -12,7 +12,7 @@ export default {
                 const db = request.mongo.db
                 const ObjectID = request.mongo.ObjectID
 
-                var findExist = await db.collection('CatalogName').find({ '_id' : new ObjectID(request.payload.id), 'catalog': request.payload.catalog, 'userId': request.auth.credentials.id }).toArray()
+                const findExist = await db.collection('CatalogName').find({ '_id' : new ObjectID(request.payload.id), 'catalog': request.payload.catalog, 'userId': request.auth.credentials.id }).toArray()
                 if (findExist.length) {
                     reply.success()
                 }

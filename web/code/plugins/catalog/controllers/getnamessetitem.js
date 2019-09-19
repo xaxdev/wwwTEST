@@ -11,7 +11,7 @@ export default {
 
             try {
                 const db = request.mongo.db
-                reply(await db.collection('CatalogName').find({ "userId": request.auth.credentials.id }).sort({ "catalog": 1 }).toArray())
+                reply(await db.collection('CatalogName').find({ 'userId': request.auth.credentials.id }).sort({ 'catalog': 1 }).toArray())
             } catch (e) {
 
                 reply(Boom.badImplementation('', e))

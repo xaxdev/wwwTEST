@@ -64,7 +64,7 @@ export const fields = [
     'productGroupSalesWAT', 'productGroupSalesACC','productGroupSalesOBA','productGroupSalesSPA','productGroupSalesErr','priceSalesRTP','priceSalesUCP',
     'priceSalesCTP','priceSalesNSP', 'priceSalesMGP','priceSalesDSP','salesLocation','salesLocationValue','salesWarehouse','salesWarehouseValue','salesAll',
     'sales','categorySalesJLY', 'categorySalesWAT','categorySalesSTO','categorySalesACC','categorySalesOBA','categorySalesSPP','notUseSalesHierarchy',
-    'salesChannel','salesChannelValue', 'salesChannelType', 'bomOnhand', 'bomSales', 'relatedItemOnhand'
+    'salesChannel','salesChannelValue', 'salesChannelType', 'bomOnhand', 'bomSales', 'relatedItemOnhand', 'yingCatalog'
 ];
 
 export let countFirst = 0;

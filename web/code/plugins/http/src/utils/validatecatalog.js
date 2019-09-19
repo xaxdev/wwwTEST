@@ -12,6 +12,22 @@ export default function validate(values){
     }else{
         errorNew = true;
     }
+    if (values.viewAsSet != undefined) {
+        if (values.viewAsSet) {
+            if(!values.oldYingCatalogName){
+                errorNew = false;
+            }else{
+                errorNew = true;
+            }
+        } else {
+            if(!values.oldSetReference){
+                errorNew = false;
+            }else{
+                errorNew = true;
+            }
+        }
+    }
+    
     errors.validateCatalogName = errorOld||errorNew;
     return errors;
 }

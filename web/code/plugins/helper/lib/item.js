@@ -22,6 +22,37 @@ const parameters = items => {
     return parameters
 }
 
+const parametersReference = items => {
+    const parameters = {
+        'index': 'mol',
+        'type': 'items',
+        'size': items.length,
+        'filter_path': '**._source',
+        'body': {
+            'query': {
+                'constant_score': {
+                    'query': {
+                        'bool': {
+                            'must': [],
+                            'must_not':[{
+                                'match': {
+                                    'warehouse': {
+                                        'query': 'MME.CONS'
+                                    }
+                                }
+                            }]
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    parameters.body.query.constant_score.query.bool.must.push(items.map(item => ({ 'match': { 'reference': String(item) } })))
+
+    return parameters
+}
+
 const source = x => x._source
 
 const inventory = stock => item => {
@@ -30,6 +61,15 @@ const inventory = stock => item => {
         return { ...item, ...onHand, availability: !!onHand }
     } else {
         return { ...item, availability: false }
+    }
+}
+
+const inventoryReference = stock => item => {
+    if (!!stock.hits && !!stock.hits.hits) {
+        const onHand = stock.hits.hits.map(source).find(i => Number(i.reference) === Number(item))
+        return { ...onHand, availability: !!onHand }
+    } else {
+        return { reference: item, availability: false }
     }
 }
 
@@ -144,5 +184,7 @@ export default {
     authorization: (user, data) => {
       return compose(authorize(user), permission(user))(data)
     },
-    productGroupPermission
+    productGroupPermission,
+    parametersReference,
+    inventoryReference: (data, stock) => data.map(inventoryReference(stock))
 }

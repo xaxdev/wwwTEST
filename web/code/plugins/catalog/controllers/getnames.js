@@ -49,13 +49,13 @@ export default {
                 reply(
                     await db.collection('CatalogName').find(
                         {
-                            "_id": { $in: uniqCatalogHasItem },
-                            "userId": request.auth.credentials.id
+                            '_id': { $in: uniqCatalogHasItem },
+                            'userId': request.auth.credentials.id
                         }
                     )
                     .sort(
                         {
-                            "catalog": 1
+                            'catalog': 1
                         }
                     )
                     .toArray()

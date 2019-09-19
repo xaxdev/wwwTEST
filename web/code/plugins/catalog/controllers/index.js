@@ -21,7 +21,24 @@ import renameset from './renameset'
 import removeset from './removeset'
 import savesharedset from './savesharedset'
 import removesetitem from './removesetitem'
+import addyingcatalog from './addyingcatalog'
+import getyingcatalog from './getyingcatalog'
+import getyingitem from './getyingitem'
+import uploadsetimage from './uploadsetimage'
+import updateyingcatalog from './updateyingcatalog'
+import getyingsetreference from './getyingsetreference'
+import updateordersetreference from './updateordersetreference'
+import deleteyingcatalog from './deleteyingcatalog'
+import share from './share'
+import updateyingcatalogitem from './updateyingcatalogitem'
+import updateyingcatalogset from './updateyingcatalogset'
+import deleteyingset from './deleteyingset'
+import getyingallpdf from './getyingallpdf'
+import getexcel from './getexcel'
 
-export { getnames, getdata, save, remove, removeitem, rename, items, exportpdf, saveshared, getnameswithshared , savesetitem,
-        getnamessetitem, getnameswithsharedsetitem, getdatasetitem, itemssetitem, migrateprice, savesetcatalogitem, 
-        getnameswithsharedcatalog, itemssetcatalogitem, renameset, removeset, savesharedset, removesetitem }
+export {
+        getnames, getdata, save, remove, removeitem, rename, items, exportpdf, saveshared, getnameswithshared , savesetitem, getnamessetitem, 
+        getnameswithsharedsetitem, getdatasetitem, itemssetitem, migrateprice, savesetcatalogitem, getnameswithsharedcatalog, itemssetcatalogitem, renameset, 
+        removeset, savesharedset, removesetitem, addyingcatalog, getyingcatalog, getyingitem, uploadsetimage, updateyingcatalog, getyingsetreference,
+        updateordersetreference, deleteyingcatalog, share, updateyingcatalogitem, updateyingcatalogset, deleteyingset, getyingallpdf, getexcel
+}

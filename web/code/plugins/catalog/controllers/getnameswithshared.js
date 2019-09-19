@@ -45,11 +45,11 @@ export default {
                 const uniqOwnCatalogHasItem = _.uniqWith(ownCatalogHasItem.map((data) => { return data.catalogId }), _.isEqual)
                 const ownList = await db.collection('CatalogName').find(
                     {
-                        "_id": { $in: uniqOwnCatalogHasItem },
-                        "userId": request.auth.credentials.id
+                        '_id': { $in: uniqOwnCatalogHasItem },
+                        'userId': request.auth.credentials.id
                     })
                     .sort({
-                        "catalog": 1
+                        'catalog': 1
                     })
                     .toArray()
                 const markOwnList = ownList.map((item) => { return { ...item, shared: false } });

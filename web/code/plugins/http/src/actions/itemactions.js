@@ -14,7 +14,8 @@ import {
 } from '../constants/itemconstants';
 
 import { SET_SHAREEMAILTO } from '../constants/userConstants';
-import urlCurrPage from '../utils/getUrlApiCurrPage';
+
+import { FETCH_ALLYINGNAME, GET_YINGSETREFERENCE, UPDATE_YINGCATALOGDETAIL, UPDATE_YINGSETCATALOGDETAIL } from '../constants/yingConstants';
 
 export function getTitleColumn(params){
     const token = sessionStorage.token;
@@ -764,5 +765,76 @@ export function setFirstSearch(value){
     return {
         type: FIRSTSEARCH,
         value: value
+    }
+}
+
+export function getYingNameAll(){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/catalog/yingcatalog/name/all`;
+
+    return {
+        type: FETCH_ALLYINGNAME,
+        promise: fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+        })
+    }
+}
+
+export function getYingSetReference(params){
+    const token = sessionStorage.token;
+    const { id } = params
+    let url = `${ROOT_URL}/api/catalog/yingcatalog/setreference/${id}`;
+
+    return {
+        type: GET_YINGSETREFERENCE,
+        promise: fetch(url,{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        })
+    }
+}
+
+export function updateYingCatalog(params){
+    const token = sessionStorage.token;
+    const { yingCatalogId } = params
+    let url = `${ROOT_URL}/api/catalog/yingcatalog/detail/item/${yingCatalogId}`;
+    return {
+        type: UPDATE_YINGCATALOGDETAIL,
+        promise: fetch(url,{
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(params)
+        })
+    }
+}
+
+export function updateYingSetCatalog(params){
+    const token = sessionStorage.token;
+    const { yingCatalogId } = params
+    let url = `${ROOT_URL}/api/catalog/yingcatalog/detail/set/${yingCatalogId}`;
+    return {
+        type: UPDATE_YINGSETCATALOGDETAIL,
+        promise: fetch(url,{
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(params)
+        })
     }
 }
