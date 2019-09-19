@@ -19,7 +19,8 @@ export default {
 
         try {
             const { reference } = request.params;
-            const items = [reference]
+            const items = [reference.replace('-','/')]
+            
             const es = await client.search(request.helper.item.parametersReference(items))
             const user = await request.user.getUserById(request, request.auth.credentials.id)
             const inventory = await request.helper.item.inventoryReference(items, es)

@@ -39,11 +39,11 @@ class RenderViewSetDetailHeaderEdit extends Component {
 
     readFile = (e)=>{
         e.preventDefault();
-        let { fields:{ setImages }, props} = this.props;
+        let { fields:{ editSetImages }, props} = this.props;
 
         let reader = new FileReader();
         let file = e.target.files[0];
-        setImages.onChange(file.name)
+        editSetImages.onChange(file.name)
 
         reader.onloadend = async () => {
             this.setState({
@@ -81,8 +81,9 @@ class RenderViewSetDetailHeaderEdit extends Component {
                 // const ROOT_URL = (host != 'mol.mouawad.com')? `//${host}:${(ENVIRONMENT!='staging')?3005:4005}`: `//${host}`;
                 const ROOT_URL = 'mol.mouawad.com';
                 const imagesUrl = `http://${ROOT_URL}/images/products/original/${setImages}`;
+                let {imagePreviewUrl} = this.state;
                 
-                $imagePreview = (<img src={imagesUrl} />);
+                $imagePreview = imagePreviewUrl != '' ? (<img src={imagePreviewUrl} />) : (<img src={imagesUrl} />);
             } else {
                 $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
             }

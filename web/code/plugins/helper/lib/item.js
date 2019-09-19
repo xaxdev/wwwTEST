@@ -64,9 +64,11 @@ const inventory = stock => item => {
     }
 }
 
-const inventoryReference = stock => item => {
-    if (!!stock.hits && !!stock.hits.hits) {
-        const onHand = stock.hits.hits.map(source).find(i => Number(i.reference) === Number(item))
+const inventoryReference = stock => item => {    
+    if (!!stock.hits && !!stock.hits.hits) {        
+        const onHand = stock.hits.hits.map(source).find(i => {
+            return i.reference === item
+        })        
         return { ...onHand, availability: !!onHand }
     } else {
         return { reference: item, availability: false }

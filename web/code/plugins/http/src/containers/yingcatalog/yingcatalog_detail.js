@@ -90,6 +90,7 @@ class YingCatalogDetail extends Component {
         setImages.value = ''
         this.props.setYingSetDetailAddress(null)
         this.props.setYingSetDetailRemark(null)
+        this.props.setEditItemDetails(false)
         this.props.setItemList([])
         this.setState({ addItemDetail: true, editItemDetail: false })
     }

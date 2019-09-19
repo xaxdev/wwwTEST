@@ -4,7 +4,7 @@ import numberFormat from '../../utils/convertNumberformat';
 
 import 'react-dual-listbox/lib/react-dual-listbox.css';
 
-class RenderDialogEditItem extends Component {
+class RenderDialogEditItemEdit extends Component {
     constructor() {
         super()
 
@@ -19,14 +19,14 @@ class RenderDialogEditItem extends Component {
 
     changedDescription = (e) =>{
         const { that } = this.props;
-        const { fields: { description}} = that.props;
+        const { fields: { description} } = that.props;
         description.onChange(e.target.value)
         that.props.setEditItemDetails(true)
     }
 
     render(){
         const { that } = this.props;
-        const { fields: { description, price}, yingCatalogDetail, editItemReference, isEditItemDetails, itemDetail, listItem } = that.props;
+        const { fields: { description, price}, yingCatalogDetail, editItemReference, isEditItemDetails, itemDetail } = that.props;
         
         if (!isEditItemDetails) {
             if (!!yingCatalogDetail) {
@@ -50,29 +50,6 @@ class RenderDialogEditItem extends Component {
                     }
                 }
             }   
-        } else {
-            if (description.value == undefined) {
-                if (editItemReference != '') {
-                    if (listItem.length != 0) {
-                        const [filterItem] = listItem.filter(item=>item.reference == editItemReference)
-                        if (!!filterItem) {
-                            const { description, priceInUSD } = filterItem;
-                            initData(that.props.fields, description, priceInUSD)  
-                        }
-                    }
-                }   
-            }
-            if (description.value == '' && price.value == '') {
-                if (editItemReference != '') {
-                    if (listItem.length != 0) {
-                        const [filterItem] = listItem.filter(item=>item.reference == editItemReference)
-                        if (!!filterItem) {
-                            const { description, priceInUSD } = filterItem;
-                            initData(that.props.fields, description, priceInUSD)  
-                        }
-                    }
-                }   
-            }
         }
 
         return(
@@ -112,21 +89,10 @@ class RenderDialogEditItem extends Component {
     }
 }
 
-module.exports = RenderDialogEditItem
+module.exports = RenderDialogEditItemEdit
 
 const initData = (fields, _description, _priceInUSD)=>{   
     const { description, price } = fields;
     description.onChange(_description);
     price.onChange(numberFormat(_priceInUSD));
-}
-
-const editItemData = (reference, newDescription, newPrice) => item =>{
-    const { description,  priceInUSD} = item;
-    let newItem = {}
-    if (item.reference == reference) {
-        newItem = {...item, description: newDescription != ''? newDescription: description, priceInUSD: newPrice != ''? newPrice: priceInUSD}
-    } else {
-        newItem = {...item}
-    }
-    return newItem
 }
