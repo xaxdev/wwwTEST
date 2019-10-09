@@ -85,7 +85,7 @@ class RenderViewItemDetail extends Component {
 
     saveEditItem = (reference)=>{
         const { fields: { description, price }, listItem } = this.props;
-        const newListItem = listItem.map(editItemData(reference, description.value, price.value))
+        const newListItem = listItem.map(editItemData(reference, description.value, Number(price.value.replace(/,/g,''))))
         this.props.setItemList(newListItem)
         this.setState({isOpenEditItemDialog: false})
     }
@@ -108,7 +108,6 @@ class RenderViewItemDetail extends Component {
 
     render = _ => {
         const { addItemDetail, fields, listItem, setDetailAddress, setDetailRemark } = this.props;
-         
         return(
             <div hidden={!addItemDetail}>
                 <RenderViewSetDetailHeader fields={fields} listItem={listItem} props={this.props}/>
@@ -132,6 +131,7 @@ function mapStateToProps(state) {
         editItemReference: state.myCatalog.editItemReference,
         setDetailAddress: state.myCatalog.setDetailAddress,
         setDetailRemark: state.myCatalog.setDetailRemark,
+        isEditItemDetails: state.myCatalog.isEditItemDetails,
 	}
 }
 

@@ -50,7 +50,11 @@ export default function(state = INITIAL_STATE, action){
         case SET_YINGDELETEDITEM :
             return {...state, isDeletedItem: action.isDeletedItem };
         case SET_ITEMSLIST :
-            return {...state, listItem: action.listItem };
+            if (action.listItem.length == 0) {
+                return {...state, listItem: action.listItem, yingItemDetail: null };   
+            } else {
+                return {...state, listItem: action.listItem};
+            }
         case FETCH_ITEMDETAIL :
             return {...state, yingItemDetail: action.data.item };
         case FETCH_YINGCATALOGDETAIL :

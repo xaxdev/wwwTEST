@@ -5,7 +5,7 @@ import RenderViewSetDetailHeaderEdit from './render_view_set_detail_header_edit'
 import RenderViewSetDetailItemEdit from './render_view_set_detail_item_edit'
 import RenderViewSetDetailAddress from './render_view_set_detail_address'
 import RenderDialogAddItem from './render_dialog_add_item'
-import RenderDialogEditItem from './render_dialog_edit_item'
+import RenderDialogEditItemEdit from './render_dialog_edit_item_edit'
 import * as yingsetaction from '../../actions/yingsetaction';
 
 class RenderViewItemDetailEdit extends Component {
@@ -42,7 +42,7 @@ class RenderViewItemDetailEdit extends Component {
     }
 
     renderEditItemDialog = _=>{
-        return(<RenderDialogEditItem that={this}/>)
+        return(<RenderDialogEditItemEdit that={this}/>)
     }
 
     onClickAddItem = _=>{

@@ -54,39 +54,34 @@ class RenderViewYingDetailHeader extends Component {
                     <div className="col-sm-8 col-xs-12 nopadding">
                         {isAddItemDetail || isEditItemDetail 
                             ?   isAddItemDetail
-                                ?<div>
-                                    <div className="col-sm-3 col-xs-3 ft-white nopad-ipl">
-                                        <button className="btn btn-primary btn-radius" type="button" onClick={onClickSaveSet}>Save Set</button>
+                                ?<div className="col-sm-10">
+                                    <div className="ft-white nopad-ipl">
+                                        <button className="btn btn-primary btn-radius ying" type="button" onClick={onClickSaveSet}>Save Set</button>
                                     </div>
                                 </div>
-                                :<div>
-                                    <div className="col-sm-3 col-xs-3 ft-white nopad-ipl">
-                                        <button className="btn btn-primary btn-radius" type="button" onClick={onClickUpdateSet}>Update Set</button>
+                                :<div className="col-sm-10">
+                                    <div className="ft-white nopad-ipl">
+                                        <button className="btn btn-primary btn-radius ying" type="button" onClick={onClickUpdateSet}>Update Set</button>
                                     </div>
                                 </div>
-                            :<div className={`${checkIsShared ? 'hidden' : ''}` }>
-                                <div className="col-sm-3 col-xs-3 ft-white nopad-ipl">
-                                    <button className="btn btn-primary btn-radius" type="button" onClick={onClickAddNewSet}>New Set</button>
+                            :<div className={`col-sm-10 btn-container ${checkIsShared ? 'hidden' : ''}` }>
+                                <div className="ft-white nopad-ipl">
+                                    <button className="btn btn-primary btn-radius ying" type="button" onClick={onClickAddNewSet}>New Set</button>
                                 </div>
-                                <div className="col-sm-3 col-xs-3 ft-white nopad-ipl">
-                                    <button className="btn btn-primary btn-radius" type="button" disabled={!yingCatalogDetailStatus} onClick={clickEditCatalog}>Edit Set</button>
+                                <div className="ft-white nopad-ipl">
+                                    <button className="btn btn-primary btn-radius ying" type="button" disabled={!yingCatalogDetailStatus} onClick={clickEditCatalog}>Edit Set</button>
                                 </div>
-                                <div className="col-sm-3 col-xs-3 ft-white nopad-ipl">
-                                    <button className="btn btn-primary btn-radius" type="button" disabled={!yingCatalogDetailStatus} onClick={clickDeleteCatalog}>Delete Set</button>
+                                <div className="ft-white nopad-ipl">
+                                    <button className="btn btn-primary btn-radius ying" type="button" disabled={!yingCatalogDetailStatus} onClick={clickDeleteCatalog}>Delete Set</button>
                                 </div>
-                                <div className="col-sm-3 col-xs-3 ft-white nopad-ipl">
-                                    <button className="btn btn-primary btn-radius" type="button" onClick={reOrderSet}>Re-Order</button>
+                                <div className="ft-white nopad-ipl">
+                                    <button className="btn btn-primary btn-radius ying" type="button" onClick={reOrderSet}>Re-Order</button>
                                 </div>
                             </div>
                         }
-                        {isAddItemDetail || isEditItemDetail
-                            ?<div className="col-sm-3 col-xs-3 ft-white nopad-ipl">
-                                <button className="btn btn-primary btn-radius" type="button" onClick={onClickBack}>Back</button>
-                            </div>
-                            :<div className="col-sm-3 col-xs-3 ft-white nopad-ipl">
-                                <button className="btn btn-primary btn-radius" type="button" onClick={this.backToListCatalog}>Back to List</button>
-                            </div>
-                        }
+                        <div className="col-sm-2 col-xs-2 ft-white nopad-ipl">
+                            <button className="btn btn-primary btn-radius ying" type="button" onClick={this.backToListCatalog}>Back to List</button>
+                        </div>
                     </div>                        
                 </div>
             </div>

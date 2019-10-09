@@ -86,7 +86,7 @@ export function addYingDetail(params){
 export function getItemDetail(params){
     const { reference } = params;
     const token = sessionStorage.token;
-    let url = `${ROOT_URL}/api/catalog/yingcatalog/item/${reference}`;
+    let url = `${ROOT_URL}/api/catalog/yingcatalog/item/${reference.replace('/','-')}`;
     return {
         type: FETCH_ITEMDETAIL,
         promise: fetch(url,{
