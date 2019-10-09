@@ -115,5 +115,95 @@ export default [
         method: 'DELETE',
         path: '/setitem',
         config: controllers.removesetitem
+    },
+    {
+        method: 'POST',
+        path: '/yingcatalog/name',
+        config: controllers.addyingcatalog.name
+    },
+    {
+        method: 'GET',
+        path: '/yingcatalog/name',
+        config: controllers.getyingcatalog.name
+    },
+    {
+        method: 'GET',
+        path: '/yingcatalog/detail/{id}',
+        config: controllers.getyingcatalog.id
+    },
+    {
+        method: 'POST',
+        path: '/yingcatalog/detail/{id}',
+        config: controllers.addyingcatalog.id
+    },
+    { 
+        method: 'GET',
+        path: '/yingcatalog/item/{reference}',
+        config: controllers.getyingitem
+    },
+    { 
+        method: 'POST',
+        path: '/yingcatalog/upload/setimage',
+        config: controllers.uploadsetimage
+    },
+    { 
+        method: 'PUT',
+        path: '/yingcatalog/detail/{id}',
+        config: controllers.updateyingcatalog
+    },
+    { 
+        method: 'GET',
+        path: '/yingcatalog/setreference/{id}',
+        config: controllers.getyingsetreference
+    },
+    { 
+        method: 'PUT',
+        path: '/yingcatalog/setreference/{id}',
+        config: controllers.updateordersetreference
+    },
+    { 
+        method: 'DELETE',
+        path: '/yingcatalog/{id}',
+        config: controllers.deleteyingcatalog
+    },
+    {
+        method: 'GET',
+        path: '/yingcatalog/somename',
+        config: controllers.getyingcatalog.some
+    },
+    {
+        method: 'POST',
+        path: '/yingcatalog/share',
+        config: controllers.share
+    },
+    {
+        method: 'GET',
+        path: '/yingcatalog/name/all',
+        config: controllers.getyingcatalog.nameall
+    },
+    { 
+        method: 'PUT',
+        path: '/yingcatalog/detail/item/{id}',
+        config: controllers.updateyingcatalogitem
+    },
+    { 
+        method: 'PUT',
+        path: '/yingcatalog/detail/set/{id}',
+        config: controllers.updateyingcatalogset
+    },
+    { 
+        method: 'DELETE',
+        path: '/yingcatalog/set/{id}',
+        config: controllers.deleteyingset
+    },
+    { 
+        method: 'GET',
+        path: '/yingcatalog/getallpdf/{id}',
+        config: controllers.getyingallpdf
+    },
+    { 
+        method: 'GET',
+        path: '/yingcatalog/getexcel/{id}',
+        config: controllers.getexcel
     }
 ]

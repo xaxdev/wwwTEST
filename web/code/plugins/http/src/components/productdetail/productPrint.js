@@ -253,7 +253,7 @@ class productprint extends Component {
                         gallery.map( (data,index)=>{
                             return (
                                 <div key={`imgprint${index}`}>
-                                    <span style={tagbarspecial}><img src='/images/img_special_discount_grid.png'/></span>
+                                    <span style={tagbarspecial}><img src="/images/img_special_discount_grid.png"/></span>
                                     <img style={styles.imgwidth} src={data.original}/>
                                 </div>
                             );

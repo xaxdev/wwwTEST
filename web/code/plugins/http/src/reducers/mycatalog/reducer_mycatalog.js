@@ -5,16 +5,67 @@ import  {
     SET_SHARESETCATALOG, SET_CLOSEALERTMSGSET, SET_SETCATALOGSORTBY, SET_SETCATALOGSORTDIRECTION, DELETE_ITEMSFROMSETCATALOG
 } from '../../constants/itemconstants';
 
+import  {
+    FETCH_ALLNAME, FETCH_YINGCATALOGDETAIL, FETCH_ITEMDETAIL, SET_ITEMSLIST, SET_YINGDELETEDITEM, SET_YINGEDITITEMREFERENCE, SET_YINGSETDETAILADDRESS,
+    SET_YINGSETDETAILREMARK, SET_YINGSETIMAGEBASE64, GET_YINGSETREFERENCE, SET_CHANGEDORDERSETREFERENCE, FETCH_SOMENAME, SET_SHAREDYINGSET, 
+    FETCH_ALLYINGNAME, SET_EDITITEMDETAILS
+} from '../../constants/yingConstants';
+
 const INITIAL_STATE = {
-    datas:null, ListCatalogName: [], listCatalogItems:[], currentPage: 1, catalogId: null,catalogName: null, catalogSortingBy: null
-    , catalogSortDirection: null, totalPrice: null, totalUpdatedCost: null,shareCatalogStatus: false, msg: ''
-    , shareCatalogStatusCode: 100, isCatalogShared: false, ListSetCatalogName: [], listSetCatalogItems:[], setCurrentPage: 1
-    , setCatalogId: null, setCatalogName: null, setTotalPrice: null, setTotalUpdatedCost: null, shareSetCatalogStatus: false
-    , shareSetCatalogStatusCode: 100, msgSet: '', setCatalogSortingBy: null, setCatalogSortDirection: null
+    datas: null, ListCatalogName: [], listCatalogItems:[], currentPage: 1, catalogId: null,catalogName: null, catalogSortingBy: null , catalogSortDirection: null, 
+    totalPrice: null, totalUpdatedCost: null,shareCatalogStatus: false, msg: '' , shareCatalogStatusCode: 100, isCatalogShared: false, ListSetCatalogName: [], 
+    listSetCatalogItems:[], setCurrentPage: 1 , setCatalogId: null, setCatalogName: null, setTotalPrice: null, setTotalUpdatedCost: null, 
+    shareSetCatalogStatus: false , shareSetCatalogStatusCode: 100, msgSet: '', setCatalogSortingBy: null, setCatalogSortDirection: null, yingCatalogName:[],
+    totalPages: null, yingCatalogDetail: null, yingCatalogDetailStatus: false, yingCatalogDetailStatusCode: 100, yingCatalogDetailMsg: null,
+    yingCatalogTotalPages: null, yingItemDetail: null, listItem: [], isDeletedItem: false, editItemReference: null, setDetailAddress: null, 
+    setDetailRemark: null, yingSetReference: [], changedOrder: [], sharedYingStatus: false, sharedYingStatusCode: 100, ListYingCatalogName: [],
+    isEditItemDetails: false
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case SET_EDITITEMDETAILS :
+            return {...state, isEditItemDetails: action.isEditItemDetails };
+        case FETCH_ALLYINGNAME :
+            return {...state, ListYingCatalogName: action.data.data };
+        case SET_SHAREDYINGSET :
+            return {...state,  sharedYingStatus: (action.data.statusCode >= 400) ? false : true, sharedYingStatusCode : action.data.statusCode,
+                msg: action.data.message
+            };
+            break;
+        case FETCH_SOMENAME :
+            return {...state, yingCatalogName: action.data.data, totalPages: Math.ceil(action.data.countAll/action.size)};
+        case SET_CHANGEDORDERSETREFERENCE :
+            return {...state, changedOrder: action.changedOrder };
+        case GET_YINGSETREFERENCE :            
+            return {...state, yingSetReference: action.data.data };
+        case SET_YINGSETIMAGEBASE64 :
+            return {...state, setImageBase64: action.setImageBase64 };
+        case SET_YINGSETDETAILREMARK :
+            return {...state, setDetailRemark: action.setDetailRemark };
+        case SET_YINGSETDETAILADDRESS :
+            return {...state, setDetailAddress: action.setDetailAddress };
+        case SET_YINGEDITITEMREFERENCE :
+            return {...state, editItemReference: action.editItemReference };
+        case SET_YINGDELETEDITEM :
+            return {...state, isDeletedItem: action.isDeletedItem };
+        case SET_ITEMSLIST :
+            if (action.listItem.length == 0) {
+                return {...state, listItem: action.listItem, yingItemDetail: null };   
+            } else {
+                return {...state, listItem: action.listItem};
+            }
+        case FETCH_ITEMDETAIL :
+            return {...state, yingItemDetail: action.data.item };
+        case FETCH_YINGCATALOGDETAIL :
+            return {...state, yingCatalogDetail: action.data.yingCatalogDetail, yingCatalogTotalPages: (action.data.statusCode >= 400) ? 1 : Math.ceil(action.data.countAll/action.size), 
+                yingCatalogDetailStatus: (action.data.statusCode >= 400) ? false : true, yingCatalogDetailStatusCode : action.data.statusCode,
+                yingCatalogDetailMsg: action.data.message, setDetailAddress: (!!action.data.yingCatalogDetail)? action.data.yingCatalogDetail.address: null, 
+                setDetailRemark: (!!action.data.yingCatalogDetail)? action.data.yingCatalogDetail.remark: null, 
+                listItem: (!!action.data.yingCatalogDetail)? action.data.yingCatalogDetail.items: []
+            };
+        case FETCH_ALLNAME :
+            return {...state, yingCatalogName: action.data.data, totalPages: Math.ceil(action.data.countAll/action.size)};
         case DELETE_ITEMSFROMSETCATALOG :
             return {...state, setCatalogId: action.catalog};
         case SET_SETCATALOGSORTDIRECTION :

@@ -4,17 +4,21 @@ import * as usersActions from '../../actions/usersaction';
 import UsersFrom from '../../components/user/user_addform';
 import AlertMessage from '../../utils/alertMessage';
 
+let Loading = require('react-loading');
+
 class UsersNew extends Component {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
 
         this.state = {
-            isError: false
+            isError: false,
+            isLoading: false
         }
     }
 
     handleSubmit(data) {
+        this.setState({ isLoading: true });
         let FLAG_ZERO = 0x0; // 000001
         let FLAG_JLY = 0x1; // 000001
         let FLAG_WAT = 0x2; // 000010
@@ -318,9 +322,21 @@ class UsersNew extends Component {
     }
 
     render() {
-        return (
-            <UsersFrom onSubmit={this.handleSubmit}/>
-        );
+        if (this.state.isLoading) {
+            return (
+                <div >
+                    <center>
+                        <br/><br/><br/><br/><br/><br/>
+                        <Loading type="spin" color="#202020" width="10%"/>
+                    </center>
+                    <br/><br/><br/><br/><br/><br/>
+                </div>
+            );
+        } else {
+            return (
+                <UsersFrom onSubmit={this.handleSubmit}/>
+            );
+        }
     }
 }
 

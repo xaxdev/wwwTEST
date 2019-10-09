@@ -1,0 +1,15 @@
+{
+    "gallery": {
+        "original": "/images/products/original",
+        "thumbnail": "/images/products/thumbnail"
+    },
+    "fullpath_localfile": "D:/Projects/GitLab/mol2016/",
+    "images": {
+        "staging": {
+            "path": "mnt/u01/mol/images/"
+        },
+        "production": {
+            "path": "mnt/u01/mol/images/"
+        }
+    }
+}

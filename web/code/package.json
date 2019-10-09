@@ -51,8 +51,9 @@
     "lab": "9.x.x",
     "lodash": "^4.12.0",
     "moment": "^2.13.0",
-    "moment-timezone": "^0.5.9",
+    "moment-timezone": "^0.5.26",
     "newrelic": "^1.29.0",
+    "pdfkit": "^0.10.0",
     "react": "0.14.x ",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-shallow-compare": "^15.1.0",
@@ -70,6 +71,7 @@
     "react-loading": "0.0.9",
     "react-modal-bootstrap": "^0.5.1",
     "react-page-click": "^3.0.0",
+    "react-pdf": "^2.5.3",
     "react-portal-tooltip": "^0.14.2",
     "react-redux": "^4.4.0",
     "react-router": "^2.0.1",
@@ -88,6 +90,7 @@
     "scroll-behavior": "^0.7.0",
     "sendgrid": "^4.7.1",
     "underscore": "^1.8.3",
+    "webshot": "^0.18.0",
     "xlsx": "^0.8.0"
   },
   "devDependencies": {

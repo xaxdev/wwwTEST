@@ -76,6 +76,9 @@ module.exports = {
         movement: {
             type: 'boolean'
         },
+        yingCatalog: {
+            type: 'boolean'
+        },
         toJSON: function () {
             var obj = this.toObject();
             delete obj.password;

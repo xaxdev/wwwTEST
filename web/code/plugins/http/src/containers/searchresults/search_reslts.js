@@ -1,26 +1,20 @@
 import React, { Component, PropTypes }from 'react';
-import { connect } from 'react-redux';
-import { reduxForm, reset } from 'redux-form';
-import { FormControl, Pagination, ControlLabel, DropdownButton } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { reduxForm } from 'redux-form';
+import { Pagination, ControlLabel } from 'react-bootstrap';
 import { Modal, ModalClose } from 'react-modal-bootstrap';
 import shallowCompare from 'react-addons-shallow-compare';
 import jQuery from 'jquery';
-import Path from 'path';
 import moment from 'moment-timezone';
-import { Wrapper, Button, Menu, MenuItem, openMenu, closeMenu } from 'react-aria-menubutton'
+import { Wrapper, Button, Menu, MenuItem } from 'react-aria-menubutton'
 import CSSTransitionGroup from 'react-addons-css-transition-group'
 import * as itemactions from '../../actions/itemactions';
-import PureInput from '../../utils/PureInput';
 import GridItemsView from '../../components/searchresults/griditemview';
 import GridItemsViewPrint from '../../components/searchresults/griditemviewPrint';
 import ListItemsView from '../../components/searchresults/listitemview';
 import ListItemsViewPrint from '../../components/searchresults/listitemviewPrint';
 import numberFormat from '../../utils/convertNumberformat';
-import GenHtmlExportExcel from '../../utils/genHtmlExportExcel';
 import ModalMyCatalog from '../../utils/modalMyCatalog';
 import Modalalertmsg from '../../utils/modalalertmsg';
-import convertDate from '../../utils/convertDate';
 import validateCatalog from '../../utils/validatecatalog';
 import GenTemplateHtml from '../../utils/genTemplatePdfSearchResult';
 import GetGemstoneLotnumberFilter from './utils/get_gemlot_filter';
@@ -132,6 +126,7 @@ class SearchResult extends Component {
         this.props.getItems(params).then(async (value) => {
             await this.props.getCatalogNameSetItem();
             await this.props.getSetCatalogName();
+            await this.props.getYingNameAll();
             let titleParams = { 'isViewAsSet': ViewAsSet }
             await this.props.getTitleColumn(titleParams);
         });
@@ -309,6 +304,7 @@ class SearchResult extends Component {
         this.props.getItems(params).then(async (value) => {
             await this.props.getCatalogNameSetItem();
             await this.props.getSetCatalogName();
+            await this.props.getYingNameAll();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -354,6 +350,7 @@ class SearchResult extends Component {
             this.props.getItems(params).then(async (value) => {
                 await this.props.getCatalogNameSetItem();
                 await this.props.getSetCatalogName();
+                await this.props.getYingNameAll();
                 this.setState({showLoading: false});
                 if(girdView){
                     this.props.setShowGridView(true);
@@ -632,6 +629,7 @@ class SearchResult extends Component {
         this.props.getItems(params).then(async (value) => {
             await this.props.getCatalogNameSetItem();
             await this.props.getSetCatalogName();
+            await this.props.getYingNameAll();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -679,6 +677,7 @@ class SearchResult extends Component {
         this.props.getItems(params).then(async (value) => {
             await this.props.getCatalogNameSetItem();
             await this.props.getSetCatalogName();
+            await this.props.getYingNameAll();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -727,6 +726,7 @@ class SearchResult extends Component {
         this.props.getItems(params).then(async (value) => {
             await this.props.getCatalogNameSetItem();
             await this.props.getSetCatalogName();
+            await this.props.getYingNameAll();
             this.setState({showLoading: false});
             if(girdView){
                 this.props.setShowGridView(true);
@@ -1005,6 +1005,7 @@ class SearchResult extends Component {
         this.props.exportDatas(params).then(async (value) => {
             await this.props.getCatalogNameSetItem();
             await this.props.getSetCatalogName();
+            await this.props.getYingNameAll();
             if(girdView){
                 that.props.setShowGridView(true);
             }else if (listView) {
@@ -1068,7 +1069,9 @@ class SearchResult extends Component {
         let fileName = jQuery('input[type="checkbox"]');
         fileName.removeAttr('checked');
         this.setState({isOpenAddMyCatalog: false});
-        const { fields: { oldCatalogName, newCatalogName, validateCatalogName, oldSetCatalogName, newSetCatalogName } } = this.props;
+        const {
+            fields: { oldCatalogName, newCatalogName, validateCatalogName, oldSetCatalogName, newSetCatalogName, oldYingCatalogName, oldSetReference }
+        } = this.props;
         const  Detail  = this.props.productdetail;
         const  listCatalogName  = this.props.listCatalogName;
         const  listSetCatalogName  = this.props.listSetCatalogName;
@@ -1104,6 +1107,7 @@ class SearchResult extends Component {
                     this.setState({enabledMyCatalog: false});
                     await this.props.getCatalogNameSetItem();
                     await this.props.getSetCatalogName();
+                    await this.props.getYingNameAll();
                 })
             }
             if (!!oldSetCatalogName.value || !!newSetCatalogName.value) {
@@ -1117,9 +1121,25 @@ class SearchResult extends Component {
                     this.setState({enabledMyCatalog: false});
                     await this.props.getCatalogNameSetItem();
                     await this.props.getSetCatalogName();
+                    await this.props.getYingNameAll();
                 })
             }
+            if (!!oldYingCatalogName.value) {
+                const setYingParams = {
+                    yingCatalogId: !!oldYingCatalogName.value ? oldYingCatalogName.value  :null,
+                    items: listMyCatalog
+                }
+                this.props.updateYingSetCatalog(setYingParams).then(async () =>{
+                    oldYingCatalogName.value = '';
+                    oldYingCatalogName.onChange('');
 
+                    this.setState({isOpenAddMyCatalogmsg: true});
+                    this.setState({enabledMyCatalog: false});
+                    await this.props.getCatalogNameSetItem();
+                    await this.props.getSetCatalogName();
+                    await this.props.getYingNameAll();
+                })
+            }
         } else {
             if (!!oldCatalogName.value || !!newCatalogName.value) {
                 this.props.addCatalog(catalogdata).then(async () =>{
@@ -1132,6 +1152,25 @@ class SearchResult extends Component {
                     this.setState({enabledMyCatalog: false});
                     await this.props.getCatalogNameSetItem();
                     await this.props.getSetCatalogName();
+                    await this.props.getYingNameAll();
+                })
+            }else if (!!oldSetReference.value) {
+                const yingParams = {
+                    yingCatalogId: !!oldYingCatalogName.value ? oldYingCatalogName.value  :null,
+                    setReference: !!oldSetReference.value ? oldSetReference.value : null,
+                    items: listMyCatalog
+                }
+                this.props.updateYingCatalog(yingParams).then(async () =>{
+                    oldYingCatalogName.value = '';
+                    oldSetReference.value = '';
+                    oldYingCatalogName.onChange('');
+                    oldSetReference.onChange('');
+
+                    this.setState({isOpenAddMyCatalogmsg: true});
+                    this.setState({enabledMyCatalog: false});
+                    await this.props.getCatalogNameSetItem();
+                    await this.props.getSetCatalogName();
+                    await this.props.getYingNameAll();
                 })
             }else{
                 this.setState({isOpenCannotAddMyCatalogmsg: true});
@@ -1141,10 +1180,12 @@ class SearchResult extends Component {
     }
 
     renderAddMyCatalog = _=> {
-        const { listCatalogName, listSetCatalogName, submitting } = this.props;
+        const { listCatalogName, listSetCatalogName, listYingCatalogName, yingSetReference, submitting, ViewAsSet } = this.props;
+        
         return(
             <ModalMyCatalog onSubmit={this.handleSubmitCatalog} listCatalogName={listCatalogName} isOpen={this.state.isOpenAddMyCatalog}
-                isClose={this.handleClose} props={this.props} listSetCatalogName = {listSetCatalogName}/>
+                isClose={this.handleClose} props={this.props} listSetCatalogName = {listSetCatalogName} listYingCatalogName={listYingCatalogName} 
+                yingSetReference={yingSetReference} ViewAsSet={ViewAsSet} />
         );
     }
 
@@ -1527,7 +1568,8 @@ function mapStateToProps(state) {
         showListView: state.searchResult.ShowListView, listCatalogName: state.myCatalog.ListCatalogName,
         ViewAsSet: state.searchResult.viewAsSet, ItemsOrder: state.searchResult.itemsOrder,
         SetReferencdOrder: state.searchResult.setReferenceOrder, listSetCatalogName: state.myCatalog.ListSetCatalogName,
-        TitleColumnDb: state.searchResult.titleColumnDb, TitleColumn: state.searchResult.titleColumn
+        TitleColumnDb: state.searchResult.titleColumnDb, TitleColumn: state.searchResult.titleColumn, 
+        listYingCatalogName: state.myCatalog.ListYingCatalogName, yingSetReference: state.myCatalog.yingSetReference,
     }
 }
 SearchResult.propTypes = {
@@ -1541,6 +1583,9 @@ SearchResult.contextTypes = {
 };
 module.exports = reduxForm({
     form: 'SearchResult',
-    fields: [ 'currPage','oldCatalogName','newCatalogName','validateCatalogName','printPage','oldSetCatalogName','newSetCatalogName' ],
+    fields: [
+        'currPage', 'oldCatalogName', 'newCatalogName', 'validateCatalogName', 'printPage', 'oldSetCatalogName', 'newSetCatalogName', 'oldYingCatalogName',
+        'oldSetReference', 'viewAsSet'
+    ],
     validate:validateCatalog
 },mapStateToProps,itemactions)(SearchResult)

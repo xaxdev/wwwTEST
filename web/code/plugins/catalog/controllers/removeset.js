@@ -20,7 +20,6 @@ export default {
                     'status': true
                 })
             } catch (e) {
-
                 reply(Boom.badImplementation('', e))
             }
         })();

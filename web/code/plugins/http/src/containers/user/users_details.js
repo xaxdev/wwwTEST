@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as usersActions from '../../actions/usersaction';
 import UsersFrom from '../../components/user/user_editform';
+
 let Loading = require('react-loading');
 
 class UserDetails extends Component {
@@ -22,6 +23,7 @@ class UserDetails extends Component {
     }
 
     handleSubmit(data) {
+        this.setState({ loadComplete: false });
         // console.log('data-->',data);
         let FLAG_ZERO = 0x0; // 000001
         let FLAG_JLY = 0x1; // 000001

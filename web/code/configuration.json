@@ -372,11 +372,11 @@
 				"options": {
 					"$filter": "env",
 					"development": {
-						"host": "amqp://dev:P@ssw0rd@192.168.1.92:5672",
-						"channelExcel": "mol",
-						"channelPdf": "pdf",
-						"channelWord": "word",
-						"channelRelatedExcel": "related"
+						"host": "amqp://mol:P@ssw0rd@10.128.133.76:5672",
+						"channelExcel": "mol-staging",
+						"channelPdf": "pdf-staging",
+						"channelWord": "word-staging",
+						"channelRelatedExcel": "related-staging"
 					},
 					"test": {
 						"host": "amqp://dev:P@ssw0rd@192.168.1.92:5672",

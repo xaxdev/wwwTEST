@@ -39,7 +39,6 @@ class RelatedItem extends Component {
             isOpenDialogExport: false,
             isOpenDialogExportSuccess: false
         };
-
     }
     componentDidMount(){
         const params = {

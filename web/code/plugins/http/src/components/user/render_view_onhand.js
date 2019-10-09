@@ -11,7 +11,10 @@ class RenderViewOnHand extends Component {
             props, state, onChangedOnHandLocation, onChangedOnHandLocationChecked, onChangedOnHandWarehouse, onChangedOnHandWarehouseChecked, onChangedOnHandAll,
             dataDropDowntLocations, dataDropDowntWareHouse
         } = this.props;
-        const { fields: { webOnly, movement, onhandLocation, onhandWarehouse, onhandAll, onhandLocationValue, onhandWarehouseValue }, userTypeValue } = props;
+        const {
+            fields: { webOnly, movement, onhandLocation, onhandWarehouse, onhandAll, onhandLocationValue, onhandWarehouseValue, yingCatalog }, 
+            userTypeValue 
+        } = props;
         return(
             <div>
                 <div className="form-group">
@@ -24,6 +27,12 @@ class RenderViewOnHand extends Component {
                     <label className="col-sm-2 control-label">Movement Activity</label>
                     <div className="col-sm-7">
                         <input type="checkbox" {...movement}/>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label className="col-sm-2 control-label">Ying Catalog</label>
+                    <div className="col-sm-7">
+                        <input type="checkbox" {...yingCatalog}/>
                     </div>
                 </div>
                 <div className={`form-group ${userTypeValue != 'Sales' && userTypeValue != null ?'':'hidden'}`}>
