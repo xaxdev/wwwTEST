@@ -144,24 +144,45 @@ class YingCatalog extends Component {
         const { yingCatalogName, totalPages } = this.props
 
         if (!yingCatalogName || yingCatalogName.length == 0) {
-            return(
-                <div>
-                    <div className="col-sm-12 bg-hearder bg-header-inventories">
-                        <div className="col-sm-6 m-width-60 ft-white m-nopadding">
-                            <h1>List of Catalog</h1>
+            if (yingCatalogName.length == 0) {
+                return(
+                    <div>
+                        <div className="col-sm-12 bg-hearder bg-header-inventories">
+                            <div className="col-sm-6 m-width-60 ft-white m-nopadding">
+                                <h1>List of Catalog</h1>
+                            </div>
+                            <div className="col-sm-6 m-width-40 m-nopadding text-right maring-t15">
+                                <button className="btn btn-primary btn-radius" type="button" onClick={this.clickAddNewCatalog}>Add New Catalog</button>
+                            </div>
                         </div>
-                        <div className="col-sm-6 m-width-40 m-nopadding text-right maring-t15">
-                            <button className="btn btn-primary btn-radius" type="button" onClick={this.clickAddNewCatalog}>Add New Catalog</button>
+                        <div className="col-sm-12  panel panel-default">
+                            <div className="panel-body">
+                                Not has Ying Catalog's data.
+                            </div>
                         </div>
+                        {this.renderCatalogNameDialog()}
                     </div>
-                    <div className="col-sm-12  panel panel-default">
-                        <div className="panel-body">
-                            <LoadingModal/>
+                )   
+            } else {
+                return(
+                    <div>
+                        <div className="col-sm-12 bg-hearder bg-header-inventories">
+                            <div className="col-sm-6 m-width-60 ft-white m-nopadding">
+                                <h1>List of Catalog</h1>
+                            </div>
+                            <div className="col-sm-6 m-width-40 m-nopadding text-right maring-t15">
+                                <button className="btn btn-primary btn-radius" type="button" onClick={this.clickAddNewCatalog}>Add New Catalog</button>
+                            </div>
                         </div>
+                        <div className="col-sm-12  panel panel-default">
+                            <div className="panel-body">
+                                <LoadingModal/>
+                            </div>
+                        </div>
+                        {this.renderCatalogNameDialog()}
                     </div>
-                    {this.renderCatalogNameDialog()}
-                </div>
-            )
+                )
+            }
         } else {
             return(
                 <div>
