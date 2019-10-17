@@ -142,7 +142,7 @@ class YingCatalog extends Component {
 
     render() {
         const { yingCatalogName, totalPages } = this.props
-
+        
         if (!yingCatalogName || yingCatalogName.length == 0) {
             if (yingCatalogName.length == 0) {
                 return(

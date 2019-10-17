@@ -8,6 +8,7 @@ import RenderViewItemDetail from '../../components/mycatalog/render_view_item_de
 import RenderViewItemDetailEdit from '../../components/mycatalog/render_view_item_detail_edit'
 import YingPrint from '../../components/mycatalog/render_ying_print'
 import ModalAlertMsg from '../../utils/modalalertmsg';
+import ModalAlertMsgYingPdf from '../../utils/modalalertmsgyingpdf';
 import ModalConfirmDelete from '../../utils/modalConfirmDelete';
 import RenderReOrderSet from './render_re_order_set'
 
@@ -255,17 +256,26 @@ class YingCatalogDetail extends Component {
     }
 
     renderAlertMsgPdf = _=> {
-        const message = 'Please check your email for printing files.';
+        const { fields:{ pdfLanguage } } = this.props;  
+        const messageOne = 'Please select the language options';
+        const messageTwo = 'and check your email for printing files.';
+        const message = { messageOne, messageTwo }
         const title = 'Ying Catalog';
         return(
-            <ModalAlertMsg isOpen={this.state.isOpenPrintPdf} isClose={this.handlePrintPdf} props={this.props} message={message}  title={title}/>
+            <ModalAlertMsgYingPdf isOpen={this.state.isOpenPrintPdf} onSubmit={this.handlePrintPdf} props={this.props} message={message} title={title}
+                isClose={this.onClickClosePrintPdf} pdfLanguage={pdfLanguage}/>
         );
+    }
+
+    onClickClosePrintPdf = () => {
+        this.setState({isOpenPrintPdf: false});
     }
 
     handlePrintPdf = () => {
         let { id } = this.props.params;
-        
-        this.props.getAllPDF(id)
+        const { fields:{ pdfLanguage } } = this.props; 
+
+        this.props.getAllPDF(id, pdfLanguage.value)
         this.setState({isOpenPrintPdf: false});
     }
 
@@ -373,7 +383,7 @@ module.exports = reduxForm(
         form: 'YingCatalogDetail',
         fields: [
             'setReferenceNumber', 'setDescription', 'suiteName', 'romanceNote', 'setImages', 'reference', 'description', 'price', 
-            'editSetReferenceNumber', 'editSetDescription', 'editSuiteName', 'editRomanceNote', 'editSetImages'
+            'editSetReferenceNumber', 'editSetDescription', 'editSuiteName', 'editRomanceNote', 'editSetImages', 'pdfLanguage', 'itemDescriptionLanguage'
         ]
     }, mapStateToProps, yingsetaction
 )(YingCatalogDetail);

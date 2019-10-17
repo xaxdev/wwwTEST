@@ -60,6 +60,8 @@ class RenderViewSetDetailHeaderEdit extends Component {
             fields: { editSetReferenceNumber, editSetDescription, editSuiteName, editRomanceNote, editSetImages }
         } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        const { currency } = userLogin
+        
         const summary = {
             totalItem: 0,
             totalRetailPrice: 0,
@@ -105,30 +107,30 @@ class RenderViewSetDetailHeaderEdit extends Component {
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
                                             <span className="font-b fc-000">Total Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(totalRetailPrice) } { 'USD' }</span>
+                                            <span className="font-w9">{ numberFormat(totalRetailPrice) } { currency }</span>
                                         </span>
                                         <span className={`${(userLogin.permission.price == 'Updated'
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
                                             <span className="padding-lf15">|</span>
                                             <span className="font-b fc-000">Total Updated Cost :</span>
-                                            <span className="font-w9">{ numberFormat(totalUpdatedCost) } { 'USD' }</span>
+                                            <span className="font-w9">{ numberFormat(totalUpdatedCost) } { currency }</span>
                                         </span>
                                     </div>
                                     <div id="dvTotalsub2" className="bg-f7d886 text-center">
                                         <span>
                                             <span className="font-b fc-000">Highest Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(highestRetailPrice) } { 'USD' } </span>
+                                            <span className="font-w9">{ numberFormat(highestRetailPrice) } { currency } </span>
                                             <span className="padding-lf15">|</span>
                                         </span>
                                         <span>
                                             <span className="font-b fc-000">Lowest Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(lowestRetailPrice) } { 'USD' } </span>
+                                            <span className="font-w9">{ numberFormat(lowestRetailPrice) } { currency } </span>
                                             <span className="padding-lf15">|</span>
                                         </span>
                                         <span>
                                             <span className="font-b fc-000">Average Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(averageRetailPrice) } { 'USD' } </span>
+                                            <span className="font-w9">{ numberFormat(averageRetailPrice) } { currency } </span>
                                         </span>
                                     </div>
                                 </div>
@@ -201,30 +203,30 @@ class RenderViewSetDetailHeaderEdit extends Component {
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
                                             <span className="font-b fc-000">Total Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(0) } { 'USD' }</span>
+                                            <span className="font-w9">{ numberFormat(0) } { currency }</span>
                                         </span>
                                         <span className={`${(userLogin.permission.price == 'Updated'
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
                                             <span className="padding-lf15">|</span>
                                             <span className="font-b fc-000">Total Updated Cost :</span>
-                                            <span className="font-w9">{ numberFormat(0) } { 'USD' }</span>
+                                            <span className="font-w9">{ numberFormat(0) } { currency }</span>
                                         </span>
                                     </div>
                                     <div id="dvTotalsub2" className="bg-f7d886 text-center">
                                         <span>
                                             <span className="font-b fc-000">Highest Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(0) } { 'USD' } </span>
+                                            <span className="font-w9">{ numberFormat(0) } { currency } </span>
                                             <span className="padding-lf15">|</span>
                                         </span>
                                         <span>
                                             <span className="font-b fc-000">Lowest Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(0) } { 'USD' } </span>
+                                            <span className="font-w9">{ numberFormat(0) } { currency } </span>
                                             <span className="padding-lf15">|</span>
                                         </span>
                                         <span>
                                             <span className="font-b fc-000">Average Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(0) } { 'USD' } </span>
+                                            <span className="font-w9">{ numberFormat(0) } { currency } </span>
                                         </span>
                                     </div>
                                 </div>
@@ -290,11 +292,11 @@ const summaryListItem = (summary, item) =>{
     const newSummary = {
         ...summary, 
         totalItem: totalItem + 1,
-        totalRetailPrice: totalRetailPrice + Number(item.priceInUSD),
-        totalUpdatedCost: totalUpdatedCost + Number(item.updatedCostInUSD),
-        highestRetailPrice: Math.max(highestRetailPrice, Number(item.priceInUSD)),
-        lowestRetailPrice: totalItem == 0 ? Number(item.priceInUSD): Math.min(lowestRetailPrice, Number(item.priceInUSD)),
-        averageRetailPrice: (totalRetailPrice + Number(item.priceInUSD))/(totalItem + 1)
+        totalRetailPrice: totalRetailPrice + Number(item.priceInHomeCurrency),
+        totalUpdatedCost: totalUpdatedCost + Number(item.updatedCostInHomeCurrency),
+        highestRetailPrice: Math.max(highestRetailPrice, Number(item.priceInHomeCurrency)),
+        lowestRetailPrice: totalItem == 0 ? Number(item.priceInHomeCurrency): Math.min(lowestRetailPrice, Number(item.priceInHomeCurrency)),
+        averageRetailPrice: (totalRetailPrice + Number(item.priceInHomeCurrency))/(totalItem + 1)
     }
     return newSummary
 }
