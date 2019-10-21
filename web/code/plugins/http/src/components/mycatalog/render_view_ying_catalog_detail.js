@@ -19,7 +19,7 @@ class RenderViewYingCatalogDetail extends Component {
                 imagesUrl = `http://${ROOT_URL}/images/products/original/${setImages}`;   
             }
 
-            const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInUSD) || 0), 0);
+            const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInHomeCurrency) || 0), 0);
 
             return (
                 <div className={`${(addItemDetail || editItemDetail) ? 'hidden' : ''}` }>
@@ -41,14 +41,25 @@ class RenderViewYingCatalogDetail extends Component {
                                             <td className="ying_td_width_74"><p className="s1_ying ying_price"><strong><span className="s1_ying">يلامجﻹا غلبملا</span></strong></p></td>
                                         </tr>
                                         {items.map((item,index)=>{
-                                            return (
-                                                <tr className="ying_tr_height_23">
-                                                    <td className="ying_td_width_27"><p className="s2_ying ying_id"><strong><span className="s1_ying">{index+1}</span></strong></p></td>
-                                                    <td className="ying_td_width_116"><p className="s1_ying ying_reference"><span className="s1_ying">{item.reference}</span></p></td>
-                                                    <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><strong><span className="s1_ying">{item.description}</span></strong></p></td>
-                                                    <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.priceInUSD)}</span></strong></p></td>
-                                                </tr>
-                                            )
+                                            if (item.itemDescriptionLanguage == 'arb') {
+                                                return (
+                                                    <tr className="ying_tr_height_23">
+                                                        <td className="ying_td_width_27"><p className="s2_ying ying_id"><strong><span className="s1_ying">{index+1}</span></strong></p></td>
+                                                        <td className="ying_td_width_116"><p className="s1_ying ying_reference"><span className="s1_ying">{item.reference}</span></p></td>
+                                                        <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><strong><span className="s1_ying">{item.description}</span></strong></p></td>
+                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
+                                                    </tr>
+                                                )    
+                                            } else {
+                                                return (
+                                                    <tr className="ying_tr_height_23">
+                                                        <td className="ying_td_width_27"><p className="s2_ying ying_id"><strong><span className="s1_ying">{index+1}</span></strong></p></td>
+                                                        <td className="ying_td_width_116"><p className="s1_ying ying_reference"><span className="s1_ying">{item.reference}</span></p></td>
+                                                        <td className="ying_td_width_240"><p className="s1_ying ying_description_item_left"><strong><span className="s1_ying">{item.description}</span></strong></p></td>
+                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
+                                                    </tr>
+                                                )
+                                            }
                                         })}
                                         
                                         <tr className="ying_tr_height_17">

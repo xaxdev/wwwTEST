@@ -8,7 +8,9 @@ class RenderViewSetDetailItemEdit extends Component {
 
     render = _ => {
         const { listItem, onClickAddItem, onClickEditItem, onClickDeleteItem, yingCatalogDetail, yingCatalogDetailStatus } = this.props;
-
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const { currency } = userLogin
+        
         if (yingCatalogDetailStatus) {
             return(
                 <div className="col-sm-12">
@@ -26,7 +28,7 @@ class RenderViewSetDetailItemEdit extends Component {
                                 <tr>
                                     <th><span>Item Reference</span></th>
                                     <th><span>Item Description</span></th>
-                                    <th><span>Retail Price (USD)</span></th>
+                                    <th><span>{`Retail Price (${currency})`}</span></th>
                                     <th><span>Edit</span></th>
                                     <th><span>Delete</span></th>
                                 </tr>
@@ -55,7 +57,7 @@ class RenderViewSetDetailItemEdit extends Component {
                                 <tr>
                                     <th><span>Item Reference</span></th>
                                     <th><span>Item Description</span></th>
-                                    <th><span>Retail Price (USD)</span></th>
+                                    <th><span>{`Retail Price (${currency})`}</span></th>
                                     <th><span>Edit</span></th>
                                     <th><span>Delete</span></th>
                                 </tr>

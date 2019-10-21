@@ -303,9 +303,9 @@ export function setEditItemDetails(value){
     }
 }
 
-export function getAllPDF(id){
+export function getAllPDF(id, lng){
     const token = sessionStorage.token;
-    let url = `${ROOT_URL}/api/catalog/yingcatalog/getallpdf/${id}`;
+    let url = `${ROOT_URL}/api/catalog/yingcatalog/getallpdf/${id}/${lng}`;
 
     return {
         type: FETCH_ALLPDF,

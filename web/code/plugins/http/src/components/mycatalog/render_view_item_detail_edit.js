@@ -84,8 +84,8 @@ class RenderViewItemDetailEdit extends Component {
     }
 
     saveEditItem = (reference)=>{
-        const { fields: { description, price }, listItem } = this.props;        
-        const newListItem = listItem.map(editItemData(reference, description.value, Number(price.value.replace(/,/g,''))))
+        const { fields: { description, price, itemDescriptionLanguage }, listItem } = this.props;        
+        const newListItem = listItem.map(editItemData(reference, description.value, Number(price.value.replace(/,/g,'')), itemDescriptionLanguage.value))
         this.props.setItemList(newListItem)
         this.props.setEditItemDetails(false)
         this.setState({isOpenEditItemDialog: false})
@@ -139,11 +139,16 @@ function mapStateToProps(state) {
 
 module.exports = connect(mapStateToProps, yingsetaction)(RenderViewItemDetailEdit);
 
-const editItemData = (reference, newDescription, newPrice) => item =>{
-    const { description,  priceInUSD} = item;
+const editItemData = (reference, newDescription, newPrice, newItemDescriptionLanguage) => item =>{
+    const { description,  priceInHomeCurrency, itemDescriptionLanguage} = item;
     let newItem = {}
     if (item.reference == reference) {
-        newItem = {...item, description: newDescription != ''? newDescription: description, priceInUSD: newPrice != ''? newPrice: priceInUSD}
+        newItem = {
+            ...item
+            , description: newDescription != ''? newDescription: description
+            , priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency
+            , itemDescriptionLanguage: newItemDescriptionLanguage != ''? newItemDescriptionLanguage: itemDescriptionLanguage
+        }
     } else {
         newItem = {...item}
     }

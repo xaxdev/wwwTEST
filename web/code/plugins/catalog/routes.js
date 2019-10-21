@@ -198,7 +198,7 @@ export default [
     },
     { 
         method: 'GET',
-        path: '/yingcatalog/getallpdf/{id}',
+        path: '/yingcatalog/getallpdf/{id}/{lng}',
         config: controllers.getyingallpdf
     },
     { 

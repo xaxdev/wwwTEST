@@ -44,6 +44,7 @@ class RenderViewSetDetailHeader extends Component {
     render = _ => {
         const { listItem, fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages } } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        const { currency } = userLogin
         const summary = {
             totalItem: 0,
             totalRetailPrice: 0,
@@ -80,30 +81,30 @@ class RenderViewSetDetailHeader extends Component {
                                     || userLogin.permission.price == 'All') ?
                                     '' : 'hidden'}`}>
                                     <span className="font-b fc-000">Total Retail Price :</span>
-                                    <span className="font-w9">{ numberFormat(totalRetailPrice) } { 'USD' }</span>
+                                    <span className="font-w9">{ numberFormat(totalRetailPrice) } { currency }</span>
                                 </span>
                                 <span className={`${(userLogin.permission.price == 'Updated'
                                     || userLogin.permission.price == 'All') ?
                                     '' : 'hidden'}`}>
                                     <span className="padding-lf15">|</span>
                                     <span className="font-b fc-000">Total Updated Cost :</span>
-                                    <span className="font-w9">{ numberFormat(totalUpdatedCost) } { 'USD' }</span>
+                                    <span className="font-w9">{ numberFormat(totalUpdatedCost) } { currency }</span>
                                 </span>
                             </div>
                             <div id="dvTotalsub2" className="bg-f7d886 text-center">
                                 <span>
                                     <span className="font-b fc-000">Highest Retail Price :</span>
-                                    <span className="font-w9">{ numberFormat(highestRetailPrice) } { 'USD' } </span>
+                                    <span className="font-w9">{ numberFormat(highestRetailPrice) } { currency } </span>
                                     <span className="padding-lf15">|</span>
                                 </span>
                                 <span>
                                     <span className="font-b fc-000">Lowest Retail Price :</span>
-                                    <span className="font-w9">{ numberFormat(lowestRetailPrice) } { 'USD' } </span>
+                                    <span className="font-w9">{ numberFormat(lowestRetailPrice) } { currency } </span>
                                     <span className="padding-lf15">|</span>
                                 </span>
                                 <span>
                                     <span className="font-b fc-000">Average Retail Price :</span>
-                                    <span className="font-w9">{ numberFormat(averageRetailPrice) } { 'USD' } </span>
+                                    <span className="font-w9">{ numberFormat(averageRetailPrice) } { currency } </span>
                                 </span>
                             </div>
                         </div>
@@ -168,11 +169,11 @@ const summaryListItem = (summary, item) =>{
     const newSummary = {
         ...summary, 
         totalItem: totalItem + 1,
-        totalRetailPrice: totalRetailPrice + item.priceInUSD,
-        totalUpdatedCost: totalUpdatedCost + item.updatedCostInUSD,
-        highestRetailPrice: Math.max(highestRetailPrice, item.priceInUSD),
-        lowestRetailPrice: totalItem == 0 ? item.priceInUSD: Math.min(lowestRetailPrice, item.priceInUSD),
-        averageRetailPrice: (totalRetailPrice + item.priceInUSD)/(totalItem + 1)
+        totalRetailPrice: totalRetailPrice + item.priceInHomeCurrency,
+        totalUpdatedCost: totalUpdatedCost + item.updatedCostInHomeCurrency,
+        highestRetailPrice: Math.max(highestRetailPrice, item.priceInHomeCurrency),
+        lowestRetailPrice: totalItem == 0 ? item.priceInHomeCurrency: Math.min(lowestRetailPrice, item.priceInHomeCurrency),
+        averageRetailPrice: (totalRetailPrice + item.priceInHomeCurrency)/(totalItem + 1)
     }
     return newSummary
 }

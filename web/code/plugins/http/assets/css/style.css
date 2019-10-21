@@ -2916,6 +2916,12 @@ select.form-searchresult option{
   text-align: right;
 }
 
+.ying_description_item_left {
+  padding-top: 6pt;
+  text-indent: 0pt;
+  text-align: left;
+}
+
 .ying_td_width_74 { 
   width:74pt;
   border-top-style:solid;

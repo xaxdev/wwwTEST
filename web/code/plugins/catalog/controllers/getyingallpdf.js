@@ -24,7 +24,7 @@ export default {
             const env = process.env.NODE_ENV || 'development'
             const host = request.info.hostname;
             const ROOT_URL = (host != 'mol.mouawad.com')? `http://${host}:3005`: `http://${host}`;
-            const { id } = request.params;
+            const { id, lng } = request.params;
             const db = request.mongo.db
             
             let data = await db.collection('YingCatalogDetail').find({'yingCatalogId' : id}).sort({ id: 1 }).toArray()
@@ -59,7 +59,7 @@ export default {
                 listItems.push(['لسلستلا','ةعطقلا مقر','تافصاوملا','يلامجﻹا غلبملا']);
 
                 const itemTable = items.reduce(reducer, listItems)
-                const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInUSD) || 0), 0);
+                const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInHomeCurrency) || 0), 0);
                 itemTable.push(['Total / عومجملا', numberFormat(totalPrice)])
 
                 let setImagePath = ''
@@ -82,7 +82,7 @@ export default {
                         width: 340
                     });
 
-                    createTable(doc, itemTable)   
+                    createTable(doc, itemTable, lng)   
                 } else {
                     // Add another page
                     doc.addPage()
@@ -96,7 +96,7 @@ export default {
                         align: 'center',
                         width: 340
                     });
-                    createTable(doc, itemTable)
+                    createTable(doc, itemTable, lng)
                     doc.image('../../web/code/plugins/http/public/images/images_footer.png', 70, 700, {
                         align: 'center',
                         valign: 'bottom',
@@ -216,7 +216,7 @@ const notify = (err, userEmail, emailBody) => new Promise((resolve, reject) => {
         });
 });
 
-function createTable(doc, data, width = 500) {
+function createTable(doc, data, lng, width = 500) {
     const startY = 580
     const startX = 90
     const distanceY = 15
@@ -233,10 +233,10 @@ function createTable(doc, data, width = 500) {
 
         if (row == 1) {
             value.forEach((text,index) => {
-                //Create rectangles
+                //Create rectangles title
                 switch (index) {
                     case 0:
-                        //Write text
+                        //Id
                         doc
                         .fontSize(12)
                         .font('plugins/http/public/fonts/Mirza-Regular.ttf')
@@ -245,7 +245,7 @@ function createTable(doc, data, width = 500) {
                         blockSize = 40
                         break;
                     case 1:
-                        //Write text
+                        //Reference
                         doc
                         .fontSize(12)
                         .font('plugins/http/public/fonts/Mirza-Regular.ttf')
@@ -253,7 +253,7 @@ function createTable(doc, data, width = 500) {
                         blockSize = 70
                         break;
                     case 2:
-                        //Write text
+                        //Description
                         doc
                         .fontSize(12)
                         .font('plugins/http/public/fonts/Mirza-Regular.ttf')
@@ -261,7 +261,7 @@ function createTable(doc, data, width = 500) {
                         blockSize = 265
                         break;
                     default:
-                        //Write text
+                        //Price
                         doc
                         .fontSize(12)
                         .font('plugins/http/public/fonts/Mirza-Regular.ttf')
@@ -279,10 +279,10 @@ function createTable(doc, data, width = 500) {
             });
         } else if (row == data.length) {
             value.forEach((text,index) => {
-                //Create rectangles
+                //Total
                 switch (index) {
                     case 0:
-                        //Write text
+                        //Total
                         doc
                         .fontSize(8)
                         .font('plugins/http/public/fonts/Mirza-Regular.ttf')
@@ -291,7 +291,7 @@ function createTable(doc, data, width = 500) {
                         blockSize = 375
                         break;
                     default:
-                        //Write text
+                        //Price
                         doc
                         .fontSize(8)
                         .font('plugins/http/public/fonts/Mirza-Regular.ttf')
@@ -309,10 +309,10 @@ function createTable(doc, data, width = 500) {
             });
         } else {
             value.forEach((text,index) => {
-                //Create rectangles
+                //Items details
                 switch (index) {
                     case 0:
-                        //Write text
+                        //Id
                         doc
                         .fontSize(8)
                         .font('plugins/http/public/fonts/Mirza-Regular.ttf')
@@ -321,7 +321,7 @@ function createTable(doc, data, width = 500) {
                         blockSize = 40
                         break;
                     case 1:
-                        //Write text
+                        //Reference
                         doc
                         .fontSize(8)
                         .font('plugins/http/public/fonts/Mirza-Regular.ttf')
@@ -329,15 +329,24 @@ function createTable(doc, data, width = 500) {
                         blockSize = 70
                         break;
                     case 2:
-                        //Write text
-                        doc
-                        .fontSize(8)
-                        .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                        .text(text, currentX + distanceX, currentY + 5);
-                        blockSize = 265
-                        break;
+                        //Description
+                        if (lng == 'eng') {
+                            doc
+                            .fontSize(8)
+                            .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            .text(text, currentX + distanceX, currentY + 5);
+                            blockSize = 265
+                            break;   
+                        } else {
+                            doc
+                            .fontSize(8)
+                            .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + 50, currentY + 5, {align: 'center'});
+                            blockSize = 265
+                            break;
+                        }
                     default:
-                        //Write text
+                        //Price
                         doc
                         .fontSize(8)
                         .font('plugins/http/public/fonts/Mirza-Regular.ttf')
@@ -345,7 +354,6 @@ function createTable(doc, data, width = 500) {
                         blockSize = 80
                         break;
                 }
-
                 doc
                 .lineJoin('miter')
                 .rect(currentX, currentY, blockSize, distanceY)
@@ -363,7 +371,7 @@ const reducer = (listItems, current) => {
     itemRow.push(listItems.length)
     itemRow.push(current.reference)
     itemRow.push(current.description)
-    itemRow.push(numberFormat(current.priceInUSD))
+    itemRow.push(numberFormat(current.priceInHomeCurrency))
     listItems.push(itemRow)
     
     return listItems

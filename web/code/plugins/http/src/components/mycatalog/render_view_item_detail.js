@@ -138,10 +138,10 @@ function mapStateToProps(state) {
 module.exports = connect(mapStateToProps, yingsetaction)(RenderViewItemDetail);
 
 const editItemData = (reference, newDescription, newPrice) => item =>{
-    const { description,  priceInUSD} = item;
+    const { description,  priceInHomeCurrency} = item;
     let newItem = {}
     if (item.reference == reference) {
-        newItem = {...item, description: newDescription != ''? newDescription: description, priceInUSD: newPrice != ''? newPrice: priceInUSD}
+        newItem = {...item, description: newDescription != ''? newDescription: description, priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency}
     } else {
         newItem = {...item}
     }
