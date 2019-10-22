@@ -7,11 +7,14 @@ class RenderViewSetDetailItemEdit extends Component {
     }
 
     render = _ => {
-        const { listItem, onClickAddItem, onClickEditItem, onClickDeleteItem, yingCatalogDetail, yingCatalogDetailStatus } = this.props;
+        const { listItem, onClickAddItem, onClickEditItem, onClickDeleteItem, yingCatalogDetail, yingCatalogDetailStatus, displayCurrency } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { currency } = userLogin
         
         if (yingCatalogDetailStatus) {
+            const displaySetCurrency = displayCurrency == '' 
+            ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
+            : displayCurrency
             return(
                 <div className="col-sm-12">
                     <div className="col-sm-4 m-width-60 ft-white m-nopadding"></div>
@@ -28,7 +31,7 @@ class RenderViewSetDetailItemEdit extends Component {
                                 <tr>
                                     <th><span>Item Reference</span></th>
                                     <th><span>Item Description</span></th>
-                                    <th><span>{`Retail Price (${currency})`}</span></th>
+                                    <th><span>{`Retail Price (${displaySetCurrency})`}</span></th>
                                     <th><span>Edit</span></th>
                                     <th><span>Delete</span></th>
                                 </tr>
@@ -41,6 +44,7 @@ class RenderViewSetDetailItemEdit extends Component {
                 </div>
             )
         } else {
+            const displaySetCurrency = displayCurrency == ''? currency: displayCurrency
             return(
                 <div className="col-sm-12">
                     <div className="col-sm-4 m-width-60 ft-white m-nopadding"></div>
@@ -57,7 +61,7 @@ class RenderViewSetDetailItemEdit extends Component {
                                 <tr>
                                     <th><span>Item Reference</span></th>
                                     <th><span>Item Description</span></th>
-                                    <th><span>{`Retail Price (${currency})`}</span></th>
+                                    <th><span>{`Retail Price (${displaySetCurrency})`}</span></th>
                                     <th><span>Edit</span></th>
                                     <th><span>Delete</span></th>
                                 </tr>

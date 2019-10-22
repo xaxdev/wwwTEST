@@ -108,13 +108,16 @@ class RenderViewItemDetailEdit extends Component {
     }
 
     render = _ => {
-        const { editItemDetail, fields, listItem, setDetailAddress, setDetailRemark, yingCatalogDetail, yingCatalogDetailStatus } = this.props;        
+        const {
+            editItemDetail, fields, listItem, setDetailAddress, setDetailRemark, yingCatalogDetail, yingCatalogDetailStatus, displayCurrency
+        } = this.props;        
         return(
             <div hidden={!editItemDetail}>
                 <RenderViewSetDetailHeaderEdit fields={fields} listItem={listItem} yingCatalogDetail={yingCatalogDetail}
-                    yingCatalogDetailStatus={yingCatalogDetailStatus} props={this.props}/>
+                    yingCatalogDetailStatus={yingCatalogDetailStatus} props={this.props} displayCurrency={displayCurrency}/>
                 <RenderViewSetDetailItemEdit onClickAddItem={this.onClickAddItem} listItem={listItem} onClickEditItem={this.onClickEditItem}
-                    onClickDeleteItem={this.onClickDeleteItem} yingCatalogDetail={yingCatalogDetail} yingCatalogDetailStatus={yingCatalogDetailStatus}/>
+                    onClickDeleteItem={this.onClickDeleteItem} yingCatalogDetail={yingCatalogDetail} yingCatalogDetailStatus={yingCatalogDetailStatus}
+                    displayCurrency={displayCurrency}/>
                 <RenderViewSetDetailAddress stateAddress={setDetailAddress} stateRemark={setDetailRemark} addressOnChanged={this.addressOnChanged} 
                     remarkOnChanged={this.remarkOnChanged} />
                 {this.renderAddItemDialog()}
@@ -134,6 +137,7 @@ function mapStateToProps(state) {
         setDetailAddress: state.myCatalog.setDetailAddress,
         setDetailRemark: state.myCatalog.setDetailRemark,
         isEditItemDetails: state.myCatalog.isEditItemDetails,
+        displayCurrency: state.myCatalog.displayCurrency,
 	}
 }
 

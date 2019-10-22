@@ -98,8 +98,13 @@ class RenderDialogEditItemEdit extends Component {
                         <div className="row">
                             <div className="col-md-11 relete_item col-sm-6  m-nopadding">
                                 <label><b>Item Description</b></label>
-                                <input type="text" className="form-control" {...description} disabled={this.state.disableDescription} 
-                                    onChange={this.changedDescription}/>
+                                {itemDescriptionLanguage.value === 'arb'
+                                    ? <input type="text" className="form-control" {...description} disabled={this.state.disableDescription} dir="rtl"
+                                        onChange={this.changedDescription}/>
+                                    : <input type="text" className="form-control" {...description} disabled={this.state.disableDescription}
+                                        onChange={this.changedDescription}/>
+                                }
+                                
                             </div>
                         </div>
                         <div className="row">

@@ -8,7 +8,7 @@ import  {
 import  {
     FETCH_ALLNAME, FETCH_YINGCATALOGDETAIL, FETCH_ITEMDETAIL, SET_ITEMSLIST, SET_YINGDELETEDITEM, SET_YINGEDITITEMREFERENCE, SET_YINGSETDETAILADDRESS,
     SET_YINGSETDETAILREMARK, SET_YINGSETIMAGEBASE64, GET_YINGSETREFERENCE, SET_CHANGEDORDERSETREFERENCE, FETCH_SOMENAME, SET_SHAREDYINGSET, 
-    FETCH_ALLYINGNAME, SET_EDITITEMDETAILS
+    FETCH_ALLYINGNAME, SET_EDITITEMDETAILS, SET_SETCURRENCY
 } from '../../constants/yingConstants';
 
 const INITIAL_STATE = {
@@ -19,11 +19,13 @@ const INITIAL_STATE = {
     totalPages: null, yingCatalogDetail: null, yingCatalogDetailStatus: false, yingCatalogDetailStatusCode: 100, yingCatalogDetailMsg: null,
     yingCatalogTotalPages: null, yingItemDetail: null, listItem: [], isDeletedItem: false, editItemReference: null, setDetailAddress: null, 
     setDetailRemark: null, yingSetReference: [], changedOrder: [], sharedYingStatus: false, sharedYingStatusCode: 100, ListYingCatalogName: [],
-    isEditItemDetails: false
+    isEditItemDetails: false, displayCurrency: ''
 };
 
 export default function(state = INITIAL_STATE, action){
     switch(action.type){
+        case SET_SETCURRENCY:
+            return {...state, displayCurrency: action.setCurrency };
         case SET_EDITITEMDETAILS :
             return {...state, isEditItemDetails: action.isEditItemDetails };
         case FETCH_ALLYINGNAME :

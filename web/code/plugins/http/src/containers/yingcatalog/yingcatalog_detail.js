@@ -82,17 +82,19 @@ class YingCatalogDetail extends Component {
 
     clickAddNewSet = _=>{
         const { 
-            fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages }
+            fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages, setCurrency }
         } = this.props;
         setReferenceNumber.value = ''
         setDescription.value = ''
         suiteName.value = ''
         romanceNote.value = ''
         setImages.value = ''
+        setCurrency.value = ''
         this.props.setYingSetDetailAddress(null)
         this.props.setYingSetDetailRemark(null)
         this.props.setEditItemDetails(false)
         this.props.setItemList([])
+        this.props.changedSetCurrency('')
         this.setState({ addItemDetail: true, editItemDetail: false })
     }
 
@@ -101,7 +103,7 @@ class YingCatalogDetail extends Component {
         
         const { 
             setDetailAddress, setDetailRemark, listItem, setImageBase64,
-            fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages }
+            fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages, setCurrency }
         } = this.props;
         const params = {
             setReference: (!setReferenceNumber.value)? '': setReferenceNumber.value,
@@ -109,6 +111,7 @@ class YingCatalogDetail extends Component {
             suiteName: (!suiteName.value)? '': suiteName.value,
             romanceNote: (!romanceNote.value)? '': romanceNote.value,
             setImages: (!setImages.value)? '': setImages.value,
+            setCurrency: (!setCurrency.value)? '': setCurrency.value,
             address: setDetailAddress,
             remark: setDetailRemark,
             items: listItem,
@@ -130,7 +133,7 @@ class YingCatalogDetail extends Component {
         const yingCatalogId = this.props.params.id;
         const { 
             setDetailAddress, setDetailRemark, listItem, setImageBase64,
-            fields: { editSetReferenceNumber, editSetDescription, editSuiteName, editRomanceNote, editSetImages }
+            fields: { editSetReferenceNumber, editSetDescription, editSuiteName, editRomanceNote, editSetImages, setCurrency }
         } = this.props;
         const params = {
             setReference: (!editSetReferenceNumber.value)? '': editSetReferenceNumber.value,
@@ -138,11 +141,13 @@ class YingCatalogDetail extends Component {
             suiteName: (!editSuiteName.value)? '': editSuiteName.value,
             romanceNote: (!editRomanceNote.value)? '': editRomanceNote.value,
             setImages: (!editSetImages.value)? '': editSetImages.value,
+            setCurrency: (!setCurrency.value)? '': setCurrency.value,
             address: setDetailAddress,
             remark: setDetailRemark,
             items: listItem,
             id: yingCatalogId
         }
+        
         this.props.updateYingDetail(params)
         .then((value) => {
             if (!!setImageBase64) {
@@ -208,8 +213,7 @@ class YingCatalogDetail extends Component {
         .then(()=>{
             this.setState({ isLoading: false });
         })
-        this.props.changedOrderSetReference([])
-          
+        this.props.changedOrderSetReference([])  
         
         this.setState({ openReOrderSet: false })
     }
@@ -374,7 +378,7 @@ function mapStateToProps(state) {
         listItem: state.myCatalog.listItem,
         setImageBase64: state.myCatalog.setImageBase64,
         yingSetReference: state.myCatalog.yingSetReference,
-        changedOrder: state.myCatalog.changedOrder,
+        changedOrder: state.myCatalog.changedOrder
     };
 }
 
@@ -383,7 +387,8 @@ module.exports = reduxForm(
         form: 'YingCatalogDetail',
         fields: [
             'setReferenceNumber', 'setDescription', 'suiteName', 'romanceNote', 'setImages', 'reference', 'description', 'price', 
-            'editSetReferenceNumber', 'editSetDescription', 'editSuiteName', 'editRomanceNote', 'editSetImages', 'pdfLanguage', 'itemDescriptionLanguage'
+            'editSetReferenceNumber', 'editSetDescription', 'editSuiteName', 'editRomanceNote', 'editSetImages', 'pdfLanguage', 'itemDescriptionLanguage',
+            'setCurrency'
         ]
     }, mapStateToProps, yingsetaction
 )(YingCatalogDetail);
