@@ -41,9 +41,16 @@ class RenderViewSetDetailHeader extends Component {
         reader.readAsDataURL(file)    
     }
 
+    changedSetCurrency = (e) =>{
+        const {  fields: { setCurrency }, props } = this.props;
+        setCurrency.onChange(e.target.value)
+        props.changedSetCurrency(e.target.value);
+    }
+
     render = _ => {
-        const { listItem, fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages } } = this.props;
+        const { listItem, displayCurrency, fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages, setCurrency } } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
+        const { currency } = userLogin
         const summary = {
             totalItem: 0,
             totalRetailPrice: 0,
@@ -63,6 +70,8 @@ class RenderViewSetDetailHeader extends Component {
             $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
         }
 
+        const displaySetCurrency = displayCurrency == ''? currency: displayCurrency
+
         return(
             <div className="row">
                 <div className="col-sm-12">
@@ -80,30 +89,30 @@ class RenderViewSetDetailHeader extends Component {
                                     || userLogin.permission.price == 'All') ?
                                     '' : 'hidden'}`}>
                                     <span className="font-b fc-000">Total Retail Price :</span>
-                                    <span className="font-w9">{ numberFormat(totalRetailPrice) } { 'USD' }</span>
+                                    <span className="font-w9">{ numberFormat(totalRetailPrice) } { displaySetCurrency }</span>
                                 </span>
                                 <span className={`${(userLogin.permission.price == 'Updated'
                                     || userLogin.permission.price == 'All') ?
                                     '' : 'hidden'}`}>
                                     <span className="padding-lf15">|</span>
                                     <span className="font-b fc-000">Total Updated Cost :</span>
-                                    <span className="font-w9">{ numberFormat(totalUpdatedCost) } { 'USD' }</span>
+                                    <span className="font-w9">{ numberFormat(totalUpdatedCost) } { displaySetCurrency }</span>
                                 </span>
                             </div>
                             <div id="dvTotalsub2" className="bg-f7d886 text-center">
                                 <span>
                                     <span className="font-b fc-000">Highest Retail Price :</span>
-                                    <span className="font-w9">{ numberFormat(highestRetailPrice) } { 'USD' } </span>
+                                    <span className="font-w9">{ numberFormat(highestRetailPrice) } { displaySetCurrency } </span>
                                     <span className="padding-lf15">|</span>
                                 </span>
                                 <span>
                                     <span className="font-b fc-000">Lowest Retail Price :</span>
-                                    <span className="font-w9">{ numberFormat(lowestRetailPrice) } { 'USD' } </span>
+                                    <span className="font-w9">{ numberFormat(lowestRetailPrice) } { displaySetCurrency } </span>
                                     <span className="padding-lf15">|</span>
                                 </span>
                                 <span>
                                     <span className="font-b fc-000">Average Retail Price :</span>
-                                    <span className="font-w9">{ numberFormat(averageRetailPrice) } { 'USD' } </span>
+                                    <span className="font-w9">{ numberFormat(averageRetailPrice) } { displaySetCurrency } </span>
                                 </span>
                             </div>
                         </div>
@@ -132,6 +141,20 @@ class RenderViewSetDetailHeader extends Component {
                                         <label className="col-sm-4 control-label">Romance Note</label>
                                         <div className="col-sm-7">
                                             <input type="text" className="form-control" placeholder="Enter Romance Note" {...romanceNote}/>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="col-sm-4 control-label">Currency</label>
+                                        <div className="col-sm-7">
+                                            <select className="form-control" {...setCurrency} onChange={this.changedSetCurrency}>
+                                                <option key={''} value={''}>{'Please select currency'}</option>
+                                                <option key="AED" value="AED">AED</option>
+                                                <option key="JOD" value="JOD">JOD</option>
+                                                <option key="LBP" value="LBP">LBP</option>
+                                                <option key="OMR" value="OMR">OMR</option>
+                                                <option key="SAR" value="SAR">SAR</option>
+                                                <option key="USD" value="USD">USD</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="form-group">
@@ -168,11 +191,11 @@ const summaryListItem = (summary, item) =>{
     const newSummary = {
         ...summary, 
         totalItem: totalItem + 1,
-        totalRetailPrice: totalRetailPrice + item.priceInUSD,
-        totalUpdatedCost: totalUpdatedCost + item.updatedCostInUSD,
-        highestRetailPrice: Math.max(highestRetailPrice, item.priceInUSD),
-        lowestRetailPrice: totalItem == 0 ? item.priceInUSD: Math.min(lowestRetailPrice, item.priceInUSD),
-        averageRetailPrice: (totalRetailPrice + item.priceInUSD)/(totalItem + 1)
+        totalRetailPrice: totalRetailPrice + item.priceInHomeCurrency,
+        totalUpdatedCost: totalUpdatedCost + item.updatedCostInHomeCurrency,
+        highestRetailPrice: Math.max(highestRetailPrice, item.priceInHomeCurrency),
+        lowestRetailPrice: totalItem == 0 ? item.priceInHomeCurrency: Math.min(lowestRetailPrice, item.priceInHomeCurrency),
+        averageRetailPrice: (totalRetailPrice + item.priceInHomeCurrency)/(totalItem + 1)
     }
     return newSummary
 }

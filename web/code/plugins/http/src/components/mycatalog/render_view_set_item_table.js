@@ -35,18 +35,46 @@ class RenderViewSetItemTable extends Component {
     }
 
     render = _ => {
-        const { row } = this.props;        
-        return (
-            <tbody key={row.id} id={row.reference}>
-                <tr>
-                    <td className="width-6 text-center">{row.reference}</td>
-                    <td>{row.description}</td>
-                    <td className="text-center">{numberFormat(row.priceInUSD)}</td>
-                    {this.renderEdit(0, row.reference)}
-                    {this.renderDelete(0, row.reference)}
-                </tr>
-            </tbody>
-        )
+        const { row } = this.props;    
+        
+        if (row.itemDescriptionLanguage == undefined) {
+            return (
+                <tbody key={row.id} id={row.reference}>
+                    <tr className="ying_tr_height_23">
+                        <td className="width-6 text-center">{row.reference}</td>
+                        <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><span className="s1_ying">{row.description}</span></p></td>
+                        <td className="text-center">{numberFormat(row.priceInHomeCurrency)}</td>
+                        {this.renderEdit(0, row.reference)}
+                        {this.renderDelete(0, row.reference)}
+                    </tr>
+                </tbody>
+            )    
+        } else if (row.itemDescriptionLanguage == 'arb') {
+            return (
+                <tbody key={row.id} id={row.reference}>
+                    <tr className="ying_tr_height_23">
+                        <td className="width-6 text-center">{row.reference}</td>
+                        <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><span className="s1_ying">{row.description}</span></p></td>
+                        <td className="text-center">{numberFormat(row.priceInHomeCurrency)}</td>
+                        {this.renderEdit(0, row.reference)}
+                        {this.renderDelete(0, row.reference)}
+                    </tr>
+                </tbody>
+            )
+        } else {
+            return (
+                <tbody key={row.id} id={row.reference}>
+                    <tr>
+                        <td className="width-6 text-center">{row.reference}</td>
+                        <td>{row.description}</td>
+                        <td className="text-center">{numberFormat(row.priceInHomeCurrency)}</td>
+                        {this.renderEdit(0, row.reference)}
+                        {this.renderDelete(0, row.reference)}
+                    </tr>
+                </tbody>
+            )
+        }
+        
     }
 }
 

@@ -17,7 +17,7 @@ class YingPrint extends Component {
                 const ROOT_URL = 'mol.mouawad.com';
                 imagesUrl = `http://${ROOT_URL}/images/products/original/${setImages}`;   
             }
-            const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInUSD) || 0), 0);
+            const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInHomeCurrency) || 0), 0);
 
             const styles = {
                 ying_img_logo: { 
@@ -160,6 +160,11 @@ class YingPrint extends Component {
                     'textIndent': '0pt',
                     'textAlign': 'right'
                 },
+                ying_description_item_left: {
+                    'paddingTop': '6pt',
+                    'textIndent': '0pt',
+                    'textAlign': 'left'
+                },
                 ying_price: {
                     'paddingTop': '5pt',
                     'paddingLeft': '15pt',
@@ -215,14 +220,25 @@ class YingPrint extends Component {
                                             <td style={styles.ying_td_width_74}><p style={styles.s1_ying} style={styles.ying_price}><strong><span style={styles.s1_ying}>يلامجﻹا غلبملا</span></strong></p></td>
                                         </tr>
                                         {items.map((item,index)=>{
-                                            return(
-                                                <tr style={styles.ying_tr_height_23}>
-                                                    <td style={styles.ying_td_width_27}><p style={styles.s2_ying} style={styles.ying_id}><strong><span style={styles.s1_ying}>{index+1}</span></strong></p></td>
-                                                    <td style={styles.ying_td_width_116}><p style={styles.s1_ying} style={styles.ying_reference} ><span style={styles.s1_ying}>{item.reference}</span></p></td>
-                                                    <td style={styles.ying_td_width_240}><p style={styles.s1_ying} style={styles.ying_description_item} ><strong><span style={styles.s1_ying}>{item.description}</span></strong></p></td>
-                                                    <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.priceInUSD)}</span></strong></p></td>
-                                                </tr>
-                                            )
+                                            if (item.itemDescriptionLanguage == 'arb') {
+                                                return(
+                                                    <tr style={styles.ying_tr_height_23}>
+                                                        <td style={styles.ying_td_width_27}><p style={styles.s2_ying} style={styles.ying_id}><strong><span style={styles.s1_ying}>{index+1}</span></strong></p></td>
+                                                        <td style={styles.ying_td_width_116}><p style={styles.s1_ying} style={styles.ying_reference} ><span style={styles.s1_ying}>{item.reference}</span></p></td>
+                                                        <td style={styles.ying_td_width_240}><p style={styles.s1_ying} style={styles.ying_description_item} ><strong><span style={styles.s1_ying}>{item.description}</span></strong></p></td>
+                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
+                                                    </tr>
+                                                )
+                                            } else {
+                                                return(
+                                                    <tr style={styles.ying_tr_height_23}>
+                                                        <td style={styles.ying_td_width_27}><p style={styles.s2_ying} style={styles.ying_id}><strong><span style={styles.s1_ying}>{index+1}</span></strong></p></td>
+                                                        <td style={styles.ying_td_width_116}><p style={styles.s1_ying} style={styles.ying_reference} ><span style={styles.s1_ying}>{item.reference}</span></p></td>
+                                                        <td style={styles.ying_td_width_240}><p style={styles.s1_ying} style={styles.ying_description_item_left} ><strong><span style={styles.s1_ying}>{item.description}</span></strong></p></td>
+                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
+                                                    </tr>
+                                                )
+                                            }
                                         })}
                                         <tr style={styles.ying_tr_height_17}>
                                             <td style={styles.ying_td_width_383} colSpan="3"><p style={styles.s1_ying} style={styles.ying_total}><strong><span style={styles.s1_ying}>Total / عومجملا</span></strong></p></td>

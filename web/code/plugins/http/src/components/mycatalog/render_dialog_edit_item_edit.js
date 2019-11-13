@@ -8,6 +8,15 @@ class RenderDialogEditItemEdit extends Component {
     constructor() {
         super()
 
+        this.state = {
+            disableDescription: false,
+            isChangedLanguage: false
+        }
+
+    }
+
+    componentDidMount = _ => {
+
     }
 
     changedPrice = (e) =>{
@@ -24,9 +33,17 @@ class RenderDialogEditItemEdit extends Component {
         that.props.setEditItemDetails(true)
     }
 
+    onChange = (e) =>{
+        const target = e.target;
+        const { that } = this.props;
+        const { fields: { itemDescriptionLanguage}} = that.props;
+        itemDescriptionLanguage.onChange(target.value)
+        this.setState({isChangedLanguage: true})
+    }
+
     render(){
         const { that } = this.props;
-        const { fields: { description, price}, yingCatalogDetail, editItemReference, isEditItemDetails, itemDetail } = that.props;
+        const { fields: { description, price, itemDescriptionLanguage }, yingCatalogDetail, editItemReference, isEditItemDetails, itemDetail } = that.props;
         
         if (!isEditItemDetails) {
             if (!!yingCatalogDetail) {
@@ -35,8 +52,8 @@ class RenderDialogEditItemEdit extends Component {
                 if (items.length != 0) {
                     const [filterItem] = items.filter(item=>item.reference == editItemReference)
                     if (!!filterItem) {
-                        const { description, priceInUSD } = filterItem;
-                        initData(that.props.fields, description, priceInUSD)  
+                        const { description, priceInHomeCurrency, itemDescriptionLanguage } = filterItem;
+                        initData(that.props.fields, description, priceInHomeCurrency, itemDescriptionLanguage, this.state.isChangedLanguage)  
                     }
                 }
             } else {
@@ -44,8 +61,8 @@ class RenderDialogEditItemEdit extends Component {
                     if (itemDetail != null) {
                         const { reference } = itemDetail
                         if (reference == editItemReference) {
-                            const { description, priceInUSD } = itemDetail;
-                            initData(that.props.fields, description, priceInUSD)  
+                            const { description, priceInHomeCurrency, itemDescriptionLanguage } = itemDetail;
+                            initData(that.props.fields, description, priceInHomeCurrency, itemDescriptionLanguage, this.state.isChangedLanguage)  
                         }
                     }
                 }
@@ -62,8 +79,32 @@ class RenderDialogEditItemEdit extends Component {
                     <div className="modal-body">
                         <div className="row">
                             <div className="col-md-11 relete_item col-sm-6  m-nopadding">
+                                <label><b>Please select language.</b></label>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-11 relete_item col-sm-6  m-nopadding">
+                                <label className="pure-checkbox" >
+                                    <input type="radio" {...itemDescriptionLanguage} name="eng" value="eng" checked={itemDescriptionLanguage.value === 'eng'}
+                                        onChange={this.onChange}/> English
+                                </label>
+                                &nbsp;&nbsp;
+                                <label className="pure-checkbox" >
+                                    <input type="radio" {...itemDescriptionLanguage} name="arb" value="arb" checked={itemDescriptionLanguage.value === 'arb'}
+                                        onChange={this.onChange}/> Arabic
+                                </label>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-11 relete_item col-sm-6  m-nopadding">
                                 <label><b>Item Description</b></label>
-                                <input type="text" className="form-control" {...description}  onChange={this.changedDescription}/>
+                                {itemDescriptionLanguage.value === 'arb'
+                                    ? <input type="text" className="form-control" {...description} disabled={this.state.disableDescription} dir="rtl"
+                                        onChange={this.changedDescription}/>
+                                    : <input type="text" className="form-control" {...description} disabled={this.state.disableDescription}
+                                        onChange={this.changedDescription}/>
+                                }
+                                
                             </div>
                         </div>
                         <div className="row">
@@ -91,8 +132,12 @@ class RenderDialogEditItemEdit extends Component {
 
 module.exports = RenderDialogEditItemEdit
 
-const initData = (fields, _description, _priceInUSD)=>{   
-    const { description, price } = fields;
+const initData = (fields, _description, _priceInHomeCurrency, _itemDescriptionLanguage, isChangedLanguage)=>{   
+    const { description, price, itemDescriptionLanguage } = fields;
+    
     description.onChange(_description);
-    price.onChange(numberFormat(_priceInUSD));
+    price.onChange(numberFormat(_priceInHomeCurrency));
+    if (!isChangedLanguage) {
+        itemDescriptionLanguage.onChange(_itemDescriptionLanguage);
+    }
 }

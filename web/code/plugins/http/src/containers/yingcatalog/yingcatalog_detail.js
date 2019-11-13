@@ -8,6 +8,7 @@ import RenderViewItemDetail from '../../components/mycatalog/render_view_item_de
 import RenderViewItemDetailEdit from '../../components/mycatalog/render_view_item_detail_edit'
 import YingPrint from '../../components/mycatalog/render_ying_print'
 import ModalAlertMsg from '../../utils/modalalertmsg';
+import ModalAlertMsgYingPdf from '../../utils/modalalertmsgyingpdf';
 import ModalConfirmDelete from '../../utils/modalConfirmDelete';
 import RenderReOrderSet from './render_re_order_set'
 
@@ -81,17 +82,19 @@ class YingCatalogDetail extends Component {
 
     clickAddNewSet = _=>{
         const { 
-            fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages }
+            fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages, setCurrency }
         } = this.props;
         setReferenceNumber.value = ''
         setDescription.value = ''
         suiteName.value = ''
         romanceNote.value = ''
         setImages.value = ''
+        setCurrency.value = ''
         this.props.setYingSetDetailAddress(null)
         this.props.setYingSetDetailRemark(null)
         this.props.setEditItemDetails(false)
         this.props.setItemList([])
+        this.props.changedSetCurrency('')
         this.setState({ addItemDetail: true, editItemDetail: false })
     }
 
@@ -100,7 +103,7 @@ class YingCatalogDetail extends Component {
         
         const { 
             setDetailAddress, setDetailRemark, listItem, setImageBase64,
-            fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages }
+            fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages, setCurrency }
         } = this.props;
         const params = {
             setReference: (!setReferenceNumber.value)? '': setReferenceNumber.value,
@@ -108,6 +111,7 @@ class YingCatalogDetail extends Component {
             suiteName: (!suiteName.value)? '': suiteName.value,
             romanceNote: (!romanceNote.value)? '': romanceNote.value,
             setImages: (!setImages.value)? '': setImages.value,
+            setCurrency: (!setCurrency.value)? '': setCurrency.value,
             address: setDetailAddress,
             remark: setDetailRemark,
             items: listItem,
@@ -129,7 +133,7 @@ class YingCatalogDetail extends Component {
         const yingCatalogId = this.props.params.id;
         const { 
             setDetailAddress, setDetailRemark, listItem, setImageBase64,
-            fields: { editSetReferenceNumber, editSetDescription, editSuiteName, editRomanceNote, editSetImages }
+            fields: { editSetReferenceNumber, editSetDescription, editSuiteName, editRomanceNote, editSetImages, setCurrency }
         } = this.props;
         const params = {
             setReference: (!editSetReferenceNumber.value)? '': editSetReferenceNumber.value,
@@ -137,11 +141,13 @@ class YingCatalogDetail extends Component {
             suiteName: (!editSuiteName.value)? '': editSuiteName.value,
             romanceNote: (!editRomanceNote.value)? '': editRomanceNote.value,
             setImages: (!editSetImages.value)? '': editSetImages.value,
+            setCurrency: (!setCurrency.value)? '': setCurrency.value,
             address: setDetailAddress,
             remark: setDetailRemark,
             items: listItem,
             id: yingCatalogId
         }
+        
         this.props.updateYingDetail(params)
         .then((value) => {
             if (!!setImageBase64) {
@@ -207,8 +213,7 @@ class YingCatalogDetail extends Component {
         .then(()=>{
             this.setState({ isLoading: false });
         })
-        this.props.changedOrderSetReference([])
-          
+        this.props.changedOrderSetReference([])  
         
         this.setState({ openReOrderSet: false })
     }
@@ -255,17 +260,26 @@ class YingCatalogDetail extends Component {
     }
 
     renderAlertMsgPdf = _=> {
-        const message = 'Please check your email for printing files.';
+        const { fields:{ pdfLanguage } } = this.props;  
+        const messageOne = 'Please select the language options';
+        const messageTwo = 'and check your email for printing files.';
+        const message = { messageOne, messageTwo }
         const title = 'Ying Catalog';
         return(
-            <ModalAlertMsg isOpen={this.state.isOpenPrintPdf} isClose={this.handlePrintPdf} props={this.props} message={message}  title={title}/>
+            <ModalAlertMsgYingPdf isOpen={this.state.isOpenPrintPdf} onSubmit={this.handlePrintPdf} props={this.props} message={message} title={title}
+                isClose={this.onClickClosePrintPdf} pdfLanguage={pdfLanguage}/>
         );
+    }
+
+    onClickClosePrintPdf = () => {
+        this.setState({isOpenPrintPdf: false});
     }
 
     handlePrintPdf = () => {
         let { id } = this.props.params;
-        
-        this.props.getAllPDF(id)
+        const { fields:{ pdfLanguage } } = this.props; 
+
+        this.props.getAllPDF(id, pdfLanguage.value)
         this.setState({isOpenPrintPdf: false});
     }
 
@@ -364,7 +378,7 @@ function mapStateToProps(state) {
         listItem: state.myCatalog.listItem,
         setImageBase64: state.myCatalog.setImageBase64,
         yingSetReference: state.myCatalog.yingSetReference,
-        changedOrder: state.myCatalog.changedOrder,
+        changedOrder: state.myCatalog.changedOrder
     };
 }
 
@@ -373,7 +387,8 @@ module.exports = reduxForm(
         form: 'YingCatalogDetail',
         fields: [
             'setReferenceNumber', 'setDescription', 'suiteName', 'romanceNote', 'setImages', 'reference', 'description', 'price', 
-            'editSetReferenceNumber', 'editSetDescription', 'editSuiteName', 'editRomanceNote', 'editSetImages'
+            'editSetReferenceNumber', 'editSetDescription', 'editSuiteName', 'editRomanceNote', 'editSetImages', 'pdfLanguage', 'itemDescriptionLanguage',
+            'setCurrency'
         ]
     }, mapStateToProps, yingsetaction
 )(YingCatalogDetail);

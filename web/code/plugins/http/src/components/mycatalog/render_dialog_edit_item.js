@@ -35,8 +35,8 @@ class RenderDialogEditItem extends Component {
                 if (items.length != 0) {
                     const [filterItem] = items.filter(item=>item.reference == editItemReference)
                     if (!!filterItem) {
-                        const { description, priceInUSD } = filterItem;
-                        initData(that.props.fields, description, priceInUSD)  
+                        const { description, priceInHomeCurrency } = filterItem;
+                        initData(that.props.fields, description, priceInHomeCurrency)  
                     }
                 }
             } else {
@@ -44,8 +44,8 @@ class RenderDialogEditItem extends Component {
                     if (itemDetail != null) {
                         const { reference } = itemDetail
                         if (reference == editItemReference) {
-                            const { description, priceInUSD } = itemDetail;
-                            initData(that.props.fields, description, priceInUSD)  
+                            const { description, priceInHomeCurrency } = itemDetail;
+                            initData(that.props.fields, description, priceInHomeCurrency)  
                         }
                     }
                 }
@@ -56,8 +56,8 @@ class RenderDialogEditItem extends Component {
                     if (listItem.length != 0) {
                         const [filterItem] = listItem.filter(item=>item.reference == editItemReference)
                         if (!!filterItem) {
-                            const { description, priceInUSD } = filterItem;
-                            initData(that.props.fields, description, priceInUSD)  
+                            const { description, priceInHomeCurrency } = filterItem;
+                            initData(that.props.fields, description, priceInHomeCurrency)  
                         }
                     }
                 }   
@@ -67,8 +67,8 @@ class RenderDialogEditItem extends Component {
                     if (listItem.length != 0) {
                         const [filterItem] = listItem.filter(item=>item.reference == editItemReference)
                         if (!!filterItem) {
-                            const { description, priceInUSD } = filterItem;
-                            initData(that.props.fields, description, priceInUSD)  
+                            const { description, priceInHomeCurrency } = filterItem;
+                            initData(that.props.fields, description, priceInHomeCurrency)  
                         }
                     }
                 }   
@@ -114,17 +114,17 @@ class RenderDialogEditItem extends Component {
 
 module.exports = RenderDialogEditItem
 
-const initData = (fields, _description, _priceInUSD)=>{   
+const initData = (fields, _description, _priceInHomeCurrency)=>{   
     const { description, price } = fields;
     description.onChange(_description);
-    price.onChange(numberFormat(_priceInUSD));
+    price.onChange(numberFormat(_priceInHomeCurrency));
 }
 
 const editItemData = (reference, newDescription, newPrice) => item =>{
-    const { description,  priceInUSD} = item;
+    const { description,  priceInHomeCurrency} = item;
     let newItem = {}
     if (item.reference == reference) {
-        newItem = {...item, description: newDescription != ''? newDescription: description, priceInUSD: newPrice != ''? newPrice: priceInUSD}
+        newItem = {...item, description: newDescription != ''? newDescription: description, priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency}
     } else {
         newItem = {...item}
     }

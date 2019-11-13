@@ -84,8 +84,8 @@ class RenderViewItemDetailEdit extends Component {
     }
 
     saveEditItem = (reference)=>{
-        const { fields: { description, price }, listItem } = this.props;        
-        const newListItem = listItem.map(editItemData(reference, description.value, Number(price.value.replace(/,/g,''))))
+        const { fields: { description, price, itemDescriptionLanguage }, listItem } = this.props;        
+        const newListItem = listItem.map(editItemData(reference, description.value, Number(price.value.replace(/,/g,'')), itemDescriptionLanguage.value))
         this.props.setItemList(newListItem)
         this.props.setEditItemDetails(false)
         this.setState({isOpenEditItemDialog: false})
@@ -108,13 +108,16 @@ class RenderViewItemDetailEdit extends Component {
     }
 
     render = _ => {
-        const { editItemDetail, fields, listItem, setDetailAddress, setDetailRemark, yingCatalogDetail, yingCatalogDetailStatus } = this.props;        
+        const {
+            editItemDetail, fields, listItem, setDetailAddress, setDetailRemark, yingCatalogDetail, yingCatalogDetailStatus, displayCurrency
+        } = this.props;        
         return(
             <div hidden={!editItemDetail}>
                 <RenderViewSetDetailHeaderEdit fields={fields} listItem={listItem} yingCatalogDetail={yingCatalogDetail}
-                    yingCatalogDetailStatus={yingCatalogDetailStatus} props={this.props}/>
+                    yingCatalogDetailStatus={yingCatalogDetailStatus} props={this.props} displayCurrency={displayCurrency}/>
                 <RenderViewSetDetailItemEdit onClickAddItem={this.onClickAddItem} listItem={listItem} onClickEditItem={this.onClickEditItem}
-                    onClickDeleteItem={this.onClickDeleteItem} yingCatalogDetail={yingCatalogDetail} yingCatalogDetailStatus={yingCatalogDetailStatus}/>
+                    onClickDeleteItem={this.onClickDeleteItem} yingCatalogDetail={yingCatalogDetail} yingCatalogDetailStatus={yingCatalogDetailStatus}
+                    displayCurrency={displayCurrency}/>
                 <RenderViewSetDetailAddress stateAddress={setDetailAddress} stateRemark={setDetailRemark} addressOnChanged={this.addressOnChanged} 
                     remarkOnChanged={this.remarkOnChanged} />
                 {this.renderAddItemDialog()}
@@ -134,16 +137,22 @@ function mapStateToProps(state) {
         setDetailAddress: state.myCatalog.setDetailAddress,
         setDetailRemark: state.myCatalog.setDetailRemark,
         isEditItemDetails: state.myCatalog.isEditItemDetails,
+        displayCurrency: state.myCatalog.displayCurrency,
 	}
 }
 
 module.exports = connect(mapStateToProps, yingsetaction)(RenderViewItemDetailEdit);
 
-const editItemData = (reference, newDescription, newPrice) => item =>{
-    const { description,  priceInUSD} = item;
+const editItemData = (reference, newDescription, newPrice, newItemDescriptionLanguage) => item =>{
+    const { description,  priceInHomeCurrency, itemDescriptionLanguage} = item;
     let newItem = {}
     if (item.reference == reference) {
-        newItem = {...item, description: newDescription != ''? newDescription: description, priceInUSD: newPrice != ''? newPrice: priceInUSD}
+        newItem = {
+            ...item
+            , description: newDescription != ''? newDescription: description
+            , priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency
+            , itemDescriptionLanguage: newItemDescriptionLanguage != ''? newItemDescriptionLanguage: itemDescriptionLanguage
+        }
     } else {
         newItem = {...item}
     }

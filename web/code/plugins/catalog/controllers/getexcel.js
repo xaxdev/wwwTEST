@@ -116,15 +116,15 @@ export default {
                 ws.cell(row,5).string('يلامجﻹا غلبملا').style(style_thinBorder).style(style_center);
 
                 items.map((item,index)=>{
-                    const { reference, description, priceInUSD } = item;
+                    const { reference, description, priceInHomeCurrency } = item;
                     const rowItem = row+1;
                     ws.cell(rowItem,2).string((index+1).toString()).style(style_thinBorder).style(style_center);
                     ws.cell(rowItem,3).string(reference).style(style_thinBorder);
                     ws.cell(rowItem,4).string(description).style(style_thinBorder);
-                    ws.cell(rowItem,5).string(numberFormat(priceInUSD).toString()).style(style_thinBorder).style(style_right);
+                    ws.cell(rowItem,5).string(numberFormat(priceInHomeCurrency).toString()).style(style_thinBorder).style(style_right);
                     row++;
                 })
-                const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInUSD) || 0), 0);
+                const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInHomeCurrency) || 0), 0);
                 ws.cell(row+1, 2, row+1, 4, true).string('Total / عومجملا').style(style_thinBorder).style(style_center);
                 ws.cell(row+1, 5).string(numberFormat(totalPrice).toString()).style(style_thinBorder).style(style_right);
 

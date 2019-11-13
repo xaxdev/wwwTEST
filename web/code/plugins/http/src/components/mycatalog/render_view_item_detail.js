@@ -107,12 +107,12 @@ class RenderViewItemDetail extends Component {
     }
 
     render = _ => {
-        const { addItemDetail, fields, listItem, setDetailAddress, setDetailRemark } = this.props;
+        const { addItemDetail, fields, listItem, setDetailAddress, setDetailRemark, displayCurrency } = this.props;
         return(
             <div hidden={!addItemDetail}>
-                <RenderViewSetDetailHeader fields={fields} listItem={listItem} props={this.props}/>
+                <RenderViewSetDetailHeader fields={fields} listItem={listItem} props={this.props} displayCurrency={displayCurrency}/>
                 <RenderViewSetDetailItem onClickAddItem={this.onClickAddItem} listItem={listItem} onClickEditItem={this.onClickEditItem}
-                    onClickDeleteItem={this.onClickDeleteItem}/>
+                    onClickDeleteItem={this.onClickDeleteItem} displayCurrency={displayCurrency}/>
                 <RenderViewSetDetailAddress stateAddress={setDetailAddress} stateRemark={setDetailRemark} addressOnChanged={this.addressOnChanged} 
                     remarkOnChanged={this.remarkOnChanged} />
                 {this.renderAddItemDialog()}
@@ -132,16 +132,17 @@ function mapStateToProps(state) {
         setDetailAddress: state.myCatalog.setDetailAddress,
         setDetailRemark: state.myCatalog.setDetailRemark,
         isEditItemDetails: state.myCatalog.isEditItemDetails,
+        displayCurrency: state.myCatalog.displayCurrency,
 	}
 }
 
 module.exports = connect(mapStateToProps, yingsetaction)(RenderViewItemDetail);
 
 const editItemData = (reference, newDescription, newPrice) => item =>{
-    const { description,  priceInUSD} = item;
+    const { description,  priceInHomeCurrency} = item;
     let newItem = {}
     if (item.reference == reference) {
-        newItem = {...item, description: newDescription != ''? newDescription: description, priceInUSD: newPrice != ''? newPrice: priceInUSD}
+        newItem = {...item, description: newDescription != ''? newDescription: description, priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency}
     } else {
         newItem = {...item}
     }

@@ -5,7 +5,7 @@ import {
     ROOT_URL, FETCH_ALLNAME, ADD_YINGCATALOGNAME, FETCH_YINGCATALOGDETAIL, FETCH_ITEMDETAIL, SET_ITEMSLIST, SET_YINGDELETEDITEM, SET_YINGEDITITEMREFERENCE,
     SET_YINGSETDETAILADDRESS, SET_YINGSETDETAILREMARK, ADD_YINGCATALOGDETAIL, UPLOAD_SETIMAGE, SET_YINGSETIMAGEBASE64, UPDATE_YINGCATALOGDETAIL, 
     GET_YINGSETREFERENCE, SET_CHANGEDORDERSETREFERENCE, UPDATE_ORDERSETREFERENCE, DELETE_CATALOGNAME, FETCH_SOMENAME, SET_SHAREDYINGSET, DELETE_YINGSET,
-    SET_EDITITEMDETAILS, FETCH_ALLPDF, FETCH_EXCELFILE
+    SET_EDITITEMDETAILS, FETCH_ALLPDF, FETCH_EXCELFILE, SET_SETCURRENCY
 } from '../constants/yingConstants';
 
 export function getYingName(params){
@@ -303,9 +303,9 @@ export function setEditItemDetails(value){
     }
 }
 
-export function getAllPDF(id){
+export function getAllPDF(id, lng){
     const token = sessionStorage.token;
-    let url = `${ROOT_URL}/api/catalog/yingcatalog/getallpdf/${id}`;
+    let url = `${ROOT_URL}/api/catalog/yingcatalog/getallpdf/${id}/${lng}`;
 
     return {
         type: FETCH_ALLPDF,
@@ -334,5 +334,12 @@ export function getExcel(id){
                 'Authorization': token
             },
         })
+    }
+}
+
+export function changedSetCurrency(value){
+    return {
+        type: SET_SETCURRENCY,
+        setCurrency: value
     }
 }

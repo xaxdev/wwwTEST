@@ -26,7 +26,7 @@ class ModalMyCatalog extends Component {
                         <button type="button" className="btn btn-default btn-radius" onClick={isClose}>
                             No
                         </button>
-                        </div>
+                    </div>
                 </Modal>
             </div>
         )
