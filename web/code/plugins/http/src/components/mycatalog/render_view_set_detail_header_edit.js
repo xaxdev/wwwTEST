@@ -15,8 +15,8 @@ class RenderViewSetDetailHeaderEdit extends Component {
     componentWillMount = _=>{
         const { yingCatalogDetail } = this.props;
         if (!!yingCatalogDetail) {
-            const { setReference, setDescription, suiteName, romanceNote } = yingCatalogDetail;
-            initData(this.props.fields, setReference, setDescription, suiteName, romanceNote)   
+            const { setReference, setDescription, suiteName, romanceNote, setCurrency } = yingCatalogDetail;
+            initData(this.props.fields, setReference, setDescription, suiteName, romanceNote, setCurrency)   
         }
     }
 
@@ -55,9 +55,15 @@ class RenderViewSetDetailHeaderEdit extends Component {
         reader.readAsDataURL(file)    
     }
 
+    changedSetCurrency = (e) =>{
+        const {  fields: { setCurrency }, props } = this.props;
+        setCurrency.onChange(e.target.value)
+        props.changedSetCurrency(e.target.value);
+    }
+
     render = _ => {
-        const { yingCatalogDetail, yingCatalogDetailStatus, 
-            fields: { editSetReferenceNumber, editSetDescription, editSuiteName, editRomanceNote, editSetImages }
+        const { yingCatalogDetail, yingCatalogDetailStatus, displayCurrency, 
+            fields: { editSetReferenceNumber, editSetDescription, editSuiteName, editRomanceNote, editSetImages, setCurrency }
         } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { currency } = userLogin
@@ -75,6 +81,9 @@ class RenderViewSetDetailHeaderEdit extends Component {
 
         if (yingCatalogDetailStatus) {
             const { items, setImages } = yingCatalogDetail;
+            const displaySetCurrency = displayCurrency == '' 
+            ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
+            : displayCurrency
             const summaryItem = items.reduce(summaryListItem, summary);
             const {totalItem, totalRetailPrice, totalUpdatedCost, highestRetailPrice, lowestRetailPrice, averageRetailPrice} = summaryItem;  
 
@@ -107,30 +116,30 @@ class RenderViewSetDetailHeaderEdit extends Component {
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
                                             <span className="font-b fc-000">Total Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(totalRetailPrice) } { currency }</span>
+                                            <span className="font-w9">{ numberFormat(totalRetailPrice) } { displaySetCurrency }</span>
                                         </span>
                                         <span className={`${(userLogin.permission.price == 'Updated'
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
                                             <span className="padding-lf15">|</span>
                                             <span className="font-b fc-000">Total Updated Cost :</span>
-                                            <span className="font-w9">{ numberFormat(totalUpdatedCost) } { currency }</span>
+                                            <span className="font-w9">{ numberFormat(totalUpdatedCost) } { displaySetCurrency }</span>
                                         </span>
                                     </div>
                                     <div id="dvTotalsub2" className="bg-f7d886 text-center">
                                         <span>
                                             <span className="font-b fc-000">Highest Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(highestRetailPrice) } { currency } </span>
+                                            <span className="font-w9">{ numberFormat(highestRetailPrice) } { displaySetCurrency } </span>
                                             <span className="padding-lf15">|</span>
                                         </span>
                                         <span>
                                             <span className="font-b fc-000">Lowest Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(lowestRetailPrice) } { currency } </span>
+                                            <span className="font-w9">{ numberFormat(lowestRetailPrice) } { displaySetCurrency } </span>
                                             <span className="padding-lf15">|</span>
                                         </span>
                                         <span>
                                             <span className="font-b fc-000">Average Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(averageRetailPrice) } { currency } </span>
+                                            <span className="font-w9">{ numberFormat(averageRetailPrice) } { displaySetCurrency } </span>
                                         </span>
                                     </div>
                                 </div>
@@ -162,6 +171,20 @@ class RenderViewSetDetailHeaderEdit extends Component {
                                             </div>
                                         </div>
                                         <div className="form-group">
+                                            <label className="col-sm-4 control-label">Currency</label>
+                                            <div className="col-sm-7">
+                                                <select className="form-control " {...setCurrency} onChange={this.changedSetCurrency}>
+                                                    <option key={''} value={''}>{'Please select currency'}</option>
+                                                    <option key="AED" value="AED">AED</option>
+                                                    <option key="JOD" value="JOD">JOD</option>
+                                                    <option key="LBP" value="LBP">LBP</option>
+                                                    <option key="OMR" value="OMR">OMR</option>
+                                                    <option key="SAR" value="SAR">SAR</option>
+                                                    <option key="USD" value="USD">USD</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
                                             <label className="col-sm-4 control-label">Attachment Image Set</label>
                                             <div className="col-sm-7">
                                                 <input id="fileEdit" type="file" field={editSetImages} onChange={this.readFile}/>
@@ -186,6 +209,7 @@ class RenderViewSetDetailHeaderEdit extends Component {
                 </div>
             )
         } else {
+            const displaySetCurrency = displayCurrency == ''? currency: displayCurrency
             return(
                 <div className="row">
                     <div className="col-sm-12">
@@ -203,30 +227,30 @@ class RenderViewSetDetailHeaderEdit extends Component {
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
                                             <span className="font-b fc-000">Total Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(0) } { currency }</span>
+                                            <span className="font-w9">{ numberFormat(0) } { displaySetCurrency }</span>
                                         </span>
                                         <span className={`${(userLogin.permission.price == 'Updated'
                                             || userLogin.permission.price == 'All') ?
                                             '' : 'hidden'}`}>
                                             <span className="padding-lf15">|</span>
                                             <span className="font-b fc-000">Total Updated Cost :</span>
-                                            <span className="font-w9">{ numberFormat(0) } { currency }</span>
+                                            <span className="font-w9">{ numberFormat(0) } { displaySetCurrency }</span>
                                         </span>
                                     </div>
                                     <div id="dvTotalsub2" className="bg-f7d886 text-center">
                                         <span>
                                             <span className="font-b fc-000">Highest Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(0) } { currency } </span>
+                                            <span className="font-w9">{ numberFormat(0) } { displaySetCurrency } </span>
                                             <span className="padding-lf15">|</span>
                                         </span>
                                         <span>
                                             <span className="font-b fc-000">Lowest Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(0) } { currency } </span>
+                                            <span className="font-w9">{ numberFormat(0) } { displaySetCurrency } </span>
                                             <span className="padding-lf15">|</span>
                                         </span>
                                         <span>
                                             <span className="font-b fc-000">Average Retail Price :</span>
-                                            <span className="font-w9">{ numberFormat(0) } { currency } </span>
+                                            <span className="font-w9">{ numberFormat(0) } { displaySetCurrency } </span>
                                         </span>
                                     </div>
                                 </div>
@@ -255,6 +279,20 @@ class RenderViewSetDetailHeaderEdit extends Component {
                                             <label className="col-sm-4 control-label">Romance Note</label>
                                             <div className="col-sm-7">
                                                 <input type="text" className="form-control" placeholder="Enter Romance Note"/>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="col-sm-4 control-label">Currency</label>
+                                            <div className="col-sm-7">
+                                                <select className="form-control ">
+                                                    <option key={''} value={''}>{'Please select currency'}</option>
+                                                    <option key="AED" value="AED">AED</option>
+                                                    <option key="JOD" value="JOD">JOD</option>
+                                                    <option key="LBP" value="LBP">LBP</option>
+                                                    <option key="OMR" value="OMR">OMR</option>
+                                                    <option key="SAR" value="SAR">SAR</option>
+                                                    <option key="USD" value="USD">USD</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div className="form-group">
@@ -301,10 +339,11 @@ const summaryListItem = (summary, item) =>{
     return newSummary
 }
 
-const initData = (fields, _setReference, _setDescription, _suiteName, _romanceNote)=>{
-    const { editSetReferenceNumber, editSetDescription, editSuiteName, editRomanceNote } = fields;
+const initData = (fields, _setReference, _setDescription, _suiteName, _romanceNote, _setCurrency)=>{
+    const { editSetReferenceNumber, editSetDescription, editSuiteName, editRomanceNote, setCurrency } = fields;
     editSetReferenceNumber.onChange(_setReference);
     editSetDescription.onChange(_setDescription);
     editSuiteName.onChange(_suiteName);
     editRomanceNote.onChange(_romanceNote);
+    setCurrency.onChange(_setCurrency);
 }

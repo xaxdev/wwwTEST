@@ -51,7 +51,7 @@ exports.id = {
             const db = request.mongo.db
             const ObjectID = request.mongo.ObjectID
             const id = request.params.id
-            const { setDescription, setReference, suiteName, romanceNote, setImages, address, remark, items } = request.payload
+            const { setDescription, setReference, suiteName, romanceNote, setImages, address, remark, items, setCurrency } = request.payload
 
             const existingCatalog = await db.collection('YingCatalogDetail')
             .find({
@@ -75,6 +75,7 @@ exports.id = {
                         'suiteName': suiteName,
                         'romanceNote': romanceNote,
                         'setImages': setImages,
+                        'setCurrency': setCurrency,
                         'address': address,
                         'remark': remark,
                         'items': items,

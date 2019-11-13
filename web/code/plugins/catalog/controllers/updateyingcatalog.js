@@ -9,7 +9,7 @@ export default {
             const db = request.mongo.db
             const ObjectID = request.mongo.ObjectID
             const id = request.params.id
-            const { setDescription, setReference, suiteName, romanceNote, setImages, address, remark, items } = request.payload
+            const { setDescription, setReference, suiteName, romanceNote, setImages, address, remark, items, setCurrency } = request.payload
 
             const findExist = await db.collection('YingCatalogDetail').find({ 'yingCatalogId' : id, 'setReference': setReference}).toArray()
             if (findExist.length == 0) return reply(Boom.badRequest('Invalid Ying CatalogId.'))
@@ -27,6 +27,7 @@ export default {
                         'suiteName': suiteName != '' ? suiteName : findExist[0].suiteName,
                         'romanceNote': romanceNote != '' ? romanceNote : findExist[0].romanceNote,
                         'setImages': setImages != '' ? setImages : findExist[0].setImages,
+                        'setCurrency': setCurrency != '' ? setCurrency : findExist[0].setCurrency,
                         'address': address != '' ? address : findExist[0].address,
                         'remark': remark != '' ? remark : findExist[0].remark,
                         'items': items.length != 0 ? items : findExist[0].items,

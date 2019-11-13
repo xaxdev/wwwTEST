@@ -330,6 +330,8 @@ function createTable(doc, data, lng, width = 500) {
                         break;
                     case 2:
                         //Description
+                        console.log({lng});
+                        console.log({text});
                         if (lng == 'eng') {
                             doc
                             .fontSize(8)
