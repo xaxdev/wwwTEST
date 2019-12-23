@@ -117,7 +117,8 @@ export default {
                 );
 
                 emailBody = '';
-                emailBody = `${owner.firstName} ${owner.lastName} shared with you "${catalogName.catalog}"`;
+                emailBody = `${owner.firstName} ${owner.lastName} shared a catalog with you. 
+                            (${catalogName.catalog})`;
                 await notify('');
 
                 return reply({error:'',message:'Share catalog success.',statusCode:200});
