@@ -78,7 +78,10 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
 
             if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' && key != 'pageSize'
                 && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' && key != 'viewAsSet' && key != 'ItemsSalesOrder' && key != 'SetReferenceSalesOrder'
-                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice' && key != 'typeFile' && key != 'customerSearch'
+                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice' && key != 'typeFile' && key != 'customerSearch' && key != 'jlySalesHierarchy' 
+                && key != 'watSalesHierarchy' && key != 'stoSalesHierarchy' && key != 'accSalesHierarchy' && key != 'obaSalesHierarchy' && key != 'sppSalesHierarchy'
+                && key != 'jewelryProductSalesHierarchy' && key != 'watchProductSalesHierarchy' && key != 'stoneProductSalesHierarchy' 
+                && key != 'accessoryProductSalesHierarchy' && key != 'obaProductSalesHierarchy' && key != 'sparePartProductSalesHierarchy'
             ){
                 if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency' || key == 'polish' || key == 'mustHave'
                     || key == 'symmetry' || key == 'treatment' || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
