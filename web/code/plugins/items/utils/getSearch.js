@@ -76,7 +76,8 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
 
             if(key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'userCurrency' && key != 'fields' && key != 'price' && key != 'pageSize'
                 && key != 'ROOT_URL' && key != 'userName' && key != 'userEmail' && key != 'viewAsSet' && key != 'ItemsOrder' && key != 'SetReferencdOrder'
-                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice' && key != 'typeFile' && key != 'titleColumn'
+                && key != 'env' && key != 'viewType' && key != 'userPermissionPrice' && key != 'typeFile' && key != 'titleColumn' && key != 'jlyHierarchy' 
+                && key != 'watHierarchy' && key != 'stoHierarchy' && key != 'accHierarchy' && key != 'obaHierarchy' && key != 'sppHierarchy'
             ){
                 if(key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'certificateAgency' || key == 'polish' || key == 'origin'
                     || key == 'symmetry' || key == 'treatment' || key == 'fluorescence' || key == 'jewelryCategory' || key == 'collection' || key == 'brand'
