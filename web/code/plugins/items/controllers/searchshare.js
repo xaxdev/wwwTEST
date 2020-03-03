@@ -1,10 +1,15 @@
 import Boom from 'boom'
 import Joi from 'joi'
 import _  from 'lodash'
+import moment from 'moment-timezone'
+import sendgrid from 'sendgrid'
+import sendgridConfig from '../sendgrid.json'
 
 const shareduser = Joi.object().keys({
     email: Joi.string().required()
 });
+
+let userEmail = [];
 
 module.exports = {
     auth: {
@@ -19,6 +24,49 @@ module.exports = {
     handler: (request, reply) => {
 
         (async () => {
+
+            let emailBody = '';
+            userEmail = [];
+
+            const notify = err => new Promise((resolve, reject) => {                
+                const time = moment().tz('Asia/Bangkok').format()
+                const subject = (!!err)? `Failed share save search  ${time}` : `Succeeded share save search ${time}`
+                const sg = sendgrid(sendgridConfig.key)
+                const request = sg.emptyRequest()
+
+                request.method = 'POST'
+                request.path = '/v3/mail/send'
+                request.body = {
+                    personalizations: [
+                        {
+                            to: userEmail,
+                            subject
+                        }
+                    ],
+                    from: {
+                        email: 'dev@itorama.com',
+                        name: 'Mouawad Admin'
+                    },
+                    content: [
+                        {
+                            type: 'text/plain',
+                            value: (!!err)? err.message : emailBody
+                        }
+                    ]
+                };
+
+                sg
+                    .API(request)
+                    .then(response => {
+                        console.log(response.statusCode)
+                        console.log(response.body)
+                        console.log(response.headers)
+                        return resolve()
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            });
 
             try {
                 const db = request.mongo.db
@@ -37,10 +85,10 @@ module.exports = {
                 if (!!sharedMe) return reply(Boom.badRequest('Share yourself is denied.'))
 
                 const findShared = await db.collection('SearchCriteria').findOne(
-                    {
-                        '_id': new ObjectID(searchId),
-                        'owner': owner.id
-                    })
+                {
+                    '_id': new ObjectID(searchId),
+                    'owner': owner.id
+                })
 
                 if (findShared !== null) {
                     const sharedUser = typeof(findShared.users) !== 'undefined' ? findShared.users : []
@@ -64,9 +112,15 @@ module.exports = {
                     }
                 )
 
+                emailBody = '';
+                emailBody = `${owner.firstName} ${owner.lastName} shared a save search with you. 
+                            Save search name (${findShared.name})`;
+                await notify('');
+
                 return reply({error:'',message:'Shared save search success.',statusCode:200});
             } catch (e) {
-
+                console.log(e)
+                notify(e);
                 return reply(Boom.badImplementation('', e))
             }
         })();
@@ -75,6 +129,7 @@ module.exports = {
 
 const findByEmail = (email, UsersDB, ids) => new Promise((resolve, reject) => {
     ids.push(email)
+    userEmail.push({email})
     return resolve(ids);
 });
 
