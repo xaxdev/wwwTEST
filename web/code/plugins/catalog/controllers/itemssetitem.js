@@ -2,8 +2,6 @@ import Joi from 'joi'
 import Boom from 'boom'
 import Elasticsearch from 'elasticsearch'
 import constants from '../constants'
-// const _ = require('lodash');
-import lodash from 'lodash';
 
 export default {
     auth: {
@@ -54,6 +52,7 @@ export default {
                         }
                     }
                 ])
+
                 const [catalog] = await cursor.toArray()
 
                 if (!!catalog) {
@@ -89,16 +88,14 @@ export default {
                     const dataWithSetItems = data.filter((item) => { return item.id === null })
                     const dispItems = dataSorted.filter((item) => { return item.id !== null })
                     const dispSetItems = dataSorted.filter((item) => { return item.id === null })
-                    const user = await request.user.getUserById(request, request.auth.credentials.id)
 
                     total_pages = Math.ceil(data.length/size)
                     total_items = dataWithItems.length;
                     total_setitems = dataWithSetItems.length;
 
                     if (!!dataWithItems.length && dataWithItems.length > 0) {
-                        const es = await client.search(request.helper.item.parameters(dataWithItems))
-                        let inventory = await request.helper.item.inventory(dataWithItems, es)
-                        let all = await request.helper.item.authorization(user, inventory)
+                        let all = await parallelize(request, dataWithItems)
+                        
                         responseAllItems.push(...all);
                         all = all.filter((item) => {
                             return item.price > -1
@@ -110,32 +107,27 @@ export default {
                     }
 
                     if (!!dataWithSetItems.length && dataWithSetItems.length > 0) {
-                        const esSetItems = await client.search(request.helper.setitem.parameters(dataWithSetItems))
-                        let inventorySetItems = await request.helper.setitem.inventory(dataWithSetItems, esSetItems)
-                        const allSetItem = await request.helper.setitem.authorization(user, inventorySetItems)
+                        let allSetItem = await parallelize(request, dataWithSetItems)
+
                         setItemPrice = allSetItem.reduce((previous, current) => previous + (!!current.totalPrice ? current.totalPrice.USD : 0), 0)
                         setItemUpdatedCost = allSetItem.reduce((previous, current) => previous + (!!current.totalUpdatedCost ? current.totalUpdatedCost.USD : 0), 0)
                         responseAllItems.push(...allSetItem);
                     }
 
                     if (!!dispItems.length && dispItems.length > 0) {
-                        const es = await client.search(request.helper.item.parameters(dispItems))
-                        let inventory = await request.helper.item.inventory(dispItems, es)
-                        const items = await request.helper.item.authorization(user, inventory)
+                        const items = await parallelize(request, dispItems)
 
                         response.push(...items)
                     }
-
+                    
                     if (!!dispSetItems.length && dispSetItems.length > 0) {
-                        const esSetItems = await client.search(request.helper.setitem.parameters(dispSetItems))
-                        let inventorySetItems = await request.helper.setitem.inventory(dispSetItems, esSetItems)
-                        const itemsSetitem = await request.helper.setitem.authorization(user, inventorySetItems)
+                        const itemsSetitem = await parallelize(request, dispSetItems)
 
                         response.push(...itemsSetitem)
                     }
                     
                     response = response.sort(compareBy(sort,order == -1?'desc':'asc'));
-
+                    
                     return reply({ ...catalog, price, updatedCost, setItemPrice, setItemUpdatedCost, page,
                         total_items, total_pages, total_setitems, 'items': response, 'allItems': responseAllItems })
                 }
@@ -150,51 +142,10 @@ export default {
     }
 }
 
-/**
-     * @description
-     * Returns a function which will sort an
-     * array of objects by the given key.
-     *
-     * @param  {String}  key
-     * @param  {Boolean} reverse
-     * @return {Function}
- */
-function sortBy(key, reverse) {
-    // Move smaller items towards the front
-    // or back of the array depending on if
-    // we want to sort the array in reverse
-    // order or not.
-    const moveSmaller = reverse ? 1 : -1;
-
-    // Move larger items towards the front
-    // or back of the array depending on if
-    // we want to sort the array in reverse
-    // order or not.
-    const moveLarger = reverse ? -1 : 1;
-
-    /**
-     * @param  {*} a
-     * @param  {*} b
-     * @return {Number}
-     */
-
-     return function(a, b) {
-         if (a[key] < b[key]) {
-             return moveSmaller;
-         }
-         if (a[key] > b[key]) {
-             return moveLarger;
-         }
-         return 0;
-     };
-}
-
 const compareBy = (property, order = 'asc') => (a, b) => {
     if(!a.hasOwnProperty(property) || !b.hasOwnProperty(property)) {
         return 0;
     }
-    let priceA = 0;
-    let priceB = 0;
     const first = (property.toLowerCase().indexOf('priceInUSD') != -1 || property.toLowerCase().indexOf('netamount') != -1)
                     ? a[property] != undefined
                         ? a[property] != undefined ? a[property] : 0
@@ -219,4 +170,33 @@ const compareBy = (property, order = 'asc') => (a, b) => {
     }
 
     return (order === 'desc')? (comparison * -1) : comparison
+}
+
+const parallelize = async (request, items) => {
+    try {
+        const client = new Elasticsearch.Client({
+            host: request.elasticsearch.host,
+            keepAlive: false
+        })
+
+        const size = 900;
+        const range = items.length;
+        const rounds = Math.ceil((range - 0 + 1) / size);
+        const inventories = [];
+
+        for (let i = 0; i < rounds; i++) {
+            const from =  (i * size);
+            const to = (i * size) + size - 1;
+            const itemsSlice = items.slice(from,to+1)
+            const es = await client.search(request.helper.item.parameters(itemsSlice))
+            const inventory = await request.helper.item.inventory(itemsSlice, es)
+            inventories.push(...inventory)
+        }
+        const user = await request.user.getUserById(request, request.auth.credentials.id)
+        const response = await request.helper.item.authorization(user, inventories)
+        
+        return response;
+    } catch (error) {
+        throw error;
+    }
 }

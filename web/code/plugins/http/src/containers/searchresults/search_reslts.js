@@ -25,6 +25,7 @@ import RenderExportExcelViewAsSetDialog from './utils/render_export_excel_viewas
 import ModalPrintOptions from './utils/modalPrintOptions';
 import SearchResultLoader from './search_results_loader';
 import SearchResultOnItem from './search_results_noitem';
+import ModalLoader from './utils/modalLoader';
 
 const _ = require('lodash');
 const Loading = require('react-loading');
@@ -98,7 +99,8 @@ class SearchResult extends Component {
             showLoading: false, isOpenAddMyCatalog: false, enabledMyCatalog:false, isOpenAddMyCatalogmsg: false, isOpenPrintPdfmsg: false, createdDate: false,
             isOpenMsgPageInvalid: false, checkAllItems: false, allFieldsViewAsSet: false, showImagesViewAsSet: false, isOpenViewAsSet: false, totalActualCost: false,
             totalUpdatedCost: false, totalPrice: false, markup: false, companyName: false, warehouseName: false, isOpenPrintOptions: false,
-            isOpenCannotAddMyCatalogmsg: false, isOpenChangeTitle: false, specialDiscountPercent: false
+            isOpenCannotAddMyCatalogmsg: false, isOpenChangeTitle: false, specialDiscountPercent: false, isOpenCannotAddMyCatalogOther: false, message: '',
+            showLoadingAddCatalog: false
         };
     }
 
@@ -1142,17 +1144,27 @@ class SearchResult extends Component {
             }
         } else {
             if (!!oldCatalogName.value || !!newCatalogName.value) {
+                this.setState({ showLoadingAddCatalog: true });
                 this.props.addCatalog(catalogdata).then(async () =>{
+                    this.setState({ showLoadingAddCatalog: false });
+                    const status = this.props.addCatalogStatus;
+
                     newCatalogName.value = '';
                     oldCatalogName.value = '';
                     newCatalogName.onChange('');
                     oldCatalogName.onChange('');
 
-                    this.setState({isOpenAddMyCatalogmsg: true});
-                    this.setState({enabledMyCatalog: false});
+                    if (status != 200) {
+                        this.setState({message: this.props.addCatalogMessage});
+                        this.setState({isOpenCannotAddMyCatalogOther: true});
+                    } else {
+                        this.setState({isOpenAddMyCatalogmsg: true});
+                        this.setState({enabledMyCatalog: false});
+                    }
+
                     await this.props.getCatalogNameSetItem();
                     await this.props.getSetCatalogName();
-                    await this.props.getYingNameAll();
+                    await this.props.getYingNameAll();                    
                 })
             }else if (!!oldSetReference.value) {
                 const yingParams = {
@@ -1194,16 +1206,37 @@ class SearchResult extends Component {
         const title = 'SEARCH RESULTS';
         return(
             <Modalalertmsg isOpen={this.state.isOpenAddMyCatalogmsg} isClose={this.handleClosemsg}
-                props={this.props} message={message}  title={title}/>
+                props={this.props} message={message} title={title}/>
         );
     }
 
     renderAlertmsgNotAddToCatalog = _=> {
-        const message = 'Cannot add to catalog success';
+        const message = 'Cannot add to catalog';
         const title = 'SEARCH RESULTS';
         return(
             <Modalalertmsg isOpen={this.state.isOpenCannotAddMyCatalogmsg} isClose={this.handleClosemsgCannotAddMyCatalog}
-                props={this.props} message={message}  title={title}/>
+                props={this.props} message={message} title={title}/>
+        );
+    }
+
+    renderAlertmsgNotAddToCatalogOther = _=> {
+        const { addCatalogStatus } = this.props;
+        let messageOther = ''
+        if (addCatalogStatus != 200) {
+            if (addCatalogStatus == undefined) {
+                messageOther = 'Add to catalog success';
+            }
+            if (addCatalogStatus != undefined) {
+                messageOther = `Cannot add to catalog. ${this.state.message}`;
+            }
+        }
+        if (addCatalogStatus == 200) {
+            messageOther = 'Add to catalog success';
+        }
+        const title = 'SEARCH RESULTS';
+        return(
+            <Modalalertmsg isOpen={this.state.isOpenCannotAddMyCatalogOther} isClose={this.handleClosemsgCannotAddMyCatalogOther}
+                props={this.props} message={messageOther} title={title}/>
         );
     }
 
@@ -1227,6 +1260,10 @@ class SearchResult extends Component {
 
     handleClosemsgCannotAddMyCatalog = _=>{
         this.setState({isOpenCannotAddMyCatalogmsg: false});
+    }
+
+    handleClosemsgCannotAddMyCatalogOther = _=>{
+        this.setState({isOpenCannotAddMyCatalogOther: false});
     }
 
     handleClosePdfmsg = _=>{
@@ -1333,6 +1370,12 @@ class SearchResult extends Component {
                 </div>
             );
         }
+    }
+
+    renderLoaderAddCatalog = _=>{
+        return (
+            <ModalLoader isOpen={this.state.showLoadingAddCatalog}/>
+        )
     }
 
     render() {
@@ -1546,10 +1589,12 @@ class SearchResult extends Component {
                         {this.renderAddMyCatalog()}
                         {this.renderAlertmsg()}
                         {this.renderAlertmsgNotAddToCatalog()}
+                        {this.renderAlertmsgNotAddToCatalogOther()}
                         {this.renderAlertmsgPdf()}
                         {this.renderAlertmsgPageInvalid()}
                         {this.renderDialogPrintOptions()}
                         {this.renderTitleDialog()}
+                        {this.renderLoaderAddCatalog()}
                     </form>
                 );
             }
@@ -1569,7 +1614,8 @@ function mapStateToProps(state) {
         ViewAsSet: state.searchResult.viewAsSet, ItemsOrder: state.searchResult.itemsOrder,
         SetReferencdOrder: state.searchResult.setReferenceOrder, listSetCatalogName: state.myCatalog.ListSetCatalogName,
         TitleColumnDb: state.searchResult.titleColumnDb, TitleColumn: state.searchResult.titleColumn, 
-        listYingCatalogName: state.myCatalog.ListYingCatalogName, yingSetReference: state.myCatalog.yingSetReference,
+        listYingCatalogName: state.myCatalog.ListYingCatalogName, yingSetReference: state.myCatalog.yingSetReference, 
+        addCatalogStatus: state.productdetail.statusCode, addCatalogMessage: state.productdetail.message
     }
 }
 SearchResult.propTypes = {
