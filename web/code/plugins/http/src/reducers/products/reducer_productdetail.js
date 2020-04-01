@@ -7,7 +7,7 @@ import { GET_CATALOGNAME} from '../../constants/itemconstants';
 const INITIAL_STATE = {
     detail:'',relete:'',reletepage:1,productlist:null,index:1,indexplus:1,pagego:1,setreference:'',ListCatalogName: [], lotNumbers: [],
     stonActivePage:1,totalpage:null ,stonePageSize:20, activities:[], allData:[],setItemIndex:1,setItemList:[],salessetdetail:'', salessetindexplus:1, salessetpagego:1,
-    salessetproductlist:null, salessettotalpage:null,salessetindex:1
+    salessetproductlist:null, salessettotalpage:null,salessetindex:1, message:'', statusCode: 200
 };
 
 export default function(state = INITIAL_STATE,action){
@@ -73,7 +73,7 @@ export default function(state = INITIAL_STATE,action){
         case FETCH_PRODUCTRELETED:
             return {...state,relete:action.data,reletepage:action.page}
         case ADD_CATALOG:
-            return {...state,message: action.data.statusCode >= 400? action.data.message: ADD_CATALOG_SUCCESS}
+            return {...state,message: action.data.statusCode >= 400? action.data.message: ADD_CATALOG_SUCCESS, statusCode:action.data.statusCode}
         case FETCH_SETREFERENCE:
             return {...state,setreference:action.data}
         case GET_CATALOGNAME :

@@ -366,6 +366,7 @@ class SetCatalog extends Component {
         };
         this.props.setCatalogSortDirection(sortingDirection);
         if (setCatalogId != null) {
+            this.props.setListSetCatalogItems([])
             this.props.getSetCatalogItemsWithSetItem(parasm);
         }
     }
@@ -381,6 +382,7 @@ class SetCatalog extends Component {
         };
         this.props.setSetCatalogSortingBy(sortingBy);
         if (setCatalogId != null) {
+            this.props.setListSetCatalogItems([])
             this.props.getSetCatalogItemsWithSetItem(parasm);
         }
     }
@@ -445,8 +447,8 @@ class SetCatalog extends Component {
             };
             this.props.setCatalogCurrentPage(getPage);
             if (setCatalogId != null) {
-                this.props.getSetCatalogItemsWithSetItem(parasm).then((value) => {
-                });
+                this.props.setListSetCatalogItems([])
+                this.props.getSetCatalogItemsWithSetItem(parasm).then((value) => {});
             }
         }
     }
@@ -463,6 +465,7 @@ class SetCatalog extends Component {
             sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
             order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
         };
+        this.props.setListSetCatalogItems([])
         this.props.getSetCatalogItemsWithSetItem(parasm)
         this.props.setIsCatalogShare(selectedSetCatalog.shared);
     }
@@ -517,6 +520,7 @@ class SetCatalog extends Component {
                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                 };
+                this.props.setListSetCatalogItems([])
                 this.props.getSetCatalogItemsWithSetItem(parasm)
             });
         }
@@ -540,6 +544,7 @@ class SetCatalog extends Component {
                                     sort: (this.props.catalogSortingBy != null)? this.props.catalogSortingBy: 1,
                                     order: (this.props.catalogSortDirection != null)? this.props.catalogSortDirection: -1
                                 };
+                                this.props.setListSetCatalogItems([])
                                 this.props.getSetCatalogItemsWithSetItem(parasm)
                                 this.props.setIsCatalogShare(isCatalogShared);
                             }else{
@@ -728,8 +733,8 @@ class SetCatalog extends Component {
         this.props.setCatalogCurrentPage(getPage);
         this.props.setPageSize(pageSize);
         if (setCatalogId != null) {
-            this.props.getSetCatalogItemsWithSetItem(parasm).then((value) => {
-            });
+            this.props.setListSetCatalogItems([])
+            this.props.getSetCatalogItemsWithSetItem(parasm).then((value) => {});
         }
     }
 
@@ -747,8 +752,8 @@ class SetCatalog extends Component {
         };
         this.props.setCatalogCurrentPage(getPage);
         if (setCatalogId != null) {
-            this.props.getSetCatalogItemsWithSetItem(parasm).then((value) => {
-            });
+            this.props.setListSetCatalogItems([])
+            this.props.getSetCatalogItemsWithSetItem(parasm).then((value) => {});
         }
     }
 
@@ -814,27 +819,26 @@ class SetCatalog extends Component {
                             </div>
                         <div className="col-lg-5 col-md-6 col-sm-12 col-xs-12 nopadding pull-right">
                             <div className="cat-sort col-xs-12 margin-t5">
-                            <ControlLabel>Sort By : </ControlLabel>
+                                <ControlLabel>Sort By : </ControlLabel>
                             </div>
                             <div className="col-md-5 col-sm-3 col-xs-12 nopadding m-bottom-5">
-                            <div className="styled-select-black">
-                                <select onChange={this.changeSortingBy} value={catalogSortingBy}
-                                ref="sortingBy">
-                                <option key={1} value={1}>{'Updated Date'}</option>
-                                <option key={2} value={2}>{'Retail Price'}</option>
-                                <option key={3} value={3}>{'Description'}</option>
-                                <option key={4} value={4}>{'Set Reference Number'}</option>
-                                </select>
-                            </div>
+                                <div className="styled-select-black">
+                                    <select onChange={this.changeSortingBy} value={catalogSortingBy} ref="sortingBy">
+                                        <option key={1} value={1}>{'Updated Date'}</option>
+                                        <option key={2} value={2}>{'Retail Price'}</option>
+                                        <option key={3} value={3}>{'Description'}</option>
+                                        <option key={4} value={4}>{'Set Reference Number'}</option>
+                                    </select>
+                                </div>
                             </div>
                             <div className="col-md-5 col-sm-3 col-xs-12 nopadding margin-l10 m-margin-xs m-bottom-5">
-                            <div className="styled-select-black">
-                                <select onChange={this.changeSortingDirection} value={catalogSortDirection}
-                                    ref="sortingDirection">
-                                    <option key={-1} value={-1}>{'Descending'}</option>
-                                    <option key={1} value={1}>{'Ascending'}</option>
-                                </select>
-                            </div>
+                                <div className="styled-select-black">
+                                    <select onChange={this.changeSortingDirection} value={catalogSortDirection}
+                                        ref="sortingDirection">
+                                        <option key={-1} value={-1}>{'Descending'}</option>
+                                        <option key={1} value={1}>{'Ascending'}</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -863,21 +867,30 @@ class SetCatalog extends Component {
                             <span className="margin-l5 text-del">Delete Items</span>
                         </div>
                         <div className="pull-right maring-b10">
-                                <div className="pull-left padding-r10 margin-t7">View</div>
-                                <div className="pull-left">
-                                    <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
+                            <div className="pull-left padding-r10 margin-t7">View</div>
+                            <div className="pull-left">
+                                <select className="form-control" onChange={ this.selectedPageSize } ref="pageSize">
                                     <option key="16" value="16">16</option>
                                     <option key="32" value="32">32</option>
                                     <option key="60" value="60">60</option>
-                                    </select>
-                                </div>
-                                <div className="pull-left padding-l10 margin-t7 margin-r10">
+                                </select>
+                            </div>
+                            <div className="pull-left padding-l10 margin-t7 margin-r10">
                                 per page
-                                </div>
-                                <div className="searchresult-navi cat-go">
-                                    {this.renderPagination()}
-                                </div>
+                            </div>
+                            <div className="searchresult-navi cat-go">
+                                {this.renderPagination()}
+                            </div>
                         </div>
+                    </div>
+                    <div className={`${items.length == 0  ? '' : 'hidden'}`}>
+                        <center>
+                            <br/>
+                            <h3>Please wait....</h3>
+                            <br/>
+                            <Loading type="spin" color="#202020" width="10%"/>
+                            <br/><br/><br/><br/>
+                        </center>
                     </div>
                     <div className="panel panel-default">
                         <div className="panel-body padding-ft0">
