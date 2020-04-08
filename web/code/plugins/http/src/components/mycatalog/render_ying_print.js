@@ -18,6 +18,7 @@ class YingPrint extends Component {
                 imagesUrl = `http://${ROOT_URL}/images/products/original/${setImages}`;   
             }
             const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInHomeCurrency) || 0), 0);
+            const totalNetVatPrice = items.reduce((prev, curr) => prev + (Number(curr.netVatPrice) || 0), 0);
 
             const styles = {
                 ying_img_logo: { 
@@ -214,10 +215,11 @@ class YingPrint extends Component {
                                 <table style={styles.ying_table_set_detail} cellSpacing="0">
                                     <tbody>
                                         <tr style={styles.ying_tr_height_22}>
-                                            <td style={styles.ying_td_width_27}><p style={styles.s1_ying} style={styles.ying_id}><strong><span style={styles.s1_ying}>لسلستلا</span></strong></p></td>
-                                            <td style={styles.ying_td_width_116}><p style={styles.s1_ying} style={styles.ying_reference} ><strong><span style={styles.s1_ying}>ةعطقلا مقر</span></strong></p></td>
-                                            <td style={styles.ying_td_width_240}><p style={styles.s1_ying} style={styles.ying_description}><strong><span style={styles.s1_ying}>تافصاوملا</span></strong></p></td>
-                                            <td style={styles.ying_td_width_74}><p style={styles.s1_ying} style={styles.ying_price}><strong><span style={styles.s1_ying}>يلامجﻹا غلبملا</span></strong></p></td>
+                                            <td style={styles.ying_td_width_27}><img width="40" height="25" alt="image" src="/images/order.png"/></td>
+                                            <td style={styles.ying_td_width_116}><img width="150" height="35" alt="image" src="/images/skunumber.png"/></td>
+                                            <td style={styles.ying_td_width_240}><img width="240" height="35" alt="image" src="/images/description.png"/></td>
+                                            <td style={styles.ying_td_width_74}><img width="95" height="30" alt="image" src="/images/pp.png"/></td>
+                                            <td style={styles.ying_td_width_74}><img width="100" height="30" alt="image" src="/images/net.png"/></td>
                                         </tr>
                                         {items.map((item,index)=>{
                                             if (item.itemDescriptionLanguage == 'arb') {
@@ -227,6 +229,7 @@ class YingPrint extends Component {
                                                         <td style={styles.ying_td_width_116}><p style={styles.s1_ying} style={styles.ying_reference} ><span style={styles.s1_ying}>{item.reference}</span></p></td>
                                                         <td style={styles.ying_td_width_240}><p style={styles.s1_ying} style={styles.ying_description_item} ><strong><span style={styles.s1_ying}>{item.description}</span></strong></p></td>
                                                         <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
+                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.netVatPrice)}</span></strong></p></td>
                                                     </tr>
                                                 )
                                             } else {
@@ -236,13 +239,15 @@ class YingPrint extends Component {
                                                         <td style={styles.ying_td_width_116}><p style={styles.s1_ying} style={styles.ying_reference} ><span style={styles.s1_ying}>{item.reference}</span></p></td>
                                                         <td style={styles.ying_td_width_240}><p style={styles.s1_ying} style={styles.ying_description_item_left} ><strong><span style={styles.s1_ying}>{item.description}</span></strong></p></td>
                                                         <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
+                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.netVatPrice)}</span></strong></p></td>
                                                     </tr>
                                                 )
                                             }
                                         })}
                                         <tr style={styles.ying_tr_height_17}>
-                                            <td style={styles.ying_td_width_383} colSpan="3"><p style={styles.s1_ying} style={styles.ying_total}><strong><span style={styles.s1_ying}>Total / عومجملا</span></strong></p></td>
+                                            <td style={styles.ying_td_width_383} colSpan="3"><p style={styles.s1_ying} style={styles.ying_total}><strong><span style={styles.s1_ying}>Total / المجموع</span></strong></p></td>
                                             <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_footer_total} ><strong><span style={styles.s1_ying}>{numberFormat(totalPrice)}</span></strong></p></td>
+                                            <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_footer_total} ><strong><span style={styles.s1_ying}>{numberFormat(totalNetVatPrice)}</span></strong></p></td>
                                         </tr>
                                     </tbody>
                                 </table>
