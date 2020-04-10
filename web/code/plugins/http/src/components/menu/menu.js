@@ -85,11 +85,11 @@ class Menu extends Component {
                 props.currentLocation.indexOf('productmycatalog') != -1 ||
                 props.currentLocation.indexOf('setdetailsetcatalog') != -1
             )?'active': ''}`} onClick={this.handleClickSetCatalog}>Set Catalog</NavItem>
-            <NavItem href="/yingcatalog" className={`${(
+            {/* <NavItem href="/yingcatalog" className={`${(
                 props.currentLocation == '/yingcatalog' ||
                 props.currentLocation.indexOf('productmycatalog') != -1 ||
                 props.currentLocation.indexOf('setdetailsetcatalog') != -1
-            )?'active': ''}`} onClick={this.handleClickYingCatalog}>Ying Catalog</NavItem>
+            )?'active': ''}`} onClick={this.handleClickYingCatalog}>Ying Catalog</NavItem> */}
         </NavDropdown>
         :<NavDropdown id="catalog" title="Catalog" className={`${(permission.userType != 'Sales')?'':'hidden'}`}>
             <NavItem href="/mycatalog" className={`${(

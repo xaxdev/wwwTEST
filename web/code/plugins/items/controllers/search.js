@@ -45,15 +45,15 @@ module.exports = {
             if (!!clarityFields.find((key) => {return key == 'clarity'})) {
                 const clarities = valusObj.clarity.split(',');
                 clarities.map((clar) => {
-                    internals.query = GetSearch(request, 0, 100000,clar);
+                    internals.query = GetSearch(request, 0, 100000, clar);
                     ps.push(getClarityItems(internals.query));
                 })
             }else{
-                internals.query = GetSearch(request, 0, 100000,null);
+                internals.query = GetSearch(request, 0, 100000, null);
                 ps.push(getClarityItems(internals.query));
             }
         }else{
-            internals.query = GetSearch(request, 0, 100000,null);
+            internals.query = GetSearch(request, 0, 100000, null);
             ps.push(getClarityItems(internals.query));
         }
 
