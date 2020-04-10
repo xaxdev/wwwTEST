@@ -84,7 +84,7 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                     || key == 'mustHave' || key == 'ringSize' || key == 'dominantStone' || key == 'metalType' || key == 'metalColour' || key == 'watchCategory'
                     || key == 'limitedEdition' || key == 'movement' || key == 'dialIndex' || key == 'dialColor' || key == 'dialMetal' || key == 'buckleType'
                     || key == 'strapType' || key == 'strapColor' || key == 'complication' || key == 'warehouse' || key == 'location' || key=='certificatedNumber'
-                    || key == 'article'
+                    || key == 'article' || key == 'accessoryType' || key == 'sparePartType'
                 ){
                     if(key == 'metalColour')
                         key = 'metalColor'
@@ -102,6 +102,10 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
                         key = 'subType'
                     if(key == 'article')
                         key = 'articleGrouping'
+                    if(key == 'accessoryType')
+                        key = 'subType'
+                    if(key == 'sparePartType')
+                        key = 'subType'
 
                     filter =
                     `{
