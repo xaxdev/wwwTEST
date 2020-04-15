@@ -32,6 +32,7 @@ class RenderViewSetDetailItemEdit extends Component {
                                     <th><span>Item Reference</span></th>
                                     <th><span>Item Description</span></th>
                                     <th><span>{`Retail Price (${displaySetCurrency})`}</span></th>
+                                    <th><span>{`Net + VAT (${displaySetCurrency})`}</span></th>
                                     <th><span>Edit</span></th>
                                     <th><span>Delete</span></th>
                                 </tr>
@@ -62,6 +63,7 @@ class RenderViewSetDetailItemEdit extends Component {
                                     <th><span>Item Reference</span></th>
                                     <th><span>Item Description</span></th>
                                     <th><span>{`Retail Price (${displaySetCurrency})`}</span></th>
+                                    <th><span>{`Net+VAT (${displaySetCurrency})`}</span></th>
                                     <th><span>Edit</span></th>
                                     <th><span>Delete</span></th>
                                 </tr>

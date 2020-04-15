@@ -44,6 +44,7 @@ class RenderViewSetItemTable extends Component {
                         <td className="width-6 text-center">{row.reference}</td>
                         <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><span className="s1_ying">{row.description}</span></p></td>
                         <td className="text-center">{numberFormat(row.priceInHomeCurrency)}</td>
+                        <td className="text-center">{numberFormat(row.netVatPrice)}</td>
                         {this.renderEdit(0, row.reference)}
                         {this.renderDelete(0, row.reference)}
                     </tr>
@@ -56,6 +57,7 @@ class RenderViewSetItemTable extends Component {
                         <td className="width-6 text-center">{row.reference}</td>
                         <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><span className="s1_ying">{row.description}</span></p></td>
                         <td className="text-center">{numberFormat(row.priceInHomeCurrency)}</td>
+                        <td className="text-center">{numberFormat(row.netVatPrice)}</td>
                         {this.renderEdit(0, row.reference)}
                         {this.renderDelete(0, row.reference)}
                     </tr>
@@ -68,6 +70,7 @@ class RenderViewSetItemTable extends Component {
                         <td className="width-6 text-center">{row.reference}</td>
                         <td>{row.description}</td>
                         <td className="text-center">{numberFormat(row.priceInHomeCurrency)}</td>
+                        <td className="text-center">{numberFormat(row.netVatPrice)}</td>
                         {this.renderEdit(0, row.reference)}
                         {this.renderDelete(0, row.reference)}
                     </tr>

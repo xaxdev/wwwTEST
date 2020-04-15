@@ -33,6 +33,13 @@ class RenderDialogEditItemEdit extends Component {
         that.props.setEditItemDetails(true)
     }
 
+    changedNetVatPrice = (e) =>{
+        const { that } = this.props;
+        const { fields: { netVatPrice} } = that.props;
+        netVatPrice.onChange(e.target.value)
+        that.props.setEditItemDetails(true)
+    }
+
     onChange = (e) =>{
         const target = e.target;
         const { that } = this.props;
@@ -43,7 +50,15 @@ class RenderDialogEditItemEdit extends Component {
 
     render(){
         const { that } = this.props;
-        const { fields: { description, price, itemDescriptionLanguage }, yingCatalogDetail, editItemReference, isEditItemDetails, itemDetail } = that.props;
+        const { fields: { description, price, itemDescriptionLanguage, netVatPrice }, 
+            yingCatalogDetail, editItemReference, isEditItemDetails, itemDetail, displayCurrency
+        } = that.props;
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const { currency } = userLogin
+
+        const displaySetCurrency = displayCurrency == '' 
+            ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
+            : displayCurrency
         
         if (!isEditItemDetails) {
             if (!!yingCatalogDetail) {
@@ -52,8 +67,8 @@ class RenderDialogEditItemEdit extends Component {
                 if (items.length != 0) {
                     const [filterItem] = items.filter(item=>item.reference == editItemReference)
                     if (!!filterItem) {
-                        const { description, priceInHomeCurrency, itemDescriptionLanguage } = filterItem;
-                        initData(that.props.fields, description, priceInHomeCurrency, itemDescriptionLanguage, this.state.isChangedLanguage)  
+                        const { description, priceInHomeCurrency, itemDescriptionLanguage, netVatPrice } = filterItem;
+                        initData(that.props.fields, description, priceInHomeCurrency, itemDescriptionLanguage, this.state.isChangedLanguage, netVatPrice)  
                     }
                 }
             } else {
@@ -61,8 +76,8 @@ class RenderDialogEditItemEdit extends Component {
                     if (itemDetail != null) {
                         const { reference } = itemDetail
                         if (reference == editItemReference) {
-                            const { description, priceInHomeCurrency, itemDescriptionLanguage } = itemDetail;
-                            initData(that.props.fields, description, priceInHomeCurrency, itemDescriptionLanguage, this.state.isChangedLanguage)  
+                            const { description, priceInHomeCurrency, itemDescriptionLanguage, netVatPrice } = itemDetail;
+                            initData(that.props.fields, description, priceInHomeCurrency, itemDescriptionLanguage, this.state.isChangedLanguage, netVatPrice)  
                         }
                     }
                 }
@@ -73,7 +88,7 @@ class RenderDialogEditItemEdit extends Component {
             <div className="">
                 <Modal isOpen={that.state.isOpenEditItemDialog} onRequestHide={that.hideEditItemDialog}>
                     <div className="modal-header">
-                        <ModalClose onClick={that.hideAddItemDialog}/>
+                        <ModalClose onClick={that.hideEditItemDialog}/>
                         <h1 className="modal-title">Add New Item</h1>
                     </div>
                     <div className="modal-body">
@@ -109,14 +124,20 @@ class RenderDialogEditItemEdit extends Component {
                         </div>
                         <div className="row">
                             <div className="col-md-11 relete_item col-sm-6  m-nopadding">
-                                <label><b>Retail Price (USD)</b></label>
+                                <label><b>{`Retail Price (${displaySetCurrency})`}</b></label>
                                 <input type="text" className="form-control" {...price} onChange={this.changedPrice}/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-11 relete_item col-sm-6  m-nopadding">
+                                <label><b>{`Net + VAT (${displaySetCurrency})`}</b></label>
+                                <input type="text" className="form-control" {...netVatPrice} onChange={this.changedNetVatPrice}/>
                             </div>
                         </div>
                     </div>
                     <div className="modal-footer">
                         <div className="text-center maring-t20 font-b">
-                            <button id="export" className="btn btn-default btn-radius" onClick={that.saveEditItem.bind(this,editItemReference)}>
+                            <button id="export" className="btn btn-default btn-radius" onClick={that.saveEditItem.bind(this, editItemReference)}>
                                 Save
                             </button>
                             <button className="btn btn-default btn-radius" onClick={that.hideEditItemDialog}>
@@ -132,12 +153,13 @@ class RenderDialogEditItemEdit extends Component {
 
 module.exports = RenderDialogEditItemEdit
 
-const initData = (fields, _description, _priceInHomeCurrency, _itemDescriptionLanguage, isChangedLanguage)=>{   
-    const { description, price, itemDescriptionLanguage } = fields;
+const initData = (fields, _description, _priceInHomeCurrency, _itemDescriptionLanguage, isChangedLanguage, _netVatPrice)=>{   
+    const { description, price, itemDescriptionLanguage, netVatPrice } = fields;
     
     description.onChange(_description);
     price.onChange(numberFormat(_priceInHomeCurrency));
     if (!isChangedLanguage) {
         itemDescriptionLanguage.onChange(_itemDescriptionLanguage);
     }
+    netVatPrice.onChange(numberFormat(_netVatPrice));
 }
