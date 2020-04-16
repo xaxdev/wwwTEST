@@ -56,11 +56,12 @@ export default {
             data.map((item,index)=>{
                 const { items, setImages } = item
                 let listItems = []
-                listItems.push(['لسلستلا','ةعطقلا مقر','تافصاوملا','يلامجﻹا غلبملا']);
+                listItems.push(['التسلسل','رقم القطعة','المواصفات','المبلغ الإجمالي','المجموع الضريبة']);
 
                 const itemTable = items.reduce(reducer, listItems)
                 const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInHomeCurrency) || 0), 0);
-                itemTable.push(['Total / عومجملا', numberFormat(totalPrice)])
+                const totalNetVatPrice = items.reduce((prev, curr) => prev + (Number(curr.netVatPrice) || 0), 0);
+                itemTable.push(['Total / المبلغ الإجمالي', numberFormat(totalPrice), numberFormat(totalNetVatPrice)])
 
                 let setImagePath = ''
 
@@ -112,36 +113,8 @@ export default {
             doc.end();
             //***********************************************************************************/
             
-            // if (data.length == 0) return reply(Boom.badRequest('Invalid Ying CatalogId.'))
-            // let htmlTemplate = '';
-
-            // switch (env) {
-            //     case 'staging':
-            //         htmlTemplate = GenTemplateHtmlStaging(data);        
-            //         break;
-            //     case 'development':
-            //         htmlTemplate = GenTemplateHtml(data);        
-            //         break;
-            //     default:
-            //         break;
-            // }
-
-            // const exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
-            // const userName =  `ying_${user.username}_${exportDate}`;
-            // const destination = Path.resolve(__dirname, '../../../../../pdf/import_html')
-            // const file_path = `${destination}/${userName}.html`;
-
-            // await file.write(file_path, htmlTemplate);
-
-            // console.log('writing done!');
-
-            // const html = fs.readFileSync(file_path, 'utf8');
-            // const options = { format: 'A4', timeout: 30000 };
-            // const _pathDistFile = Path.resolve(__dirname, `../../http/public/export_files/${userName}.pdf`);
-
             console.log(`user Email: ${userEmail}`);
-            // await save(html, options, _pathDistFile);
-            // console.log('writing pdf');
+            
             console.log('Create PDF done!');
             emailBody = '';
             emailBody = `Please download the files only by today from below link ${ROOT_URL}/export_files/${userName}.pdf`;
@@ -217,155 +190,206 @@ const notify = (err, userEmail, emailBody) => new Promise((resolve, reject) => {
 });
 
 function createTable(doc, data, lng, width = 500) {
-    const startY = 580
-    const startX = 90
-    const distanceY = 15
-    const distanceX = 10
-    doc.fontSize(7);
-    
-    let currentY = startY;
-    data.forEach((value,index) => {
-        let currentX = startX
-        let size = value.length
-        let row = index+1;
-    
-        let blockSize = width / size;
-
-        if (row == 1) {
-            value.forEach((text,index) => {
-                //Create rectangles title
-                switch (index) {
-                    case 0:
-                        //Id
-                        doc
-                        .fontSize(12)
-                        .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                        .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX-5, currentY + 3);
-                        
-                        blockSize = 40
-                        break;
-                    case 1:
-                        //Reference
-                        doc
-                        .fontSize(12)
-                        .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                        .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX, currentY + 3);
-                        blockSize = 70
-                        break;
-                    case 2:
-                        //Description
-                        doc
-                        .fontSize(12)
-                        .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                        .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX + 80, currentY + 3);
-                        blockSize = 265
-                        break;
-                    default:
-                        //Price
-                        doc
-                        .fontSize(12)
-                        .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                        .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX, currentY + 3);
-                        blockSize = 80
-                        break;
-                }
-                
-                doc
-                .lineJoin('miter')
-                .rect(currentX, currentY, blockSize, distanceY)
-                .stroke();
-                
-                currentX += blockSize;
-            });
-        } else if (row == data.length) {
-            value.forEach((text,index) => {
-                //Total
-                switch (index) {
-                    case 0:
-                        //Total
-                        doc
-                        .fontSize(8)
-                        .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                        .text(text, currentX + distanceX + 160, currentY + 5);
-                        
-                        blockSize = 375
-                        break;
-                    default:
-                        //Price
-                        doc
-                        .fontSize(8)
-                        .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                        .text(text, currentX + distanceX, currentY + 5, {align: 'right'});
-                        blockSize = 80
-                        break;
-                }
-
-                doc
-                .lineJoin('miter')
-                .rect(currentX, currentY, blockSize, distanceY)
-                .stroke();
-
-                currentX += blockSize;
-            });
-        } else {
-            value.forEach((text,index) => {
-                //Items details
-                switch (index) {
-                    case 0:
-                        //Id
-                        doc
-                        .fontSize(8)
-                        .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                        .text(text, currentX + distanceX + 7, currentY + 5);
-                        
-                        blockSize = 40
-                        break;
-                    case 1:
-                        //Reference
-                        doc
-                        .fontSize(8)
-                        .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                        .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX, currentY + 5);
-                        blockSize = 70
-                        break;
-                    case 2:
-                        //Description
-                        console.log({lng});
-                        console.log({text});
-                        if (lng == 'eng') {
+    try {
+        const startY = 580
+        const startX = 90
+        const distanceY = 15
+        const distanceX = 10
+        doc.fontSize(7);
+        
+        let currentY = startY;
+        data.forEach((value,index) => {
+            let currentX = startX
+            let size = value.length
+            let row = index+1;
+        
+            let blockSize = width / size;
+            
+            if (row == 1) {
+                value.forEach((text,index) => {
+                    //Create rectangles title
+                    switch (index) {
+                        case 0:
+                            //Id
+                            // doc
+                            // .fontSize(12)
+                            // .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            // .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX-5, currentY + 3);
+                            doc.image('../../web/code/plugins/http/public/images/order.png', 90, 575, {
+                                align: 'center',
+                                valign: 'top',
+                                width: 35
+                            });
+                            blockSize = 40
+                            break;
+                        case 1:
+                            //Reference
+                            // doc
+                            // .fontSize(12)
+                            // .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            // .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX, currentY + 3);
+                            doc.image('../../web/code/plugins/http/public/images/skunumber-pdf.png', 140, 580, {
+                                align: 'center',
+                                valign: 'top',
+                                width: 45
+                            });
+                            blockSize = 70
+                            break;
+                        case 2:
+                            //Description
+                            // doc
+                            // .fontSize(12)
+                            // .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            // .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX + 80, currentY + 3);
+                            doc.image('../../web/code/plugins/http/public/images/description.png', 200, 575, {
+                                align: 'center',
+                                valign: 'top',
+                                width: 200
+                            });
+                            blockSize = 200
+                            break;
+                        case 3:
+                            //Public Price
+                            // doc
+                            // .fontSize(12)
+                            // .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            // .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX, currentY + 3);
+                            doc.image('../../web/code/plugins/http/public/images/pp.png', 405, 575, {
+                                align: 'center',
+                                valign: 'top',
+                                width: 70
+                            });
+                            blockSize = 80
+                            break;
+                        default:
+                            //Net Price
+                            // doc
+                            // .fontSize(12)
+                            // .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            // .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX, currentY + 3);
+                            doc.image('../../web/code/plugins/http/public/images/net.png', 495, 580, {
+                                align: 'center',
+                                valign: 'top',
+                                width: 55
+                            });
+                            blockSize = 80
+                            break;
+                    }
+                    
+                    doc
+                    .lineJoin('miter')
+                    .rect(currentX, currentY, blockSize, distanceY)
+                    .stroke();
+                    
+                    currentX += blockSize;
+                });
+            } else if (row == data.length) {
+                value.forEach((text,index) => {
+                    //Total
+                    switch (index) {
+                        case 0:
+                            //Total
+                            doc
+                            .fontSize(8)
+                            .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            .text(text, currentX + distanceX + 160, currentY + 5);
+                            
+                            blockSize = 310
+                            break;
+                        case 1:
+                            //Public Price
                             doc
                             .fontSize(8)
                             .font('plugins/http/public/fonts/Mirza-Regular.ttf')
                             .text(text, currentX + distanceX, currentY + 5);
-                            blockSize = 265
-                            break;   
-                        } else {
+                            blockSize = 80
+                            break;
+                        default:
+                            //Net Price
                             doc
                             .fontSize(8)
                             .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                            .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + 50, currentY + 5, {align: 'center'});
-                            blockSize = 265
+                            .text(text, currentX + distanceX, currentY + 5, {align: 'right'});
+                            blockSize = 80
                             break;
-                        }
-                    default:
-                        //Price
-                        doc
-                        .fontSize(8)
-                        .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                        .text(text, currentX + distanceX, currentY + 5, {align: 'right'});
-                        blockSize = 80
-                        break;
-                }
-                doc
-                .lineJoin('miter')
-                .rect(currentX, currentY, blockSize, distanceY)
-                .stroke();
+                    }
 
-                currentX += blockSize;
-            });
-        }
-        currentY += distanceY;
-    });
+                    doc
+                    .lineJoin('miter')
+                    .rect(currentX, currentY, blockSize, distanceY)
+                    .stroke();
+
+                    currentX += blockSize;
+                });
+            } else {
+                value.forEach((text,index) => {
+                    //Items details
+                    switch (index) {
+                        case 0:
+                            //Id
+                            doc
+                            .fontSize(8)
+                            .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            .text(text, currentX + distanceX + 7, currentY + 5);
+                            
+                            blockSize = 40
+                            break;
+                        case 1:
+                            //Reference
+                            doc
+                            .fontSize(8)
+                            .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX, currentY + 5);
+                            blockSize = 70
+                            break;
+                        case 2:
+                            //Description
+                            if (lng == 'eng') {
+                                doc
+                                .fontSize(8)
+                                .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                                .text(text, currentX + distanceX, currentY + 5);
+                                blockSize = 200
+                                break;   
+                            } else {
+                                doc
+                                .fontSize(8)
+                                .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                                .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX - 50, currentY + 5, {align: 'center'});
+                                blockSize = 200
+                                break;
+                            }
+                        case 3:
+                            //Public Price
+                            doc
+                            .fontSize(8)
+                            .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            .text(text, currentX + distanceX, currentY + 5);
+                            blockSize = 80
+                            break;
+                        default:
+                            //Net Price
+                            doc
+                            .fontSize(8)
+                            .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                            .text(text, currentX + distanceX, currentY + 5, {align: 'right'});
+                            blockSize = 80
+                            break;
+                    }
+                    doc
+                    .lineJoin('miter')
+                    .rect(currentX, currentY, blockSize, distanceY)
+                    .stroke();
+
+                    currentX += blockSize;  
+                });
+            }
+            currentY += distanceY;
+        });
+    } catch (error) {
+        console.log(error)
+        notify(error, '', '');
+    }
 }
 
 const reducer = (listItems, current) => {
@@ -373,7 +397,9 @@ const reducer = (listItems, current) => {
     itemRow.push(listItems.length)
     itemRow.push(current.reference)
     itemRow.push(current.description)
-    itemRow.push(numberFormat(current.priceInHomeCurrency))
+    itemRow.push(numberFormat(current.priceInHomeCurrency)) // Public Price
+    itemRow.push(numberFormat(current.netVatPrice)) // Net Price
+    
     listItems.push(itemRow)
     
     return listItems

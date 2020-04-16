@@ -110,28 +110,33 @@ export default {
                     }
                 });
 
-                ws.cell(row,2).string('لسلستلا').style(style_thinBorder);
-                ws.cell(row,3).string('ةعطقلا مقر').style(style_thinBorder).style(style_center);
-                ws.cell(row,4).string('تافصاوملا').style(style_thinBorder).style(style_center);
-                ws.cell(row,5).string('يلامجﻹا غلبملا').style(style_thinBorder).style(style_center);
+                ws.cell(row,2).string('التسلسل').style(style_thinBorder);
+                ws.cell(row,3).string('رقم القطعة').style(style_thinBorder).style(style_center);
+                ws.cell(row,4).string('المواصفات').style(style_thinBorder).style(style_center);
+                ws.cell(row,5).string('المبلغ الإجمالي').style(style_thinBorder).style(style_center);
+                ws.cell(row,6).string('المجموع شامل الضريبة  ( بعد الخصم )').style(style_thinBorder).style(style_center);
 
                 items.map((item,index)=>{
-                    const { reference, description, priceInHomeCurrency } = item;
+                    const { reference, description, priceInHomeCurrency, netVatPrice } = item;
                     const rowItem = row+1;
                     ws.cell(rowItem,2).string((index+1).toString()).style(style_thinBorder).style(style_center);
                     ws.cell(rowItem,3).string(reference).style(style_thinBorder);
                     ws.cell(rowItem,4).string(description).style(style_thinBorder);
                     ws.cell(rowItem,5).string(numberFormat(priceInHomeCurrency).toString()).style(style_thinBorder).style(style_right);
+                    ws.cell(rowItem,6).string(numberFormat(netVatPrice).toString()).style(style_thinBorder).style(style_right);
                     row++;
                 })
                 const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInHomeCurrency) || 0), 0);
-                ws.cell(row+1, 2, row+1, 4, true).string('Total / عومجملا').style(style_thinBorder).style(style_center);
+                const totalNetVatPrice = items.reduce((prev, curr) => prev + (Number(curr.netVatPrice) || 0), 0);
+                ws.cell(row+1, 2, row+1, 4, true).string('Total / المجموع').style(style_thinBorder).style(style_center);
                 ws.cell(row+1, 5).string(numberFormat(totalPrice).toString()).style(style_thinBorder).style(style_right);
+                ws.cell(row+1, 6).string(numberFormat(totalNetVatPrice).toString()).style(style_thinBorder).style(style_right);
 
                 ws.column(2).setWidth(7);
                 ws.column(3).setWidth(15);
                 ws.column(4).setWidth(50);
                 ws.column(5).setWidth(15);
+                ws.column(6).setWidth(17);
 
                 const pathImageFooter = Path.resolve(__dirname, '../../http/public/images/images_footer.png');
 

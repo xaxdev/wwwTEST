@@ -84,8 +84,17 @@ class RenderViewItemDetailEdit extends Component {
     }
 
     saveEditItem = (reference)=>{
-        const { fields: { description, price, itemDescriptionLanguage }, listItem } = this.props;        
-        const newListItem = listItem.map(editItemData(reference, description.value, Number(price.value.replace(/,/g,'')), itemDescriptionLanguage.value))
+        const { fields: { description, price, itemDescriptionLanguage, netVatPrice }, listItem } = this.props; 
+        const newListItem = listItem.map(
+            editItemData(
+                reference
+                , description.value
+                , Number(price.value.replace(/,/g,''))
+                , itemDescriptionLanguage.value
+                , Number(netVatPrice.value.replace(/,/g,''))
+            )
+        )
+        console.log({newListItem});
         this.props.setItemList(newListItem)
         this.props.setEditItemDetails(false)
         this.setState({isOpenEditItemDialog: false})
@@ -143,8 +152,8 @@ function mapStateToProps(state) {
 
 module.exports = connect(mapStateToProps, yingsetaction)(RenderViewItemDetailEdit);
 
-const editItemData = (reference, newDescription, newPrice, newItemDescriptionLanguage) => item =>{
-    const { description,  priceInHomeCurrency, itemDescriptionLanguage} = item;
+const editItemData = (reference, newDescription, newPrice, newItemDescriptionLanguage, newNetVatPrice) => item =>{
+    const { description,  priceInHomeCurrency, itemDescriptionLanguage, netVatPrice} = item;
     let newItem = {}
     if (item.reference == reference) {
         newItem = {
@@ -152,6 +161,7 @@ const editItemData = (reference, newDescription, newPrice, newItemDescriptionLan
             , description: newDescription != ''? newDescription: description
             , priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency
             , itemDescriptionLanguage: newItemDescriptionLanguage != ''? newItemDescriptionLanguage: itemDescriptionLanguage
+            , netVatPrice: newNetVatPrice != ''? newNetVatPrice: netVatPrice
         }
     } else {
         newItem = {...item}

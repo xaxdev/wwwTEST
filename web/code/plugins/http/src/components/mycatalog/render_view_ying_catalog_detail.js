@@ -18,8 +18,9 @@ class RenderViewYingCatalogDetail extends Component {
                 const ROOT_URL = 'mol.mouawad.com';
                 imagesUrl = `http://${ROOT_URL}/images/products/original/${setImages}`;   
             }
-
+            
             const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInHomeCurrency) || 0), 0);
+            const totalNetVatPrice = items.reduce((prev, curr) => prev + (Number(curr.netVatPrice) || 0), 0);
 
             return (
                 <div className={`${(addItemDetail || editItemDetail) ? 'hidden' : ''}` }>
@@ -35,10 +36,11 @@ class RenderViewYingCatalogDetail extends Component {
                                 <td className="ying_td_center">
                                     <table className="ying_table_set_detail" cellspacing="0">
                                         <tr className="ying_tr_height_22">
-                                            <td className="ying_td_width_27"><p className="s1_ying ying_id" ><strong><span className="s1_ying">لسلستلا</span></strong></p></td>
-                                            <td className="ying_td_width_116"><p className="s1_ying ying_reference"><strong><span className="s1_ying">ةعطقلا مقر</span></strong></p></td>
-                                            <td className="ying_td_width_240"><p className="s1_ying ying_description"><strong><span className="s1_ying">تافصاوملا</span></strong></p></td>
-                                            <td className="ying_td_width_74"><p className="s1_ying ying_price"><strong><span className="s1_ying">يلامجﻹا غلبملا</span></strong></p></td>
+                                            <td className="ying_td_width_27"><img width="564" height="25" alt="image" src="/images/order.png"/></td>
+                                            <td className="ying_td_width_116"><img width="564" height="35" alt="image" src="/images/skunumber.png"/></td>
+                                            <td className="ying_td_width_240"><img width="564" height="35" alt="image" src="/images/description.png"/></td>
+                                            <td className="ying_td_width_74"><img width="564" height="30" alt="image" src="/images/pp.png"/></td>
+                                            <td className="ying_td_width_74"><img width="564" height="30" alt="image" src="/images/net.png"/></td>
                                         </tr>
                                         {items.map((item,index)=>{
                                             if (item.itemDescriptionLanguage == 'arb') {
@@ -48,6 +50,7 @@ class RenderViewYingCatalogDetail extends Component {
                                                         <td className="ying_td_width_116"><p className="s1_ying ying_reference"><span className="s1_ying">{item.reference}</span></p></td>
                                                         <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><strong><span className="s1_ying">{item.description}</span></strong></p></td>
                                                         <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
+                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.netVatPrice)}</span></strong></p></td>
                                                     </tr>
                                                 )    
                                             } else {
@@ -57,14 +60,16 @@ class RenderViewYingCatalogDetail extends Component {
                                                         <td className="ying_td_width_116"><p className="s1_ying ying_reference"><span className="s1_ying">{item.reference}</span></p></td>
                                                         <td className="ying_td_width_240"><p className="s1_ying ying_description_item_left"><strong><span className="s1_ying">{item.description}</span></strong></p></td>
                                                         <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
+                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.netVatPrice)}</span></strong></p></td>
                                                     </tr>
                                                 )
                                             }
                                         })}
                                         
                                         <tr className="ying_tr_height_17">
-                                            <td className="ying_td_width_383" colSpan="3"><p className="s1_ying ying_total" ><strong><span className="s1_ying">Total / عومجملا</span></strong></p></td>
+                                            <td className="ying_td_width_383" colSpan="3"><p className="s1_ying ying_total" ><strong><span className="s1_ying">Total / المجموع</span></strong></p></td>
                                             <td className="ying_td_width_74"><p className="s2_ying ying_footer_total" ><strong><span className="s1">{numberFormat(totalPrice)}</span></strong></p></td>
+                                            <td className="ying_td_width_74"><p className="s2_ying ying_footer_total" ><strong><span className="s1">{numberFormat(totalNetVatPrice)}</span></strong></p></td>
                                         </tr>
                                     </table>
                                 </td>
