@@ -57,10 +57,13 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
     let valMetalWeightFrom = 0;
     let valMetalWeightTo = 0;
 
+    let isViewAsSet = false;
+
     internals.filters = [];
 
     if (keys.length != 3 ){
         keys.forEach((key) => {
+            isViewAsSet = !!keys.find((key) => {return key == 'viewAsSet'});
             filter = '';
             let value = obj[key];
             if(key == 'reference' || key == 'stoneType' || key == 'cut' || key == 'cutGrade' || key == 'clarity' || key == 'polish' || key == 'symmetry'
@@ -415,33 +418,70 @@ module.exports = (request, fromRecord, sizeRecord, clarity, cb) => {
         });
 
         if(objRange.length != 0){
-            let keysObjRange = Object.keys(objRange);
-            keysObjRange.forEach((key) => {
-                if(key != 'length'){
-                    if(objRange[key].to != 0){
-                        filter =
-                        `{
-                            "range": {
-                                "${key}": {
-                                    "gte": "${objRange[key].from}",
-                                    "lte": "${objRange[key].to}"
+            if (isViewAsSet) {
+                let keysObjRange = Object.keys(objRange);
+                keysObjRange.forEach((key) => {
+                    if( key != 'actualCost.AED' && key != 'actualCost.CHF' && key != 'actualCost.EUR' && key != 'actualCost.JOD' && key != 'actualCost.KWD' 
+                        && key != 'actualCost.LBP' && key != 'actualCost.OMR' && key != 'actualCost.QAR' && key != 'actualCost.SAR' && key != 'actualCost.USD' 
+                        && key != 'updatedCost.AED' && key != 'updatedCost.CHF' && key != 'updatedCost.EUR' && key != 'updatedCost.JOD' && key != 'updatedCost.KWD' 
+                        && key != 'updatedCost.LBP' && key != 'updatedCost.OMR' && key != 'updatedCost.QAR' && key != 'updatedCost.SAR' && key != 'updatedCost.USD'
+                        && key != 'price.AED' && key != 'price.CHF' && key != 'price.EUR' && key != 'price.JOD' && key != 'price.KWD' && key != 'price.LBP' 
+                        && key != 'price.OMR' && key != 'price.QAR' && key != 'price.SAR' && key != 'price.USD'){
+                            if(key != 'length'){
+                                if(objRange[key].to != 0){
+                                    filter =
+                                    `{
+                                        "range": {
+                                            "${key}": {
+                                                "gte": "${objRange[key].from}",
+                                                "lte": "${objRange[key].to}"
+                                            }
+                                        }
+                                    }`;
+                                }else{
+                                    filter =
+                                    `{
+                                        "range": {
+                                            "${key}": {
+                                                "gte": "${objRange[key].from}"
+                                            }
+                                        }
+                                    }`;
                                 }
+                                internals.filters.push(JSON.parse(filter));
+                                filter = '';
                             }
-                        }`;
-                    }else{
-                        filter =
-                        `{
-                            "range": {
-                                "${key}": {
-                                    "gte": "${objRange[key].from}"
-                                }
-                            }
-                        }`;
                     }
-                    internals.filters.push(JSON.parse(filter));
-                    filter = '';
-                }
-            });
+                });
+            }else{
+                let keysObjRange = Object.keys(objRange);
+                keysObjRange.forEach((key) => {
+                    if(key != 'length'){
+                        if(objRange[key].to != 0){
+                            filter =
+                            `{
+                                "range": {
+                                    "${key}": {
+                                        "gte": "${objRange[key].from}",
+                                        "lte": "${objRange[key].to}"
+                                    }
+                                }
+                            }`;
+                        }else{
+                            filter =
+                            `{
+                                "range": {
+                                    "${key}": {
+                                        "gte": "${objRange[key].from}"
+                                    }
+                                }
+                            }`;
+                        }
+                        internals.filters.push(JSON.parse(filter));
+                        filter = '';
+                    }
+                });
+            }
         }
 
         let missing = '';

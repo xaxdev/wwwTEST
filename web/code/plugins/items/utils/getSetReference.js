@@ -21,24 +21,15 @@ module.exports = async (data, params, elastic, cb) => {
         let valFromCost = 0
         let valToCost = 0
         let filter = ''
-        let filters = []
-        if (isViewAsSet) {
-            keys.forEach((key) => {
-                if( key != 'page' && key != 'sortBy' && key != 'sortDirections' && key != 'pageSize' && key != 'ItemsOrder' && key != 'SetReferencdOrder' 
-                    && key != 'viewAsSet' && key != 'type' && key != 'userCurrency' && key != 'publicPriceFrom' && key != 'publicPriceTo' 
-                    && key != 'totalUpdatedCostFrom' && key != 'totalUpdatedCostTo' && key != 'totalCostFrom' && key != 'totalCostTo'){
-                    filter = 
-                    `{
-                        "match": {
-                            "reference": "${setReferenceUniq.join(' ')}"
-                        }
-                    }`
-                    filters.push(JSON.parse(filter))
-                    filter = ''
-                }
-                filter = ''
-            })
-        }
+        let filters = [];
+        filter = 
+        `{
+            "match": {
+                "reference": "${setReferenceUniq.join(' ')}"
+            }
+        }`
+        filters.push(JSON.parse(filter))
+        filter = ''
         
         if (isViewAsSet) {
             keys.forEach((key) => {
