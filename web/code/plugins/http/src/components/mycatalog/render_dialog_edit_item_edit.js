@@ -10,7 +10,8 @@ class RenderDialogEditItemEdit extends Component {
 
         this.state = {
             disableDescription: false,
-            isChangedLanguage: false
+            isChangedLanguage: false,
+            sizeDescription: 0
         }
 
     }
@@ -26,11 +27,32 @@ class RenderDialogEditItemEdit extends Component {
         that.props.setEditItemDetails(true)
     }
 
+    changedSize = (e) =>{
+        const { that } = this.props;
+        const { fields: { changedSize} } = that.props;
+        changedSize.onChange(Number(e.target.value))
+        this.setState({sizeDescription: Number(e.target.value)})
+    }
+
     changedDescription = (e) =>{
         const { that } = this.props;
-        const { fields: { description} } = that.props;
-        description.onChange(e.target.value)
-        that.props.setEditItemDetails(true)
+        const { fields: { description, changedSize} } = that.props;
+        const limitNum = this.state.sizeDescription != 0 ? this.state.sizeDescription: 100;
+        let textDescription = e.target.value
+        console.log({textDescription});
+        console.log('textDescription.length-->',textDescription.length);
+        
+        if (textDescription.length > limitNum) {
+            textDescription = textDescription.substring(0, limitNum);
+            console.log({textDescription});
+            console.log('textDescription.length-->',textDescription.length);
+            description.onChange(textDescription)
+            that.props.setEditItemDetails(true)
+        } else {
+            changedSize.onChange(0)
+            description.onChange(e.target.value)
+            that.props.setEditItemDetails(true)
+        }
     }
 
     changedNetVatPrice = (e) =>{
@@ -56,9 +78,7 @@ class RenderDialogEditItemEdit extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { currency } = userLogin
 
-        const displaySetCurrency = displayCurrency == '' 
-            ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
-            : displayCurrency
+        let displaySetCurrency = currency
         
         if (!isEditItemDetails) {
             if (!!yingCatalogDetail) {
@@ -70,6 +90,9 @@ class RenderDialogEditItemEdit extends Component {
                         const { description, priceInHomeCurrency, itemDescriptionLanguage, netVatPrice } = filterItem;
                         initData(that.props.fields, description, priceInHomeCurrency, itemDescriptionLanguage, this.state.isChangedLanguage, netVatPrice)  
                     }
+                    displaySetCurrency = displayCurrency == '' 
+                        ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
+                        : displayCurrency
                 }
             } else {
                 if (editItemReference != '') {
@@ -108,6 +131,23 @@ class RenderDialogEditItemEdit extends Component {
                                     <input type="radio" {...itemDescriptionLanguage} name="arb" value="arb" checked={itemDescriptionLanguage.value === 'arb'}
                                         onChange={this.onChange}/> Arabic
                                 </label>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-11 relete_item col-sm-6  m-nopadding">
+                                <label><b>Please select size of description.</b></label>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-11 relete_item col-sm-6  m-nopadding">
+                                <select className="form-control " onChange={this.changedSize}>
+                                    <option key={''} value={''}>{'Please select Size'}</option>
+                                    <option key="100" value="100">100</option>
+                                    <option key="90" value="90">90</option>
+                                    <option key="80" value="80">80</option>
+                                    <option key="70" value="70">70</option>
+                                    <option key="60" value="60">60</option>
+                                </select>
                             </div>
                         </div>
                         <div className="row">

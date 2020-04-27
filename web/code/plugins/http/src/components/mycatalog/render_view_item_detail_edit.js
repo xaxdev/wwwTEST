@@ -84,11 +84,14 @@ class RenderViewItemDetailEdit extends Component {
     }
 
     saveEditItem = (reference)=>{
-        const { fields: { description, price, itemDescriptionLanguage, netVatPrice }, listItem } = this.props; 
+        const { fields: { description, price, itemDescriptionLanguage, netVatPrice, changedSize }, listItem } = this.props; 
+        const limitNum = changedSize.value != 0 ? changedSize.value: 100;
+        console.log({limitNum});
+        
         const newListItem = listItem.map(
             editItemData(
                 reference
-                , description.value
+                , description.value.substring(0, limitNum)
                 , Number(price.value.replace(/,/g,''))
                 , itemDescriptionLanguage.value
                 , Number(netVatPrice.value.replace(/,/g,''))

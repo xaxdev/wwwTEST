@@ -24,9 +24,21 @@ class RenderDialogEditItem extends Component {
         that.props.setEditItemDetails(true)
     }
 
+    changedNetVatPrice = (e) =>{
+        const { that } = this.props;
+        const { fields: { netVatPrice} } = that.props;
+        netVatPrice.onChange(e.target.value)
+        that.props.setEditItemDetails(true)
+    }
+
     render(){
         const { that } = this.props;
-        const { fields: { description, price}, yingCatalogDetail, editItemReference, isEditItemDetails, itemDetail, listItem } = that.props;
+        const { fields: { description, price, netVatPrice}, yingCatalogDetail, editItemReference, isEditItemDetails, itemDetail, listItem } = that.props;
+
+        const userLogin = JSON.parse(sessionStorage.logindata);
+        const { currency } = userLogin
+
+        let displaySetCurrency = currency
         
         if (!isEditItemDetails) {
             if (!!yingCatalogDetail) {
@@ -38,6 +50,9 @@ class RenderDialogEditItem extends Component {
                         const { description, priceInHomeCurrency } = filterItem;
                         initData(that.props.fields, description, priceInHomeCurrency)  
                     }
+                    displaySetCurrency = displayCurrency == '' 
+                        ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
+                        : displayCurrency
                 }
             } else {
                 if (editItemReference != '') {
@@ -91,8 +106,14 @@ class RenderDialogEditItem extends Component {
                         </div>
                         <div className="row">
                             <div className="col-md-11 relete_item col-sm-6  m-nopadding">
-                                <label><b>Retail Price (USD)</b></label>
+                                <label><b>{`Retail Price (${displaySetCurrency})`}</b></label>
                                 <input type="text" className="form-control" {...price} onChange={this.changedPrice}/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-11 relete_item col-sm-6  m-nopadding">
+                                <label><b>{`Net + VAT (${displaySetCurrency})`}</b></label>
+                                <input type="text" className="form-control" {...netVatPrice} onChange={this.changedNetVatPrice}/>
                             </div>
                         </div>
                     </div>

@@ -84,8 +84,15 @@ class RenderViewItemDetail extends Component {
     }
 
     saveEditItem = (reference)=>{
-        const { fields: { description, price }, listItem } = this.props;
-        const newListItem = listItem.map(editItemData(reference, description.value, Number(price.value.replace(/,/g,''))))
+        const { fields: { description, price, netVatPrice }, listItem } = this.props;
+        const newListItem = listItem.map(
+            editItemData(
+                reference
+                , description.value
+                , Number(price.value.replace(/,/g,''))
+                , Number(netVatPrice.value.replace(/,/g,''))
+            )
+        )
         this.props.setItemList(newListItem)
         this.setState({isOpenEditItemDialog: false})
     }
@@ -138,11 +145,16 @@ function mapStateToProps(state) {
 
 module.exports = connect(mapStateToProps, yingsetaction)(RenderViewItemDetail);
 
-const editItemData = (reference, newDescription, newPrice) => item =>{
-    const { description,  priceInHomeCurrency} = item;
+const editItemData = (reference, newDescription, newPrice, newNetVatPrice) => item =>{
+    const { description,  priceInHomeCurrency, netVatPrice} = item;
     let newItem = {}
     if (item.reference == reference) {
-        newItem = {...item, description: newDescription != ''? newDescription: description, priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency}
+        newItem = {
+            ...item
+            , description: newDescription != ''? newDescription: description
+            , priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency
+            , netVatPrice: newNetVatPrice != ''? newNetVatPrice: netVatPrice
+        }
     } else {
         newItem = {...item}
     }
