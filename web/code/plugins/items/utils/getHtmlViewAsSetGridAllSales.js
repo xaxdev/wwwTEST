@@ -163,7 +163,7 @@ export default function GetHTMLViewASSetGridAllSales(datas,currency,isViewAsSet,
                                                             ? (item.gallery.length) != 0 ? item.gallery[0].original : '/images/blank.gif'
                                                             : '/images/blank.gif';
                                                     }
-                                                    price = GetPriceWithCurrency(item,'price',currency);
+                                                    price = GetPriceWithCurrency(item,'netAmount',currency);
                                                     itemName = (item.description != undefined)
                                                         ? (item.description.length <= 80) ? item.description : item.description.substring(0, 80) + '...'
                                                         : '-';
