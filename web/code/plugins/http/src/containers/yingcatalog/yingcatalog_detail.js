@@ -261,8 +261,8 @@ class YingCatalogDetail extends Component {
 
     renderAlertMsgPdf = _=> {
         const { fields:{ pdfLanguage } } = this.props;  
-        const messageOne = 'Please select the language options for alignment wording';
-        const messageTwo = 'and check your email for printing files.';
+        const messageOne = 'Please select the language options If the catalog is in Arabic then ';
+        const messageTwo = 'choose Arabic else English and check your email for printing files.';
         const message = { messageOne, messageTwo }
         const title = 'Ying Catalog';
         return(
@@ -388,7 +388,7 @@ module.exports = reduxForm(
         fields: [
             'setReferenceNumber', 'setDescription', 'suiteName', 'romanceNote', 'setImages', 'reference', 'description', 'price', 
             'editSetReferenceNumber', 'editSetDescription', 'editSuiteName', 'editRomanceNote', 'editSetImages', 'pdfLanguage', 'itemDescriptionLanguage',
-            'setCurrency', 'netVatPrice'
+            'setCurrency', 'netVatPrice', 'changedSize'
         ]
     }, mapStateToProps, yingsetaction
 )(YingCatalogDetail);

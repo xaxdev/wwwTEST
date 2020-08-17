@@ -56,9 +56,12 @@ export default {
             data.map((item,index)=>{
                 const { items, setImages } = item
                 let listItems = []
+                let initialOrder = 0
                 listItems.push(['التسلسل','رقم القطعة','المواصفات','المبلغ الإجمالي','المجموع الضريبة']);
+                let params = {}
+                params = {...params, listItems, initialOrder}
 
-                const itemTable = items.reduce(reducer, listItems)
+                const itemTable = items.reduce(reducer, params).listItems
                 const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInHomeCurrency) || 0), 0);
                 const totalNetVatPrice = items.reduce((prev, curr) => prev + (Number(curr.netVatPrice) || 0), 0);
                 itemTable.push(['Total / المبلغ الإجمالي', numberFormat(totalPrice), numberFormat(totalNetVatPrice)])
@@ -192,7 +195,7 @@ const notify = (err, userEmail, emailBody) => new Promise((resolve, reject) => {
 function createTable(doc, data, lng, width = 500) {
     try {
         const startY = 580
-        const startX = 90
+        const startX = 70
         const distanceY = 15
         const distanceX = 10
         doc.fontSize(7);
@@ -215,7 +218,7 @@ function createTable(doc, data, lng, width = 500) {
                             // .fontSize(12)
                             // .font('plugins/http/public/fonts/Mirza-Regular.ttf')
                             // .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX-5, currentY + 3);
-                            doc.image('../../web/code/plugins/http/public/images/order.png', 90, 575, {
+                            doc.image('../../web/code/plugins/http/public/images/order.png', 70, 575, {
                                 align: 'center',
                                 valign: 'top',
                                 width: 35
@@ -228,12 +231,12 @@ function createTable(doc, data, lng, width = 500) {
                             // .fontSize(12)
                             // .font('plugins/http/public/fonts/Mirza-Regular.ttf')
                             // .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX, currentY + 3);
-                            doc.image('../../web/code/plugins/http/public/images/skunumber-pdf.png', 140, 580, {
+                            doc.image('../../web/code/plugins/http/public/images/skunumber-pdf.png', 120, 580, {
                                 align: 'center',
                                 valign: 'top',
                                 width: 45
                             });
-                            blockSize = 70
+                            blockSize = 60
                             break;
                         case 2:
                             //Description
@@ -241,12 +244,12 @@ function createTable(doc, data, lng, width = 500) {
                             // .fontSize(12)
                             // .font('plugins/http/public/fonts/Mirza-Regular.ttf')
                             // .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX + 80, currentY + 3);
-                            doc.image('../../web/code/plugins/http/public/images/description.png', 200, 575, {
+                            doc.image('../../web/code/plugins/http/public/images/description.png', 180, 575, {
                                 align: 'center',
                                 valign: 'top',
                                 width: 200
                             });
-                            blockSize = 200
+                            blockSize = 230
                             break;
                         case 3:
                             //Public Price
@@ -259,7 +262,7 @@ function createTable(doc, data, lng, width = 500) {
                                 valign: 'top',
                                 width: 70
                             });
-                            blockSize = 80
+                            blockSize = 70
                             break;
                         default:
                             //Net Price
@@ -267,12 +270,12 @@ function createTable(doc, data, lng, width = 500) {
                             // .fontSize(12)
                             // .font('plugins/http/public/fonts/Mirza-Regular.ttf')
                             // .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX, currentY + 3);
-                            doc.image('../../web/code/plugins/http/public/images/net.png', 495, 580, {
+                            doc.image('../../web/code/plugins/http/public/images/net.png', 475, 580, {
                                 align: 'center',
                                 valign: 'top',
                                 width: 55
                             });
-                            blockSize = 80
+                            blockSize = 70
                             break;
                     }
                     
@@ -294,15 +297,15 @@ function createTable(doc, data, lng, width = 500) {
                             .font('plugins/http/public/fonts/Mirza-Regular.ttf')
                             .text(text, currentX + distanceX + 160, currentY + 5);
                             
-                            blockSize = 310
+                            blockSize = 330
                             break;
                         case 1:
                             //Public Price
                             doc
                             .fontSize(8)
                             .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                            .text(text, currentX + distanceX, currentY + 5);
-                            blockSize = 80
+                            .text(text, currentX + distanceX + 10, currentY + 5);
+                            blockSize = 70
                             break;
                         default:
                             //Net Price
@@ -310,7 +313,7 @@ function createTable(doc, data, lng, width = 500) {
                             .fontSize(8)
                             .font('plugins/http/public/fonts/Mirza-Regular.ttf')
                             .text(text, currentX + distanceX, currentY + 5, {align: 'right'});
-                            blockSize = 80
+                            blockSize = 70
                             break;
                     }
 
@@ -340,7 +343,7 @@ function createTable(doc, data, lng, width = 500) {
                             .fontSize(8)
                             .font('plugins/http/public/fonts/Mirza-Regular.ttf')
                             .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX + distanceX, currentY + 5);
-                            blockSize = 70
+                            blockSize = 60
                             break;
                         case 2:
                             //Description
@@ -349,23 +352,33 @@ function createTable(doc, data, lng, width = 500) {
                                 .fontSize(8)
                                 .font('plugins/http/public/fonts/Mirza-Regular.ttf')
                                 .text(text, currentX + distanceX, currentY + 5);
-                                blockSize = 200
+                                blockSize = 230
                                 break;   
                             } else {
-                                doc
-                                .fontSize(8)
-                                .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                                .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX - 50, currentY + 5, {align: 'center'});
-                                blockSize = 200
-                                break;
+                                if (text.length < 55) {
+                                    doc
+                                    .fontSize(8)
+                                    .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                                    .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX - 70, currentY + 5, {align: 'center'});
+                                    blockSize = 230
+                                    break;
+                                } else {
+                                    doc
+                                    .fontSize(8)
+                                    .font('plugins/http/public/fonts/Mirza-Regular.ttf')
+                                    .text(text.split(' ').reverse().join(' ').split('\n').reverse().join('\n'), currentX - 140, currentY + 5, {align: 'center'});
+                                    blockSize = 230
+                                    break;
+                                }
+                                
                             }
                         case 3:
                             //Public Price
                             doc
                             .fontSize(8)
                             .font('plugins/http/public/fonts/Mirza-Regular.ttf')
-                            .text(text, currentX + distanceX, currentY + 5);
-                            blockSize = 80
+                            .text(text, currentX + distanceX + 10, currentY + 5);
+                            blockSize = 70
                             break;
                         default:
                             //Net Price
@@ -373,7 +386,7 @@ function createTable(doc, data, lng, width = 500) {
                             .fontSize(8)
                             .font('plugins/http/public/fonts/Mirza-Regular.ttf')
                             .text(text, currentX + distanceX, currentY + 5, {align: 'right'});
-                            blockSize = 80
+                            blockSize = 70
                             break;
                     }
                     doc
@@ -392,15 +405,52 @@ function createTable(doc, data, lng, width = 500) {
     }
 }
 
-const reducer = (listItems, current) => {
+const reducer = (params, current) => {
+    let {listItems, initialOrder} = params
     let itemRow = []
-    itemRow.push(listItems.length)
-    itemRow.push(current.reference)
-    itemRow.push(current.description)
-    itemRow.push(numberFormat(current.priceInHomeCurrency)) // Public Price
-    itemRow.push(numberFormat(current.netVatPrice)) // Net Price
+    let order = 0
+    const size = 120
+    const rangeMax = current.description.length
+    const rounds = Math.ceil((rangeMax + 1) / size);
+    let rangeMin = 0
+
+    if (rounds == 1) {
+        initialOrder += 1
+        itemRow.push(initialOrder)
+        itemRow.push(current.reference)
+        itemRow.push(current.description)
+        itemRow.push(numberFormat(current.priceInHomeCurrency)) // Public Price
+        itemRow.push(numberFormat(current.netVatPrice)) // Net Price
+
+        listItems.push(itemRow)
+    } else {
+        for (let i = 0; i < rounds; i++) {
+            const from =  (i * size) + rangeMin;
+            const to = (i * size) + size + rangeMin - 1;
+            if (i == 0) {
+                initialOrder += 1
+                itemRow.push(initialOrder)
+                itemRow.push(current.reference)
+                itemRow.push(current.description.slice(from, to))
+                itemRow.push(numberFormat(current.priceInHomeCurrency)) // Public Price
+                itemRow.push(numberFormat(current.netVatPrice)) // Net Price
+
+                listItems.push(itemRow)
+                itemRow = []
+            } else {
+                itemRow.push('')
+                itemRow.push('')
+                itemRow.push(current.description.slice(from, to))
+                itemRow.push('') // Public Price
+                itemRow.push('') // Net Price
+
+                listItems.push(itemRow)
+                itemRow = []
+            }
+        }
+    }
+
+    params = {...params, listItems, initialOrder}
     
-    listItems.push(itemRow)
-    
-    return listItems
+    return params
 }
