@@ -244,7 +244,7 @@ module.exports = {
                         } else {
                             temp = await GetHTMLListViewAsSetAllSales(datas,curr,isViewAsSet,env,userPermissionPrice);
                         }
-                        const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
+                        const destination = Path.resolve(__dirname, '/home/mol/www/projects/production/pdf/import_html');
 
                         await file.write(`${destination}/${userName}.html`, temp);
                         console.log('writing done!');
@@ -271,7 +271,7 @@ module.exports = {
                         } else if (viewType == 'list') {
                             temp = await GetHTMLListAllSales(datas,curr,isViewAsSet,env,userPermissionPrice)
                         }
-                        const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
+                        const destination = Path.resolve(__dirname, '/home/mol/www/projects/production/pdf/import_html');
 
                         await file.write(`${destination}/${userName}.html`, temp);
                         console.log('writing done!');

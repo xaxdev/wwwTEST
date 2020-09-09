@@ -35,7 +35,7 @@ class RenderViewSetItemTable extends Component {
     }
 
     render = _ => {
-        const { row } = this.props;    
+        const { row, displaySetCurrency } = this.props;  
         
         if (row.itemDescriptionLanguage == undefined) {
             return (
@@ -43,7 +43,7 @@ class RenderViewSetItemTable extends Component {
                     <tr className="ying_tr_height_23">
                         <td className="width-6 text-center">{row.reference}</td>
                         <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><span className="s1_ying">{row.description}</span></p></td>
-                        <td className="text-center">{numberFormat(row.priceInHomeCurrency)}</td>
+                        <td className="text-center">{numberFormat(row.priceInCurrency[displaySetCurrency])}</td>
                         <td className="text-center">{numberFormat(row.netVatPrice)}</td>
                         {this.renderEdit(0, row.reference)}
                         {this.renderDelete(0, row.reference)}
@@ -56,7 +56,7 @@ class RenderViewSetItemTable extends Component {
                     <tr className="ying_tr_height_23">
                         <td className="width-6 text-center">{row.reference}</td>
                         <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><span className="s1_ying">{row.description}</span></p></td>
-                        <td className="text-center">{numberFormat(row.priceInHomeCurrency)}</td>
+                        <td className="text-center">{numberFormat(row.priceInCurrency[displaySetCurrency])}</td>
                         <td className="text-center">{numberFormat(row.netVatPrice)}</td>
                         {this.renderEdit(0, row.reference)}
                         {this.renderDelete(0, row.reference)}
@@ -69,7 +69,7 @@ class RenderViewSetItemTable extends Component {
                     <tr>
                         <td className="width-6 text-center">{row.reference}</td>
                         <td>{row.description}</td>
-                        <td className="text-center">{numberFormat(row.priceInHomeCurrency)}</td>
+                        <td className="text-center">{numberFormat(row.priceInCurrency[displaySetCurrency])}</td>
                         <td className="text-center">{numberFormat(row.netVatPrice)}</td>
                         {this.renderEdit(0, row.reference)}
                         {this.renderDelete(0, row.reference)}

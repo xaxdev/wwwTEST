@@ -5,7 +5,7 @@
     "node_args": "--max_old_space_size=2048",
     "watch": false,
     "env_production": {
-      "NODE_ENV": "production",
+      "NODE_ENV": "production"
     },
     "env_test": {
 	    "NODE_ENV": "test"

@@ -4,6 +4,7 @@ import _  from 'lodash'
 import moment from 'moment-timezone';
 import sendgrid from 'sendgrid';
 import sendgridConfig from '../sendgrid.json';
+import nodeoutlook  from 'nodejs-nodemailer-outlook';
 
 const shareduser = Joi.object().keys({
     email: Joi.string().required().trim()
@@ -28,44 +29,62 @@ export default {
             let emailBody = '';
             userEmail = [];
 
-            const notify = err => new Promise((resolve, reject) => {                
+            // const notify = err => new Promise((resolve, reject) => {                
+            //     const time = moment().tz('Asia/Bangkok').format()
+            //     const subject = (!!err)? `Failed share data catalog  ${time}` : `Succeeded share data catalog ${time}`
+            //     const sg = sendgrid(sendgridConfig.key)
+            //     const request = sg.emptyRequest()
+
+            //     request.method = 'POST'
+            //     request.path = '/v3/mail/send'
+            //     request.body = {
+            //         personalizations: [
+            //             {
+            //                 to: userEmail,
+            //                 subject
+            //             }
+            //         ],
+            //         from: {
+            //             email: 'Korakod.C@Mouawad.com',
+            //             name: 'Mouawad Admin'
+            //         },
+            //         content: [
+            //             {
+            //                 type: 'text/plain',
+            //                 value: (!!err)? err.message : emailBody
+            //             }
+            //         ]
+            //     };
+
+            //     sg
+            //         .API(request)
+            //         .then(response => {
+            //             console.log(response.statusCode)
+            //             console.log(response.body)
+            //             console.log(response.headers)
+            //             return resolve()
+            //         })
+            //         .catch(err => {
+            //             console.log(err);
+            //         });
+            // });
+            
+            const notify = err => new Promise((resolve, reject) => {
                 const time = moment().tz('Asia/Bangkok').format()
                 const subject = (!!err)? `Failed share data catalog  ${time}` : `Succeeded share data catalog ${time}`
-                const sg = sendgrid(sendgridConfig.key)
-                const request = sg.emptyRequest()
-
-                request.method = 'POST'
-                request.path = '/v3/mail/send'
-                request.body = {
-                    personalizations: [
-                        {
-                            to: userEmail,
-                            subject
-                        }
-                    ],
-                    from: {
-                        email: 'dev@itorama.com',
-                        name: 'Mouawad Admin'
+            
+                nodeoutlook.sendEmail({
+                    auth: {
+                        user: 'noreply@mouawad.com',
+                        pass: 'Y63jeYVvF!'
                     },
-                    content: [
-                        {
-                            type: 'text/plain',
-                            value: (!!err)? err.message : emailBody
-                        }
-                    ]
-                };
-
-                sg
-                    .API(request)
-                    .then(response => {
-                        console.log(response.statusCode)
-                        console.log(response.body)
-                        console.log(response.headers)
-                        return resolve()
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+                    from: 'noreply@mouawad.com',
+                    to: userEmail,
+                    subject: subject,
+                    html: emailBody,
+                    onError: (e) => console.log(e),
+                    onSuccess: (i) => console.log(i)
+                });
             });
 
             try {

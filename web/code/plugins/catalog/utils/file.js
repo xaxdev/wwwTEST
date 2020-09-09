@@ -37,34 +37,40 @@ const write = async (file, data) => {
 }
 
 const save = (file, wb) => new Promise((resolve, reject) => {
-    wb.write(file, err => {
-        if (err) {
-            return reject(err)
-        }
-
-        const _pathSourceFile = Path.resolve(__dirname, '../../../' + file);
-        const _pathDistFile = Path.resolve(__dirname, '../../../plugins/http/public/export_files');
-        const output = fs.createWriteStream(_pathDistFile + '/' + file.replace('.xlsx','.zip'));
-        const archive = archiver('zip');
-        
-        output.on('close', function() {
-            fs.unlink(_pathSourceFile,function(err){
-                if(err) return console.log(err);
-                console.log('Write file done.');
-                return resolve()
+    console.log('save function');
+    try {
+        wb.write(file, err => {
+            if (err) {
+                return reject(err)
+            }
+    
+            const _pathSourceFile = Path.resolve(__dirname, '../../../' + file);
+            const _pathDistFile = Path.resolve(__dirname, '../../../plugins/http/public/export_files');
+            const output = fs.createWriteStream(_pathDistFile + '/' + file.replace('.xlsx','.zip'));
+            const archive = archiver('zip');
+            output.on('close', function() {
+                fs.unlink(_pathSourceFile,function(err){
+                    if(err) return console.log(err);
+                    console.log('Write file done.');
+                    return resolve()
+                });
             });
-        });
-        
-        archive.on('error', function(err) {
-            throw err;
-        });
-        
-        archive.pipe(output);
-        archive.append(fs.createReadStream(_pathSourceFile), {
-            name: file
-        });
-        archive.finalize();
-    })
+            
+            archive.on('error', function(err) {
+                throw err;
+            });
+            
+            archive.pipe(output);
+            archive.append(fs.createReadStream(_pathSourceFile), {
+                name: file
+            });
+            archive.finalize();
+        })
+        console.log('End Write');
+    } catch (error) {
+        console.log(error)
+    }
+    
 });
 
 export { read, write, save };

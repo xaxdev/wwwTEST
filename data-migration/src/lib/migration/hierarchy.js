@@ -49,7 +49,7 @@ const getSources = async _ => {
             add(hierarchy.spare, record)
         })
 
-        const destination = Path.resolve(__dirname, '../../../../web/code/plugins/http/src/utils/treeview')
+        const destination = Path.resolve(__dirname, '../../../../mol/web/code/plugins/http/src/utils/treeview')
 
         Object.keys(hierarchy).forEach(async key => {
             await file.write(`${destination}/${key}.json`, JSON.stringify(hierarchy[key], null, 4))

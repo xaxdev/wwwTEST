@@ -2,6 +2,7 @@ import amqp from 'amqplib'
 import moment from 'moment-timezone';
 import sendgrid from 'sendgrid'
 import sendgridConfig from './sendgrid.json'
+import nodeoutlook  from 'nodejs-nodemailer-outlook'
 
 const officegen = require('officegen');
 const docx = officegen ('docx');
@@ -34,48 +35,72 @@ const Confidence = require('confidence');
         }
     });
 
+    // const notify = err => new Promise((resolve, reject) => {
+    //     const time = moment().tz('Asia/Bangkok').format()
+    //     const subject = (!!err)? `Failed print data to word  ${time}` : `Succeeded print data to word ${time}`
+    //     const sg = sendgrid(sendgridConfig.key)
+    //     const request = sg.emptyRequest()
+
+    //     request.method = 'POST'
+    //     request.path = '/v3/mail/send'
+    //     request.body = {
+    //         personalizations: [
+    //             {
+    //                 to: [
+    //                     {
+    //                         email: userEmail
+    //                     }
+    //                 ],
+    //                 subject
+    //             }
+    //         ],
+    //         from: {
+    //             email: 'Korakod.C@Mouawad.com',
+    //             name: 'Mouawad Admin'
+    //         },
+    //         content: [
+    //             {
+    //                 type: 'text/plain',
+    //                 value: (!!err)? err.message : emailBody
+    //             }
+    //         ]
+    //     };
+
+    //     sg
+    //         .API(request)
+    //         .then(response => {
+    //             console.log(response.statusCode)
+    //             console.log(response.body)
+    //             console.log(response.headers)
+    //             return resolve()
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+    // });
+
     const notify = err => new Promise((resolve, reject) => {
         const time = moment().tz('Asia/Bangkok').format()
         const subject = (!!err)? `Failed print data to word  ${time}` : `Succeeded print data to word ${time}`
-        const sg = sendgrid(sendgridConfig.key)
-        const request = sg.emptyRequest()
-
-        request.method = 'POST'
-        request.path = '/v3/mail/send'
-        request.body = {
-            personalizations: [
-                {
-                    to: [
-                        {
-                            email: userEmail
-                        }
-                    ],
-                    subject
-                }
-            ],
-            from: {
-                email: 'dev@itorama.com',
-                name: 'Mouawad Admin'
+    
+        nodeoutlook.sendEmail({
+            auth: {
+                user: 'noreply@mouawad.com',
+                pass: 'Y63jeYVvF!'
             },
-            content: [
-                {
-                    type: 'text/plain',
-                    value: (!!err)? err.message : emailBody
-                }
-            ]
-        };
-
-        sg
-            .API(request)
-            .then(response => {
-                console.log(response.statusCode)
-                console.log(response.body)
-                console.log(response.headers)
+            from: 'noreply@mouawad.com',
+            to: userEmail,
+            subject: subject,
+            html: (!!err)? err.message : emailBody,
+            onError: (e) => {
+                console.log(i)
+                return reject()
+            },
+            onSuccess: (i) => {
+                console.log(i)
                 return resolve()
-            })
-            .catch(err => {
-                console.log(err);
-            });
+            }
+        });
     });
 
     const store = new Confidence.Store(require('./config'));

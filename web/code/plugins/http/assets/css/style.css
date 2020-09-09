@@ -953,6 +953,13 @@ select.form-searchresult option{
   float: left;
   cursor:pointer;
 }
+.icon-rename{
+  background: url(/images/icon-rename.png) no-repeat center;
+  width:40px;
+  height: 40px;
+  float: left;
+  cursor:pointer;
+}
 .icon-filesMonograph{
   background: url(/images/icon-gallery.png) no-repeat center;
   width:40px;
@@ -1879,6 +1886,16 @@ select.form-searchresult option{
     border-radius: 5px;
     margin: 0 5px;
 }
+.savesearch .icon-rename {
+  background: #d7b261 url(/images/icon-rename.png) no-repeat center;
+  width: 30px;
+  height: 30px;
+  float: left;
+  cursor: pointer;
+  background-size: 89%;
+  border-radius: 5px;
+  margin: 0 5px;
+}
 .savesearch .table-bordered>tbody>tr>td:first-child, .savesearch .table-bordered>tbody>tr>td:nth-child(3){
   text-align: center;
 }
@@ -2772,16 +2789,15 @@ select.form-searchresult option{
 
 .s1_ying {
   color: black; 
-  font-family:"Times New Roman", serif; 
-  font-style: normal; 
-  font-weight:bold; 
+  font-family: "open_sanslight"; 
+  font-style: normal;
   text-decoration: none; 
   font-size: 9pt;
 }
 
 .s2_1_ying_footer { 
   color: black; 
-  font-family:"Times New Roman", serif; 
+  font-family: "open_sanslight"; 
   font-style: normal; 
   font-weight: normal; 
   text-decoration: none; 
@@ -2793,7 +2809,7 @@ select.form-searchresult option{
 
 .s2_2_ying_footer { 
   color: black; 
-  font-family:"Times New Roman", serif; 
+  font-family: "open_sanslight"; 
   font-style: normal; 
   font-weight: normal; 
   text-decoration: none; 
@@ -2806,7 +2822,7 @@ select.form-searchresult option{
 
 .s2_ying { 
   color: black; 
-  font-family:"Times New Roman", serif; 
+  font-family: "open_sanslight"; 
   font-style: normal; 
   font-weight: normal; 
   text-decoration: none; 

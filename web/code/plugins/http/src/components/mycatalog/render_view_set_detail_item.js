@@ -34,7 +34,8 @@ class RenderViewSetDetailItem extends Component {
                             </tr>
                         </thead>
                         {listItem.map(row=>{
-                            return <RenderViewSetItemTable row={row} onClickEditItem={onClickEditItem} onClickDeleteItem={onClickDeleteItem}/>
+                            return <RenderViewSetItemTable row={row} onClickEditItem={onClickEditItem} onClickDeleteItem={onClickDeleteItem} 
+                                displaySetCurrency={displaySetCurrency}/>
                         })}
                     </table>
                 </div>

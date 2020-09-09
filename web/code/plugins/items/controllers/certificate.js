@@ -1,6 +1,7 @@
 import moment from 'moment-timezone';
 import sendgrid from 'sendgrid';
 import sendgridConfig from '../sendgrid.json'
+import nodeoutlook  from 'nodejs-nodemailer-outlook'
 
 const Boom = require('boom');
 const Hoek = require('hoek');
@@ -97,48 +98,72 @@ module.exports = {
             });
 
             const notify = (err, mailBody, toEmail) => new Promise((resolve, reject) => {
-                const time = moment().tz('Asia/Bangkok').format();
-                const subject = (!!err)? `Failed download certificate  ${time}` : `Succeeded download certificate ${time}`;
-                const sg = sendgrid(sendgridConfig.key);
-                const request = sg.emptyRequest();
-
-                request.method = 'POST'
-                request.path = '/v3/mail/send'
-                request.body = {
-                    personalizations: [
-                        {
-                            to: [
-                                {
-                                    email: toEmail
-                                }
-                            ],
-                            subject
-                        }
-                    ],
-                    from: {
-                        email: 'dev@itorama.com',
-                        name: 'Mouawad Admin'
+                const time = moment().tz('Asia/Bangkok').format()
+                const subject = (!!err)? `Failed download certificate  ${time}` : `Succeeded download certificate ${time}`
+            
+                nodeoutlook.sendEmail({
+                    auth: {
+                        user: 'noreply@mouawad.com',
+                        pass: 'Y63jeYVvF!'
                     },
-                    content: [
-                        {
-                            type: 'text/plain',
-                            value: (!!err)? err.message : mailBody
-                        }
-                    ]
-                };
-
-                sg
-                    .API(request)
-                    .then(response => {
-                        console.log(response.statusCode)
-                        console.log(response.body)
-                        console.log(response.headers)
+                    from: 'noreply@mouawad.com',
+                    to: toEmail,
+                    subject: subject,
+                    html: mailBody,
+                    onError: (e) => {
+                        console.log(e)
+                        return reject(e)
+                    },
+                    onSuccess: (i) => {
+                        console.log(i)
                         return resolve()
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+                    }
+                });
             });
+
+            // const notify = (err, mailBody, toEmail) => new Promise((resolve, reject) => {
+            //     const time = moment().tz('Asia/Bangkok').format();
+            //     const subject = (!!err)? `Failed download certificate  ${time}` : `Succeeded download certificate ${time}`;
+            //     const sg = sendgrid(sendgridConfig.key);
+            //     const request = sg.emptyRequest();
+
+            //     request.method = 'POST'
+            //     request.path = '/v3/mail/send'
+            //     request.body = {
+            //         personalizations: [
+            //             {
+            //                 to: [
+            //                     {
+            //                         email: toEmail
+            //                     }
+            //                 ],
+            //                 subject
+            //             }
+            //         ],
+            //         from: {
+            //             email: 'Korakod.C@Mouawad.com',
+            //             name: 'Mouawad Admin'
+            //         },
+            //         content: [
+            //             {
+            //                 type: 'text/plain',
+            //                 value: (!!err)? err.message : mailBody
+            //             }
+            //         ]
+            //     };
+
+            //     sg
+            //         .API(request)
+            //         .then(response => {
+            //             console.log(response.statusCode)
+            //             console.log(response.body)
+            //             console.log(response.headers)
+            //             return resolve()
+            //         })
+            //         .catch(err => {
+            //             console.log(err);
+            //         });
+            // });
 
             const toEmail = request.payload.userEmail;
 

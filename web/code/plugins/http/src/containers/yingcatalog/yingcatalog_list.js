@@ -141,7 +141,7 @@ class YingCatalog extends Component {
     }
 
     render() {
-        const { yingCatalogName, totalPages } = this.props
+        const { yingCatalogName, totalPages, fields: {yingCatalogReName, yingCatalogId} } = this.props
         
         if (!yingCatalogName || yingCatalogName.length == 0) {
             if (yingCatalogName.length == 0) {
@@ -230,7 +230,8 @@ class YingCatalog extends Component {
                         </div>
                         <div className="panel-body">
                             <YingCatalogNameList  yingCatalogName={yingCatalogName} yingCatalogDetail={this.yingCatalogDetail} 
-                                onDeleteCatalog={this.onDeleteCatalog}/>
+                                onDeleteCatalog={this.onDeleteCatalog} yingCatalogReName={yingCatalogReName}
+                                yingCatalogId={yingCatalogId} that={this}/>
                         </div>
                         {
                             React.createElement(
@@ -265,6 +266,6 @@ function mapStateToProps(state) {
 module.exports = reduxForm(
     {
         form: 'YingCatalog',
-        fields: ['yingCatalogName']
+        fields: ['yingCatalogName', 'yingCatalogReName', 'yingCatalogId']
     }, mapStateToProps, yingsetaction
 )(YingCatalog)

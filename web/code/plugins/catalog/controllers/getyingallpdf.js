@@ -6,6 +6,7 @@ import moment from 'moment-timezone';
 import sendgrid from 'sendgrid';
 import sendgridConfig from '../sendgrid.json';
 import numberFormat from '../utils/convertNumberformat';
+import nodeoutlook  from 'nodejs-nodemailer-outlook';
 
 const fs = require('fs');
 const Path = require('path');
@@ -59,7 +60,7 @@ export default {
                 let initialOrder = 0
                 listItems.push(['التسلسل','رقم القطعة','المواصفات','المبلغ الإجمالي','المجموع الضريبة']);
                 let params = {}
-                params = {...params, listItems, initialOrder}
+                params = {...params, listItems, initialOrder, lng}
 
                 const itemTable = items.reduce(reducer, params).listItems
                 const totalPrice = items.reduce((prev, curr) => prev + (Number(curr.priceInHomeCurrency) || 0), 0);
@@ -69,6 +70,9 @@ export default {
                 let setImagePath = ''
 
                 switch (env) {
+                    case 'production':
+                        setImagePath = `../../../../../../../../../../../mnt/u01/mol/images/products/original/${setImages}`;        
+                        break;
                     case 'staging':
                         setImagePath = `../../../../../../../../../../../mnt/u01/mol/images/products/original/${setImages}`;        
                         break;
@@ -148,48 +152,72 @@ const save = (html, options, _pathDistFile) => new Promise((resolve, reject) => 
     }
 });
 
+// const notify = (err, userEmail, emailBody) => new Promise((resolve, reject) => {
+//     const time = moment().tz('Asia/Bangkok').format()
+//     const subject = (!!err)? `Failed print data to pdf  ${time}` : `Succeeded print data to pdf ${time}`
+//     const sg = sendgrid(sendgridConfig.key)
+//     const request = sg.emptyRequest()
+
+//     request.method = 'POST'
+//     request.path = '/v3/mail/send'
+//     request.body = {
+//         personalizations: [
+//             {
+//                 to: [
+//                     {
+//                         email: userEmail
+//                     }
+//                 ],
+//                 subject
+//             }
+//         ],
+//         from: {
+//             email: 'Korakod.C@Mouawad.com',
+//             name: 'Mouawad Admin'
+//         },
+//         content: [
+//             {
+//                 type: 'text/plain',
+//                 value: (!!err)? err.message : emailBody
+//             }
+//         ]
+//     };
+
+//     sg
+//         .API(request)
+//         .then(response => {
+//             console.log(response.statusCode)
+//             console.log(response.body)
+//             console.log(response.headers)
+//             return resolve()
+//         })
+//         .catch(err => {
+//             console.log(err);
+//         });
+// });
+
 const notify = (err, userEmail, emailBody) => new Promise((resolve, reject) => {
     const time = moment().tz('Asia/Bangkok').format()
     const subject = (!!err)? `Failed print data to pdf  ${time}` : `Succeeded print data to pdf ${time}`
-    const sg = sendgrid(sendgridConfig.key)
-    const request = sg.emptyRequest()
 
-    request.method = 'POST'
-    request.path = '/v3/mail/send'
-    request.body = {
-        personalizations: [
-            {
-                to: [
-                    {
-                        email: userEmail
-                    }
-                ],
-                subject
-            }
-        ],
-        from: {
-            email: 'dev@itorama.com',
-            name: 'Mouawad Admin'
+    nodeoutlook.sendEmail({
+        auth: {
+            user: 'noreply@mouawad.com',
+            pass: 'Y63jeYVvF!'
         },
-        content: [
-            {
-                type: 'text/plain',
-                value: (!!err)? err.message : emailBody
-            }
-        ]
-    };
-
-    sg
-        .API(request)
-        .then(response => {
-            console.log(response.statusCode)
-            console.log(response.body)
-            console.log(response.headers)
+        from: 'noreply@mouawad.com',
+        to: userEmail,
+        subject: subject,
+        html: emailBody,
+        onError: (e) => {
+            console.log(e)
+            return reject(e)
+        },
+        onSuccess: (i) => {
+            console.log(i)
             return resolve()
-        })
-        .catch(err => {
-            console.log(err);
-        });
+        }
+    });
 });
 
 function createTable(doc, data, lng, width = 500) {
@@ -370,7 +398,6 @@ function createTable(doc, data, lng, width = 500) {
                                     blockSize = 230
                                     break;
                                 }
-                                
                             }
                         case 3:
                             //Public Price
@@ -406,10 +433,10 @@ function createTable(doc, data, lng, width = 500) {
 }
 
 const reducer = (params, current) => {
-    let {listItems, initialOrder} = params
+    let {listItems, initialOrder, lng} = params
     let itemRow = []
     let order = 0
-    const size = 120
+    let size = (lng != 'eng')? 80: 65
     const rangeMax = current.description.length
     const rounds = Math.ceil((rangeMax + 1) / size);
     let rangeMin = 0

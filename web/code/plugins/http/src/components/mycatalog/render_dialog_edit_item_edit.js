@@ -85,26 +85,38 @@ class RenderDialogEditItemEdit extends Component {
                 const { items } = yingCatalogDetail
                 
                 if (items.length != 0) {
-                    const [filterItem] = items.filter(item=>item.reference == editItemReference)
-                    if (!!filterItem) {
-                        const { description, priceInHomeCurrency, itemDescriptionLanguage, netVatPrice } = filterItem;
-                        initData(that.props.fields, description, priceInHomeCurrency, itemDescriptionLanguage, this.state.isChangedLanguage, netVatPrice)  
-                    }
                     displaySetCurrency = displayCurrency == '' 
                         ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
                         : displayCurrency
+                    const [filterItem] = items.filter(item=>item.reference == editItemReference)
+                    if (!!filterItem) {
+                        const { description, priceInCurrency, itemDescriptionLanguage, netVatPrice } = filterItem;
+                        initData(that.props.fields, description, priceInCurrency[displaySetCurrency], itemDescriptionLanguage, this.state.isChangedLanguage, netVatPrice)  
+                    }
+                    
                 }
             } else {
                 if (editItemReference != '') {
+                    displaySetCurrency = that.props.displayCurrency || 'USD'
                     if (itemDetail != null) {
                         const { reference } = itemDetail
                         if (reference == editItemReference) {
-                            const { description, priceInHomeCurrency, itemDescriptionLanguage, netVatPrice } = itemDetail;
-                            initData(that.props.fields, description, priceInHomeCurrency, itemDescriptionLanguage, this.state.isChangedLanguage, netVatPrice)  
+                            const { description, priceInCurrency, itemDescriptionLanguage, netVatPrice } = itemDetail;
+                            initData(that.props.fields, description, priceInCurrency[displaySetCurrency], itemDescriptionLanguage, this.state.isChangedLanguage, netVatPrice)  
                         }
                     }
                 }
             }   
+        } else {
+            if (!!yingCatalogDetail) {
+                displaySetCurrency = displayCurrency == '' 
+                    ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
+                    : displayCurrency
+            } else {
+                if (editItemReference != '') {
+                    displaySetCurrency = that.props.displayCurrency || 'USD'
+                }
+            }
         }
 
         return(
@@ -112,7 +124,7 @@ class RenderDialogEditItemEdit extends Component {
                 <Modal isOpen={that.state.isOpenEditItemDialog} onRequestHide={that.hideEditItemDialog}>
                     <div className="modal-header">
                         <ModalClose onClick={that.hideEditItemDialog}/>
-                        <h1 className="modal-title">Add New Item</h1>
+                        <h1 className="modal-title">Edit Item</h1>
                     </div>
                     <div className="modal-body">
                         <div className="row">

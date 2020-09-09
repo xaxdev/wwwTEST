@@ -54,9 +54,7 @@ exports.id = {
             const { setDescription, setReference, suiteName, romanceNote, setImages, address, remark, items, setCurrency } = request.payload
 
             const existingCatalog = await db.collection('YingCatalogDetail')
-            .find({
-                'setReference': setReference
-            }).toArray()
+            .find({ '_id' : new ObjectID(id) }).toArray()
             if(existingCatalog.length > 0) return reply(Boom.badRequest('Your required Id is existing.'))
 
             const catalogDetail = await db.collection('YingCatalogDetail').find({ 'yingCatalogId': id }).toArray()

@@ -53,6 +53,7 @@
     "moment": "^2.13.0",
     "moment-timezone": "^0.5.26",
     "newrelic": "^1.29.0",
+    "nodejs-nodemailer-outlook": "^1.2.3",
     "pdfkit": "^0.10.0",
     "react": "0.14.x ",
     "react-addons-css-transition-group": "^15.4.2",

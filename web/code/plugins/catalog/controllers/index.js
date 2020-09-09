@@ -35,10 +35,11 @@ import updateyingcatalogset from './updateyingcatalogset'
 import deleteyingset from './deleteyingset'
 import getyingallpdf from './getyingallpdf'
 import getexcel from './getexcel'
+import renameying from './renameying'
 
 export {
         getnames, getdata, save, remove, removeitem, rename, items, exportpdf, saveshared, getnameswithshared , savesetitem, getnamessetitem, 
         getnameswithsharedsetitem, getdatasetitem, itemssetitem, migrateprice, savesetcatalogitem, getnameswithsharedcatalog, itemssetcatalogitem, renameset, 
         removeset, savesharedset, removesetitem, addyingcatalog, getyingcatalog, getyingitem, uploadsetimage, updateyingcatalog, getyingsetreference,
-        updateordersetreference, deleteyingcatalog, share, updateyingcatalogitem, updateyingcatalogset, deleteyingset, getyingallpdf, getexcel
+        updateordersetreference, deleteyingcatalog, share, updateyingcatalogitem, updateyingcatalogset, deleteyingset, getyingallpdf, getexcel, renameying
 }

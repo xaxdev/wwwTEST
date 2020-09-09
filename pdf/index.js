@@ -1,8 +1,8 @@
 import amqp from 'amqplib'
 import moment from 'moment-timezone';
 import sendgrid from 'sendgrid'
-
 import sendgridConfig from './sendgrid.json'
+import nodeoutlook  from 'nodejs-nodemailer-outlook'
 
 const fs = require('fs');
 const Path = require('path');
@@ -31,48 +31,66 @@ const Confidence = require('confidence');
         }
     });
 
+    // const notify = err => new Promise((resolve, reject) => {
+    //     const time = moment().tz('Asia/Bangkok').format()
+    //     const subject = (!!err)? `Failed print data to pdf  ${time}` : `Succeeded print data to pdf ${time}`
+    //     const sg = sendgrid(sendgridConfig.key)
+    //     const request = sg.emptyRequest()
+
+    //     request.method = 'POST'
+    //     request.path = '/v3/mail/send'
+    //     request.body = {
+    //         personalizations: [
+    //             {
+    //                 to: [
+    //                     {
+    //                         email: userEmail
+    //                     }
+    //                 ],
+    //                 subject
+    //             }
+    //         ],
+    //         from: {
+    //             email: 'Korakod.C@Mouawad.com',
+    //             name: 'Mouawad Admin'
+    //         },
+    //         content: [
+    //             {
+    //                 type: 'text/plain',
+    //                 value: (!!err)? err.message : emailBody
+    //             }
+    //         ]
+    //     };
+
+    //     sg
+    //         .API(request)
+    //         .then(response => {
+    //             console.log(response.statusCode)
+    //             console.log(response.body)
+    //             console.log(response.headers)
+    //             return resolve()
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+    // });
+
     const notify = err => new Promise((resolve, reject) => {
         const time = moment().tz('Asia/Bangkok').format()
         const subject = (!!err)? `Failed print data to pdf  ${time}` : `Succeeded print data to pdf ${time}`
-        const sg = sendgrid(sendgridConfig.key)
-        const request = sg.emptyRequest()
-
-        request.method = 'POST'
-        request.path = '/v3/mail/send'
-        request.body = {
-            personalizations: [
-                {
-                    to: [
-                        {
-                            email: userEmail
-                        }
-                    ],
-                    subject
-                }
-            ],
-            from: {
-                email: 'dev@itorama.com',
-                name: 'Mouawad Admin'
+    
+        nodeoutlook.sendEmail({
+            auth: {
+                user: 'noreply@mouawad.com',
+                pass: 'Y63jeYVvF!'
             },
-            content: [
-                {
-                    type: 'text/plain',
-                    value: (!!err)? err.message : emailBody
-                }
-            ]
-        };
-
-        sg
-            .API(request)
-            .then(response => {
-                console.log(response.statusCode)
-                console.log(response.body)
-                console.log(response.headers)
-                return resolve()
-            })
-            .catch(err => {
-                console.log(err);
-            });
+            from: 'noreply@mouawad.com',
+            to: userEmail,
+            subject: subject,
+            html: (!!err)? err.message : emailBody,
+            onError: (e) => console.log(e),
+            onSuccess: (i) => console.log(i)
+        });
     });
 
     const store = new Confidence.Store(require('./config'));
@@ -102,7 +120,7 @@ const Confidence = require('confidence');
                 const html = fs.readFileSync(`./import_html/${userName}.html`, 'utf8');
                 const options = { format: 'A4', timeout: 30000 };
 
-                let _pathDistFile = Path.resolve(__dirname, `../web/code/plugins/http/public/export_files/${userName}.pdf`);
+                let _pathDistFile = Path.resolve(__dirname, `/home/mol/www/projects/mol/web/code/plugins/http/public/export_files/${userName}.pdf`);
 
                 console.log(`user Email: ${userEmail}`);
                 await save(html, options, _pathDistFile);

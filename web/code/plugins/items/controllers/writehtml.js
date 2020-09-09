@@ -27,9 +27,10 @@ module.exports = {
                 console.log('userName-->',userName);
 
                 const destination = channel == 'pdf'
-                    ? Path.resolve(__dirname, '../../../../../pdf/import_html')
+                    ? Path.resolve(__dirname, '/home/mol/www/projects/production/pdf/import_html')
                     : Path.resolve(__dirname, '../../../../../word-export/import_html')
 
+                console.log({destination});
                 await file.write(`${destination}/${userName}.html`, temp);
                 console.log('writing done!');
                 amqp.connect(amqpHost, function(err, conn) {
