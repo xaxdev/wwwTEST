@@ -165,10 +165,10 @@
 			"plugin": {
 				"register": "./plugins/email",
 				"options": {
-					"user": "azure_7fe2416fe9b6546bd21d8e81829437c1@azure.com",
-					"password": "2Q8afc6h8NUkxil",
+					"user": "mouawadmol",
+					"password": "m0u@w@dm0l",
 					"reset": {
-						"from": "dev@itorama.com",
+						"from": "Korakod.C@Mouawad.com",
 						"subject": "Request to reset password"
 					}
 				}

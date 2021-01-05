@@ -105,6 +105,7 @@ class YingCatalogDetail extends Component {
             setDetailAddress, setDetailRemark, listItem, setImageBase64,
             fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages, setCurrency }
         } = this.props;
+        console.log({listItem});
         const params = {
             setReference: (!setReferenceNumber.value)? '': setReferenceNumber.value,
             setDescription: (!setDescription.value)? '': setDescription.value,

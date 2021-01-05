@@ -84,13 +84,14 @@ class RenderViewItemDetail extends Component {
     }
 
     saveEditItem = (reference)=>{
-        const { fields: { description, price, netVatPrice }, listItem } = this.props;
+        const { fields: { description, price, netVatPrice, setCurrency }, listItem } = this.props;
         const newListItem = listItem.map(
             editItemData(
                 reference
                 , description.value
                 , Number(price.value.replace(/,/g,''))
-                , Number(netVatPrice.value.replace(/,/g,''))
+                , Number(!netVatPrice.value?0 :netVatPrice.value.replace(/,/g,''))
+                , setCurrency
             )
         )
         this.props.setItemList(newListItem)
@@ -145,8 +146,34 @@ function mapStateToProps(state) {
 
 module.exports = connect(mapStateToProps, yingsetaction)(RenderViewItemDetail);
 
-const editItemData = (reference, newDescription, newPrice, newNetVatPrice) => item =>{
-    const { description,  priceInHomeCurrency, netVatPrice} = item;
+const editItemData = (reference, newDescription, newPrice, newNetVatPrice, setCurrency) => item =>{
+    let { description,  priceInHomeCurrency, netVatPrice, priceInCurrency} = item;
+    switch (setCurrency.value) {
+        case 'USD':
+            priceInCurrency = {...priceInCurrency, 'USD': newPrice}       
+            break;
+        case 'CHF':
+            priceInCurrency = {...priceInCurrency, 'CHF': newPrice}       
+            break;
+        case 'JOD':
+            priceInCurrency = {...priceInCurrency, 'JOD': newPrice}       
+            break;
+        case 'KWD':
+            priceInCurrency = {...priceInCurrency, 'KWD': newPrice}       
+            break;
+        case 'OMR':
+            priceInCurrency = {...priceInCurrency, 'OMR': newPrice}       
+            break;
+        case 'QAR':
+            priceInCurrency = {...priceInCurrency, 'QAR': newPrice}       
+            break;
+        case 'SAR':
+            priceInCurrency = {...priceInCurrency, 'SAR': newPrice}       
+            break;
+    
+        default:
+            break;
+    }
     let newItem = {}
     if (item.reference == reference) {
         newItem = {
@@ -154,6 +181,7 @@ const editItemData = (reference, newDescription, newPrice, newNetVatPrice) => it
             , description: newDescription != ''? newDescription: description
             , priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency
             , netVatPrice: newNetVatPrice != ''? newNetVatPrice: netVatPrice
+            , priceInCurrency
         }
     } else {
         newItem = {...item}

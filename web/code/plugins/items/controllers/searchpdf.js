@@ -33,6 +33,7 @@ module.exports = {
         const size = request.payload.pageSize;
         const itemsOrder = request.payload.ItemsOrder;
         const setReferencdOrder = request.payload.SetReferencdOrder;
+        const itemsList = request.payload.itemsList;
         const amqpHost = request.server.plugins.amqp.host;
         const amqpChannel = request.server.plugins.amqp.channelPdf;
 
@@ -136,7 +137,7 @@ module.exports = {
                         } else {
                             temp = await GetHtmlListViewAsSetAll(datas,curr,isViewAsSet,env,userPermissionPrice,titleColumn);
                         }
-                        const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
+                        const destination = Path.resolve(__dirname, '/home/mol/www/projects/production/pdf/import_html');
 
                         await file.write(`${destination}/${userName}.html`, temp);
                         console.log('writing done!');
@@ -158,12 +159,19 @@ module.exports = {
                     }else {
                         datas = await GetAllData(allItems, sortDirections, sortBy, size, page, userCurrency, keys,
                             obj, request, itemsOrder, setReferencdOrder,itemsNotMMECONSResult,itemsMMECONSResult);
+                        // if (itemsList.length != 0) {
+                        //     let params = {}
+                        //     let dataItemsList = []
+                        //     params = {...params, 'itemsList': itemsList, dataItemsList}
+                        //     datas = datas.reduce(reducer, params).dataItemsList   
+                        // }
+                        // console.log({datas});
                         if (viewType == 'grid') {
                             temp = await GetHTMLViewASSetGridAll(datas,curr,isViewAsSet,env,userPermissionPrice)
                         } else if (viewType == 'list') {
                             temp = await GetHtmlListAll(datas,curr,isViewAsSet,env,userPermissionPrice,titleColumn)
                         }
-                        const destination = Path.resolve(__dirname, '../../../../../pdf/import_html');
+                        const destination = Path.resolve(__dirname, '/home/mol/www/projects/production/pdf/import_html');
 
                         await file.write(`${destination}/${userName}.html`, temp);
                         console.log('writing done!');
@@ -198,3 +206,17 @@ module.exports = {
         }
     }
 };
+
+const reducer = (params, current) =>{
+    console.log({current});
+    let {dataItemsList, itemsList} = params
+    
+    const result = itemsList.find( ({ reference }) => reference === current[0] );
+    if (!!result) {
+        dataItemsList.push(current)
+    }
+
+    params = {...params, dataItemsList}
+
+    return params
+}

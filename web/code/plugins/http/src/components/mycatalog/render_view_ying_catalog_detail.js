@@ -27,60 +27,59 @@ class RenderViewYingCatalogDetail extends Component {
                     <table  width="100%" border="0">
                         <tbody>
                             <tr>
-                                <td className="ying_img_logo" ><img width="564" height="85" alt="image" src="/images/Image_logo.jpg"/></td>
+                                <td className="ying_img_logo" width="40%" ><img height="85" alt="image" src="/images/Image_address_header_eng.jpg"/></td>
+                                <td className="ying_img_logo" width="20%" ><img height="85" alt="image" src="/images/mouawad-crest.png"/></td>
+                                <td className="ying_img_logo" width="40%" ><img height="85" alt="image" src="/images/Image_address_header_arabic.jpg"/></td>
                             </tr>
                             <tr>
-                                <td className="ying_img_set"><img width="358" height="509" alt="image" src={imagesUrl}/></td>
+                                <td colSpan="3" className="ying_img_set"><br/><br/><img height="509" alt="image" src={imagesUrl}/><br/><br/></td>
                             </tr>
                             <tr className="ying_td_center">
-                                <td className="ying_td_center">
+                                <td colSpan="3" className="ying_td_center">
                                     <table className="ying_table_set_detail" cellspacing="0">
                                         <tr className="ying_tr_height_22">
-                                            <td className="ying_td_width_27"><img width="564" height="25" alt="image" src="/images/order.png"/></td>
-                                            <td className="ying_td_width_116"><img width="564" height="35" alt="image" src="/images/skunumber.png"/></td>
-                                            <td className="ying_td_width_240"><img width="564" height="35" alt="image" src="/images/description.png"/></td>
-                                            <td className="ying_td_width_74"><img width="564" height="30" alt="image" src="/images/pp.png"/></td>
-                                            <td className="ying_td_width_74"><img width="564" height="30" alt="image" src="/images/net.png"/></td>
+                                            <td className="ying_td_width_27"><img width="564" height="20" alt="image" src="/images/order.png"/></td>
+                                            <td className="ying_td_width_116"><img width="564" height="30" alt="image" src="/images/skunumber.png"/></td>
+                                            <td className="ying_td_width_240"><img width="564" height="30" alt="image" src="/images/description.png"/></td>
+                                            <td className="ying_td_width_74"><img width="564" height="25" alt="image" src="/images/pp.png"/></td>
+                                            <td className="ying_td_width_74"><img width="564" height="25" alt="image" src="/images/net.png"/></td>
                                         </tr>
                                         {items.map((item,index)=>{
                                             if (item.itemDescriptionLanguage == 'arb') {
                                                 return (
                                                     <tr className="ying_tr_height_23">
-                                                        <td className="ying_td_width_27"><p className="s2_ying ying_id"><strong><span className="s1_ying">{index+1}</span></strong></p></td>
+                                                        <td className="ying_td_width_27"><p className="s2_ying ying_id"><span className="s1_ying">{index+1}</span></p></td>
                                                         <td className="ying_td_width_116"><p className="s1_ying ying_reference"><span className="s1_ying">{item.reference}</span></p></td>
-                                                        <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><strong><span className="s1_ying">{item.description}</span></strong></p></td>
-                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
-                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.netVatPrice)}</span></strong></p></td>
+                                                        <td className="ying_td_width_240"><p className="s1_ying ying_description_item"><span className="s1_ying">{item.description}</span></p></td>
+                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><span className="s1_ying">{numberFormat(item.priceInHomeCurrency)}</span></p></td>
+                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><span className="s1_ying">{numberFormat(item.netVatPrice)}</span></p></td>
                                                     </tr>
                                                 )    
                                             } else {
                                                 return (
                                                     <tr className="ying_tr_height_23">
-                                                        <td className="ying_td_width_27"><p className="s2_ying ying_id"><strong><span className="s1_ying">{index+1}</span></strong></p></td>
+                                                        <td className="ying_td_width_27"><p className="s2_ying ying_id"><span className="s1_ying">{index+1}</span></p></td>
                                                         <td className="ying_td_width_116"><p className="s1_ying ying_reference"><span className="s1_ying">{item.reference}</span></p></td>
-                                                        <td className="ying_td_width_240"><p className="s1_ying ying_description_item_left"><strong><span className="s1_ying">{item.description}</span></strong></p></td>
-                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
-                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><strong><span className="s1_ying">{numberFormat(item.netVatPrice)}</span></strong></p></td>
+                                                        <td className="ying_td_width_240"><p className="s1_ying ying_description_item_left"><span className="s1_ying">{item.description}</span></p></td>
+                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><span className="s1_ying">{numberFormat(item.priceInHomeCurrency)}</span></p></td>
+                                                        <td className="ying_td_width_74"><p className="s2_ying ying_item_price"><span className="s1_ying">{numberFormat(item.netVatPrice)}</span></p></td>
                                                     </tr>
                                                 )
                                             }
                                         })}
                                         
                                         <tr className="ying_tr_height_17">
-                                            <td className="ying_td_width_383" colSpan="3"><p className="s1_ying ying_total" ><strong><span className="s1_ying">Total / المجموع</span></strong></p></td>
-                                            <td className="ying_td_width_74"><p className="s2_ying ying_footer_total" ><strong><span className="s1">{numberFormat(totalPrice)}</span></strong></p></td>
-                                            <td className="ying_td_width_74"><p className="s2_ying ying_footer_total" ><strong><span className="s1">{numberFormat(totalNetVatPrice)}</span></strong></p></td>
+                                            <td className="ying_td_width_383" colSpan="3"><p className="s1_ying ying_total" ><span className="s1_ying">Total / المجموع</span></p></td>
+                                            <td className="ying_td_width_74"><p className="s2_ying ying_footer_total" ><span className="s1">{numberFormat(totalPrice)}</span></p></td>
+                                            <td className="ying_td_width_74"><p className="s2_ying ying_footer_total" ><span className="s1">{numberFormat(totalNetVatPrice)}</span></p></td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
                             <tr>
-                                <td height="116" align="bottom">
+                                <td colSpan="3" className="ying_img_logo" align="bottom">
                                     <p className="ying_img_footer"><br/></p>
-                                    <p className="s2_1_ying_footer">وعسلا ةيبرعلا ةكلمملا - 4030123957 :ت.س - (012) 610 6195 :سكاف ،(012) 610 6194 ،(012) 610 6193 ،(012) 610 6192 :فتاه 21441 ةدج 1526 .ب.ص ،ريوكس ليمج ىنبم ،ةيلحتلا عراش :يسيئرلا زك</p>
-                                    <p className="s2_2_ying_footer">(012) 283 3125 فتاه ،ريوكس ليمج ،ةدج - (011) 293 4555 فتاه ،رتنس زانكأ ،ضايرلا - (013) 894 5747 فتاه ،لوم دشارلا ،ربخلا</p>
-                                    <p className="s2_2_ying_footer">Head Office: Tahlia Street, Jameel Square Bldg., Tel: (012) 610 6192, (012) 610 6193, (012) 610 6194, Fax: (012) 6106195, P.O. Box: 1526 Jeddah 21441, Kingdom of Saudi Arabia</p>
-                                    <p className="s2_2_ying_footer">Al Rashed Mall, Khobar Tel: (013) 894 5747, Aknaz Center, Riyadh Tel: (011) 293 4555, Jameel Square, Jeddah Tel: (012) 283 3125</p>
+                                    <img height="95" alt="image" src="/images/images_footer.png"/>
                                 </td>
                             </tr>
                         </tbody>

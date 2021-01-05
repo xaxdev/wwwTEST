@@ -8,7 +8,7 @@ import  {
 import  {
     FETCH_ALLNAME, FETCH_YINGCATALOGDETAIL, FETCH_ITEMDETAIL, SET_ITEMSLIST, SET_YINGDELETEDITEM, SET_YINGEDITITEMREFERENCE, SET_YINGSETDETAILADDRESS,
     SET_YINGSETDETAILREMARK, SET_YINGSETIMAGEBASE64, GET_YINGSETREFERENCE, SET_CHANGEDORDERSETREFERENCE, FETCH_SOMENAME, SET_SHAREDYINGSET, 
-    FETCH_ALLYINGNAME, SET_EDITITEMDETAILS, SET_SETCURRENCY
+    FETCH_ALLYINGNAME, SET_EDITITEMDETAILS, SET_SETCURRENCY, SET_NEWYINGCATALOGNAME
 } from '../../constants/yingConstants';
 
 const INITIAL_STATE = {
@@ -19,7 +19,7 @@ const INITIAL_STATE = {
     totalPages: null, yingCatalogDetail: null, yingCatalogDetailStatus: false, yingCatalogDetailStatusCode: 100, yingCatalogDetailMsg: null,
     yingCatalogTotalPages: null, yingItemDetail: null, listItem: [], isDeletedItem: false, editItemReference: null, setDetailAddress: null, 
     setDetailRemark: null, yingSetReference: [], changedOrder: [], sharedYingStatus: false, sharedYingStatusCode: 100, ListYingCatalogName: [],
-    isEditItemDetails: false, displayCurrency: ''
+    isEditItemDetails: false, displayCurrency: '',yingCatalogNewName: null
 };
 
 export default function(state = INITIAL_STATE, action){
@@ -112,6 +112,8 @@ export default function(state = INITIAL_STATE, action){
             return {...state, catalogId: action.catalogId };
         case SET_NEWCATALOGNAME :
             return {...state, catalogName: action.catalogName };
+        case SET_NEWYINGCATALOGNAME :
+            return {...state, yingCatalogNewName: action.yingCatalogName };
         case SET_SLECTEDCATALOG :
             return {...state, catalogId: action.catalog };
         case DELETE_ITEMSFROMCATALOG :

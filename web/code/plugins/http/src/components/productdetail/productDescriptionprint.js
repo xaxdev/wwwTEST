@@ -85,7 +85,7 @@ const Detail = (props) =>{
                     <div style={styles.colmd5}>{convertBlanktodash(props.venderReference)}</div>
                 </div>
                 <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Manufactory Date</div>
+                    <div style={styles.colmd5}>Manufacturing Date</div>
                     <div style={styles.colmd5}>{invoicedDate}</div>
                 </div>
             </div>

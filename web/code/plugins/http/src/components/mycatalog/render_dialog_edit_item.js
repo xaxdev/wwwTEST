@@ -45,45 +45,50 @@ class RenderDialogEditItem extends Component {
                 const { items } = yingCatalogDetail
                 
                 if (items.length != 0) {
-                    const [filterItem] = items.filter(item=>item.reference == editItemReference)
-                    if (!!filterItem) {
-                        const { description, priceInHomeCurrency } = filterItem;
-                        initData(that.props.fields, description, priceInHomeCurrency)  
-                    }
                     displaySetCurrency = displayCurrency == '' 
                         ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
                         : displayCurrency
+                    const [filterItem] = items.filter(item=>item.reference == editItemReference)
+                    if (!!filterItem) {
+                        const { description, priceInCurrency } = filterItem;
+                        initData(that.props.fields, description, priceInCurrency[displaySetCurrency])  
+                    }
                 }
             } else {
                 if (editItemReference != '') {
                     if (itemDetail != null) {
+                        displaySetCurrency = that.props.displayCurrency || 'USD'
                         const { reference } = itemDetail
                         if (reference == editItemReference) {
-                            const { description, priceInHomeCurrency } = itemDetail;
-                            initData(that.props.fields, description, priceInHomeCurrency)  
+                            const { description, priceInCurrency } = itemDetail;
+                            initData(that.props.fields, description, priceInCurrency[displaySetCurrency])  
                         }
                     }
+                }else{
+                    displaySetCurrency = that.props.displayCurrency || 'USD'
                 }
             }   
         } else {
             if (description.value == undefined) {
                 if (editItemReference != '') {
+                    displaySetCurrency = that.props.displayCurrency || 'USD'
                     if (listItem.length != 0) {
                         const [filterItem] = listItem.filter(item=>item.reference == editItemReference)
                         if (!!filterItem) {
-                            const { description, priceInHomeCurrency } = filterItem;
-                            initData(that.props.fields, description, priceInHomeCurrency)  
+                            const { description, priceInCurrency } = filterItem;
+                            initData(that.props.fields, description, priceInCurrency[displaySetCurrency])  
                         }
                     }
                 }   
             }
             if (description.value == '' && price.value == '') {
                 if (editItemReference != '') {
+                    displaySetCurrency = that.props.displayCurrency || 'USD'
                     if (listItem.length != 0) {
                         const [filterItem] = listItem.filter(item=>item.reference == editItemReference)
                         if (!!filterItem) {
-                            const { description, priceInHomeCurrency } = filterItem;
-                            initData(that.props.fields, description, priceInHomeCurrency)  
+                            const { description, priceInCurrency } = filterItem;
+                            initData(that.props.fields, description, priceInCurrency[displaySetCurrency])  
                         }
                     }
                 }   
@@ -94,8 +99,8 @@ class RenderDialogEditItem extends Component {
             <div className="">
                 <Modal isOpen={that.state.isOpenEditItemDialog} onRequestHide={that.hideEditItemDialog}>
                     <div className="modal-header">
-                        <ModalClose onClick={that.hideAddItemDialog}/>
-                        <h1 className="modal-title">Add New Item</h1>
+                        <ModalClose onClick={that.hideEditItemDialog}/>
+                        <h1 className="modal-title">Edit For New Item</h1>
                     </div>
                     <div className="modal-body">
                         <div className="row">
@@ -139,15 +144,4 @@ const initData = (fields, _description, _priceInHomeCurrency)=>{
     const { description, price } = fields;
     description.onChange(_description);
     price.onChange(numberFormat(_priceInHomeCurrency));
-}
-
-const editItemData = (reference, newDescription, newPrice) => item =>{
-    const { description,  priceInHomeCurrency} = item;
-    let newItem = {}
-    if (item.reference == reference) {
-        newItem = {...item, description: newDescription != ''? newDescription: description, priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency}
-    } else {
-        newItem = {...item}
-    }
-    return newItem
 }

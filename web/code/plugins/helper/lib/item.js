@@ -112,6 +112,33 @@ const applyPermission = (user, item) => {
         const priceInUSD = getPriceIn('USD')(item.price) || -1
         const priceInHomeCurrency = getPriceIn(item.currency)(item.price) || -1
         const userCurrency = user.currency
+        const actualCostInCurrency = {
+            'USD': actualCostInUSD,
+            'CHF': getPriceIn('CHF')(item.actualCost) || -1,
+            'JOD': getPriceIn('JOD')(item.actualCost) || -1,
+            'KWD': getPriceIn('KWD')(item.actualCost) || -1,
+            'OMR': getPriceIn('OMR')(item.actualCost) || -1,
+            'QAR': getPriceIn('QAR')(item.actualCost) || -1,
+            'SAR': getPriceIn('SAR')(item.actualCost) || -1
+        }
+        const updatedCostInCurrency = {
+            'USD': updatedCostInUSD,
+            'CHF': getPriceIn('CHF')(item.updatedCost) || -1,
+            'JOD': getPriceIn('JOD')(item.updatedCost) || -1,
+            'KWD': getPriceIn('KWD')(item.updatedCost) || -1,
+            'OMR': getPriceIn('OMR')(item.updatedCost) || -1,
+            'QAR': getPriceIn('QAR')(item.updatedCost) || -1,
+            'SAR': getPriceIn('SAR')(item.updatedCost) || -1
+        }
+        const priceInCurrency = {
+            'USD': priceInUSD,
+            'CHF': getPriceIn('CHF')(item.price) || -1,
+            'JOD': getPriceIn('JOD')(item.price) || -1,
+            'KWD': getPriceIn('KWD')(item.price) || -1,
+            'OMR': getPriceIn('OMR')(item.price) || -1,
+            'QAR': getPriceIn('QAR')(item.price) || -1,
+            'SAR': getPriceIn('SAR')(item.price) || -1
+        }
         const result = {
             ...item,
             actualCost,
@@ -123,7 +150,10 @@ const applyPermission = (user, item) => {
             price,
             priceInUSD,
             priceInHomeCurrency,
-            userCurrency
+            userCurrency,
+            actualCostInCurrency,
+            updatedCostInCurrency,
+            priceInCurrency
         }
         result.gemstones.forEach(gemstone => delete gemstone.cost)
 
@@ -136,11 +166,14 @@ const applyPermission = (user, item) => {
                 delete result.updatedCostInUSD
                 delete result.updatedCostInHomeCurrency
                 delete result.markup
+                delete result.actualCostInCurrency
+                delete result.updatedCostInCurrency
                 break;
             case 'UPDATED':
                 delete result.actualCost
                 delete result.actualCostInUSD
                 delete result.actualCostInHomeCurrency
+                delete result.actualCostInCurrency
                 break;
         }
         return result

@@ -5,7 +5,7 @@ import {
     ROOT_URL, FETCH_ALLNAME, ADD_YINGCATALOGNAME, FETCH_YINGCATALOGDETAIL, FETCH_ITEMDETAIL, SET_ITEMSLIST, SET_YINGDELETEDITEM, SET_YINGEDITITEMREFERENCE,
     SET_YINGSETDETAILADDRESS, SET_YINGSETDETAILREMARK, ADD_YINGCATALOGDETAIL, UPLOAD_SETIMAGE, SET_YINGSETIMAGEBASE64, UPDATE_YINGCATALOGDETAIL, 
     GET_YINGSETREFERENCE, SET_CHANGEDORDERSETREFERENCE, UPDATE_ORDERSETREFERENCE, DELETE_CATALOGNAME, FETCH_SOMENAME, SET_SHAREDYINGSET, DELETE_YINGSET,
-    SET_EDITITEMDETAILS, FETCH_ALLPDF, FETCH_EXCELFILE, SET_SETCURRENCY
+    SET_EDITITEMDETAILS, FETCH_ALLPDF, FETCH_EXCELFILE, SET_SETCURRENCY, SET_NEWYINGCATALOGNAME
 } from '../constants/yingConstants';
 
 export function getYingName(params){
@@ -341,5 +341,23 @@ export function changedSetCurrency(value){
     return {
         type: SET_SETCURRENCY,
         setCurrency: value
+    }
+}
+
+export function updateCatalogName(params){
+    const token = sessionStorage.token;
+    let url = `${ROOT_URL}/api/catalog/yingcatalog/rename`;
+    return {
+        type: SET_NEWYINGCATALOGNAME,
+        promise: fetch(url,{
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(params)
+        }),
+        yingCatalogName: params.name
     }
 }

@@ -7,6 +7,7 @@ import constants from '../constants';
 import GenTemplateHtml from '../utils/genTemplatePdfMyCatalog';
 import * as file from '../utils/file';
 import sendgridConfig from '../sendgrid.json';
+import nodeoutlook  from 'nodejs-nodemailer-outlook';
 
 const fs = require('fs');
 const Path = require('path');
@@ -50,46 +51,70 @@ export default {
             const notify = err => new Promise((resolve, reject) => {
                 const time = moment().tz('Asia/Bangkok').format()
                 const subject = (!!err)? `Failed print data to pdf  ${time}` : `Succeeded print data to pdf ${time}`
-                const sg = sendgrid(sendgridConfig.key)
-                const request = sg.emptyRequest()
-
-                request.method = 'POST'
-                request.path = '/v3/mail/send'
-                request.body = {
-                    personalizations: [
-                        {
-                            to: [
-                                {
-                                    email: userEmail
-                                }
-                            ],
-                            subject
-                        }
-                    ],
-                    from: {
-                        email: 'dev@itorama.com',
-                        name: 'Mouawad Admin'
+            
+                nodeoutlook.sendEmail({
+                    auth: {
+                        user: 'noreply@mouawad.com',
+                        pass: 'Y63jeYVvF!'
                     },
-                    content: [
-                        {
-                            type: 'text/plain',
-                            value: (!!err)? err.message : emailBody
-                        }
-                    ]
-                };
-
-                sg
-                    .API(request)
-                    .then(response => {
-                        console.log(response.statusCode)
-                        console.log(response.body)
-                        console.log(response.headers)
+                    from: 'noreply@mouawad.com',
+                    to: userEmail,
+                    subject: subject,
+                    html: emailBody,
+                    onError: (e) => {
+                        console.log(e)
+                        return reject(e)
+                    },
+                    onSuccess: (i) => {
+                        console.log(i)
                         return resolve()
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+                    }
+                });
             });
+
+            // const notify = err => new Promise((resolve, reject) => {
+            //     const time = moment().tz('Asia/Bangkok').format()
+            //     const subject = (!!err)? `Failed print data to pdf  ${time}` : `Succeeded print data to pdf ${time}`
+            //     const sg = sendgrid(sendgridConfig.key)
+            //     const request = sg.emptyRequest()
+
+            //     request.method = 'POST'
+            //     request.path = '/v3/mail/send'
+            //     request.body = {
+            //         personalizations: [
+            //             {
+            //                 to: [
+            //                     {
+            //                         email: userEmail
+            //                     }
+            //                 ],
+            //                 subject
+            //             }
+            //         ],
+            //         from: {
+            //             email: 'Korakod.C@Mouawad.com',
+            //             name: 'Mouawad Admin'
+            //         },
+            //         content: [
+            //             {
+            //                 type: 'text/plain',
+            //                 value: (!!err)? err.message : emailBody
+            //             }
+            //         ]
+            //     };
+
+            //     sg
+            //         .API(request)
+            //         .then(response => {
+            //             console.log(response.statusCode)
+            //             console.log(response.body)
+            //             console.log(response.headers)
+            //             return resolve()
+            //         })
+            //         .catch(err => {
+            //             console.log(err);
+            //         });
+            // });
 
             const client = new Elasticsearch.Client({
                                 host: request.elasticsearch.host,
@@ -159,7 +184,7 @@ export default {
 
                     const exportDate = moment().tz('Asia/Bangkok').format('YYYYMMDD_HHmmss');
                     const userName =  `${user.username}_${exportDate}`;
-                    const destination = Path.resolve(__dirname, '../../../../../pdf/import_html')
+                    const destination = Path.resolve(__dirname, '/home/mol/www/projects/production/pdf/import_html')
                     const file_path = `${destination}/${userName}.html`;
 
                     await file.write(file_path, htmlTemplate);

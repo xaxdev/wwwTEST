@@ -21,9 +21,15 @@ class YingPrint extends Component {
             const totalNetVatPrice = items.reduce((prev, curr) => prev + (Number(curr.netVatPrice) || 0), 0);
 
             const styles = {
-                ying_img_logo: { 
+                ying_img_logo_40: { 
                     'height': '145',
-                    'textAlign': 'center'
+                    'textAlign': 'center',
+                    'width': '40%' 
+                },
+                ying_img_logo_20: { 
+                    'height': '145',
+                    'textAlign': 'center',
+                    'width': '20%' 
                 },
                 ying_img_set: {
                     'height': '534',
@@ -44,12 +50,11 @@ class YingPrint extends Component {
                     'height':'17pt'
                 },
                 ying_img_footer: {
-                    'textIndent': '0pt',
-                    'textAlign': 'left'
+                    'textAlign': 'center'
                 },
                 s2_1_ying_footer: { 
                     'color': 'black',
-                    'fontFamily':'Times New Roman, serif',
+                    'fontFamily':'open_sanslight',
                     'fontStyle': 'normal',
                     'fontWeight': 'normal', 
                     'textDecoration': 'none', 
@@ -60,7 +65,7 @@ class YingPrint extends Component {
                 },
                 s2_2_ying_footer: { 
                     'color': 'black',
-                    'fontFamily':'Times New Roman, serif',
+                    'fontFamily':'open_sanslight',
                     'fontStyle': 'normal',
                     'fontWeight': 'normal', 
                     'textDecoration': 'none',
@@ -71,6 +76,9 @@ class YingPrint extends Component {
                     'textAlign': 'center'
                 },
                 ying_td_center: {
+                    'textAlign': 'center'
+                },
+                ying_td_center_colSpan: {
                     'textAlign': 'center'
                 },
                 ying_td_width_27: {
@@ -130,9 +138,8 @@ class YingPrint extends Component {
                 },
                 s1_ying: {
                     'color': 'black',
-                    'fontFamily':'Times New Roman, serif',
-                    'fontStyle': 'normal', 
-                    'fontWeight':'bold',
+                    'fontFamily':'open_sanslight',
+                    'fontStyle': 'normal',
                     'textDecoration': 'none', 
                     'fontSize': '9pt'
                 },
@@ -181,7 +188,7 @@ class YingPrint extends Component {
                 },
                 s2_ying: { 
                     'color': 'black',
-                    'fontFamily':'Times New Roman, serif',
+                    'fontFamily':'open_sanslight',
                     'fontStyle': 'normal',
                     'fontWeight': 'normal', 
                     'textDecoration': 'none', 
@@ -202,16 +209,18 @@ class YingPrint extends Component {
             }
 
             return(
-                <table  width="100%" border="0">
+                <table  width="100%">
                     <tbody>
                         <tr>
-                            <td style={styles.ying_img_logo}><img width="564" height="85" alt="image" src="/images/Image_logo.jpg"/></td>
+                            <td style={styles.ying_img_logo_40}><img height="85" alt="image" src="/images/Image_address_header_eng.jpg"/></td>
+                            <td style={styles.ying_img_logo_20}><img height="85" alt="image" src="/images/mouawad-crest.png"/></td>
+                            <td style={styles.ying_img_logo_40}><img height="85" alt="image" src="/images/Image_address_header_arabic.jpg"/></td>
                         </tr>
                         <tr>
-                            <td style={styles.ying_img_set}><img width="358" height="509" alt="image" src={imagesUrl}/></td>
+                            <td style={styles.ying_img_set} colSpan="3"><img width="358" height="509" alt="image" src={imagesUrl}/></td>
                         </tr>
                         <tr style={styles.ying_td_center}>
-                            <td style={styles.ying_td_center}>
+                            <td style={styles.ying_td_center_colSpan} colSpan="3">
                                 <table style={styles.ying_table_set_detail} cellSpacing="0">
                                     <tbody>
                                         <tr style={styles.ying_tr_height_22}>
@@ -225,41 +234,38 @@ class YingPrint extends Component {
                                             if (item.itemDescriptionLanguage == 'arb') {
                                                 return(
                                                     <tr style={styles.ying_tr_height_23}>
-                                                        <td style={styles.ying_td_width_27}><p style={styles.s2_ying} style={styles.ying_id}><strong><span style={styles.s1_ying}>{index+1}</span></strong></p></td>
+                                                        <td style={styles.ying_td_width_27}><p style={styles.s2_ying} style={styles.ying_id}><span style={styles.s1_ying}>{index+1}</span></p></td>
                                                         <td style={styles.ying_td_width_116}><p style={styles.s1_ying} style={styles.ying_reference} ><span style={styles.s1_ying}>{item.reference}</span></p></td>
-                                                        <td style={styles.ying_td_width_240}><p style={styles.s1_ying} style={styles.ying_description_item} ><strong><span style={styles.s1_ying}>{item.description}</span></strong></p></td>
-                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
-                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.netVatPrice)}</span></strong></p></td>
+                                                        <td style={styles.ying_td_width_240}><p style={styles.s1_ying} style={styles.ying_description_item} ><span style={styles.s1_ying}>{item.description}</span></p></td>
+                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><span style={styles.s1_ying}>{numberFormat(item.priceInHomeCurrency)}</span></p></td>
+                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><span style={styles.s1_ying}>{numberFormat(item.netVatPrice)}</span></p></td>
                                                     </tr>
                                                 )
                                             } else {
                                                 return(
                                                     <tr style={styles.ying_tr_height_23}>
-                                                        <td style={styles.ying_td_width_27}><p style={styles.s2_ying} style={styles.ying_id}><strong><span style={styles.s1_ying}>{index+1}</span></strong></p></td>
+                                                        <td style={styles.ying_td_width_27}><p style={styles.s2_ying} style={styles.ying_id}><span style={styles.s1_ying}>{index+1}</span></p></td>
                                                         <td style={styles.ying_td_width_116}><p style={styles.s1_ying} style={styles.ying_reference} ><span style={styles.s1_ying}>{item.reference}</span></p></td>
-                                                        <td style={styles.ying_td_width_240}><p style={styles.s1_ying} style={styles.ying_description_item_left} ><strong><span style={styles.s1_ying}>{item.description}</span></strong></p></td>
-                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.priceInHomeCurrency)}</span></strong></p></td>
-                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><strong><span style={styles.s1_ying}>{numberFormat(item.netVatPrice)}</span></strong></p></td>
+                                                        <td style={styles.ying_td_width_240}><p style={styles.s1_ying} style={styles.ying_description_item_left} ><span style={styles.s1_ying}>{item.description}</span></p></td>
+                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><span style={styles.s1_ying}>{numberFormat(item.priceInHomeCurrency)}</span></p></td>
+                                                        <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_item_price} ><span style={styles.s1_ying}>{numberFormat(item.netVatPrice)}</span></p></td>
                                                     </tr>
                                                 )
                                             }
                                         })}
                                         <tr style={styles.ying_tr_height_17}>
-                                            <td style={styles.ying_td_width_383} colSpan="3"><p style={styles.s1_ying} style={styles.ying_total}><strong><span style={styles.s1_ying}>Total / المجموع</span></strong></p></td>
-                                            <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_footer_total} ><strong><span style={styles.s1_ying}>{numberFormat(totalPrice)}</span></strong></p></td>
-                                            <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_footer_total} ><strong><span style={styles.s1_ying}>{numberFormat(totalNetVatPrice)}</span></strong></p></td>
+                                            <td style={styles.ying_td_width_383} colSpan="3"><p style={styles.s1_ying} style={styles.ying_total}><span style={styles.s1_ying}>Total / المجموع</span></p></td>
+                                            <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_footer_total} ><span style={styles.s1_ying}>{numberFormat(totalPrice)}</span></p></td>
+                                            <td style={styles.ying_td_width_74}><p style={styles.s2_ying} style={styles.ying_footer_total} ><span style={styles.s1_ying}>{numberFormat(totalNetVatPrice)}</span></p></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </td>
                         </tr>
                         <tr>
-                            <td height="116" align="bottom">
-                                <p style={styles.ying_img_footer}><br/></p>
-                                <p style={styles.s2_1_ying_footer}>وعسلا ةيبرعلا ةكلمملا - 4030123957 :ت.س - (012) 610 6195 :سكاف ،(012) 610 6194 ،(012) 610 6193 ،(012) 610 6192 :فتاه 21441 ةدج 1526 .ب.ص ،ريوكس ليمج ىنبم ،ةيلحتلا عراش :يسيئرلا زك</p>
-                                <p style={styles.s2_2_ying_footer}>(012) 283 3125 فتاه ،ريوكس ليمج ،ةدج - (011) 293 4555 فتاه ،رتنس زانكأ ،ضايرلا - (013) 894 5747 فتاه ،لوم دشارلا ،ربخلا</p>
-                                <p style={styles.s2_2_ying_footer}>Head Office: Tahlia Street, Jameel Square Bldg., Tel: (012) 610 6192, (012) 610 6193, (012) 610 6194, Fax: (012) 6106195, P.O. Box: 1526 Jeddah 21441, Kingdom of Saudi Arabia</p>
-                                <p style={styles.s2_2_ying_footer}>Al Rashed Mall, Khobar Tel: (013) 894 5747, Aknaz Center, Riyadh Tel: (011) 293 4555, Jameel Square, Jeddah Tel: (012) 283 3125</p>
+                            <td height="116" colSpan="3" style={styles.ying_img_footer}>
+                                <p><br/></p>
+                                <img height="95" alt="image" src="/images/images_footer.png"/>
                             </td>
                         </tr>
                     </tbody>
