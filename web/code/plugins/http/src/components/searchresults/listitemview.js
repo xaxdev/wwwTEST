@@ -371,10 +371,18 @@ class ListItemsView extends Component {
                     </div>
                 );
             }else{
+                let withPermission = []
+                let columnPermission = []
+                let params = {}
                 const keys = ['', 'image','reference',...titleColumn]
+                params = {...params, withPermission, 'permission': userLogin.permission}
+                const keysPermission = keys.reduce(reducer, params).withPermission
+                params = {...params, columnPermission}
+                const tablePermission = tableColumns.reduce(reducerColumn, params).columnPermission
+
                 return (
                     <div>
-                        <DataTable className="col-sm-12" keys={[...keys ]} columns={tableColumns} initialData={items}
+                        <DataTable className="col-sm-12" keys={[...keysPermission ]} columns={tablePermission} initialData={items}
                             initialPageLength={this.state.initialPageLength} initialSortBy={{ prop: 'reference', order: 'ascending' }}
                             pageLengthOptions={[ 5, 20, 50 ]}
                         />
@@ -393,3 +401,63 @@ class ListItemsView extends Component {
 }
 
 module.exports = ListItemsView
+
+const reducerColumn = (params, current) => {
+    let {columnPermission, permission} = params
+
+    switch (current.prop) {
+        case 'priceUSD':
+            if (permission.price == 'Public' || permission.price == 'Updated' || permission.price == 'All') {
+                columnPermission.push(current)
+            }
+            break;
+        case 'updatedCostUSD':
+            if (permission.price == 'Updated' || permission.price == 'All') {
+                columnPermission.push(current)
+            }
+            break;
+        case 'actualCostUSD':
+            if (permission.price == 'All') {
+                columnPermission.push(current)
+            }
+            break;
+    
+        default:
+            columnPermission.push(current)
+            break;
+    }
+
+    params = {...params, columnPermission}
+    
+    return params
+}
+
+const reducer = (params, current) => {
+    let {withPermission, permission} = params
+
+    switch (current) {
+        case 'priceUSD':
+            if (permission.price == 'Public' || permission.price == 'Updated' || permission.price == 'All') {
+                withPermission.push(current)
+            }
+            break;
+        case 'updatedCostUSD':
+            if (permission.price == 'Updated' || permission.price == 'All') {
+                withPermission.push(current)
+            }
+            break;
+        case 'actualCostUSD':
+            if (permission.price == 'All') {
+                withPermission.push(current)
+            }
+            break;
+    
+        default:
+            withPermission.push(current)
+            break;
+    }
+
+    params = {...params, withPermission}
+    
+    return params
+}

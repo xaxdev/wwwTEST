@@ -205,5 +205,10 @@ export default [
         method: 'GET',
         path: '/yingcatalog/getexcel/{id}',
         config: controllers.getexcel
+    },
+    {
+        method: 'PUT',
+        path: '/yingcatalog/rename',
+        config: controllers.renameying
     }
 ]

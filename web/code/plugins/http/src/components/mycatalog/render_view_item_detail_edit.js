@@ -84,9 +84,8 @@ class RenderViewItemDetailEdit extends Component {
     }
 
     saveEditItem = (reference)=>{
-        const { fields: { description, price, itemDescriptionLanguage, netVatPrice, changedSize }, listItem } = this.props; 
+        const { fields: { description, price, itemDescriptionLanguage, netVatPrice, changedSize, setCurrency }, listItem } = this.props; 
         const limitNum = changedSize.value != 0 ? changedSize.value: 100;
-        console.log({limitNum});
         
         const newListItem = listItem.map(
             editItemData(
@@ -94,10 +93,10 @@ class RenderViewItemDetailEdit extends Component {
                 , description.value.substring(0, limitNum)
                 , Number(price.value.replace(/,/g,''))
                 , itemDescriptionLanguage.value
-                , Number(netVatPrice.value.replace(/,/g,''))
+                , Number(!netVatPrice.value?0 :netVatPrice.value.replace(/,/g,''))
+                , setCurrency
             )
         )
-        console.log({newListItem});
         this.props.setItemList(newListItem)
         this.props.setEditItemDetails(false)
         this.setState({isOpenEditItemDialog: false})
@@ -155,8 +154,34 @@ function mapStateToProps(state) {
 
 module.exports = connect(mapStateToProps, yingsetaction)(RenderViewItemDetailEdit);
 
-const editItemData = (reference, newDescription, newPrice, newItemDescriptionLanguage, newNetVatPrice) => item =>{
-    const { description,  priceInHomeCurrency, itemDescriptionLanguage, netVatPrice} = item;
+const editItemData = (reference, newDescription, newPrice, newItemDescriptionLanguage, newNetVatPrice, setCurrency) => item =>{
+    let { description,  priceInHomeCurrency, itemDescriptionLanguage, netVatPrice, priceInCurrency} = item;
+    switch (setCurrency.value) {
+        case 'USD':
+            priceInCurrency = {...priceInCurrency, 'USD': newPrice}       
+            break;
+        case 'CHF':
+            priceInCurrency = {...priceInCurrency, 'CHF': newPrice}       
+            break;
+        case 'JOD':
+            priceInCurrency = {...priceInCurrency, 'JOD': newPrice}       
+            break;
+        case 'KWD':
+            priceInCurrency = {...priceInCurrency, 'KWD': newPrice}       
+            break;
+        case 'OMR':
+            priceInCurrency = {...priceInCurrency, 'OMR': newPrice}       
+            break;
+        case 'QAR':
+            priceInCurrency = {...priceInCurrency, 'QAR': newPrice}       
+            break;
+        case 'SAR':
+            priceInCurrency = {...priceInCurrency, 'SAR': newPrice}       
+            break;
+    
+        default:
+            break;
+    }
     let newItem = {}
     if (item.reference == reference) {
         newItem = {
@@ -165,6 +190,7 @@ const editItemData = (reference, newDescription, newPrice, newItemDescriptionLan
             , priceInHomeCurrency: newPrice != ''? newPrice: priceInHomeCurrency
             , itemDescriptionLanguage: newItemDescriptionLanguage != ''? newItemDescriptionLanguage: itemDescriptionLanguage
             , netVatPrice: newNetVatPrice != ''? newNetVatPrice: netVatPrice
+            , priceInCurrency
         }
     } else {
         newItem = {...item}

@@ -19,26 +19,39 @@ class YingCatalogNameRows extends Component {
         onDeleteCatalog(id);
     }
 
-    renderAction = (index, id) => {
-        const { isShared } = this.props;
+    showTooltip = _=> {
+        this.setState({isTooltipActive: true})
+    }
+
+    hideTooltip = _=>{
+        this.setState({isTooltipActive: false});
+    }
+
+    renderAction = (index, id, name) => {
+        const { isShared, clickRenameCatalog } = this.props;
         let shared = false
 
         return (
-            <td className="savesearch text-center">
-                <a>
-                    <div className={`${isShared ? 'icon-edit fa' : 'icon-edit'}`}
+            <td className="savesearch text-center" key={id} id={id}>
+                <a className={`${isShared ? 'icon-edit fa' : 'icon-edit'}`} onClick={isShared ? '' : this.onClickEditCatalog.bind(this,id)}>
+                    {/* <div className={`${isShared ? 'icon-edit fa' : 'icon-edit'}`}
                         onClick={isShared ? '' : this.onClickEditCatalog.bind(this,id)}>
-                    </div>
+                    </div> */}
                 </a>
-                <a>
-                    <div className="icon-search"
+                <a className="icon-search" onClick={this.onClickEditCatalog.bind(this,id)}>
+                    {/* <div className="icon-search"
                         onClick={this.onClickEditCatalog.bind(this,id)}>
-                    </div>
+                    </div> */}
                 </a>
                 <ShareModal key={ id } id={id} />
-                <a>
-                    <div className={`${isShared ? 'icon-del fa' : 'icon-del'}`}
+                <a className={`${isShared ? 'icon-del fa' : 'icon-del'}`} onClick={isShared ? '' : this.onClickDeleteCatalog.bind(this,id)}>
+                    {/* <div className={`${isShared ? 'icon-del fa' : 'icon-del'}`}
                         onClick={isShared ? '' : this.onClickDeleteCatalog.bind(this,id)}>
+                    </div> */}
+                </a>
+                <a>
+                    <div className={`${isShared ? 'icon-rename fa' : 'icon-rename'}`} id="rename" 
+                        onClick={isShared ? '' : clickRenameCatalog.bind(this, id, name)}>
                     </div>
                 </a>
             </td>
@@ -46,15 +59,14 @@ class YingCatalogNameRows extends Component {
     }
 
     render = _ => {
-        const { row } = this.props;
-
+        const { row, yingCatalogReName } = this.props;
         return (
             <tbody key={row._id} id={row._id}>
-                <tr>
+                <tr key={row._id} id={row._id}>
                     <td className="width-5 text-center">{row.id}</td>
                     <td>{row.name}</td>
                     <td className="text-center">{row.status}</td>
-                    {this.renderAction(0, row._id)}
+                    {this.renderAction(0, row._id, row.name)}
                 </tr>
             </tbody>
         )

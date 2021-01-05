@@ -68,7 +68,7 @@ class RenderViewSetDetailHeaderEdit extends Component {
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { currency } = userLogin
         
-        const summary = {
+        let summary = {
             totalItem: 0,
             totalRetailPrice: 0,
             totalUpdatedCost: 0,
@@ -84,6 +84,7 @@ class RenderViewSetDetailHeaderEdit extends Component {
             const displaySetCurrency = displayCurrency == '' 
             ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
             : displayCurrency
+            summary = {...summary, 'currency':displaySetCurrency}
             const summaryItem = items.reduce(summaryListItem, summary);
             const {totalItem, totalRetailPrice, totalUpdatedCost, highestRetailPrice, lowestRetailPrice, averageRetailPrice} = summaryItem;  
 
@@ -326,15 +327,15 @@ class RenderViewSetDetailHeaderEdit extends Component {
 module.exports = RenderViewSetDetailHeaderEdit
 
 const summaryListItem = (summary, item) =>{
-    const {totalItem, totalRetailPrice, totalUpdatedCost, highestRetailPrice, lowestRetailPrice} = summary;
+    const {totalItem, totalRetailPrice, totalUpdatedCost, highestRetailPrice, lowestRetailPrice, currency} = summary;
     const newSummary = {
         ...summary, 
         totalItem: totalItem + 1,
-        totalRetailPrice: totalRetailPrice + Number(item.priceInHomeCurrency),
-        totalUpdatedCost: totalUpdatedCost + Number(item.updatedCostInHomeCurrency),
-        highestRetailPrice: Math.max(highestRetailPrice, Number(item.priceInHomeCurrency)),
-        lowestRetailPrice: totalItem == 0 ? Number(item.priceInHomeCurrency): Math.min(lowestRetailPrice, Number(item.priceInHomeCurrency)),
-        averageRetailPrice: (totalRetailPrice + Number(item.priceInHomeCurrency))/(totalItem + 1)
+        totalRetailPrice: totalRetailPrice + Number(item.priceInCurrency[currency]),
+        totalUpdatedCost: totalUpdatedCost + Number(item.updatedCostInCurrency[currency]),
+        highestRetailPrice: Math.max(highestRetailPrice, Number(item.priceInCurrency[currency])),
+        lowestRetailPrice: totalItem == 0 ? Number(item.priceInCurrency[currency]): Math.min(lowestRetailPrice, Number(item.priceInCurrency[currency])),
+        averageRetailPrice: (totalRetailPrice + Number(item.priceInCurrency[currency]))/(totalItem + 1)
     }
     return newSummary
 }

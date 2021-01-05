@@ -58,7 +58,7 @@ const notify = (err, userEmail, emailBody) => new Promise((resolve, reject) => {
             }
         ],
         from: {
-            email: 'dev@itorama.com',
+            email: 'Korakod.C@Mouawad.com',
             name: 'Mouawad Admin'
         },
         content: [

@@ -133,7 +133,7 @@ const DetailDescriptionPrint = (props) => {
                     <div style={styles.colmd5}>{convertBlanktodash(props.salesPersonName)}</div>
                 </div>
                 <div style={styles.colmd12}>
-                    <div style={styles.colmd5}>Manufactory Date</div>
+                    <div style={styles.colmd5}>Manufacturing Date</div>
                     <div style={styles.colmd5}>{dateCreate}</div>
                 </div>
             </div>

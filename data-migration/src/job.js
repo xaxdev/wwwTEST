@@ -54,7 +54,7 @@ const notify = err => {
             }
         ],
         from: {
-            email: 'dev@itorama.com'
+            email: 'Korakod.C@Mouawad.com'
         },
         content: [
             {

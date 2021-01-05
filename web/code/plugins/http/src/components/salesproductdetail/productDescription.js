@@ -117,7 +117,7 @@ const DetailDescription = (props) => {
                     <div className="col-md-8 col-sm-8">{props.salesPersonName}</div>
                 </div>
                 <div className="col-md-12 col-sm-12 nopadding">
-                    <div className="col-md-4 col-sm-4 nopadding font-b">Manufactory Date</div>
+                    <div className="col-md-4 col-sm-4 nopadding font-b">Manufacturing Date</div>
                     <div className="col-md-8 col-sm-8">{dateCreate}</div>
                 </div>
             </div>

@@ -51,7 +51,7 @@ class RenderViewSetDetailHeader extends Component {
         const { listItem, displayCurrency, fields: { setReferenceNumber, setDescription, suiteName, romanceNote, setImages, setCurrency } } = this.props;
         const userLogin = JSON.parse(sessionStorage.logindata);
         const { currency } = userLogin
-        const summary = {
+        let summary = {
             totalItem: 0,
             totalRetailPrice: 0,
             totalUpdatedCost: 0,
@@ -59,6 +59,10 @@ class RenderViewSetDetailHeader extends Component {
             lowestRetailPrice: 0,
             averageRetailPrice: 0
         }
+        const displaySetCurrency = displayCurrency == ''? currency: displayCurrency
+
+        summary = {...summary, 'currency':displaySetCurrency}
+
         const summaryItem = listItem.reduce(summaryListItem, summary);
         const {totalItem, totalRetailPrice, totalUpdatedCost, highestRetailPrice, lowestRetailPrice, averageRetailPrice} = summaryItem;     
         
@@ -69,8 +73,6 @@ class RenderViewSetDetailHeader extends Component {
         } else {
             $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
         }
-
-        const displaySetCurrency = displayCurrency == ''? currency: displayCurrency
 
         return(
             <div className="row">
@@ -187,15 +189,15 @@ class RenderViewSetDetailHeader extends Component {
 module.exports = RenderViewSetDetailHeader
 
 const summaryListItem = (summary, item) =>{
-    const {totalItem, totalRetailPrice, totalUpdatedCost, highestRetailPrice, lowestRetailPrice} = summary;
+    const {totalItem, totalRetailPrice, totalUpdatedCost, highestRetailPrice, lowestRetailPrice, currency} = summary;
     const newSummary = {
         ...summary, 
         totalItem: totalItem + 1,
-        totalRetailPrice: totalRetailPrice + item.priceInHomeCurrency,
-        totalUpdatedCost: totalUpdatedCost + item.updatedCostInHomeCurrency,
-        highestRetailPrice: Math.max(highestRetailPrice, item.priceInHomeCurrency),
-        lowestRetailPrice: totalItem == 0 ? item.priceInHomeCurrency: Math.min(lowestRetailPrice, item.priceInHomeCurrency),
-        averageRetailPrice: (totalRetailPrice + item.priceInHomeCurrency)/(totalItem + 1)
+        totalRetailPrice: totalRetailPrice + item.priceInCurrency[currency],
+        totalUpdatedCost: totalUpdatedCost + item.updatedCostInCurrency[currency],
+        highestRetailPrice: Math.max(highestRetailPrice, item.priceInCurrency[currency]),
+        lowestRetailPrice: totalItem == 0 ? item.priceInCurrency[currency]: Math.min(lowestRetailPrice, item.priceInCurrency[currency]),
+        averageRetailPrice: (totalRetailPrice + item.priceInCurrency[currency])/(totalItem + 1)
     }
     return newSummary
 }

@@ -248,7 +248,7 @@ class SearchResult extends Component {
                 'page' : 1, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : pageSize,
                 'ItemsOrder': ItemsOrder, 'SetReferencdOrder': SetReferencdOrder,'userName': `${userLogin.username}_${exportDate}`,
                 'userEmail': userLogin.email,'ROOT_URL': ROOT_URL, 'env': env_web, 'viewType': viewType,
-                'userPermissionPrice': userPermissionPrice, 'titleColumn': TitleColumnDb
+                'userPermissionPrice': userPermissionPrice, 'titleColumn': TitleColumnDb, 'itemsList': listMyCatalog
             };
             const filters =  JSON.parse(sessionStorage.filters);
             params = GetGemstoneLotnumberFilter(filters, params);
@@ -933,7 +933,8 @@ class SearchResult extends Component {
         };
         let params = {
             'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : this.props.pageSize, 'fields': fields,
-            'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'OnHand'
+            'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'OnHand',
+            'itemsList': listMyCatalog
         };
         // default search params
         const filters =  JSON.parse(sessionStorage.filters);
@@ -987,7 +988,8 @@ class SearchResult extends Component {
 
         let params = {
             'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : this.props.pageSize,  'fields': fields,
-            'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'OnHand'
+            'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'OnHand',
+            'itemsList': listMyCatalog
         };
 
         // default search params

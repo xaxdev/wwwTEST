@@ -13,8 +13,9 @@ class RenderViewSetDetailItemEdit extends Component {
         
         if (yingCatalogDetailStatus) {
             const displaySetCurrency = displayCurrency == '' 
-            ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
-            : displayCurrency
+                ? (yingCatalogDetail.setCurrency == '' || yingCatalogDetail.setCurrency == undefined) ? currency: yingCatalogDetail.setCurrency
+                : displayCurrency
+
             return(
                 <div className="col-sm-12">
                     <div className="col-sm-4 m-width-60 ft-white m-nopadding"></div>
@@ -38,7 +39,8 @@ class RenderViewSetDetailItemEdit extends Component {
                                 </tr>
                             </thead>
                             {listItem.map(row=>{
-                                return <RenderViewSetItemTable row={row} onClickEditItem={onClickEditItem} onClickDeleteItem={onClickDeleteItem}/>
+                                return <RenderViewSetItemTable row={row} onClickEditItem={onClickEditItem} onClickDeleteItem={onClickDeleteItem} 
+                                    displaySetCurrency={displaySetCurrency}/>
                             })}
                         </table>
                     </div>
