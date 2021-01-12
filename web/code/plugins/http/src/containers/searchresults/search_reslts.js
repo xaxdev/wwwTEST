@@ -752,6 +752,7 @@ class SearchResult extends Component {
             keys.forEach((key) => {
                 paramsSearch[key] = '';
             })
+            listMyCatalog = [];
             await this.props.newSearch();
             await this.props.setParams(paramsSearch);
             await sessionStorage.setItem('paramsSearch', JSON.stringify(paramsSearch));
@@ -771,6 +772,7 @@ class SearchResult extends Component {
             this.props.setShowGridView(true);
             this.props.setShowListView(false);
             this.setState({showLoading: false});
+            listMyCatalog = [];
             await this.props.modifySearch(this.props.paramsSearch);
             if(token){
                 this.context.router.push('/inventories');
@@ -931,6 +933,7 @@ class SearchResult extends Component {
             limitedEditionNumber: this.state.limitedEditionNumber, itemCreatedDate: this.state.itemCreatedDate,
             specialDiscountPercent: this.state.specialDiscountPercent
         };
+        console.log({listMyCatalog});
         let params = {
             'page' : this.props.currentPage, 'sortBy': sortingBy, 'sortDirections': sortingDirection, 'pageSize' : this.props.pageSize, 'fields': fields,
             'price': userLogin.permission.price, 'ROOT_URL': ROOT_URL, 'userName': userLogin.username, 'userEmail': userLogin.email, 'typeFile': 'OnHand',
