@@ -24,9 +24,19 @@
                             "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\3 Stone Earrings"
                         },
                         {
+                            "id": "174",
+                            "label": "Bellataire Rings",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Bellataire Rings"
+                        },
+                        {
                             "id": "49",
                             "label": "Dangling Earrings",
                             "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Dangling Earrings"
+                        },
+                        {
+                            "id": "175",
+                            "label": "Diamond Moments",
+                            "code": "Mouawad Inventory\\\\\\\\Merchandise\\\\\\\\Jewelry\\\\\\\\Classic\\\\\\\\Diamond Classic\\\\\\\\Diamond Moments"
                         },
                         {
                             "id": "50",
